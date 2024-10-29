@@ -1,0 +1,53 @@
+name: Automated testing for enumext package (TL2024)
+
+on:
+  push:
+    branches:
+      - "*"
+  schedule:
+    # at 12:00 UTC (20:00 CST/UTC +8) on Friday
+  - cron: "0 12 * * 5"
+  workflow_dispatch:
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        version:
+          - 2024
+        command:
+          - doc
+          - examples
+          - testpkg
+      fail-fast: false
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup TeX Live ${{ matrix.version }}
+        uses: teatimeguest/setup-texlive-action@v3
+        with:
+          version: ${{ matrix.version }}
+          package-file: |
+            .github/tl_packages
+          cache: true
+          update-all-packages: true
+
+      - name: Install enumext package
+        run: l3build install
+
+      - name: Run "l3build ${{ matrix.command }}" (TeX Live ${{ matrix.version }})
+        run: l3build ${{ matrix.command }}
+
+      # If fail some test, upload test and log file
+      - name: Upload error files
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: github-error-files
+          path: |
+            ./*.log
+            ./*.tex
+          retention-days: 2

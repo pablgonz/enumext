@@ -1,0 +1,54 @@
+## project-specific
+build/*
+
+## auxiliary files:
+*.aux
+*.lof
+*.log
+*.lot
+*.fls
+*.out
+*.toc
+*.tmp
+*.out
+*.glo
+*.hd
+*.xdv
+*.txt
+
+## atach
+*.atfi
+
+## makeidx and glo
+*.idx
+*.ilg
+*.ind
+*.ist
+
+## minted
+_minted*
+*.pyg
+
+## Intermediate documents:
+*.dvi
+*.ps
+*.pdf
+*.ltx
+*.tsc
+*.tuc
+
+## Build tool auxiliary files:
+*.fdb_latexmk
+*.synctex
+*.synctex.gz
+*.synctex.gz(busy)
+*.synctex(busy)
+*.pdfsync
+*.zip
+*.curlopt
+
+## For testing
+**/sources/test-pkg/CTANREADME.md
+**/sources/test-pkg/enumext.ins
+**/sources/test-pkg/enumext.dtx
+**/sources/test-pkg/enumext.sty
