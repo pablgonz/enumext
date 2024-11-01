@@ -22,8 +22,8 @@
 -- General package identification
 module     = "enumext"
 pkgversion = "1.0"
-pkgdate    = "2024-10-29"
-ltxrelease = "2024-06-01"
+pkgdate    = "2024-11-01"
+ltxrelease = "2024-11-01"
 
 -- Configuration of files for build and installation
 maindir       = "."
@@ -115,7 +115,7 @@ uploadconfig = {
   version      = pkgversion,
   license      = "lppl1.3c",
   summary      = "Stores LaTeX contents in memory or files",
-  description  =[[This package provides enumerated list environments compatible with LATEX tagging PDF for creating
+  description  =[[This package provides enumerated list environments compatible with tagging PDF for creating
                   “simple exercise sheets” along with “multiple choice questions”, storing the “answers” to these in memory using
                    multicol and scontents packages.]],
   topic        = { "File management", "Experimental LaTeX3" },
@@ -262,7 +262,7 @@ if options["target"] == "testpkg" then
   print("Compiling tagged PDF sample files in ./"..tmpdir.." using [arara]")
   local samples = {"enumext-01", "enumext-02", "enumext-03", "enumext-04", "enumext-05", "enumext-06"}
   for i, samples in ipairs(samples) do
-    local errorlevel = run(tmpdir, "arara "..samples..".tex")
+    local errorlevel = run(tmpdir, "arara -v "..samples..".tex")
     if errorlevel ~= 0 then
       local f = assert(io.open(tmpdir.."/"..samples..".log", "r"))
       err_log_file = f:read("*all")

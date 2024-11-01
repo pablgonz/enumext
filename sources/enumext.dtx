@@ -3545,7 +3545,7 @@ $ pdfdetach -saveall enumext.pdf
 %<*example>
 % \fi
 \begin{filecontents*}[overwrite]{enumext-exa-1.tex}
-% arara: lualatex
+% arara: lualatex: { branch: developer }
 % arara: clean: { extensions: [ aux, log] }
 \documentclass{article}
 \usepackage{siunitx,amssymb,enumext}
@@ -3655,8 +3655,8 @@ $ pdfdetach -saveall enumext.pdf
 %<*example>
 % \fi
 \begin{filecontents*}[overwrite]{enumext-exa-2.tex}
-% arara: lualatex
-% arara: lualatex
+% arara: lualatex: { branch: developer }
+% arara: lualatex: { branch: developer }
 % arara: clean: { extensions: [ aux, log, out] }
 \documentclass{article}
 \usepackage[colorlinks]{hyperref}
@@ -3770,8 +3770,8 @@ $ pdfdetach -saveall enumext.pdf
 %<*example>
 % \fi
 \begin{filecontents*}[overwrite]{enumext-exa-3.tex}
-% arara: lualatex
-% arara: lualatex
+% arara: lualatex: { branch: developer }
+% arara: lualatex: { branch: developer }
 % arara: clean: { extensions: [ aux, log, out] }
 \documentclass{article}
 \usepackage[margin=2cm]{geometry}
@@ -4162,7 +4162,7 @@ to \ref{simplews:3} is \getkeyans{simplews:3}.
     pdfversion=2.0,
     pdfstandard=ua-2,
     testphase={phase-III,math,title,table,firstaid},
-    uncompress,
+    %uncompress,
   }
 \documentclass{article}
 \usepackage[top=2cm,bottom=2cm,left=1cm,right=1cm]{geometry}
@@ -4267,7 +4267,7 @@ Some refs here \ref{G} and \ref{H}
     pdfversion=2.0,
     pdfstandard=ua-2,
     testphase={phase-III,math,title,table,firstaid},
-    uncompress,
+    %uncompress,
   }
 \documentclass{article}
 \usepackage[top=2cm,bottom=2cm,left=1cm,right=1cm]{geometry}
@@ -4352,7 +4352,7 @@ Some text here
     pdfversion=2.0,
     pdfstandard=ua-2,
     testphase={phase-III,math,title,table,firstaid},
-    uncompress,
+    %uncompress,
   }
 \documentclass{article}
 \usepackage[top=2cm,bottom=2cm,left=1cm,right=1cm]{geometry}
@@ -4428,7 +4428,7 @@ The answer to question \ref{dos} is \getkeyans{test:2}
     pdfversion=2.0,
     pdfstandard=ua-2,
     testphase={phase-III,math,title,table,firstaid},
-    uncompress,
+    %uncompress,
   }
 \documentclass{article}
 \usepackage[top=2cm,bottom=2cm,left=1cm,right=1cm]{geometry}
@@ -4499,7 +4499,7 @@ Some text here
     pdfversion=2.0,
     pdfstandard=ua-2,
     testphase={phase-III,math,title,table,firstaid},
-    uncompress,
+    %uncompress,
   }
 \documentclass{article}
 \usepackage[top=2cm,bottom=2cm,left=1cm,right=1cm]{geometry}
@@ -4613,7 +4613,7 @@ Some text here
     pdfversion=2.0,
     pdfstandard=ua-2,
     testphase={phase-III,math,title,table,firstaid},
-    uncompress,
+    %uncompress,
   }
 \documentclass{article}
 \usepackage[top=2cm,bottom=2cm,left=3cm,right=3cm]{geometry}
@@ -5269,11 +5269,11 @@ Some text here
 % First we will make sure we have a minimum (super updated) version of
 % \hologo{LaTeX} to work correctly.
 %    \begin{macrocode}
-\NeedsTeXFormat{LaTeX2e}[2024-06-01]
+\NeedsTeXFormat{LaTeX2e}[2024-11-01]
 %    \end{macrocode}
 % Now declare the \mypkg*{enumext} package.
 %    \begin{macrocode}
-\ProvidesExplPackage {enumext} {2024-10-29} {1.0} {Enumerate exercise sheets}
+\ProvidesExplPackage {enumext} {2024-11-01} {1.0} {Enumerate exercise sheets}
 %    \end{macrocode}
 % Finally check if the \mypkg{multicol} and \mypkg{scontents} packages
 % are loaded, if not we load it.
@@ -12689,7 +12689,7 @@ Some text here
     \IfDocumentMetadataTF
       {
         \socket_assign_plug:nn {tagsupport/@@/starred} {start-list-tags}
-        \tag_socket_use:nn {@@/starred} {#1}
+        \socket_use:nn {tagsupport/@@/starred} {#1}
       } {}
    }
 \cs_new_protected_nopar:Nn \@@_stop_start_list_tag:
@@ -12697,7 +12697,7 @@ Some text here
     \IfDocumentMetadataTF
       {
         \socket_assign_plug:nn {tagsupport/@@/starred} {stop-start-tags}
-        \tag_socket_use:nn {@@/starred} { }
+        \socket_use:nn {tagsupport/@@/starred} { }
       } {}
    }
 \cs_new_protected_nopar:Npn \@@_stop_list_tag:n #1
@@ -12705,7 +12705,7 @@ Some text here
     \IfDocumentMetadataTF
       {
         \socket_assign_plug:nn {tagsupport/@@/starred} {stop-list-tags}
-        \tag_socket_use:nn {@@/starred} {#1}
+        \socket_use:nn {tagsupport/@@/starred} {#1}
       } {}
    }
 %    \end{macrocode}
@@ -12762,7 +12762,7 @@ Some text here
     \IfDocumentMetadataTF
       {
         \socket_assign_plug:nn {tagsupport/@@/keyanspic} {start-list-tags}
-        \tag_socket_use:n {@@/keyanspic}
+        \socket_use:n {tagsupport/@@/keyanspic}
       } {}
    }
 \cs_new_protected_nopar:Nn \@@_anspic_stop_start_list_tag:
@@ -12770,7 +12770,7 @@ Some text here
     \IfDocumentMetadataTF
       {
         \socket_assign_plug:nn {tagsupport/@@/keyanspic} {stop-start-tags}
-        \tag_socket_use:n {@@/keyanspic}
+        \socket_use:n {tagsupport/@@/keyanspic}
       } {}
    }
 \cs_new_protected_nopar:Nn \@@_anspic_stop_list_tag:
@@ -12778,7 +12778,7 @@ Some text here
     \IfDocumentMetadataTF
       {
         \socket_assign_plug:nn {tagsupport/@@/keyanspic} {stop-list-tags}
-        \tag_socket_use:n {@@/keyanspic}
+        \socket_use:n {tagsupport/@@/keyanspic}
       } {}
    }
 %    \end{macrocode}
