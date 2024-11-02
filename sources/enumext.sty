@@ -2972,7 +2972,7 @@
           }
       }
   }
-%% Hooks for |anskey*| inside the |keyans|, |keyans*| and |keyanspic| environments, math-mode ans not number |\item|.
+%% Hooks for |anskey*| inside the |keyans|, |keyans*| and |keyanspic| environments, math-mode and not number |\item|.
 \__enumext_before_env:nn { anskey* }
   {
     \int_compare:nNnT { \l__enumext_keyans_level_int } = { 1 }
@@ -3407,7 +3407,7 @@
           \l__enumext_labelwidth_i_dim \l__enumext_labelsep_i_dim
       }
   }
-%% Internal function for |\item| whit check-answer mechanism in |enumext| environment.
+%% Internal function for |\item| with check-answer mechanism in |enumext| environment.
 \cs_new_protected:Npn \__enumext_default_item:n #1
   {
     \tl_if_novalue:nTF {#1}
@@ -3427,7 +3427,7 @@
         \__enumext_item_std:w [#1] \tl_use:c { l__enumext_fake_item_indent_ \__enumext_level: _tl }
       }
   }
-%% Internal function for |\item*[symb][sep]| whit check-answer mechanism in |enumext| environment.
+%% Internal function for |\item*[symb][sep]| with check-answer mechanism in |enumext| environment.
 \cs_new_protected:Npn \__enumext_starred_item:nn #1 #2
   {
     \tl_if_novalue:nTF {#1}
@@ -4727,7 +4727,7 @@
         \__enumext_mini_page{ \l__enumext_minipage_left_vii_dim }
       }
    }
-%% Stop support for |mini-env| key ans stop |list| in |enumext*| environment.
+%% Stop support for |mini-env| key and stop |list| in |enumext*| environment.
 \cs_new_protected:Nn \__enumext_stop_mini_vii:
   {
     \bool_if:NTF \l__enumext_minipage_active_vii_bool

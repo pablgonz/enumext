@@ -4448,7 +4448,7 @@ Some text here
   \item Question B. \anskey{Answer B}
   \item Question C.
     \begin{anskey*}
-    Answer whit \verb+code+ and more
+    Answer with \verb+code+ and more
       \begin{verbatim}
         Some code here
       \end{verbatim}
@@ -4469,7 +4469,7 @@ Some text here
   \item Question B. \anskey{Answer B}
   \item Question C.
     \begin{anskey*}
-    Answer whit \verb+code+ and more
+    Answer with \verb+code+ and more
       \begin{verbatim}
         Some code here
       \end{verbatim}
@@ -9276,7 +9276,7 @@ Some text here
 %   \ics*{anskey} command and the \myenv*{anskey*}, \myenv*{keyans},
 %   \myenv*{keyans*} and \myenv*{keyanspic} environments and will set
 %   to \enquote{true} the variable \cs{l_@@_check_answers_bool} used for
-%   intenal checking answers mechanism set by the \mykey{check-ans} and \mykey{no-store}
+%   internal checking answers mechanism set by the \mykey{check-ans} and \mykey{no-store}
 %   keys, copy \mymarg{store name} into the variable \cs{g_@@_store_name_tl}
 %   and execute the function \cs{@@_anskey_env_make:V} creating the environment
 %   \myenv*{anskey*} (\S\ref{env:anskey}).
@@ -10578,7 +10578,7 @@ Some text here
 %   a not numbered |\item| or if it is in \emph{math mode} returning
 %   the appropriate messages.
 % \iffalse
-%% Hooks for |anskey*| inside the |keyans|, |keyans*| and |keyanspic| environments, math-mode ans not number |\item|.
+%% Hooks for |anskey*| inside the |keyans|, |keyans*| and |keyanspic| environments, math-mode and not number |\item|.
 % \fi
 %    \begin{macrocode}
 \@@_before_env:nn { anskey* }
@@ -11281,7 +11281,7 @@ Some text here
 %   by the key \mykey{wrap-label*} and execute \cs{@@_item_std:w} with
 %   the \emph{optional argument} and the key \mykey{itemindent}.
 % \iffalse
-%% Internal function for |\item| whit check-answer mechanism in |enumext| environment.
+%% Internal function for |\item| with check-answer mechanism in |enumext| environment.
 % \fi
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_default_item:n #1
@@ -11327,7 +11327,7 @@ Some text here
 %   \myvarenv{l__@@_wrap_label_X_bool} to \enquote{true} for the key \mykey{wrap-label}
 %   and execute \cs{@@_item_std:w} and the key \mykey{itemindent}.
 % \iffalse
-%% Internal function for |\item*[symb][sep]| whit check-answer mechanism in |enumext| environment.
+%% Internal function for |\item*[symb][sep]| with check-answer mechanism in |enumext| environment.
 % \fi
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_starred_item:nn #1 #2
@@ -13625,7 +13625,7 @@ Some text here
 %   \cs{@@_after_list_vii:} function in the second part of the \myenv*{enumext*}
 %   environment definition (\S\ref{env:starred}).
 % \iffalse
-%% Stop support for |mini-env| key ans stop |list| in |enumext*| environment.
+%% Stop support for |mini-env| key and stop |list| in |enumext*| environment.
 % \fi
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_stop_mini_vii:
