@@ -118,7 +118,7 @@ uploadconfig = {
   description  =[[This package provides enumerated list environments compatible with tagging PDF for creating
                   “simple exercise sheets” along with “multiple choice questions”, storing the “answers” to these in memory using
                    multicol and scontents packages.]],
-  topic        = { "File management", "Experimental LaTeX3" },
+  topic        = { "List", "Tagged PDF", "Exercise", "Experimental LaTeX3", "List enumumerate" },
   ctanPath     = "/macros/latex/contrib/" .. ctanpkg,
   repository   = "https://github.com/pablgonz/" .. module,
   bugtracker   = "https://github.com/pablgonz/" .. module .. "/issues",
