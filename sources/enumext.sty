@@ -36,7 +36,7 @@
 %% ------------------------------------------------------------------------
 %% 
 \NeedsTeXFormat{LaTeX2e}[2024-11-01]
-\ProvidesExplPackage {enumext} {2024-11-01} {1.0} {Enumerate exercise sheets}
+\ProvidesExplPackage {enumext} {2024-11-03} {1.0} {Enumerate exercise sheets}
 \hook_gput_code:nnn {begindocument} {enumext}
   {
     \IfPackageLoadedTF { multicol }
@@ -197,10 +197,12 @@
 \box_new:N  \l__enumext_anspic_body_box
 \dim_new:N  \l__enumext_anspic_label_htdp_dim
 \dim_new:N  \l__enumext_anspic_body_htdp_dim
-%% Variables used by check-answer mechanism, |check-ans| and |no-store| keys.
+%% Variables used by check-answer mechanism, |check-ans|, |wrap-key| and |no-store| keys.
 \bool_new:N \l__enumext_check_answers_bool
 \bool_new:N \g__enumext_check_ans_key_bool
 \tl_new:N   \l__enumext_check_start_line_env_tl
+\int_new:N  \l__enumext_item_star_exec_int
+\bool_new:N \l__enumext_item_star_wrap_bool
 \int_new:N  \g__enumext_check_starred_cmd_int
 \int_new:N  \g__enumext_item_anskey_int
 \int_new:N  \g__enumext_item_number_int
@@ -2449,6 +2451,8 @@
         wrap-opt   .cs_set_protected:Np = \__enumext_keyans_wrapper_opt:n ##1,
         wrap-opt   .initial:n = [{##1}],
         wrap-opt   .value_required:n = true,
+        wrap-key   .cs_set_protected:Np = \__enumext_keyans_wrapper_item:n ##1,
+        wrap-key   .value_required:n = true,
         save-sep   .tl_set:N  = \l__enumext_store_keyans_item_opt_sep_tl,
         save-sep   .initial:n = {, ~ },
         save-sep   .value_required:n = true,
@@ -3647,12 +3651,14 @@
       {
         \bool_if:nTF {##1}
           {
+            \int_incr:N \l__enumext_item_star_exec_int % increment
             \peek_remove_spaces:n
               {
                 \__enumext_keyans_starred_item:n {##2}
               }
           }
           {
+            \int_zero:N \l__enumext_item_star_exec_int % zero
             \__enumext_keyans_default_item:n {##2}
           }
       }
@@ -3674,17 +3680,31 @@
           }
       }
   }
+\cs_new_protected:Npn \__enumext_keyans_wraper_label:n #1
+  {
+    \bool_lazy_all:nT
+      {
+        { \bool_if_p:N \l__enumext_wrap_label_v_bool }
+        { \bool_if_p:N  \l__enumext_show_answer_bool }
+        { \int_compare_p:nNn { \l__enumext_item_star_exec_int } = { 1 } }
+        { \cs_if_exist_p:N \__enumext_keyans_wrapper_item:n }
+      }
+      {
+        \cs_set_eq:NN \__enumext_wrapper_label_v:n \__enumext_keyans_wrapper_item:n
+      }
+    \bool_if:NTF \l__enumext_wrap_label_v_bool
+      {
+        \__enumext_wrapper_label_v:n { #1 }
+      }
+      { #1 }
+  }
 \cs_new_protected:Nn \__enumext_keyans_make_label_std:
   {
     \RenewDocumentCommand \makelabel { m }
       {
         \tl_use:N \l__enumext_label_fill_left_v_tl
         \tl_use:N \l__enumext_label_font_style_v_tl
-        \bool_if:NTF \l__enumext_wrap_label_v_bool
-          {
-            \__enumext_wrapper_label_v:n { ##1 }
-          }
-          { ##1 }
+        \__enumext_keyans_wraper_label:n { ##1 }
         \tl_use:N \l__enumext_label_fill_right_v_tl
       }
   }
@@ -3697,11 +3717,7 @@
             \makebox[ \l__enumext_labelwidth_v_dim ][ \l__enumext_align_label_pos_v_str ]
               {
                 \tl_use:N \l__enumext_label_font_style_v_tl
-                \bool_if:NTF \l__enumext_wrap_label_v_bool
-                  {
-                    \__enumext_wrapper_label_v:n { ##1 }
-                  }
-                  { ##1 }
+                \__enumext_keyans_wraper_label:n { ##1 }
               }
           }
       }
@@ -5209,13 +5225,14 @@
   {
     \__enumext_starred_joined_item_viii:n {#1}
     \peek_meaning_remove:NTF *
-      { \__enumext_starred_item_viii:w  }
+      { \__enumext_starred_item_viii:w }
       { \__enumext_standar_item_viii:w }
   }
 %% Set standard \item[opt] for |keyans*| environment.
 \cs_new_protected:Npn \__enumext_standar_item_viii:w
   {
     \bool_set_false:N \l__enumext_item_starred_viii_bool
+    \int_zero:N \l__enumext_item_star_exec_int
     \peek_meaning:NTF [
       {
         \bool_set_eq:NN \l__enumext_wrap_label_viii_bool \l__enumext_wrap_label_opt_viii_bool
@@ -5231,6 +5248,7 @@
 \cs_new_protected:Npn \__enumext_starred_item_viii:w
   {
     \bool_set_true:N \l__enumext_item_starred_viii_bool
+    \int_incr:N \l__enumext_item_star_exec_int
     \bool_set_true:N \l__enumext_wrap_label_viii_bool
     \peek_meaning:NTF [
       { \__enumext_starred_item_viii_aux_i:w }
@@ -5288,6 +5306,24 @@
       }
   }
 %% Define a fake |\makelabel| for |keyans*| environment.
+\cs_new_protected:Npn \__enumext_keyans_wraper_label_viii:n #1
+  {
+    \bool_lazy_all:nT
+      {
+        { \bool_if_p:N \l__enumext_wrap_label_viii_bool }
+        { \bool_if_p:N  \l__enumext_show_answer_bool }
+        { \int_compare_p:nNn { \l__enumext_item_star_exec_int } = { 1 } }
+        { \cs_if_exist_p:N \__enumext_keyans_wrapper_item:n }
+      }
+      {
+        \cs_set_eq:NN \__enumext_wrapper_label_viii:n \__enumext_keyans_wrapper_item:n
+      }
+    \bool_if:NTF \l__enumext_wrap_label_viii_bool
+      {
+        \__enumext_wrapper_label_viii:n {#1}
+      }
+      { #1 }
+  }
 \cs_new_protected_nopar:Npn \__enumext_fake_make_label_viii:n #1
   {
     \legacy_if:nT { @noitemarg }
@@ -5305,11 +5341,12 @@
     \makebox[ \l__enumext_labelwidth_viii_dim ][ \l__enumext_align_label_viii_str ]
       {
         \tl_use:N \l__enumext_label_font_style_viii_tl
-        \bool_if:NTF \l__enumext_wrap_label_viii_bool
-          {
-            \__enumext_wrapper_label_viii:n {#1}
-          }
-          { #1 }
+        \__enumext_keyans_wraper_label_viii:n {#1}
+        %%\bool_if:NTF \l__enumext_wrap_label_viii_bool
+        %%  {
+        %%    \__enumext_wrapper_label_viii:n {#1}
+        %%  }
+        %%  { #1 }
       }
     \skip_horizontal:N \l__enumext_labelsep_viii_dim \ignorespaces
   }

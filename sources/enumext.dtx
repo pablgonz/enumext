@@ -5273,7 +5273,7 @@ Some text here
 %    \end{macrocode}
 % Now declare the \mypkg*{enumext} package.
 %    \begin{macrocode}
-\ProvidesExplPackage {enumext} {2024-11-01} {1.0} {Enumerate exercise sheets}
+\ProvidesExplPackage {enumext} {2024-11-03} {1.0} {Enumerate exercise sheets}
 %    \end{macrocode}
 % Finally check if the \mypkg{multicol} and \mypkg{scontents} packages
 % are loaded, if not we load it.
@@ -5674,21 +5674,24 @@ Some text here
 % \end{variable}
 %
 % \begin{variable}{\l_@@_check_answers_bool,\g_@@_check_ans_key_bool,
-%                  \l_@@_check_start_line_env_tl, \g_@@_check_starred_cmd_int,
+%                  \l_@@_check_start_line_env_tl, \l_@@_item_star_exec_int,
+%                  \l_@@_item_star_wrap_bool, \g_@@_check_starred_cmd_int,
 %                  \g_@@_item_anskey_int, \g_@@_item_number_int,
 %                  \g_@@_item_number_bool, \g_@@_item_answer_diff_int,}
-%    Internal variables used by \emph{\enquote{internal check answer}} mechanism
-%    (\S\ref{int:check-answer}) used by the \mykey{check-ans} and
-%    \mykey{no-store} keys and check for starred commands \ics*{item*}
-%    in \myenv*{keyans} and \myenv*{keyans*} environments and \ics*{anspic*}
-%    in \myenv*{keyanspic} environment.
+%   Internal variables used by \emph{\enquote{internal check answer}} mechanism
+%   (\S\ref{int:check-answer}) used by the \mykey{check-ans}, \mykey{no-store}, \mykey{wrap-key}
+%   keys and check for starred commands \ics*{item*} in \myenv*{keyans} and
+%   \myenv*{keyans*} environments and \ics*{anspic*}
+%   in \myenv*{keyanspic} environment.
 % \iffalse
-%% Variables used by check-answer mechanism, |check-ans| and |no-store| keys.
+%% Variables used by check-answer mechanism, |check-ans|, |wrap-key| and |no-store| keys.
 % \fi
 %    \begin{macrocode}
 \bool_new:N \l_@@_check_answers_bool
 \bool_new:N \g_@@_check_ans_key_bool
 \tl_new:N   \l_@@_check_start_line_env_tl
+\int_new:N  \l_@@_item_star_exec_int
+\bool_new:N \l_@@_item_star_wrap_bool
 \int_new:N  \g_@@_check_starred_cmd_int
 \int_new:N  \g_@@_item_anskey_int
 \int_new:N  \g_@@_item_number_int
@@ -5698,11 +5701,10 @@ Some text here
 % \end{variable}
 %
 % \begin{variable}[int]{\l_@@_hyperref_bool, \l_@@_footnotes_key_bool,}
-%    The boolean variable \cs{l_@@_hyperref_bool} will determine if the
-%    \mypkg{hyperref} package is present or load in memory
-%    (\S\ref{pkg:hyperref}). The boolean variable \cs{l_@@_footnotes_key_bool}
-%    determine if \mypkg{hyperref} is load with key |hyperfootnotes=true|.
-%
+%   The boolean variable \cs{l_@@_hyperref_bool} will determine if the
+%   \mypkg{hyperref} package is present or load in memory
+%   (\S\ref{pkg:hyperref}). The boolean variable \cs{l_@@_footnotes_key_bool}
+%   determine if \mypkg{hyperref} is load with key |hyperfootnotes=true|.
 % \iffalse
 %% Variables used for hyperref detection.
 % \fi
@@ -5714,17 +5716,16 @@ Some text here
 %
 % \begin{variable}[int]{ \l_@@_newlabel_arg_one_tl, \l_@@_newlabel_arg_two_tl,
 %                        \l_@@_write_aux_file_tl, \l_@@_label_copy_X_tl, }
+%   Internal variables used by \mykey{save-ref} key (\S\ref{int:storage-system}).
+%   The variables \myvarenv{l__@@_label_copy_X_tl} correspond to temporary
+%   copies of the \mymeta{labels} defined by level on which operations will be performed.
 %
-%    Internal variables used by \mykey{save-ref} key (\S\ref{int:storage-system}).
-%    The variables \myvarenv{l__@@_label_copy_X_tl} correspond to temporary
-%    copies of the \mymeta{labels} defined by level on which operations will be performed.
+%   \smallskip
 %
-%    \smallskip
-%
-%    The variables \cs{l_@@_newlabel_arg_one_tl} and \cs{l_@@_newlabel_arg_two_tl}
-%    will be used to form the arguments passed to the function
-%    \cs{@@_newlabel:nn} (\S\ref{fun:newlabel}) and the variable \cs{l_@@_write_aux_file_tl}
-%    will be in charge of executing the writing code in the |.aux| file.
+%   The variables \cs{l_@@_newlabel_arg_one_tl} and \cs{l_@@_newlabel_arg_two_tl}
+%   will be used to form the arguments passed to the function
+%   \cs{@@_newlabel:nn} (\S\ref{fun:newlabel}) and the variable \cs{l_@@_write_aux_file_tl}
+%   will be in charge of executing the writing code in the |.aux| file.
 % \iffalse
 %% Variables used by |save-ref| key (internal label and ref).
 % \fi
@@ -9640,12 +9641,12 @@ Some text here
 %
 % \subsection{Keys and functions associated with storage}\label{int:storage-system}
 %
-% \begin{macro}[int]{wrap-ans, wrap-opt, save-sep,mark-ans, mark-pos, show-ans, mark-ref, save-ref}
-%   We add the keys \mykey{wrap-ans}, \mykey{wrap-opt}, \mykey{save-sep},
+% \begin{macro}[int]{wrap-ans, wrap-opt, wrap-key,save-sep, mark-ans, mark-pos, show-ans, mark-ref, save-ref}
+%   We add the keys \mykey{wrap-ans}, \mykey{wrap-opt}, \mykey{wrap-key},\mykey{save-sep},
 %   \mykey{mark-ans}, \mykey{mark-pos}, \mykey{show-ans}, \mykey{show-pos},
 %   \mykey{mark-ref} and \mykey{save-ref} related to the \emph{\enquote{storage system}}
-%    and internal mechanism of \emph{\enquote{label and ref}} only at
-%    the \emph{first level} of \myenv*{enumext} and \myenv*{enumext*}.
+%   and internal mechanism of \emph{\enquote{label and ref}} only at
+%   the \emph{first level} of \myenv*{enumext} and \myenv*{enumext*}.
 % \iffalse
 %% Add keys associated with storage on first level of |enumext| and |enumext*|.
 % \fi
@@ -9663,6 +9664,8 @@ Some text here
         wrap-opt   .cs_set_protected:Np = \@@_keyans_wrapper_opt:n ##1,
         wrap-opt   .initial:n = [{##1}],
         wrap-opt   .value_required:n = true,
+        wrap-key   .cs_set_protected:Np = \@@_keyans_wrapper_item:n ##1,
+        wrap-key   .value_required:n = true,
         save-sep   .tl_set:N  = \l_@@_store_keyans_item_opt_sep_tl,
         save-sep   .initial:n = {, ~ },
         save-sep   .value_required:n = true,
@@ -11713,12 +11716,14 @@ Some text here
       {
         \bool_if:nTF {##1}
           {
+            \int_incr:N \l_@@_item_star_exec_int % increment
             \peek_remove_spaces:n
               {
                 \@@_keyans_starred_item:n {##2}
               }
           }
           {
+            \int_zero:N \l_@@_item_star_exec_int % zero
             \@@_keyans_default_item:n {##2}
           }
       }
@@ -11726,7 +11731,8 @@ Some text here
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_keyans_make_label:,\@@_keyans_make_label_std:,\@@_keyans_make_label_box:}
+% \begin{macro}{\@@_keyans_make_label:,\@@_keyans_wraper_label:n,
+%               \@@_keyans_make_label_std:,\@@_keyans_make_label_box:}
 %   The function \cs{@@_keyans_make_label:} redefine \ics{makelabel}
 %   for the keys \mykey{mode-box}, \mykey{align}, \mykey{font},
 %   \mykey{wrap-label}, \mykey{wrap-label*} and |\item*| for \myenv*{keyans}
@@ -11756,17 +11762,31 @@ Some text here
 %    \end{macrocode}
 %   Standard definition when |\DocumentMetadata| is not active.
 %    \begin{macrocode}
+\cs_new_protected:Npn \@@_keyans_wraper_label:n #1
+  {
+    \bool_lazy_all:nT
+      {
+        { \bool_if_p:N \l_@@_wrap_label_v_bool }
+        { \bool_if_p:N  \l_@@_show_answer_bool }
+        { \int_compare_p:nNn { \l_@@_item_star_exec_int } = { 1 } }
+        { \cs_if_exist_p:N \@@_keyans_wrapper_item:n }
+      }
+      {
+        \cs_set_eq:NN \@@_wrapper_label_v:n \@@_keyans_wrapper_item:n
+      }
+    \bool_if:NTF \l_@@_wrap_label_v_bool
+      {
+        \@@_wrapper_label_v:n { #1 }
+      }
+      { #1 }
+  }
 \cs_new_protected:Nn \@@_keyans_make_label_std:
   {
     \RenewDocumentCommand \makelabel { m }
       {
         \tl_use:N \l_@@_label_fill_left_v_tl
         \tl_use:N \l_@@_label_font_style_v_tl
-        \bool_if:NTF \l_@@_wrap_label_v_bool
-          {
-            \@@_wrapper_label_v:n { ##1 }
-          }
-          { ##1 }
+        \@@_keyans_wraper_label:n { ##1 }
         \tl_use:N \l_@@_label_fill_right_v_tl
       }
   }
@@ -11783,11 +11803,7 @@ Some text here
             \makebox[ \l_@@_labelwidth_v_dim ][ \l_@@_align_label_pos_v_str ]
               {
                 \tl_use:N \l_@@_label_font_style_v_tl
-                \bool_if:NTF \l_@@_wrap_label_v_bool
-                  {
-                    \@@_wrapper_label_v:n { ##1 }
-                  }
-                  { ##1 }
+                \@@_keyans_wraper_label:n { ##1 }
               }
           }
       }
@@ -14518,7 +14534,7 @@ Some text here
   {
     \@@_starred_joined_item_viii:n {#1}
     \peek_meaning_remove:NTF *
-      { \@@_starred_item_viii:w  }
+      { \@@_starred_item_viii:w }
       { \@@_standar_item_viii:w }
   }
 %    \end{macrocode}
@@ -14540,6 +14556,7 @@ Some text here
 \cs_new_protected:Npn \@@_standar_item_viii:w
   {
     \bool_set_false:N \l_@@_item_starred_viii_bool
+    \int_zero:N \l_@@_item_star_exec_int
     \peek_meaning:NTF [
       {
         \bool_set_eq:NN \l_@@_wrap_label_viii_bool \l_@@_wrap_label_opt_viii_bool
@@ -14566,6 +14583,7 @@ Some text here
 \cs_new_protected:Npn \@@_starred_item_viii:w
   {
     \bool_set_true:N \l_@@_item_starred_viii_bool
+    \int_incr:N \l_@@_item_star_exec_int
     \bool_set_true:N \l_@@_wrap_label_viii_bool
     \peek_meaning:NTF [
       { \@@_starred_item_viii_aux_i:w }
@@ -14649,6 +14667,24 @@ Some text here
 %% Define a fake |\makelabel| for |keyans*| environment.
 % \fi
 %    \begin{macrocode}
+\cs_new_protected:Npn \@@_keyans_wraper_label_viii:n #1
+  {
+    \bool_lazy_all:nT
+      {
+        { \bool_if_p:N \l_@@_wrap_label_viii_bool }
+        { \bool_if_p:N  \l_@@_show_answer_bool }
+        { \int_compare_p:nNn { \l_@@_item_star_exec_int } = { 1 } }
+        { \cs_if_exist_p:N \@@_keyans_wrapper_item:n }
+      }
+      {
+        \cs_set_eq:NN \@@_wrapper_label_viii:n \@@_keyans_wrapper_item:n
+      }
+    \bool_if:NTF \l_@@_wrap_label_viii_bool
+      {
+        \@@_wrapper_label_viii:n {#1}
+      }
+      { #1 }
+  }
 \cs_new_protected_nopar:Npn \@@_fake_make_label_viii:n #1
   {
     \legacy_if:nT { @noitemarg }
@@ -14666,11 +14702,12 @@ Some text here
     \makebox[ \l_@@_labelwidth_viii_dim ][ \l_@@_align_label_viii_str ]
       {
         \tl_use:N \l_@@_label_font_style_viii_tl
-        \bool_if:NTF \l_@@_wrap_label_viii_bool
-          {
-            \@@_wrapper_label_viii:n {#1}
-          }
-          { #1 }
+        \@@_keyans_wraper_label_viii:n {#1}
+        %%\bool_if:NTF \l_@@_wrap_label_viii_bool
+        %%  {
+        %%    \@@_wrapper_label_viii:n {#1}
+        %%  }
+        %%  { #1 }
       }
     \skip_horizontal:N \l_@@_labelsep_viii_dim \ignorespaces
   }
