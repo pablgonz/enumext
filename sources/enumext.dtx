@@ -9641,7 +9641,7 @@ Some text here
 %
 % \subsection{Keys and functions associated with storage}\label{int:storage-system}
 %
-% \begin{macro}[int]{wrap-ans, wrap-opt, wrap-key,save-sep, mark-ans, mark-pos, show-ans, mark-ref, save-ref}
+% \begin{macro}[int]{wrap-ans, wrap-opt, wrap-key, save-sep, mark-ans, mark-pos, show-ans, mark-ref, save-ref}
 %   We add the keys \mykey{wrap-ans}, \mykey{wrap-opt}, \mykey{wrap-key},\mykey{save-sep},
 %   \mykey{mark-ans}, \mykey{mark-pos}, \mykey{show-ans}, \mykey{show-pos},
 %   \mykey{mark-ref} and \mykey{save-ref} related to the \emph{\enquote{storage system}}
@@ -9698,17 +9698,24 @@ Some text here
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}[int]{mark-pos, show-ans, show-pos}
-%    For the \myenv*{keyans} and \myenv*{keyans*} environments we will
-%    only add the keys \mykey{mark-pos}, \mykey{show-ans} and \mykey{show-pos}.
+% \begin{macro}[int]{save-sep, wrap-opt, wrap-key, mark-pos, show-ans, show-pos}
+%   For the \myenv*{keyans} and \myenv*{keyans*} environments we will
+%   only add the keys \mykey{save-sep}, \mykey{wrap-opt}, \mykey{wrap-key},
+%   \mykey{mark-pos}, \mykey{show-ans} and \mykey{show-pos}.
 % \iffalse
-%% Add keys |mark-pos|, |show-pos| and |show-ans| keys for |keyans| and |keyans*| environments.
+%% Add keys |save-sep|, |wrap-opt|, |wrap-key|,  |mark-pos|, |show-pos| and |show-ans| keys for |keyans| and |keyans*| environments.
 % \fi
 %    \begin{macrocode}
 \cs_set_protected:Npn \@@_tmp:n #1
   {
     \keys_define:nn { enumext / #1 }
       {
+        save-sep .tl_set:N  = \l_@@_store_keyans_item_opt_sep_tl,
+        save-sep .value_required:n = true,
+        wrap-opt .cs_set_protected:Np = \@@_keyans_wrapper_opt:n ##1,
+        wrap-opt .value_required:n = true,
+        wrap-key .cs_set_protected:Np = \@@_keyans_wrapper_item:n ##1,
+        wrap-key .value_required:n = true,
         mark-pos .choice:,
         mark-pos / left  .code:n = \str_set:Nn \l_@@_mark_position_str { l },
         mark-pos / right .code:n = \str_set:Nn \l_@@_mark_position_str { r },
@@ -11760,14 +11767,15 @@ Some text here
       }
   }
 %    \end{macrocode}
-%   Standard definition when |\DocumentMetadata| is not active.
+%   We added conditionals to the \cs{@@_keyans_wraper_label:n} function
+%   to handle the keys \mykey{wrap-key}, \mykey{wrap-label} and \mykey{wrap-label*}.
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_keyans_wraper_label:n #1
   {
     \bool_lazy_all:nT
       {
         { \bool_if_p:N \l_@@_wrap_label_v_bool }
-        { \bool_if_p:N  \l_@@_show_answer_bool }
+        { \bool_if_p:N \l_@@_show_answer_bool  }
         { \int_compare_p:nNn { \l_@@_item_star_exec_int } = { 1 } }
         { \cs_if_exist_p:N \@@_keyans_wrapper_item:n }
       }
@@ -11780,6 +11788,9 @@ Some text here
       }
       { #1 }
   }
+%    \end{macrocode}
+%   Standard definition when |\DocumentMetadata| is not active.
+%    \begin{macrocode}
 \cs_new_protected:Nn \@@_keyans_make_label_std:
   {
     \RenewDocumentCommand \makelabel { m }
@@ -11813,11 +11824,11 @@ Some text here
 %
 % \subsection{Second argument of the lists}\label{ltx:second-arg}
 %
-%    At this point of the code we have already programmed most the necessary
-%    tools to create a custom \myenv{list} environment, remember that the function
-%    \cs{@@_start_list:nn} takes two arguments, the first one we have
-%    ready, the second one we will define for all the levels of the
-%    environment \myenv*{enumext} and the environment \myenv*{keyans}.
+% At this point of the code we have already programmed most the necessary
+% tools to create a custom \myenv{list} environment, remember that the function
+% \cs{@@_start_list:nn} takes two arguments, the first one we have
+% ready, the second one we will define for all the levels of the
+% environment \myenv*{enumext} and the environment \myenv*{keyans}.
 %
 % \subsubsection{Calculation of \cs{leftmargin} and \cs{itemindent}}\label{int:leftmargin}
 %
@@ -13202,7 +13213,7 @@ Some text here
 %   to the command. Here we will store the \mymeta{label} and
 %   \emph{optional argument} in \emph{prop list} and \emph{sequence}
 %   and execute the \mykey{show-ans}, \mykey{show-pos}, \mykey{font},
-%   \mykey{wrap-label} and \mykey{wrap-opt} keys.
+%   \mykey{wrap-label}, \mykey{wrap-key} and \mykey{wrap-opt} keys.
 % \iffalse
 %% Process and store label and [opt] for |\anspic|.
 % \fi
@@ -13211,8 +13222,10 @@ Some text here
   {
     \makebox[ \l_@@_anspic_mini_width_dim ][ c ]
       {
-        \bool_if:nT { #1 }
+        \bool_if:nTF { #1 }
           {
+            \int_incr:N \l_@@_item_star_exec_int
+            \bool_set_true:N \l_@@_wrap_label_v_bool
             \@@_keyans_addto_prop:n { #2 }
             \@@_keyans_store_ref:
             \@@_keyans_addto_seq:n { #2 }
@@ -13225,10 +13238,15 @@ Some text here
                 \@@_keyans_show_left:n { #2 }
                 \tl_set_eq:NN \l_@@_label_vi_tl \l_@@_label_v_tl
               }
+            \tl_use:N \l_@@_label_font_style_v_tl
+            \@@_keyans_wraper_label:n { \l_@@_label_vi_tl }
+            \c_space_tl \@@_keyans_show_item_opt:              
           }
-        \tl_use:N \l_@@_label_font_style_v_tl
-        \@@_wrapper_label_v:n { \l_@@_label_vi_tl }
-        \@@_keyans_show_item_opt:
+          {
+            \int_zero:N \l_@@_item_star_exec_int % zero
+            \tl_use:N \l_@@_label_font_style_v_tl
+            \@@_wrapper_label_v:n { \l_@@_label_vi_tl }
+          }
       }
   }
 %    \end{macrocode}
@@ -14506,9 +14524,9 @@ Some text here
 %    \end{macrocode}
 %   The function \cs{@@_item_peek_args_viii:} will handle the \ics*{item}\myparg{number}.
 %   Look for the argument \enquote{\textcolor{MediumOrchid}{\ttfamily (}}, if it is
-%   present we will call the function \cs{@@_joined_item_viii:w} \myparg{number}, which is in charge of joining the item's
-%   in the same row, in case they are not present we will set the default
-%   value \textcolor{gray}{\ttfamily(\mydim{1})}.
+%   present we will call the function \cs{@@_joined_item_viii:w} \myparg{number},
+%   which is in charge of joining the item's in the same row, in case they
+%   are not present we will set the default value \textcolor{gray}{\ttfamily(\mydim{1})}.
 % \iffalse
 %% Peek argument for \item(number)*[opt] for |keyans*| environment.
 % \fi
@@ -14660,7 +14678,7 @@ Some text here
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_fake_make_label_viii:n}
+% \begin{macro}{\@@_keyans_wraper_label_viii:n, \@@_fake_make_label_viii:n}
 %    The implementation at this is very similar to that of the
 %    \myenv*{enumext*} environment.
 % \iffalse
@@ -14703,11 +14721,6 @@ Some text here
       {
         \tl_use:N \l_@@_label_font_style_viii_tl
         \@@_keyans_wraper_label_viii:n {#1}
-        %%\bool_if:NTF \l_@@_wrap_label_viii_bool
-        %%  {
-        %%    \@@_wrapper_label_viii:n {#1}
-        %%  }
-        %%  { #1 }
       }
     \skip_horizontal:N \l_@@_labelsep_viii_dim \ignorespaces
   }
