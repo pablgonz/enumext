@@ -5273,7 +5273,7 @@ Some text here
 %    \end{macrocode}
 % Now declare the \mypkg*{enumext} package.
 %    \begin{macrocode}
-\ProvidesExplPackage {enumext} {2024-11-03} {1.0} {Enumerate exercise sheets}
+\ProvidesExplPackage {enumext} {2024-11-06} {1.0} {Enumerate exercise sheets}
 %    \end{macrocode}
 % Finally check if the \mypkg{multicol} and \mypkg{scontents} packages
 % are loaded, if not we load it.
@@ -5674,10 +5674,10 @@ Some text here
 % \end{variable}
 %
 % \begin{variable}{\l_@@_check_answers_bool,\g_@@_check_ans_key_bool,
-%                  \l_@@_check_start_line_env_tl, \l_@@_item_star_exec_int,
-%                  \l_@@_item_star_wrap_bool, \g_@@_check_starred_cmd_int,
-%                  \g_@@_item_anskey_int, \g_@@_item_number_int,
-%                  \g_@@_item_number_bool, \g_@@_item_answer_diff_int,}
+%                  \l_@@_check_start_line_env_tl, \l_@@_item_wrap_key_bool,
+%                  \g_@@_check_starred_cmd_int, \g_@@_item_anskey_int,
+%                  \g_@@_item_number_int, \g_@@_item_number_bool,
+%                  \g_@@_item_answer_diff_int,}
 %   Internal variables used by \emph{\enquote{internal check answer}} mechanism
 %   (\S\ref{int:check-answer}) used by the \mykey{check-ans}, \mykey{no-store}, \mykey{wrap-key}
 %   keys and check for starred commands \ics*{item*} in \myenv*{keyans} and
@@ -5690,8 +5690,7 @@ Some text here
 \bool_new:N \l_@@_check_answers_bool
 \bool_new:N \g_@@_check_ans_key_bool
 \tl_new:N   \l_@@_check_start_line_env_tl
-\int_new:N  \l_@@_item_star_exec_int
-\bool_new:N \l_@@_item_star_wrap_bool
+\bool_new:N \l_@@_item_wrap_key_bool
 \int_new:N  \g_@@_check_starred_cmd_int
 \int_new:N  \g_@@_item_anskey_int
 \int_new:N  \g_@@_item_number_int
@@ -9641,9 +9640,9 @@ Some text here
 %
 % \subsection{Keys and functions associated with storage}\label{int:storage-system}
 %
-% \begin{macro}[int]{wrap-ans, wrap-opt, wrap-key, save-sep, mark-ans, mark-pos, show-ans, mark-ref, save-ref}
+% \begin{macro}[int]{wrap-ans, wrap-opt, wrap-key, save-sep, mark-ans, mark-pos, mark-sep, show-ans, mark-ref, save-ref}
 %   We add the keys \mykey{wrap-ans}, \mykey{wrap-opt}, \mykey{wrap-key},\mykey{save-sep},
-%   \mykey{mark-ans}, \mykey{mark-pos}, \mykey{show-ans}, \mykey{show-pos},
+%   \mykey{mark-ans}, \mykey{mark-pos}, \mykey{mark-sep}, \mykey{show-ans}, \mykey{show-pos},
 %   \mykey{mark-ref} and \mykey{save-ref} related to the \emph{\enquote{storage system}}
 %   and internal mechanism of \emph{\enquote{label and ref}} only at
 %   the \emph{first level} of \myenv*{enumext} and \myenv*{enumext*}.
@@ -9680,6 +9679,9 @@ Some text here
                              { mark-pos } { left, ~ right } { \exp_not:n {##1} },
         mark-pos   .initial:n = right,
         mark-pos   .value_required:n = true,
+        mark-sep   .dim_set:N  = \l_@@_mark_sym_sep_dim,
+        mark-sep   .initial:n = \labelsep,
+        mark-sep   .value_required:n = true,
         show-ans   .bool_set:N = \l_@@_show_answer_bool,
         show-ans   .initial:n  = false,
         show-ans   .value_required:n = true,
@@ -9698,12 +9700,12 @@ Some text here
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}[int]{save-sep, wrap-opt, wrap-key, mark-pos, show-ans, show-pos}
+% \begin{macro}[int]{save-sep, wrap-opt, wrap-key, mark-pos, mark-pos, show-ans, show-pos}
 %   For the \myenv*{keyans} and \myenv*{keyans*} environments we will
 %   only add the keys \mykey{save-sep}, \mykey{wrap-opt}, \mykey{wrap-key},
 %   \mykey{mark-pos}, \mykey{show-ans} and \mykey{show-pos}.
 % \iffalse
-%% Add keys |save-sep|, |wrap-opt|, |wrap-key|,  |mark-pos|, |show-pos| and |show-ans| keys for |keyans| and |keyans*| environments.
+%% Add keys |save-sep|, |wrap-opt|, |wrap-key|, |mark-pos|, |show-pos| and |show-ans| keys for |keyans| and |keyans*| environments.
 % \fi
 %    \begin{macrocode}
 \cs_set_protected:Npn \@@_tmp:n #1
@@ -9716,11 +9718,17 @@ Some text here
         wrap-opt .value_required:n = true,
         wrap-key .cs_set_protected:Np = \@@_keyans_wrapper_item:n ##1,
         wrap-key .value_required:n = true,
-        mark-pos .choice:,
-        mark-pos / left  .code:n = \str_set:Nn \l_@@_mark_position_str { l },
-        mark-pos / right .code:n = \str_set:Nn \l_@@_mark_position_str { r },
+        mark-pos / left    .code:n = \str_set:Nn \l_@@_mark_position_str { l },
+        mark-pos / right   .code:n = \str_set:Nn \l_@@_mark_position_str { r },
+        mark-pos / unknown .code:n =
+                           \msg_error:nneee { enumext } { unknown-choice }
+                             { mark-pos } { left, ~ right } { \exp_not:n {##1} },
         mark-pos .initial:n = right,
+        mark-pos .value_required:n = true,
         mark-pos .value_required:n  = true,
+        mark-sep .dim_set:N  = \l_@@_mark_sym_sep_dim,
+        mark-sep .initial:n = \labelsep,
+        mark-sep .value_required:n = true,
         show-ans .bool_set:N = \l_@@_show_answer_bool,
         show-ans .initial:n  = false,
         show-ans .value_required:n = true,
@@ -9883,7 +9891,8 @@ Some text here
       {
         { series   } {} { resume    } {} { save-ans } {} { save-ref   } {}
         { save-key } {} { check-ans } {} { show-ans } {} { show-pos   } {}
-        { wrap-ans } {} { mark-ans  } {} { wrap-opt } {} { save-sep   } {}
+        { wrap-ans } {} { mark-ans  } {} { wrap-opt } {} { wrap-key } {}
+        { save-sep   } {}
         { mark-ref } {} { mini-env  } {} { mini-sep } {} { mini-right } {}
         { mini-right* } {}
       }
@@ -10060,7 +10069,7 @@ Some text here
   {
     \mode_leave_vertical:
     \skip_horizontal:n { -\dim_use:N #2 }
-    \makebox[0pt][ r ]
+    \hbox_overlap_left:n
       {
         \makebox[ \dim_use:N #1 ][ \l_@@_mark_position_str ]
           {
@@ -11167,7 +11176,9 @@ Some text here
 % The code is very similar to the \ics*{anskey} code, but, if I change
 % the order of the operations the counter off \mymeta{label} are incorrect.
 %
-% \begin{macro}{\@@_keyans_show_left:n,\@@_keyans_show_ans:, \@@_keyans_show_pos:, \@@_keyans_show_item_opt:,}
+% \begin{macro}{\@@_keyans_show_left:n,\@@_keyans_show_item_opt:,
+%               \@@_keyans_show_ans:, \@@_keyans_show_pos:,
+%               \@@_keyans_pic_show_pos:,}
 %   Common function to show \emph{starred commands} |\item*| and \mymeta{position} of
 %   stored content in \emph{prop list} for \myenv*{keyans} and
 %   \myenv*{keyanspic}. Need add |1| to \myvarenv{g__@@_\mymeta[cf=gray]{store name}_prop} for \mykey{show-pos} key.
@@ -11180,14 +11191,6 @@ Some text here
     \tl_if_novalue:nF { #1 }
       {
         \tl_set:Ne \l_@@_store_current_opt_arg_tl { #1 }
-      }
-    \bool_if:NT \l_@@_show_answer_bool
-      {
-        \@@_keyans_show_ans:
-      }
-    \bool_if:NT \l_@@_show_position_bool
-      {
-        \@@_keyans_show_pos:
       }
   }
 \cs_new_protected:Nn \@@_keyans_show_item_opt:
@@ -11202,57 +11205,82 @@ Some text here
           }
       }
   }
+\cs_new_protected:Nn \@@_keyans_pos_mark_set:
+  {
+    \@@_label_width_by_box:Nn \l_tmpa_dim { \l_@@_label_v_tl }
+    \str_case:Vn \l_@@_align_label_pos_v_str
+      {
+        { l }
+            {
+              \dim_set:Nn \l_tmpb_dim { \c_zero_dim }
+            }
+        { r }
+            {
+              \dim_set:Nn \l_tmpb_dim { \l_@@_labelwidth_v_dim - \l_tmpa_dim } % OK
+            }
+        { c }
+            {
+              \dim_set:Nn \l_tmpb_dim { 0.5\l_@@_labelwidth_v_dim - 0.5\l_tmpa_dim } % OK
+            }
+       }
+    \dim_add:Nn \l_@@_mark_sym_sep_dim { \l_tmpb_dim }
+  }
 \cs_new_protected:Nn \@@_keyans_show_ans:
   {
-    \bool_if:NT \l_@@_starred_bool
+    \bool_lazy_all:nT
       {
-        \dim_set_eq:NN \l_@@_labelwidth_i_dim \l_@@_labelwidth_vii_dim
-        \dim_set_eq:NN \l_@@_labelsep_i_dim \l_@@_labelsep_vii_dim
+        { \bool_if_p:N \l_@@_show_answer_bool   }
+        { \bool_if_p:N \l_@@_item_wrap_key_bool }
       }
-    \tl_put_left:Nn \l_@@_label_v_tl
       {
-        \@@_print_keyans_box:NN
-          \l_@@_labelwidth_i_dim \l_@@_labelsep_i_dim
+        \@@_keyans_pos_mark_set:
+        \@@_print_keyans_box:NN \l_@@_labelwidth_v_dim \l_@@_mark_sym_sep_dim
       }
   }
 \cs_new_protected:Nn \@@_keyans_show_pos:
   {
-    \bool_if:NT \l_@@_starred_bool
+    \bool_lazy_all:nT
       {
-        \dim_set_eq:NN \l_@@_labelwidth_i_dim \l_@@_labelwidth_vii_dim
-        \dim_set_eq:NN \l_@@_labelsep_i_dim \l_@@_labelsep_vii_dim
+        { \bool_if_p:N \l_@@_show_position_bool }
+        { \bool_if_p:N \l_@@_item_wrap_key_bool }
       }
-    \int_compare:nNnTF { \l_@@_keyans_pic_level_int } = { 1 }
       {
+        \@@_keyans_pos_mark_set:
         \tl_set:Ne \l_@@_mark_answer_sym_tl
           {
             \group_begin:
-            \exp_not:N \normalfont
-            \exp_not:N \footnotesize [ \int_eval:n
-              {
-                \prop_count:c { g_@@_ \l_@@_store_name_tl _prop }
-              }
+              \exp_not:N \normalfont
+              \exp_not:N \footnotesize [ \int_eval:n
+                {
+                  \prop_count:c { g_@@_ \l_@@_store_name_tl _prop } + 1
+                }
               ]
             \group_end:
           }
+        \@@_print_keyans_box:NN \l_@@_labelwidth_v_dim \l_@@_mark_sym_sep_dim
+      }
+  }
+\cs_new_protected:Nn \@@_keyans_pic_show_pos:
+  {
+    \bool_lazy_all:nT
+      {
+        { \bool_if_p:N \l_@@_show_position_bool }
+        { \bool_if_p:N \l_@@_item_wrap_key_bool }
       }
       {
+        \@@_keyans_pos_mark_set:
         \tl_set:Ne \l_@@_mark_answer_sym_tl
           {
             \group_begin:
-            \exp_not:N \normalfont
-            \exp_not:N \footnotesize [ \int_eval:n
-              {
-                \prop_count:c { g_@@_ \l_@@_store_name_tl _prop } + 1
-              }
+              \exp_not:N \normalfont
+              \exp_not:N \footnotesize [ \int_eval:n
+                {
+                  \prop_count:c { g_@@_ \l_@@_store_name_tl _prop }
+                }
               ]
             \group_end:
           }
-      }
-    \tl_put_left:Nn \l_@@_label_v_tl
-      {
-        \@@_print_keyans_box:NN
-          \l_@@_labelwidth_i_dim \l_@@_labelsep_i_dim
+        \@@_print_keyans_box:NN \l_@@_labelwidth_v_dim \l_@@_mark_sym_sep_dim
       }
   }
 %    \end{macrocode}
@@ -11446,10 +11474,10 @@ Some text here
     \RenewDocumentCommand \makelabel { m }
       {
         \tl_use:c { l_@@_label_fill_left_ \@@_level: _tl }
+        \@@_item_star_exec:
         \tl_use:c { l_@@_label_font_style_ \@@_level: _tl }
         \bool_if:cTF { l_@@_wrap_label_ \@@_level: _bool }
           {
-            \@@_item_star_exec:
             \use:c { @@_wrapper_label_ \@@_level: :n } { ##1 }
           }
           { ##1 }
@@ -11481,10 +11509,10 @@ Some text here
               [ \dim_use:c { l_@@_labelwidth_ \@@_level: _dim } ]
               [ \str_use:c { l_@@_align_label_pos_ \@@_level: _str } ]
               {
+                \@@_item_star_exec:
                 \tl_use:c { l_@@_label_font_style_ \@@_level: _tl }
                 \bool_if:cTF { l_@@_wrap_label_ \@@_level: _bool }
                   {
-                    \@@_item_star_exec:
                     \use:c { @@_wrapper_label_ \@@_level: :n } { ##1 }
                   }
                   { ##1 }
@@ -11682,7 +11710,6 @@ Some text here
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_keyans_starred_item:n #1
   {
-    \tl_set_eq:NN \l_@@_store_current_label_tmp_tl \l_@@_label_v_tl
     \@@_keyans_show_left:n { #1 }
     \bool_set_true:N \l_@@_wrap_label_v_bool
     \@@_item_std:w \tl_use:N \l_@@_fake_item_indent_v_tl
@@ -11695,7 +11722,6 @@ Some text here
 %    and finally increments \cs{g_@@_check_starred_cmd_int} for internal
 %    check system.
 %    \begin{macrocode}
-    \tl_set_eq:NN \l_@@_label_v_tl \l_@@_store_current_label_tmp_tl
     \@@_keyans_addto_prop:n { #1 }
     \@@_keyans_store_ref:
     \@@_keyans_addto_seq:n { #1 }
@@ -11723,14 +11749,14 @@ Some text here
       {
         \bool_if:nTF {##1}
           {
-            \int_incr:N \l_@@_item_star_exec_int % increment
+            \bool_set_true:N \l_@@_item_wrap_key_bool % wrap-key
             \peek_remove_spaces:n
               {
                 \@@_keyans_starred_item:n {##2}
               }
           }
           {
-            \int_zero:N \l_@@_item_star_exec_int % zero
+            \bool_set_false:N \l_@@_item_wrap_key_bool
             \@@_keyans_default_item:n {##2}
           }
       }
@@ -11738,7 +11764,7 @@ Some text here
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_keyans_make_label:,\@@_keyans_wraper_label:n,
+% \begin{macro}{\@@_keyans_make_label:,\@@_keyans_wrapper_label:n,
 %               \@@_keyans_make_label_std:,\@@_keyans_make_label_box:}
 %   The function \cs{@@_keyans_make_label:} redefine \ics{makelabel}
 %   for the keys \mykey{mode-box}, \mykey{align}, \mykey{font},
@@ -11770,13 +11796,13 @@ Some text here
 %   We added conditionals to the \cs{@@_keyans_wraper_label:n} function
 %   to handle the keys \mykey{wrap-key}, \mykey{wrap-label} and \mykey{wrap-label*}.
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_keyans_wraper_label:n #1
+\cs_new_protected:Npn \@@_keyans_wrapper_label:n #1
   {
     \bool_lazy_all:nT
       {
-        { \bool_if_p:N \l_@@_wrap_label_v_bool }
-        { \bool_if_p:N \l_@@_show_answer_bool  }
-        { \int_compare_p:nNn { \l_@@_item_star_exec_int } = { 1 } }
+        { \bool_if_p:N \l_@@_wrap_label_v_bool       }
+        { \bool_if_p:N \l_@@_show_answer_bool        }
+        { \bool_if_p:N \l_@@_item_wrap_key_bool      }
         { \cs_if_exist_p:N \@@_keyans_wrapper_item:n }
       }
       {
@@ -11796,8 +11822,10 @@ Some text here
     \RenewDocumentCommand \makelabel { m }
       {
         \tl_use:N \l_@@_label_fill_left_v_tl
+        \@@_keyans_show_ans:
+        \@@_keyans_show_pos:
         \tl_use:N \l_@@_label_font_style_v_tl
-        \@@_keyans_wraper_label:n { ##1 }
+        \@@_keyans_wrapper_label:n { ##1 }
         \tl_use:N \l_@@_label_fill_right_v_tl
       }
   }
@@ -11813,8 +11841,10 @@ Some text here
           {
             \makebox[ \l_@@_labelwidth_v_dim ][ \l_@@_align_label_pos_v_str ]
               {
+                \@@_keyans_show_ans:
+                \@@_keyans_show_pos:
                 \tl_use:N \l_@@_label_font_style_v_tl
-                \@@_keyans_wraper_label:n { ##1 }
+                \@@_keyans_wrapper_label:n { ##1 }
               }
           }
       }
@@ -13224,26 +13254,21 @@ Some text here
       {
         \bool_if:nTF { #1 }
           {
-            \int_incr:N \l_@@_item_star_exec_int
+            \bool_set_true:N \l_@@_item_wrap_key_bool
             \bool_set_true:N \l_@@_wrap_label_v_bool
+            \@@_keyans_show_left:n { #2 }
             \@@_keyans_addto_prop:n { #2 }
             \@@_keyans_store_ref:
             \@@_keyans_addto_seq:n { #2 }
             \int_gincr:N \g_@@_check_starred_cmd_int
-            \bool_lazy_or:nnT
-              { \bool_if_p:N \l_@@_show_answer_bool }
-              { \bool_if_p:N \l_@@_show_position_bool }
-              {
-                \tl_set_eq:NN \l_@@_label_v_tl \l_@@_label_vi_tl
-                \@@_keyans_show_left:n { #2 }
-                \tl_set_eq:NN \l_@@_label_vi_tl \l_@@_label_v_tl
-              }
+            \@@_keyans_show_ans:
+            \@@_keyans_pic_show_pos:
             \tl_use:N \l_@@_label_font_style_v_tl
-            \@@_keyans_wraper_label:n { \l_@@_label_vi_tl }
-            \c_space_tl \@@_keyans_show_item_opt:              
+            \@@_keyans_wrapper_label:n { \l_@@_label_vi_tl }
+            \c_space_tl \@@_keyans_show_item_opt:
           }
           {
-            \int_zero:N \l_@@_item_star_exec_int % zero
+            \bool_set_false:N \l_@@_item_wrap_key_bool
             \tl_use:N \l_@@_label_font_style_v_tl
             \@@_wrapper_label_v:n { \l_@@_label_vi_tl }
           }
@@ -14574,7 +14599,7 @@ Some text here
 \cs_new_protected:Npn \@@_standar_item_viii:w
   {
     \bool_set_false:N \l_@@_item_starred_viii_bool
-    \int_zero:N \l_@@_item_star_exec_int
+    \bool_set_false:N \l_@@_item_wrap_key_bool
     \peek_meaning:NTF [
       {
         \bool_set_eq:NN \l_@@_wrap_label_viii_bool \l_@@_wrap_label_opt_viii_bool
@@ -14601,7 +14626,7 @@ Some text here
 \cs_new_protected:Npn \@@_starred_item_viii:w
   {
     \bool_set_true:N \l_@@_item_starred_viii_bool
-    \int_incr:N \l_@@_item_star_exec_int
+    \bool_set_true:N \l_@@_item_wrap_key_bool
     \bool_set_true:N \l_@@_wrap_label_viii_bool
     \peek_meaning:NTF [
       { \@@_starred_item_viii_aux_i:w }
@@ -14657,7 +14682,8 @@ Some text here
     \int_gincr:N \g_@@_check_starred_cmd_int
     \bool_if:NT \l_@@_show_answer_bool
       {
-        \@@_print_keyans_box:NN \l_@@_labelwidth_i_dim \l_@@_labelsep_i_dim
+        \@@_print_keyans_box:NN
+          \l_@@_labelwidth_viii_dim \l_@@_mark_sym_sep_dim
       }
     \bool_if:NT \l_@@_show_position_bool
       {
@@ -14672,7 +14698,8 @@ Some text here
                ]
             \group_end:
           }
-        \@@_print_keyans_box:NN \l_@@_labelwidth_i_dim \l_@@_labelsep_i_dim
+        \@@_print_keyans_box:NN
+          \l_@@_labelwidth_viii_dim \l_@@_mark_sym_sep_dim
       }
   }
 %    \end{macrocode}
@@ -14689,9 +14716,9 @@ Some text here
   {
     \bool_lazy_all:nT
       {
-        { \bool_if_p:N \l_@@_wrap_label_viii_bool }
-        { \bool_if_p:N  \l_@@_show_answer_bool }
-        { \int_compare_p:nNn { \l_@@_item_star_exec_int } = { 1 } }
+        { \bool_if_p:N \l_@@_wrap_label_viii_bool    }
+        { \bool_if_p:N \l_@@_show_answer_bool        }
+        { \bool_if_p:N \l_@@_item_wrap_key_bool      }
         { \cs_if_exist_p:N \@@_keyans_wrapper_item:n }
       }
       {

@@ -36,7 +36,7 @@
 %% ------------------------------------------------------------------------
 %% 
 \NeedsTeXFormat{LaTeX2e}[2024-11-01]
-\ProvidesExplPackage {enumext} {2024-11-03} {1.0} {Enumerate exercise sheets}
+\ProvidesExplPackage {enumext} {2024-11-06} {1.0} {Enumerate exercise sheets}
 \hook_gput_code:nnn {begindocument} {enumext}
   {
     \IfPackageLoadedTF { multicol }
@@ -201,8 +201,7 @@
 \bool_new:N \l__enumext_check_answers_bool
 \bool_new:N \g__enumext_check_ans_key_bool
 \tl_new:N   \l__enumext_check_start_line_env_tl
-\int_new:N  \l__enumext_item_star_exec_int
-\bool_new:N \l__enumext_item_star_wrap_bool
+\bool_new:N \l__enumext_item_wrap_key_bool
 \int_new:N  \g__enumext_check_starred_cmd_int
 \int_new:N  \g__enumext_item_anskey_int
 \int_new:N  \g__enumext_item_number_int
@@ -2467,6 +2466,9 @@
                              { mark-pos } { left, ~ right } { \exp_not:n {##1} },
         mark-pos   .initial:n = right,
         mark-pos   .value_required:n = true,
+        mark-sep   .dim_set:N  = \l__enumext_mark_sym_sep_dim,
+        mark-sep   .initial:n = \labelsep,
+        mark-sep   .value_required:n = true,
         show-ans   .bool_set:N = \l__enumext_show_answer_bool,
         show-ans   .initial:n  = false,
         show-ans   .value_required:n = true,
@@ -2482,16 +2484,28 @@
       }
   }
 \clist_map_inline:nn { level-1, enumext* } { \__enumext_tmp:n {#1} }
-%% Add keys |mark-pos|, |show-pos| and |show-ans| keys for |keyans| and |keyans*| environments.
+%% Add keys |save-sep|, |wrap-opt|, |wrap-key|, |mark-pos|, |show-pos| and |show-ans| keys for |keyans| and |keyans*| environments.
 \cs_set_protected:Npn \__enumext_tmp:n #1
   {
     \keys_define:nn { enumext / #1 }
       {
-        mark-pos .choice:,
-        mark-pos / left  .code:n = \str_set:Nn \l__enumext_mark_position_str { l },
-        mark-pos / right .code:n = \str_set:Nn \l__enumext_mark_position_str { r },
+        save-sep .tl_set:N  = \l__enumext_store_keyans_item_opt_sep_tl,
+        save-sep .value_required:n = true,
+        wrap-opt .cs_set_protected:Np = \__enumext_keyans_wrapper_opt:n ##1,
+        wrap-opt .value_required:n = true,
+        wrap-key .cs_set_protected:Np = \__enumext_keyans_wrapper_item:n ##1,
+        wrap-key .value_required:n = true,
+        mark-pos / left    .code:n = \str_set:Nn \l__enumext_mark_position_str { l },
+        mark-pos / right   .code:n = \str_set:Nn \l__enumext_mark_position_str { r },
+        mark-pos / unknown .code:n =
+                           \msg_error:nneee { enumext } { unknown-choice }
+                             { mark-pos } { left, ~ right } { \exp_not:n {##1} },
         mark-pos .initial:n = right,
+        mark-pos .value_required:n = true,
         mark-pos .value_required:n  = true,
+        mark-sep .dim_set:N  = \l__enumext_mark_sym_sep_dim,
+        mark-sep .initial:n = \labelsep,
+        mark-sep .value_required:n = true,
         show-ans .bool_set:N = \l__enumext_show_answer_bool,
         show-ans .initial:n  = false,
         show-ans .value_required:n = true,
@@ -2574,7 +2588,8 @@
       {
         { series   } {} { resume    } {} { save-ans } {} { save-ref   } {}
         { save-key } {} { check-ans } {} { show-ans } {} { show-pos   } {}
-        { wrap-ans } {} { mark-ans  } {} { wrap-opt } {} { save-sep   } {}
+        { wrap-ans } {} { mark-ans  } {} { wrap-opt } {} { wrap-key } {}
+        { save-sep   } {}
         { mark-ref } {} { mini-env  } {} { mini-sep } {} { mini-right } {}
         { mini-right* } {}
       }
@@ -2665,7 +2680,7 @@
   {
     \mode_leave_vertical:
     \skip_horizontal:n { -\dim_use:N #2 }
-    \makebox[0pt][ r ]
+    \hbox_overlap_left:n
       {
         \makebox[ \dim_use:N #1 ][ \l__enumext_mark_position_str ]
           {
@@ -3337,14 +3352,6 @@
       {
         \tl_set:Ne \l__enumext_store_current_opt_arg_tl { #1 }
       }
-    \bool_if:NT \l__enumext_show_answer_bool
-      {
-        \__enumext_keyans_show_ans:
-      }
-    \bool_if:NT \l__enumext_show_position_bool
-      {
-        \__enumext_keyans_show_pos:
-      }
   }
 \cs_new_protected:Nn \__enumext_keyans_show_item_opt:
   {
@@ -3358,57 +3365,82 @@
           }
       }
   }
+\cs_new_protected:Nn \__enumext_keyans_pos_mark_set:
+  {
+    \__enumext_label_width_by_box:Nn \l_tmpa_dim { \l__enumext_label_v_tl }
+    \str_case:Vn \l__enumext_align_label_pos_v_str
+      {
+        { l }
+            {
+              \dim_set:Nn \l_tmpb_dim { \c_zero_dim }
+            }
+        { r }
+            {
+              \dim_set:Nn \l_tmpb_dim { \l__enumext_labelwidth_v_dim - \l_tmpa_dim } % OK
+            }
+        { c }
+            {
+              \dim_set:Nn \l_tmpb_dim { 0.5\l__enumext_labelwidth_v_dim - 0.5\l_tmpa_dim } % OK
+            }
+       }
+    \dim_add:Nn \l__enumext_mark_sym_sep_dim { \l_tmpb_dim }
+  }
 \cs_new_protected:Nn \__enumext_keyans_show_ans:
   {
-    \bool_if:NT \l__enumext_starred_bool
+    \bool_lazy_all:nT
       {
-        \dim_set_eq:NN \l__enumext_labelwidth_i_dim \l__enumext_labelwidth_vii_dim
-        \dim_set_eq:NN \l__enumext_labelsep_i_dim \l__enumext_labelsep_vii_dim
+        { \bool_if_p:N \l__enumext_show_answer_bool   }
+        { \bool_if_p:N \l__enumext_item_wrap_key_bool }
       }
-    \tl_put_left:Nn \l__enumext_label_v_tl
       {
-        \__enumext_print_keyans_box:NN
-          \l__enumext_labelwidth_i_dim \l__enumext_labelsep_i_dim
+        \__enumext_keyans_pos_mark_set:
+        \__enumext_print_keyans_box:NN \l__enumext_labelwidth_v_dim \l__enumext_mark_sym_sep_dim
       }
   }
 \cs_new_protected:Nn \__enumext_keyans_show_pos:
   {
-    \bool_if:NT \l__enumext_starred_bool
+    \bool_lazy_all:nT
       {
-        \dim_set_eq:NN \l__enumext_labelwidth_i_dim \l__enumext_labelwidth_vii_dim
-        \dim_set_eq:NN \l__enumext_labelsep_i_dim \l__enumext_labelsep_vii_dim
+        { \bool_if_p:N \l__enumext_show_position_bool }
+        { \bool_if_p:N \l__enumext_item_wrap_key_bool }
       }
-    \int_compare:nNnTF { \l__enumext_keyans_pic_level_int } = { 1 }
       {
+        \__enumext_keyans_pos_mark_set:
         \tl_set:Ne \l__enumext_mark_answer_sym_tl
           {
             \group_begin:
-            \exp_not:N \normalfont
-            \exp_not:N \footnotesize [ \int_eval:n
-              {
-                \prop_count:c { g__enumext_ \l__enumext_store_name_tl _prop }
-              }
+              \exp_not:N \normalfont
+              \exp_not:N \footnotesize [ \int_eval:n
+                {
+                  \prop_count:c { g__enumext_ \l__enumext_store_name_tl _prop } + 1
+                }
               ]
             \group_end:
           }
+        \__enumext_print_keyans_box:NN \l__enumext_labelwidth_v_dim \l__enumext_mark_sym_sep_dim
+      }
+  }
+\cs_new_protected:Nn \__enumext_keyans_pic_show_pos:
+  {
+    \bool_lazy_all:nT
+      {
+        { \bool_if_p:N \l__enumext_show_position_bool }
+        { \bool_if_p:N \l__enumext_item_wrap_key_bool }
       }
       {
+        \__enumext_keyans_pos_mark_set:
         \tl_set:Ne \l__enumext_mark_answer_sym_tl
           {
             \group_begin:
-            \exp_not:N \normalfont
-            \exp_not:N \footnotesize [ \int_eval:n
-              {
-                \prop_count:c { g__enumext_ \l__enumext_store_name_tl _prop } + 1
-              }
+              \exp_not:N \normalfont
+              \exp_not:N \footnotesize [ \int_eval:n
+                {
+                  \prop_count:c { g__enumext_ \l__enumext_store_name_tl _prop }
+                }
               ]
             \group_end:
           }
-      }
-    \tl_put_left:Nn \l__enumext_label_v_tl
-      {
-        \__enumext_print_keyans_box:NN
-          \l__enumext_labelwidth_i_dim \l__enumext_labelsep_i_dim
+        \__enumext_print_keyans_box:NN \l__enumext_labelwidth_v_dim \l__enumext_mark_sym_sep_dim
       }
   }
 %% Internal function for |\item| with check-answer mechanism in |enumext| environment.
@@ -3504,10 +3536,10 @@
     \RenewDocumentCommand \makelabel { m }
       {
         \tl_use:c { l__enumext_label_fill_left_ \__enumext_level: _tl }
+        \__enumext_item_star_exec:
         \tl_use:c { l__enumext_label_font_style_ \__enumext_level: _tl }
         \bool_if:cTF { l__enumext_wrap_label_ \__enumext_level: _bool }
           {
-            \__enumext_item_star_exec:
             \use:c { __enumext_wrapper_label_ \__enumext_level: :n } { ##1 }
           }
           { ##1 }
@@ -3525,10 +3557,10 @@
               [ \dim_use:c { l__enumext_labelwidth_ \__enumext_level: _dim } ]
               [ \str_use:c { l__enumext_align_label_pos_ \__enumext_level: _str } ]
               {
+                \__enumext_item_star_exec:
                 \tl_use:c { l__enumext_label_font_style_ \__enumext_level: _tl }
                 \bool_if:cTF { l__enumext_wrap_label_ \__enumext_level: _bool }
                   {
-                    \__enumext_item_star_exec:
                     \use:c { __enumext_wrapper_label_ \__enumext_level: :n } { ##1 }
                   }
                   { ##1 }
@@ -3633,12 +3665,10 @@
   }
 \cs_new_protected:Npn \__enumext_keyans_starred_item:n #1
   {
-    \tl_set_eq:NN \l__enumext_store_current_label_tmp_tl \l__enumext_label_v_tl
     \__enumext_keyans_show_left:n { #1 }
     \bool_set_true:N \l__enumext_wrap_label_v_bool
     \__enumext_item_std:w \tl_use:N \l__enumext_fake_item_indent_v_tl
     \__enumext_keyans_show_item_opt:
-    \tl_set_eq:NN \l__enumext_label_v_tl \l__enumext_store_current_label_tmp_tl
     \__enumext_keyans_addto_prop:n { #1 }
     \__enumext_keyans_store_ref:
     \__enumext_keyans_addto_seq:n { #1 }
@@ -3651,14 +3681,14 @@
       {
         \bool_if:nTF {##1}
           {
-            \int_incr:N \l__enumext_item_star_exec_int % increment
+            \bool_set_true:N \l__enumext_item_wrap_key_bool % wrap-key
             \peek_remove_spaces:n
               {
                 \__enumext_keyans_starred_item:n {##2}
               }
           }
           {
-            \int_zero:N \l__enumext_item_star_exec_int % zero
+            \bool_set_false:N \l__enumext_item_wrap_key_bool
             \__enumext_keyans_default_item:n {##2}
           }
       }
@@ -3680,13 +3710,13 @@
           }
       }
   }
-\cs_new_protected:Npn \__enumext_keyans_wraper_label:n #1
+\cs_new_protected:Npn \__enumext_keyans_wrapper_label:n #1
   {
     \bool_lazy_all:nT
       {
-        { \bool_if_p:N \l__enumext_wrap_label_v_bool }
-        { \bool_if_p:N  \l__enumext_show_answer_bool }
-        { \int_compare_p:nNn { \l__enumext_item_star_exec_int } = { 1 } }
+        { \bool_if_p:N \l__enumext_wrap_label_v_bool       }
+        { \bool_if_p:N \l__enumext_show_answer_bool        }
+        { \bool_if_p:N \l__enumext_item_wrap_key_bool      }
         { \cs_if_exist_p:N \__enumext_keyans_wrapper_item:n }
       }
       {
@@ -3703,8 +3733,10 @@
     \RenewDocumentCommand \makelabel { m }
       {
         \tl_use:N \l__enumext_label_fill_left_v_tl
+        \__enumext_keyans_show_ans:
+        \__enumext_keyans_show_pos:
         \tl_use:N \l__enumext_label_font_style_v_tl
-        \__enumext_keyans_wraper_label:n { ##1 }
+        \__enumext_keyans_wrapper_label:n { ##1 }
         \tl_use:N \l__enumext_label_fill_right_v_tl
       }
   }
@@ -3716,8 +3748,10 @@
           {
             \makebox[ \l__enumext_labelwidth_v_dim ][ \l__enumext_align_label_pos_v_str ]
               {
+                \__enumext_keyans_show_ans:
+                \__enumext_keyans_show_pos:
                 \tl_use:N \l__enumext_label_font_style_v_tl
-                \__enumext_keyans_wraper_label:n { ##1 }
+                \__enumext_keyans_wrapper_label:n { ##1 }
               }
           }
       }
@@ -4461,24 +4495,26 @@
   {
     \makebox[ \l__enumext_anspic_mini_width_dim ][ c ]
       {
-        \bool_if:nT { #1 }
+        \bool_if:nTF { #1 }
           {
+            \bool_set_true:N \l__enumext_item_wrap_key_bool
+            \bool_set_true:N \l__enumext_wrap_label_v_bool
+            \__enumext_keyans_show_left:n { #2 }
             \__enumext_keyans_addto_prop:n { #2 }
             \__enumext_keyans_store_ref:
             \__enumext_keyans_addto_seq:n { #2 }
             \int_gincr:N \g__enumext_check_starred_cmd_int
-            \bool_lazy_or:nnT
-              { \bool_if_p:N \l__enumext_show_answer_bool }
-              { \bool_if_p:N \l__enumext_show_position_bool }
-              {
-                \tl_set_eq:NN \l__enumext_label_v_tl \l__enumext_label_vi_tl
-                \__enumext_keyans_show_left:n { #2 }
-                \tl_set_eq:NN \l__enumext_label_vi_tl \l__enumext_label_v_tl
-              }
+            \__enumext_keyans_show_ans:
+            \__enumext_keyans_pic_show_pos:
+            \tl_use:N \l__enumext_label_font_style_v_tl
+            \__enumext_keyans_wrapper_label:n { \l__enumext_label_vi_tl }
+            \c_space_tl \__enumext_keyans_show_item_opt:
           }
-        \tl_use:N \l__enumext_label_font_style_v_tl
-        \__enumext_wrapper_label_v:n { \l__enumext_label_vi_tl }
-        \__enumext_keyans_show_item_opt:
+          {
+            \bool_set_false:N \l__enumext_item_wrap_key_bool
+            \tl_use:N \l__enumext_label_font_style_v_tl
+            \__enumext_wrapper_label_v:n { \l__enumext_label_vi_tl }
+          }
       }
   }
 %% Set position of labels for |\anspic|.
@@ -5232,7 +5268,7 @@
 \cs_new_protected:Npn \__enumext_standar_item_viii:w
   {
     \bool_set_false:N \l__enumext_item_starred_viii_bool
-    \int_zero:N \l__enumext_item_star_exec_int
+    \bool_set_false:N \l__enumext_item_wrap_key_bool
     \peek_meaning:NTF [
       {
         \bool_set_eq:NN \l__enumext_wrap_label_viii_bool \l__enumext_wrap_label_opt_viii_bool
@@ -5248,7 +5284,7 @@
 \cs_new_protected:Npn \__enumext_starred_item_viii:w
   {
     \bool_set_true:N \l__enumext_item_starred_viii_bool
-    \int_incr:N \l__enumext_item_star_exec_int
+    \bool_set_true:N \l__enumext_item_wrap_key_bool
     \bool_set_true:N \l__enumext_wrap_label_viii_bool
     \peek_meaning:NTF [
       { \__enumext_starred_item_viii_aux_i:w }
@@ -5287,7 +5323,8 @@
     \int_gincr:N \g__enumext_check_starred_cmd_int
     \bool_if:NT \l__enumext_show_answer_bool
       {
-        \__enumext_print_keyans_box:NN \l__enumext_labelwidth_i_dim \l__enumext_labelsep_i_dim
+        \__enumext_print_keyans_box:NN
+          \l__enumext_labelwidth_viii_dim \l__enumext_mark_sym_sep_dim
       }
     \bool_if:NT \l__enumext_show_position_bool
       {
@@ -5302,7 +5339,8 @@
                ]
             \group_end:
           }
-        \__enumext_print_keyans_box:NN \l__enumext_labelwidth_i_dim \l__enumext_labelsep_i_dim
+        \__enumext_print_keyans_box:NN
+          \l__enumext_labelwidth_viii_dim \l__enumext_mark_sym_sep_dim
       }
   }
 %% Define a fake |\makelabel| for |keyans*| environment.
@@ -5310,9 +5348,9 @@
   {
     \bool_lazy_all:nT
       {
-        { \bool_if_p:N \l__enumext_wrap_label_viii_bool }
-        { \bool_if_p:N  \l__enumext_show_answer_bool }
-        { \int_compare_p:nNn { \l__enumext_item_star_exec_int } = { 1 } }
+        { \bool_if_p:N \l__enumext_wrap_label_viii_bool    }
+        { \bool_if_p:N \l__enumext_show_answer_bool        }
+        { \bool_if_p:N \l__enumext_item_wrap_key_bool      }
         { \cs_if_exist_p:N \__enumext_keyans_wrapper_item:n }
       }
       {
@@ -5342,11 +5380,6 @@
       {
         \tl_use:N \l__enumext_label_font_style_viii_tl
         \__enumext_keyans_wraper_label_viii:n {#1}
-        %%\bool_if:NTF \l__enumext_wrap_label_viii_bool
-        %%  {
-        %%    \__enumext_wrapper_label_viii:n {#1}
-        %%  }
-        %%  { #1 }
       }
     \skip_horizontal:N \l__enumext_labelsep_viii_dim \ignorespaces
   }
