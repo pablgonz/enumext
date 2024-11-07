@@ -272,6 +272,14 @@
   {
     \textcolor{\l_userdoc_meta_brackcolor_tl}{#1}
   }
+% Rewrite textborn | textasteriskcentered
+\DeclareTextSymbol{\textbornstd}{TS1}{98}
+\UndeclareTextCommand{\textborn}{TS1}
+\makeatletter
+\DeclareTextCommandDefault{\textbornstd}{\tc@check@symbol2\textbornstd}
+\makeatother
+\DeclareRobustCommand{\textborn}{{\fontfamily{lmr}\selectfont\textbornstd}}
+\newcommand{\oldtextasteriskcentered}{{\fontfamily{lmr}\selectfont\textasteriskcentered}}
 % \envexamp{m}
 \newsavebox{\boxexaenv}
 \tl_new:N \l_tempc_tl
@@ -594,7 +602,7 @@
                     multicolsep,leftmargini,leftmarginii, hfill, small, vspace, par, parbox, value, noindent, makebox, textcolor, %
                     itemindent, labelwidth, leftmarginiii,leftmarginiv,itemindent, itemsep, strutbox, raggedright, cs_new_eq, N, NN,%
                     labelwidth, fbox, addvspace, Alph, alph, arabic, Roman, roman, partopsep, baselineskip, mode_leave_vertical,%
-                    textbullet, textendash, textasteriskcentered, textperiodcentered, raggedleft, peek_remove_spaces, skip_horizontal, %
+                    textborn, textbullet, textendash, textasteriskcentered, textperiodcentered, raggedleft, peek_remove_spaces, skip_horizontal, %
                     triangleright, diamond, circ, parleft, star, centering, ast, hyperlink,hypertarget,IfHyperBoolean,newtheorem, %
                     aux_i, aux_ii, aux_iii, w, n, N, if@noitemarg, if, if@hyper@item, hyper, noitemarg, skip_vertical, },%
 % Other words 3
@@ -617,7 +625,7 @@
                     scale,wrap-label,font,first,widest,mini-env,list-indent, no-store, save-key,%
                     store-env, print-env, write-out, force-eol, write-env, overwrite, unknown, %
                     midsep, wrapper,label-pos,label-sep, layout-sty, layout-sep, layout-top, lang,%
-                    pdfversion, pdfstandard, testphase, alt},%
+                    pdfversion, pdfstandard, testphase, alt, mark-sep, wrap-key},%
 % Reserved words 7 (label values)
     keywordstyle  = [7]{\color{MediumOrchid}},%
     keywords      = [7]{m,s,M,VIII,viii,v,E,t,l,A,XXIII,true, false,test,sample,above,below,ua-2,phase-III,%
@@ -1534,7 +1542,7 @@
 %
 % \subsubsection{Keys for \cs[no-index]{item*}}
 %
-% \keyexamp{item-sym\textcolor{MediumOrchid}{*}}{symbol}{\textbackslash{}textasteriskcentered}
+% \keyexamp{item-sym\textcolor{MediumOrchid}{*}}{symbol}{\textbackslash{}textborn}
 % Sets the \emph{symbol} to be displayed in the \emph{\enquote{left}} of the
 % box containing the current \mymeta{label} set by \mykey{labelwidth} key for \ics*{item*} in
 % \myenv*{enumext} and \myenv*{enumext*}. The \emph{symbol} can be in
@@ -2539,7 +2547,7 @@
 %
 % \smallskip
 %
-% \keyexamp{mark-ref}{symbol}{\textbackslash{}\textreferencemark}
+% \keyexamp{mark-ref}{symbol}{\textbackslash{}textreferencemark}
 % Sets the \emph{symbol} that will be displayed by the \ics*{printkeyans}
 % command only if the \mypkg{hyperref} package is detected and the
 % \mykey{save-ref} key are active.
@@ -2743,7 +2751,7 @@
 %</example>
 % \fi
 %
-% \begin{enumext}[save-ans=test,show-ans=true,columns=2,nosep]
+% \begin{enumext}[save-ans=test,mark-ans={\oldtextasteriskcentered},show-ans=true,columns=2,nosep]
 %   \item* Text containing our instructions or questions.\anskey{first answer}
 %   \item Text containing our instructions or questions.
 %     \begin{enumext}
@@ -3009,7 +3017,7 @@
 %</example>
 % \fi
 %
-% \begin{enumext}[save-ans=test,show-ans=true,columns=2,nosep]
+% \begin{enumext}[save-ans=test,mark-ans={\oldtextasteriskcentered},show-ans=true,columns=2,nosep]
 %  \item Text containing a question.
 %
 %    \begin{keyans*}[nosep,columns=2]
@@ -3247,7 +3255,7 @@
 %</example>
 % \fi
 %
-% \begin{enumext}[save-ans=test,show-ans=true,nosep, before={\setenumext[keyans]{nosep,parsep=5mm}}]
+% \begin{enumext}[save-ans=test,mark-ans={\oldtextasteriskcentered},show-ans=true,nosep, before={\setenumext[keyans]{nosep,parsep=5mm}}]
 % \item Question with images and labels below.
 %    \begin{keyanspic}[layout-sty={3,2}]
 %      \anspic{\includegraphics[scale=0.15]{example-image-a}}
@@ -5622,13 +5630,15 @@ Some text here
 %
 %
 % \begin{variable}[int]{\l_@@_print_keyans_starred_tl, \l_@@_print_keyans_star_bool,
-%                       \l_@@_mark_position_str, \g_@@_item_symbol_aux_tl,
-%                       \l_@@_print_keyans_X_tl, \l_@@_store_save_key_X_tl,
-%                       \l_@@_store_save_key_X_bool, \l_@@_store_upper_level_X_bool,}
-%    Internal variables used by command \ics*{printkeyans}
-%    (\S\ref{cmd:printkeyans}), \mykey{show-pos} key (\S\ref{int:storage-system}),
-%    \mykey{item-sym*} key (\S\ref{key:item-starred}), \mykey{save-key} key
-%    (\S\ref{key:save-key}) and \emph{\enquote{storing structure}}.
+%                       \l_@@_mark_position_str, \l_@@_mark_sep_tmpa_dim,
+%                       \l_@@_mark_sep_tmpb_dim, \l_@@_show_pos_tmp_int,
+%                       \g_@@_item_symbol_aux_tl, \l_@@_print_keyans_X_tl,
+%                       \l_@@_store_save_key_X_tl, \l_@@_store_save_key_X_bool,
+%                       \l_@@_store_upper_level_X_bool,}
+%   Internal variables used by command \ics*{printkeyans}
+%   (\S\ref{cmd:printkeyans}), \mykey{show-pos}, \mykey{show-ans}, \mykey{mark-pos}, \mykey{mark-sep} keys (\S\ref{int:storage-system}),
+%   \mykey{item-sym*} key (\S\ref{key:item-starred}), \mykey{save-key} key
+%   (\S\ref{key:save-key}) and \emph{\enquote{storing structure}}.
 % \iffalse
 %% Variables used by |\printkeyans|, |mark-pos|, |item-sym*|, |save-key| and  storing structure in |enumext| and |enumext*|.
 % \fi
@@ -5636,6 +5646,9 @@ Some text here
 \tl_new:N   \l_@@_print_keyans_starred_tl
 \bool_new:N \l_@@_print_keyans_star_bool
 \str_new:N  \l_@@_mark_position_str
+\dim_new:N  \l_@@_mark_sep_tmpa_dim
+\dim_new:N  \l_@@_mark_sep_tmpb_dim
+\int_new:N  \l_@@_show_pos_tmp_int
 \tl_new:N   \g_@@_item_symbol_aux_tl
 \cs_set_protected:Npn \@@_tmp:n #1
   {
@@ -5651,7 +5664,7 @@ Some text here
 % \begin{variable}{\l_@@_anspic_args_seq, \l_@@_anspic_mini_width_dim,
 %                  \l_@@_anspic_above_int,\l_@@_anspic_below_int,
 %                  \l_@@_anspic_label_above_bool, \l_@@_anspic_mini_pos_str,
-%                  \g_@@_keyans_pic_parsep_skip, \l_@@_anspic_label_box, \l_@@_anspic_body_box,
+%                  \l_@@_anspic_label_box, \l_@@_anspic_body_box,
 %                  \l_@@_anspic_label_htdp_dim, \l_@@_anspic_body_htdp_dim,}
 %    Internal variables used by \myenv*{keyanspic} environment and
 %   \ics*{anspic} command (\S\ref{env:keyanspic}).
@@ -5665,7 +5678,6 @@ Some text here
 \int_new:N  \l_@@_anspic_below_int
 \bool_new:N \l_@@_anspic_label_above_bool
 \str_new:N  \l_@@_anspic_mini_pos_str
-\skip_new:N \g_@@_keyans_pic_parsep_skip
 \box_new:N  \l_@@_anspic_label_box
 \box_new:N  \l_@@_anspic_body_box
 \dim_new:N  \l_@@_anspic_label_htdp_dim
@@ -9680,7 +9692,6 @@ Some text here
         mark-pos   .initial:n = right,
         mark-pos   .value_required:n = true,
         mark-sep   .dim_set:N  = \l_@@_mark_sym_sep_dim,
-        mark-sep   .initial:n = \labelsep,
         mark-sep   .value_required:n = true,
         show-ans   .bool_set:N = \l_@@_show_answer_bool,
         show-ans   .initial:n  = false,
@@ -9727,7 +9738,6 @@ Some text here
         mark-pos .value_required:n = true,
         mark-pos .value_required:n  = true,
         mark-sep .dim_set:N  = \l_@@_mark_sym_sep_dim,
-        mark-sep .initial:n = \labelsep,
         mark-sep .value_required:n = true,
         show-ans .bool_set:N = \l_@@_show_answer_bool,
         show-ans .initial:n  = false,
@@ -9880,21 +9890,21 @@ Some text here
 %    \end{macrocode}
 %   The function \cs{@@_filter_save_key_pair:nn} will be responsible for
 %   \emph{\enquote{filtering keys}} that are passed \emph{\enquote{with value}} by
-%   excluding the \mykey{series}, \mykey{resume}, \mykey{save-ans}, \mykey{save-ref}, \mykey{check-ans},
-%   \mykey{show-ans}, \mykey{save-pos}, \mykey{wrap-ans}, \mykey{mark-ans},
-%   \mykey{wrap-opt}, \mykey{save-sep}, \mykey{mark-ref}, \mykey{mini-env}, \mykey{mini-sep},
-%   \mykey{mini-right} and \mykey{mini-right*} keys.
+%   excluding the \mykey{series}, \mykey{resume}, \mykey{save-ans}, \mykey{save-ref},
+%   \mykey{save-key}, \mykey{check-ans}, \mykey{show-ans}, \mykey{save-pos},
+%   \mykey{wrap-ans}, \mykey{mark-ans}, \mykey{wrap-opt}, \mykey{wrap-key},
+%   \mykey{save-sep}, \mykey{mark-sep}, \mykey{mark-ref}, \mykey{save-sep},
+%   \mykey{mini-env}, \mykey{mini-sep}, \mykey{mini-right} and \mykey{mini-right*} keys.
 %    \begin{macrocode}
 \cs_new:Npn \@@_filter_save_key_pair:nn #1#2
   {
     \str_case:nnF {#1}
       {
-        { series   } {} { resume    } {} { save-ans } {} { save-ref   } {}
-        { save-key } {} { check-ans } {} { show-ans } {} { show-pos   } {}
-        { wrap-ans } {} { mark-ans  } {} { wrap-opt } {} { wrap-key } {}
-        { save-sep   } {}
-        { mark-ref } {} { mini-env  } {} { mini-sep } {} { mini-right } {}
-        { mini-right* } {}
+        { series   } {} { resume     } {} { save-ans } {} { save-ref   } {}
+        { save-key } {} { check-ans  } {} { show-ans } {} { show-pos   } {}
+        { wrap-ans } {} { mark-ans   } {} { wrap-opt } {} { wrap-key } {}
+        { save-sep } {} { mark-sep   } {} { mark-ref } {} { mini-env  } {}
+        { mini-sep } {} { mini-right } {} { mini-right* } {}
       }
       { , { \exp_not:n {#1} } = { \exp_not:n {#2} } }
   }
@@ -11173,26 +11183,26 @@ Some text here
 %
 % \subsubsection{The \texttt{show-ans} and \texttt{show-pos} keys for \env{keyans} and \env{keyanspic}}
 %
-% The code is very similar to the \ics*{anskey} code, but, if I change
-% the order of the operations the counter off \mymeta{label} are incorrect.
-%
-% \begin{macro}{\@@_keyans_show_left:n,\@@_keyans_show_item_opt:,
-%               \@@_keyans_show_ans:, \@@_keyans_show_pos:,
-%               \@@_keyans_pic_show_pos:,}
-%   Common function to show \emph{starred commands} |\item*| and \mymeta{position} of
-%   stored content in \emph{prop list} for \myenv*{keyans} and
-%   \myenv*{keyanspic}. Need add |1| to \myvarenv{g__@@_\mymeta[cf=gray]{store name}_prop} for \mykey{show-pos} key.
+% \begin{macro}{\@@_keyans_save_item_opt:n,\@@_keyans_show_item_opt:,}
+%   The function \cs{@@_keyans_save_item_opt:n} will save the optional
+%   argument of |\item*| and |\anspic*| in the variable
+%   \cs{l_@@_store_current_opt_arg_tl}.
 % \iffalse
-%% Function for |show-ans| and |show-pos| keys for |keyans| and |keyanspic| environments.
+%% Function for |wrap-opt| key for |keyans| and |keyanspic| environments.
 % \fi
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_keyans_show_left:n #1
+\cs_new_protected:Npn \@@_keyans_save_item_opt:n #1
   {
     \tl_if_novalue:nF { #1 }
       {
         \tl_set:Ne \l_@@_store_current_opt_arg_tl { #1 }
       }
   }
+%    \end{macrocode}
+%   The function \cs{@@_keyans_show_item_opt:}  will print the optional
+%   arguments of |\item*| and |\anspic*| when the \mykey{show-ans} or
+%   \mykey{show-pos} keys are set.
+%    \begin{macrocode}
 \cs_new_protected:Nn \@@_keyans_show_item_opt:
   {
     \tl_if_empty:NF \l_@@_store_current_opt_arg_tl
@@ -11201,30 +11211,56 @@ Some text here
           { \bool_if_p:N \l_@@_show_answer_bool }
           { \bool_if_p:N \l_@@_show_position_bool }
           {
-            \@@_keyans_wrapper_opt:n { \l_@@_store_current_opt_arg_tl } \c_space_tl
+            \@@_keyans_wrapper_opt:n
+              { \l_@@_store_current_opt_arg_tl } \c_space_tl
           }
       }
   }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_keyans_pos_mark_set:, \@@_keyans_show_ans:, \@@_keyans_show_pos:}
+%   The function \cs{@@_keyans_pos_mark_set:} adjusts the horizontal
+%   spaces for the \mykey{mark-sep} key taking into account the value of
+%   the \mykey{align} key and the width of \mymeta{label}.
+% \iffalse
+%% Function for |mark-sep|, |show-ans| and |show-pos| keys for |keyans| and |keyanspic| environments.
+% \fi
+%    \begin{macrocode}
 \cs_new_protected:Nn \@@_keyans_pos_mark_set:
   {
-    \@@_label_width_by_box:Nn \l_tmpa_dim { \l_@@_label_v_tl }
+    \@@_label_width_by_box:Nn
+      \l_@@_mark_sep_tmpa_dim { \l_@@_label_v_tl }
     \str_case:Vn \l_@@_align_label_pos_v_str
       {
         { l }
             {
-              \dim_set:Nn \l_tmpb_dim { \c_zero_dim }
+              \dim_set:Nn \l_@@_mark_sep_tmpb_dim { \c_zero_dim }
             }
         { r }
             {
-              \dim_set:Nn \l_tmpb_dim { \l_@@_labelwidth_v_dim - \l_tmpa_dim } % OK
+              \dim_set:Nn \l_@@_mark_sep_tmpb_dim
+                { \l_@@_labelwidth_v_dim - \l_@@_mark_sep_tmpa_dim }
             }
         { c }
             {
-              \dim_set:Nn \l_tmpb_dim { 0.5\l_@@_labelwidth_v_dim - 0.5\l_tmpa_dim } % OK
+              \dim_set:Nn \l_@@_mark_sep_tmpb_dim
+                { 0.5\l_@@_labelwidth_v_dim - 0.5\l_@@_mark_sep_tmpa_dim }
             }
        }
-    \dim_add:Nn \l_@@_mark_sym_sep_dim { \l_tmpb_dim }
+%    \end{macrocode}
+%   Here we set the default value for the key \mykey{mark-sep}.
+%    \begin{macrocode}
+    \dim_compare:nNnT { \l_@@_mark_sym_sep_dim } = { \c_zero_dim }
+      {
+        \dim_set:Nn \l_@@_mark_sym_sep_dim { \l_@@_labelsep_v_dim }
+      }
+    \dim_add:Nn \l_@@_mark_sym_sep_dim { \l_@@_mark_sep_tmpb_dim }
   }
+%    \end{macrocode}
+%   The function \cs{@@_keyans_show_ans:} will print the \mymeta{symbol}
+%   set by the \mykey{mark-ans} key when the \mykey{show-ans} key is active.
+%    \begin{macrocode}
 \cs_new_protected:Nn \@@_keyans_show_ans:
   {
     \bool_lazy_all:nT
@@ -11234,53 +11270,45 @@ Some text here
       }
       {
         \@@_keyans_pos_mark_set:
-        \@@_print_keyans_box:NN \l_@@_labelwidth_v_dim \l_@@_mark_sym_sep_dim
+        \@@_print_keyans_box:NN
+          \l_@@_labelwidth_v_dim \l_@@_mark_sym_sep_dim
       }
   }
+%    \end{macrocode}
+%   The function \cs{@@_keyans_show_pos:} will print the \mymeta{position}
+%   of the stored content in \emph{prop list}. Need add |1| to
+%   \myvarenv{g__@@_\mymeta[cf=gray]{store name}_prop} for \myenv*{keyans}
+%   environment.
+%    \begin{macrocode}
 \cs_new_protected:Nn \@@_keyans_show_pos:
   {
+    \int_compare:nNnTF { \l_@@_keyans_level_int } = { 1 }
+      {
+        \int_incr:N \l_@@_show_pos_tmp_int
+      }
+      {
+        \int_zero:N \l_@@_show_pos_tmp_int
+      }
     \bool_lazy_all:nT
       {
         { \bool_if_p:N \l_@@_show_position_bool }
         { \bool_if_p:N \l_@@_item_wrap_key_bool }
       }
       {
-        \@@_keyans_pos_mark_set:
         \tl_set:Ne \l_@@_mark_answer_sym_tl
           {
             \group_begin:
               \exp_not:N \normalfont
               \exp_not:N \footnotesize [ \int_eval:n
                 {
-                  \prop_count:c { g_@@_ \l_@@_store_name_tl _prop } + 1
+                  \prop_count:c { g_@@_ \l_@@_store_name_tl _prop } + \l_@@_show_pos_tmp_int
                 }
               ]
             \group_end:
           }
-        \@@_print_keyans_box:NN \l_@@_labelwidth_v_dim \l_@@_mark_sym_sep_dim
-      }
-  }
-\cs_new_protected:Nn \@@_keyans_pic_show_pos:
-  {
-    \bool_lazy_all:nT
-      {
-        { \bool_if_p:N \l_@@_show_position_bool }
-        { \bool_if_p:N \l_@@_item_wrap_key_bool }
-      }
-      {
         \@@_keyans_pos_mark_set:
-        \tl_set:Ne \l_@@_mark_answer_sym_tl
-          {
-            \group_begin:
-              \exp_not:N \normalfont
-              \exp_not:N \footnotesize [ \int_eval:n
-                {
-                  \prop_count:c { g_@@_ \l_@@_store_name_tl _prop }
-                }
-              ]
-            \group_end:
-          }
-        \@@_print_keyans_box:NN \l_@@_labelwidth_v_dim \l_@@_mark_sym_sep_dim
+        \@@_print_keyans_box:NN
+          \l_@@_labelwidth_v_dim \l_@@_mark_sym_sep_dim
       }
   }
 %    \end{macrocode}
@@ -11344,7 +11372,7 @@ Some text here
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}[int]{\@@_starred_item:nn, \@@_item_star_exec:,}
+% \begin{macro}[int]{\@@_starred_item_exec:nn, \@@_starred_item_exec:,}
 %    The \ics*{item*}, \ics*{item*}\myoarg{symbol} and \ics*{item*}\myoarg{symbol}\myoarg{offset}
 %    works like the \emph{numbered} |\item|, but placing a \mymeta{symbol}
 %    to the \emph{\enquote{left}} of the \mymeta{label} separated from
@@ -11368,7 +11396,7 @@ Some text here
 %% Internal function for |\item*[symb][sep]| with check-answer mechanism in |enumext| environment.
 % \fi
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_starred_item:nn #1 #2
+\cs_new_protected:Npn \@@_starred_item_exec:nn #1 #2
   {
     \tl_if_novalue:nTF {#1}
       {
@@ -11396,13 +11424,13 @@ Some text here
     \@@_item_std:w \tl_use:c { l_@@_fake_item_indent_ \@@_level: _tl }
   }
 %    \end{macrocode}
-%    The function \cs{@@_item_star_exec:} will be responsible for
+%    The function \cs{@@_starred_item_exec:} will be responsible for
 %    executing |\item*| for the \myenv*{enumext} environment.
 % \iffalse
 %% Function for |\item*[sym][sep]| in |\makelabel| for |enumext| environment.
 % \fi
 %    \begin{macrocode}
-\cs_new_protected:Nn \@@_item_star_exec:
+\cs_new_protected:Nn \@@_starred_item_exec:
   {
     \tl_if_empty:cF { l_@@_item_symbol_ \@@_level: _tl }
       {
@@ -11430,7 +11458,7 @@ Some text here
       {
         \bool_if:nTF {##1}
           {
-            \@@_starred_item:nn {##2} {##3}
+            \@@_starred_item_exec:nn {##2} {##3}
           }
           { \@@_default_item:n {##2} }
       }
@@ -11474,7 +11502,7 @@ Some text here
     \RenewDocumentCommand \makelabel { m }
       {
         \tl_use:c { l_@@_label_fill_left_ \@@_level: _tl }
-        \@@_item_star_exec:
+        \@@_starred_item_exec:
         \tl_use:c { l_@@_label_font_style_ \@@_level: _tl }
         \bool_if:cTF { l_@@_wrap_label_ \@@_level: _bool }
           {
@@ -11509,7 +11537,7 @@ Some text here
               [ \dim_use:c { l_@@_labelwidth_ \@@_level: _dim } ]
               [ \str_use:c { l_@@_align_label_pos_ \@@_level: _str } ]
               {
-                \@@_item_star_exec:
+                \@@_starred_item_exec:
                 \tl_use:c { l_@@_label_font_style_ \@@_level: _tl }
                 \bool_if:cTF { l_@@_wrap_label_ \@@_level: _bool }
                   {
@@ -11544,7 +11572,7 @@ Some text here
       {
         item-sym* .tl_set:c  = { l_@@_item_symbol_#2_tl },
         item-sym* .value_required:n = true,
-        item-sym* .initial:n  = {\textasteriskcentered},
+        item-sym* .initial:n  = {\textborn},
         item-pos* .dim_set:c  = { l_@@_item_symbol_sep_#2_dim },
         item-pos* .value_required:n = true,
       }
@@ -11699,28 +11727,26 @@ Some text here
 % \end{macro}
 %
 % \begin{macro}{\@@_keyans_starred_item:n}
-%    The function \cs{@@_keyans_starred_item:n} which will make a temporary
-%    copy of the current \mymeta{label}, execute the \mykey{show-ans}
-%    or \mykey{show-pos} keys using the function \cs{@@_keyans_show_left:n}
-%    and will display the \mymeta{contents} of that item using the internal
-%    copy \cs{@@_item_std:w}, this is necessary to prevent incrementing
-%    the current \emph{\enquote{counter}} of the original \mymeta{label},
-%    followed by this it will execute function \cs{@@_keyans_show_item_opt:}
-%    handled by \mykey{wrap-opt} key.
+%   The function \cs{@@_keyans_starred_item:n} will take as argument |#1|
+%   the \emph{optional argument} \myoarg{content} passed to |\item*| and
+%   save it via the \cs{@@_keyans_save_item_opt:n} function, then activate
+%   the \mykey{wrap-label} key, execute |\item| using \cs{@@_item_std:w},
+%   the \mykey{itemindent} key and print the \emph{optional argument} using
+%   the \cs{@@_keyans_show_item_opt:} function handled by the
+%   \mykey{wrap-opt} key.
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_keyans_starred_item:n #1
   {
-    \@@_keyans_show_left:n { #1 }
+    \@@_keyans_save_item_opt:n { #1 }
     \bool_set_true:N \l_@@_wrap_label_v_bool
     \@@_item_std:w \tl_use:N \l_@@_fake_item_indent_v_tl
     \@@_keyans_show_item_opt:
 %    \end{macrocode}
-%    Recover the original value of the current \mymeta{label} and \emph{store}
-%    it first in the \emph{prop list} (including the \emph{optional argument}),
-%    run the internal \emph{\enquote{label and ref}} system if the
-%    \mykey{save-ref} key is active, \emph{store} it in the \emph{sequence}
-%    and finally increments \cs{g_@@_check_starred_cmd_int} for internal
-%    check system.
+%   Now \emph{store} the current \mymeta{label} first in the \emph{prop list}
+%   (including the \emph{optional argument}), run the internal \emph{\enquote{label and ref}}
+%   system if the \mykey{save-ref} key is active, then \emph{store} in the \emph{sequence}
+%   and finally increments \cs{g_@@_check_starred_cmd_int} for internal
+%   check system.
 %    \begin{macrocode}
     \@@_keyans_addto_prop:n { #1 }
     \@@_keyans_store_ref:
@@ -11731,14 +11757,16 @@ Some text here
 % \end{macro}
 %
 % \begin{macro}{\item*,\@@_keyans_redefine_item:}
-%    The function \cs{@@_keyans_redefine_item:} is responsible for adding
-%    the \emph{starred argument} and \emph{optional argument} by the
-%    \cs{@@_list_arg_two_v:} function in the definition of the
-%    \myenv*{keyans} environment. Here we need to use
-%    |\peek_remove_spaces:n| to prevent an unwanted space when using
-%    |\item*| in conjunction with the \mykey{itemindent} key.
-%    This function are passed to \myvarenv{__@@_list_arg_two_v:} used
-%    in the definition of the \myenv*{keyans} environment (\S\ref{ltx:second-arg}).
+%   The function \cs{@@_keyans_redefine_item:} is responsible for adding
+%   the \emph{starred argument} and \emph{optional argument} by the
+%   \cs{@@_list_arg_two_v:} function in the definition of the
+%   \myenv*{keyans} environment. Here we will set to true the variable
+%   \cs{l_@@_item_wrap_key_bool} used by the \mykey{wrap-key} key
+%   only when |\item*| is executed and additionally we need to use
+%   |\peek_remove_spaces:n| to avoid an unwanted space when using
+%   |\item*| together with the \mykey{itemindent} key.
+%   This function are passed to \myvarenv{__@@_list_arg_two_v:} used
+%   in the definition of the \myenv*{keyans} environment (\S\ref{ltx:second-arg}).
 % \iffalse
 %% Redefine |\item| for |keyans| environment.
 % \fi
@@ -11768,8 +11796,8 @@ Some text here
 %               \@@_keyans_make_label_std:,\@@_keyans_make_label_box:}
 %   The function \cs{@@_keyans_make_label:} redefine \ics{makelabel}
 %   for the keys \mykey{mode-box}, \mykey{align}, \mykey{font},
-%   \mykey{wrap-label}, \mykey{wrap-label*} and |\item*| for \myenv*{keyans}
-%   environment.
+%   \mykey{wrap-label}, \mykey{wrap-label*}, \mykey{wrap-key} and |\item*|
+%   for \myenv*{keyans} environment.
 %   This function are passed to \myvarenv{__@@_list_arg_two_v:} used
 %   in the definition of the \myenv*{keyans} environment (\S\ref{ltx:second-arg}).
 % \iffalse
@@ -12936,7 +12964,7 @@ Some text here
 % \subsubsection{The environment \env{keyanspic}}\label{env:keyanspic}
 %
 % \begin{macro}[int]{label-pos, label-sep, layout-sty, layout-sep,
-%                   layout-top,}
+%                   layout-top, mark-pos, mark-sep}
 %   First we define the key that allows us to process the position of the
 %   \mymeta{label} centered \enquote{above} or \enquote{below} which will be \mykey{label-pos},
 %   the vertical separation of these from \emph{drawing or tabular} will be
@@ -12971,12 +12999,14 @@ Some text here
     label-sep  .value_required:n = true,
     layout-sty .tl_set:N         = \l_@@_anspic_layout_style_tl,
     layout-sty .value_required:n = true,
-    layout-sep .code:n           = \keys_set:nn { enumext / keyans }
-                                     { parsep = #1 },
+    layout-sep .code:n           = \keys_set:nn { enumext / keyans } { parsep = #1 },
     layout-sep .value_required:n = true,
-    layout-top .code:n           = \keys_set:nn { enumext / keyans }
-                                     { topsep = #1 },
+    layout-top .code:n           = \keys_set:nn { enumext / keyans } { topsep = #1 },
     layout-top .value_required:n = true,
+    mark-pos   .code:n           = \keys_set:nn { enumext / keyans } { mark-pos = #1 },
+    mark-pos   .value_required:n = true,
+    mark-sep   .code:n           = \keys_set:nn { enumext / keyans } { mark-sep = #1 },
+    mark-sep   .value_required:n = true,
     unknown    .code:n           = { \@@_keyans_unknown_keys:n {#1} }
   }
 %    \end{macrocode}
@@ -13065,7 +13095,8 @@ Some text here
 %   then set |\listparindent|, |\partopsep| and |\itemsep| to zero so that
 %   the \emph{horizontal} and \emph{vertical} space is not affected.
 %    \begin{macrocode}
-    \dim_add:Nn  \leftmargin { -\labelwidth - \labelsep }
+    \dim_add:Nn \leftmargin { -\l_@@_labelwidth_v_dim - \l_@@_labelsep_v_dim }
+    \ignorespaces
     \skip_add:Nn \topsep { 0.5\box_dp:N \strutbox }
     \dim_zero:N  \listparindent
     \skip_zero:N \partopsep
@@ -13256,13 +13287,13 @@ Some text here
           {
             \bool_set_true:N \l_@@_item_wrap_key_bool
             \bool_set_true:N \l_@@_wrap_label_v_bool
-            \@@_keyans_show_left:n { #2 }
+            \@@_keyans_save_item_opt:n { #2 }
             \@@_keyans_addto_prop:n { #2 }
             \@@_keyans_store_ref:
             \@@_keyans_addto_seq:n { #2 }
             \int_gincr:N \g_@@_check_starred_cmd_int
             \@@_keyans_show_ans:
-            \@@_keyans_pic_show_pos:
+            \@@_keyans_show_pos:
             \tl_use:N \l_@@_label_font_style_v_tl
             \@@_keyans_wrapper_label:n { \l_@@_label_vi_tl }
             \c_space_tl \@@_keyans_show_item_opt:
@@ -14615,7 +14646,7 @@ Some text here
 % \end{macro}
 %
 % \begin{macro}{\@@_starred_item_viii:w, \@@_starred_item_viii_aux_i:w,
-%               \@@_starred_item_viii_aux_ii:w, \@@_starred_item_exec:}
+%               \@@_starred_item_viii_aux_ii:w, \@@_keyans_starred_item_star:}
 %   The function \cs{@@_starred_item_viii:w} together with the specified
 %   auxiliary functions |aux_i:w| and |aux_ii:w| execute \ics*{item*}
 %   and \ics*{item*}\myoarg{content}.
@@ -14662,17 +14693,17 @@ Some text here
     \@@_start_item_viii:w [ \l_@@_label_viii_tl ] \ignorespaces
   }
 %    \end{macrocode}
-%   The function \cs{@@_starred_item_exec:} will be in charge of storing
+%   The function \cs{@@_keyans_starred_item_star:} will be in charge of storing
 %   the current \mymeta{label} for \ics*{item*} followed by the
 %   \myoarg{content} for \ics*{item*}\myoarg{content} if
 %   present in the \emph{sequence} and \emph{prop list} set by the
 %   \mykey{save-ans} key. In this same function the keys \mykey{show-ans},
-%   \mykey{show-pos} and \mykey{save-ref} are implemented.
+%   \mykey{show-pos}, \mykey{mark-sep} and \mykey{save-ref} are implemented.
 % \iffalse
 %% Set \item*[content] for |keyans*| environment.
 % \fi
 %    \begin{macrocode}
-\cs_new_protected:Nn \@@_starred_item_exec:
+\cs_new_protected:Nn \@@_keyans_starred_item_star:
   {
     \tl_put_left:Ne \l_@@_store_current_label_tl { \l_@@_label_viii_tl }
     \@@_store_addto_prop:V \l_@@_store_current_label_tl
@@ -14680,6 +14711,10 @@ Some text here
     \tl_put_left:Ne \l_@@_store_current_label_tl { \item }
     \@@_keyans_addto_seq_link:
     \int_gincr:N \g_@@_check_starred_cmd_int
+    \dim_compare:nNnT { \l_@@_mark_sym_sep_dim } = { \c_zero_dim }
+      {
+        \dim_set:Nn \l_@@_mark_sym_sep_dim { \l_@@_labelsep_viii_dim }
+      }
     \bool_if:NT \l_@@_show_answer_bool
       {
         \@@_print_keyans_box:NN
@@ -14742,7 +14777,7 @@ Some text here
       }
     \bool_if:NT \l_@@_item_starred_viii_bool
       {
-        \@@_starred_item_exec:
+        \@@_keyans_starred_item_star:
       }
     \makebox[ \l_@@_labelwidth_viii_dim ][ \l_@@_align_label_viii_str ]
       {

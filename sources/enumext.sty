@@ -176,6 +176,9 @@
 \tl_new:N   \l__enumext_print_keyans_starred_tl
 \bool_new:N \l__enumext_print_keyans_star_bool
 \str_new:N  \l__enumext_mark_position_str
+\dim_new:N  \l__enumext_mark_sep_tmpa_dim
+\dim_new:N  \l__enumext_mark_sep_tmpb_dim
+\int_new:N  \l__enumext_show_pos_tmp_int
 \tl_new:N   \g__enumext_item_symbol_aux_tl
 \cs_set_protected:Npn \__enumext_tmp:n #1
   {
@@ -192,7 +195,6 @@
 \int_new:N  \l__enumext_anspic_below_int
 \bool_new:N \l__enumext_anspic_label_above_bool
 \str_new:N  \l__enumext_anspic_mini_pos_str
-\skip_new:N \g__enumext_keyans_pic_parsep_skip
 \box_new:N  \l__enumext_anspic_label_box
 \box_new:N  \l__enumext_anspic_body_box
 \dim_new:N  \l__enumext_anspic_label_htdp_dim
@@ -2467,7 +2469,6 @@
         mark-pos   .initial:n = right,
         mark-pos   .value_required:n = true,
         mark-sep   .dim_set:N  = \l__enumext_mark_sym_sep_dim,
-        mark-sep   .initial:n = \labelsep,
         mark-sep   .value_required:n = true,
         show-ans   .bool_set:N = \l__enumext_show_answer_bool,
         show-ans   .initial:n  = false,
@@ -2504,7 +2505,6 @@
         mark-pos .value_required:n = true,
         mark-pos .value_required:n  = true,
         mark-sep .dim_set:N  = \l__enumext_mark_sym_sep_dim,
-        mark-sep .initial:n = \labelsep,
         mark-sep .value_required:n = true,
         show-ans .bool_set:N = \l__enumext_show_answer_bool,
         show-ans .initial:n  = false,
@@ -3361,29 +3361,37 @@
           { \bool_if_p:N \l__enumext_show_answer_bool }
           { \bool_if_p:N \l__enumext_show_position_bool }
           {
-            \__enumext_keyans_wrapper_opt:n { \l__enumext_store_current_opt_arg_tl } \c_space_tl
+            \__enumext_keyans_wrapper_opt:n
+              { \l__enumext_store_current_opt_arg_tl } \c_space_tl
           }
       }
   }
 \cs_new_protected:Nn \__enumext_keyans_pos_mark_set:
   {
-    \__enumext_label_width_by_box:Nn \l_tmpa_dim { \l__enumext_label_v_tl }
+    \__enumext_label_width_by_box:Nn
+      \l__enumext_mark_sep_tmpa_dim { \l__enumext_label_v_tl }
     \str_case:Vn \l__enumext_align_label_pos_v_str
       {
         { l }
             {
-              \dim_set:Nn \l_tmpb_dim { \c_zero_dim }
+              \dim_set:Nn \l__enumext_mark_sep_tmpb_dim { \c_zero_dim }
             }
         { r }
             {
-              \dim_set:Nn \l_tmpb_dim { \l__enumext_labelwidth_v_dim - \l_tmpa_dim } % OK
+              \dim_set:Nn \l__enumext_mark_sep_tmpb_dim
+                { \l__enumext_labelwidth_v_dim - \l__enumext_mark_sep_tmpa_dim } % OK
             }
         { c }
             {
-              \dim_set:Nn \l_tmpb_dim { 0.5\l__enumext_labelwidth_v_dim - 0.5\l_tmpa_dim } % OK
+              \dim_set:Nn \l__enumext_mark_sep_tmpb_dim
+                { 0.5\l__enumext_labelwidth_v_dim - 0.5\l__enumext_mark_sep_tmpa_dim } % OK
             }
        }
-    \dim_add:Nn \l__enumext_mark_sym_sep_dim { \l_tmpb_dim }
+    \dim_compare:nNnT { \l__enumext_mark_sym_sep_dim } = { \c_zero_dim }
+      {
+        \dim_set:Nn \l__enumext_mark_sym_sep_dim { \l__enumext_labelsep_v_dim }
+      }
+    \dim_add:Nn \l__enumext_mark_sym_sep_dim { \l__enumext_mark_sep_tmpb_dim }
   }
 \cs_new_protected:Nn \__enumext_keyans_show_ans:
   {
@@ -3394,53 +3402,39 @@
       }
       {
         \__enumext_keyans_pos_mark_set:
-        \__enumext_print_keyans_box:NN \l__enumext_labelwidth_v_dim \l__enumext_mark_sym_sep_dim
+        \__enumext_print_keyans_box:NN
+          \l__enumext_labelwidth_v_dim \l__enumext_mark_sym_sep_dim
       }
   }
 \cs_new_protected:Nn \__enumext_keyans_show_pos:
   {
+    \int_compare:nNnTF { \l__enumext_keyans_level_int } = { 1 }
+      {
+        \int_incr:N \l__enumext_show_pos_tmp_int
+      }
+      {
+        \int_zero:N \l__enumext_show_pos_tmp_int
+      }
     \bool_lazy_all:nT
       {
         { \bool_if_p:N \l__enumext_show_position_bool }
         { \bool_if_p:N \l__enumext_item_wrap_key_bool }
       }
       {
-        \__enumext_keyans_pos_mark_set:
         \tl_set:Ne \l__enumext_mark_answer_sym_tl
           {
             \group_begin:
               \exp_not:N \normalfont
               \exp_not:N \footnotesize [ \int_eval:n
                 {
-                  \prop_count:c { g__enumext_ \l__enumext_store_name_tl _prop } + 1
+                  \prop_count:c { g__enumext_ \l__enumext_store_name_tl _prop } + \l__enumext_show_pos_tmp_int
                 }
               ]
             \group_end:
           }
-        \__enumext_print_keyans_box:NN \l__enumext_labelwidth_v_dim \l__enumext_mark_sym_sep_dim
-      }
-  }
-\cs_new_protected:Nn \__enumext_keyans_pic_show_pos:
-  {
-    \bool_lazy_all:nT
-      {
-        { \bool_if_p:N \l__enumext_show_position_bool }
-        { \bool_if_p:N \l__enumext_item_wrap_key_bool }
-      }
-      {
         \__enumext_keyans_pos_mark_set:
-        \tl_set:Ne \l__enumext_mark_answer_sym_tl
-          {
-            \group_begin:
-              \exp_not:N \normalfont
-              \exp_not:N \footnotesize [ \int_eval:n
-                {
-                  \prop_count:c { g__enumext_ \l__enumext_store_name_tl _prop }
-                }
-              ]
-            \group_end:
-          }
-        \__enumext_print_keyans_box:NN \l__enumext_labelwidth_v_dim \l__enumext_mark_sym_sep_dim
+        \__enumext_print_keyans_box:NN
+          \l__enumext_labelwidth_v_dim \l__enumext_mark_sym_sep_dim
       }
   }
 %% Internal function for |\item| with check-answer mechanism in |enumext| environment.
@@ -3576,7 +3570,7 @@
       {
         item-sym* .tl_set:c  = { l__enumext_item_symbol_#2_tl },
         item-sym* .value_required:n = true,
-        item-sym* .initial:n  = {\textasteriskcentered},
+        item-sym* .initial:n  = {\textborn},
         item-pos* .dim_set:c  = { l__enumext_item_symbol_sep_#2_dim },
         item-pos* .value_required:n = true,
       }
@@ -4338,6 +4332,12 @@
     layout-top .code:n           = \keys_set:nn { enumext / keyans }
                                      { topsep = #1 },
     layout-top .value_required:n = true,
+    mark-pos   .code:n           = \keys_set:nn { enumext / keyans }
+                                     { mark-pos = #1 },
+    mark-pos   .value_required:n = true,
+    mark-sep   .code:n           = \keys_set:nn { enumext / keyans }
+                                     { mark-sep = #1 },
+    mark-sep .value_required:n = true,
     unknown    .code:n           = { \__enumext_keyans_unknown_keys:n {#1} }
   }
 %% Internal check code for |keyanspic| environment.
@@ -4384,7 +4384,8 @@
             + \l__enumext_anspic_label_sep_skip
           }
       }
-    \dim_add:Nn  \leftmargin { -\labelwidth - \labelsep }
+    \dim_add:Nn \leftmargin { -\l__enumext_labelwidth_v_dim - \l__enumext_labelsep_v_dim }
+    \ignorespaces
     \skip_add:Nn \topsep { 0.5\box_dp:N \strutbox }
     \dim_zero:N  \listparindent
     \skip_zero:N \partopsep
@@ -4505,7 +4506,7 @@
             \__enumext_keyans_addto_seq:n { #2 }
             \int_gincr:N \g__enumext_check_starred_cmd_int
             \__enumext_keyans_show_ans:
-            \__enumext_keyans_pic_show_pos:
+            \__enumext_keyans_show_pos:
             \tl_use:N \l__enumext_label_font_style_v_tl
             \__enumext_keyans_wrapper_label:n { \l__enumext_label_vi_tl }
             \c_space_tl \__enumext_keyans_show_item_opt:
@@ -5321,6 +5322,10 @@
     \tl_put_left:Ne \l__enumext_store_current_label_tl { \item }
     \__enumext_keyans_addto_seq_link:
     \int_gincr:N \g__enumext_check_starred_cmd_int
+    \dim_compare:nNnT { \l__enumext_mark_sym_sep_dim } = { \c_zero_dim }
+      {
+        \dim_set:Nn \l__enumext_mark_sym_sep_dim { \l__enumext_labelsep_viii_dim }
+      }
     \bool_if:NT \l__enumext_show_answer_bool
       {
         \__enumext_print_keyans_box:NN
