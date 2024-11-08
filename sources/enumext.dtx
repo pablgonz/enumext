@@ -625,7 +625,7 @@
                     scale,wrap-label,font,first,widest,mini-env,list-indent, no-store, save-key,%
                     store-env, print-env, write-out, force-eol, write-env, overwrite, unknown, %
                     midsep, wrapper,label-pos,label-sep, layout-sty, layout-sep, layout-top, lang,%
-                    pdfversion, pdfstandard, testphase, alt, mark-sep, wrap-key},%
+                    pdfversion, pdfstandard, testphase, alt, mark-sep, wrap-key, mark-ans, mark-sep},%
 % Reserved words 7 (label values)
     keywordstyle  = [7]{\color{MediumOrchid}},%
     keywords      = [7]{m,s,M,VIII,viii,v,E,t,l,A,XXIII,true, false,test,sample,above,below,ua-2,phase-III,%
@@ -1823,10 +1823,11 @@
 %
 % \smallskip
 %
-% Wraps the \emph{current} \mymeta{label} defined by \mykey{label} key referenced by |{#1}|.
-% The \mymarg{code} must be passed between braces.
-% This key does not modify the value set by the \mykey{labelwidth} key
-% and is applied only on \ics*{item} and \ics*{item*}.
+% Wraps the \emph{current} \mymeta{label} defined by \mykey{label} key
+% referenced by |{#1}| after executing the \mykey{align} and \mykey{font}
+% keys. The \mymarg{code} must be passed between braces and this does not
+% modify the value set by the \mykey{labelwidth} key and is applied \emph{only}
+% on \ics*{item} and \ics*{item*}.
 % When using it in the \ics*{setenumext} command it is necessary to use the
 % \emph{double hash} ‘|{##1}|’. For example |wrap-label={\fbox{#1}}|
 % or you can create a command:
@@ -2454,14 +2455,12 @@
 %
 % \smallskip
 %
-%^^A \begin{important}*
-%  For security reasons the \emph{optional argument} of the inner levels
-%  or the nested environment are \emph{filtered} by excluding all \mymeta{keys}
-%  related to the \emph{\enquote{storage system}} (\S\ref{subsec:storage-keys})
-%  along with the keys \mykey{mini-env}, \mykey{mini-sep}, \mykey{mini-right},
-%  \mykey{mini-right*}, \mykey{series}, \mykey{resume} and \mykey{resume*}
-%  when storing in \emph{sequence} \mymarg{store name} set by \mykey{save-ans} key.
-%^^A \end{important}
+% For security reasons the \emph{optional argument} of the inner levels
+% or the nested environment are \emph{filtered} by excluding all \mymeta{keys}
+% related to the \emph{\enquote{storage system}} (\S\ref{subsec:storage-keys})
+% along with the keys \mykey{mini-env}, \mykey{mini-sep}, \mykey{mini-right},
+% \mykey{mini-right*}, \mykey{series}, \mykey{resume} and \mykey{resume*}
+% when storing in \emph{sequence} \mymarg{store name} set by \mykey{save-ans} key.
 %
 % \subsection{Keys for storage system}\label{subsec:storage-keys}
 %
@@ -2530,6 +2529,22 @@
 % affects the \emph{\enquote{stored content}} and not what is displayed
 % when using the \mykey{show-ans} or \mykey{show-pos} keys.
 %
+% \smallskip
+%
+% \keyexamp*{no-store}{value forbidden}{not used}
+%
+% \smallskip
+%
+% This is a \emph{\enquote{switch-key}} that does not receive an argument
+% and disables the \emph{\enquote{storing content}} in the \emph{sequence}
+% and \emph{prop list} \mymarg{store name} set by \mykey{save-ans} key at
+% the entire level or a nested environment in which it runs. This key
+% is intended for use in internal levels or nested \myenv*{enumext} or
+% \myenv*{enumext*} environments in which you want to use \myenv*{enumext}
+% or \myenv*{enumext*} but \emph{\enquote{without}} using the \ics*{anskey}
+% command or use \myenv*{anskey*} environment and \emph{\enquote{without}}
+% interfering with the \mykey{check-ans} key.
+%
 % \subsubsection{Keys for \texttt{label} and \texttt{ref}}\label{subsec:label-ref}
 %
 % \keyexamp{save-ref}{true \textnormal{\textcolor{lightgray}{\textbar}} false}{false}
@@ -2557,16 +2572,61 @@
 %
 % \subsubsection{Keys for \texttt{wrap} and \texttt{display}}\label{subsec:wrap-display}
 %
+% \keyexamp{mark-ans}{symbol}{\textbackslash{}textasteriskcentered}
+% Sets the \emph{symbol} to be displayed in the left margin for
+% \ics*{anskey}, \myenv*{anskey*}, \ics*{item*} and \ics*{anspic}|*| in the place
+% where they are executed when using the key \mykey{show-ans}. The
+% \emph{\enquote{symbol}} is placed in a box of width equal to the value of
+% \mykey{labelwidth} at the current level, separated by the value of the
+% key \mykey{mark-sep} and aligned by the value of the key
+% \mykey{mark-pos}. This key is not affected by the keys \mykey{font} or
+% \mykey{wrap-label} so if you want to apply \emph{styling} you have to do it
+% directly, for example: |mark-ans={\textcolor{red}{\textbf{\textasteriskcentered}}|
+%
+% \smallskip
+%
+% \keyexamp{mark-pos}{left \textnormal{\textcolor{lightgray}{\textbar}} right}{left}
+% Sets the \emph{aligned} of the \emph{\enquote{symbol}} defined by \mykey{mark-ans} key. The
+% \emph{\enquote{symbol}} is aligned in a box with the same dimensions of the label box
+% defined by \mykey{labelwidth} key on the current level and separated by the value of the
+% \mykey{mark-sep} key.
+%
+% \smallskip
+%
+% \keyexamp{mark-sep}{rigid length}{\textbackslash{}labelsep}
+% Sets the \emph{horizontal space} between the box containing the \emph{\enquote{symbol}}
+% defined by \mykey{mark-ans} key and the current \mymeta{label} for
+% \ics*{item*} and \ics*{anspic}|*| in the \myenv*{keyans}, \myenv*{keyans*}
+% and \myenv*{keyanspic} environments, the \emph{argument} passed to
+% the \ics*{anskey} and the \emph{body} in \myenv*{anskey*} environment.
+%
+% \smallskip
+%
 % \keyexamp{wrap-ans}{code{} \space\usebox{\hashbox} more code}{\textbackslash{}fbox+\textbackslash{}parbox\{\#1\}}
 % Wraps the \emph{argument} passed to the \ics*{anskey} and the \emph{body} in \myenv*{anskey*} environment
 % referenced by |{#1}| when using the \mykey{show-ans} or \mykey{show-pos} keys.
-% The \mymarg{code} must be passed between  braces and only affects the
-% \emph{argument} or \emph{body} and NOT the \emph{\enquote{stored
+% The \mymarg{code} must be passed between  braces and only affects how the
+% \emph{argument} or \emph{body} is displayed and NOT the \emph{\enquote{stored
 % content}} in the \emph{sequence} and \emph{prop list} \mymarg{store
 % name} set by \mykey{save-ans} key. If this key is passed using
 % \ics*{setenumext} it is necessary to use double ‘|{##1}|’.
 %
 % \smallskip
+%
+% \keyexamp{wrap-key}{code{} \space\usebox{\hashbox} more code}{not used}
+% Wraps the \emph{current} \mymeta{label} when using the \mykey{show-ans}
+% key for \ics*{item*} and \ics*{anspic}|*| referenced by |{#1}| in the
+% \myenv*{keyans}, \myenv*{keyans*} and \myenv*{keyanspic} environments
+% after executing the \mykey{align} and \mykey{font} keys.
+% The \mymarg{code} must be passed between braces and \emph{only} affects
+% how the \mymeta{label} is displayed and NOT the \emph{\enquote{stored label}}
+% in the \emph{sequence} and \emph{prop list} \mymarg{store name} set by
+% \mykey{save-ans} key. This key overwrites the key \mykey{wrap-label}
+% and if is passed using \ics*{setenumext} it is necessary to use double ‘|{##1}|’.
+% For example, if you want the \mymeta{label} to be displayed in red when
+% using \mykey{show-ans} you just set |wrap-key={\textcolor{red}{#1}}|.
+%
+% \newpage
 %
 % \keyexamp{wrap-opt}{code{} \space\usebox{\hashbox} more code}{[\{\#1\}]}
 % Wraps the \emph{optional argument} passed to the
@@ -2588,20 +2648,6 @@
 % If the \emph{optional argument} is present in \ics*{item*} or \ics*{anspic}|*| it will
 % be shown using \mykey{wrap-opt} key.
 %
-% \smallskip
-%
-% \keyexamp{mark-ans}{symbol}{\textbackslash{}textasteriskcentered}
-% Sets the \emph{symbol} to be displayed in the left margin for
-% \ics*{anskey}, \myenv*{anskey*}, \ics*{item*} and \ics*{anspic}|*| in the place
-% where they are executed when using the key \mykey{show-ans}.
-%
-% \smallskip
-%
-% \keyexamp{mark-pos}{left \textnormal{\textcolor{lightgray}{\textbar}} right}{left}
-% Sets the \emph{aligned} of the symbol defined by \mykey{mark-ans} key. The
-% \emph{\enquote{symbol}} is aligned in a box with the same dimensions of the label box
-% defined by \mykey{labelwidth} key on the current level and separated by the value of the
-% \mykey{labelsep} key.
 %
 % \subsubsection{Keys for debug and checking}
 %
@@ -2628,23 +2674,6 @@
 % answer}} or \emph{\enquote{only one execution}} of the \ics*{anskey}
 % or \myenv*{anskey*}. It is intended to be used in conjunction with the
 % \mykey{no-store} key.
-%
-% \smallskip
-%
-% \keyexamp*{no-store}{value forbidden}{not used}
-%
-% \smallskip
-%
-% This is a \emph{\enquote{switch-key}} that does not receive an argument
-% and disables the \emph{\enquote{stored structure}} in the \emph{sequence}
-% \mymarg{store name} set by \mykey{save-ans} key at the entire level
-% or a nested environment in which it runs. This key
-% is intended for use in internal levels or nested \myenv*{enumext} or
-% \myenv*{enumext*} environments in which
-% you want to use \myenv*{enumext} or \myenv*{enumext*} but \emph{\enquote{without}} using
-% the \ics*{anskey},\emph{\enquote{without}} use \myenv*{anskey*}, \emph{\enquote{without}} interfering with the
-% \mykey{check-ans} key and \emph{\enquote{without}} storing an unwanted
-% structure in the \emph{sequence} \mymarg{store name}.
 %
 % \subsection{The command \cs[no-index]{anskey}}
 % \label{sec:anskey}
@@ -5281,7 +5310,7 @@ Some text here
 %    \end{macrocode}
 % Now declare the \mypkg*{enumext} package.
 %    \begin{macrocode}
-\ProvidesExplPackage {enumext} {2024-11-06} {1.0} {Enumerate exercise sheets}
+\ProvidesExplPackage {enumext} {2024-11-08} {1.0} {Enumerate exercise sheets}
 %    \end{macrocode}
 % Finally check if the \mypkg{multicol} and \mypkg{scontents} packages
 % are loaded, if not we load it.

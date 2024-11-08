@@ -36,7 +36,7 @@
 %% ------------------------------------------------------------------------
 %% 
 \NeedsTeXFormat{LaTeX2e}[2024-11-01]
-\ProvidesExplPackage {enumext} {2024-11-06} {1.0} {Enumerate exercise sheets}
+\ProvidesExplPackage {enumext} {2024-11-08} {1.0} {Enumerate exercise sheets}
 \hook_gput_code:nnn {begindocument} {enumext}
   {
     \IfPackageLoadedTF { multicol }
@@ -2586,12 +2586,11 @@
   {
     \str_case:nnF {#1}
       {
-        { series   } {} { resume    } {} { save-ans } {} { save-ref   } {}
-        { save-key } {} { check-ans } {} { show-ans } {} { show-pos   } {}
-        { wrap-ans } {} { mark-ans  } {} { wrap-opt } {} { wrap-key } {}
-        { save-sep   } {}
-        { mark-ref } {} { mini-env  } {} { mini-sep } {} { mini-right } {}
-        { mini-right* } {}
+        { series   } {} { resume     } {} { save-ans } {} { save-ref   } {}
+        { save-key } {} { check-ans  } {} { show-ans } {} { show-pos   } {}
+        { wrap-ans } {} { mark-ans   } {} { wrap-opt } {} { wrap-key } {}
+        { save-sep } {} { mark-sep   } {} { mark-ref } {} { mini-env  } {}
+        { mini-sep } {} { mini-right } {} { mini-right* } {}
       }
       { , { \exp_not:n {#1} } = { \exp_not:n {#2} } }
   }
@@ -3345,8 +3344,8 @@
         \int_gincr:N \g__enumext_item_anskey_int
       }
   }
-%% Function for |show-ans| and |show-pos| keys for |keyans| and |keyanspic| environments.
-\cs_new_protected:Npn \__enumext_keyans_show_left:n #1
+%% Function for |wrap-opt| key for |keyans| and |keyanspic| environments.
+\cs_new_protected:Npn \__enumext_keyans_save_item_opt:n #1
   {
     \tl_if_novalue:nF { #1 }
       {
@@ -3366,6 +3365,7 @@
           }
       }
   }
+%% Function for |mark-sep|, |show-ans| and |show-pos| keys for |keyans| and |keyanspic| environments.
 \cs_new_protected:Nn \__enumext_keyans_pos_mark_set:
   {
     \__enumext_label_width_by_box:Nn
@@ -3379,12 +3379,12 @@
         { r }
             {
               \dim_set:Nn \l__enumext_mark_sep_tmpb_dim
-                { \l__enumext_labelwidth_v_dim - \l__enumext_mark_sep_tmpa_dim } % OK
+                { \l__enumext_labelwidth_v_dim - \l__enumext_mark_sep_tmpa_dim }
             }
         { c }
             {
               \dim_set:Nn \l__enumext_mark_sep_tmpb_dim
-                { 0.5\l__enumext_labelwidth_v_dim - 0.5\l__enumext_mark_sep_tmpa_dim } % OK
+                { 0.5\l__enumext_labelwidth_v_dim - 0.5\l__enumext_mark_sep_tmpa_dim }
             }
        }
     \dim_compare:nNnT { \l__enumext_mark_sym_sep_dim } = { \c_zero_dim }
@@ -3458,7 +3458,7 @@
       }
   }
 %% Internal function for |\item*[symb][sep]| with check-answer mechanism in |enumext| environment.
-\cs_new_protected:Npn \__enumext_starred_item:nn #1 #2
+\cs_new_protected:Npn \__enumext_starred_item_exec:nn #1 #2
   {
     \tl_if_novalue:nTF {#1}
       {
@@ -3486,7 +3486,7 @@
     \__enumext_item_std:w \tl_use:c { l__enumext_fake_item_indent_ \__enumext_level: _tl }
   }
 %% Function for |\item*[sym][sep]| in |\makelabel| for |enumext| environment.
-\cs_new_protected:Nn \__enumext_item_star_exec:
+\cs_new_protected:Nn \__enumext_starred_item_exec:
   {
     \tl_if_empty:cF { l__enumext_item_symbol_ \__enumext_level: _tl }
       {
@@ -3503,7 +3503,7 @@
       {
         \bool_if:nTF {##1}
           {
-            \__enumext_starred_item:nn {##2} {##3}
+            \__enumext_starred_item_exec:nn {##2} {##3}
           }
           { \__enumext_default_item:n {##2} }
       }
@@ -3530,7 +3530,7 @@
     \RenewDocumentCommand \makelabel { m }
       {
         \tl_use:c { l__enumext_label_fill_left_ \__enumext_level: _tl }
-        \__enumext_item_star_exec:
+        \__enumext_starred_item_exec:
         \tl_use:c { l__enumext_label_font_style_ \__enumext_level: _tl }
         \bool_if:cTF { l__enumext_wrap_label_ \__enumext_level: _bool }
           {
@@ -3551,7 +3551,7 @@
               [ \dim_use:c { l__enumext_labelwidth_ \__enumext_level: _dim } ]
               [ \str_use:c { l__enumext_align_label_pos_ \__enumext_level: _str } ]
               {
-                \__enumext_item_star_exec:
+                \__enumext_starred_item_exec:
                 \tl_use:c { l__enumext_label_font_style_ \__enumext_level: _tl }
                 \bool_if:cTF { l__enumext_wrap_label_ \__enumext_level: _bool }
                   {
@@ -3659,7 +3659,7 @@
   }
 \cs_new_protected:Npn \__enumext_keyans_starred_item:n #1
   {
-    \__enumext_keyans_show_left:n { #1 }
+    \__enumext_keyans_save_item_opt:n { #1 }
     \bool_set_true:N \l__enumext_wrap_label_v_bool
     \__enumext_item_std:w \tl_use:N \l__enumext_fake_item_indent_v_tl
     \__enumext_keyans_show_item_opt:
@@ -4326,18 +4326,14 @@
     label-sep  .value_required:n = true,
     layout-sty .tl_set:N         = \l__enumext_anspic_layout_style_tl,
     layout-sty .value_required:n = true,
-    layout-sep .code:n           = \keys_set:nn { enumext / keyans }
-                                     { parsep = #1 },
+    layout-sep .code:n           = \keys_set:nn { enumext / keyans } { parsep = #1 },
     layout-sep .value_required:n = true,
-    layout-top .code:n           = \keys_set:nn { enumext / keyans }
-                                     { topsep = #1 },
+    layout-top .code:n           = \keys_set:nn { enumext / keyans } { topsep = #1 },
     layout-top .value_required:n = true,
-    mark-pos   .code:n           = \keys_set:nn { enumext / keyans }
-                                     { mark-pos = #1 },
+    mark-pos   .code:n           = \keys_set:nn { enumext / keyans } { mark-pos = #1 },
     mark-pos   .value_required:n = true,
-    mark-sep   .code:n           = \keys_set:nn { enumext / keyans }
-                                     { mark-sep = #1 },
-    mark-sep .value_required:n = true,
+    mark-sep   .code:n           = \keys_set:nn { enumext / keyans } { mark-sep = #1 },
+    mark-sep   .value_required:n = true,
     unknown    .code:n           = { \__enumext_keyans_unknown_keys:n {#1} }
   }
 %% Internal check code for |keyanspic| environment.
@@ -4500,7 +4496,7 @@
           {
             \bool_set_true:N \l__enumext_item_wrap_key_bool
             \bool_set_true:N \l__enumext_wrap_label_v_bool
-            \__enumext_keyans_show_left:n { #2 }
+            \__enumext_keyans_save_item_opt:n { #2 }
             \__enumext_keyans_addto_prop:n { #2 }
             \__enumext_keyans_store_ref:
             \__enumext_keyans_addto_seq:n { #2 }
@@ -5314,7 +5310,7 @@
     \__enumext_start_item_viii:w [ \l__enumext_label_viii_tl ] \ignorespaces
   }
 %% Set \item*[content] for |keyans*| environment.
-\cs_new_protected:Nn \__enumext_starred_item_exec:
+\cs_new_protected:Nn \__enumext_keyans_starred_item_star:
   {
     \tl_put_left:Ne \l__enumext_store_current_label_tl { \l__enumext_label_viii_tl }
     \__enumext_store_addto_prop:V \l__enumext_store_current_label_tl
@@ -5379,7 +5375,7 @@
       }
     \bool_if:NT \l__enumext_item_starred_viii_bool
       {
-        \__enumext_starred_item_exec:
+        \__enumext_keyans_starred_item_star:
       }
     \makebox[ \l__enumext_labelwidth_viii_dim ][ \l__enumext_align_label_viii_str ]
       {
