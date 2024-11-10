@@ -1752,8 +1752,9 @@
 %
 % \smallskip
 %
-% Sets the \mymeta{label} that will be printed at the \emph{current
-% level}. The default value for the first level of the environments
+% Sets the \mymeta{label} that will be printed at the \emph{current level}
+% and default value for \mykey{labelwidth} key if it has not been established.
+% The default value for the first level of the environments
 % \myenv*{enumext} and \myenv*{enumext*} are \ilabel{arabic*.}, for
 % second level are \ilabel*{alph*)}, for third level are \ilabel{roman*.}
 % and for fourth level are \ilabel{Alph*.}. For \myenv*{keyans}
@@ -1783,12 +1784,13 @@
 % \smallskip
 %
 % \keyexamp{labelwidth}{rigid length}{by label}
-% Sets the \emph{width} of the box containing the current \mymeta{label} set
-% by \mykey{label} key. Internally sets the value of \ics{labelwidth} for the current
-% level. The default values are calculated by means of the \emph{width}
-% of a box by setting a \emph{value} to the current counter using ‘\mydim{0}’ for
-% \ilabel{arabic*}, ‘|M|’ for \ilabel{Alph*}, ‘|m|’ for \ilabel{alph*}, ‘|VIII|’
-% for \ilabel{Roman*} and ‘|viii|’ for \ilabel{roman*}.
+% Sets the \emph{width} of the box containing the current \mymeta{label}
+% set by \mykey{label} key. Internally sets the value of \ics{labelwidth}
+% for the current level. The default values are calculated by means of
+% the \emph{width} of a box by setting a \emph{value} to the current
+% counter set by \mykey{label} key using ‘\mydim{0}’ for \ilabel{arabic*},
+% ‘|M|’ for \ilabel{Alph*}, ‘|m|’ for \ilabel{alph*}, ‘|VIII|’ for
+% \ilabel{Roman*} and ‘|viii|’ for \ilabel{roman*}.
 %
 % \smallskip
 %
@@ -2311,8 +2313,11 @@
 % \smallskip
 %
 % Set the \emph{number of columns} to be used by the \myenv{multicols}
-% environment within the environment. The value must be a positive
+% environment within the environments \myenv*{enumext} and \myenv*{keyans}. The value must be a positive
 % integer less than or equal to \mydim{10}.
+% In the \myenv*{enumext*} and \myenv*{keyans*} environments they
+% correspond to the default number of columns (without joining) and
+% internally adjust the value of |\itemwidth|.
 %
 % \smallskip
 %
@@ -2321,10 +2326,13 @@
 % \smallskip
 %
 % Set the \emph{space between} columns used by the \myenv{multicols}
-% environment within the environment. Internally sets the value of
+% environment within the environments \myenv*{enumext} and \myenv*{keyans}. Internally sets the value of
 % \ics{columnsep}, by default its value is equal to the sum of the
 % values set in the keys \mykey{labelwidth} and \mykey{labelsep} of the
 % current level.
+% In the \myenv*{enumext*} and \myenv*{keyans*} environments they
+% correspond to the \emph{space between} columns (without joining) and
+% internally adjust the value of |\itemwidth|.
 %
 % \subsection{Keys for \env{minipage}}\label{key:mini}
 %
@@ -3905,7 +3913,7 @@ Test keys
 % \setenumext[keyans]{label=\Alph*,font=\small,nosep,wrap-label={\myCircled{##1}}}
 % \begin{enumext}[save-ans=simplemc,columns=1,nosep,save-ref=true]
 %   \item First type of questions
-%      \begin{keyans*}[columns=2,noitemsep]
+%      \begin{keyans*}[label=\Alph*,font=\small,nosep,wrap-label={\myCircled{#1}},columns=2]
 %        \item value
 %        \item*[$x=5$] correct
 %        \item value
@@ -6883,9 +6891,9 @@ Some text here
 % \subsubsection{Define and set \texttt{label} and \texttt{ref} keys for \env{enumext} environment}
 %
 % \begin{macro}[int]{label,ref,\l_@@_label_i_tl,\l_@@_label_ii_tl, \l_@@_label_iii_tl, \l_@@_label_iv_tl}
-%    Here we set the default \mymeta{labels} of the \emph{four levels} of
-%    \myenv*{enumext} environment, along with the default value for
-%    \mykey{labelwidth} key and \mykey{ref} key.
+%   Here we set the default \mymeta{labels} of the \emph{four levels} of
+%   \myenv*{enumext} environment, along with the default value for
+%   \mykey{labelwidth} key if it has not been established and \mykey{ref} key.
 % \iffalse
 %% Define and set |label| and |ref| keys for |enumext|.
 % \fi
@@ -6897,8 +6905,14 @@ Some text here
         label .code:n    = {
                              \@@_label_style:cvn { l_@@_label_#2_tl }
                                { l_@@_counter_#2_tl } {##1}
-                             \dim_set_eq:cN  { l_@@_labelwidth_#2_dim }
-                               \l_@@_current_widest_dim
+                             \dim_compare:nNnT
+                               { \dim_use:c { l_@@_labelwidth_#2_dim } }
+                               =
+                               { \c_zero_dim }
+                               {
+                                 \dim_set_eq:cN  { l_@@_labelwidth_#2_dim }
+                                 \l_@@_current_widest_dim
+                               }
                            },
         label .initial:n = #3,
         label .value_required:n = true,
@@ -6980,8 +6994,14 @@ Some text here
         label .code:n    = {
                              \@@_label_style:cvn { l_@@_label_#2_tl }
                                { l_@@_counter_#2_tl } {##1}
-                             \dim_set_eq:cN  { l_@@_labelwidth_#2_dim }
-                               \l_@@_current_widest_dim
+                             \dim_compare:nNnT
+                               { \dim_use:c { l_@@_labelwidth_#2_dim } }
+                               =
+                               { \c_zero_dim }
+                               {
+                                 \dim_set_eq:cN  { l_@@_labelwidth_#2_dim }
+                                 \l_@@_current_widest_dim
+                               }
                            },
         label .initial:n = #3,
         label .value_required:n = true,
@@ -7069,11 +7089,11 @@ Some text here
 %
 % \begin{macro}[int]{label, ref}
 % \begin{macro}{\l_@@_label_v_tl,\l_@@_label_vi_tl,}
-%    Here we set the default \mymeta{label} for \myenv*{keyans}
-%    and \myenv*{keyanspic} environment, along with the default value for
-%    \mykey{labelwidth} and \mykey{ref} key. The \myenv*{keyanspic}
-%    environment use the same \mymeta{label} as the \myenv*{keyans}
-%    environment.
+%   Here we set the default \mymeta{label} for \myenv*{keyans}
+%   and \myenv*{keyanspic} environment, along with the default value for
+%   \mykey{labelwidth} if it has not been established and \mykey{ref} key.
+%   The \myenv*{keyanspic} environment use the same \mymeta{label} as
+%   the \myenv*{keyans} environment.
 % \iffalse
 %% Define and set |label| and |ref| keys for |keyans| and |keyanspic|.
 % \fi
@@ -7083,12 +7103,13 @@ Some text here
     label .code:n    = {
                          \@@_label_style:cvn { l_@@_label_v_tl }
                            { l_@@_counter_v_tl } {#1}
-                         \dim_set_eq:cN  { l_@@_labelwidth_v_dim }
-                           \l_@@_current_widest_dim
                          \@@_label_style:cvn { l_@@_label_vi_tl }
-                            { l_@@_counter_vi_tl } {#1}
-                         \dim_set_eq:cN  { l_@@_labelwidth_v_dim }
-                            \l_@@_current_widest_dim
+                           { l_@@_counter_vi_tl } {#1}
+                         \dim_compare:nNnT
+                           { \l_@@_labelwidth_v_dim } = { \c_zero_dim }
+                           {
+                             \dim_set_eq:NN \l_@@_labelwidth_v_dim \l_@@_current_widest_dim
+                           }
                        },
     label .initial:n = \Alph*),
     label .value_required:n = true,
@@ -11647,7 +11668,10 @@ Some text here
   {
     \keys_define:nn { enumext / #1 }
       {
-        unknown .code:n = { \@@_keyans_unknown_keys:n {##1} }
+        unknown .code:n = {
+                            \tl_set:Nn \l_@@_envir_name_tl {#1}
+                            \@@_keyans_unknown_keys:n {##1}
+                          },
       }
   }
 \clist_map_inline:nn { keyans, keyans*, keyanspic } { \@@_tmp:n {#1} }
@@ -11681,7 +11705,7 @@ Some text here
 %    \begin{macrocode}
 \keys_define:nn { enumext / enumext* }
   {
-    unknown .code:n = { \@@_starred_unknown_keys:n {#1} }
+    unknown .code:n = { \@@_starred_unknown_keys:n {#1} },
   }
 %    \end{macrocode}
 %   Internal functions for handling |unknown| key.
@@ -11715,7 +11739,7 @@ Some text here
   {
     \keys_define:nn { enumext / #1 }
       {
-        unknown .code:n = { \@@_standar_unknown_keys:n {##1} }
+        unknown .code:n = { \@@_standar_unknown_keys:n {##1} },
       }
   }
 \clist_map_inline:nn { level-1,level-2,level-3,level-4 } { \@@_tmp:n {#1} }
@@ -13061,7 +13085,10 @@ Some text here
     show-ans   .value_required:n = true,
     show-pos   .code:n           = \keys_set:nn { enumext / keyans } { show-pos = #1 },
     show-pos   .value_required:n = true,
-    unknown    .code:n           = { \@@_keyans_unknown_keys:n {#1} }
+    unknown    .code:n           = {
+                                     \tl_set:Nn \l_@@_envir_name_tl { keyanspic }
+                                     \@@_keyans_unknown_keys:n {#1}
+                                   },
   }
 %    \end{macrocode}
 % \end{macro}
