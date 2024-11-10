@@ -2988,6 +2988,9 @@
 % are not set by \ics*{setenumext}, the default values will be the same
 % as the \emph{\enquote{second level}} of the \myenv*{enumext} environment
 % with the difference in the \mymeta{label} which will be set to \mykey{label}=\ilabel{Alph*)}.
+% The keys \mykey{mark-ans}, \mykey{mark-pos}, \mykey{mark-sep}, \mykey{save-sep},
+% \mykey{wrap-opt}, \mykey{wrap-key}, \mykey{show-ans} and \mykey{show-pos}
+% are available for both environments.
 %
 % \subsubsection[The \texttt{\textbackslash item*} in \texttt{keyans}]{The \cs[no-index]{item*} in \texttt{keyans} and \texttt{keyans*}}
 %
@@ -3218,6 +3221,12 @@
 %
 % Set the \emph{vertical space} added to both the top and bottom of the environment.
 % Internally adjust the value of \mykey{topsep} taken from \myenv*{keyans} environment.
+%
+% \smallskip
+%
+% The keys \mykey{mark-ans}, \mykey{mark-pos}, \mykey{mark-sep},
+% \mykey{save-sep}, \mykey{wrap-opt}, \mykey{wrap-key}, \mykey{show-ans}
+% and \mykey{show-pos} are available for this environment.
 %
 % \subsubsection{The command \cs[no-index]{anspic}}
 %
@@ -9740,24 +9749,21 @@ Some text here
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}[int]{save-sep, wrap-opt, wrap-key, mark-pos, mark-pos, show-ans, show-pos}
+% \begin{macro}[int]{mark-ans, mark-pos, mark-sep, save-sep, wrap-opt, wrap-key, show-ans, show-pos}
 %   For the \myenv*{keyans} and \myenv*{keyans*} environments we will
-%   only add the keys \mykey{save-sep}, \mykey{wrap-opt}, \mykey{wrap-key},
-%   \mykey{mark-pos}, \mykey{show-ans} and \mykey{show-pos}.
+%   only add the keys \mykey{mark-ans}, \mykey{mark-pos}, \mykey{mark-sep}, \mykey{save-sep},
+%   \mykey{wrap-opt}, \mykey{wrap-key}, \mykey{show-ans} and \mykey{show-pos}.
 % \iffalse
-%% Add keys |save-sep|, |wrap-opt|, |wrap-key|, |mark-pos|, |show-pos| and |show-ans| keys for |keyans| and |keyans*| environments.
+%% Add keys |save-sep|, |wrap-opt|, |wrap-key|, |mark-pos|, |mark-sep|, |show-pos| and |show-ans| keys for |keyans| and |keyans*| environments.
 % \fi
 %    \begin{macrocode}
 \cs_set_protected:Npn \@@_tmp:n #1
   {
     \keys_define:nn { enumext / #1 }
       {
-        save-sep .tl_set:N  = \l_@@_store_keyans_item_opt_sep_tl,
-        save-sep .value_required:n = true,
-        wrap-opt .cs_set_protected:Np = \@@_keyans_wrapper_opt:n ##1,
-        wrap-opt .value_required:n = true,
-        wrap-key .cs_set_protected:Np = \@@_keyans_wrapper_item:n ##1,
-        wrap-key .value_required:n = true,
+        mark-ans   .tl_set:N  = \l_@@_mark_answer_sym_tl,
+        mark-ans   .initial:n = \textasteriskcentered,
+        mark-ans   .value_required:n = true,
         mark-pos / left    .code:n = \str_set:Nn \l_@@_mark_position_str { l },
         mark-pos / right   .code:n = \str_set:Nn \l_@@_mark_position_str { r },
         mark-pos / unknown .code:n =
@@ -9768,6 +9774,12 @@ Some text here
         mark-pos .value_required:n  = true,
         mark-sep .dim_set:N  = \l_@@_mark_sym_sep_dim,
         mark-sep .value_required:n = true,
+        save-sep .tl_set:N  = \l_@@_store_keyans_item_opt_sep_tl,
+        save-sep .value_required:n = true,
+        wrap-opt .cs_set_protected:Np = \@@_keyans_wrapper_opt:n ##1,
+        wrap-opt .value_required:n = true,
+        wrap-key .cs_set_protected:Np = \@@_keyans_wrapper_item:n ##1,
+        wrap-key .value_required:n = true,
         show-ans .bool_set:N = \l_@@_show_answer_bool,
         show-ans .initial:n  = false,
         show-ans .value_required:n = true,
@@ -11650,10 +11662,10 @@ Some text here
   {
     \tl_if_blank:nTF {#2}
       {
-        \msg_error:nnn { enumext } { keyans-unknown-key } {#1}
+        \msg_error:nne { enumext } { keyans-unknown-key } {#1}
       }
       {
-        \msg_error:nnnn { enumext } { keyans-unknown-key-value } {#1} {#2}
+        \msg_error:nnee { enumext } { keyans-unknown-key-value } {#1} {#2}
       }
   }
 %    \end{macrocode}
@@ -12993,7 +13005,8 @@ Some text here
 % \subsubsection{The environment \env{keyanspic}}\label{env:keyanspic}
 %
 % \begin{macro}[int]{label-pos, label-sep, layout-sty, layout-sep,
-%                   layout-top, mark-pos, mark-sep}
+%                   layout-top, mark-ans, mark-pos, mark-sep, save-sep,
+%                   wrap-opt, wrap-key, show-ans, show-pos}
 %   First we define the key that allows us to process the position of the
 %   \mymeta{label} centered \enquote{above} or \enquote{below} which will be \mykey{label-pos},
 %   the vertical separation of these from \emph{drawing or tabular} will be
@@ -13032,10 +13045,22 @@ Some text here
     layout-sep .value_required:n = true,
     layout-top .code:n           = \keys_set:nn { enumext / keyans } { topsep = #1 },
     layout-top .value_required:n = true,
+    mark-ans   .code:n           = \keys_set:nn { enumext / keyans } { mark-ans = #1 },
+    mark-ans   .value_required:n = true,
     mark-pos   .code:n           = \keys_set:nn { enumext / keyans } { mark-pos = #1 },
     mark-pos   .value_required:n = true,
     mark-sep   .code:n           = \keys_set:nn { enumext / keyans } { mark-sep = #1 },
     mark-sep   .value_required:n = true,
+    save-sep   .code:n           = \keys_set:nn { enumext / keyans } { save-sep = #1 },
+    save-sep   .value_required:n = true,
+    wrap-opt   .code:n           = \keys_set:nn { enumext / keyans } { wrap-opt = #1 },
+    wrap-opt   .value_required:n = true,
+    wrap-key   .code:n           = \keys_set:nn { enumext / keyans } { wrap-key = #1 },
+    wrap-key   .value_required:n = true,
+    show-ans   .code:n           = \keys_set:nn { enumext / keyans } { show-ans = #1 },
+    show-ans   .value_required:n = true,
+    show-pos   .code:n           = \keys_set:nn { enumext / keyans } { show-pos = #1 },
+    show-pos   .value_required:n = true,
     unknown    .code:n           = { \@@_keyans_unknown_keys:n {#1} }
   }
 %    \end{macrocode}

@@ -2485,17 +2485,14 @@
       }
   }
 \clist_map_inline:nn { level-1, enumext* } { \__enumext_tmp:n {#1} }
-%% Add keys |save-sep|, |wrap-opt|, |wrap-key|, |mark-pos|, |show-pos| and |show-ans| keys for |keyans| and |keyans*| environments.
+%% Add keys |save-sep|, |wrap-opt|, |wrap-key|, |mark-pos|, |mark-sep|, |show-pos| and |show-ans| keys for |keyans| and |keyans*| environments.
 \cs_set_protected:Npn \__enumext_tmp:n #1
   {
     \keys_define:nn { enumext / #1 }
       {
-        save-sep .tl_set:N  = \l__enumext_store_keyans_item_opt_sep_tl,
-        save-sep .value_required:n = true,
-        wrap-opt .cs_set_protected:Np = \__enumext_keyans_wrapper_opt:n ##1,
-        wrap-opt .value_required:n = true,
-        wrap-key .cs_set_protected:Np = \__enumext_keyans_wrapper_item:n ##1,
-        wrap-key .value_required:n = true,
+        mark-ans   .tl_set:N  = \l__enumext_mark_answer_sym_tl,
+        mark-ans   .initial:n = \textasteriskcentered,
+        mark-ans   .value_required:n = true,
         mark-pos / left    .code:n = \str_set:Nn \l__enumext_mark_position_str { l },
         mark-pos / right   .code:n = \str_set:Nn \l__enumext_mark_position_str { r },
         mark-pos / unknown .code:n =
@@ -2506,6 +2503,12 @@
         mark-pos .value_required:n  = true,
         mark-sep .dim_set:N  = \l__enumext_mark_sym_sep_dim,
         mark-sep .value_required:n = true,
+        save-sep .tl_set:N  = \l__enumext_store_keyans_item_opt_sep_tl,
+        save-sep .value_required:n = true,
+        wrap-opt .cs_set_protected:Np = \__enumext_keyans_wrapper_opt:n ##1,
+        wrap-opt .value_required:n = true,
+        wrap-key .cs_set_protected:Np = \__enumext_keyans_wrapper_item:n ##1,
+        wrap-key .value_required:n = true,
         show-ans .bool_set:N = \l__enumext_show_answer_bool,
         show-ans .initial:n  = false,
         show-ans .value_required:n = true,
@@ -3597,10 +3600,10 @@
   {
     \tl_if_blank:nTF {#2}
       {
-        \msg_error:nnn { enumext } { keyans-unknown-key } {#1}
+        \msg_error:nne { enumext } { keyans-unknown-key } {#1}
       }
       {
-        \msg_error:nnnn { enumext } { keyans-unknown-key-value } {#1} {#2}
+        \msg_error:nnee { enumext } { keyans-unknown-key-value } {#1} {#2}
       }
   }
 %% Add keys |unknown| for |enumext*| environment.
@@ -4330,10 +4333,22 @@
     layout-sep .value_required:n = true,
     layout-top .code:n           = \keys_set:nn { enumext / keyans } { topsep = #1 },
     layout-top .value_required:n = true,
+    mark-ans   .code:n           = \keys_set:nn { enumext / keyans } { mark-ans = #1 },
+    mark-ans   .value_required:n = true,
     mark-pos   .code:n           = \keys_set:nn { enumext / keyans } { mark-pos = #1 },
     mark-pos   .value_required:n = true,
     mark-sep   .code:n           = \keys_set:nn { enumext / keyans } { mark-sep = #1 },
     mark-sep   .value_required:n = true,
+    save-sep   .code:n           = \keys_set:nn { enumext / keyans } { save-sep = #1 },
+    save-sep   .value_required:n = true,
+    wrap-opt   .code:n           = \keys_set:nn { enumext / keyans } { wrap-opt = #1 },
+    wrap-opt   .value_required:n = true,
+    wrap-key   .code:n           = \keys_set:nn { enumext / keyans } { wrap-key = #1 },
+    wrap-key   .value_required:n = true,
+    show-ans   .code:n           = \keys_set:nn { enumext / keyans } { show-ans = #1 },
+    show-ans   .value_required:n = true,
+    show-pos   .code:n           = \keys_set:nn { enumext / keyans } { show-pos = #1 },
+    show-pos   .value_required:n = true,
     unknown    .code:n           = { \__enumext_keyans_unknown_keys:n {#1} }
   }
 %% Internal check code for |keyanspic| environment.
