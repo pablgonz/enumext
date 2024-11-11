@@ -1753,7 +1753,7 @@
 % \smallskip
 %
 % Sets the \mymeta{label} that will be printed at the \emph{current level}
-% and default value for \mykey{labelwidth} key if it has not been established.
+% and default value for \mykey{labelwidth} key.
 % The default value for the first level of the environments
 % \myenv*{enumext} and \myenv*{enumext*} are \ilabel{arabic*.}, for
 % second level are \ilabel*{alph*)}, for third level are \ilabel{roman*.}
@@ -1785,12 +1785,13 @@
 %
 % \keyexamp{labelwidth}{rigid length}{by label}
 % Sets the \emph{width} of the box containing the current \mymeta{label}
-% set by \mykey{label} key. Internally sets the value of \ics{labelwidth}
-% for the current level. The default values are calculated by means of
-% the \emph{width} of a box by setting a \emph{value} to the current
-% counter set by \mykey{label} key using ‘\mydim{0}’ for \ilabel{arabic*},
-% ‘|M|’ for \ilabel{Alph*}, ‘|m|’ for \ilabel{alph*}, ‘|VIII|’ for
-% \ilabel{Roman*} and ‘|viii|’ for \ilabel{roman*}.
+% set by the \mykey{label} key when set \emph{\enquote{after it}}.
+% Internally sets the value of \ics{labelwidth} for the current level.
+% The default values are calculated by means of the \emph{width} of a box
+% by setting a \emph{value} to the current counter set by \mykey{label}
+% key using ‘\mydim{0}’ for \ilabel{arabic*}, ‘|M|’ for \ilabel{Alph*},
+% ‘|m|’ for \ilabel{alph*}, ‘|VIII|’ for  \ilabel{Roman*} and ‘|viii|’
+% for \ilabel{roman*}.
 %
 % \smallskip
 %
@@ -1831,7 +1832,7 @@
 % modify the value set by the \mykey{labelwidth} key and is applied \emph{only}
 % on \ics*{item} and \ics*{item*}.
 % When using it in the \ics*{setenumext} command it is necessary to use the
-% \emph{double hash} ‘|{##1}|’. For example |wrap-label={\fbox{#1}}|
+% \emph{double} ‘|{##1}|’. For example |wrap-label={\fbox{#1}}|
 % or you can create a command:
 %
 % \iffalse
@@ -2593,7 +2594,7 @@
 %
 % \smallskip
 %
-% \keyexamp{mark-pos}{left \textnormal{\textcolor{lightgray}{\textbar}} right}{left}
+% \keyexamp{mark-pos}{left \textnormal{\textcolor{lightgray}{\textbar}} right \textnormal{\textcolor{lightgray}{\textbar}} center}{left}
 % Sets the \emph{aligned} of the \emph{\enquote{symbol}} defined by \mykey{mark-ans} key. The
 % \emph{\enquote{symbol}} is aligned in a box with the same dimensions of the label box
 % defined by \mykey{labelwidth} key on the current level and separated by the value of the
@@ -2601,7 +2602,7 @@
 %
 % \smallskip
 %
-% \keyexamp{mark-sep}{rigid length}{\textbackslash{}labelsep}
+% \keyexamp{mark-sep}{rigid length}{labelsep}
 % Sets the \emph{horizontal space} between the box containing the \emph{\enquote{symbol}}
 % defined by \mykey{mark-ans} key and the current \mymeta{label} for
 % \ics*{item*} and \ics*{anspic}|*| in the \myenv*{keyans}, \myenv*{keyans*}
@@ -2611,8 +2612,9 @@
 % \smallskip
 %
 % \keyexamp{wrap-ans}{code{} \space\usebox{\hashbox} more code}{\textbackslash{}fbox+\textbackslash{}parbox\{\#1\}}
-% Wraps the \emph{argument} passed to the \ics*{anskey} and the \emph{body} in \myenv*{anskey*} environment
-% referenced by |{#1}| when using the \mykey{show-ans} or \mykey{show-pos} keys.
+% Wraps the \emph{mandatory argument} \mymeta{content} passed to the \ics*{anskey}
+% and the \mymeta{body} in \myenv*{anskey*} environment referenced by |{#1}|
+% when using the \mykey{show-ans} or \mykey{show-pos} keys.
 % The \mymarg{code} must be passed between  braces and only affects how the
 % \emph{argument} or \emph{body} is displayed and NOT the \emph{\enquote{stored
 % content}} in the \emph{sequence} and \emph{prop list} \mymarg{store
@@ -3946,7 +3948,7 @@ Test keys
 %    \end{keyans}
 %
 % \item Question with image and label below:
-%  \begin{keyanspic}
+%  \begin{keyanspic}[label-sep=3pt]
 %    \anspic{\includegraphics[scale=0.15]{example-image-a}}
 %    \anspic{\includegraphics[scale=0.15]{example-image-b}}
 %    \anspic{\includegraphics[scale=0.15]{example-image-a}}
@@ -5327,7 +5329,7 @@ Some text here
 %    \end{macrocode}
 % Now declare the \mypkg*{enumext} package.
 %    \begin{macrocode}
-\ProvidesExplPackage {enumext} {2024-11-08} {1.0} {Enumerate exercise sheets}
+\ProvidesExplPackage {enumext} {2024-11-10} {1.0} {Enumerate exercise sheets}
 %    \end{macrocode}
 % Finally check if the \mypkg{multicol} and \mypkg{scontents} packages
 % are loaded, if not we load it.
@@ -6893,7 +6895,7 @@ Some text here
 % \begin{macro}[int]{label,ref,\l_@@_label_i_tl,\l_@@_label_ii_tl, \l_@@_label_iii_tl, \l_@@_label_iv_tl}
 %   Here we set the default \mymeta{labels} of the \emph{four levels} of
 %   \myenv*{enumext} environment, along with the default value for
-%   \mykey{labelwidth} key if it has not been established and \mykey{ref} key.
+%   \mykey{labelwidth} key and \mykey{ref} key.
 % \iffalse
 %% Define and set |label| and |ref| keys for |enumext|.
 % \fi
@@ -6905,14 +6907,9 @@ Some text here
         label .code:n    = {
                              \@@_label_style:cvn { l_@@_label_#2_tl }
                                { l_@@_counter_#2_tl } {##1}
-                             \dim_compare:nNnT
-                               { \dim_use:c { l_@@_labelwidth_#2_dim } }
-                               =
-                               { \c_zero_dim }
-                               {
-                                 \dim_set_eq:cN  { l_@@_labelwidth_#2_dim }
-                                 \l_@@_current_widest_dim
-                               }
+                             \dim_set_eq:cN  { l_@@_labelwidth_#2_dim }
+                               \l_@@_current_widest_dim
+
                            },
         label .initial:n = #3,
         label .value_required:n = true,
@@ -6994,14 +6991,8 @@ Some text here
         label .code:n    = {
                              \@@_label_style:cvn { l_@@_label_#2_tl }
                                { l_@@_counter_#2_tl } {##1}
-                             \dim_compare:nNnT
-                               { \dim_use:c { l_@@_labelwidth_#2_dim } }
-                               =
-                               { \c_zero_dim }
-                               {
-                                 \dim_set_eq:cN  { l_@@_labelwidth_#2_dim }
+                             \dim_set_eq:cN  { l_@@_labelwidth_#2_dim }
                                  \l_@@_current_widest_dim
-                               }
                            },
         label .initial:n = #3,
         label .value_required:n = true,
@@ -7105,11 +7096,8 @@ Some text here
                            { l_@@_counter_v_tl } {#1}
                          \@@_label_style:cvn { l_@@_label_vi_tl }
                            { l_@@_counter_vi_tl } {#1}
-                         \dim_compare:nNnT
-                           { \l_@@_labelwidth_v_dim } = { \c_zero_dim }
-                           {
-                             \dim_set_eq:NN \l_@@_labelwidth_v_dim \l_@@_current_widest_dim
-                           }
+                         \dim_set_eq:NN
+                           \l_@@_labelwidth_v_dim \l_@@_current_widest_dim
                        },
     label .initial:n = \Alph*),
     label .value_required:n = true,
@@ -9745,9 +9733,10 @@ Some text here
         mark-pos   .choice:,
         mark-pos / left    .code:n = \str_set:Nn \l_@@_mark_position_str { l },
         mark-pos / right   .code:n = \str_set:Nn \l_@@_mark_position_str { r },
+        mark-pos / center  .code:n = \str_set:Nn \l_@@_mark_position_str { c },
         mark-pos / unknown .code:n =
                            \msg_error:nneee { enumext } { unknown-choice }
-                             { mark-pos } { left, ~ right } { \exp_not:n {##1} },
+                             { mark-pos } { left, ~ right, ~ center } { \exp_not:n {##1} },
         mark-pos   .initial:n = right,
         mark-pos   .value_required:n = true,
         mark-sep   .dim_set:N  = \l_@@_mark_sym_sep_dim,
@@ -9787,9 +9776,10 @@ Some text here
         mark-ans   .value_required:n = true,
         mark-pos / left    .code:n = \str_set:Nn \l_@@_mark_position_str { l },
         mark-pos / right   .code:n = \str_set:Nn \l_@@_mark_position_str { r },
+        mark-pos / center  .code:n = \str_set:Nn \l_@@_mark_position_str { c },
         mark-pos / unknown .code:n =
                            \msg_error:nneee { enumext } { unknown-choice }
-                             { mark-pos } { left, ~ right } { \exp_not:n {##1} },
+                             { mark-pos } { left, ~ right, ~ center } { \exp_not:n {##1} },
         mark-pos .initial:n = right,
         mark-pos .value_required:n = true,
         mark-pos .value_required:n  = true,
@@ -11649,17 +11639,26 @@ Some text here
 %
 % \subsection{Handling unknown keys}\label{key:unknown-keys}
 %
-% At this point in the code I already know that I will not add more
-% \mymeta{keys} and since I have already been quite \emph{paranoid and
+% At this point in the code I already know that I will NOT add more
+% \mymeta{keys} for and since I have already been quite \emph{paranoid and
 % restrictive} with the definitions of environments and commands, the
 % only thing left to do is do it with the \mymeta{keys} (you have to be
 % consistent in life).
+%
+% \smallskip
+%
+% \begin{important}*
+%  Well, the paragraph above is not so real, after all I had to add more
+%  \mymeta{keys} than I had planned, not everything turns out the way one thinks in
+%  life.
+% \end{important}
 %
 % \subsubsection{Handling unknown keys for \env{keyans}, \env{keyans*} and \env{keyanspic}}\label{key:unknown-keys-keyans}
 %
 % \begin{macro}[int]{unknown, \@@_keyans_unknown_keys:n, \@@_keyans_unknown_keys:nn}
 %   Define and set |unknown| key for  \myenv*{keyans}, \myenv*{keyans*}
-%   and \myenv*{keyanspic} environments.
+%   and \myenv*{keyanspic} environments. Here it is necessary to set
+%   \cs{l_@@_envir_name_tl} in case an |unknown| key is passed using |\setenumext|.
 % \iffalse
 %% Add keys |unknown| for |keyans|, |keyans*| and |keyanspic| environments.
 % \fi
@@ -13375,9 +13374,13 @@ Some text here
             \int_gincr:N \g_@@_check_starred_cmd_int
             \@@_keyans_show_ans:
             \@@_keyans_show_pos:
-            \tl_use:N \l_@@_label_font_style_v_tl
-            \@@_keyans_wrapper_label:n { \l_@@_label_vi_tl }
-            \c_space_tl \@@_keyans_show_item_opt:
+            \makebox[ \l_@@_labelwidth_v_dim ][c]
+              {
+                \tl_use:N \l_@@_label_font_style_v_tl
+                \@@_keyans_wrapper_label:n { \l_@@_label_vi_tl }
+              }
+            \skip_horizontal:n { \l_@@_labelsep_v_dim }
+            \@@_keyans_show_item_opt:
           }
           {
             \bool_set_false:N \l_@@_item_wrap_key_bool
@@ -15037,27 +15040,39 @@ Some text here
     print*  .code:n     = \keys_precompile:neN { enumext / enumext* }
                             { \@@_filter_save_key:n {#1} }
                             \l_@@_print_keyans_starred_tl, % starred cmd
-    print*  .initial:n  = { nosep, label=\arabic*., columns=2, first=\small, font=\small },
+    print*  .initial:n  = { labelwidth=0pt, labelsep=0.3333em, itemindent=0pt, list-offset=0pt,
+                            rightmargin=0pt, listparindent=0pt, nosep, label=\arabic*.,
+                            columns=2, first=\small, font=\small },
     print-1 .code:n     = \keys_precompile:neN { enumext / level-1 }
                             { \@@_filter_save_key:n {#1} }
                             \l_@@_print_keyans_i_tl,
-    print-1 .initial:n  = { nosep, label=\arabic*., columns=2, first=\small, font=\small },
+    print-1 .initial:n  = { labelwidth=0pt, labelsep=0.3333em, itemindent=0pt, list-offset=0pt,
+                            rightmargin=0pt, listparindent=0pt, nosep, label=\arabic*.,
+                            columns=2, first=\small, font=\small },
     print-2 .code:n     = \keys_precompile:neN { enumext / level-2 }
                             { \@@_filter_save_key:n {#1} }
                             \l_@@_print_keyans_ii_tl,
-    print-2 .initial:n  = { nosep, label=(\alph*), first=\small, font=\small },
+    print-2 .initial:n  = { labelwidth=0pt, labelsep=0.3333em, itemindent=0pt, list-offset=0pt,
+                            rightmargin=0pt, listparindent=0pt,  nosep, label=(\alph*),
+                            first=\small, font=\small },
     print-3 .code:n     = \keys_precompile:neN { enumext / level-3 }
                             { \@@_filter_save_key:n {#1} }
                             \l_@@_print_keyans_iii_tl,
-    print-3 .initial:n  = { nosep, label=\roman*., first=\small, font=\small },
+    print-3 .initial:n  = { labelwidth=0pt, labelsep=0.3333em, itemindent=0pt, list-offset=0pt,
+                            rightmargin=0pt, listparindent=0pt, nosep, label=\roman*.,
+                            first=\small, font=\small },
     print-4 .code:n     = \keys_precompile:neN { enumext / level-4 }
                             { \@@_filter_save_key:n {#1} }
                             \l_@@_print_keyans_iv_tl,
-    print-4 .initial:n  = { nosep, label=\Alph*., first=\small, font=\small },
+    print-4 .initial:n  = { labelwidth=0pt, labelsep=0.3333em, itemindent=0pt, list-offset=0pt,
+                            rightmargin=0pt, listparindent=0pt, nosep, label=\Alph*.,
+                            first=\small, font=\small },
     print-* .code:n     = \keys_precompile:neN { enumext / enumext* }
                             { \@@_filter_save_key:n {#1} }
                             \l_@@_print_keyans_vii_tl, % starred nested
-    print-* .initial:n  = { nosep, label=\arabic*., first=\small, font=\small },
+    print-* .initial:n  = { labelwidth=0pt, labelsep=0.3333em, itemindent=0pt, list-offset=0pt,
+                            rightmargin=0pt, listparindent=0pt, nosep, label=\arabic*.,
+                            first=\small, font=\small },
   }
 %    \end{macrocode}
 %

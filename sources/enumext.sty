@@ -36,7 +36,7 @@
 %% ------------------------------------------------------------------------
 %% 
 \NeedsTeXFormat{LaTeX2e}[2024-11-01]
-\ProvidesExplPackage {enumext} {2024-11-08} {1.0} {Enumerate exercise sheets}
+\ProvidesExplPackage {enumext} {2024-11-10} {1.0} {Enumerate exercise sheets}
 \hook_gput_code:nnn {begindocument} {enumext}
   {
     \IfPackageLoadedTF { multicol }
@@ -810,6 +810,7 @@
                                { l__enumext_counter_#2_tl } {##1}
                              \dim_set_eq:cN  { l__enumext_labelwidth_#2_dim }
                                \l__enumext_current_widest_dim
+
                            },
         label .initial:n = #3,
         label .value_required:n = true,
@@ -858,7 +859,7 @@
                              \__enumext_label_style:cvn { l__enumext_label_#2_tl }
                                { l__enumext_counter_#2_tl } {##1}
                              \dim_set_eq:cN  { l__enumext_labelwidth_#2_dim }
-                               \l__enumext_current_widest_dim
+                                 \l__enumext_current_widest_dim
                            },
         label .initial:n = #3,
         label .value_required:n = true,
@@ -929,12 +930,10 @@
     label .code:n    = {
                          \__enumext_label_style:cvn { l__enumext_label_v_tl }
                            { l__enumext_counter_v_tl } {#1}
-                         \dim_set_eq:cN  { l__enumext_labelwidth_v_dim }
-                           \l__enumext_current_widest_dim
                          \__enumext_label_style:cvn { l__enumext_label_vi_tl }
-                            { l__enumext_counter_vi_tl } {#1}
-                         \dim_set_eq:cN  { l__enumext_labelwidth_v_dim }
-                            \l__enumext_current_widest_dim
+                           { l__enumext_counter_vi_tl } {#1}
+                         \dim_set_eq:NN
+                           \l__enumext_labelwidth_v_dim \l__enumext_current_widest_dim
                        },
     label .initial:n = \Alph*),
     label .value_required:n = true,
@@ -2463,9 +2462,10 @@
         mark-pos   .choice:,
         mark-pos / left    .code:n = \str_set:Nn \l__enumext_mark_position_str { l },
         mark-pos / right   .code:n = \str_set:Nn \l__enumext_mark_position_str { r },
+        mark-pos / center  .code:n = \str_set:Nn \l__enumext_mark_position_str { c },
         mark-pos / unknown .code:n =
                            \msg_error:nneee { enumext } { unknown-choice }
-                             { mark-pos } { left, ~ right } { \exp_not:n {##1} },
+                             { mark-pos } { left, ~ right, ~ center } { \exp_not:n {##1} },
         mark-pos   .initial:n = right,
         mark-pos   .value_required:n = true,
         mark-sep   .dim_set:N  = \l__enumext_mark_sym_sep_dim,
@@ -2495,9 +2495,10 @@
         mark-ans   .value_required:n = true,
         mark-pos / left    .code:n = \str_set:Nn \l__enumext_mark_position_str { l },
         mark-pos / right   .code:n = \str_set:Nn \l__enumext_mark_position_str { r },
+        mark-pos / center  .code:n = \str_set:Nn \l__enumext_mark_position_str { c },
         mark-pos / unknown .code:n =
                            \msg_error:nneee { enumext } { unknown-choice }
-                             { mark-pos } { left, ~ right } { \exp_not:n {##1} },
+                             { mark-pos } { left, ~ right, ~ center } { \exp_not:n {##1} },
         mark-pos .initial:n = right,
         mark-pos .value_required:n = true,
         mark-pos .value_required:n  = true,
@@ -3588,7 +3589,10 @@
   {
     \keys_define:nn { enumext / #1 }
       {
-        unknown .code:n = { \__enumext_keyans_unknown_keys:n {##1} }
+        unknown .code:n = {
+                            \tl_set:Nn \l__enumext_envir_name_tl {#1}
+                            \__enumext_keyans_unknown_keys:n {##1}
+                          },
       }
   }
 \clist_map_inline:nn { keyans, keyans*, keyanspic } { \__enumext_tmp:n {#1} }
@@ -3609,7 +3613,7 @@
 %% Add keys |unknown| for |enumext*| environment.
 \keys_define:nn { enumext / enumext* }
   {
-    unknown .code:n = { \__enumext_starred_unknown_keys:n {#1} }
+    unknown .code:n = { \__enumext_starred_unknown_keys:n {#1} },
   }
 \cs_new_protected:Npn \__enumext_starred_unknown_keys:n #1
   {
@@ -3630,7 +3634,7 @@
   {
     \keys_define:nn { enumext / #1 }
       {
-        unknown .code:n = { \__enumext_standar_unknown_keys:n {##1} }
+        unknown .code:n = { \__enumext_standar_unknown_keys:n {##1} },
       }
   }
 \clist_map_inline:nn { level-1,level-2,level-3,level-4 } { \__enumext_tmp:n {#1} }
@@ -4349,7 +4353,10 @@
     show-ans   .value_required:n = true,
     show-pos   .code:n           = \keys_set:nn { enumext / keyans } { show-pos = #1 },
     show-pos   .value_required:n = true,
-    unknown    .code:n           = { \__enumext_keyans_unknown_keys:n {#1} }
+    unknown    .code:n           = {
+                                     \tl_set:Nn \l__enumext_envir_name_tl { keyanspic }
+                                     \__enumext_keyans_unknown_keys:n {#1}
+                                   },
   }
 %% Internal check code for |keyanspic| environment.
 \cs_new_protected:Nn \__enumext_keyans_pic_safe_exec:
@@ -4518,9 +4525,13 @@
             \int_gincr:N \g__enumext_check_starred_cmd_int
             \__enumext_keyans_show_ans:
             \__enumext_keyans_show_pos:
-            \tl_use:N \l__enumext_label_font_style_v_tl
-            \__enumext_keyans_wrapper_label:n { \l__enumext_label_vi_tl }
-            \c_space_tl \__enumext_keyans_show_item_opt:
+            \makebox[ \l__enumext_labelwidth_v_dim ][c]
+              {
+                \tl_use:N \l__enumext_label_font_style_v_tl
+                \__enumext_keyans_wrapper_label:n { \l__enumext_label_vi_tl }
+              }
+            \skip_horizontal:n { \l__enumext_labelsep_v_dim }
+            \__enumext_keyans_show_item_opt:
           }
           {
             \bool_set_false:N \l__enumext_item_wrap_key_bool
@@ -5497,27 +5508,39 @@
     print*  .code:n     = \keys_precompile:neN { enumext / enumext* }
                             { \__enumext_filter_save_key:n {#1} }
                             \l__enumext_print_keyans_starred_tl, % starred cmd
-    print*  .initial:n  = { nosep, label=\arabic*., columns=2, first=\small, font=\small },
+    print*  .initial:n  = { labelwidth=0pt, labelsep=0.3333em, itemindent=0pt, list-offset=0pt,
+                            rightmargin=0pt, listparindent=0pt, nosep, label=\arabic*.,
+                            columns=2, first=\small, font=\small },
     print-1 .code:n     = \keys_precompile:neN { enumext / level-1 }
                             { \__enumext_filter_save_key:n {#1} }
                             \l__enumext_print_keyans_i_tl,
-    print-1 .initial:n  = { nosep, label=\arabic*., columns=2, first=\small, font=\small },
+    print-1 .initial:n  = { labelwidth=0pt, labelsep=0.3333em, itemindent=0pt, list-offset=0pt,
+                            rightmargin=0pt, listparindent=0pt, nosep, label=\arabic*.,
+                            columns=2, first=\small, font=\small },
     print-2 .code:n     = \keys_precompile:neN { enumext / level-2 }
                             { \__enumext_filter_save_key:n {#1} }
                             \l__enumext_print_keyans_ii_tl,
-    print-2 .initial:n  = { nosep, label=(\alph*), first=\small, font=\small },
+    print-2 .initial:n  = { labelwidth=0pt, labelsep=0.3333em, itemindent=0pt, list-offset=0pt,
+                            rightmargin=0pt, listparindent=0pt,  nosep, label=(\alph*),
+                            first=\small, font=\small },
     print-3 .code:n     = \keys_precompile:neN { enumext / level-3 }
                             { \__enumext_filter_save_key:n {#1} }
                             \l__enumext_print_keyans_iii_tl,
-    print-3 .initial:n  = { nosep, label=\roman*., first=\small, font=\small },
+    print-3 .initial:n  = { labelwidth=0pt, labelsep=0.3333em, itemindent=0pt, list-offset=0pt,
+                            rightmargin=0pt, listparindent=0pt, nosep, label=\roman*.,
+                            first=\small, font=\small },
     print-4 .code:n     = \keys_precompile:neN { enumext / level-4 }
                             { \__enumext_filter_save_key:n {#1} }
                             \l__enumext_print_keyans_iv_tl,
-    print-4 .initial:n  = { nosep, label=\Alph*., first=\small, font=\small },
+    print-4 .initial:n  = { labelwidth=0pt, labelsep=0.3333em, itemindent=0pt, list-offset=0pt,
+                            rightmargin=0pt, listparindent=0pt, nosep, label=\Alph*.,
+                            first=\small, font=\small },
     print-* .code:n     = \keys_precompile:neN { enumext / enumext* }
                             { \__enumext_filter_save_key:n {#1} }
                             \l__enumext_print_keyans_vii_tl, % starred nested
-    print-* .initial:n  = { nosep, label=\arabic*., first=\small, font=\small },
+    print-* .initial:n  = { labelwidth=0pt, labelsep=0.3333em, itemindent=0pt, list-offset=0pt,
+                            rightmargin=0pt, listparindent=0pt, nosep, label=\arabic*.,
+                            first=\small, font=\small },
   }
 %% Define |\printkeyans|.
 \NewDocumentCommand \printkeyans { s O{} m }
