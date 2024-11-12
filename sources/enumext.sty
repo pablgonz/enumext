@@ -176,6 +176,8 @@
 \tl_new:N   \l__enumext_print_keyans_starred_tl
 \bool_new:N \l__enumext_print_keyans_star_bool
 \str_new:N  \l__enumext_mark_position_str
+\str_new:N  \l__enumext_mark_position_v_str
+\str_new:N  \l__enumext_mark_position_viii_str
 \dim_new:N  \l__enumext_mark_sep_tmpa_dim
 \dim_new:N  \l__enumext_mark_sep_tmpb_dim
 \int_new:N  \l__enumext_show_pos_tmp_int
@@ -199,7 +201,7 @@
 \box_new:N  \l__enumext_anspic_body_box
 \dim_new:N  \l__enumext_anspic_label_htdp_dim
 \dim_new:N  \l__enumext_anspic_body_htdp_dim
-%% Variables used by check-answer mechanism, |check-ans|, |wrap-key| and |no-store| keys.
+%% Variables used by check-answer mechanism, |check-ans|, |wrap-ans*| and |no-store| keys.
 \bool_new:N \l__enumext_check_answers_bool
 \bool_new:N \g__enumext_check_ans_key_bool
 \tl_new:N   \l__enumext_check_start_line_env_tl
@@ -810,7 +812,6 @@
                                { l__enumext_counter_#2_tl } {##1}
                              \dim_set_eq:cN  { l__enumext_labelwidth_#2_dim }
                                \l__enumext_current_widest_dim
-
                            },
         label .initial:n = #3,
         label .value_required:n = true,
@@ -2448,14 +2449,37 @@
                        \fbox{\parbox[t]{\dimeval{\itemwidth -2\fboxsep -2\fboxrule}}{##1}}
                      },
         wrap-ans   .value_required:n = true,
-        wrap-opt   .cs_set_protected:Np = \__enumext_keyans_wrapper_opt:n ##1,
-        wrap-opt   .initial:n = [{##1}],
+        mark-ans*  .code:n = {
+                               \keys_set:nn { enumext / keyans  } { mark-ans* = {##1} }
+                               \keys_set:nn { enumext / keyans* } { mark-ans* = {##1} }
+                             },
+        mark-ans*  .value_required:n = true,
+        mark-pos*  .code:n = {
+                               \keys_set:nn { enumext / keyans  } { mark-pos* = {##1} }
+                               \keys_set:nn { enumext / keyans* } { mark-pos* = {##1} }
+                             },
+        mark-pos*  .value_required:n = true,
+        mark-sep*  .code:n = {
+                               \keys_set:nn { enumext / keyans  } { mark-sep* = {##1} }
+                               \keys_set:nn { enumext / keyans* } { mark-sep* = {##1} }
+                             },
+        mark-sep*  .value_required:n = true,
+        wrap-ans*  .code:n = {
+                               \keys_set:nn { enumext / keyans  } { wrap-ans* = {##1} }
+                               \keys_set:nn { enumext / keyans* } { wrap-ans* = {##1} }
+                             },
+        wrap-ans*  .value_required:n = true,
+        wrap-opt   .code:n = {
+                               \keys_set:nn { enumext / keyans  } { wrap-opt = {##1} }
+                               \keys_set:nn { enumext / keyans* } { wrap-opt = {##1} }
+                             },
         wrap-opt   .value_required:n = true,
-        wrap-key   .cs_set_protected:Np = \__enumext_keyans_wrapper_item:n ##1,
-        wrap-key   .value_required:n = true,
-        save-sep   .tl_set:N  = \l__enumext_store_keyans_item_opt_sep_tl,
-        save-sep   .initial:n = {, ~ },
+        save-sep   .code:n = {
+                               \keys_set:nn { enumext / keyans  } { save-sep = {##1} }
+                               \keys_set:nn { enumext / keyans* } { save-sep = {##1} }
+                             },
         save-sep   .value_required:n = true,
+%%%%%%% Next is for \anskey
         mark-ans   .tl_set:N  = \l__enumext_mark_answer_sym_tl,
         mark-ans   .initial:n = \textasteriskcentered,
         mark-ans   .value_required:n = true,
@@ -2485,40 +2509,42 @@
       }
   }
 \clist_map_inline:nn { level-1, enumext* } { \__enumext_tmp:n {#1} }
-%% Add keys |save-sep|, |wrap-opt|, |wrap-key|, |mark-pos|, |mark-sep|, |show-pos| and |show-ans| keys for |keyans| and |keyans*| environments.
-\cs_set_protected:Npn \__enumext_tmp:n #1
+%% Add the keys for marks style and print for |keyans| and |keyans*| environments.
+\cs_set_protected:Npn \__enumext_tmp:nn #1 #2
   {
     \keys_define:nn { enumext / #1 }
       {
-        mark-ans   .tl_set:N  = \l__enumext_mark_answer_sym_tl,
-        mark-ans   .initial:n = \textasteriskcentered,
-        mark-ans   .value_required:n = true,
-        mark-pos / left    .code:n = \str_set:Nn \l__enumext_mark_position_str { l },
-        mark-pos / right   .code:n = \str_set:Nn \l__enumext_mark_position_str { r },
-        mark-pos / center  .code:n = \str_set:Nn \l__enumext_mark_position_str { c },
-        mark-pos / unknown .code:n =
+        mark-ans* .tl_set:c  = { l__enumext_mark_answer_sym_#2_tl },
+        mark-ans* .initial:n = \textasteriskcentered,
+        mark-ans* .value_required:n = true,
+        mark-pos* .choice:,
+        mark-pos* / left    .code:n = \str_set:cn { l__enumext_mark_position_#2_str } { l },
+        mark-pos* / right   .code:n = \str_set:cn { l__enumext_mark_position_#2_str } { r },
+        mark-pos* / center  .code:n = \str_set:cn { l__enumext_mark_position_#2_str } { c },
+        mark-pos* / unknown .code:n =
                            \msg_error:nneee { enumext } { unknown-choice }
                              { mark-pos } { left, ~ right, ~ center } { \exp_not:n {##1} },
-        mark-pos .initial:n = right,
-        mark-pos .value_required:n = true,
-        mark-pos .value_required:n  = true,
-        mark-sep .dim_set:N  = \l__enumext_mark_sym_sep_dim,
-        mark-sep .value_required:n = true,
-        save-sep .tl_set:N  = \l__enumext_store_keyans_item_opt_sep_tl,
-        save-sep .value_required:n = true,
-        wrap-opt .cs_set_protected:Np = \__enumext_keyans_wrapper_opt:n ##1,
-        wrap-opt .value_required:n = true,
-        wrap-key .cs_set_protected:Np = \__enumext_keyans_wrapper_item:n ##1,
-        wrap-key .value_required:n = true,
-        show-ans .bool_set:N = \l__enumext_show_answer_bool,
-        show-ans .initial:n  = false,
-        show-ans .value_required:n = true,
-        show-pos .bool_set:N = \l__enumext_show_position_bool,
-        show-pos .initial:n  = false,
-        show-pos .value_required:n = true,
+        mark-pos* .initial:n = right,
+        mark-pos* .value_required:n = true,
+        mark-sep* .dim_set:c = { l__enumext_mark_sym_sep_#2_dim },
+        mark-sep* .value_required:n = true,
+        wrap-ans* .cs_set_protected:cp = { __enumext_keyans_wrapper_item_#2:n } ##1,
+        wrap-ans* .value_required:n = true,
+        wrap-opt  .cs_set_protected:cp = { __enumext_keyans_wrapper_opt_#2:n } ##1,
+        wrap-opt  .initial:n = [{##1}],
+        wrap-opt  .value_required:n = true,
+        save-sep  .tl_set:c = { l__enumext_store_keyans_item_opt_sep_#2_tl },
+        save-sep  .initial:n = {, ~ },
+        save-sep  .value_required:n = true,
+        show-ans  .bool_set:N = \l__enumext_show_answer_bool,
+        show-ans  .initial:n = false,
+        show-ans  .value_required:n = true,
+        show-pos  .bool_set:N = \l__enumext_show_position_bool,
+        show-pos  .initial:n = false,
+        show-pos  .value_required:n = true,
       }
   }
-\clist_map_inline:nn { keyans, keyans* } { \__enumext_tmp:n {#1} }
+\clist_map_inline:nn { {keyans}{v}, {keyans*}{viii} } { \__enumext_tmp:nn #1 }
 %% Internal function for store optional arguments of the environments in seq.
 \cs_new_protected:Npn \__enumext_store_active_keys:n #1
   {
@@ -2590,9 +2616,9 @@
   {
     \str_case:nnF {#1}
       {
-        { series   } {} { resume     } {} { save-ans } {} { save-ref   } {}
-        { save-key } {} { check-ans  } {} { show-ans } {} { show-pos   } {}
-        { wrap-ans } {} { mark-ans   } {} { wrap-opt } {} { wrap-key } {}
+        { series   } {} { resume     } {} { save-ans } {} { save-ref  } {}
+        { save-key } {} { check-ans  } {} { show-ans } {} { show-pos  } {}
+        { wrap-ans } {} { mark-ans   } {} { wrap-opt } {} { wrap-ans* } {}
         { save-sep } {} { mark-sep   } {} { mark-ref } {} { mini-env  } {}
         { mini-sep } {} { mini-right } {} { mini-right* } {}
       }
@@ -2887,6 +2913,32 @@
     item-sym* .value_required:n = true,
     item-pos* .dim_set:N  = \l__enumext_store_item_symbol_sep_dim,
     item-pos* .value_required:n = true,
+    wrap-ans  .cs_set_protected:Np = \__enumext_anskey_wrapper:n #1,
+    wrap-ans  .initial:n =
+                {
+                  \fbox{\parbox[t]{\dimeval{\itemwidth -2\fboxsep -2\fboxrule}}{#1}}
+                },
+    wrap-ans  .value_required:n = true,
+    mark-ans  .tl_set:N  = \l__enumext_mark_answer_sym_tl,
+    mark-ans  .initial:n = \textasteriskcentered,
+    mark-ans  .value_required:n = true,
+    mark-pos  .choice:,
+    mark-pos / left    .code:n = \str_set:Nn \l__enumext_mark_position_str { l },
+    mark-pos / right   .code:n = \str_set:Nn \l__enumext_mark_position_str { r },
+    mark-pos / center  .code:n = \str_set:Nn \l__enumext_mark_position_str { c },
+    mark-pos / unknown .code:n =
+                       \msg_error:nneee { enumext } { unknown-choice }
+                         { mark-pos } { left, ~ right, ~ center } { \exp_not:n {#1} },
+    mark-pos  .initial:n = right,
+    mark-pos  .value_required:n = true,
+    mark-sep  .dim_set:N  = \l__enumext_mark_sym_sep_dim,
+    mark-sep  .value_required:n = true,
+    show-ans  .bool_set:N = \l__enumext_show_answer_bool,
+    show-ans  .initial:n  = false,
+    show-ans  .value_required:n = true,
+    show-pos  .bool_set:N = \l__enumext_show_position_bool,
+    show-pos  .initial:n  = false,
+    show-pos  .value_required:n = true,
     unknown   .code:n     = { \__enumext_anskey_unknown:n {#1} },
   }
 \cs_new_protected:Npn \__enumext_anskey_unknown:n #1
@@ -3045,6 +3097,32 @@
         item-sym* .value_required:n = true,
         item-pos* .dim_gset:N  = \g__enumext_store_item_symbol_sep_dim,
         item-pos* .value_required:n = true,
+        wrap-ans  .cs_set_protected:Np = \__enumext_anskey_wrapper:n ##1,
+        wrap-ans  .initial:n =
+                    {
+                      \fbox{\parbox[t]{\dimeval{\itemwidth -2\fboxsep -2\fboxrule}}{##1}}
+                    },
+        wrap-ans  .value_required:n = true,
+        mark-ans  .tl_set:N  = \l__enumext_mark_answer_sym_tl,
+        mark-ans  .initial:n = \textasteriskcentered,
+        mark-ans  .value_required:n = true,
+        mark-pos  .choice:,
+        mark-pos / left    .code:n = \str_set:Nn \l__enumext_mark_position_str { l },
+        mark-pos / right   .code:n = \str_set:Nn \l__enumext_mark_position_str { r },
+        mark-pos / center  .code:n = \str_set:Nn \l__enumext_mark_position_str { c },
+        mark-pos / unknown .code:n =
+                       \msg_error:nneee { enumext } { unknown-choice }
+                         { mark-pos } { left, ~ right, ~ center } { \exp_not:n {##1} },
+        mark-pos  .initial:n = right,
+        mark-pos  .value_required:n = true,
+        mark-sep  .dim_set:N  = \l__enumext_mark_sym_sep_dim,
+        mark-sep  .value_required:n = true,
+        show-ans  .bool_set:N = \l__enumext_show_answer_bool,
+        show-ans  .initial:n  = false,
+        show-ans  .value_required:n = true,
+        show-pos  .bool_set:N = \l__enumext_show_position_bool,
+        show-pos  .initial:n  = false,
+        show-pos  .value_required:n = true,
         print-env .undefine:,
         store-env .undefine:,
         write-out .undefine:,
@@ -3075,6 +3153,12 @@
         item-star .undefine:,
         item-sym* .undefine:,
         item-pos* .undefine:,
+        wrap-ans  .undefine:,
+        mark-ans  .undefine:,
+        mark-pos  .undefine:,
+        mark-sep  .undefine:,
+        show-ans  .undefine:,
+        show-pos  .undefine:,
         write-out .code:n    = {
                                  \bool_set_false:N \l__scontents_storing_bool
                                  \bool_set_true:N  \l__scontents_writing_bool
@@ -3238,11 +3322,11 @@
       }
     \tl_if_novalue:nF { #1 }
       {
-        \tl_if_empty:NF \l__enumext_store_keyans_item_opt_sep_tl
+        \tl_if_empty:NF \l__enumext_store_keyans_item_opt_sep_v_tl
           {
             \tl_put_right:Ne \l__enumext_store_current_label_tl
               {
-                \l__enumext_store_keyans_item_opt_sep_tl
+                \l__enumext_store_keyans_item_opt_sep_v_tl
               }
           }
         \tl_put_right:Ne \l__enumext_store_current_label_tl { #1 }
@@ -3316,11 +3400,11 @@
       }
     \tl_if_novalue:nF { #1 }
       {
-        \tl_if_empty:NF \l__enumext_store_keyans_item_opt_sep_tl
+        \tl_if_empty:NF \l__enumext_store_keyans_item_opt_sep_v_tl
           {
             \tl_put_right:Ne \l__enumext_store_current_label_tl
               {
-                \l__enumext_store_keyans_item_opt_sep_tl
+                \l__enumext_store_keyans_item_opt_sep_v_tl
               }
           }
         \tl_put_right:Ne \l__enumext_store_current_label_tl { #1 }
@@ -3348,7 +3432,7 @@
         \int_gincr:N \g__enumext_item_anskey_int
       }
   }
-%% Function for |wrap-opt| key for |keyans| and |keyanspic| environments.
+%% Function for |wrap-opt| key for |keyans|, |keyanspic| and |keyans*| environments.
 \cs_new_protected:Npn \__enumext_keyans_save_item_opt:n #1
   {
     \tl_if_novalue:nF { #1 }
@@ -3364,12 +3448,25 @@
           { \bool_if_p:N \l__enumext_show_answer_bool }
           { \bool_if_p:N \l__enumext_show_position_bool }
           {
-            \__enumext_keyans_wrapper_opt:n
+            \__enumext_keyans_wrapper_opt_v:n
               { \l__enumext_store_current_opt_arg_tl } \c_space_tl
           }
       }
   }
-%% Function for |mark-sep|, |show-ans| and |show-pos| keys for |keyans| and |keyanspic| environments.
+\cs_new_protected:Nn \__enumext_keyans_show_item_opt_viii:
+  {
+    \tl_if_empty:NF \l__enumext_store_current_opt_arg_tl
+      {
+        \bool_lazy_or:nnT
+          { \bool_if_p:N \l__enumext_show_answer_bool }
+          { \bool_if_p:N \l__enumext_show_position_bool }
+          {
+            \__enumext_keyans_wrapper_opt_viii:n
+              { \l__enumext_store_current_opt_arg_tl } \c_space_tl
+          }
+      }
+  }
+%% Function for |mark-sep*|, |show-ans| and |show-pos| keys for |keyans| and |keyanspic| environments.
 \cs_new_protected:Nn \__enumext_keyans_pos_mark_set:
   {
     \__enumext_label_width_by_box:Nn
@@ -3391,11 +3488,13 @@
                 { 0.5\l__enumext_labelwidth_v_dim - 0.5\l__enumext_mark_sep_tmpa_dim }
             }
        }
-    \dim_compare:nNnT { \l__enumext_mark_sym_sep_dim } = { \c_zero_dim }
+    \dim_compare:nNnT { \l__enumext_mark_sym_sep_v_dim } = { \c_zero_dim }
       {
-        \dim_set:Nn \l__enumext_mark_sym_sep_dim { \l__enumext_labelsep_v_dim }
+        \dim_set:Nn \l__enumext_mark_sym_sep_v_dim { \l__enumext_labelsep_v_dim }
       }
-    \dim_add:Nn \l__enumext_mark_sym_sep_dim { \l__enumext_mark_sep_tmpb_dim }
+    \tl_set_eq:NN \l__enumext_mark_answer_sym_tl \l__enumext_mark_answer_sym_v_tl
+    \dim_add:Nn \l__enumext_mark_sym_sep_v_dim { \l__enumext_mark_sep_tmpb_dim }
+    \str_set_eq:NN \l__enumext_mark_position_str \l__enumext_mark_position_v_str
   }
 \cs_new_protected:Nn \__enumext_keyans_show_ans:
   {
@@ -3407,7 +3506,7 @@
       {
         \__enumext_keyans_pos_mark_set:
         \__enumext_print_keyans_box:NN
-          \l__enumext_labelwidth_v_dim \l__enumext_mark_sym_sep_dim
+          \l__enumext_labelwidth_v_dim \l__enumext_mark_sym_sep_v_dim
       }
   }
 \cs_new_protected:Nn \__enumext_keyans_show_pos:
@@ -3425,20 +3524,21 @@
         { \bool_if_p:N \l__enumext_item_wrap_key_bool }
       }
       {
-        \tl_set:Ne \l__enumext_mark_answer_sym_tl
+        \tl_set:Ne \l__enumext_mark_answer_sym_v_tl %\l__enumext_mark_answer_sym_tl
           {
             \group_begin:
               \exp_not:N \normalfont
               \exp_not:N \footnotesize [ \int_eval:n
                 {
-                  \prop_count:c { g__enumext_ \l__enumext_store_name_tl _prop } + \l__enumext_show_pos_tmp_int
+                  \prop_count:c { g__enumext_ \l__enumext_store_name_tl _prop }
+                  + \l__enumext_show_pos_tmp_int
                 }
               ]
             \group_end:
           }
         \__enumext_keyans_pos_mark_set:
         \__enumext_print_keyans_box:NN
-          \l__enumext_labelwidth_v_dim \l__enumext_mark_sym_sep_dim
+          \l__enumext_labelwidth_v_dim \l__enumext_mark_sym_sep_v_dim
       }
   }
 %% Internal function for |\item| with check-answer mechanism in |enumext| environment.
@@ -3462,7 +3562,7 @@
       }
   }
 %% Internal function for |\item*[symb][sep]| with check-answer mechanism in |enumext| environment.
-\cs_new_protected:Npn \__enumext_starred_item_exec:nn #1 #2
+\cs_new_protected:Npn \__enumext_item_starred_exec:nn #1 #2
   {
     \tl_if_novalue:nTF {#1}
       {
@@ -3490,7 +3590,7 @@
     \__enumext_item_std:w \tl_use:c { l__enumext_fake_item_indent_ \__enumext_level: _tl }
   }
 %% Function for |\item*[sym][sep]| in |\makelabel| for |enumext| environment.
-\cs_new_protected:Nn \__enumext_starred_item_exec:
+\cs_new_protected:Nn \__enumext_item_starred_exec:
   {
     \tl_if_empty:cF { l__enumext_item_symbol_ \__enumext_level: _tl }
       {
@@ -3507,7 +3607,7 @@
       {
         \bool_if:nTF {##1}
           {
-            \__enumext_starred_item_exec:nn {##2} {##3}
+            \__enumext_item_starred_exec:nn {##2} {##3}
           }
           { \__enumext_default_item:n {##2} }
       }
@@ -3534,7 +3634,7 @@
     \RenewDocumentCommand \makelabel { m }
       {
         \tl_use:c { l__enumext_label_fill_left_ \__enumext_level: _tl }
-        \__enumext_starred_item_exec:
+        \__enumext_item_starred_exec:
         \tl_use:c { l__enumext_label_font_style_ \__enumext_level: _tl }
         \bool_if:cTF { l__enumext_wrap_label_ \__enumext_level: _bool }
           {
@@ -3555,7 +3655,7 @@
               [ \dim_use:c { l__enumext_labelwidth_ \__enumext_level: _dim } ]
               [ \str_use:c { l__enumext_align_label_pos_ \__enumext_level: _str } ]
               {
-                \__enumext_starred_item_exec:
+                \__enumext_item_starred_exec:
                 \tl_use:c { l__enumext_label_font_style_ \__enumext_level: _tl }
                 \bool_if:cTF { l__enumext_wrap_label_ \__enumext_level: _bool }
                   {
@@ -3682,7 +3782,7 @@
       {
         \bool_if:nTF {##1}
           {
-            \bool_set_true:N \l__enumext_item_wrap_key_bool % wrap-key
+            \bool_set_true:N \l__enumext_item_wrap_key_bool % wrap-ans*
             \peek_remove_spaces:n
               {
                 \__enumext_keyans_starred_item:n {##2}
@@ -3715,13 +3815,13 @@
   {
     \bool_lazy_all:nT
       {
-        { \bool_if_p:N \l__enumext_wrap_label_v_bool       }
-        { \bool_if_p:N \l__enumext_show_answer_bool        }
-        { \bool_if_p:N \l__enumext_item_wrap_key_bool      }
-        { \cs_if_exist_p:N \__enumext_keyans_wrapper_item:n }
+        { \bool_if_p:N \l__enumext_wrap_label_v_bool         }
+        { \bool_if_p:N \l__enumext_show_answer_bool          }
+        { \bool_if_p:N \l__enumext_item_wrap_key_bool        }
+        { \cs_if_exist_p:N \__enumext_keyans_wrapper_item_v:n }
       }
       {
-        \cs_set_eq:NN \__enumext_wrapper_label_v:n \__enumext_keyans_wrapper_item:n
+        \cs_set_eq:NN \__enumext_wrapper_label_v:n \__enumext_keyans_wrapper_item_v:n
       }
     \bool_if:NTF \l__enumext_wrap_label_v_bool
       {
@@ -4347,8 +4447,8 @@
     save-sep   .value_required:n = true,
     wrap-opt   .code:n           = \keys_set:nn { enumext / keyans } { wrap-opt = #1 },
     wrap-opt   .value_required:n = true,
-    wrap-key   .code:n           = \keys_set:nn { enumext / keyans } { wrap-key = #1 },
-    wrap-key   .value_required:n = true,
+    wrap-ans*   .code:n           = \keys_set:nn { enumext / keyans } { wrap-ans* = #1 },
+    wrap-ans*   .value_required:n = true,
     show-ans   .code:n           = \keys_set:nn { enumext / keyans } { show-ans = #1 },
     show-ans   .value_required:n = true,
     show-pos   .code:n           = \keys_set:nn { enumext / keyans } { show-pos = #1 },
@@ -5318,11 +5418,11 @@
     \tl_clear:N \l__enumext_store_current_label_tl
     \tl_if_novalue:nF { #1 }
       {
-        \tl_if_empty:NF \l__enumext_store_keyans_item_opt_sep_tl
+        \tl_if_empty:NF \l__enumext_store_keyans_item_opt_sep_viii_tl
           {
             \tl_put_right:Ne \l__enumext_store_current_label_tl
               {
-                \l__enumext_store_keyans_item_opt_sep_tl
+                \l__enumext_store_keyans_item_opt_sep_viii_tl
               }
             \tl_put_right:Ne \l__enumext_store_current_label_tl { #1 }
           }
@@ -5344,14 +5444,16 @@
     \tl_put_left:Ne \l__enumext_store_current_label_tl { \item }
     \__enumext_keyans_addto_seq_link:
     \int_gincr:N \g__enumext_check_starred_cmd_int
-    \dim_compare:nNnT { \l__enumext_mark_sym_sep_dim } = { \c_zero_dim }
+    \dim_compare:nNnT { \l__enumext_mark_sym_sep_viii_dim } = { \c_zero_dim }
       {
-        \dim_set:Nn \l__enumext_mark_sym_sep_dim { \l__enumext_labelsep_viii_dim }
+        \dim_set:Nn \l__enumext_mark_sym_sep_viii_dim { \l__enumext_labelsep_viii_dim }
       }
     \bool_if:NT \l__enumext_show_answer_bool
       {
+        \tl_set_eq:NN \l__enumext_mark_answer_sym_tl \l__enumext_mark_answer_sym_viii_tl
+        \str_set_eq:NN \l__enumext_mark_position_str \l__enumext_mark_position_viii_str
         \__enumext_print_keyans_box:NN
-          \l__enumext_labelwidth_viii_dim \l__enumext_mark_sym_sep_dim
+          \l__enumext_labelwidth_viii_dim \l__enumext_mark_sym_sep_viii_dim
       }
     \bool_if:NT \l__enumext_show_position_bool
       {
@@ -5366,8 +5468,9 @@
                ]
             \group_end:
           }
+        \str_set_eq:NN \l__enumext_mark_position_str \l__enumext_mark_position_viii_str
         \__enumext_print_keyans_box:NN
-          \l__enumext_labelwidth_viii_dim \l__enumext_mark_sym_sep_dim
+          \l__enumext_labelwidth_viii_dim \l__enumext_mark_sym_sep_viii_dim
       }
   }
 %% Define a fake |\makelabel| for |keyans*| environment.
@@ -5375,13 +5478,14 @@
   {
     \bool_lazy_all:nT
       {
-        { \bool_if_p:N \l__enumext_wrap_label_viii_bool    }
-        { \bool_if_p:N \l__enumext_show_answer_bool        }
-        { \bool_if_p:N \l__enumext_item_wrap_key_bool      }
-        { \cs_if_exist_p:N \__enumext_keyans_wrapper_item:n }
+        { \bool_if_p:N \l__enumext_wrap_label_viii_bool         }
+        { \bool_if_p:N \l__enumext_show_answer_bool             }
+        { \bool_if_p:N \l__enumext_item_wrap_key_bool           }
+        { \cs_if_exist_p:N \__enumext_keyans_wrapper_item_viii:n }
       }
       {
-        \cs_set_eq:NN \__enumext_wrapper_label_viii:n \__enumext_keyans_wrapper_item:n
+        \cs_set_eq:NN
+          \__enumext_wrapper_label_viii:n \__enumext_keyans_wrapper_item_viii:n
       }
     \bool_if:NTF \l__enumext_wrap_label_viii_bool
       {
@@ -5433,7 +5537,7 @@
         \tl_use:N \l__enumext_fake_item_indent_viii_tl
         \bool_if:NT \l__enumext_item_starred_viii_bool
           {
-            \__enumext_keyans_show_item_opt:
+            \__enumext_keyans_show_item_opt_viii:
           }
         \tl_use:N \l__enumext_after_list_args_viii_tl
    }
