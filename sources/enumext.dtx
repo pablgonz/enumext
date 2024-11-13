@@ -3912,10 +3912,10 @@ Test keys
 % \fi
 %
 % A \emph{\enquote{simple multiple choice}} test \textattachfile[color=red,print=false]{enumext-exa-3.tex}{\faFile*[regular]}.
-% \setenumext[keyans]{label=\Alph*,font=\small,nosep,wrap-label={\myCircled{##1}}}
-% \begin{enumext}[save-ans=simplemc,columns=1,nosep,save-ref=true]
+% \setenumext[keyans]{labelsep=6pt,label=\Alph*,font=\small,nosep,wrap-label={\myCircled{##1}}}
+% \begin{enumext}[mode-box,save-ans=simplemc,columns=1,nosep,save-ref=true]
 %   \item First type of questions
-%      \begin{keyans*}[label=\Alph*,font=\small,nosep,wrap-label={\myCircled{#1}},columns=2]
+%      \begin{keyans*}[labelsep=8pt,label=\Alph*,font=\small,nosep,wrap-label={\myCircled{#1}},columns=2]
 %        \item value
 %        \item*[$x=5$] correct
 %        \item value
@@ -9701,86 +9701,51 @@ Some text here
 %
 % \subsection{Keys and functions associated with storage}\label{int:storage-system}
 %
-% \begin{macro}[int]{wrap-ans, wrap-opt, wrap-ans*, save-sep, mark-ans, mark-pos, mark-sep, show-ans, mark-ref, save-ref}
-%   We add the keys \mykey{wrap-ans}, \mykey{wrap-opt}, \mykey{wrap-ans*},\mykey{save-sep},
-%   \mykey{mark-ans}, \mykey{mark-pos}, \mykey{mark-sep}, \mykey{show-ans}, \mykey{show-pos},
-%   \mykey{mark-ref} and \mykey{save-ref} related to the \emph{\enquote{storage system}}
-%   and internal mechanism of \emph{\enquote{label and ref}} only at
-%   the \emph{first level} of \myenv*{enumext} and \myenv*{enumext*}.
+% \subsubsection{Keys for \texttt{marks}, \texttt{wrapp} and \texttt{show}}
+%
+% The \myenv*{enumext} package provides a set of \mymeta{keys} for
+% manipulating \emph{\enquote{marks}} associated with \emph{\enquote{answers}}
+% and how they are displayed and stored in the \emph{sequence} and \emph{prop list}
+% as well as an internal \emph{\enquote{label and ref}} system.
+%
+% \begin{macro}[int]{mark-ans, mark-pos, mark-sep, wrap-ans, show-ans,
+%                    show-pos,}
+%   For the command |\anskey| and the environment \myenv*{anskey*} we
+%   will add the keys \mykey{mark-ans}, \mykey{mark-pos}, \mykey{mark-sep},
+%   \mykey{wrap-ans}, \mykey{show-ans} and \mykey{show-pos}.
 % \iffalse
-%% Add keys associated with storage on first level of |enumext| and |enumext*|.
+%% Add |key=val| for |\anskey|.
 % \fi
 %    \begin{macrocode}
-\cs_set_protected:Npn \@@_tmp:n #1
+\keys_define:nn { enumext / anskey }
   {
-    \keys_define:nn { enumext / #1 }
-      {
-        wrap-ans   .cs_set_protected:Np = \@@_anskey_wrapper:n ##1,
-        wrap-ans   .initial:n =
-                     {
-                       \fbox{\parbox[t]{\dimeval{\itemwidth -2\fboxsep -2\fboxrule}}{##1}}
-                     },
-        wrap-ans   .value_required:n = true,
-        mark-ans*  .code:n = {
-                               \keys_set:nn { enumext / keyans  } { mark-ans* = {##1} }
-                               \keys_set:nn { enumext / keyans* } { mark-ans* = {##1} }
-                             },
-        mark-ans*  .value_required:n = true,
-        mark-pos*  .code:n = {
-                               \keys_set:nn { enumext / keyans  } { mark-pos* = {##1} }
-                               \keys_set:nn { enumext / keyans* } { mark-pos* = {##1} }
-                             },
-        mark-pos*  .value_required:n = true,
-        mark-sep*  .code:n = {
-                               \keys_set:nn { enumext / keyans  } { mark-sep* = {##1} }
-                               \keys_set:nn { enumext / keyans* } { mark-sep* = {##1} }
-                             },
-        mark-sep*  .value_required:n = true,
-        wrap-ans*  .code:n = {
-                               \keys_set:nn { enumext / keyans  } { wrap-ans* = {##1} }
-                               \keys_set:nn { enumext / keyans* } { wrap-ans* = {##1} }
-                             },
-        wrap-ans*  .value_required:n = true,
-        wrap-opt   .code:n = {
-                               \keys_set:nn { enumext / keyans  } { wrap-opt = {##1} }
-                               \keys_set:nn { enumext / keyans* } { wrap-opt = {##1} }
-                             },
-        wrap-opt   .value_required:n = true,
-        save-sep   .code:n = {
-                               \keys_set:nn { enumext / keyans  } { save-sep = {##1} }
-                               \keys_set:nn { enumext / keyans* } { save-sep = {##1} }
-                             },
-        save-sep   .value_required:n = true,
-%%%%%%% Next is for \anskey
-        mark-ans   .tl_set:N  = \l_@@_mark_answer_sym_tl,
-        mark-ans   .initial:n = \textasteriskcentered,
-        mark-ans   .value_required:n = true,
-        mark-pos   .choice:,
-        mark-pos / left    .code:n = \str_set:Nn \l_@@_mark_position_str { l },
-        mark-pos / right   .code:n = \str_set:Nn \l_@@_mark_position_str { r },
-        mark-pos / center  .code:n = \str_set:Nn \l_@@_mark_position_str { c },
-        mark-pos / unknown .code:n =
-                           \msg_error:nneee { enumext } { unknown-choice }
-                             { mark-pos } { left, ~ right, ~ center } { \exp_not:n {##1} },
-        mark-pos   .initial:n = right,
-        mark-pos   .value_required:n = true,
-        mark-sep   .dim_set:N  = \l_@@_mark_sym_sep_dim,
-        mark-sep   .value_required:n = true,
-        show-ans   .bool_set:N = \l_@@_show_answer_bool,
-        show-ans   .initial:n  = false,
-        show-ans   .value_required:n = true,
-        show-pos   .bool_set:N = \l_@@_show_position_bool,
-        show-pos   .initial:n  = false,
-        show-pos   .value_required:n = true,
-        mark-ref   .tl_set:N   = \l_@@_mark_ref_sym_tl,
-        mark-ref   .initial:n  = \textreferencemark,
-        mark-ref   .value_required:n = true,
-        save-ref   .bool_set:N = \l_@@_store_ref_key_bool,
-        save-ref   .initial:n  = false,
-        save-ref   .value_required:n = true,
-      }
+    mark-ans  .tl_set:N  = \l_@@_mark_answer_sym_tl,
+    mark-ans  .initial:n = \textasteriskcentered,
+    mark-ans  .value_required:n = true,
+    mark-pos  .choice:,
+    mark-pos / left    .code:n = \str_set:Nn \l_@@_mark_position_str { l },
+    mark-pos / right   .code:n = \str_set:Nn \l_@@_mark_position_str { r },
+    mark-pos / center  .code:n = \str_set:Nn \l_@@_mark_position_str { c },
+    mark-pos / unknown .code:n =
+                       \msg_error:nneee { enumext } { unknown-choice }
+                         { mark-pos } { left, ~ right, ~ center } { \exp_not:n {#1} },
+    mark-pos  .initial:n = right,
+    mark-pos  .value_required:n = true,
+    mark-sep  .dim_set:N  = \l_@@_mark_sym_sep_dim,
+    mark-sep  .value_required:n = true,
+    wrap-ans  .cs_set_protected:Np = \@@_anskey_wrapper:n #1,
+    wrap-ans  .initial:n =
+                {
+                  \fbox{\parbox[t]{\dimeval{\itemwidth -2\fboxsep -2\fboxrule}}{#1}}
+                },
+    wrap-ans  .value_required:n = true,
+    show-ans  .bool_set:N = \l_@@_show_answer_bool,
+    show-ans  .initial:n  = false,
+    show-ans  .value_required:n = true,
+    show-pos  .bool_set:N = \l_@@_show_position_bool,
+    show-pos  .initial:n  = false,
+    show-pos  .value_required:n = true,
   }
-\clist_map_inline:nn { level-1, enumext* } { \@@_tmp:n {#1} }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -9798,37 +9763,116 @@ Some text here
   {
     \keys_define:nn { enumext / #1 }
       {
-        mark-ans* .tl_set:c  = { l_@@_mark_answer_sym_#2_tl },
-        mark-ans* .initial:n = \textasteriskcentered,
-        mark-ans* .value_required:n = true,
-        mark-pos* .choice:,
+        mark-ans*  .tl_set:c  = { l_@@_mark_answer_sym_#2_tl },
+        mark-ans*  .initial:n = \textasteriskcentered,
+        mark-ans*  .value_required:n = true,
+        mark-pos*  .choice:,
         mark-pos* / left    .code:n = \str_set:cn { l_@@_mark_position_#2_str } { l },
         mark-pos* / right   .code:n = \str_set:cn { l_@@_mark_position_#2_str } { r },
         mark-pos* / center  .code:n = \str_set:cn { l_@@_mark_position_#2_str } { c },
         mark-pos* / unknown .code:n =
                            \msg_error:nneee { enumext } { unknown-choice }
                              { mark-pos } { left, ~ right, ~ center } { \exp_not:n {##1} },
-        mark-pos* .initial:n = right,
-        mark-pos* .value_required:n = true,
-        mark-sep* .dim_set:c = { l_@@_mark_sym_sep_#2_dim },
-        mark-sep* .value_required:n = true,
-        wrap-ans* .cs_set_protected:cp = { @@_keyans_wrapper_item_#2:n } ##1,
-        wrap-ans* .value_required:n = true,
-        wrap-opt  .cs_set_protected:cp = { @@_keyans_wrapper_opt_#2:n } ##1,
-        wrap-opt  .initial:n = [{##1}],
-        wrap-opt  .value_required:n = true,
-        save-sep  .tl_set:c = { l_@@_store_keyans_item_opt_sep_#2_tl },
-        save-sep  .initial:n = {, ~ },
-        save-sep  .value_required:n = true,
-        show-ans  .bool_set:N = \l_@@_show_answer_bool,
-        show-ans  .initial:n = false,
-        show-ans  .value_required:n = true,
-        show-pos  .bool_set:N = \l_@@_show_position_bool,
-        show-pos  .initial:n = false,
-        show-pos  .value_required:n = true,
+        mark-pos*  .initial:n = right,
+        mark-pos*  .value_required:n = true,
+        mark-sep*  .dim_set:c = { l_@@_mark_sym_sep_#2_dim },
+        mark-sep*  .value_required:n = true,
+        wrap-ans*  .cs_set_protected:cp = { @@_keyans_wrapper_item_#2:n } ##1,
+        wrap-ans*  .value_required:n = true,
+        wrap-opt   .cs_set_protected:cp = { @@_keyans_wrapper_opt_#2:n } ##1,
+        wrap-opt   .initial:n = [{##1}],
+        wrap-opt   .value_required:n = true,
+        save-sep   .tl_set:c = { l_@@_store_keyans_item_opt_sep_#2_tl },
+        save-sep   .initial:n = {, ~ },
+        save-sep   .value_required:n = true,
+        show-ans   .bool_set:N = \l_@@_show_answer_bool,
+        show-ans   .initial:n = false,
+        show-ans   .value_required:n = true,
+        show-pos   .bool_set:N = \l_@@_show_position_bool,
+        show-pos   .initial:n = false,
+        show-pos   .value_required:n = true,
       }
   }
 \clist_map_inline:nn { {keyans}{v}, {keyans*}{viii} } { \@@_tmp:nn #1 }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}[int]{wrap-ans, wrap-opt, wrap-ans*, save-sep, mark-ans,
+%                    mark-pos, mark-sep, show-ans, mark-ref, save-ref}
+%   We add the keys \mykey{wrap-ans}, \mykey{wrap-opt}, \mykey{wrap-ans*},\mykey{save-sep},
+%   \mykey{mark-ans}, \mykey{mark-pos}, \mykey{mark-sep}, \mykey{show-ans}, \mykey{show-pos},
+%   \mykey{mark-ref} and \mykey{save-ref} related to the \emph{\enquote{storage system}}
+%   and internal mechanism of \emph{\enquote{label and ref}} only at
+%   the \emph{first level} of \myenv*{enumext} and \myenv*{enumext*}.
+% \iffalse
+%% Add keys associated with storage on first level of |enumext| and |enumext*|.
+% \fi
+%    \begin{macrocode}
+\cs_set_protected:Npn \@@_tmp:n #1
+  {
+    \keys_define:nn { enumext / #1 }
+      {
+        mark-ans  .code:n = {
+                              \keys_set:nn { enumext / anskey  } { mark-ans = {##1} }
+                            },
+        mark-ans  .value_required:n = true,
+        mark-ans* .code:n = {
+                              \keys_set:nn { enumext / keyans  } { mark-ans* = {##1} }
+                              \keys_set:nn { enumext / keyans* } { mark-ans* = {##1} }
+                            },
+        mark-ans* .value_required:n = true,
+        mark-pos  .code:n = {
+                              \keys_set:nn { enumext / anskey  } { mark-pos = {##1} }
+                            },
+        mark-pos  .value_required:n = true,
+        mark-pos* .code:n = {
+                              \keys_set:nn { enumext / keyans  } { mark-pos* = {##1} }
+                              \keys_set:nn { enumext / keyans* } { mark-pos* = {##1} }
+                            },
+        mark-pos* .value_required:n = true,
+        mark-sep  .code:n = {
+                              \keys_set:nn { enumext / anskey  } { mark-sep = {##1} }
+                            },
+        mark-sep  .value_required:n = true,
+        mark-sep* .code:n = {
+                              \keys_set:nn { enumext / keyans  } { mark-sep* = {##1} }
+                              \keys_set:nn { enumext / keyans* } { mark-sep* = {##1} }
+                            },
+        mark-sep* .value_required:n = true,
+        wrap-ans  .code:n = {
+                              \keys_set:nn { enumext / anskey  } { wrap-ans = {##1} }
+                            },
+        wrap-ans  .value_required:n = true,
+        wrap-ans* .code:n = {
+                              \keys_set:nn { enumext / keyans  } { wrap-ans* = {##1} }
+                              \keys_set:nn { enumext / keyans* } { wrap-ans* = {##1} }
+                            },
+        wrap-ans* .value_required:n = true,
+        wrap-opt  .code:n = {
+                              \keys_set:nn { enumext / keyans  } { wrap-opt = {##1} }
+                              \keys_set:nn { enumext / keyans* } { wrap-opt = {##1} }
+                            },
+        wrap-opt  .value_required:n = true,
+        save-sep  .code:n = {
+                              \keys_set:nn { enumext / keyans  } { save-sep = {##1} }
+                              \keys_set:nn { enumext / keyans* } { save-sep = {##1} }
+                            },
+        save-sep  .value_required:n = true,
+        show-ans  .bool_set:N = \l_@@_show_answer_bool,
+        show-ans  .initial:n  = false,
+        show-ans  .value_required:n = true,
+        show-pos  .bool_set:N = \l_@@_show_position_bool,
+        show-pos  .initial:n  = false,
+        show-pos  .value_required:n = true,
+        mark-ref  .tl_set:N   = \l_@@_mark_ref_sym_tl,
+        mark-ref  .initial:n  = \textreferencemark,
+        mark-ref  .value_required:n = true,
+        save-ref  .bool_set:N = \l_@@_store_ref_key_bool,
+        save-ref  .initial:n  = false,
+        save-ref  .value_required:n = true,
+      }
+  }
+\clist_map_inline:nn { level-1, enumext* } { \@@_tmp:n {#1} }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -10470,12 +10514,9 @@ Some text here
 % environments executed as follows \ics*{anskey}\myoarg{key \textnormal{\textcolor{gray}{=}} val}\mymarg{content}.
 %
 % \begin{macro}[int]{break-col, item-join, item-star, item-sym*, item-pos*,
-%               wrap-ans, mark-ans, mark-pos, mark-sep, show-ans, show-pos,
-%               \@@_anskey_unknown:n, \@@_anskey_unknown:nn}
+%                    unknown, \@@_anskey_unknown:n, \@@_anskey_unknown:nn}
 %   First we'll add the keys \mykeycmd{break-col}, \mykeycmd{item-join},
-%   \mykeycmd{item-star}, \mykeycmd{item-sym*}, \mykeycmd{item-pos*},
-%   \mykey{wrap-ans}, \mykey{mark-ans}, \mykey{mark-pos}, \mykey{mark-sep},
-%   \mykey{show-ans} and \mykey{show-pos}.
+%   \mykeycmd{item-star}, \mykeycmd{item-sym*} and \mykeycmd{item-pos*}.
 % \iffalse
 %% Add |key=val| for |\anskey|.
 % \fi
@@ -10494,32 +10535,6 @@ Some text here
     item-sym* .value_required:n = true,
     item-pos* .dim_set:N  = \l_@@_store_item_symbol_sep_dim,
     item-pos* .value_required:n = true,
-    wrap-ans  .cs_set_protected:Np = \@@_anskey_wrapper:n #1,
-    wrap-ans  .initial:n =
-                {
-                  \fbox{\parbox[t]{\dimeval{\itemwidth -2\fboxsep -2\fboxrule}}{#1}}
-                },
-    wrap-ans  .value_required:n = true,
-    mark-ans  .tl_set:N  = \l_@@_mark_answer_sym_tl,
-    mark-ans  .initial:n = \textasteriskcentered,
-    mark-ans  .value_required:n = true,
-    mark-pos  .choice:,
-    mark-pos / left    .code:n = \str_set:Nn \l_@@_mark_position_str { l },
-    mark-pos / right   .code:n = \str_set:Nn \l_@@_mark_position_str { r },
-    mark-pos / center  .code:n = \str_set:Nn \l_@@_mark_position_str { c },
-    mark-pos / unknown .code:n =
-                       \msg_error:nneee { enumext } { unknown-choice }
-                         { mark-pos } { left, ~ right, ~ center } { \exp_not:n {#1} },
-    mark-pos  .initial:n = right,
-    mark-pos  .value_required:n = true,
-    mark-sep  .dim_set:N  = \l_@@_mark_sym_sep_dim,
-    mark-sep  .value_required:n = true,
-    show-ans  .bool_set:N = \l_@@_show_answer_bool,
-    show-ans  .initial:n  = false,
-    show-ans  .value_required:n = true,
-    show-pos  .bool_set:N = \l_@@_show_position_bool,
-    show-pos  .initial:n  = false,
-    show-pos  .value_required:n = true,
     unknown   .code:n     = { \@@_anskey_unknown:n {#1} },
   }
 %    \end{macrocode}
