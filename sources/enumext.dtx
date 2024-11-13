@@ -960,7 +960,7 @@
 %
 % \smallskip
 %
-% \begin{enumext}[save-ans=worksheet,columns=2,show-ans=true,nosep,save-ref=true]
+% \begin{enumext}[save-ans=worksheet,mark-ans={\oldtextasteriskcentered},columns=2,show-ans=true,nosep,save-ref=true]
 %  \item Factor $x^{2}-2x+1$ \anskey{$\left(x-1\right)^{2}$}
 %  \item Factor $3x+3y+3z$ \anskey{$3(x+y+z)$}
 %  \item True False
@@ -1785,7 +1785,7 @@
 %
 % \keyexamp{labelwidth}{rigid length}{by label}
 % Sets the \emph{width} of the box containing the current \mymeta{label}
-% set by the \mykey{label} key when set \emph{\enquote{after it}}.
+% set by the \mykey{label} key.
 % Internally sets the value of \ics{labelwidth} for the current level.
 % The default values are calculated by means of the \emph{width} of a box
 % by setting a \emph{value} to the current counter set by \mykey{label}
@@ -2579,35 +2579,77 @@
 % in which the \mykey{save-ans} key was used and the place where the
 % command is executed.
 %
-% \subsubsection{Keys for \texttt{wrap} and \texttt{display}}\label{subsec:wrap-display}
+% \subsubsection{Keys for \texttt{wrap} and \texttt{marks}}\label{subsec:wrap-display}
+%
+% The \mypkg*{enumext} package provides a set of \mymeta{keys} to set and
+% manipulate \emph{\enquote{symbol marks}} associated with
+% \emph{\enquote{answers}} ​​and how they are displayed and stored in the
+% \emph{sequence} and \emph{prop list}.
+%
+% \smallskip
+%
+% The \mymeta{keys} available for the |\anskey| command and the
+% \myenv*{anskey*} environment can be passed locally in the
+% \emph{optional argument} or at the \emph{\enquote{first level}} of the
+% \myenv*{enumext} or \myenv*{enumext*} environment.
+%
+% \smallskip
+%
+% The \mymeta{keys} available for the \myenv*{keyans} and
+% \myenv*{keyans*} environments can be passed locally in the
+% \emph{optional argument}, at the \emph{\enquote{first level}} of the
+% \myenv*{enumext} or \myenv*{enumext*} environment or via the
+% |\setenumext| command with one minor difference, when \mymeta{keys} are passed
+% through the \emph{\enquote{first level}} of the \myenv*{enumext} or
+% \myenv*{enumext*} environment they are set in \emph{\enquote{both}}
+% environments, but when they are passed using the |\setenumext| command
+% they are set \emph{\enquote{individually}} in each environment.
+%
+% \smallskip
+%
+% \keyexamp{show-ans}{true \textnormal{\textcolor{lightgray}{\textbar}} false}{false}
+%
+% Display the \emph{symbol} set by the \mykey{mark-ans} key to the left of
+% the \emph{mandatory argument} \mymeta{content} passed to the |\anskey|
+% command and \mymeta{body} for the \myenv*{anskey*} environment using
+% the \mykey{wrap-ans} key if set.
+%
+% For \ics*{item*} and \ics*{anspic}|*| the \myenv*{keyans},
+% \myenv*{keyans*} and \myenv*{keyanspic} environments it will display
+% the \emph{symbol} set by the \mykey{mark-ans*} key to the left of the
+% current \mymeta{label} and \emph{optional argument}. If the
+% \emph{optional argument} is present in \ics*{item*} or \ics*{anspic}|*|
+% it will be shown using \mykey{wrap-opt} key.
+%
+% \subsubsection*{Keys for \texttt{\textbackslash{}anskey} and \texttt{anskey*}}
 %
 % \keyexamp{mark-ans}{symbol}{\textbackslash{}textasteriskcentered}
 % Sets the \emph{symbol} to be displayed in the left margin for
-% \ics*{anskey}, \myenv*{anskey*}, \ics*{item*} and \ics*{anspic}|*| in the place
-% where they are executed when using the key \mykey{show-ans}. The
-% \emph{\enquote{symbol}} is placed in a box of width equal to the value of
-% \mykey{labelwidth} at the current level, separated by the value of the
-% key \mykey{mark-sep} and aligned by the value of the key
-% \mykey{mark-pos}. This key is not affected by the keys \mykey{font} or
-% \mykey{wrap-label} so if you want to apply \emph{styling} you have to do it
-% directly, for example: |mark-ans={\textcolor{red}{\textbf{\textasteriskcentered}}|
+% \ics*{anskey} command and \myenv*{anskey*} environment when using the
+% key \mykey{show-ans}. The \emph{\enquote{symbol}} is placed in a box
+% of width equal to the value of \mykey{labelwidth} at the current level,
+% separated by the value of the key \mykey{mark-sep} and aligned by
+% the value of the key \mykey{mark-pos}. This key is not affected by the
+% keys \mykey{font} or \mykey{wrap-label} so if you want to apply
+% \emph{styling} you have to do it directly, for example: |mark-ans={\textcolor{red}{\textbf{\textasteriskcentered}}|
 %
 % \smallskip
 %
 % \keyexamp{mark-pos}{left \textnormal{\textcolor{lightgray}{\textbar}} right \textnormal{\textcolor{lightgray}{\textbar}} center}{left}
-% Sets the \emph{aligned} of the \emph{\enquote{symbol}} defined by \mykey{mark-ans} key. The
-% \emph{\enquote{symbol}} is aligned in a box with the same dimensions of the label box
-% defined by \mykey{labelwidth} key on the current level and separated by the value of the
-% \mykey{mark-sep} key.
+% Sets the \emph{aligned} of the \emph{\enquote{symbol}} defined by
+% \mykey{mark-ans} key for \ics*{anskey} command and \myenv*{anskey*}
+% environment. The \emph{\enquote{symbol}} is aligned in a box with the
+% same dimensions of the label box defined by \mykey{labelwidth} key
+% on the current level and separated by the value of the \mykey{mark-sep}
+% key.
 %
 % \smallskip
 %
 % \keyexamp{mark-sep}{rigid length}{labelsep}
-% Sets the \emph{horizontal space} between the box containing the \emph{\enquote{symbol}}
-% defined by \mykey{mark-ans} key and the current \mymeta{label} for
-% \ics*{item*} and \ics*{anspic}|*| in the \myenv*{keyans}, \myenv*{keyans*}
-% and \myenv*{keyanspic} environments, the \emph{argument} passed to
-% the \ics*{anskey} and the \emph{body} in \myenv*{anskey*} environment.
+% Sets the \emph{horizontal space} between the box containing the
+% \emph{\enquote{symbol}} defined by \mykey{mark-ans} key and the
+% \emph{mandatory argument} \mymeta{content} passed to the \ics*{anskey}
+% command and the \emph{body} in \myenv*{anskey*} environment.
 %
 % \smallskip
 %
@@ -2620,6 +2662,37 @@
 % content}} in the \emph{sequence} and \emph{prop list} \mymarg{store
 % name} set by \mykey{save-ans} key. If this key is passed using
 % \ics*{setenumext} it is necessary to use double ‘|{##1}|’.
+%
+% \subsubsection*{Keys for \texttt{keyans}, \texttt{keyans*} and \texttt{keyanspic}}
+%
+% \keyexamp{mark-ans\textcolor{MediumOrchid}{*}}{symbol}{\textbackslash{}textasteriskcentered}
+% Sets the \emph{symbol} to be displayed in the left margin for
+% \ics*{item*} and \ics*{anspic}|*| for the \myenv*{keyans}, \myenv*{keyans*}
+% and \myenv*{keyanspic} environments when using the key \mykey{show-ans}.
+% The \emph{\enquote{symbol}} is placed in a box of width equal to the value of
+% \mykey{labelwidth} of the environment in which it is executed, separated by the value of the
+% key \mykey{mark-sep*} and aligned by the value of the key
+% \mykey{mark-pos*}. This key is not affected by the keys \mykey{font} or
+% \mykey{wrap-label} so if you want to apply \emph{styling} you have to do it
+% directly, for example: |mark-ans*={\textcolor{red}{\textbf{\textasteriskcentered}}|
+%
+% \smallskip
+%
+% \keyexamp{mark-pos\textcolor{MediumOrchid}{*}}{left \textnormal{\textcolor{lightgray}{\textbar}} right \textnormal{\textcolor{lightgray}{\textbar}} center}{left}
+% Sets the \emph{aligned} of the \emph{\enquote{symbol}} defined by
+% \mykey{mark-ans*} key for the \myenv*{keyans}, \myenv*{keyans*}
+% and \myenv*{keyanspic} environments. The \emph{\enquote{symbol}} is
+% aligned in a box with the same dimensions of the label box defined by
+% \mykey{labelwidth} key of the environment in which it is executed and
+% separated by the value of the \mykey{mark-sep*} key.
+%
+% \smallskip
+%
+% \keyexamp{mark-sep\textcolor{MediumOrchid}{*}}{rigid length}{labelsep}
+% Sets the \emph{horizontal space} between the box containing the
+% \emph{\enquote{symbol}} defined by \mykey{mark-ans*} key and the current \mymeta{label} for
+% \ics*{item*} and \ics*{anspic}|*| in the \myenv*{keyans}, \myenv*{keyans*}
+% and \myenv*{keyanspic} environments.
 %
 % \smallskip
 %
@@ -2636,7 +2709,7 @@
 % For example, if you want the \mymeta{label} to be displayed in red when
 % using \mykey{show-ans} you just set |wrap-ans*={\textcolor{red}{#1}}|.
 %
-% \newpage
+% \smallskip
 %
 % \keyexamp{wrap-opt}{code{} \space\usebox{\hashbox} more code}{[\{\#1\}]}
 % Wraps the \emph{optional argument} passed to the
@@ -2648,16 +2721,6 @@
 % \emph{\enquote{stored content}} in the \emph{sequence} and \emph{prop list}
 % \mymarg{store name} set by \mykey{save-ans} key.
 % If this key is passed using \ics*{setenumext} it is necessary to use double ‘|{##1}|’.
-%
-% \smallskip
-%
-% \keyexamp{show-ans}{true \textnormal{\textcolor{lightgray}{\textbar}} false}{false}
-% Displays the \emph{argument} passed to the \ics*{anskey}, the
-% \emph{body} for \myenv*{anskey*} environment, the \mymeta{label}
-% for \ics*{item*} and \ics*{anspic}|*| at the place where it is executed.
-% If the \emph{optional argument} is present in \ics*{item*} or \ics*{anspic}|*| it will
-% be shown using \mykey{wrap-opt} key.
-%
 %
 % \subsubsection{Keys for debug and checking}
 %
@@ -2720,11 +2783,12 @@
 %
 % \subsubsection{Keys for \cs[no-index]{anskey}}
 %
-% By default the \mymarg{content} passed to |\anskey| when
-% \emph{\enquote{storing}} in the \emph{sequence} \mymarg{store name} has
-% the form |\item| \mymeta{content}, the following \mymeta{keys} allow
-% modifying the way in which it is \emph{\enquote{stored}} in the
-% \emph{sequence}.
+% The keys \mykey{mark-ans}, \mykey{mark-pos}, \mykey{mark-sep}, \mykey{wrap-ans},
+% \mykey{show-ans} and \mykey{show-pos} are available. By default the
+% \mymarg{content} passed to |\anskey| when \emph{\enquote{storing}} in
+% the \emph{sequence} \mymarg{store name} has the form |\item| \mymeta{content},
+% the following \mymeta{keys} allow modifying the way in which it is
+% \emph{\enquote{stored}} in the \emph{sequence}.
 %
 % \smallskip
 %
@@ -2814,17 +2878,26 @@
 %   key are active and the \mypkg{hyperref}\cite{hyperref} package is
 %   detected |\hyperlink| and |\hypertarget| will be used, otherwise the
 %   usual \emph{\enquote{label and ref}} system provided by \hologo{LaTeX} will be used.
-%   By design the environment cannot be nested but full supports \emph{\enquote{verbatim material}} in the
-%   body and it is assumed that each numbered|\item| or |\item*| within the
-%   environment in which it is active it has a \emph{\enquote{single
-%   execution}} unless |\item| or |\item*| open a nested level
-%   or use the \mykey{no-store} key.
 % \end{function}
 %
+% \smallskip
+%
+% By design the environment cannot be nested but full supports
+% \emph{\enquote{verbatim material}} in the \mymeta{body} and it is assumed
+% that \emph{\enquote{each numbered}} |\item| or |\item*| within the
+% environment in which it is active it has a \emph{\enquote{single
+% execution}} unless |\item| or |\item*| open a nested level
+% or use the \mykey{no-store} key.
+%
+% \smallskip
+%
 % The \myenv*{anskey*} environment is implemented using the \mypkg{scontents}
-% package, for the correct operation |\begin{anskey*}| and |\end{anskey*}|
-% must be in different lines, all \mymeta{keys} must be passed separated by
-% commas and \enquote{without separation} of the start of the environment.
+% package, |\begin{anskey*}| and |\end{anskey*}| must be in different lines,
+% all \mymeta{keys} must be passed separated by commas and \enquote{without separation}
+% of the start of the environment.
+%
+% \smallskip
+%
 % Comments \enquote{\textcolor{gray}{\%}} or \enquote{any character}
 % after |\begin{anskey*}| or \myoarg{key \textnormal{\textcolor{gray}{=}} val}
 % on the same line are NOT supported, the package \mypkg{scontents} will return an
@@ -2836,8 +2909,8 @@
 % \subsubsection{Keys for \texttt{anskey*}}
 %
 % The \myenv*{anskey*} environment uses the same \mymeta{keys} as the
-% \ics*{anskey} command  next to the keys inherited from package \mypkg{scontents}.
-% The environment is available for all levels of the
+% \ics*{anskey} command  next to the \mymeta{keys} inherited from package
+% \mypkg{scontents}. The environment is available for all levels of the
 % \myenv*{enumext} environment and the \myenv*{enumext*} environment, but
 % it is disabled for the \myenv*{keyans}, \myenv*{keyans*} and
 % \myenv*{keyanspic} environments.
@@ -2859,7 +2932,7 @@
 % Sets whether the \mymeta{file.ext} generated by \mykey{write-env}
 % from the \myenv*{anskey*} environment will be rewritten.
 %
-% \smallskip
+% \newpage
 %
 % \keyexampenv{force-eol}{true \textnormal{\textcolor{lightgray}{\textbar}} false}{false}
 %
@@ -2888,6 +2961,7 @@
 \begin{examplecode}[frame=single]
 \begin{enumext}[save-ans=test,show-pos=true,start=5]
   \item* Text containing our instructions or questions.
+
     \begin{anskey*}[item-star]
       `\mymeta{first answer}`
     \end{anskey*}
@@ -2902,11 +2976,13 @@
     \end{enumext}
 
   \item Text containing our instructions or questions.
+
     \begin{anskey*}
       `\mymeta{third answer}`
     \end{anskey*}
 
   \item Text containing our instructions or questions.
+
     \begin{anskey*}
       `\mymeta{fourth answer}`
     \end{anskey*}
@@ -2998,7 +3074,10 @@
 % are not set by \ics*{setenumext}, the default values will be the same
 % as the \emph{\enquote{second level}} of the \myenv*{enumext} environment
 % with the difference in the \mymeta{label} which will be set to \mykey{label}=\ilabel{Alph*)}.
-% The keys \mykey{mark-ans}, \mykey{mark-pos}, \mykey{mark-sep}, \mykey{save-sep},
+%
+% \smallskip
+%
+% The keys \mykey{mark-ans*}, \mykey{mark-pos*}, \mykey{mark-sep*}, \mykey{save-sep},
 % \mykey{wrap-opt}, \mykey{wrap-ans*}, \mykey{show-ans} and \mykey{show-pos}
 % are available for both environments.
 %
@@ -3059,7 +3138,7 @@
 %</example>
 % \fi
 %
-% \begin{enumext}[save-ans=test,mark-ans={\oldtextasteriskcentered},show-ans=true,columns=2,nosep]
+% \begin{enumext}[save-ans=test,mark-ans*={\oldtextasteriskcentered},show-ans=true,columns=2,nosep]
 %  \item Text containing a question.
 %
 %    \begin{keyans*}[nosep,columns=2]
@@ -3176,9 +3255,9 @@
 %
 % \smallskip
 %
-% This environment cannot be nested and must always be at the
+% This environment cannot be nested and must \emph{always} be at the
 % \emph{\enquote{first level}} of the \myenv*{enumext} environment, the
-% \ics*{item} command is disabled and keys cannot be set using
+% \ics*{item} command is disabled and \mymeta{keys} cannot be set using
 % |\setenumext|.
 %
 % \subsubsection{Keys for \texttt{keyanspic}}
@@ -3234,9 +3313,9 @@
 %
 % \smallskip
 %
-% The keys \mykey{mark-ans}, \mykey{mark-pos}, \mykey{mark-sep},
-% \mykey{save-sep}, \mykey{wrap-opt}, \mykey{wrap-ans*}, \mykey{show-ans}
-% and \mykey{show-pos} are available for this environment.
+% The keys \mykey{mark-ans*}, \mykey{mark-pos*}, \mykey{mark-sep*}, \mykey{save-sep},
+% \mykey{wrap-opt}, \mykey{wrap-ans*}, \mykey{show-ans} and \mykey{show-pos}
+% are available for this environment.
 %
 % \subsubsection{The command \cs[no-index]{anspic}}
 %
@@ -3267,7 +3346,7 @@
 %<*example>
 % \fi
 \begin{examplecode}[frame=single]
-\begin{enumext}[save-ans=test,show-ans,nosep]
+\begin{enumext}[save-ans=test,show-ans=true,nosep]
   \item Question with images and labels below.
 
     \begin{keyanspic}[layout-sty={3,2}]
@@ -3297,13 +3376,16 @@
       \anspic{\includegraphics[scale=0.15]{example-image-a}}
       \anspic*[note]{\includegraphics[scale=0.15]{example-image-a}}
     \end{keyanspic}
+    
 \end{enumext}
 \end{examplecode}
 % \iffalse
 %</example>
 % \fi
 %
-% \begin{enumext}[save-ans=test,mark-ans={\oldtextasteriskcentered},show-ans=true,nosep, before={\setenumext[keyans]{nosep,parsep=5mm}}]
+% \newpage
+%
+% \begin{enumext}[save-ans=test, mark-ans*={\oldtextasteriskcentered},show-ans=true,nosep, before={\setenumext[keyans]{nosep,parsep=5mm}}]
 % \item Question with images and labels below.
 %    \begin{keyanspic}[layout-sty={3,2}]
 %      \anspic{\includegraphics[scale=0.15]{example-image-a}}
@@ -3313,7 +3395,7 @@
 %      \anspic*[note]{\includegraphics[scale=0.15]{example-image-a}}
 %    \end{keyanspic}
 % \item Question with images and labels above.
-%    \begin{keyanspic}[label-pos=above, layout-sty={3,2},layout-sep=0.25cm]
+%    \begin{keyanspic}[label-pos=above, layout-sty={3,2},layout-sep=0.25cm,layout-top=10pt]
 %      \anspic{\includegraphics[scale=0.15]{example-image-a}}
 %      \anspic{\includegraphics[scale=0.15]{example-image-b}}
 %      \anspic{\includegraphics[scale=0.15]{example-image-a}}
@@ -3321,7 +3403,7 @@
 %      \anspic*[note]{\includegraphics[scale=0.15]{example-image-a}}
 %    \end{keyanspic}
 % \item Question with images and labels below on a single line.
-%    \begin{keyanspic}
+%    \begin{keyanspic}[layout-top=10pt]
 %      \anspic{\includegraphics[scale=0.15]{example-image-a}}
 %      \anspic{\includegraphics[scale=0.15]{example-image-b}}
 %      \anspic{\includegraphics[scale=0.15]{example-image-a}}
@@ -3352,6 +3434,9 @@
 %   in \emph{prop list} \mymarg{store name} defined by
 %   \mykey{save-ans} key in the \mymeta{position} returned by the
 %   \mykey{show-pos} key.
+%
+%  \smallskip
+%
 %   The \emph{\enquote{stored content}} can only be accessed \emph{after}
 %   it is stored, if \mymarg{store name} does not exist the command
 %   will return an error.
@@ -3552,7 +3637,7 @@ all the worksheets are as follows:
 %</example>
 % \fi
 %
-% \begin{enumext}[save-ans=sampleXX,columns=1,show-pos=true,nosep,save-ref=true]
+% \begin{enumext}[save-ans=sampleXX,columns=1,show-pos=true,save-ref=true]
 %  \item Factor $3x+3y+3z$. \anskey{$3(x+y+z)$}
 %  \item True False
 %    \begin{enumext}[nosep]
@@ -3661,7 +3746,7 @@ $ pdfdetach -saveall enumext.pdf
 % \textattachfile[color=red,print=false]{enumext-exa-1.tex}{\faFile*[regular]}.
 %
 % \setenumext[keyans]{label=\Alph*,font=\small,nosep,wrap-label={\fbox{\makebox[\height]{##1}}}}
-% \begin{enumext}[columns=2,save-ans=sabastiano,itemsep=0pt, topsep=0pt,below*={8pt}]
+% \begin{enumext}[columns=2,save-ans=sabastiano,itemsep=2pt, topsep=5pt,below*={8pt}]
 % \item La velocità di \SI{1,00e2}{m/s} espressa in \si{km/h} è:
 %
 %   \begin{keyans}
@@ -3703,7 +3788,7 @@ $ pdfdetach -saveall enumext.pdf
 %   \end{keyans}
 % \end{enumext}
 %
-% \printkeyans[columns=4]{sabastiano}
+% \printkeyans[columns=1]{sabastiano}
 %
 % \subsubsection*{Example 2}
 %
@@ -3778,7 +3863,7 @@ $ pdfdetach -saveall enumext.pdf
 % Adapted from the response given by Florent Rougon in \href{https://tex.stackexchange.com/q/529034/7832}{Multiple choice questions with proposed answers in random order — addition of automatic correction (cross mark)}
 % \textattachfile[color=red,print=false]{enumext-exa-2.tex}{\faFile*[regular]}.
 % \setenumext[keyans]{label=\Alph*,font=\small,nosep,wrap-label={\mySquared{##1}}}
-% \begin{enumext}[columns=2,save-ans=sabastiano2,mark-pos=left,mark-ans=$\checkmark$,save-ref=true,show-ans=true,itemsep=0pt]
+% \begin{enumext}[columns=2,save-ans=sabastiano2,mark-pos*=center,mark-ans*=$\checkmark$,save-ref=true,show-ans=true,itemsep=0pt]
 % \item La velocità di \SI{1,00e2}{m/s} espressa in \si{km/h} è:
 %   \begin{keyans}
 %     \item \SI{36}{km/h}.
@@ -5225,10 +5310,17 @@ Some text here
 %
 % \setlist[itemize,1]{label=\textendash,wide=0.5em,nosep,noitemsep,leftmargin=10pt}
 % \newlength\descrwidth
-% \settowidth{\descrwidth}{\textsf{v1.0a, --- 2023-08-18} }
+% \settowidth{\descrwidth}{\textsf{v1.0, (ctan), 2024-11-01} }
 %
 % \begin{description}[font=\small\sffamily,wide=0pt,style=multiline,leftmargin=1.1\descrwidth,nosep,noitemsep]
-% \item [\fileversion{} \, \filedate]
+%  \item [\fileversion{} (ctan), \filedate]
+%    \begin{itemize}
+%      \item Fixed implementation for |font| and |base-fix| keys.
+%      \item Added new keys for symbol marks.
+%      \item Update and improvements in the internal code.
+%      \item Adjustments in the documentation.
+%    \end{itemize}
+%  \item [v1.0 (ctan), 2024-11-01]
 %    \begin{itemize}
 %    \item First public release.
 %    \end{itemize}
@@ -5679,7 +5771,7 @@ Some text here
 %
 % \begin{variable}[int]{\l_@@_print_keyans_starred_tl, \l_@@_print_keyans_star_bool,
 %                       \l_@@_mark_position_str, \l_@@_mark_position_v_str,
-%                       \l_@@_mark_position_viii_str\l_@@_mark_sep_tmpa_dim,
+%                       \l_@@_mark_position_viii_str, \l_@@_mark_sep_tmpa_dim,
 %                       \l_@@_mark_sep_tmpb_dim, \l_@@_show_pos_tmp_int,
 %                       \g_@@_item_symbol_aux_tl, \l_@@_print_keyans_X_tl,
 %                       \l_@@_store_save_key_X_tl, \l_@@_store_save_key_X_bool,
@@ -6927,14 +7019,14 @@ Some text here
 % \end{macro}
 %
 % \begin{macro}[int]{\@@_standar_ref:n, \@@_standar_ref:,}
-%    The \cs{@@_standar_ref:n} first we will pass the key argument to
-%    \cs{l_@@_ref_key_arg_tl} and we will analyze its state, if it is not
-%    \emph{empty} we will make a copy of the current counter in \cs{l_@@ _ref_the_count_tl}
-%    and we will execute the function \cs{@@_regex_counter_style:} which
-%    will return the modified \cs{l_@@_ref_key_arg_tl} and we make the
-%    value of \cs{l_@@_ref_the_count_tl} the same as that \myvarenv{l__@@_the_counter_X_tl}
-%    which contains |\theenumX| and finally we set \myvarenv{l__@@_renew_the_count_X_tl}
-%    with the renewed command.
+%   The \cs{@@_standar_ref:n} first we will pass the key argument to
+%   \cs{l_@@_ref_key_arg_tl} and we will analyze its state, if it is not
+%   \emph{empty} we will make a copy of the current counter in \cs{l_@@_ref_the_count_tl}
+%   and we will execute the function \cs{@@_regex_counter_style:} which
+%   will return the modified \cs{l_@@_ref_key_arg_tl} and we make the
+%   value of \cs{l_@@_ref_the_count_tl} the same as that \myvarenv{l__@@_the_counter_X_tl}
+%   which contains |\theenumX| and finally we set \myvarenv{l__@@_renew_the_count_X_tl}
+%   with the renewed command.
 % \iffalse
 %% Internal function used by |ref| key in enumext environment.
 % \fi
@@ -9703,8 +9795,8 @@ Some text here
 %
 % \subsubsection{Keys for \texttt{marks}, \texttt{wrapp} and \texttt{show}}
 %
-% The \myenv*{enumext} package provides a set of \mymeta{keys} for
-% manipulating \emph{\enquote{marks}} associated with \emph{\enquote{answers}}
+% The \mypkg*{enumext} package provides a set of \mymeta{keys} for
+% manipulating \emph{\enquote{symbol marks}} associated with \emph{\enquote{answers}}
 % and how they are displayed and stored in the \emph{sequence} and \emph{prop list}
 % as well as an internal \emph{\enquote{label and ref}} system.
 %
@@ -9714,7 +9806,7 @@ Some text here
 %   will add the keys \mykey{mark-ans}, \mykey{mark-pos}, \mykey{mark-sep},
 %   \mykey{wrap-ans}, \mykey{show-ans} and \mykey{show-pos}.
 % \iffalse
-%% Add |key=val| for |\anskey|.
+%% Add the keys for marks style and show for |\anskey| and |anskey*| environment.
 % \fi
 %    \begin{macrocode}
 \keys_define:nn { enumext / anskey }
@@ -9756,7 +9848,7 @@ Some text here
 %   \mykey{wrap-ans*}, \mykey{wrap-opt}, \mykey{save-sep}, \mykey{show-ans}
 %   and \mykey{show-pos}.
 % \iffalse
-%% Add the keys for marks style and print for |keyans| and |keyans*| environments.
+%% Add the keys for marks style and show for |keyans| and |keyans*| environments.
 % \fi
 %    \begin{macrocode}
 \cs_set_protected:Npn \@@_tmp:nn #1 #2
@@ -9797,21 +9889,29 @@ Some text here
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}[int]{wrap-ans, wrap-opt, wrap-ans*, save-sep, mark-ans,
-%                    mark-pos, mark-sep, show-ans, mark-ref, save-ref}
-%   We add the keys \mykey{wrap-ans}, \mykey{wrap-opt}, \mykey{wrap-ans*},\mykey{save-sep},
-%   \mykey{mark-ans}, \mykey{mark-pos}, \mykey{mark-sep}, \mykey{show-ans}, \mykey{show-pos},
-%   \mykey{mark-ref} and \mykey{save-ref} related to the \emph{\enquote{storage system}}
-%   and internal mechanism of \emph{\enquote{label and ref}} only at
-%   the \emph{first level} of \myenv*{enumext} and \myenv*{enumext*}.
+% \begin{macro}[int]{mark-ref, save-ref, mark-ans, mark-ans*, mark-pos,
+%                    mark-pos*, mark-sep, mark-sep*, wrap-ans, wrap-ans*,
+%                    wrap-opt, save-sep, show-ans, show-pos}
+%   We add the keys \mykey{mark-ref} and \mykey{save-ref} related to the
+%   \emph{\enquote{storage system}} and internal mechanism of
+%   \emph{\enquote{label and ref}} along with the keys created for the
+%   command |\anskey|, the environment \myenv*{anskey*} and the environments
+%   \myenv*{keyans} and \myenv*{keyans*} only at the \emph{first level}
+%   of \myenv*{enumext} and \myenv*{enumext*}.
 % \iffalse
-%% Add keys associated with storage on first level of |enumext| and |enumext*|.
+%% Add keys associated with mark and internal label/ref on first level of |enumext| and |enumext*| environments.
 % \fi
 %    \begin{macrocode}
 \cs_set_protected:Npn \@@_tmp:n #1
   {
     \keys_define:nn { enumext / #1 }
       {
+        mark-ref  .tl_set:N   = \l_@@_mark_ref_sym_tl,
+        mark-ref  .initial:n  = \textreferencemark,
+        mark-ref  .value_required:n = true,
+        save-ref  .bool_set:N = \l_@@_store_ref_key_bool,
+        save-ref  .initial:n  = false,
+        save-ref  .value_required:n = true,
         mark-ans  .code:n = {
                               \keys_set:nn { enumext / anskey  } { mark-ans = {##1} }
                             },
@@ -9864,12 +9964,6 @@ Some text here
         show-pos  .bool_set:N = \l_@@_show_position_bool,
         show-pos  .initial:n  = false,
         show-pos  .value_required:n = true,
-        mark-ref  .tl_set:N   = \l_@@_mark_ref_sym_tl,
-        mark-ref  .initial:n  = \textreferencemark,
-        mark-ref  .value_required:n = true,
-        save-ref  .bool_set:N = \l_@@_store_ref_key_bool,
-        save-ref  .initial:n  = false,
-        save-ref  .value_required:n = true,
       }
   }
 \clist_map_inline:nn { level-1, enumext* } { \@@_tmp:n {#1} }
