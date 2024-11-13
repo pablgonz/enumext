@@ -7466,6 +7466,13 @@ Some text here
 %   to apply it within the document in which case the variable
 %   \cs{l_@@_print_keyans_star_bool} set by the |\printkeyans| command is
 %   false and the variable \cs{l_@@_base_line_fix_bool} is true.
+%
+%  \smallskip
+%
+%   We set the values ​​of the keys \mykey{topsep}, \mykey{above}
+%   and \mykey{above*} for the \emph{\enquote{first level}} of \myenv*{enumext}
+%   environment equal to \mydim{0pt} and finally  set the variable \cs{l_@@_base_line_fix_bool}
+%   to false.
 % \iffalse
 %% Internal function for |base-fix| key in |enumext| environment.
 % \fi
@@ -7481,6 +7488,10 @@ Some text here
       {
         \mode_leave_vertical:
         \vspace { -\dim_eval:n { \baselineskip + \parsep } }
+        \keys_set:nn { enumext / level-1 }
+          {
+            topsep = 0pt, above = 0pt, above* = 0pt,
+          }
       }
 %    \end{macrocode}
 %   When we are running the |\printkeyans| command with the \emph{starred
@@ -7494,16 +7505,10 @@ Some text here
         \mode_leave_vertical:
         \skip_vertical:n { -\baselineskip }
         \skip_vertical:N \c_zero_skip
-      }
-%    \end{macrocode}
-%   Finally we set the values ​​of the keys \mykey{topsep}, \mykey{above}
-%   and \mykey{above*} for the \emph{\enquote{first level}} of \myenv*{enumext}
-%   environment equal to \mydim{0pt} and set the variable \cs{l_@@_base_line_fix_bool}
-%   to false.
-%    \begin{macrocode}
-    \keys_set:nn { enumext / level-1 }
-      {
-        topsep = 0pt, above = 0pt, above* = 0pt,
+        \keys_set:nn { enumext / level-1 }
+          {
+            topsep = 0pt, above = 0pt, above* = 0pt,
+          }
       }
     \bool_set_false:N \l_@@_base_line_fix_bool
   }
