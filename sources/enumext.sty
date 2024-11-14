@@ -1097,6 +1097,10 @@
       {
         \mode_leave_vertical:
         \vspace { -\dim_eval:n { \baselineskip + \parsep } }
+        \keys_set:nn { enumext / level-1 }
+          {
+            topsep = 0pt, above = 0pt, above* = 0pt,
+          }
       }
     \bool_lazy_and:nnT
       { \bool_if_p:N \l__enumext_starred_first_bool }
@@ -1105,10 +1109,10 @@
         \mode_leave_vertical:
         \skip_vertical:n { -\baselineskip }
         \skip_vertical:N \c_zero_skip
-      }
-    \keys_set:nn { enumext / level-1 }
-      {
-        topsep = 0pt, above = 0pt, above* = 0pt,
+        \keys_set:nn { enumext / level-1 }
+          {
+            topsep = 0pt, above = 0pt, above* = 0pt,
+          }
       }
     \bool_set_false:N \l__enumext_base_line_fix_bool
   }
@@ -2438,37 +2442,7 @@
     \int_gzero:N \g__enumext_check_starred_cmd_int
     \tl_clear:N \l__enumext_check_start_line_env_tl
   }
-%% Add |key=val| for |\anskey|.
-\keys_define:nn { enumext / anskey }
-  {
-    mark-ans  .tl_set:N  = \l__enumext_mark_answer_sym_tl,
-    mark-ans  .initial:n = \textasteriskcentered,
-    mark-ans  .value_required:n = true,
-    mark-pos  .choice:,
-    mark-pos / left    .code:n = \str_set:Nn \l__enumext_mark_position_str { l },
-    mark-pos / right   .code:n = \str_set:Nn \l__enumext_mark_position_str { r },
-    mark-pos / center  .code:n = \str_set:Nn \l__enumext_mark_position_str { c },
-    mark-pos / unknown .code:n =
-                       \msg_error:nneee { enumext } { unknown-choice }
-                         { mark-pos } { left, ~ right, ~ center } { \exp_not:n {#1} },
-    mark-pos  .initial:n = right,
-    mark-pos  .value_required:n = true,
-    mark-sep  .dim_set:N  = \l__enumext_mark_sym_sep_dim,
-    mark-sep  .value_required:n = true,
-    wrap-ans  .cs_set_protected:Np = \__enumext_anskey_wrapper:n #1,
-    wrap-ans  .initial:n =
-                {
-                  \fbox{\parbox[t]{\dimeval{\itemwidth -2\fboxsep -2\fboxrule}}{#1}}
-                },
-    wrap-ans  .value_required:n = true,
-    show-ans  .bool_set:N = \l__enumext_show_answer_bool,
-    show-ans  .initial:n  = false,
-    show-ans  .value_required:n = true,
-    show-pos  .bool_set:N = \l__enumext_show_position_bool,
-    show-pos  .initial:n  = false,
-    show-pos  .value_required:n = true,
-  }
-%% Add the keys for marks style and print for |keyans| and |keyans*| environments.
+%% Add the keys for marks style and show for |keyans| and |keyans*| environments.
 \cs_set_protected:Npn \__enumext_tmp:nn #1 #2
   {
     \keys_define:nn { enumext / #1 }
@@ -2504,42 +2478,59 @@
       }
   }
 \clist_map_inline:nn { {keyans}{v}, {keyans*}{viii} } { \__enumext_tmp:nn #1 }
-%% Add keys associated with storage on first level of |enumext| and |enumext*|.
+%% Add keys associated with mark and internal label/ref on first level of |enumext| and |enumext*| environments.
 \cs_set_protected:Npn \__enumext_tmp:n #1
   {
     \keys_define:nn { enumext / #1 }
       {
-        mark-ans  .code:n = {
-                              \keys_set:nn { enumext / anskey  } { mark-ans = {##1} }
-                            },
+        mark-ref  .tl_set:N   = \l__enumext_mark_ref_sym_tl,
+        mark-ref  .initial:n  = \textreferencemark,
+        mark-ref  .value_required:n = true,
+        save-ref  .bool_set:N = \l__enumext_store_ref_key_bool,
+        save-ref  .initial:n  = false,
+        save-ref  .value_required:n = true,
+        show-ans  .bool_set:N = \l__enumext_show_answer_bool,
+        show-ans  .initial:n  = false,
+        show-ans  .value_required:n = true,
+        show-pos  .bool_set:N = \l__enumext_show_position_bool,
+        show-pos  .initial:n  = false,
+        show-pos  .value_required:n = true,
+        mark-ans  .tl_set:N  = \l__enumext_mark_answer_sym_tl,
+        mark-ans  .initial:n = \textasteriskcentered,
         mark-ans  .value_required:n = true,
+        mark-sep  .dim_set:N  = \l__enumext_mark_sym_sep_dim,
+        mark-sep  .value_required:n = true,
+        mark-pos  .choice:,
+        mark-pos / left    .code:n = \str_set:Nn \l__enumext_mark_position_str { l },
+        mark-pos / right   .code:n = \str_set:Nn \l__enumext_mark_position_str { r },
+        mark-pos / center  .code:n = \str_set:Nn \l__enumext_mark_position_str { c },
+        mark-pos / unknown .code:n =
+                           \msg_error:nneee { enumext } { unknown-choice }
+                             { mark-pos } { left, ~ right, ~ center } { \exp_not:n {##1} },
+        mark-pos  .initial:n = right,
+        mark-pos  .value_required:n = true,
+
+        wrap-ans  .cs_set_protected:Np = \__enumext_anskey_wrapper:n ##1,
+        wrap-ans  .initial:n =
+                    {
+                      \fbox{\parbox[t]{\dimeval{\itemwidth -2\fboxsep -2\fboxrule}}{##1}}
+                    },
+        wrap-ans  .value_required:n = true,
         mark-ans* .code:n = {
                               \keys_set:nn { enumext / keyans  } { mark-ans* = {##1} }
                               \keys_set:nn { enumext / keyans* } { mark-ans* = {##1} }
                             },
         mark-ans* .value_required:n = true,
-        mark-pos  .code:n = {
-                              \keys_set:nn { enumext / anskey  } { mark-pos = {##1} }
-                            },
-        mark-pos  .value_required:n = true,
         mark-pos* .code:n = {
                               \keys_set:nn { enumext / keyans  } { mark-pos* = {##1} }
                               \keys_set:nn { enumext / keyans* } { mark-pos* = {##1} }
                             },
         mark-pos* .value_required:n = true,
-        mark-sep  .code:n = {
-                              \keys_set:nn { enumext / anskey  } { mark-sep = {##1} }
-                            },
-        mark-sep  .value_required:n = true,
         mark-sep* .code:n = {
                               \keys_set:nn { enumext / keyans  } { mark-sep* = {##1} }
                               \keys_set:nn { enumext / keyans* } { mark-sep* = {##1} }
                             },
         mark-sep* .value_required:n = true,
-        wrap-ans  .code:n = {
-                              \keys_set:nn { enumext / anskey  } { wrap-ans = {##1} }
-                            },
-        wrap-ans  .value_required:n = true,
         wrap-ans* .code:n = {
                               \keys_set:nn { enumext / keyans  } { wrap-ans* = {##1} }
                               \keys_set:nn { enumext / keyans* } { wrap-ans* = {##1} }
@@ -2555,18 +2546,6 @@
                               \keys_set:nn { enumext / keyans* } { save-sep = {##1} }
                             },
         save-sep  .value_required:n = true,
-        show-ans  .bool_set:N = \l__enumext_show_answer_bool,
-        show-ans  .initial:n  = false,
-        show-ans  .value_required:n = true,
-        show-pos  .bool_set:N = \l__enumext_show_position_bool,
-        show-pos  .initial:n  = false,
-        show-pos  .value_required:n = true,
-        mark-ref  .tl_set:N   = \l__enumext_mark_ref_sym_tl,
-        mark-ref  .initial:n  = \textreferencemark,
-        mark-ref  .value_required:n = true,
-        save-ref  .bool_set:N = \l__enumext_store_ref_key_bool,
-        save-ref  .initial:n  = false,
-        save-ref  .value_required:n = true,
       }
   }
 \clist_map_inline:nn { level-1, enumext* } { \__enumext_tmp:n {#1} }
@@ -2890,13 +2869,23 @@
     \par
     \bool_if:NTF \l__enumext_starred_bool
       {
+        \dim_compare:nNnT { \l__enumext_mark_sym_sep_dim } = { \c_zero_dim }
+          {
+             \dim_set:Nn \l__enumext_mark_sym_sep_dim { \l__enumext_labelsep_vii_dim }
+          }
         \__enumext_print_keyans_box:NN
-          \l__enumext_labelwidth_vii_dim  \l__enumext_labelsep_vii_dim
+          \l__enumext_labelwidth_vii_dim \l__enumext_mark_sym_sep_dim
       }
       {
+        \dim_compare:nNnT { \l__enumext_mark_sym_sep_dim } = { \c_zero_dim }
+          {
+            \dim_set:Nn \l__enumext_mark_sym_sep_dim
+              {
+                \dim_use:c {l__enumext_labelsep_ \__enumext_level: _dim }
+              }
+          }
         \__enumext_print_keyans_box:cc
-          { l__enumext_labelwidth_ \__enumext_level: _dim }
-          { l__enumext_labelsep_ \__enumext_level: _dim }
+          { l__enumext_labelwidth_ \__enumext_level: _dim } { l__enumext_mark_sym_sep_dim }
       }
     \__enumext_anskey_wrapper:n { #1 }
   }
@@ -3096,32 +3085,6 @@
         item-sym* .value_required:n = true,
         item-pos* .dim_gset:N  = \g__enumext_store_item_symbol_sep_dim,
         item-pos* .value_required:n = true,
-        wrap-ans  .cs_set_protected:Np = \__enumext_anskey_wrapper:n ##1,
-        wrap-ans  .initial:n =
-                    {
-                      \fbox{\parbox[t]{\dimeval{\itemwidth -2\fboxsep -2\fboxrule}}{##1}}
-                    },
-        wrap-ans  .value_required:n = true,
-        mark-ans  .tl_set:N  = \l__enumext_mark_answer_sym_tl,
-        mark-ans  .initial:n = \textasteriskcentered,
-        mark-ans  .value_required:n = true,
-        mark-pos  .choice:,
-        mark-pos / left    .code:n = \str_set:Nn \l__enumext_mark_position_str { l },
-        mark-pos / right   .code:n = \str_set:Nn \l__enumext_mark_position_str { r },
-        mark-pos / center  .code:n = \str_set:Nn \l__enumext_mark_position_str { c },
-        mark-pos / unknown .code:n =
-                       \msg_error:nneee { enumext } { unknown-choice }
-                         { mark-pos } { left, ~ right, ~ center } { \exp_not:n {##1} },
-        mark-pos  .initial:n = right,
-        mark-pos  .value_required:n = true,
-        mark-sep  .dim_set:N  = \l__enumext_mark_sym_sep_dim,
-        mark-sep  .value_required:n = true,
-        show-ans  .bool_set:N = \l__enumext_show_answer_bool,
-        show-ans  .initial:n  = false,
-        show-ans  .value_required:n = true,
-        show-pos  .bool_set:N = \l__enumext_show_position_bool,
-        show-pos  .initial:n  = false,
-        show-pos  .value_required:n = true,
         print-env .undefine:,
         store-env .undefine:,
         write-out .undefine:,
@@ -3152,12 +3115,6 @@
         item-star .undefine:,
         item-sym* .undefine:,
         item-pos* .undefine:,
-        wrap-ans  .undefine:,
-        mark-ans  .undefine:,
-        mark-pos  .undefine:,
-        mark-sep  .undefine:,
-        show-ans  .undefine:,
-        show-pos  .undefine:,
         write-out .code:n    = {
                                  \bool_set_false:N \l__scontents_storing_bool
                                  \bool_set_true:N  \l__scontents_writing_bool
