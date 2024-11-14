@@ -36,7 +36,7 @@
 %% ------------------------------------------------------------------------
 %% 
 \NeedsTeXFormat{LaTeX2e}[2024-11-01]
-\ProvidesExplPackage {enumext} {2024-11-10} {1.0} {Enumerate exercise sheets}
+\ProvidesExplPackage {enumext} {2024-11-14} {1.1} {Enumerate exercise sheets}
 \hook_gput_code:nnn {begindocument} {enumext}
   {
     \IfPackageLoadedTF { multicol }
@@ -2620,11 +2620,12 @@
   {
     \str_case:nnF {#1}
       {
-        { series   } {} { resume     } {} { save-ans } {} { save-ref  } {}
-        { save-key } {} { check-ans  } {} { show-ans } {} { show-pos  } {}
-        { wrap-ans } {} { mark-ans   } {} { wrap-opt } {} { wrap-ans* } {}
-        { save-sep } {} { mark-sep   } {} { mark-ref } {} { mini-env  } {}
-        { mini-sep } {} { mini-right } {} { mini-right* } {}
+        { series    } {} { resume     } {} { save-ans    } {} { save-ref  } {}
+        { save-key  } {} { check-ans  } {} { show-ans    } {} { show-pos  } {}
+        { mark-ans  } {} { mark-pos   } {} { mark-sep    } {} { wrap-ans  } {}
+        { mark-ans* } {} { mark-pos*  } {} { mark-sep*   } {} { wrap-ans* } {}
+        { wrap-opt  } {} { save-sep   } {} { mark-ref    } {} { mini-env  } {}
+        { mini-sep  } {} { mini-right } {} { mini-right* } {}
       }
       { , { \exp_not:n {#1} } = { \exp_not:n {#2} } }
   }

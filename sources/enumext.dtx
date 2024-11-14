@@ -272,7 +272,7 @@
   {
     \textcolor{\l_userdoc_meta_brackcolor_tl}{#1}
   }
-% Rewrite textborn | textasteriskcentered
+% Rewrite \textborn | textasteriskcentered
 \DeclareTextSymbol{\textbornstd}{TS1}{98}
 \UndeclareTextCommand{\textborn}{TS1}
 \makeatletter
@@ -623,7 +623,7 @@
     keywords      = [6]{save-ans,wrap-ans,save-ref,show-pos,show-ans,columns,list-offset, eunumXi,%
                     nosep,before,after,start, right, item-sym, item-sep, hyperfootnotes, item-star, %
                     scale,wrap-label,font,first,widest,mini-env,list-indent, no-store, save-key,%
-                    store-env, print-env, write-out, force-eol, write-env, overwrite, unknown, %
+                    store-env, print-env, write-out, force-eol, write-env, overwrite, unknown, base-fix,%
                     midsep, wrapper,label-pos,label-sep, layout-sty, layout-sep, layout-top, lang,%
                     pdfversion, pdfstandard, testphase, alt, mark-sep, wrap-ans*, mark-ans, mark-sep},%
 % Reserved words 7 (label values)
@@ -813,16 +813,54 @@
       {\strut\smash{\parbox[t]{\labelwidth}{\raggedright{#2}}}}%
       {\strut\smash{\parbox[t]{\labelwidth}{\raggedleft{#2}}}}%
   }
-%%%\ExplSyntaxOn
-%%5\NewDocumentCommand \labelbx { s +m }
-%%  {
-%%   %% \tag_suspend:n {\parbox}
-%%    \IfBooleanTF{#1}
-%%      { \parbox[t]{\labelwidth}{\raggedright{#2}} }
-%%      { \parbox[t]{\labelwidth}{\raggedleft{#2}}  }
-%%   %% \tag_resume:n {\parbox}
-%%  }
-%%%\ExplSyntaxOff
+% For azetina sample
+\newlength{\itemwd}
+\settowidth{\itemwd}{\bfseries 10.} % max width
+\NewDocumentCommand \rating { }{8.5a, KSC}
+\ExplSyntaxOn
+\bool_new:N \l_azetina_rating_bool
+\NewDocumentCommand \showrating { m }
+  {
+    \str_case:nn {#1}
+      {
+        { true  }
+                {
+                  \bool_set_true:N \l_azetina_rating_bool
+                  \setenumext{show-ans=true,save-sep={ }}
+                }
+        { false }
+                {
+                  \bool_set_false:N \l_azetina_rating_bool
+                  \setenumext{show-ans=false,save-sep={ }}
+                }
+      }
+  }
+\NewDocumentCommand \myans { m +m }
+  {
+    \bool_if:NTF \l_azetina_rating_bool
+      {
+        \item*[(#1)] \textcolor{red}{#2}
+      }
+      {
+        \item*[(#1)] \textcolor{black}{#2}
+      }
+  }
+\NewDocumentCommand \azwrapp { m }
+  {
+    \bool_if:NTF \l_azetina_rating_bool
+      {
+        \makebox[\dim_eval:n{\marginparwidth}][r]
+          {
+            \textcolor{red}{\bfseries\footnotesize\rating}
+          }
+        \hspace{\marginparsep}\textbf{#1}
+      }
+      {
+        \makebox[\dim_eval:n{\marginparwidth+\marginparsep}][l]{ }\textbf{#1}
+      }
+  }
+\ExplSyntaxOff
+\setenumextmeta[enumext,1]{azetinasty}{label={\arabic*.},labelwidth={\marginparwidth+\marginparsep+\itemwd},list-offset={-\marginparwidth-\marginparsep},}
 \begin{document}
   \DocInput{\jobname.dtx}
 \end{document}
@@ -2674,7 +2712,7 @@
 % key \mykey{mark-sep*} and aligned by the value of the key
 % \mykey{mark-pos*}. This key is not affected by the keys \mykey{font} or
 % \mykey{wrap-label} so if you want to apply \emph{styling} you have to do it
-% directly, for example: |mark-ans*={\textcolor{red}{\textbf{\textasteriskcentered}}|
+% directly, for example: |mark-ans*={\textcolor{red}{\textbf{\textasteriskcentered}}|.
 %
 % \smallskip
 %
@@ -3374,7 +3412,7 @@
       \anspic{\includegraphics[scale=0.15]{example-image-a}}
       \anspic*[note]{\includegraphics[scale=0.15]{example-image-a}}
     \end{keyanspic}
-    
+
 \end{enumext}
 \end{examplecode}
 % \iffalse
@@ -3799,7 +3837,7 @@ $ pdfdetach -saveall enumext.pdf
 % arara: clean: { extensions: [ aux, log, out] }
 \documentclass{article}
 \usepackage[colorlinks]{hyperref}
-\usepackage{siunitx,amssymb,tikz,enumext}
+\usepackage{siunitx,amssymb,tikz,enumext,libertinus}
 \usetikzlibrary{shapes.geometric}
 \sisetup{output-decimal-marker={,}}
 \DeclareSIUnit{\angstrom}{\textup{\AA}}
@@ -3811,7 +3849,7 @@ $ pdfdetach -saveall enumext.pdf
 \pagestyle{empty}
 \begin{document}
 \setenumext[keyans]{label=\Alph*,font=\small,nosep,wrap-label={\mySquared{##1}}}
-\begin{enumext}[columns=1,save-ans=sabastiano2,mark-pos=left,mark-ans=$\checkmark$,save-ref=true,show-ans=true,itemsep=0pt]
+\begin{enumext}[columns=1,save-ans=sabastiano2,mark-sep*=2pt,mark-ans*={\textcolor{gray}{✔}},save-ref=true,show-ans=true,itemsep=0pt]
  \item La velocità di \qty{1,00e2}{m/s} espressa in \unit{km/h} è:
    \begin{keyans}
      \item \qty{36}{km/h}.
@@ -3861,7 +3899,7 @@ $ pdfdetach -saveall enumext.pdf
 % Adapted from the response given by Florent Rougon in \href{https://tex.stackexchange.com/q/529034/7832}{Multiple choice questions with proposed answers in random order — addition of automatic correction (cross mark)}
 % \textattachfile[color=red,print=false]{enumext-exa-2.tex}{\faFile*[regular]}.
 % \setenumext[keyans]{label=\Alph*,font=\small,nosep,wrap-label={\mySquared{##1}}}
-% \begin{enumext}[columns=2,save-ans=sabastiano2,mark-pos*=center,mark-ans*=$\checkmark$,save-ref=true,show-ans=true,itemsep=0pt]
+% \begin{enumext}[columns=2,save-ans=sabastiano2,mark-sep*=2pt,mark-ans*={\textcolor{gray}{✔}},save-ref=true,show-ans=true,itemsep=0pt]
 % \item La velocità di \SI{1,00e2}{m/s} espressa in \si{km/h} è:
 %   \begin{keyans}
 %     \item \SI{36}{km/h}.
@@ -3930,7 +3968,7 @@ $ pdfdetach -saveall enumext.pdf
 \setenumextmeta[enumext,2]{myarabic}{no-store,list-offset=0.5cm,label=(\arabic*),noitemsep}
 \begin{enumext}[mode-box,save-ans=simplemc,columns=1,nosep,save-ref=true]
 \item First type of questions
-  \begin{keyans*}[columns=1,noitemsep]
+  \begin{keyans*}[columns=2,noitemsep]
     \item value
     \item*[$x=5$] correct
     \item value
@@ -3995,7 +4033,7 @@ Test keys
 % \fi
 %
 % A \emph{\enquote{simple multiple choice}} test \textattachfile[color=red,print=false]{enumext-exa-3.tex}{\faFile*[regular]}.
-% \setenumext[keyans]{labelsep=6pt,label=\Alph*,font=\small,nosep,wrap-label={\myCircled{##1}}}
+% \setenumext[keyans]{labelsep=8pt,label=\Alph*,font=\small,nosep,wrap-label={\myCircled{##1}}}
 % \begin{enumext}[mode-box,save-ans=simplemc,columns=1,nosep,save-ref=true]
 %   \item First type of questions
 %      \begin{keyans*}[labelsep=8pt,label=\Alph*,font=\small,nosep,wrap-label={\myCircled{#1}},columns=2]
@@ -4248,6 +4286,166 @@ to \ref{simplews:3} is \getkeyans{simplews:3}.
 % \end{enumext}
 %
 % \printkeyans[columns=4]{stylesat}
+%
+% \subsubsection*{Example 6}
+%
+% \iffalse
+%<*example>
+% \fi
+\begin{filecontents*}[overwrite]{enumext-exa-6.tex}
+% arara: lualatex: { branch: developer, draft: true }
+% arara: lualatex: { branch: developer, draft: true }
+% arara: lualatex: { branch: developer }
+% arara: clean: { extensions: [ aux, log, out] }
+\documentclass[letterpaper,twoside]{article}
+\usepackage{xcolor,enumext,libertinus}
+\newlength{\itemwd}
+\settowidth{\itemwd}{\bfseries 10.} % max width
+\NewDocumentCommand \rating { }{8.5a, KSC}
+\ExplSyntaxOn
+\bool_new:N \l_azetina_rating_bool
+\NewDocumentCommand \showrating { m }
+  {
+    \str_case:nn {#1}
+      {
+        { true  }
+                {
+                  \bool_set_true:N \l_azetina_rating_bool
+                  \setenumext{show-ans=true,save-sep={ }}
+                }
+        { false }
+                {
+                  \bool_set_false:N \l_azetina_rating_bool
+                  \setenumext{show-ans=false,save-sep={ }}
+                }
+      }
+  }
+\NewDocumentCommand \myans { m +m }
+  {
+    \bool_if:NTF \l_azetina_rating_bool
+      {
+        \item*[(#1)] \textcolor{red}{#2}
+      }
+      {
+        \item*[(#1)] \textcolor{black}{#2}
+      }
+  }
+\NewDocumentCommand \azwrapp { m }
+  {
+    \bool_if:NTF \l_azetina_rating_bool
+      {
+        \makebox[\dim_eval:n{\marginparwidth}][r]
+          {
+            \textcolor{red}{\bfseries\footnotesize\rating}
+          }
+        \hspace{\marginparsep}\textbf{#1}
+      }
+      {
+        \makebox[\dim_eval:n{\marginparwidth+\marginparsep}][l]{ }\textbf{#1}
+      }
+  }
+\ExplSyntaxOff
+\setenumextmeta[enumext,1]{azetinasty}{label={\arabic*.},labelwidth={\marginparwidth+\marginparsep+\itemwd},list-offset={-\marginparwidth-\marginparsep},}
+\setenumext[keyans]{
+    label={\Alph*},
+    font={\bfseries},
+    wrap-ans*={\textcolor{red}{\bfseries##1}},
+    mark-ans*={\textcolor{red}{✔}},
+    wrap-opt={ },
+    }
+\begin{document}
+
+\showrating{true}
+\begin{enumext}[azetinasty,start=10,wrap-label={\azwrapp{#1}},save-ans=test2024]
+  \item sample
+    \begin{keyans}
+      \item sample
+      %\item*[(8.5a, KSC)] answer
+      \myans{8.5a, KSC}{answer}
+      \item sample
+      \item sample
+    \end{keyans}
+  % Renew \rating here
+  \RenewDocumentCommand \rating { }{9.5a, KSC}
+  \item sample
+      \begin{keyans}
+      \item sample
+      \item sample
+      \item sample
+      %\item*[(9.5a, KSC)] answer
+      \myans{9.5a, KSC}{answer}
+    \end{keyans}
+\end{enumext}
+\showrating{false}
+\RenewDocumentCommand \rating { }{10.5a, KSC}
+\begin{enumext}[resume*,save-ans=test2024]
+  \item sample
+    \begin{keyans}
+      \item sample
+      %\item*[(10.5a, KSC)] answer
+      \myans{10.5a, KSC}{answer}
+      \item sample
+      \item sample
+    \end{keyans}
+  % Renew \rating here
+  \RenewDocumentCommand \rating { }{11.5a, KSC}
+  \item sample
+      \begin{keyans}
+      \item sample
+      \item sample
+      \item sample
+      %\item*[(11.5a, KSC)] answer
+      \myans{11.5a, KSC}{answer}
+    \end{keyans}
+\end{enumext}
+\printkeyans[start=10]{test2024}
+\end{document}
+\end{filecontents*}
+% \iffalse
+%</example>
+% \fi
+%
+% Adapted from the response to \href{https://tex.stackexchange.com/q/728584}{Environment for enumerate environment}
+% \textattachfile[color=red,print=false]{enumext-exa-6.tex}{\faFile*[regular]}.
+% \setenumext[keyans]{label={\Alph*},font={\bfseries},wrap-ans*={\textcolor{red}{\bfseries##1}},mark-ans*={\textcolor{red}{✔}},wrap-opt={ },}
+% \showrating{true}
+% \begin{enumext}[azetinasty,start=10,wrap-label={\azwrapp{#1}},save-ans=test2024,save-sep={ }]
+%  \item sample
+%    \begin{keyans}
+%      \item sample
+%      \item*[(8.5a, KSC)] answer
+%      \item sample
+%      \item sample
+%    \end{keyans}
+%  \RenewDocumentCommand \rating { }{9.5a, KSC}
+%  \item sample
+%      \begin{keyans}
+%      \item sample
+%      \item sample
+%      \item sample
+%      \item*[(9.5a, KSC)] answer
+%    \end{keyans}
+% \end{enumext}
+% \showrating{false}
+% \RenewDocumentCommand \rating { }{10.5a, KSC}
+% \begin{enumext}[resume*,save-ans=test2024]
+%  \item sample
+%    \begin{keyans}
+%      \item sample
+%      \item*[(10.5a, KSC)] answer
+%      \item sample
+%      \item sample
+%    \end{keyans}
+%  \RenewDocumentCommand \rating { }{11.5a, KSC}
+%  \item sample
+%      \begin{keyans}
+%      \item sample
+%      \item sample
+%      \item sample
+%      \item*[(11.5a, KSC)] answer
+%    \end{keyans}
+% \end{enumext}
+% \printkeyans[start=10]{test2024}
 %
 % \section{Tagged PDF examples}
 %
@@ -5419,7 +5617,7 @@ Some text here
 %    \end{macrocode}
 % Now declare the \mypkg*{enumext} package.
 %    \begin{macrocode}
-\ProvidesExplPackage {enumext} {2024-11-10} {1.0} {Enumerate exercise sheets}
+\ProvidesExplPackage {enumext} {2024-11-14} {1.1} {Enumerate exercise sheets}
 %    \end{macrocode}
 % Finally check if the \mypkg{multicol} and \mypkg{scontents} packages
 % are loaded, if not we load it.
@@ -9896,7 +10094,7 @@ Some text here
                              { mark-pos } { left, ~ right, ~ center } { \exp_not:n {##1} },
         mark-pos  .initial:n = right,
         mark-pos  .value_required:n = true,
-    
+
         wrap-ans  .cs_set_protected:Np = \@@_anskey_wrapper:n ##1,
         wrap-ans  .initial:n =
                     {
@@ -10081,19 +10279,21 @@ Some text here
 %   \emph{\enquote{filtering keys}} that are passed \emph{\enquote{with value}} by
 %   excluding the \mykey{series}, \mykey{resume}, \mykey{save-ans}, \mykey{save-ref},
 %   \mykey{save-key}, \mykey{check-ans}, \mykey{show-ans}, \mykey{save-pos},
-%   \mykey{wrap-ans}, \mykey{mark-ans}, \mykey{wrap-opt}, \mykey{wrap-ans*},
-%   \mykey{save-sep}, \mykey{mark-sep}, \mykey{mark-ref}, \mykey{save-sep},
-%   \mykey{mini-env}, \mykey{mini-sep}, \mykey{mini-right} and \mykey{mini-right*} keys.
+%   \mykey{mark-ans}, \mykey{mark-pos}, \mykey{mark-sep}, \mykey{wrap-ans},
+%   \mykey{mark-ans*}, \mykey{mark-pos*}, \mykey{mark-sep*}, \mykey{wrap-ans*},
+%   \mykey{wrap-opt}, \mykey{save-sep}, \mykey{mark-ref}, \mykey{mini-env},
+%   \mykey{mini-sep}, \mykey{mini-right} and \mykey{mini-right*} keys.
 %    \begin{macrocode}
 \cs_new:Npn \@@_filter_save_key_pair:nn #1#2
   {
     \str_case:nnF {#1}
       {
-        { series   } {} { resume     } {} { save-ans } {} { save-ref  } {}
-        { save-key } {} { check-ans  } {} { show-ans } {} { show-pos  } {}
-        { wrap-ans } {} { mark-ans   } {} { wrap-opt } {} { wrap-ans* } {}
-        { save-sep } {} { mark-sep   } {} { mark-ref } {} { mini-env  } {}
-        { mini-sep } {} { mini-right } {} { mini-right* } {}
+        { series    } {} { resume     } {} { save-ans    } {} { save-ref  } {}
+        { save-key  } {} { check-ans  } {} { show-ans    } {} { show-pos  } {}
+        { mark-ans  } {} { mark-pos   } {} { mark-sep    } {} { wrap-ans  } {}
+        { mark-ans* } {} { mark-pos*  } {} { mark-sep*   } {} { wrap-ans* } {}
+        { wrap-opt  } {} { save-sep   } {} { mark-ref    } {} { mini-env  } {}
+        { mini-sep  } {} { mini-right } {} { mini-right* } {}
       }
       { , { \exp_not:n {#1} } = { \exp_not:n {#2} } }
   }

@@ -21,8 +21,8 @@
 
 -- General package identification
 module     = "enumext"
-pkgversion = "1.0"
-pkgdate    = "2024-11-10"
+pkgversion = "1.1"
+pkgdate    = "2024-11-14"
 ltxrelease = "2024-11-01"
 
 -- Configuration of files for build and installation
@@ -304,7 +304,7 @@ if options["target"] == "examples" then
   end
   -- Compiling example files
   print("Compiling sample files in ./"..tmpdir.." using [arara]")
-  local samples = {"enumext-exa-1","enumext-exa-2","enumext-exa-3","enumext-exa-4","enumext-exa-5"}
+  local samples = {"enumext-exa-1","enumext-exa-2","enumext-exa-3","enumext-exa-4","enumext-exa-5","enumext-exa-6"}
   for i, samples in ipairs(samples) do
     local errorlevel = run(tmpdir, "arara "..samples..".tex > "..os_null)
     if errorlevel ~= 0 then

@@ -1,2 +1,5 @@
-Release v1.0 2024-11-10:
-- First public release.
+Release v1.1 2024-11-14:
+– Fixed implementation for `font` and `base-fix` keys.
+– Added new keys for symbol marks.
+– Update and improvements in the internal code.
+– Adjustments in the documentation.
