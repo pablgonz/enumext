@@ -4293,10 +4293,8 @@ to \ref{simplews:3} is \getkeyans{simplews:3}.
 %<*example>
 % \fi
 \begin{filecontents*}[overwrite]{enumext-exa-6.tex}
-% arara: lualatex: { branch: developer, draft: true }
-% arara: lualatex: { branch: developer, draft: true }
-% arara: lualatex: { branch: developer }
-% arara: clean: { extensions: [ aux, log, out] }
+% arara: lualatex
+% arara: clean: { extensions: [ aux, log] }
 \documentclass[letterpaper,twoside]{article}
 \usepackage{xcolor,enumext,libertinus}
 \newlength{\itemwd}
@@ -11408,12 +11406,9 @@ Some text here
       {
         \tl_if_empty:NF \l_@@_store_keyans_item_opt_sep_v_tl
           {
-            \tl_put_right:Ne \l_@@_store_current_label_tl
-              {
-                \l_@@_store_keyans_item_opt_sep_v_tl
-              }
+            \tl_put_right:Nn \l_@@_store_current_label_tl { \l_@@_store_keyans_item_opt_sep_v_tl }
           }
-        \tl_put_right:Ne \l_@@_store_current_label_tl { #1 }
+        \tl_put_right:Nn \l_@@_store_current_label_tl { #1 }
       }
     \@@_store_addto_prop:V \l_@@_store_current_label_tl
   }
@@ -11537,12 +11532,9 @@ Some text here
       {
         \tl_if_empty:NF \l_@@_store_keyans_item_opt_sep_v_tl
           {
-            \tl_put_right:Ne \l_@@_store_current_label_tl
-              {
-                \l_@@_store_keyans_item_opt_sep_v_tl
-              }
+            \tl_put_right:Nn \l_@@_store_current_label_tl { \l_@@_store_keyans_item_opt_sep_v_tl }
           }
-        \tl_put_right:Ne \l_@@_store_current_label_tl { #1 }
+        \tl_put_right:Nn \l_@@_store_current_label_tl { #1 }
       }
     \@@_keyans_addto_seq_link:
   }
@@ -11596,7 +11588,7 @@ Some text here
   {
     \tl_if_novalue:nF { #1 }
       {
-        \tl_set:Ne \l_@@_store_current_opt_arg_tl { #1 }
+        \tl_set:Nn \l_@@_store_current_opt_arg_tl { #1 }
       }
   }
 %    \end{macrocode}
@@ -15133,13 +15125,10 @@ Some text here
       {
         \tl_if_empty:NF \l_@@_store_keyans_item_opt_sep_viii_tl
           {
-            \tl_put_right:Ne \l_@@_store_current_label_tl
-              {
-                \l_@@_store_keyans_item_opt_sep_viii_tl
-              }
-            \tl_put_right:Ne \l_@@_store_current_label_tl { #1 }
+            \tl_put_right:NV \l_@@_store_current_label_tl \l_@@_store_keyans_item_opt_sep_viii_tl
+            \tl_put_right:Nn \l_@@_store_current_label_tl { #1 }
           }
-        \tl_set:Ne \l_@@_store_current_opt_arg_tl { #1 }
+        \tl_set:Nn \l_@@_store_current_opt_arg_tl { #1 }
       }
     \@@_starred_item_viii_aux_ii:w
   }
@@ -15164,7 +15153,7 @@ Some text here
     \tl_put_left:Ne \l_@@_store_current_label_tl { \l_@@_label_viii_tl }
     \@@_store_addto_prop:V \l_@@_store_current_label_tl
     \@@_keyans_store_ref:
-    \tl_put_left:Ne \l_@@_store_current_label_tl { \item }
+    \tl_put_left:Nn \l_@@_store_current_label_tl { \item }
     \@@_keyans_addto_seq_link:
     \int_gincr:N \g_@@_check_starred_cmd_int
     \dim_compare:nNnT { \l_@@_mark_sym_sep_viii_dim } = { \c_zero_dim }

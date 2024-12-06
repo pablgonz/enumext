@@ -3272,21 +3272,22 @@
     \tl_clear:N \l__enumext_store_current_label_tl
     \int_compare:nNnTF { \l__enumext_keyans_pic_level_int } = { 1 }
       {
-        \tl_put_right:Ne \l__enumext_store_current_label_tl { \l__enumext_label_vi_tl }
+        %%% \tl_put_right:Ne \l__enumext_store_current_label_tl { \l__enumext_label_vi_tl }
+        \tl_put_right:NV \l__enumext_store_current_label_tl \l__enumext_label_vi_tl
       }
       {
-        \tl_put_right:Ne \l__enumext_store_current_label_tl { \l__enumext_label_v_tl }
+        \tl_put_right:NV \l__enumext_store_current_label_tl \l__enumext_label_v_tl
       }
     \tl_if_novalue:nF { #1 }
       {
         \tl_if_empty:NF \l__enumext_store_keyans_item_opt_sep_v_tl
           {
-            \tl_put_right:Ne \l__enumext_store_current_label_tl
+            \tl_put_right:Nn \l__enumext_store_current_label_tl
               {
                 \l__enumext_store_keyans_item_opt_sep_v_tl
               }
           }
-        \tl_put_right:Ne \l__enumext_store_current_label_tl { #1 }
+        \tl_put_right:Nn \l__enumext_store_current_label_tl { #1 }
       }
     \__enumext_store_addto_prop:V \l__enumext_store_current_label_tl
   }
@@ -3350,6 +3351,7 @@
     \tl_clear:N \l__enumext_store_current_label_tl
     \int_compare:nNnTF { \l__enumext_keyans_pic_level_int } = { 1 }
       {
+        %%\tl_put_right:Ne \l__enumext_store_current_label_tl { \item \l__enumext_label_vi_tl }
         \tl_put_right:Ne \l__enumext_store_current_label_tl { \item \l__enumext_label_vi_tl }
       }
       {
@@ -3359,12 +3361,12 @@
       {
         \tl_if_empty:NF \l__enumext_store_keyans_item_opt_sep_v_tl
           {
-            \tl_put_right:Ne \l__enumext_store_current_label_tl
+            \tl_put_right:Nn \l__enumext_store_current_label_tl
               {
                 \l__enumext_store_keyans_item_opt_sep_v_tl
               }
           }
-        \tl_put_right:Ne \l__enumext_store_current_label_tl { #1 }
+        \tl_put_right:Nn \l__enumext_store_current_label_tl { #1 }
       }
     \__enumext_keyans_addto_seq_link:
   }
@@ -3394,7 +3396,7 @@
   {
     \tl_if_novalue:nF { #1 }
       {
-        \tl_set:Ne \l__enumext_store_current_opt_arg_tl { #1 }
+        \tl_set:Nn \l__enumext_store_current_opt_arg_tl { #1 }
       }
   }
 \cs_new_protected:Nn \__enumext_keyans_show_item_opt:
@@ -5377,13 +5379,13 @@
       {
         \tl_if_empty:NF \l__enumext_store_keyans_item_opt_sep_viii_tl
           {
-            \tl_put_right:Ne \l__enumext_store_current_label_tl
+            \tl_put_right:Nn \l__enumext_store_current_label_tl
               {
                 \l__enumext_store_keyans_item_opt_sep_viii_tl
               }
-            \tl_put_right:Ne \l__enumext_store_current_label_tl { #1 }
+            \tl_put_right:Nn \l__enumext_store_current_label_tl { #1 }
           }
-        \tl_set:Ne \l__enumext_store_current_opt_arg_tl { #1 }
+        \tl_set:Nn \l__enumext_store_current_opt_arg_tl { #1 }
       }
     \__enumext_starred_item_viii_aux_ii:w
   }
