@@ -6,7 +6,7 @@
 %%
 %% enumext.dtx  (with options: `package')
 %% 
-%% Copyright (C) 2024 by Pablo González L <pablgonz@educarchile.cl>
+%% Copyright (C) 2024-2025 by Pablo González L <pablgonz@educarchile.cl>
 %% 
 %% This work may be distributed and/or modified under the conditions of the
 %% LaTeX Project Public License, either version 1.3c of this license or (at
@@ -171,7 +171,7 @@
 \tl_new:N  \l__enumext_meta_path_tl
 \seq_new:N \l__enumext_foreach_print_seq
 \tl_new:N  \l__enumext_foreach_name_prop_tl
-\tl_new:N  \g__enumext_foreach_default_keys_tl
+\tl_new:N  \l__enumext_foreach_default_keys_tl
 %% Variables used by |\printkeyans|, |mark-pos|, |item-sym*|, |save-key| and  storing structure in |enumext| and |enumext*|.
 \tl_new:N   \l__enumext_print_keyans_starred_tl
 \bool_new:N \l__enumext_print_keyans_star_bool
@@ -2554,7 +2554,7 @@
   {
     \bool_if:cF { l__enumext_store_save_key_ \__enumext_level: _bool }
       {
-        \tl_clear:c { l__enumext_save_key_ \__enumext_level: _tl }
+        \tl_clear:c { l__enumext_store_save_key_ \__enumext_level: _tl }
         \tl_set:ce
           { l__enumext_store_save_key_ \__enumext_level: _tl }
           { \__enumext_filter_save_key:n {#1} }
@@ -3156,7 +3156,7 @@
         \tl_clear:N \l__enumext_store_anskey_opt_tl
         \bool_if:NT \l__enumext_check_answers_bool
           {
-            \tl_gset:Ne \l__enumext_store_anskey_env_tl
+            \tl_set:Ne \l__enumext_store_anskey_env_tl
               {
                 \seq_item:ce { g__scontents_name_ \l__enumext_store_name_tl _seq } { -1 }
               }
@@ -3272,20 +3272,16 @@
     \tl_clear:N \l__enumext_store_current_label_tl
     \int_compare:nNnTF { \l__enumext_keyans_pic_level_int } = { 1 }
       {
-        %%% \tl_put_right:Ne \l__enumext_store_current_label_tl { \l__enumext_label_vi_tl }
-        \tl_put_right:NV \l__enumext_store_current_label_tl \l__enumext_label_vi_tl
+        \tl_put_right:Ne \l__enumext_store_current_label_tl { \l__enumext_label_vi_tl }
       }
       {
-        \tl_put_right:NV \l__enumext_store_current_label_tl \l__enumext_label_v_tl
+        \tl_put_right:Ne \l__enumext_store_current_label_tl { \l__enumext_label_v_tl }
       }
     \tl_if_novalue:nF { #1 }
       {
         \tl_if_empty:NF \l__enumext_store_keyans_item_opt_sep_v_tl
           {
-            \tl_put_right:Nn \l__enumext_store_current_label_tl
-              {
-                \l__enumext_store_keyans_item_opt_sep_v_tl
-              }
+            \tl_put_right:Nn \l__enumext_store_current_label_tl { \l__enumext_store_keyans_item_opt_sep_v_tl }
           }
         \tl_put_right:Nn \l__enumext_store_current_label_tl { #1 }
       }
@@ -3351,7 +3347,6 @@
     \tl_clear:N \l__enumext_store_current_label_tl
     \int_compare:nNnTF { \l__enumext_keyans_pic_level_int } = { 1 }
       {
-        %%\tl_put_right:Ne \l__enumext_store_current_label_tl { \item \l__enumext_label_vi_tl }
         \tl_put_right:Ne \l__enumext_store_current_label_tl { \item \l__enumext_label_vi_tl }
       }
       {
@@ -3361,10 +3356,7 @@
       {
         \tl_if_empty:NF \l__enumext_store_keyans_item_opt_sep_v_tl
           {
-            \tl_put_right:Nn \l__enumext_store_current_label_tl
-              {
-                \l__enumext_store_keyans_item_opt_sep_v_tl
-              }
+            \tl_put_right:Nn \l__enumext_store_current_label_tl { \l__enumext_store_keyans_item_opt_sep_v_tl }
           }
         \tl_put_right:Nn \l__enumext_store_current_label_tl { #1 }
       }
@@ -5379,10 +5371,7 @@
       {
         \tl_if_empty:NF \l__enumext_store_keyans_item_opt_sep_viii_tl
           {
-            \tl_put_right:Nn \l__enumext_store_current_label_tl
-              {
-                \l__enumext_store_keyans_item_opt_sep_viii_tl
-              }
+            \tl_put_right:NV \l__enumext_store_current_label_tl \l__enumext_store_keyans_item_opt_sep_viii_tl
             \tl_put_right:Nn \l__enumext_store_current_label_tl { #1 }
           }
         \tl_set:Nn \l__enumext_store_current_opt_arg_tl { #1 }
@@ -5400,7 +5389,7 @@
     \tl_put_left:Ne \l__enumext_store_current_label_tl { \l__enumext_label_viii_tl }
     \__enumext_store_addto_prop:V \l__enumext_store_current_label_tl
     \__enumext_keyans_store_ref:
-    \tl_put_left:Ne \l__enumext_store_current_label_tl { \item }
+    \tl_put_left:Nn \l__enumext_store_current_label_tl { \item }
     \__enumext_keyans_addto_seq_link:
     \int_gincr:N \g__enumext_check_starred_cmd_int
     \dim_compare:nNnT { \l__enumext_mark_sym_sep_viii_dim } = { \c_zero_dim }
@@ -5831,7 +5820,7 @@
   {
     before={},after={},start=1,step=1,stop=0,wrapper=#1,sep={; }
   }
-  \g__enumext_foreach_default_keys_tl
+  \l__enumext_foreach_default_keys_tl
 \cs_new_protected:Npn \__enumext_parse_foreach_keys:nn #1#2
   {
     \tl_if_blank:nTF {#2}
@@ -5852,7 +5841,7 @@
   }
 \cs_new_protected:Npn \__enumext_foreach_keyans:nn #1 #2
   {
-    \tl_use:N \g__enumext_foreach_default_keys_tl
+    \tl_use:N \l__enumext_foreach_default_keys_tl
     \keys_set:nn { enumext / foreach } {#1}
     \tl_set:Nn \l__enumext_foreach_name_prop_tl {#2}
     \prop_if_exist:cF { g__enumext_#2_prop }
