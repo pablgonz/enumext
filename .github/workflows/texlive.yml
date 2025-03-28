@@ -1,4 +1,4 @@
-name: Automated testing for enumext package (TL2024)
+name: Automated testing for enumext package (TL2024 -2025)
 
 on:
   push:
@@ -17,6 +17,7 @@ jobs:
       matrix:
         version:
           - 2024
+          - 2025
         command:
           - doc
           - examples

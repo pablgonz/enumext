@@ -1,5 +1,3 @@
-Release v1.1 2024-11-14:
-– Fixed implementation for `font` and `base-fix` keys.
-– Added new keys for symbol marks.
-– Update and improvements in the internal code.
-– Adjustments in the documentation.
+Release v1.2 2025-03-28:
+- Replace signature (prevent expansion for optional arg).
+- Solve Inconsistent local/global assignment.

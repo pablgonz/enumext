@@ -8,7 +8,7 @@
 %
 % File: enumext.dtx
 %
-% Copyright (C) 2024 by Pablo González L <pablgonz@educarchile.cl>
+% Copyright (C) 2024-2025 by Pablo González L <pablgonz@educarchile.cl>
 %
 % This work may be distributed and/or modified under the conditions of the
 % LaTeX Project Public License, either version 1.3c of this license or (at
@@ -738,7 +738,7 @@
 }
 \setfoot{\rlap{\hskip\dimexpr-\oddsidemargin-1in\relax%
          \parbox{1.93\paperwidth}{\hfil\thepage\,/\,\pageref{LastPage}}}}%
-        {\parbox{\textwidth}{\raggedright \textcolor{gray}{\raisebox{-1pt}{\textcopyright}{}2024 by Pablo González L}}}%
+        {\parbox{\textwidth}{\raggedright \textcolor{gray}{\raisebox{-1pt}{\textcopyright}{}2024--2025 by Pablo González L}}}%
         {}%
 \sethead{\llap{\raisebox{0.55cm}{\parbox{\dimexpr\oddsidemargin+1in\relax}{\makebox[0pt][l]{\hspace{15pt}\pkglogo\space\fileversion}}}}}
         {\raisebox{0.55cm}{\parbox{\textwidth}{\hspace*{-\oddsidemargin}\centering\small\S.\thesection\space\sectiontitle}}}%
@@ -875,7 +875,7 @@
 %    \filedate.}\\[25pt]
 %    \author{
 %    \large
-%    \raisebox{-1pt}{\textcopyright}{}2024 by Pablo González\thanks{
+%    \raisebox{-1pt}{\textcopyright}{}2024--2025 by Pablo González\thanks{
 %    E-mail: \textcolor{OrangeRed}{\textsf{\guillemotleft}}\email{pablgonz@educarchile.cl}\textcolor{OrangeRed}{\textsf{\guillemotright}}.
 %       }%
 %    }
@@ -5509,6 +5509,11 @@ Some text here
 % \begin{description}[font=\small\sffamily,wide=0pt,style=multiline,leftmargin=1.1\descrwidth,nosep,noitemsep]
 %  \item [\fileversion{} (ctan), \filedate]
 %    \begin{itemize}
+%      \item Replace signature (prevent expansion for optional arg).
+%      \item Solve Inconsistent local/global assignment.
+%    \end{itemize}
+%  \item [v1.1 (ctan), 2024-11-14]
+%    \begin{itemize}
 %      \item Fixed implementation for |font| and |base-fix| keys.
 %      \item Added new keys for symbol marks.
 %      \item Update and improvements in the internal code.
@@ -5615,7 +5620,7 @@ Some text here
 %    \end{macrocode}
 % Now declare the \mypkg*{enumext} package.
 %    \begin{macrocode}
-\ProvidesExplPackage {enumext} {2024-11-14} {1.1} {Enumerate exercise sheets}
+\ProvidesExplPackage {enumext} {2025-03-28} {1.2} {Enumerate exercise sheets}
 %    \end{macrocode}
 % Finally check if the \mypkg{multicol} and \mypkg{scontents} packages
 % are loaded, if not we load it.
@@ -5951,14 +5956,14 @@ Some text here
 % \end{variable}
 %
 % \begin{variable}[int]{\l_@@_meta_path_tl, \l_@@_foreach_print_seq,
-%                       \l_@@_foreach_name_prop_tl, \g_@@_foreach_default_keys_tl,}
+%                       \l_@@_foreach_name_prop_tl, \l_@@_foreach_default_keys_tl,}
 %   Internal variables used by the |\printkeyans| command (\S\ref{cmd:printkeyans})
 %   and |\foreachkeyans| command (\S\ref{cmd:foreachkeyans}).
 %    \begin{macrocode}
 \tl_new:N  \l_@@_meta_path_tl
 \seq_new:N \l_@@_foreach_print_seq
 \tl_new:N  \l_@@_foreach_name_prop_tl
-\tl_new:N  \g_@@_foreach_default_keys_tl
+\tl_new:N  \l_@@_foreach_default_keys_tl
 %    \end{macrocode}
 % \end{variable}
 %
@@ -10160,7 +10165,7 @@ Some text here
   {
     \bool_if:cF { l_@@_store_save_key_ \@@_level: _bool }
       {
-        \tl_clear:c { l_@@_save_key_ \@@_level: _tl }
+        \tl_clear:c { l_@@_store_save_key_ \@@_level: _tl }
         \tl_set:ce
           { l_@@_store_save_key_ \@@_level: _tl }
           { \@@_filter_save_key:n {#1} }
@@ -11196,7 +11201,7 @@ Some text here
         \tl_clear:N \l_@@_store_anskey_opt_tl
         \bool_if:NT \l_@@_check_answers_bool
           {
-            \tl_gset:Ne \l_@@_store_anskey_env_tl
+            \tl_set:Ne \l_@@_store_anskey_env_tl
               {
                 \seq_item:ce { g__scontents_name_ \l_@@_store_name_tl _seq } { -1 }
               }
@@ -15803,7 +15808,7 @@ Some text here
   {
     before={},after={},start=1,step=1,stop=0,wrapper=#1,sep={; }
   }
-  \g_@@_foreach_default_keys_tl
+  \l_@@_foreach_default_keys_tl
 %    \end{macrocode}
 %   Functions for handling unknown \mymeta{keys}.
 %    \begin{macrocode}
@@ -15835,7 +15840,7 @@ Some text here
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_foreach_keyans:nn #1 #2
   {
-    \tl_use:N \g_@@_foreach_default_keys_tl
+    \tl_use:N \l_@@_foreach_default_keys_tl
     \keys_set:nn { enumext / foreach } {#1}
     \tl_set:Nn \l_@@_foreach_name_prop_tl {#2}
     \prop_if_exist:cF { g_@@_#2_prop }
