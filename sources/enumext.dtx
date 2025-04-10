@@ -827,12 +827,12 @@
         { true  }
                 {
                   \bool_set_true:N \l_azetina_rating_bool
-                  \setenumext{show-ans=true,save-sep={ }}
+                  \setenumext{show-ans=true,save-sep={ ~ }}
                 }
         { false }
                 {
                   \bool_set_false:N \l_azetina_rating_bool
-                  \setenumext{show-ans=false,save-sep={ }}
+                  \setenumext{show-ans=false,save-sep={ ~ }}
                 }
       }
   }
@@ -4304,12 +4304,12 @@ to \ref{simplews:3} is \getkeyans{simplews:3}.
         { true  }
                 {
                   \bool_set_true:N \l_azetina_rating_bool
-                  \setenumext{show-ans=true,save-sep={ }}
+                  \setenumext{show-ans=true,save-sep={ ~ }}
                 }
         { false }
                 {
                   \bool_set_false:N \l_azetina_rating_bool
-                  \setenumext{show-ans=false,save-sep={ }}
+                  \setenumext{show-ans=false,save-sep={ ~ }}
                 }
       }
   }
@@ -4400,9 +4400,9 @@ to \ref{simplews:3} is \getkeyans{simplews:3}.
 %
 % Adapted from the response to \href{https://tex.stackexchange.com/q/728584}{Environment for enumerate environment}
 % \textattachfile[color=red,print=false]{enumext-exa-6.tex}{\faFile*[regular]}.
-% \setenumext[keyans]{label={\Alph*},font={\bfseries},wrap-ans*={\textcolor{red}{\bfseries##1}},mark-ans*={\textcolor{red}{✔}},wrap-opt={ },}
+% \setenumext[keyans]{label={\Alph*},font={\bfseries},wrap-ans*={\textcolor{red}{\bfseries##1}},mark-ans*={\textcolor{red}{✔}},wrap-opt={ },save-sep={ }}
 % \showrating{true}
-% \begin{enumext}[azetinasty,start=10,wrap-label={\azwrapp{#1}},save-ans=test2024,save-sep={\space}]
+% \begin{enumext}[azetinasty,start=10,wrap-label={\azwrapp{#1}},save-ans=test2024]
 %  \item sample
 %    \begin{keyans}
 %      \item sample
