@@ -35,8 +35,8 @@
 %% 
 %% ------------------------------------------------------------------------
 %% 
-\NeedsTeXFormat{LaTeX2e}[2024-11-01]
-\ProvidesExplPackage {enumext} {2025-03-28} {1.2} {Enumerate exercise sheets}
+\NeedsTeXFormat{LaTeX2e}[2025-06-01]
+\ProvidesExplPackage {enumext} {2025-06-01} {1.3} {Enumerate exercise sheets}
 \hook_gput_code:nnn {begindocument} {enumext}
   {
     \IfPackageLoadedTF { multicol }
@@ -47,16 +47,8 @@
         \msg_info:nnn { enumext } { package-not-load } { multicol }
         \RequirePackage{multicol}[2024-05-23]
       }
-    \IfPackageLoadedTF { scontents }
-      {
-        \msg_info:nnn { enumext } { package-load } { scontents }
-      }
-      {
-        \msg_info:nnn { enumext } { package-not-load } { scontents }
-        \RequirePackage{scontents}
-      }
   }
-%% Variable for levels and nesting off all environments and \anskey.
+%% Variable for levels and nesting off all environments and |\anskey|, |anskey*|.
 \int_new:N  \l__enumext_level_int
 \int_new:N  \l__enumext_level_h_int
 \int_new:N  \l__enumext_anskey_level_int
@@ -70,7 +62,6 @@
 \bool_new:N \l__enumext_standar_bool
 \bool_new:N \g__enumext_standar_bool
 \bool_new:N \l__enumext_standar_first_bool
-\bool_new:N \l__enumext_anskey_env_bool
 \bool_new:N \l__enumext_keyans_env_bool
 \tl_new:N   \g__enumext_start_line_tl
 \tl_new:N   \g__enumext_envir_name_tl
@@ -156,12 +147,17 @@
 \bool_new:N \l__enumext_store_active_bool
 \tl_new:N   \l__enumext_store_name_tl
 \tl_new:N   \g__enumext_store_name_tl
-\tl_new:N   \l__enumext_store_anskey_arg_tl
-\tl_new:N   \l__enumext_store_anskey_env_tl
-\tl_new:N   \l__enumext_store_anskey_opt_tl
 \tl_new:N   \l__enumext_store_current_label_tl
 \tl_new:N   \l__enumext_store_current_opt_arg_tl
 \tl_new:N   \l__enumext_store_current_label_tmp_tl
+%% Variables used by |\anskey| and |anskey*|.
+\tl_new:N   \l__enumext_store_anskey_arg_tl
+\tl_new:N   \l__enumext_store_anskey_env_tl
+\bool_new:N \l__enumext_write_anskey_env_bool
+\tl_new:N   \l__enumext_write_anskey_env_file_name_tl
+\iow_new:N  \l__enumext_write_anskey_env_file_iow
+\str_const:Ne \c__enumext_anskey_env_hidden_space_str
+  { \c_percent_str \c_circumflex_str \c_circumflex_str A enumextheol \c_percent_str }
 %% Variables used by |\setenumext|.
 \tl_new:N  \l__enumext_setkey_tmpa_tl
 \tl_new:N  \l__enumext_setkey_tmpb_tl
@@ -259,6 +255,7 @@
   }
 \cs_generate_variant:Nn \keys_precompile:nnN { neN }
 \cs_generate_variant:Nn \seq_use:Nn { NV }
+\cs_new_protected:Npn \__enumext_scan_tokens:n #1 { \tex_scantokens:D {#1} }
 %% A internal "hooks" functions used for copying and execute code.
 \cs_new_protected:Npn \__enumext_at_begin_document:n #1
   {
@@ -296,9 +293,9 @@
 %% Function to show list lengths used by |show-length| key.
 \cs_new:Npn \__enumext_show_length:nnn #1 #2 #3
   {
-    * ~ #2
-    \prg_replicate:nn { 14 - \str_count:n {#2} } { ~ }
-      = ~ \use:c { #1_use:c } { l__enumext_#2_#3_#1 } \\
+    *~#2
+    \prg_replicate:nn { 14 - \str_count:n {#2} } {~}
+      =~\use:c { #1_use:c } { l__enumext_#2_#3_#1 } \\
   }
 %% Remove last skip or kern.
 \cs_new_protected:Nn \__enumext_unskip_unkern:
@@ -347,11 +344,10 @@
       }
       {
         \bool_set_true:N \l__enumext_standar_first_bool
-        \bool_set_true:N \l__enumext_anskey_env_bool
         \tl_gset:Nn \g__enumext_envir_name_tl { enumext }
         \tl_gset:Ne \g__enumext_start_line_tl
           {
-            on ~ line ~ \exp_not:V \inputlineno
+            on~line~\exp_not:V \inputlineno
           }
       }
     \bool_lazy_all:nT
@@ -362,11 +358,10 @@
       }
       {
         \bool_set_true:N \l__enumext_starred_first_bool
-        \bool_set_true:N \l__enumext_anskey_env_bool
         \tl_gset:Nn \g__enumext_envir_name_tl { enumext* }
         \tl_gset:Ne \g__enumext_start_line_tl
           {
-            on ~ line ~ \exp_not:V \inputlineno
+            on~line~\exp_not:V \inputlineno
           }
       }
   }
@@ -380,7 +375,7 @@
             \tl_set:Nn \l__enumext_envir_name_tl { keyans }
             \tl_set:Ne \l__enumext_check_start_line_env_tl
               {
-                in ~ 'keyans' ~ start ~ on ~ line ~ \exp_not:V \inputlineno
+                in~'keyans'~start~on~line~\exp_not:V \inputlineno
               }
           }
         {keyans*}
@@ -388,7 +383,7 @@
             \tl_set:Nn \l__enumext_envir_name_tl { keyans* }
             \tl_set:Ne \l__enumext_check_start_line_env_tl
               {
-                in ~ 'keyans*' ~ start ~ on ~ line ~ \exp_not:V \inputlineno
+                in~'keyans*'~start~on~line~\exp_not:V \inputlineno
               }
           }
         {keyanspic}
@@ -396,7 +391,7 @@
             \tl_set:Nn \l__enumext_envir_name_tl { keyanspic }
             \tl_set:Ne \l__enumext_check_start_line_env_tl
               {
-                in ~ 'keyanspic' ~ start ~ on ~ line ~ \exp_not:V \inputlineno
+                in~'keyanspic'~start~on~line~\exp_not:V \inputlineno
               }
           }
       }
@@ -775,7 +770,7 @@
                           },
         align / unknown .code:n =
                           \msg_error:nneee { enumext } { unknown-choice }
-                            { align } { left, ~ right, ~  center } { \exp_not:n {##1} },
+                            { align } { left,~right,~ center } { \exp_not:n {##1} },
         align .initial:n  = left,
         align .value_required:n  = true,
       }
@@ -796,7 +791,7 @@
         align / center  .code:n = \str_set:cn { l__enumext_align_label_#2_str } { c },
         align / unknown .code:n =
                           \msg_error:nneee { enumext } { unknown-choice }
-                            { align } { left, ~ right, ~  center } { \exp_not:n {##1} },
+                            { align } { left,~right,~ center } { \exp_not:n {##1} },
         align .initial:n = left,
         align .value_required:n = true,
       }
@@ -2258,7 +2253,6 @@
     \bool_set_true:N \l__enumext_store_active_bool
     \bool_set_true:N \l__enumext_check_answers_bool
     \tl_gset:NV \g__enumext_store_name_tl \l__enumext_store_name_tl
-    \__enumext_anskey_env_make:V \l__enumext_store_name_tl
     \prop_if_exist:cF { g__enumext_ \l__enumext_store_name_tl _prop }
       {
         \msg_log:nnV { enumext } { store-prop } \l__enumext_store_name_tl
@@ -2456,7 +2450,7 @@
         mark-pos* / center  .code:n = \str_set:cn { l__enumext_mark_position_#2_str } { c },
         mark-pos* / unknown .code:n =
                            \msg_error:nneee { enumext } { unknown-choice }
-                             { mark-pos } { left, ~ right, ~ center } { \exp_not:n {##1} },
+                             { mark-pos } { left,~right,~center } { \exp_not:n {##1} },
         mark-pos*  .initial:n = right,
         mark-pos*  .value_required:n = true,
         mark-sep*  .dim_set:c = { l__enumext_mark_sym_sep_#2_dim },
@@ -2467,7 +2461,7 @@
         wrap-opt   .initial:n = [{##1}],
         wrap-opt   .value_required:n = true,
         save-sep   .tl_set:c = { l__enumext_store_keyans_item_opt_sep_#2_tl },
-        save-sep   .initial:n = {, ~ },
+        save-sep   .initial:n = {,~},
         save-sep   .value_required:n = true,
         show-ans   .bool_set:N = \l__enumext_show_answer_bool,
         show-ans   .initial:n = false,
@@ -2506,7 +2500,7 @@
         mark-pos / center  .code:n = \str_set:Nn \l__enumext_mark_position_str { c },
         mark-pos / unknown .code:n =
                            \msg_error:nneee { enumext } { unknown-choice }
-                             { mark-pos } { left, ~ right, ~ center } { \exp_not:n {##1} },
+                             { mark-pos } { left,~right,~center } { \exp_not:n {##1} },
         mark-pos  .initial:n = right,
         mark-pos  .value_required:n = true,
 
@@ -2800,8 +2794,8 @@
       }
     \l__enumext_write_aux_file_tl
   }
-%% Internal function of |\anskey| for store content.
-\cs_new_protected:Npn \__enumext_store_anskey_code:n #1
+%% Internal function for |\anskey| and |anskey*| for store content.
+\cs_new_protected:Npn \__enumext_store_anskey_arg:n #1
   {
     \int_gincr:N \g__enumext_item_anskey_int
     \__enumext_store_addto_prop:n {#1}
@@ -2961,7 +2955,7 @@
             }
             {
               \__enumext_anskey_safe_inner:
-              \__enumext_store_anskey_code:n {#2}
+              \__enumext_store_anskey_arg:n {#2}
             }
         }
     \group_end:
@@ -3003,94 +2997,33 @@
         \msg_error:nne { enumext } { anskey-math-mode } { \c_backslash_str anskey }
       }
   }
-\cs_new_protected:Nn \__enumext_undefine_anskey_env:
+%% Define keys for |anskey*| environment.
+\keys_define:nn { enumext / anskey* }
   {
-    \cs_undefine:c { anskey* }
-    \cs_undefine:c { endanskey* }
-    \cs_undefine:c { __scontents_anskey*_env_begin: }
-    \cs_undefine:c { __scontents_anskey*_env_end: }
-  }
-%% Hooks for |anskey*| environment out off |enumext| and |enumext*| environments.
-\__enumext_before_env:nn { enumext }
-  {
-    \bool_lazy_and:nnT
-      { \int_compare_p:nNn { \l__enumext_level_int } = { 0 } }
-      { \int_compare_p:nNn { \l__enumext_level_h_int } = { 0 } }
-      {
-        \cs_if_free:cF { __scontents_anskey*_env_begin: }
-          {
-            \msg_error:nnn { enumext } { anskey-env-error } { anskey* }
-          }
-      }
-  }
-\__enumext_before_env:nn { enumext* }
-  {
-    \bool_lazy_and:nnT
-      { \int_compare_p:nNn { \l__enumext_level_int } = { 0 } }
-      { \int_compare_p:nNn { \l__enumext_level_h_int } = { 0 } }
-      {
-        \cs_if_free:cF { __scontents_anskey*_env_begin: }
-          {
-            \msg_error:nnn { enumext } { anskey-env-error } { anskey* }
-          }
-      }
-  }
-%% Hooks for |anskey*| inside the |keyans|, |keyans*| and |keyanspic| environments, math-mode and not number |\item|.
-\__enumext_before_env:nn { anskey* }
-  {
-    \int_compare:nNnT { \l__enumext_keyans_level_int } = { 1 }
-      {
-        \msg_error:nnn { enumext } { anskey-env-wrong }{ keyans }
-      }
-    \int_compare:nNnT { \l__enumext_keyans_level_h_int } = { 1 }
-      {
-        \msg_error:nnn { enumext } { anskey-env-wrong } { keyans* }
-      }
-    \int_compare:nNnT { \l__enumext_keyans_pic_level_int } = { 1 }
-      {
-        \msg_error:nnn { enumext } { anskey-env-wrong } { keyanspic }
-      }
-    \bool_if:NF \l__enumext_item_number_bool
-      {
-        \msg_error:nn { enumext } { anskey-unnumber-item }
-      }
-    \mode_if_math:T
-      {
-        \msg_error:nnn { enumext } { anskey-math-mode } { anskey* }
-      }
-  }
-%% Function for define |anskey*| environment using scontents.
-\cs_new_protected:Npn \__enumext_anskey_env_make:n #1
-  {
-    \bool_if:NT \l__enumext_anskey_env_bool
-      {
-        \newenvsc{anskey*}[store-env=#1,print-env=false]
-        \__enumext_anskey_env_exec:
-      }
-  }
-\cs_generate_variant:Nn \__enumext_anskey_env_make:n { V }
-%% Define keys for |anskey*| environment using scontents PATH.
-\cs_new_protected:Nn \__enumext_anskey_env_define_keys:
-  {
-    \keys_define:nn { scontents / scontents }
-      {
-        break-col .bool_gset:N = \g__enumext_store_columns_break_bool,
-        break-col .default:n   = true,
-        break-col .value_forbidden:n = true,
-        item-join .int_gset:N  = \g__enumext_store_item_join_int,
-        item-join .value_required:n = true,
-        item-star .bool_gset:N = \g__enumext_store_item_star_bool,
-        item-star .default:n   = true,
-        item-star .value_forbidden:n = true,
-        item-sym* .tl_gset:N   = \g__enumext_store_item_symbol_tl,
-        item-sym* .value_required:n = true,
-        item-pos* .dim_gset:N  = \g__enumext_store_item_symbol_sep_dim,
-        item-pos* .value_required:n = true,
-        print-env .undefine:,
-        store-env .undefine:,
-        write-out .undefine:,
-        unknown   .code:n      = { \__enumext_anskey_env_unknown:n {##1} },
-      }
+    break-col .bool_set:N = \l__enumext_store_columns_break_bool,
+    break-col .default:n  = true,
+    break-col .value_forbidden:n = true,
+    item-join .int_set:N  = \l__enumext_store_item_join_int,
+    item-join .value_required:n = true,
+    item-star .bool_set:N = \l__enumext_store_item_star_bool,
+    item-star .default:n  = true,
+    item-star .value_forbidden:n = true,
+    item-sym* .tl_set:N   = \l__enumext_store_item_symbol_tl,
+    item-sym* .value_required:n = true,
+    item-pos* .dim_set:N  = \l__enumext_store_item_symbol_sep_dim,
+    item-pos* .value_required:n = true,
+    force-eol .bool_set:N = \l__enumext_anskey_env_force_eol_bool,
+    force-eol .initial:n  = false,
+    force-eol .default:n  = true,
+    write-env .code:n     = {
+                              \bool_set_true:N \l__enumext_write_anskey_env_bool
+                              \tl_set:Nn \l__enumext_write_anskey_env_file_name_tl {#1}
+                            },
+    write-env .value_required:n = true,
+    overwrite .bool_set:N = \l__enumext_anskey_env_overwrite_bool,
+    overwrite .initial:n  = false,
+    overwrite .default:n  = true,
+    unknown   .code:n     = { \__enumext_anskey_env_unknown:n {#1} },
   }
 \cs_new_protected:Npn \__enumext_anskey_env_unknown:n #1
   {
@@ -3106,144 +3039,111 @@
         \msg_error:nnnn { enumext } { anskey-env-key-value-unknown } {#1} {#2}
       }
   }
-%% Restore keys for |scontents| environment.
-\cs_new_protected:Nn \__enumext_anskey_env_reset_keys:
+%% Conditional functions used by |write-env| and |overwrite| keys.
+\prg_new_protected_conditional:Npnn \__enumext_anskey_env_file_if_writable:n #1 { T, F, TF }
   {
-    \keys_define:nn { scontents / scontents }
+    \bool_if:NTF \l__enumext_write_anskey_env_bool
       {
-        break-col .undefine:,
-        item-join .undefine:,
-        item-star .undefine:,
-        item-sym* .undefine:,
-        item-pos* .undefine:,
-        write-out .code:n    = {
-                                 \bool_set_false:N \l__scontents_storing_bool
-                                 \bool_set_true:N  \l__scontents_writing_bool
-                                 \tl_set:Nn \l__scontents_fname_out_tl {##1}
-                               },
-        write-out .value_required:n = true,
-        print-env .meta:nn   = { scontents } { print-env = ##1 },
-        print-env .default:n = true,
-        store-env .meta:nn   = { scontents } { store-env = ##1 },
-        unknown   .code:n    = { \__scontents_parse_environment_keys:n {##1} },
+        \file_if_exist:nTF {#1}
+          {
+            \bool_if:NTF \l__enumext_anskey_env_overwrite_bool
+              {
+                \msg_warning:nne { enumext } { overwrite-file } {#1}
+                \prg_return_true:
+              }
+              {
+                \msg_warning:nne { enumext } { not-writing } {#1}
+                \prg_return_false:
+              }
+          }
+          {
+            \msg_warning:nne { enumext } { writing-file } {#1}
+            \prg_return_true:
+          }
+      }
+      { \prg_return_false: }
+  }
+\cs_new_protected:Npn \__enumext_anskey_env_file_write:nn #1#2
+  {
+    \__enumext_anskey_env_file_if_writable:nT {#1}
+      {
+        \iow_open:Nn \l__enumext_write_anskey_env_file_iow {#1}
+        \iow_now:Nn  \l__enumext_write_anskey_env_file_iow {#2}
+        \iow_close:N \l__enumext_write_anskey_env_file_iow
       }
   }
-\cs_new_protected:Npn \__enumext_rescan_anskey_env:n #1
+\cs_generate_variant:Nn \__enumext_anskey_env_file_write:nn { VV }
+%% Define the user environment |anskey*|.
+\NewDocumentEnvironment{anskey*}{ o c }
   {
-    \group_begin:
-      \int_set:Nn \tex_newlinechar:D { `\^^J }
-      \__scontents_rescan_tokens:x
+    \__enumext_anskey_env_safe_outer:
+    \bool_if:NT \l__enumext_check_answers_bool
+      {
+        \tl_if_novalue:nF {#1}
+          {
+            \keys_set:nn { enumext / anskey* } {#1}
+          }
+        \tl_if_blank:nTF {#2}
+          {
+            \msg_error:nn { enumext } { anskey-empty-arg }
+          }
+          {
+            \__enumext_anskey_env_safe_inner:
+            \__enumext_store_anskey_env:n {#2}
+          }
+      }
+  } { }
+%% Internal function for msg when |anskey*| is outer or wrong.
+\cs_new_protected:Nn \__enumext_anskey_env_safe_outer:
+  {
+    \bool_if:NF \l__enumext_store_active_bool
+      {
+        \msg_error:nnn { enumext } { anskey-env-error } { anskey* }
+      }
+    \int_compare:nNnT { \l__enumext_keyans_level_int } = { 1 }
+      {
+        \msg_error:nnn { enumext } { anskey-env-wrong }{ keyans }
+      }
+    \int_compare:nNnT { \l__enumext_keyans_level_h_int } = { 1 }
+      {
+        \msg_error:nnn { enumext } { anskey-env-wrong } { keyans* }
+      }
+    \int_compare:nNnT { \l__enumext_keyans_pic_level_int } = { 1 }
+      {
+        \msg_error:nnn { enumext } { anskey-env-wrong } { keyanspic }
+      }
+  }
+%% Internal function for msg when |anskey*| is inner or math-mode
+\cs_new_protected:Nn \__enumext_anskey_env_safe_inner:
+  {
+    \bool_if:NF \l__enumext_item_number_bool
+      {
+        \msg_error:nn { enumext } { anskey-unnumber-item }
+      }
+    \mode_if_math:T
+      {
+        \msg_error:nnn { enumext } { anskey-math-mode } { anskey* }
+      }
+  }
+\cs_new_protected:Npn \__enumext_store_anskey_env:n #1
+  {
+    \tl_set:Nn \l__enumext_store_anskey_env_tl {#1}
+    \RenewDocumentCommand \obeyedline { } { \iow_char:N \^^J }
+    \tl_replace_all:Nee \l__enumext_store_anskey_env_tl { \obeyedline } { \iow_char:N \^^J }
+    \__enumext_anskey_env_file_write:VV
+      \l__enumext_write_anskey_env_file_name_tl \l__enumext_store_anskey_env_tl
+    \bool_if:NF \l__enumext_anskey_env_force_eol_bool
+      {
+        \tl_put_right:Ne \l__enumext_store_anskey_env_tl
+          {
+            \c__enumext_anskey_env_hidden_space_str
+          }
+      }
+    \exp_args:Ne
+      \__enumext_store_anskey_arg:n
         {
-          \endgroup % This assumes \catcode`\\=0... Things might go off otherwise.
-         #1
+          \__enumext_scan_tokens:n { \l__enumext_store_anskey_env_tl }
         }
-  }
-%% Function for exec all code for |anskey*| environment.
-\cs_new_protected:Nn \__enumext_anskey_env_exec:
-  {
-    \__enumext_before_env:nn { anskey* }
-      {
-        \__enumext_anskey_env_define_keys:
-      }
-    \hook_if_empty:nF {env/anskey*/after}
-      {
-        \hook_gremove_code:nn {env/anskey*/after} { * }
-      }
-    \__enumext_after_env:nn { anskey* }
-      {
-        \__enumext_anskey_env_save_keys:
-        \tl_clear:N \l__enumext_store_anskey_env_tl
-        \tl_clear:N \l__enumext_store_anskey_opt_tl
-        \bool_if:NT \l__enumext_check_answers_bool
-          {
-            \tl_set:Ne \l__enumext_store_anskey_env_tl
-              {
-                \seq_item:ce { g__scontents_name_ \l__enumext_store_name_tl _seq } { -1 }
-              }
-            \regex_match:nVTF
-              { ^\s* \z | ^\s* \u{c__scontents_hidden_space_str} \z }
-              \l__enumext_store_anskey_env_tl
-              {
-                \msg_error:nn { enumext } { anskey-empty-arg }
-              }
-              {
-                \__enumext_anskey_env_store:
-              }
-          }
-        \__enumext_anskey_env_clean_vars:
-        \__enumext_anskey_env_reset_keys:
-      }
-  }
-\cs_new_protected:Nn \__enumext_anskey_env_save_keys:
-  {
-    \bool_lazy_and:nnT
-      { \bool_if_p:N \g__enumext_store_columns_break_bool }
-      { \bool_not_p:n { \l__enumext_starred_bool } }
-      {
-        \tl_put_left:Ne \l__enumext_store_anskey_opt_tl { ,break-col, }
-      }
-    \bool_lazy_and:nnT
-      { \bool_not_p:n { \l__enumext_starred_bool } }
-      { \int_compare_p:nNn { \g__enumext_store_item_join_int } > { 1 } }
-      {
-        \tl_put_left::Ne \l__enumext_store_anskey_opt_tl
-          {
-            ,item-join = \exp_not:V \g__enumext_store_item_join_int,
-          }
-       }
-    \bool_if:NT \g__enumext_store_item_star_bool
-      {
-        \tl_put_left:Ne \l__enumext_store_anskey_opt_tl
-          {
-            ,item-star,
-          }
-        \tl_if_empty:NF \g__enumext_store_item_symbol_tl
-          {
-            \tl_put_left:Ne \l__enumext_store_anskey_opt_tl
-              {
-                ,item-sym* = \exp_not:V \g__enumext_store_item_symbol_tl,
-              }
-          }
-        \dim_compare:nT
-          {
-            \g__enumext_store_item_symbol_sep_dim != \c_zero_dim
-          }
-          {
-            \tl_put_left:Ne \l__enumext_store_anskey_opt_tl
-              {
-                ,item-pos* = \exp_not:V \g__enumext_store_item_symbol_sep_dim,
-              }
-          }
-       }
-  }
-\cs_new_protected:Nn \__enumext_anskey_env_store:
-  {
-    \group_begin:
-      \tl_if_empty:NTF \l__enumext_store_anskey_opt_tl
-        {
-          \exp_args:Ne
-            \__enumext_store_anskey_code:n
-              {
-                \__enumext_rescan_anskey_env:n { \l__enumext_store_anskey_env_tl }
-              }
-        }
-        {
-          \keys_set_known:nV { enumext / anskey } \l__enumext_store_anskey_opt_tl
-          \exp_args:Ne
-            \__enumext_store_anskey_code:n
-              {
-                \__enumext_rescan_anskey_env:n { \l__enumext_store_anskey_env_tl }
-              }
-        }
-    \group_end:
-  }
-\cs_new_protected:Nn \__enumext_anskey_env_clean_vars:
-  {
-    \bool_gset_false:N \g__enumext_store_columns_break_bool
-    \int_gzero:N       \g__enumext_store_item_join_int
-    \bool_gset_false:N \g__enumext_store_item_star_bool
-    \tl_gclear:N       \g__enumext_store_item_symbol_tl
-    \dim_gzero:N       \g__enumext_store_item_symbol_sep_dim
   }
 %% Function internal checking answer mechanism, clean vars and undefine |anskey*| environment.
 \cs_new_protected:Nn \__enumext_execute_after_env:
@@ -3261,7 +3161,6 @@
                 \__enumext_check_ans_show:
               }
               { \__enumext_check_ans_log: }
-            \__enumext_undefine_anskey_env:
           }
         \__enumext_reset_global_vars:
       }
@@ -3281,7 +3180,10 @@
       {
         \tl_if_empty:NF \l__enumext_store_keyans_item_opt_sep_v_tl
           {
-            \tl_put_right:Nn \l__enumext_store_current_label_tl { \l__enumext_store_keyans_item_opt_sep_v_tl }
+            \tl_put_right:Nn \l__enumext_store_current_label_tl
+              {
+                \l__enumext_store_keyans_item_opt_sep_v_tl
+              }
           }
         \tl_put_right:Nn \l__enumext_store_current_label_tl { #1 }
       }
@@ -4398,8 +4300,8 @@
     save-sep   .value_required:n = true,
     wrap-opt   .code:n           = \keys_set:nn { enumext / keyans } { wrap-opt = #1 },
     wrap-opt   .value_required:n = true,
-    wrap-ans*   .code:n           = \keys_set:nn { enumext / keyans } { wrap-ans* = #1 },
-    wrap-ans*   .value_required:n = true,
+    wrap-ans*  .code:n           = \keys_set:nn { enumext / keyans } { wrap-ans* = #1 },
+    wrap-ans*  .value_required:n = true,
     show-ans   .code:n           = \keys_set:nn { enumext / keyans } { show-ans = #1 },
     show-ans   .value_required:n = true,
     show-pos   .code:n           = \keys_set:nn { enumext / keyans } { show-pos = #1 },
@@ -5773,7 +5675,7 @@
 \cs_new_protected:Npn \__enumext_add_meta_key:nnn #1
   {
     \tl_set:Nn \l__enumext_meta_path_tl {#1}
-    \tl_replace_all:Nnn \l__enumext_meta_path_tl { ~ } {}
+    \tl_replace_all:Nnn \l__enumext_meta_path_tl {~} {}
     \prop_get:NVNTF
       \c__enumext_meta_paths_prop \l__enumext_meta_path_tl \l__enumext_meta_path_tl
       { \__enumext_def_meta_key:Vnn \l__enumext_meta_path_tl }
@@ -5876,69 +5778,73 @@
 %% Messages.
 \msg_new:nnn { enumext } { package-load }
   {
-    The ~ '#1' ~ package ~ is ~ already ~ loaded.
+    The~'#1'~package~is~already~loaded.
   }
 \msg_new:nnn { enumext } { package-not-load }
   {
-    The ~ '#1' ~ package ~ will ~ be ~ loaded ~ as ~ a ~ dependency.
+    The~'#1'~package~will~be~loaded~as~a~dependency.
   }
 \msg_new:nnn { enumext } { package-load-foot }
   {
-    The ~ '#1' ~ package ~ is ~ loaded ~ with ~ the ~ option ~ '#2'.
+    The~'#1'~package~is~loaded~with~the~option~'#2'.
   }
 \msg_new:nnn { enumext } { counters }
   {
-    The ~ counter ~ '#1' ~ is ~ already ~ defined ~ by ~ some ~ \\
-    package ~ or ~ macro, ~ it ~ cannot ~ be ~ continued.
+    The~counter~'#1'~is~already~defined~by~some~\\
+    package~or~macro,~it~cannot~be~continued.
   }
 \msg_new:nnn { enumext } { unknown-choice }
   {
-    The ~ value ~ '#3' ~ for ~ '#1' ~ key ~ is ~ invalid ~ use ~ ('#2').
+    The~value~'#3'~for~'#1'~key~is~invalid~use~('#2').
   }
 \msg_new:nnnn { enumext } { anskey-env-error }
   {
-    The ~ '#1' ~ environment ~is ~ reserved ~ by ~\\
-    'enumext' ~ package, ~ It~ is~ already~ defined.
+    The~environment~'#1'~is~reserved~by ~\\
+    'enumext'~package,~It~is~already~defined.
   }
   {
-    The ~ anskey* ~ environment ~ is ~ defined ~ internally ~
-    for ~ the ~ 'save-ans' ~ key.\\
+    The~environment~'#1'~is~defined~internally ~
+    for~the~'save-ans'~key~with~save-ans~key~active.~See~documentation.\\
+  }
+\msg_new:nnn { enumext } { anskey-env-nested }
+  {
+    The~#1~'#2'~can't~be~nested~\msg_line_context:.
   }
 \msg_new:nnn { enumext } { store-prop }
   {
-    * ~ Package ~ enumext: ~ Creating ~
-     \c_backslash_str g__enumext_#1_prop ~ \msg_line_context:.
+    *~Package~enumext:~Creating ~
+     \c_backslash_str g__enumext_#1_prop~\msg_line_context:.
   }
 \msg_new:nnn { enumext } { store-seq }
   {
-    * ~ Package ~ enumext: ~ Creating ~
-    \c_backslash_str g__enumext_#1_seq ~ \msg_line_context:.
+    *~Package~enumext:~Creating ~
+    \c_backslash_str g__enumext_#1_seq~\msg_line_context:.
   }
 \msg_new:nnn { enumext } { store-int }
   {
-    * ~ Package ~ enumext: ~ Creating ~
-    \c_backslash_str g__enumext_resume_#1_int ~ \msg_line_context:.
+    *~Package~enumext:~Creating ~
+    \c_backslash_str g__enumext_resume_#1_int~\msg_line_context:.
   }
 \msg_new:nnn { enumext } { prop-seq-int-hook }
   {
-    * ~ Package ~ enumext: ~ Elements ~ in ~
-    \c_backslash_str g__enumext_#1_prop ~ = ~ #2.\\
-    * ~ Package ~ enumext: ~ Elements ~ in ~
-    \c_backslash_str g__enumext_#1_seq ~ = ~ #3.\\
-    * ~ Package ~ enumext: ~ Value ~ off ~
-    \c_backslash_str g__enumext_resume_#1_int ~ = ~ #4.
+    *~Package~enumext:~Elements~in ~
+    \c_backslash_str g__enumext_#1_prop~=~#2.\\
+    *~Package~enumext:~Elements~in ~
+    \c_backslash_str g__enumext_#1_seq~=~#3.\\
+    *~Package~enumext:~Value~off ~
+    \c_backslash_str g__enumext_resume_#1_int~=~#4.
   }
 \msg_new:nnn { enumext } { item-answer-hook }
   {
-    * ~ Package ~ enumext: ~ Value ~ off ~
-    \c_backslash_str g__enumext_item_number_int ~ = ~ #1.\\
-    * ~ Package ~ enumext: ~ Value ~ off ~
-    \c_backslash_str g__enumext_item_anskey_int ~ = ~ #2.\\
-    * ~ Package ~ enumext: ~ Difference ~ item_number_int ~ - ~ item_anskey_int ~ = ~ #3.
+    *~Package~enumext:~Value~off ~
+    \c_backslash_str g__enumext_item_number_int~=~#1.\\
+    *~Package~enumext:~Value~off ~
+    \c_backslash_str g__enumext_item_anskey_int~=~#2.\\
+    *~Package~enumext:~Difference~item_number_int~-~item_anskey_int~=~#3.
   }
 \msg_new:nnn { enumext } { invalid-key }
   {
-    The ~ key ~ '#1' ~ is ~ not ~ know ~ the ~ level ~ #2.
+    The~key~'#1'~is~not~know~the~level~#2.
   }
 \msg_new:nnn { enumext } { unknown-key-family }
   {
@@ -5946,17 +5852,17 @@
   }
 \msg_new:nnn { enumext } { width-negative }
   {
-    Ignoring ~ negative ~ value ~ '#1=#2' ~ \msg_line_context:.\\
-    The ~ key ~ '#1'~ accepts ~ values  ~ >= ~ 0pt.
+    Ignoring~negative~value~'#1=#2'~\msg_line_context:.\\
+    The~key~'#1'~ accepts~values ~>=~0pt.
   }
 \msg_new:nnn { enumext } { width-zero }
   {
-    Invalid ~ '#1=#2' ~ \msg_line_context:.\\
-    The ~ key ~ '#1'~ accepts ~ values  ~ > ~ 0pt.
+    Invalid~'#1=#2'~\msg_line_context:.\\
+    The~key~'#1'~ accepts~values ~>~0pt.
   }
 \msg_new:nnn { enumext } { list-lengths }
   {
-    **** ~ Lengths ~ used ~ by ~ 'enumext' ~ level ~ '#2' ~ \msg_line_context:~\c_space_tl ****\\
+    ****~Lengths~used~by~'enumext'~level~'#2'~\msg_line_context:~\c_space_tl ****\\
     \__enumext_show_length:nnn { dim  } { labelsep      } {#1}
     \__enumext_show_length:nnn { dim  } { labelwidth    } {#1}
     \__enumext_show_length:nnn { dim  } { itemindent    } {#1}
@@ -5971,7 +5877,7 @@
   }
 \msg_new:nnn { enumext } { list-lengths-not-nested }
   {
-    **** ~ Lengths ~ used ~ by ~ '#2' ~ environment ~ \msg_line_context:~\c_space_tl ****\\
+    ****~Lengths~used~by~'#2'~environment~\msg_line_context:~\c_space_tl ****\\
     \__enumext_show_length:nnn { dim  } { labelsep      } {#1}
     \__enumext_show_length:nnn { dim  } { labelwidth    } {#1}
     \__enumext_show_length:nnn { dim  } { itemindent    } {#1}
@@ -5986,222 +5892,234 @@
   }
 \msg_new:nnn { enumext } { key-ref-empty }
   {
-    Key ~ 'ref' ~ need ~ a ~ value ~ in ~ '#1'~ \msg_line_context:.
+    Key~'ref'~need~a~value~in~'#1'~ \msg_line_context:.
   }
 \msg_new:nnn { enumext } { save-ans-empty }
   {
-    Key ~ 'save-ans' ~ need ~ a ~ value ~ in ~ '#1'~ \msg_line_context:.
+    Key~'save-ans'~need~a~value~in~'#1'~ \msg_line_context:.
   }
 \msg_new:nnn { enumext } { save-ans-log }
   {
-    * ~ Package ~ enumext: ~ Start ~ #1\c_space_tl with ~ save-ans=#2 ~ \msg_line_context:.
+    *~Package~enumext:~Start~#1\c_space_tl with~save-ans=#2~\msg_line_context:.
   }
 \msg_new:nnn { enumext } { save-ans-log-hook }
   {
-    * ~ Package ~ enumext: ~ Stop ~ #1\c_space_tl with ~ save-ans=#2 ~ \msg_line_context:.
+    *~Package~enumext:~Stop~#1\c_space_tl with~save-ans=#2~\msg_line_context:.
   }
 \msg_new:nnn { enumext } { save-ans-hook }
   {
-    Stop ~ storing ~ for ~ 'save-ans=#1' ~ \msg_line_context:.
+    Stop~storing~for~'save-ans=#1'~\msg_line_context:.
   }
 \msg_new:nnn { enumext } { need-save-ans }
   {
-    Key ~ '#1'~ works ~ only ~ with ~ the ~ 'save-ans' ~ key ~ in ~ '#2'~ \msg_line_context:.
+    Key~'#1'~ works~only~with~the~'save-ans'~key~in~'#2'~ \msg_line_context:.
   }
 \msg_new:nnn { enumext } { items-same-answer }
   {
     ****************************************\\
-    * ~ Package ~ enumext: ~ Checking ~ answers ~ in ~ '#1' ~
-    for ~ \c_left_brace_str #2 \c_right_brace_str\\
-    * ~ started ~ #3 ~ and ~ close ~ \msg_line_context: : ~
-    'OK', ~ all ~ items ~ with ~ answer.\\
+    *~Package~enumext:~Checking~answers~in~'#1' ~
+    for~\c_left_brace_str #2 \c_right_brace_str\\
+    *~started~#3~and~close~\msg_line_context: : ~
+    'OK',~all~items~with~answer.\\
     ****************************************
   }
 \msg_new:nnn { enumext } { item-greater-answer }
   {
-    Checking ~ answers ~ in ~ '#1' ~ for ~ \c_left_brace_str #2 \c_right_brace_str\\
-    started ~ #3 ~ and ~ close ~ \msg_line_context: : ~'NOT ~ OK'\\
-    Items ~ > ~ Answers.
+    Checking~answers~in~'#1'~for~\c_left_brace_str #2 \c_right_brace_str\\
+    started~#3~and~close~\msg_line_context: : ~'NOT~OK'\\
+    Items~>~Answers.
   }
 \msg_new:nnn { enumext } { item-less-answer }
   {
-    Checking ~ answers ~ in ~ '#1' ~ for ~ \c_left_brace_str #2 \c_right_brace_str\\
-    started ~ #3 ~ and ~ close ~ \msg_line_context: : ~'NOT ~ OK'\\
-    Items ~ < ~ Answers.
+    Checking~answers~in~'#1'~for~\c_left_brace_str #2 \c_right_brace_str\\
+    started~#3~and~close~\msg_line_context: : ~'NOT~OK'\\
+    Items~<~Answers.
   }
 \msg_new:nnn { enumext } { missing-starred }
   {
-    Missing ~ '\c_backslash_str #1*' ~ #2.
+    Missing~'\c_backslash_str #1*'~#2.
   }
 \msg_new:nnn { enumext } { many-starred }
   {
-    Many ~ '\c_backslash_str #1*' ~ #2.
+    Many~'\c_backslash_str #1*'~#2.
   }
 \msg_new:nnn { enumext } { print-starred }
   {
-    \c_backslash_str printkeyans*:~ The ~ sequence ~ '#1' ~ already ~ contains ~
-    #2 ~ environment ~  \msg_line_context:.
+    \c_backslash_str printkeyans*:~ The~sequence~'#1'~already~contains ~
+    #2~environment~ \msg_line_context:.
   }
 \msg_new:nnn { enumext } { list-too-deep }
   {
-    Too ~ deep ~ nesting  ~ for ~ 'enumext' ~ \msg_line_context:.~ \\
-    The ~ maximum  ~ level  ~ of  ~ nesting  ~ is ~ 4.
+    Too~deep~nesting ~for~'enumext'~\msg_line_context:.~ \\
+    The~maximum ~level ~of ~nesting ~is~4.
   }
 \msg_new:nnn { enumext } { anskey-unnumber-item }
   {
-    Can't ~ store ~ with ~ a ~ unnumbered ~ \c_backslash_str item ~ \msg_line_context:.
+    Can't~store~with~a~unnumbered~\c_backslash_str item~\msg_line_context:.
   }
 \msg_new:nnn { enumext } { anskey-already-stored }
   {
-    Content ~ already ~ stored ~ for ~ this ~ \c_backslash_str item ~ \msg_line_context:.
+    Content~already~stored~for~this~\c_backslash_str item~\msg_line_context:.
   }
 \msg_new:nnn { enumext } { anskey-empty-arg }
   {
-    Can't ~ store ~ empty ~ content ~ \msg_line_context:.
+    Can't~store~empty~content~\msg_line_context:.
   }
 \msg_new:nnn { enumext } { anskey-wrong-place }
   {
-    Wrong ~ place ~ for ~ command ~ '\c_backslash_str #1' ~ \msg_line_context:.~ \\
-    '\c_backslash_str #1' ~ works ~ in ~ the ~ environment ~ '#2'.
+    Wrong~place~for~command~'\c_backslash_str #1'~\msg_line_context:.~ \\
+    '\c_backslash_str #1'~works~in~the~environment~'#2'.
   }
 \msg_new:nnn { enumext } { anskey-nested }
   {
-    The ~ command ~ \c_backslash_str anskey~ can't ~ be ~ nested ~ \msg_line_context:.
+    The~command~\c_backslash_str anskey~ can't~be~nested~\msg_line_context:.
   }
 \msg_new:nnn { enumext } { anskey-math-mode }
   {
-    #1 ~ can't ~ work ~ in ~ math ~ mode ~ \msg_line_context:.
+    #1~can't~work~in~math~mode~\msg_line_context:.
   }
 \msg_new:nnn { enumext } { anskey-env-wrong }
   {
-    The ~ environment ~ anskey* ~ cannot ~ use ~ in ~ '#1' ~ \msg_line_context:.
+    The~environment~anskey*~cannot~use~in~'#1'~\msg_line_context:.
   }
 \msg_new:nnn { enumext } { anspic-wrong-place }
   {
-    Wrong ~ place ~ for ~ command ~ '\c_backslash_str #1' ~ \msg_line_context:.~ \\
-    '\c_backslash_str #1' ~ works ~ in ~ the ~ environment ~ '#2'.
+    Wrong~place~for~command~'\c_backslash_str #1'~\msg_line_context:.~ \\
+    '\c_backslash_str #1'~works~in~the~environment~'#2'.
   }
 \msg_new:nnn { enumext } { command-wrong-place }
   {
-    Wrong ~ place ~ for ~ command ~ '\c_backslash_str #1' ~ \msg_line_context:.~ \\
-    '\c_backslash_str #1' ~ works ~ outside ~ the ~ environment ~ '#2'.
+    Wrong~place~for~command~'\c_backslash_str #1'~\msg_line_context:.~ \\
+    '\c_backslash_str #1'~works~outside~the~environment~'#2'.
   }
 \msg_new:nnnn { enumext } { anskey-env-key-unknown }
   {
-    The ~ key ~ '#1' ~ is ~ unknown ~ by ~ environment~
-    'anskey*' ~ and ~ is ~ being ~ ignored.
+    The~key~'#1'~is~unknown~by~environment~
+    'anskey*'~and~is~being~ignored.
   }
   {
-    The ~ environment ~ 'anskey*' ~ does ~ not ~ have ~ a ~ key ~ called ~'#1'.\\
-    Check ~ that ~ you ~ have ~ spelled ~ the ~ key ~ name ~ correctly.
+    The~environment~'anskey*'~does~not~have~a~key~called ~'#1'.\\
+    Check~that~you~have~spelled~the~key~name~correctly.
   }
 \msg_new:nnnn { enumext } { anskey-env-key-value-unknown }
   {
-    The ~ key ~ '#1=#2' ~ is ~ unknown ~ by ~ environment ~
-    'anskey*' ~ and ~ is ~ being ~ ignored.
+    The~key~'#1=#2'~is~unknown~by~environment ~
+    'anskey*'~and~is~being~ignored.
   }
   {
-    The ~ environment ~ 'anskey*' ~ does ~ not ~ have ~ a ~ key ~ called ~'#1'.\\
-    Check ~ that ~ you ~ have ~ spelled ~ the ~ key ~ name ~ correctly.
+    The~environment~'anskey*'~does~not~have~a~key~called ~'#1'.\\
+    Check~that~you~have~spelled~the~key~name~correctly.
   }
 \msg_new:nnnn { enumext } { anskey-cmd-key-unknown }
-  { The ~ key ~'#1'~ is ~ unknown ~ by ~ '\c_backslash_str anskey' ~ and ~ is ~ being ~ ignored.}
+  { The~key~'#1'~is~unknown~by~'\c_backslash_str anskey'~and~is~being~ignored.}
   {
-    The ~ command ~'\c_backslash_str anskey' ~ does ~ not ~ have ~ a ~ key ~ called ~'#1'.\\
-    Check ~ that ~ you ~ have ~ spelled ~ the ~ key ~ name ~ correctly.
+    The~command ~'\c_backslash_str anskey'~does~not~have~a~key~called ~'#1'.\\
+    Check~that~you~have~spelled~the~key~name~correctly.
   }
 \msg_new:nnnn { enumext } { anskey-cmd-key-value-unknown }
-  { The ~ key ~ '#1=#2' ~ is ~ unknown ~ by ~ '\c_backslash_str anskey' ~ and ~ is ~ being ~ ignored. }
+  { The~key~'#1=#2'~is~unknown~by~'\c_backslash_str anskey'~and~is~being~ignored. }
   {
-    The ~ command ~ '\c_backslash_str anskey' ~ does ~ not ~ have ~ a ~ key ~ called ~'#1'.\\
-    Check ~ that ~ you ~ have ~ spelled ~ the ~ key ~ name ~ correctly.
+    The~command~'\c_backslash_str anskey'~does~not~have~a~key~called ~'#1'.\\
+    Check~that~you~have~spelled~the~key~name~correctly.
+  }
+\msg_new:nnn { enumext } { overwrite-file }
+  {
+    Overwriting~file~'#1'.
+  }
+\msg_new:nnn { enumext } { writing-file }
+  {
+    Writing~file~'#1'.
+  }
+\msg_new:nnn { enumext } { not-writing }
+  {
+    File~`#1'~already~exists.~Not~writing.
   }
 \msg_new:nnn { enumext } { keyans-nested }
   {
-    The ~ environment ~ 'keyans' ~ can't ~ be  ~ nested  ~ \msg_line_context:.
+    The~environment~'keyans'~can't~be ~nested ~\msg_line_context:.
   }
 \msg_new:nnn { enumext } { keyans-wrong-level }
   {
-    Wrong ~ level ~ position ~ for ~ 'keyans' ~ \msg_line_context:.~ \\
-    The ~ environment ~ 'keyans' ~ can ~ only ~ be ~ in ~ the ~ first ~ level.
+    Wrong~level~position~for~'keyans'~\msg_line_context:.~ \\
+    The~environment~'keyans'~can~only~be~in~the~first~level.
   }
 \msg_new:nnn { enumext } { wrong-place }
   {
-    Wrong ~ place ~ for ~ '#1' ~ environment ~\msg_line_context:.~ \\
-    '#1' ~ is ~ only ~ found ~ with ~ '#2' ~  in  ~  'enumext.
+    Wrong~place~for~'#1'~environment ~\msg_line_context:.~ \\
+    '#1'~is~only~found~with~'#2'~ in ~ 'enumext.
   }
 \msg_new:nnn { enumext } { keyanspic-nested }
   {
-    The ~ environment ~ 'keyanspic' ~ can't ~ be  ~ nested~ \msg_line_context:.~.
+    The~environment~'keyanspic'~can't~be ~nested~ \msg_line_context:.~.
   }
 \msg_new:nnn { enumext } { keyanspic-wrong-level }
   {
-    Wrong ~ level ~ position ~ for ~ 'keyanspic' ~ \msg_line_context:.~ \\
-    The ~ environment ~ 'keyans' ~ can ~ only ~ be ~ in ~ the ~ first ~ level.
+    Wrong~level~position~for~'keyanspic'~\msg_line_context:.~ \\
+    The~environment~'keyans'~can~only~be~in~the~first~level.
   }
 \msg_new:nnn { enumext } { keyanspic-item-cmd }
   {
-    Can't ~ use  ~ \c_backslash_str item ~ in ~ keyanspic ~ \msg_line_context:.
+    Can't~use ~\c_backslash_str item~in~keyanspic~\msg_line_context:.
   }
 \msg_new:nnnn { enumext } { keyans-unknown-key }
   {
-    The ~ key ~ '#1' ~ is ~ unknown ~ by ~ environment~
-    '\l__enumext_envir_name_tl' ~ and ~ is ~ being ~ ignored.
+    The~key~'#1'~is~unknown~by~environment~
+    '\l__enumext_envir_name_tl'~and~is~being~ignored.
   }
   {
-    The ~ environment ~ '\l__enumext_envir_name_tl' ~ does ~ not
-    ~ have ~ a ~ key ~ called ~'#1'.\\
-    Check ~ that ~ you ~ have ~ spelled ~ the ~ key ~ name ~ correctly.
+    The~environment~'\l__enumext_envir_name_tl'~does~not
+   ~have~a~key~called ~'#1'.\\
+    Check~that~you~have~spelled~the~key~name~correctly.
   }
 \msg_new:nnnn { enumext } { keyans-unknown-key-value }
   {
-    The ~ key ~ '#1=#2' ~ is ~ unknown ~ by ~ environment ~
-    '\l__enumext_envir_name_tl' ~ and ~ is ~ being ~ ignored.
+    The~key~'#1=#2'~is~unknown~by~environment ~
+    '\l__enumext_envir_name_tl'~and~is~being~ignored.
   }
   {
-    The ~ environment ~ '\l__enumext_envir_name_tl' ~ does ~ not
-    ~ have ~ a ~ key ~ called ~'#1'.\\
-    Check ~ that ~ you ~ have ~ spelled ~ the ~ key ~ name ~ correctly.
+    The~environment~'\l__enumext_envir_name_tl'~does~not
+   ~have~a~key~called ~'#1'.\\
+    Check~that~you~have~spelled~the~key~name~correctly.
   }
 \msg_new:nnnn { enumext } { starred-unknown-key }
   {
-    The ~ key ~ '#1' ~ is ~ unknown ~ by ~ environment~
-    '\l__enumext_envir_name_tl' ~ and ~ is ~ being ~ ignored.
+    The~key~'#1'~is~unknown~by~environment~
+    '\l__enumext_envir_name_tl'~and~is~being~ignored.
   }
   {
-    The ~ environment ~ '\l__enumext_envir_name_tl' ~ does ~ not
-    ~ have ~ a ~ key ~ called ~'#1'.\\
-    Check ~ that ~ you ~ have ~ spelled ~ the ~ key ~ name ~ correctly.
+    The~environment~'\l__enumext_envir_name_tl'~does~not
+   ~have~a~key~called ~'#1'.\\
+    Check~that~you~have~spelled~the~key~name~correctly.
   }
 \msg_new:nnnn { enumext } { starred-unknown-key-value }
   {
-    The ~ key ~ '#1=#2' ~ is ~ unknown ~ by ~ environment ~
-    '\l__enumext_envir_name_tl' ~ and ~ is ~ being ~ ignored.
+    The~key~'#1=#2'~is~unknown~by~environment ~
+    '\l__enumext_envir_name_tl'~and~is~being~ignored.
   }
   {
-    The ~ environment ~ '\l__enumext_envir_name_tl' ~ does ~ not
-    ~ have ~ a ~ key ~ called ~'#1'.\\
-    Check ~ that ~ you ~ have ~ spelled ~ the ~ key ~ name ~ correctly.
+    The~environment~'\l__enumext_envir_name_tl'~does~not
+   ~have~a~key~called ~'#1'.\\
+    Check~that~you~have~spelled~the~key~name~correctly.
   }
 \msg_new:nnnn { enumext } { standar-unknown-key }
   {
-    The ~ key ~ '#1' ~ is ~ unknown ~ by ~ environment ~ '\l__enumext_envir_name_tl' \c_space_tl
-    ~ on ~ level ~ \int_use:N \l__enumext_level_int \c_space_tl and ~ is ~ being ~ ignored.
+    The~key~'#1'~is~unknown~by~environment~'\l__enumext_envir_name_tl' \c_space_tl
+   ~on~level~\int_use:N \l__enumext_level_int \c_space_tl and~is~being~ignored.
   }
   {
-    The ~ environment ~ '\l__enumext_envir_name_tl' ~ does ~ not
-    ~ have ~ a ~ key ~ called ~'#1' ~ on ~ level ~ \int_use:N \l__enumext_level_int.\\
-    Check ~ that ~ you ~ have ~ spelled ~ the ~ key ~ name ~ correctly.
+    The~environment~'\l__enumext_envir_name_tl'~does~not
+   ~have~a~key~called ~'#1'~on~level~\int_use:N \l__enumext_level_int.\\
+    Check~that~you~have~spelled~the~key~name~correctly.
   }
 \msg_new:nnnn { enumext } { standar-unknown-key-value }
   {
-    The ~ key ~ '#1=#2' ~ is ~ unknown ~ by ~ environment ~ '\l__enumext_envir_name_tl' \c_space_tl
-    ~ on ~ level ~ \int_use:N \l__enumext_level_int \c_space_tl and ~ is ~ being ~ ignored.
+    The~key~'#1=#2'~is~unknown~by~environment~'\l__enumext_envir_name_tl' \c_space_tl
+   ~on~level~\int_use:N \l__enumext_level_int \c_space_tl and~is~being~ignored.
   }
   {
-    The ~ environment ~ '\l__enumext_envir_name_tl' ~ does ~ not
-    ~ have ~ a ~ key ~ called ~'#1' ~ on ~ level ~ \int_use:N \l__enumext_level_int.\\
-    Check ~ that ~ you ~ have ~ spelled ~ the ~ key ~ name ~ correctly.
+    The~environment~'\l__enumext_envir_name_tl'~does~not
+   ~have~a~key~called ~'#1'~on~level~\int_use:N \l__enumext_level_int.\\
+    Check~that~you~have~spelled~the~key~name~correctly.
   }
 \msg_new:nnnn { enumext } { for-key-unknown }
   { The~key~'#1'~is~unknown~by~'\c_backslash_str foreachkeyans'~and~is~being~ignored.}
@@ -6217,58 +6135,58 @@
   }
 \msg_new:nnn { enumext } { undefined-storage-anskey }
   {
-    Storage ~ named ~ '#1' ~ is ~ not ~ defined ~ \msg_line_context:.
+    Storage~named~'#1'~is~not~defined~\msg_line_context:.
   }
 \msg_new:nnn { enumext } { missing-miniright }
   {
-    Missing ~ '\c_backslash_str miniright' ~ in ~ \msg_line_context:.\\
-    The ~ key ~ 'mini-env' ~ need ~ '\c_backslash_str miniright'.
+    Missing~'\c_backslash_str miniright'~in~\msg_line_context:.\\
+    The~key~'mini-env'~need~'\c_backslash_str miniright'.
   }
 \msg_new:nnn { enumext } { wrong-miniright-place }
   {
-    Wrong ~ place ~ for ~ '\c_backslash_str miniright' ~ \msg_line_context:.~ \\
-    Works ~ in ~ 'enumext' ~ and ~ 'keyans' ~ with ~ key ~ 'mini-env'.
+    Wrong~place~for~'\c_backslash_str miniright'~\msg_line_context:.~ \\
+    Works~in~'enumext'~and~'keyans'~with~key~'mini-env'.
   }
 \msg_new:nnn { enumext } { wrong-miniright-use }
   {
-    Wrong ~ use ~ for ~ '\c_backslash_str miniright' ~ \msg_line_context:.~ \\
-    '\c_backslash_str miniright' ~ need ~ a ~ key ~ 'mini-env'.
+    Wrong~use~for~'\c_backslash_str miniright'~\msg_line_context:.~ \\
+    '\c_backslash_str miniright'~need~a~key~'mini-env'.
   }
 \msg_new:nnn { enumext } { wrong-miniright-starred }
   {
-    Can't ~ use  ~ \c_backslash_str miniright ~ in ~ starred ~ environments ~ \msg_line_context:.
+    Can't~use ~\c_backslash_str miniright~in~starred~environments~\msg_line_context:.
   }
 \msg_new:nnn { enumext } { many-miniright-used }
   {
-    Can't ~ use  ~ \c_backslash_str miniright ~ more ~ than ~ once ~  \msg_line_context:.
+    Can't~use ~\c_backslash_str miniright~more~than~once~ \msg_line_context:.
   }
 \msg_new:nnn { enumext } { unknown-set }
   {
-    Argument ~ [#1] ~ is ~ unknown ~ by ~  \c_backslash_str setenumextmeta ~ \msg_line_context:.
+    Argument~[#1]~is~unknown~by~ \c_backslash_str setenumextmeta~\msg_line_context:.
   }
 \msg_new:nnn { enumext } { already-defined }
   {
-    The ~ key ~ '#1' ~ is ~ already ~ defined ~ \msg_line_context:.
+    The~key~'#1'~is~already~defined~\msg_line_context:.
   }
 \msg_new:nnn { enumext } { prohibited-unknown }
   {
-    The ~ name ~ 'unknown' ~ can't ~ be ~ chosen~ for ~ a ~ meta ~ key ~ \msg_line_context:.
+    The~name~'unknown'~can't~be~chosen~ for~a~meta~key~\msg_line_context:.
   }
 \msg_new:nnn { enumext } { nested }
   {
-    The ~ environment ~ \l__enumext_envir_name_tl \c_space_tl can't ~ be ~ nested ~ \msg_line_context:.
+    The~environment~\l__enumext_envir_name_tl \c_space_tl can't~be~nested~\msg_line_context:.
   }
 \msg_new:nnn { enumext } { nested-horizontal }
   {
-    The ~ environment ~ \l__enumext_envir_name_tl \c_space_tl can't ~ be ~ nested ~ in ~ '#1' ~  \msg_line_context:.
+    The~environment~\l__enumext_envir_name_tl \c_space_tl can't~be~nested~in~'#1'~ \msg_line_context:.
   }
 \msg_new:nnn { enumext } { item-joined }
   {
-    Items ~ joined ~ (#1) ~ > ~ #2  ~ columns ~\msg_line_context:.
+    Items~joined~(#1)~>~#2 ~columns ~\msg_line_context:.
   }
 \msg_new:nnn { enumext } { item-joined-columns }
   {
-    Not ~ space ~ to ~ join ~ items ~ (#1) ~ > ~ #2 ~\msg_line_context:.
+    Not~space~to~join~items~(#1)~>~#2 ~\msg_line_context:.
   }
 \file_input_stop:
 %% 

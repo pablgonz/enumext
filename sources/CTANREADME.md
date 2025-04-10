@@ -1,21 +1,18 @@
 ## enumext — Enumerate exercise sheets
 
-Release v1.2 \[2025-03-28\]
+Release v1.3 \[2025-06-01\]
 
 ## Description
 
 This package provides enumerated list environments compatible with
 _tagging_ PDF for creating “simple exercise sheets” along with
 “multiple choice questions”, storing the “answers” to these in memory
-using <code>&langle;multicol&rangle;</code> and <code>&langle;scontents&rangle;</code> packages.
+using <code>&langle;multicol&rangle;</code> package.
 
 ## Requirements
 
-The minimum requirement is LaTeX release 2024-11-01. Loads and depends
-on updated versions of:
-
-- [scontents](https://ctan.org/pkg/scontents)
-- [multicol](https://ctan.org/pkg/multicol)
+The minimum requirement is LaTeX release 2025-06-01. Loads and depends
+on updated versions of [multicol](https://ctan.org/pkg/multicol).
 
 ## Installation
 
