@@ -2928,11 +2928,11 @@
 %
 % \smallskip
 %
-% The \myenv*{anskey*} environment is implemented using the argument |c| 
-% \emph{\enquote{collect code}} implemented in the \mypkg{ltcmd} module, 
-% part of \hologo{LaTeX} release 2025-06-01. |\begin{anskey*}| and 
-% |\end{anskey*}| must be in different lines and should not appear 
-% within verbatim environments or commands. All \mymeta{keys} must be 
+% The \myenv*{anskey*} environment is implemented using the argument |c|
+% \emph{\enquote{collect code}} implemented in the \mypkg{ltcmd} module,
+% part of \hologo{LaTeX} release 2025-06-01. |\begin{anskey*}| and
+% |\end{anskey*}| must be in different lines and should not appear
+% within verbatim environments or commands. All \mymeta{keys} must be
 % passed separated by commas and \enquote{without separation}
 % of the start of the environment.
 %
@@ -2942,7 +2942,7 @@
 % after |\begin{anskey*}| or \myoarg{key \textnormal{\textcolor{gray}{=}} val}
 % on the same line are NOT supported, \hologo{LaTeX} will return an
 % \enquote{error} message if this happens. In a similar way comments
-% \enquote{\textcolor{gray}{\%}} or \enquote{any character} after 
+% \enquote{\textcolor{gray}{\%}} or \enquote{any character} after
 % |\end{anskey*}| on the same line \hologo{LaTeX} will
 % return a \enquote{warning} message.
 %
@@ -4288,7 +4288,7 @@ to \ref{simplews:3} is \getkeyans{simplews:3}.
 %<*example>
 % \fi
 \begin{filecontents*}[overwrite]{enumext-exa-6.tex}
-% arara: lualatex
+% arara: lualatex: { branch: developer }
 % arara: clean: { extensions: [ aux, log] }
 \documentclass[letterpaper,twoside]{article}
 \usepackage{xcolor,enumext,libertinus}
@@ -4402,7 +4402,7 @@ to \ref{simplews:3} is \getkeyans{simplews:3}.
 % \textattachfile[color=red,print=false]{enumext-exa-6.tex}{\faFile*[regular]}.
 % \setenumext[keyans]{label={\Alph*},font={\bfseries},wrap-ans*={\textcolor{red}{\bfseries##1}},mark-ans*={\textcolor{red}{✔}},wrap-opt={ },}
 % \showrating{true}
-% \begin{enumext}[azetinasty,start=10,wrap-label={\azwrapp{#1}},save-ans=test2024,save-sep={ }]
+% \begin{enumext}[azetinasty,start=10,wrap-label={\azwrapp{#1}},save-ans=test2024,save-sep={\space}]
 %  \item sample
 %    \begin{keyans}
 %      \item sample
@@ -5504,7 +5504,7 @@ Some text here
 %  \item [\fileversion{} (ctan), \filedate]
 %    \begin{itemize}
 %      \item Removed dependency on the \mypkg{scontents} package.
-%      \item The |anskey*| environment has been rewritten using the new 
+%      \item The |anskey*| environment has been rewritten using the new
 %            |c| argument from \mypkg{ltcmd} module.
 %    \end{itemize}
 %  \item [v1.2 (ctan), 2025-03-28]
@@ -5661,7 +5661,7 @@ Some text here
 %
 % \begin{variable}[int]{\l_@@_starred_bool, \g_@@_starred_bool, \l_@@_starred_first_bool,
 %                       \l_@@_standar_bool, \g_@@_standar_bool, \l_@@_standar_first_bool,
-%                       \l_@@_keyans_env_bool,\g_@@_start_line_tl, \g_@@_envir_name_tl, 
+%                       \l_@@_keyans_env_bool,\g_@@_start_line_tl, \g_@@_envir_name_tl,
 %                       \l_@@_envir_name_tl}
 %   Internal variables used by functions \cs{@@_is_not_nested:},
 %   \cs{@@_is_on_first_level:} and \cs{@@_keyans_name_and_start:} (\S\ref{fun:utilities}).
@@ -5924,11 +5924,11 @@ Some text here
 % \end{variable}
 %
 % \begin{variable}[int]{\l_@@_store_anskey_arg_tl, \l_@@_store_anskey_env_tl,
-%                       \l_@@_write_anskey_env_bool, \l_@@_write_anskey_env_file_name_tl, 
+%                       \l_@@_write_anskey_env_bool, \l_@@_write_anskey_env_file_name_tl,
 %                       \l_@@_write_anskey_env_file_iow,}
 %   The variable \cs{l_@@_store_anskey_arg_tl} save the \emph{argument}
 %   of \ics*{anskey} (\S\ref{cmd:anskey}) and the variables
-%   \cs{l_@@_store_anskey_env_tl} save the \mymeta{body} 
+%   \cs{l_@@_store_anskey_env_tl} save the \mymeta{body}
 %   of the environment \myenv*{anskey*} (\S\ref{env:anskey}).
 %
 %   \smallskip
@@ -11125,8 +11125,8 @@ Some text here
 %               \@@_store_anskey_env:n}
 %   The function \cs{@@_store_anskey_safe_outer:} will return the
 %   appropriate messages when |anskey*| is executed outside the
-%   environment in which the \mykey{save-ans} key was activated 
-%   or within the \myenv*{keyans}, \myenv*{keyans*} or \myenv*{keyanspic} 
+%   environment in which the \mykey{save-ans} key was activated
+%   or within the \myenv*{keyans}, \myenv*{keyans*} or \myenv*{keyanspic}
 %   environments.
 % \iffalse
 %% Internal function for msg when |anskey*| is outer or wrong.
@@ -11153,7 +11153,7 @@ Some text here
   }
 %    \end{macrocode}
 %   The function \cs{@@_anskey_env_safe_inner:} will first check if
-%   preceded by a not numbered |\item| or if it is in \emph{math mode} 
+%   preceded by a not numbered |\item| or if it is in \emph{math mode}
 %   returning the appropriate messages.
 % \iffalse
 %% Internal function for msg when |anskey*| is inner or math-mode
@@ -11207,8 +11207,8 @@ Some text here
 % \smallskip
 %
 % \begin{important}*
-%  Since |\obeyedline| can be redefined by the user, for example to 
-%  |\mbox{}\par|, it is necessary to redefine it to |^^J| in order to use 
+%  Since |\obeyedline| can be redefined by the user, for example to
+%  |\mbox{}\par|, it is necessary to redefine it to |^^J| in order to use
 %  |\tl_replace_all:Nee| otherwise it returns an error.
 % \end{important}
 % \end{macro}
@@ -11295,9 +11295,9 @@ Some text here
       {
         \tl_if_empty:NF \l_@@_store_keyans_item_opt_sep_v_tl
           {
-            \tl_put_right:Nn \l_@@_store_current_label_tl 
-              { 
-                \l_@@_store_keyans_item_opt_sep_v_tl 
+            \tl_put_right:Nn \l_@@_store_current_label_tl
+              {
+                \l_@@_store_keyans_item_opt_sep_v_tl
               }
           }
         \tl_put_right:Nn \l_@@_store_current_label_tl { #1 }
