@@ -1,3 +1,3 @@
 Release v1.3 2025-06-01:
 - Removed dependency on the `scontents` package.
-- The `anskey*` environment has been rewritten using the new `c` argument from `ltcmd` module.
+- The `anskey*` environment has been rewritten using the new `c-type` argument.
