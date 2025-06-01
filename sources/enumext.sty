@@ -18,7 +18,7 @@
 %% 2005/12/01 or later.
 %% 
 %% This work is "maintained" (as per the LPPL maintenance status)
-%% by Pablo González Luengo.
+%% by Pablo González L.
 %% 
 %% This work consists of the files enumext.pdf , enumext.ins, enumext.dtx
 %% and the files generated from them.
@@ -45,7 +45,7 @@
       }
       {
         \msg_info:nnn { enumext } { package-not-load } { multicol }
-        \RequirePackage{multicol}[2024-05-23]
+        \RequirePackage{multicol}[2024-09-14]
       }
   }
 %% Variable for levels and nesting off all environments and |\anskey|, |anskey*|.
@@ -3727,7 +3727,7 @@
         \msg_warning:nnnV { enumext } { width-negative }{ labelsep }{ #2 }
         \dim_set:Nn #2 { \dim_abs:n { #2 } }
       }
-    \bool_if:nF #7 { \dim_set:Nn #4 { #1 + #2} }
+    \bool_if:NF #7 { \dim_set:Nn #4 { #1 + #2} }
     \dim_compare:nNnTF { #4 } < { \c_zero_dim }
       {
         \dim_set:Nn #6 { #1 + #2 - #4}
