@@ -36,7 +36,7 @@
 %% ------------------------------------------------------------------------
 %% 
 \NeedsTeXFormat{LaTeX2e}[2025-06-01]
-\ProvidesExplPackage {enumext} {2025-06-01} {1.3} {Enumerate exercise sheets}
+\ProvidesExplPackage {enumext} {2025-06-15} {1.4} {Enumerate exercise sheets}
 \hook_gput_code:nnn {begindocument} {enumext}
   {
     \IfPackageLoadedTF { multicol }
@@ -828,9 +828,6 @@
       }
       {
         \tl_set_eq:Nc
-          \l__enumext_ref_the_count_tl { l__enumext_counter_ \__enumext_level: _tl }
-        \__enumext_regex_counter_style:
-        \tl_set_eq:Nc
           \l__enumext_ref_the_count_tl { l__enumext_the_counter_ \__enumext_level: _tl }
         \tl_put_right:ce { l__enumext_renew_the_count_ \__enumext_level: _tl }
           {
@@ -876,8 +873,6 @@
             \msg_error:nnn { enumext } { key-ref-empty } { enumext* }
           }
           {
-            \tl_set_eq:NN \l__enumext_ref_the_count_tl \l__enumext_counter_vii_tl
-            \__enumext_regex_counter_style:
             \tl_set_eq:NN \l__enumext_ref_the_count_tl \l__enumext_the_counter_vii_tl
             \tl_put_right:Ne \l__enumext_renew_the_count_vii_tl
               {
@@ -892,8 +887,6 @@
             \msg_error:nnn { enumext } { key-ref-empty } { keyans* }
           }
           {
-            \tl_set_eq:NN \l__enumext_ref_the_count_tl \l__enumext_counter_viii_tl
-            \__enumext_regex_counter_style:
             \tl_set_eq:NN \l__enumext_ref_the_count_tl \l__enumext_the_counter_viii_tl
             \tl_put_right:Ne \l__enumext_renew_the_count_viii_tl
               {
@@ -945,8 +938,6 @@
         \msg_error:nnn { enumext } { key-ref-empty } { keyans }
       }
       {
-        \tl_set_eq:NN \l__enumext_ref_the_count_tl \l__enumext_counter_v_tl
-        \__enumext_regex_counter_style:
         \tl_set_eq:NN \l__enumext_ref_the_count_tl \l__enumext_the_counter_v_tl
         \tl_put_right:Ne \l__enumext_renew_the_count_v_tl
           {
@@ -3180,10 +3171,7 @@
       {
         \tl_if_empty:NF \l__enumext_store_keyans_item_opt_sep_v_tl
           {
-            \tl_put_right:Nn \l__enumext_store_current_label_tl
-              {
-                \l__enumext_store_keyans_item_opt_sep_v_tl
-              }
+            \tl_put_right:NV \l__enumext_store_current_label_tl \l__enumext_store_keyans_item_opt_sep_v_tl
           }
         \tl_put_right:Nn \l__enumext_store_current_label_tl { #1 }
       }
@@ -3258,7 +3246,7 @@
       {
         \tl_if_empty:NF \l__enumext_store_keyans_item_opt_sep_v_tl
           {
-            \tl_put_right:Nn \l__enumext_store_current_label_tl { \l__enumext_store_keyans_item_opt_sep_v_tl }
+            \tl_put_right:NV \l__enumext_store_current_label_tl \l__enumext_store_keyans_item_opt_sep_v_tl
           }
         \tl_put_right:Nn \l__enumext_store_current_label_tl { #1 }
       }

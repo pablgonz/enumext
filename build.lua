@@ -21,8 +21,8 @@
 
 -- General package identification
 module     = "enumext"
-pkgversion = "1.3"
-pkgdate    = "2025-06-01"
+pkgversion = "1.4"
+pkgdate    = "2025-06-15"
 ltxrelease = "2025-06-01"
 
 -- Configuration of files for build and installation
@@ -117,7 +117,7 @@ uploadconfig = {
   summary      = "Stores LaTeX contents in memory or files",
   description  =[[This package provides enumerated list environments compatible with tagging PDF for creating
                   “simple exercise sheets” along with “multiple choice questions”, storing the “answers” to these in memory using
-                   multicol and scontents packages.]],
+                   multicol package.]],
   topic        = { "List", "Tagged PDF", "Exercise", "Experimental LaTeX3", "List enumerate" },
   ctanPath     = "/macros/latex/contrib/" .. ctanpkg,
   repository   = "https://github.com/pablgonz/" .. module,

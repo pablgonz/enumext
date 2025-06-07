@@ -1,3 +1,3 @@
-Release v1.3 2025-06-01:
-- Removed dependency on the `scontents` package.
-- The `anskey*` environment has been rewritten using the new `c-type` argument.
+Release v1.4 2025-06-15:
+- Improved implementation of the `ref` key.
+- Fixed the behavior of the `save-sep` key.
