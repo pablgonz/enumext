@@ -591,21 +591,23 @@
     keywordstyle  = [1]{\color{gray}},%
     keywords      = [1]{begin,end,Verbatim,env,myseq,false,NewDocumentCommand,newlength, the, red, blue, gray,%
                         settowidth, dimeval, dimexpr, IfBooleanTF,footnotehyper, DocumentMetadata, %
-                        IfDocumentMetadataTF, RenewDocumentCommand, pt, em, SuspendTagging, ResumeTagging,%
+                        IfDocumentMetadataTF, IfDocumentMetadataF, RenewDocumentCommand, pt, em, %
+                        SuspendTagging, ResumeTagging, NewCommandCopy, IfHyperBoolean, N, J, D, Nee, %
+                        Nnn, nn, Ne, w, n, %
                     },%
 % Other words 2 -- use deletekeywords=[2]{ref},
     keywordstyle  = [2]{\color{blue!75}},%
     keywords      = [2]{usepackage, section, documentclass, input, listparindent, linewidth, emph, textbf, makesavenoteenv, makelabel,%
                     columnseprule, footnote, footnotemark, footnotetext, raggedcolumns, hspace, parindent, removelastskip, %
                     subsection, list, endlist, leftmargin, itemindent,bfseries,endminipage, minipage, parskip, raisebox, strut,smash, % ,
-                    labelwidth, labelsep, labelindent, label, ref, topsep,parsep,includegraphics, itemize, description, NewCommandCopy, %
+                    labelwidth, labelsep, labelindent, label, ref, topsep,parsep,includegraphics, itemize, description, %
                     multicolsep,leftmargini,leftmarginii, hfill, small, vspace, par, parbox, value, noindent, makebox, textcolor, %
                     itemindent, labelwidth, leftmarginiii,leftmarginiv,itemindent, itemsep, strutbox, raggedright, cs_new_eq, N, NN,%
                     labelwidth, fbox, addvspace, Alph, alph, arabic, Roman, roman, partopsep, baselineskip, mode_leave_vertical,%
                     textborn, textbullet, textendash, textasteriskcentered, textperiodcentered, raggedleft, peek_remove_spaces, skip_horizontal, %
-                    triangleright, diamond, circ, parleft, star, centering, ast, hyperlink, hypertarget, IfHyperBoolean, newtheorem, %
-                    exp_args, Ne, aux_i, aux_ii, aux_iii, w, n, N, J, if@noitemarg, if, if@hyper@item, hyper, noitemarg, skip_vertical, %
-                    obeyedline, tl_replace_all, mbox, tl_rescan, tl_set_rescan, Nee, Nnn, nn, tex_scantokens, D},%
+                    triangleright, diamond, circ, parleft, star, centering, ast, hyperlink, hypertarget, newtheorem, %
+                    aux_i, aux_ii, aux_iii, exp_args, if@noitemarg, if, if@hyper@item, hyper, noitemarg, %
+                    skip_vertical, obeyedline, tl_replace_all, mbox, tl_rescan, tl_set_rescan, tex_scantokens, },%
 % Other words 3
     keywordstyle  = [3]{\color{optcolor!85}},%
     keywords      = [3]{document,article,setlength,pagestyle,definecolor, chapter,},%,
@@ -697,7 +699,6 @@
     language    = enumext-doc,%
     upquote     = true,%
     numbersep   = 1em,%
-    deletekeywords = [2]{ref},
     escapechar  =`,%
     basicstyle  =\ttfamily,%\small
     numberstyle = \tiny\color{lightgray}\noaccsupp,%
@@ -1446,7 +1447,7 @@
 %<*example>
 % \fi
 \begin{examplecode}[frame=single]
-\IfDocumentMetadataTF{ }
+\IfDocumentMetadataF
   {
     \usepackage{footnotehyper}
     \makesavenoteenv{enumext}
@@ -5697,7 +5698,7 @@ Some text here
 % \smallskip
 %
 %   The initial values of these variables are set by the function
-%   \cs{@@_define_counters:Nn} (\S\ref{int:counters}) and then modified by the function
+%   \cs{@@_define_counter:Nn} (\S\ref{int:counters}) and then modified by the function
 %   \cs{@@_label_style:Nnn} used by \mykey{label} key (\S\ref{key:label-ref}).
 % \iffalse
 %% Variable for counters
@@ -5874,7 +5875,7 @@ Some text here
 %
 % \begin{variable}[int]{\l_@@_store_active_bool, \l_@@_store_name_tl,
 %                       \g_@@_store_name_tl, \l_@@_store_current_label_tl,
-%                       \l_@@_store_current_opt_arg_tl, \l_@@_store_current_label_tmp_tl,}
+%                       \l_@@_store_current_opt_arg_tl,}
 %
 %   The variable \cs{l_@@_store_active_bool} setting by
 %   \mykey{save-ans} key (\S\ref{key:save-ans}) activates all the
@@ -5888,25 +5889,11 @@ Some text here
 %   list} in which we will store, the variable \cs{g_@@_store_name_tl}
 %   it's just a global copy of \mymarg{store name} used by different functions.
 %
-%^^A   \smallskip
-%^^A
-%^^A   The variable \cs{l_@@_store_anskey_arg_tl} save the
-%^^A   \emph{argument} of \ics*{anskey} (\S\ref{cmd:anskey}) and the variables
-%^^A   \cs{l_@@_store_anskey_env_tl} and \cs{l_@@_store_anskey_opt_tl} save the
-%^^A   \mymeta{body} and the \mymeta{keys} of the environment \myenv*{anskey*} (\S\ref{env:anskey}).
-%^^A
-%^^A   \smallskip
-%
 %   The variables \cs{l_@@_store_current_label_tl} and
 %   \cs{l_@@_store_current_opt_arg_tl} save the \emph{current label} and
 %   \emph{optional argument} of \ics*{item*} (\S\ref{cmd:item-starred}) and \ics*{anspic*}
 %   (\S\ref{cmd:anspic}) for the \myenv*{keyans}, \myenv*{keyans*} and
 %   \myenv*{keyanspic} environments.
-%
-%   \smallskip
-%
-%   The variable \cs{l_@@_store_current_label_tmp_tl} is a temporary variable used
-%   by \myenv*{keyans}, \myenv*{keyans*} and \myenv*{keyanspic} at various points.
 % \iffalse
 %% Variables used by |save-ans| key.
 % \fi
@@ -5916,7 +5903,6 @@ Some text here
 \tl_new:N   \g_@@_store_name_tl
 \tl_new:N   \l_@@_store_current_label_tl
 \tl_new:N   \l_@@_store_current_opt_arg_tl
-\tl_new:N   \l_@@_store_current_label_tmp_tl
 %    \end{macrocode}
 % \end{variable}
 %
@@ -6262,29 +6248,6 @@ Some text here
     \regex_match:nnTF { ^[\+\-]?[\d]+$ } {#1} % $
       { \prg_return_true: }
       { \prg_return_false: }
-  }
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}[int]{\@@_regex_counter_style:}
-%    The internal function \cs{@@_regex_counter_style:} replace the ‘|*|’
-%    with the actual counter of the running level and is used by
-%    the \mykey{ref} key.
-%    It loops through the defined counter styles in \cs{c_@@_counter_style_tl}
-%    and replace ‘|*|’ by real command, for example, looking for \ilabel{arabic*}
-%    and replacing that by \ics{arabic}\mymarg{counter} defined
-%    on the current level.
-% \iffalse
-%% Regex for replace '*' for |ref| key.
-% \fi
-%    \begin{macrocode}
-\cs_new_protected:Nn \@@_regex_counter_style:
-  {
-    \tl_map_inline:Nn \c_@@_counter_style_tl
-      {
-        \regex_replace_once:nnN { \c{##1}\* }
-          { \c{##1}\cB{\u{l_@@_ref_the_count_tl}\cE} } \l_@@_ref_key_arg_tl
-      }
   }
 %    \end{macrocode}
 % \end{macro}
@@ -6955,7 +6918,7 @@ Some text here
 %
 % \subsection{Definition of counters}\label{int:counters}
 %
-% \begin{macro}[int]{\@@_define_counters:Nn,enumXi, enumXii, enumXiii,
+% \begin{macro}[int]{\@@_define_counter:Nn,enumXi, enumXii, enumXiii,
 %                    enumXiv, enumXv, enumXvi, enumXvii, enumXviii}
 %   To create the necessary \emph{\enquote{counters}} we must first
 %   make sure that they are not already defined by the user or a
@@ -6972,7 +6935,7 @@ Some text here
 %% Definition of counters.
 % \fi
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_define_counters:Nn #1 #2
+\cs_new_protected:Npn \@@_define_counter:Nn #1 #2
   {
     \cs_if_exist:cTF { c@ #2 }
       { \msg_fatal:nnn { enumext } { counters }{ #2 } }
@@ -6989,14 +6952,14 @@ Some text here
 %   \myenv*{enumext*} and \icounter{enumXviii} for the \myenv*{keyans*}
 %   environments.
 %    \begin{macrocode}
-\@@_define_counters:Nn \l_@@_counter_i_tl    { enumXi    }
-\@@_define_counters:Nn \l_@@_counter_ii_tl   { enumXii   }
-\@@_define_counters:Nn \l_@@_counter_iii_tl  { enumXiii  }
-\@@_define_counters:Nn \l_@@_counter_iv_tl   { enumXiv   }
-\@@_define_counters:Nn \l_@@_counter_v_tl    { enumXv    }
-\@@_define_counters:Nn \l_@@_counter_vi_tl   { enumXvi   }
-\@@_define_counters:Nn \l_@@_counter_vii_tl  { enumXvii  }
-\@@_define_counters:Nn \l_@@_counter_viii_tl { enumXviii }
+\@@_define_counter:Nn \l_@@_counter_i_tl    { enumXi    }
+\@@_define_counter:Nn \l_@@_counter_ii_tl   { enumXii   }
+\@@_define_counter:Nn \l_@@_counter_iii_tl  { enumXiii  }
+\@@_define_counter:Nn \l_@@_counter_iv_tl   { enumXiv   }
+\@@_define_counter:Nn \l_@@_counter_v_tl    { enumXv    }
+\@@_define_counter:Nn \l_@@_counter_vi_tl   { enumXvi   }
+\@@_define_counter:Nn \l_@@_counter_vii_tl  { enumXvii  }
+\@@_define_counter:Nn \l_@@_counter_viii_tl { enumXviii }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -7007,7 +6970,7 @@ Some text here
 % \ilabel{Alph*}, \ilabel{alph*}, \ilabel{Roman*} and \ilabel{roman*}
 % to use them in the \mykey{label} key.
 %
-% \begin{macro}{\@@_register_counter_style:Nn}
+% \begin{macro}{\@@_default_label_width:Nn}
 %   These \mymeta{counters} will be used as default \mymeta{labels} if
 %   the \mykey{label} key is not used for the different levels of the
 %   \myenv*{enumext}, \myenv*{enumext*}, \myenv*{keyans} and \myenv*{keyans*}
@@ -7017,16 +6980,16 @@ Some text here
 %% Register of counters style.
 % \fi
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_register_counter_style:Nn #1 #2
+\cs_new_protected:Npn \@@_default_label_width:Nn #1 #2
   {
     \tl_const:cn { c_@@_widest_ \cs_to_str:N #1 _tl } {#2}
     \tl_gput_right:Nn \g_@@_counter_styles_tl {#1}
   }
-\@@_register_counter_style:Nn \arabic { 0 }
-\@@_register_counter_style:Nn \Alph   { M }
-\@@_register_counter_style:Nn \alph   { m }
-\@@_register_counter_style:Nn \Roman  { VIII }
-\@@_register_counter_style:Nn \roman  { viii }
+\@@_default_label_width:Nn \arabic { 0 }
+\@@_default_label_width:Nn \Alph   { M }
+\@@_default_label_width:Nn \alph   { m }
+\@@_default_label_width:Nn \Roman  { VIII }
+\@@_default_label_width:Nn \roman  { viii }
 %    \end{macrocode}
 % \end{macro}
 %
