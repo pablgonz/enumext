@@ -615,7 +615,7 @@
     keywordstyle  = [4]{\color{pkgcolor}},%
     keywords      = [4]{enumext,keyans,keyanspic, getkeyans, anskey, anspic, item, anskey*, itemwidth, enumextmeta, %
                     setenumext,printkeyans,miniright,labelbx, mywrap, descitemwd,theenumXi,theenumXii,theenumXiii,%
-                    setenumextmeta, foreachkeyans, theenumXiv,theenumXv, theenumXvii, theenumXviii},%
+                    setenumextmeta, foreachkeyans, theenumX, theenumXiv,theenumXv, theenumXvii, theenumXviii},%
 % Reserved words 5 (plain TeX or internal)
     keywordstyle  = [5]{\color{red}},%
     keywords      = [5]{makeatletter,makeatother,let,verb,def,prevdepth,glue, if@minipage,% if@noitemarg
@@ -7210,14 +7210,13 @@ Some text here
 % \end{macro}
 %
 % \begin{macro}[int]{\@@_standar_ref:n, \@@_standar_ref:,}
-%   The \cs{@@_standar_ref:n} first we will pass the key argument to
-%   \cs{l_@@_ref_key_arg_tl} and we will analyze its state, if it is not
-%   \emph{empty} we will make a copy of the current counter in \cs{l_@@_ref_the_count_tl}
-%   and we will execute the function \cs{@@_regex_counter_style:} which
-%   will return the modified \cs{l_@@_ref_key_arg_tl} and we make the
-%   value of \cs{l_@@_ref_the_count_tl} the same as that \myvarenv{l__@@_the_counter_X_tl}
-%   which contains |\theenumX| and finally we set \myvarenv{l__@@_renew_counter_X_tl}
-%   with the renewed command.
+%   The \cs{@@_standard_ref:n} function will first pass the key
+%   \emph{argument} \texttt{\textcolor{optcolor}{ref}} to the variable
+%   \cs{l_@@_ref_key_arg_t}l and analyze its state, if it is not \emph{empty}
+%   it will set a copy of of the \emph{current counter style} save in
+%   \myvarenv{l__@@_the_counter_X_tl} to \cs{l_@@_ref_the_count_tl} and
+%   then set the variable \myvarenv{l__@@_renew_counter_X_tl} which will
+%   modify |\theenumX|.
 % \iffalse
 %% Internal function used by |ref| key in enumext environment.
 % \fi

@@ -73,13 +73,11 @@
   }
 \clist_map_inline:nn { i, ii, iii, iv, v, vi, vii, viii } { \__enumext_tmp:n {#1} }
 %% Variables used by |ref| key.
-\tl_const:Nn \c__enumext_counter_style_tl
-  { { arabic } { roman } { Roman } { alph } { Alph } }
 \tl_new:N \l__enumext_ref_key_arg_tl
 \tl_new:N \l__enumext_ref_the_count_tl
 \cs_set_protected:Npn \__enumext_tmp:n #1
   {
-    \tl_new:c  { l__enumext_renew_the_count_#1_tl }
+    \tl_new:c  { l__enumext_renew_counter_#1_tl }
     \tl_new:c  { l__enumext_the_counter_#1_tl }
     \tl_set:ce { l__enumext_the_counter_#1_tl } { \exp_not:c { theenumX#1 } }
   }
@@ -149,7 +147,6 @@
 \tl_new:N   \g__enumext_store_name_tl
 \tl_new:N   \l__enumext_store_current_label_tl
 \tl_new:N   \l__enumext_store_current_opt_arg_tl
-\tl_new:N   \l__enumext_store_current_label_tmp_tl
 %% Variables used by |\anskey| and |anskey*|.
 \tl_new:N   \l__enumext_store_anskey_arg_tl
 \tl_new:N   \l__enumext_store_anskey_env_tl
@@ -280,15 +277,6 @@
     \regex_match:nnTF { ^[\+\-]?[\d]+$ } {#1} % $
       { \prg_return_true: }
       { \prg_return_false: }
-  }
-%% Regex for replace '*' for |ref| key.
-\cs_new_protected:Nn \__enumext_regex_counter_style:
-  {
-    \tl_map_inline:Nn \c__enumext_counter_style_tl
-      {
-        \regex_replace_once:nnN { \c{##1}\* }
-          { \c{##1}\cB{\u{l__enumext_ref_the_count_tl}\cE} } \l__enumext_ref_key_arg_tl
-      }
   }
 %% Function to show list lengths used by |show-length| key.
 \cs_new:Npn \__enumext_show_length:nnn #1 #2 #3
@@ -456,7 +444,7 @@
 \hook_gset_rule:nnnn { begindocument } { enumext } { after } { hyperref }
 \cs_new_protected:Nn \__enumext_after_hyperref:
   {
-    \IfPackageLoadedTF { hyperref }
+    \IfPackageLoadedT { hyperref }
       {
         \msg_info:nnn { enumext } { package-load } { hyperref }
         \bool_set_true:N \l__enumext_hyperref_bool
@@ -466,7 +454,6 @@
           }
           {  }
       }
-      {  }
 %% Detection off |footnotehyper| package.
    \bool_if:NT \l__enumext_footnotes_key_bool
      {
@@ -658,7 +645,7 @@
 %% Public dimension |\itemwidth|
 \dim_zero_new:N \itemwidth
 %% Definition of counters.
-\cs_new_protected:Npn \__enumext_define_counters:Nn #1 #2
+\cs_new_protected:Npn \__enumext_define_counter:Nn #1 #2
   {
     \cs_if_exist:cTF { c@ #2 }
       { \msg_fatal:nnn { enumext } { counters }{ #2 } }
@@ -667,25 +654,25 @@
         \newcounter { #2 }
       }
   }
-\__enumext_define_counters:Nn \l__enumext_counter_i_tl    { enumXi    }
-\__enumext_define_counters:Nn \l__enumext_counter_ii_tl   { enumXii   }
-\__enumext_define_counters:Nn \l__enumext_counter_iii_tl  { enumXiii  }
-\__enumext_define_counters:Nn \l__enumext_counter_iv_tl   { enumXiv   }
-\__enumext_define_counters:Nn \l__enumext_counter_v_tl    { enumXv    }
-\__enumext_define_counters:Nn \l__enumext_counter_vi_tl   { enumXvi   }
-\__enumext_define_counters:Nn \l__enumext_counter_vii_tl  { enumXvii  }
-\__enumext_define_counters:Nn \l__enumext_counter_viii_tl { enumXviii }
+\__enumext_define_counter:Nn \l__enumext_counter_i_tl    { enumXi    }
+\__enumext_define_counter:Nn \l__enumext_counter_ii_tl   { enumXii   }
+\__enumext_define_counter:Nn \l__enumext_counter_iii_tl  { enumXiii  }
+\__enumext_define_counter:Nn \l__enumext_counter_iv_tl   { enumXiv   }
+\__enumext_define_counter:Nn \l__enumext_counter_v_tl    { enumXv    }
+\__enumext_define_counter:Nn \l__enumext_counter_vi_tl   { enumXvi   }
+\__enumext_define_counter:Nn \l__enumext_counter_vii_tl  { enumXvii  }
+\__enumext_define_counter:Nn \l__enumext_counter_viii_tl { enumXviii }
 %% Register of counters style.
-\cs_new_protected:Npn \__enumext_register_counter_style:Nn #1 #2
+\cs_new_protected:Npn \__enumext_default_label_width:Nn #1 #2
   {
     \tl_const:cn { c__enumext_widest_ \cs_to_str:N #1 _tl } {#2}
     \tl_gput_right:Nn \g__enumext_counter_styles_tl {#1}
   }
-\__enumext_register_counter_style:Nn \arabic { 0 }
-\__enumext_register_counter_style:Nn \Alph   { M }
-\__enumext_register_counter_style:Nn \alph   { m }
-\__enumext_register_counter_style:Nn \Roman  { VIII }
-\__enumext_register_counter_style:Nn \roman  { viii }
+\__enumext_default_label_width:Nn \arabic { 0 }
+\__enumext_default_label_width:Nn \Alph   { M }
+\__enumext_default_label_width:Nn \alph   { m }
+\__enumext_default_label_width:Nn \Roman  { VIII }
+\__enumext_default_label_width:Nn \roman  { viii }
 %% Set default label width using a box width.
 \cs_new_protected:Npn \__enumext_label_width_by_box:Nn #1 #2
   {
@@ -771,7 +758,7 @@
         align / unknown .code:n =
                           \msg_error:nneee { enumext } { unknown-choice }
                             { align } { left,~right,~ center } { \exp_not:n {##1} },
-        align .initial:n  = left,
+        align .initial:n = left,
         align .value_required:n  = true,
       }
   }
@@ -827,20 +814,23 @@
         \msg_error:nnn { enumext } { key-ref-empty } { enumext }
       }
       {
-        \tl_set_eq:Nc
-          \l__enumext_ref_the_count_tl { l__enumext_the_counter_ \__enumext_level: _tl }
-        \tl_put_right:ce { l__enumext_renew_the_count_ \__enumext_level: _tl }
+        \tl_set_eq:Nc \l__enumext_ref_the_count_tl
           {
-            \exp_not:N \renewcommand { \exp_not:V \l__enumext_ref_the_count_tl } { \exp_not:V \l__enumext_ref_key_arg_tl }
+            l__enumext_the_counter_ \__enumext_level: _tl
+          }
+        \tl_set:ce { l__enumext_renew_counter_ \__enumext_level: _tl }
+          {
+            \exp_not:N \renewcommand { \exp_not:V \l__enumext_ref_the_count_tl }
+              { \exp_not:V \l__enumext_ref_key_arg_tl }
           }
       }
   }
 %% Activate |ref| key in second arg of list for |enumext| environment.
 \cs_new_protected:Nn \__enumext_standar_ref:
   {
-    \tl_if_empty:cF { l__enumext_renew_the_count_ \__enumext_level: _tl }
+    \tl_if_empty:cF { l__enumext_renew_counter_ \__enumext_level: _tl }
       {
-        \tl_use:c { l__enumext_renew_the_count_ \__enumext_level: _tl }
+        \tl_use:c { l__enumext_renew_counter_ \__enumext_level: _tl }
       }
   }
 %% Define and set |label| and |ref| keys for starred environments.
@@ -874,7 +864,7 @@
           }
           {
             \tl_set_eq:NN \l__enumext_ref_the_count_tl \l__enumext_the_counter_vii_tl
-            \tl_put_right:Ne \l__enumext_renew_the_count_vii_tl
+            \tl_set:Ne \l__enumext_renew_counter_vii_tl
               {
                 \exp_not:N \renewcommand { \exp_not:V \l__enumext_ref_the_count_tl } { \exp_not:V \l__enumext_ref_key_arg_tl }
               }
@@ -888,7 +878,7 @@
           }
           {
             \tl_set_eq:NN \l__enumext_ref_the_count_tl \l__enumext_the_counter_viii_tl
-            \tl_put_right:Ne \l__enumext_renew_the_count_viii_tl
+            \tl_set:Ne \l__enumext_renew_counter_viii_tl
               {
                 \exp_not:N \renewcommand  { \exp_not:V \l__enumext_ref_the_count_tl } { \exp_not:V \l__enumext_ref_key_arg_tl }
               }
@@ -900,16 +890,16 @@
   {
     \int_compare:nNnT { \l__enumext_level_h_int } = { 1 }
       {
-        \tl_if_empty:NF \l__enumext_renew_the_count_vii_tl
+        \tl_if_empty:NF \l__enumext_renew_counter_vii_tl
           {
-            \tl_use:N \l__enumext_renew_the_count_vii_tl
+            \tl_use:N \l__enumext_renew_counter_vii_tl
           }
       }
     \int_compare:nNnT { \l__enumext_keyans_level_h_int } = { 1 }
       {
-        \tl_if_empty:NF \l__enumext_renew_the_count_viii_tl
+        \tl_if_empty:NF \l__enumext_renew_counter_viii_tl
           {
-            \tl_use:N \l__enumext_renew_the_count_viii_tl
+            \tl_use:N \l__enumext_renew_counter_viii_tl
           }
       }
   }
@@ -939,7 +929,7 @@
       }
       {
         \tl_set_eq:NN \l__enumext_ref_the_count_tl \l__enumext_the_counter_v_tl
-        \tl_put_right:Ne \l__enumext_renew_the_count_v_tl
+        \tl_put_right:Ne \l__enumext_renew_counter_v_tl
           {
             \exp_not:N \renewcommand { \exp_not:V \l__enumext_ref_the_count_tl } { \exp_not:V \l__enumext_ref_key_arg_tl }
           }
@@ -948,9 +938,9 @@
 %% Activate |ref| key in second arg of list for |keyans| environments.
 \cs_new_protected:Nn \__enumext_keyans_ref:
   {
-    \tl_if_empty:NF \l__enumext_renew_the_count_v_tl
+    \tl_if_empty:NF \l__enumext_renew_counter_v_tl
       {
-        \tl_use:N \l__enumext_renew_the_count_v_tl
+        \tl_use:N \l__enumext_renew_counter_v_tl
       }
   }
 %% Internal function for |start| key.
