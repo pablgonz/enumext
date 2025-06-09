@@ -606,7 +606,7 @@
                     labelwidth, fbox, addvspace, Alph, alph, arabic, Roman, roman, partopsep, baselineskip, mode_leave_vertical,%
                     textborn, textbullet, textendash, textasteriskcentered, textperiodcentered, raggedleft, peek_remove_spaces, skip_horizontal, %
                     triangleright, diamond, circ, parleft, star, centering, ast, hyperlink, hypertarget, newtheorem, %
-                    aux_i, aux_ii, aux_iii, exp_args, if@noitemarg, if, if@hyper@item, hyper, noitemarg, %
+                    aux_i, aux_ii, aux_iii, exp_args, if@noitemarg, if, if@hyper@item, hyper, noitemarg, regex_match, regex_if_match,%
                     skip_vertical, obeyedline, tl_replace_all, mbox, tl_rescan, tl_set_rescan, tex_scantokens, },%
 % Other words 3
     keywordstyle  = [3]{\color{optcolor!85}},%
@@ -5498,6 +5498,10 @@ Some text here
 % \begin{description}[font=\small\sffamily,wide=0pt,style=multiline,leftmargin=1.1\descrwidth,nosep,noitemsep]
 %  \item [\fileversion{} (ctan), \filedate]
 %    \begin{itemize}
+%      \item Replacing |\regex_match:| (deprecated) with |\regex_if_match:|.
+%    \end{itemize}
+%  \item [v1.4 (ctan), 2025-06-09]
+%    \begin{itemize}
 %      \item Improved implementation of the \texttt{\textcolor{optcolor}{start}} key for \emph{tagged} \texttt{PDF}.
 %      \item Improved implementation of the \texttt{\textcolor{optcolor}{ref}} key.
 %      \item Fixed the behavior of the |save-sep| key.
@@ -5622,7 +5626,7 @@ Some text here
 %    \end{macrocode}
 % Now declare the \mypkg*{enumext} package.
 %    \begin{macrocode}
-\ProvidesExplPackage {enumext} {2025-06-09} {1.4} {Enumerate exercise sheets}
+\ProvidesExplPackage {enumext} {2025-06-15} {1.5} {Enumerate exercise sheets}
 %    \end{macrocode}
 % Finally check if the \mypkg{multicol} package are loaded, if not we load it.
 %    \begin{macrocode}
@@ -6247,7 +6251,7 @@ Some text here
 %    \begin{macrocode}
 \prg_new_protected_conditional:Npnn \@@_if_is_int:n #1 { T, F, TF }
   {
-    \regex_match:nnTF { ^[\+\-]?[\d]+$ } {#1} % $
+    \regex_if_match:nnTF { ^[\+\-]?[\d]+$ } {#1} % $
       { \prg_return_true: }
       { \prg_return_false: }
   }
@@ -7462,9 +7466,9 @@ Some text here
          \int_set:Nn #2 {#3}
        }
        {
-         \regex_match:nVT { \c{Alph} | \c{alph} } {#1}
+         \regex_if_match:nVT { \c{Alph} | \c{alph} } {#1}
            { \int_set:Nn #2 { \int_from_alph:n {#3} } }
-         \regex_match:nVT { \c{Roman} | \c{roman} } {#1}
+         \regex_if_match:nVT { \c{Roman} | \c{roman} } {#1}
            { \int_set:Nn #2  { \int_from_roman:n {#3} } }
        }
   }
@@ -7506,9 +7510,9 @@ Some text here
         \setcounter{enumX#1} { #4 }
       }
       {
-        \regex_match:nVT { \c{Alph} | \c{alph} } {#2}
+        \regex_if_match:nVT { \c{Alph} | \c{alph} } {#2}
           { \setcounter{enumX#1} { \int_from_alph:n {#4} } }
-        \regex_match:nVT { \c{Roman} | \c{roman} } {#2}
+        \regex_if_match:nVT { \c{Roman} | \c{roman} } {#2}
           { \setcounter{enumX#1} { \int_from_roman:n {#4} } }
       }
      \@@_label_width_by_box:cv

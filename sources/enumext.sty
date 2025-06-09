@@ -36,7 +36,7 @@
 %% ------------------------------------------------------------------------
 %% 
 \NeedsTeXFormat{LaTeX2e}[2025-06-01]
-\ProvidesExplPackage {enumext} {2025-06-09} {1.4} {Enumerate exercise sheets}
+\ProvidesExplPackage {enumext} {2025-06-15} {1.5} {Enumerate exercise sheets}
 \hook_gput_code:nnn {begindocument} {enumext}
   {
     \IfPackageLoadedTF { multicol }
@@ -274,7 +274,7 @@
 %% Function to check integer variables used by |start| and |widest| keys.
 \prg_new_protected_conditional:Npnn \__enumext_if_is_int:n #1 { T, F, TF }
   {
-    \regex_match:nnTF { ^[\+\-]?[\d]+$ } {#1} % $
+    \regex_if_match:nnTF { ^[\+\-]?[\d]+$ } {#1} % $
       { \prg_return_true: }
       { \prg_return_false: }
   }
@@ -954,9 +954,9 @@
          \int_set:Nn #2 {#3}
        }
        {
-         \regex_match:nVT { \c{Alph} | \c{alph} } {#1}
+         \regex_if_match:nVT { \c{Alph} | \c{alph} } {#1}
            { \int_set:Nn #2 { \int_from_alph:n {#3} } }
-         \regex_match:nVT { \c{Roman} | \c{roman} } {#1}
+         \regex_if_match:nVT { \c{Roman} | \c{roman} } {#1}
            { \int_set:Nn #2  { \int_from_roman:n {#3} } }
        }
   }
@@ -973,9 +973,9 @@
         \setcounter{enumX#1} { #4 }
       }
       {
-        \regex_match:nVT { \c{Alph} | \c{alph} } {#2}
+        \regex_if_match:nVT { \c{Alph} | \c{alph} } {#2}
           { \setcounter{enumX#1} { \int_from_alph:n {#4} } }
-        \regex_match:nVT { \c{Roman} | \c{roman} } {#2}
+        \regex_if_match:nVT { \c{Roman} | \c{roman} } {#2}
           { \setcounter{enumX#1} { \int_from_roman:n {#4} } }
       }
      \__enumext_label_width_by_box:cv

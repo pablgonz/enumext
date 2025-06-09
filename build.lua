@@ -21,8 +21,8 @@
 
 -- General package identification
 module     = "enumext"
-pkgversion = "1.4"
-pkgdate    = "2025-06-09"
+pkgversion = "1.5"
+pkgdate    = "2025-06-15"
 ltxrelease = "2025-06-01"
 
 -- Configuration of files for build and installation
