@@ -36,7 +36,7 @@
 %% ------------------------------------------------------------------------
 %% 
 \NeedsTeXFormat{LaTeX2e}[2025-06-01]
-\ProvidesExplPackage {enumext} {2025-06-15} {1.4} {Enumerate exercise sheets}
+\ProvidesExplPackage {enumext} {2025-06-09} {1.4} {Enumerate exercise sheets}
 \hook_gput_code:nnn {begindocument} {enumext}
   {
     \IfPackageLoadedTF { multicol }
@@ -2174,7 +2174,7 @@
       {
         \tl_if_empty:NF \g__enumext_standar_series_tl
           {
-            \__enumext_resume_counter:n { }
+            \__enumext_resume_counter:
             \keys_set:nV { enumext / level-1 } \g__enumext_standar_series_tl
           }
       }
@@ -2182,10 +2182,11 @@
       {
         \tl_if_empty:NF \g__enumext_starred_series_tl
           {
-            \__enumext_resume_counter:n { }
+            \__enumext_resume_counter:
             \keys_set:nV { enumext / enumext* } \g__enumext_starred_series_tl
           }
       }
+    \__enumext_resume_counter_save_ans:
   }
 %% Add |save-ans| key only on first level off |enumext| and |enumext*|.
 \cs_set_protected:Npn \__enumext_tmp:n #1
@@ -3980,6 +3981,14 @@
           }
       }
   }
+%% Re-set start counter for |enumext| environment.
+\cs_new_protected:Nn \__enumext_tagged_set_start:
+  {
+    \IfDocumentMetadataT
+      {
+        \setcounter { enumX \__enumext_level: } { \int_eval:n { \int_use:c { l__enumext_start_ \__enumext_level: _int } - 1 } }
+      }
+  }
 %% Definition of |enumext| environment.
 \NewDocumentEnvironment{enumext}{ O{} }
   {
@@ -3993,6 +4002,7 @@
         \use:c { __enumext_list_arg_two_ \__enumext_level: : }
         \__enumext_before_keys_exec:
       }
+    \__enumext_tagged_set_start:
     \__enumext_set_item_width:
     \__enumext_after_args_exec:
   }
@@ -4120,6 +4130,14 @@
         \dim_sub:Nn \itemwidth { \l__enumext_listoffset_v_dim }
       }
   }
+%% Re-set start counter for |enumext| environment.
+\cs_new_protected:Nn \__enumext_keyans_tagged_set_start:
+  {
+    \IfDocumentMetadataT
+      {
+        \setcounter { enumXv } { \int_eval:n { \int_use:c { l__enumext_start_v_int } - 1 } }
+      }
+  }
 %% Definition of |keyans| environment.
 \NewDocumentEnvironment{keyans}{ O{} }
   {
@@ -4132,6 +4150,7 @@
         \__enumext_list_arg_two_v:
         \__enumext_before_keys_exec_v:
       }
+    \__enumext_keyans_tagged_set_start:
     \__enumext_keyans_set_item_width:
     \__enumext_after_args_exec_v:
   }
@@ -4169,27 +4188,27 @@
 %% Wrap socket in conditional functions for tagging |enumext*| and |keyans*| environments.
 \cs_new_protected_nopar:Npn \__enumext_start_list_tag:n #1
   {
-    \IfDocumentMetadataTF
+    \IfDocumentMetadataT
       {
         \socket_assign_plug:nn {tagsupport/__enumext/starred} {start-list-tags}
         \socket_use:nn {tagsupport/__enumext/starred} {#1}
-      } {}
+      }
    }
 \cs_new_protected_nopar:Nn \__enumext_stop_start_list_tag:
   {
-    \IfDocumentMetadataTF
+    \IfDocumentMetadataT
       {
         \socket_assign_plug:nn {tagsupport/__enumext/starred} {stop-start-tags}
         \socket_use:nn {tagsupport/__enumext/starred} { }
-      } {}
+      }
    }
 \cs_new_protected_nopar:Npn \__enumext_stop_list_tag:n #1
   {
-    \IfDocumentMetadataTF
+    \IfDocumentMetadataT
       {
         \socket_assign_plug:nn {tagsupport/__enumext/starred} {stop-list-tags}
         \socket_use:nn {tagsupport/__enumext/starred} {#1}
-      } {}
+      }
    }
 %% Implement socket for tagging support in |keyanspic| environment.
 \socket_new:nn {tagsupport/__enumext/keyanspic}{ 0 }
@@ -4223,27 +4242,27 @@
 %% Wrap socket in conditional functions for tagging |keyanspic| environment.
 \cs_new_protected_nopar:Nn \__enumext_anspic_start_list_tag:
   {
-    \IfDocumentMetadataTF
+    \IfDocumentMetadataT
       {
         \socket_assign_plug:nn {tagsupport/__enumext/keyanspic} {start-list-tags}
         \socket_use:n {tagsupport/__enumext/keyanspic}
-      } {}
+      }
    }
 \cs_new_protected_nopar:Nn \__enumext_anspic_stop_start_list_tag:
   {
-    \IfDocumentMetadataTF
+    \IfDocumentMetadataT
       {
         \socket_assign_plug:nn {tagsupport/__enumext/keyanspic} {stop-start-tags}
         \socket_use:n {tagsupport/__enumext/keyanspic}
-      } {}
+      }
    }
 \cs_new_protected_nopar:Nn \__enumext_anspic_stop_list_tag:
   {
-    \IfDocumentMetadataTF
+    \IfDocumentMetadataT
       {
         \socket_assign_plug:nn {tagsupport/__enumext/keyanspic} {stop-list-tags}
         \socket_use:n {tagsupport/__enumext/keyanspic}
-      } {}
+      }
    }
 %% Add keys for |keyanspic| environment.
 \keys_define:nn { enumext / keyanspic }
@@ -4346,42 +4365,42 @@
     \__enumext_keyans_pic_safe_exec:
     \__enumext_keyans_pic_parse_keys:n {#1}
     \begin{list} { } { \__enumext_keyans_pic_arg_two: }
-    \IfDocumentMetadataTF
+    \IfDocumentMetadataT
       {
         \tag_suspend:n {list}
-      }{}
+      }
     \item[] \scan_stop:
     \RenewDocumentCommand \item {}
       {
         \msg_error:nn { enumext } { keyanspic-item-cmd }
       }
-    \IfDocumentMetadataTF
+    \IfDocumentMetadataT
       {
         \tag_resume:n {keyanspic}
         \tag_tool:n {para/tagging=false}
         \tag_suspend:n {keyanspic}
-      } { }
+      }
   }
   {
-    \IfDocumentMetadataTF
+    \IfDocumentMetadataT
       {
         \tag_resume:n {keyanspic}
         \tag_mc_end_push:
         \tag_struct_begin:n {tag=L,attribute=enumerate}
-      } { }
+      }
     \__enumext_anspic_exec:
-    \IfDocumentMetadataTF
+    \IfDocumentMetadataT
       {
         \tag_suspend:n {keyanspic}
-      } { }
+      }
     \end{list}
-    \IfDocumentMetadataTF
+    \IfDocumentMetadataT
       {
         \tag_struct_end:n {tag=L}
         \tag_mc_begin_pop:n {}
         \tag_struct_end:n {tag=L}
         \tag_mc_begin_pop:n {}
-      } { }
+      }
     \__enumext_check_starred_cmd:n { anspic }
     \setcounter { enumXvi } { 0 }
     \bool_if:NTF \l__enumext_anspic_label_above_bool
@@ -4425,19 +4444,19 @@
   {
     \bool_if:NF \l__enumext_anspic_label_above_bool
       {
-        \IfDocumentMetadataTF
+        \IfDocumentMetadataT
           {
             \tag_suspend:n {keyanspic}
-          } { }
+          }
         \vbox_set:Nn \l__enumext_anspic_body_box { #1 }
         \dim_set:Nn \l__enumext_anspic_body_htdp_dim
           {
             \box_ht_plus_dp:N \l__enumext_anspic_body_box
           }
-        \IfDocumentMetadataTF
+        \IfDocumentMetadataT
           {
             \tag_resume:n {keyanspic}
-          } { }
+          }
       }
   }
 %% Process and store label and [opt] for |\anspic|.
@@ -4526,18 +4545,18 @@
       { \l__enumext_anspic_above_int + 1 }
       { \l__enumext_anspic_below_int }
       {
-        \IfDocumentMetadataTF
+        \IfDocumentMetadataT
           {
             \tag_suspend:n {minipage}
-          } { }
+          }
         \begin{minipage}[ \l__enumext_anspic_mini_pos_str ]{ \l__enumext_anspic_mini_width_dim }
           \centering
           \seq_item:Nn \l__enumext_anspic_args_seq { ##1 }
         \end{minipage}
-        \IfDocumentMetadataTF
+        \IfDocumentMetadataT
           {
             \tag_resume:n {minipage}
-          } { }
+          }
       }
     \par
   }
@@ -4740,7 +4759,7 @@
       {
         \__enumext_stop_list:
         \__enumext_stop_store_level_vii:
-        \IfDocumentMetadataTF { \tag_resume:n {enumext*} } { }
+        \IfDocumentMetadataT { \tag_resume:n {enumext*} }
         \end__enumext_mini_page
         \hfill
         \bool_gset_true:N \g__enumext_minipage_active_vii_bool
@@ -4853,7 +4872,11 @@
         \__enumext_list_arg_two_vii:
         \__enumext_before_keys_exec_vii:
       }
-    \IfDocumentMetadataTF { \tag_suspend:n {enumext*} } { }
+    \IfDocumentMetadataT
+      {
+        \setcounter { enumXvii } { \int_eval:n { \int_use:c { l__enumext_start_vii_int } - 1 } }
+        \tag_suspend:n {enumext*}
+      }
     \__enumext_starred_columns_set_vii:
     \item[] \scan_stop:
     \cs_set_eq:NN \__enumext_stop_item_tmp_vii: \__enumext_first_item_tmp_vii:
@@ -4861,7 +4884,7 @@
     \ignorespaces
   }
   {
-    \IfDocumentMetadataTF { \tag_struct_end:n {tag=text-unit} } { }
+    \IfDocumentMetadataT { \tag_struct_end:n {tag=text-unit} }
     \__enumext_stop_item_tmp_vii:
     \__enumext_remove_extra_parsep_vii:
     \__enumext_after_list_vii:
@@ -5016,13 +5039,13 @@
         \legacy_if_set_false:n { @noitemarg }
         \legacy_if:nT { @nmbrlist }
           {
-            \IfDocumentMetadataTF
+            \IfDocumentMetadataT
               {
                 \bool_if:NT \l__enumext_hyperref_bool
                   {
                     \legacy_if_set_true:n { @hyper@item }
                   }
-              } { }
+              }
             \refstepcounter{enumXvii}
             \bool_if:NT \l__enumext_check_answers_bool
               {
@@ -5127,7 +5150,11 @@
         \__enumext_list_arg_two_viii:
         \__enumext_before_keys_exec_viii:
       }
-    \IfDocumentMetadataTF { \tag_suspend:n {keyans*} } { }
+    \IfDocumentMetadataT
+      {
+        \setcounter { enumXviii } { \int_eval:n { \int_use:c { l__enumext_start_viii_int } - 1 } }
+        \tag_suspend:n {keyans*}
+      }
     \__enumext_starred_columns_set_viii:
     \item[] \scan_stop:
     \cs_set_eq:NN \__enumext_stop_item_tmp_viii: \__enumext_first_item_tmp_viii:
@@ -5135,7 +5162,7 @@
     \ignorespaces
   }
   {
-    \IfDocumentMetadataTF { \tag_struct_end:n {tag=text-unit} } { }
+    \IfDocumentMetadataT { \tag_struct_end:n {tag=text-unit} }
     \__enumext_stop_item_tmp_viii:
     \__enumext_remove_extra_parsep_viii:
     \__enumext_check_starred_cmd:n { item }

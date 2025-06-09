@@ -5498,8 +5498,10 @@ Some text here
 % \begin{description}[font=\small\sffamily,wide=0pt,style=multiline,leftmargin=1.1\descrwidth,nosep,noitemsep]
 %  \item [\fileversion{} (ctan), \filedate]
 %    \begin{itemize}
+%      \item Improved implementation of the \texttt{\textcolor{optcolor}{start}} key for \emph{tagged} \texttt{PDF}.
 %      \item Improved implementation of the \texttt{\textcolor{optcolor}{ref}} key.
 %      \item Fixed the behavior of the |save-sep| key.
+%      \item Fixed the behavior of the \texttt{\textcolor{optcolor}{resume}}|*| key.
 %    \end{itemize}
 %  \item [v1.3 (ctan), 2025-06-01]
 %    \begin{itemize}
@@ -5620,7 +5622,7 @@ Some text here
 %    \end{macrocode}
 % Now declare the \mypkg*{enumext} package.
 %    \begin{macrocode}
-\ProvidesExplPackage {enumext} {2025-06-15} {1.4} {Enumerate exercise sheets}
+\ProvidesExplPackage {enumext} {2025-06-09} {1.4} {Enumerate exercise sheets}
 %    \end{macrocode}
 % Finally check if the \mypkg{multicol} package are loaded, if not we load it.
 %    \begin{macrocode}
@@ -9508,7 +9510,7 @@ Some text here
       {
         \tl_if_empty:NF \g_@@_standar_series_tl
           {
-            \@@_resume_counter:n { }
+            \@@_resume_counter:
             \keys_set:nV { enumext / level-1 } \g_@@_standar_series_tl
           }
       }
@@ -9516,10 +9518,11 @@ Some text here
       {
         \tl_if_empty:NF \g_@@_starred_series_tl
           {
-            \@@_resume_counter:n { }
+            \@@_resume_counter:
             \keys_set:nV { enumext / enumext* } \g_@@_starred_series_tl
           }
       }
+    \@@_resume_counter_save_ans:
   }
 %    \end{macrocode}
 % \end{macro}
@@ -12743,6 +12746,23 @@ Some text here
 %    \end{macrocode}
 % \end{macro}
 %
+% \begin{macro}{\@@_tagged_set_start:}\label{res:set-start-enumext}
+%   The \cs{@@_tagged_set_start:} function will reset the counters value
+%   when \emph{tagged} \texttt{PDF} is active.
+% \iffalse
+%% Re-set start counter for |enumext| environment.
+% \fi
+%    \begin{macrocode}
+\cs_new_protected:Nn \@@_tagged_set_start:
+  {
+    \IfDocumentMetadataT
+      {
+        \setcounter { enumX \@@_level: } { \int_eval:n { \int_use:c { l_@@_start_ \@@_level: _int } - 1 } }
+      }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
 % \begin{macro}{enumext}
 %   Now create the \myenv*{enumext} environment based on \myenv{list}
 %   environment by levels.
@@ -12762,6 +12782,7 @@ Some text here
         \use:c { @@_list_arg_two_ \@@_level: : }
         \@@_before_keys_exec:
       }
+    \@@_tagged_set_start:
     \@@_set_item_width:
     \@@_after_args_exec:
   }
@@ -12947,6 +12968,23 @@ Some text here
 %    \end{macrocode}
 % \end{macro}
 %
+% \begin{macro}{\@@_keyans_tagged_set_start:}\label{res:keyans-set-start-enumext}
+%   The \cs{@@_keyans_tagged_set_start:} function will reset the counters value
+%   when \emph{tagged} \texttt{PDF} is active.
+% \iffalse
+%% Re-set start counter for |enumext| environment.
+% \fi
+%    \begin{macrocode}
+\cs_new_protected:Nn \@@_keyans_tagged_set_start:
+  {
+    \IfDocumentMetadataT
+      {
+        \setcounter { enumXv } { \int_eval:n { \int_use:c { l_@@_start_v_int } - 1 } }
+      }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
 % \begin{macro}{keyans}
 %   Now we define the environment \myenv*{keyans} also based on lists.
 % \iffalse
@@ -12964,6 +13002,7 @@ Some text here
         \@@_list_arg_two_v:
         \@@_before_keys_exec_v:
       }
+    \@@_keyans_tagged_set_start:
     \@@_keyans_set_item_width:
     \@@_after_args_exec_v:
   }
@@ -13040,27 +13079,27 @@ Some text here
 %    \begin{macrocode}
 \cs_new_protected_nopar:Npn \@@_start_list_tag:n #1
   {
-    \IfDocumentMetadataTF
+    \IfDocumentMetadataT
       {
         \socket_assign_plug:nn {tagsupport/@@/starred} {start-list-tags}
         \socket_use:nn {tagsupport/@@/starred} {#1}
-      } {}
+      }
    }
 \cs_new_protected_nopar:Nn \@@_stop_start_list_tag:
   {
-    \IfDocumentMetadataTF
+    \IfDocumentMetadataT
       {
         \socket_assign_plug:nn {tagsupport/@@/starred} {stop-start-tags}
         \socket_use:nn {tagsupport/@@/starred} { }
-      } {}
+      }
    }
 \cs_new_protected_nopar:Npn \@@_stop_list_tag:n #1
   {
-    \IfDocumentMetadataTF
+    \IfDocumentMetadataT
       {
         \socket_assign_plug:nn {tagsupport/@@/starred} {stop-list-tags}
         \socket_use:nn {tagsupport/@@/starred} {#1}
-      } {}
+      }
    }
 %    \end{macrocode}
 % \end{macro}
@@ -13113,27 +13152,27 @@ Some text here
 %    \begin{macrocode}
 \cs_new_protected_nopar:Nn \@@_anspic_start_list_tag:
   {
-    \IfDocumentMetadataTF
+    \IfDocumentMetadataT
       {
         \socket_assign_plug:nn {tagsupport/@@/keyanspic} {start-list-tags}
         \socket_use:n {tagsupport/@@/keyanspic}
-      } {}
+      }
    }
 \cs_new_protected_nopar:Nn \@@_anspic_stop_start_list_tag:
   {
-    \IfDocumentMetadataTF
+    \IfDocumentMetadataT
       {
         \socket_assign_plug:nn {tagsupport/@@/keyanspic} {stop-start-tags}
         \socket_use:n {tagsupport/@@/keyanspic}
-      } {}
+      }
    }
 \cs_new_protected_nopar:Nn \@@_anspic_stop_list_tag:
   {
-    \IfDocumentMetadataTF
+    \IfDocumentMetadataT
       {
         \socket_assign_plug:nn {tagsupport/@@/keyanspic} {stop-list-tags}
         \socket_use:n {tagsupport/@@/keyanspic}
-      } {}
+      }
    }
 %    \end{macrocode}
 % \end{macro}
@@ -13407,21 +13446,21 @@ Some text here
     \@@_keyans_pic_safe_exec:
     \@@_keyans_pic_parse_keys:n {#1}
     \begin{list} { } { \@@_keyans_pic_arg_two: }
-    \IfDocumentMetadataTF
+    \IfDocumentMetadataT
       {
         \tag_suspend:n {list}
-      }{}
+      }
     \item[] \scan_stop:
     \RenewDocumentCommand \item {}
       {
         \msg_error:nn { enumext } { keyanspic-item-cmd }
       }
-    \IfDocumentMetadataTF
+    \IfDocumentMetadataT
       {
         \tag_resume:n {keyanspic}
         \tag_tool:n {para/tagging=false}
         \tag_suspend:n {keyanspic}
-      } { }
+      }
   }
 %    \end{macrocode}
 %   In the second part of the environment definition we will manually place
@@ -13429,25 +13468,25 @@ Some text here
 %   |\anspic| using the \cs{@@_anspic_exec:} function.
 %    \begin{macrocode}
   {
-    \IfDocumentMetadataTF
+    \IfDocumentMetadataT
       {
         \tag_resume:n {keyanspic}
         \tag_mc_end_push:
         \tag_struct_begin:n {tag=L,attribute=enumerate}
-      } { }
+      }
     \@@_anspic_exec:
-    \IfDocumentMetadataTF
+    \IfDocumentMetadataT
       {
         \tag_suspend:n {keyanspic}
-      } { }
+      }
     \end{list}
-    \IfDocumentMetadataTF
+    \IfDocumentMetadataT
       {
         \tag_struct_end:n {tag=L}
         \tag_mc_begin_pop:n {}
         \tag_struct_end:n {tag=L}
         \tag_mc_begin_pop:n {}
-      } { }
+      }
 %    \end{macrocode}
 %   Finally we check if \ics*{anspic*} has been used, set the counter |enumXvi|
 %   to zero and apply our \enquote{adjusted} vertical space bottom.
@@ -13538,19 +13577,19 @@ Some text here
   {
     \bool_if:NF \l_@@_anspic_label_above_bool
       {
-        \IfDocumentMetadataTF
+        \IfDocumentMetadataT
           {
             \tag_suspend:n {keyanspic}
-          } { }
+          }
         \vbox_set:Nn \l_@@_anspic_body_box { #1 }
         \dim_set:Nn \l_@@_anspic_body_htdp_dim
           {
             \box_ht_plus_dp:N \l_@@_anspic_body_box
           }
-        \IfDocumentMetadataTF
+        \IfDocumentMetadataT
           {
             \tag_resume:n {keyanspic}
-          } { }
+          }
       }
   }
 %    \end{macrocode}
@@ -13678,18 +13717,18 @@ Some text here
       { \l_@@_anspic_above_int + 1 }
       { \l_@@_anspic_below_int }
       {
-        \IfDocumentMetadataTF
+        \IfDocumentMetadataT
           {
             \tag_suspend:n {minipage}
-          } { }
+          }
         \begin{minipage}[ \l_@@_anspic_mini_pos_str ]{ \l_@@_anspic_mini_width_dim }
           \centering
           \seq_item:Nn \l_@@_anspic_args_seq { ##1 }
         \end{minipage}
-        \IfDocumentMetadataTF
+        \IfDocumentMetadataT
           {
             \tag_resume:n {minipage}
-          } { }
+          }
       }
     \par
   }
@@ -14013,7 +14052,7 @@ Some text here
       {
         \@@_stop_list:
         \@@_stop_store_level_vii:
-        \IfDocumentMetadataTF { \tag_resume:n {enumext*} } { }
+        \IfDocumentMetadataT { \tag_resume:n {enumext*} }
         \end@@_mini_page
         \hfill
         \bool_gset_true:N \g_@@_minipage_active_vii_bool
@@ -14165,7 +14204,11 @@ Some text here
         \@@_list_arg_two_vii:
         \@@_before_keys_exec_vii:
       }
-    \IfDocumentMetadataTF { \tag_suspend:n {enumext*} } { }
+    \IfDocumentMetadataT
+      {
+        \setcounter { enumXvii } { \int_eval:n { \int_use:c { l_@@_start_vii_int } - 1 } }
+        \tag_suspend:n {enumext*}
+      }
     \@@_starred_columns_set_vii:
     \item[] \scan_stop:
     \cs_set_eq:NN \@@_stop_item_tmp_vii: \@@_first_item_tmp_vii:
@@ -14173,7 +14216,7 @@ Some text here
     \ignorespaces
   }
   {
-    \IfDocumentMetadataTF { \tag_struct_end:n {tag=text-unit} } { }
+    \IfDocumentMetadataT { \tag_struct_end:n {tag=text-unit} } 
     \@@_stop_item_tmp_vii:
     \@@_remove_extra_parsep_vii:
     \@@_after_list_vii:
@@ -14501,13 +14544,13 @@ Some text here
         \legacy_if_set_false:n { @noitemarg }
         \legacy_if:nT { @nmbrlist }
           {
-            \IfDocumentMetadataTF
+            \IfDocumentMetadataT
               {
                 \bool_if:NT \l_@@_hyperref_bool
                   {
                     \legacy_if_set_true:n { @hyper@item }
                   }
-              } { }
+              }
             \refstepcounter{enumXvii}
             \bool_if:NT \l_@@_check_answers_bool
               {
@@ -14705,7 +14748,11 @@ Some text here
         \@@_list_arg_two_viii:
         \@@_before_keys_exec_viii:
       }
-    \IfDocumentMetadataTF { \tag_suspend:n {keyans*} } { }
+    \IfDocumentMetadataT
+      {
+        \setcounter { enumXviii } { \int_eval:n { \int_use:c { l_@@_start_viii_int } - 1 } }
+        \tag_suspend:n {keyans*}
+      }
     \@@_starred_columns_set_viii:
     \item[] \scan_stop:
     \cs_set_eq:NN \@@_stop_item_tmp_viii: \@@_first_item_tmp_viii:
@@ -14713,7 +14760,7 @@ Some text here
     \ignorespaces
   }
   {
-    \IfDocumentMetadataTF { \tag_struct_end:n {tag=text-unit} } { }
+    \IfDocumentMetadataT { \tag_struct_end:n {tag=text-unit} }
     \@@_stop_item_tmp_viii:
     \@@_remove_extra_parsep_viii:
     \@@_check_starred_cmd:n { item }

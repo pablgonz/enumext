@@ -1,3 +1,5 @@
-Release v1.4 2025-06-15:
+Release v1.4 2025-06-09:
+- Improved implementation of the `start` key for _tagged_ PDF.
 - Improved implementation of the `ref` key.
 - Fixed the behavior of the `save-sep` key.
+- Fixed the behavior of the `resume*` key.
