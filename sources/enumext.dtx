@@ -12364,7 +12364,6 @@ Some text here
         \clist_map_inline:nn { topsep, parsep, partopsep, itemsep }
           { \skip_set_eq:cc {####1} { l_@@_####1_#1_skip } }
         \usecounter { enumX#1 }
-        %%%%% \setcounter { enumX#1 } { \int_eval:n { \int_use:c { l_@@_start_#1_int } - 1 } }
         \str_if_eq:nnTF {#1} { v }
           {
             \@@_keyans_redefine_item:
@@ -12424,7 +12423,6 @@ Some text here
         \skip_set_eq:Nc \parsep  { l_@@_itemsep_#1_skip }
         \skip_zero:N \partopsep
         \usecounter { enumX#1 }
-        %%%% \setcounter { enumX#1 } { \int_eval:n { \int_use:c { l_@@_start_#1_int } - 1 } }
         \@@_starred_ref:
         \str_if_eq:nnTF {#1} { vii }
           {
@@ -12779,7 +12777,7 @@ Some text here
 %   one}\mymarg{arg two}|\setcounter{enumX}|.
 %
 %   \smallskip
-% \begin{important}* 
+% \begin{important}*
 %   This is described in \href{https://github.com/latex3/tagging-project/issues/893}{processing
 %   order of legacysetupcode in the block templates}
 %   and we will apply the workaround provided by Frank Mittelbach.
