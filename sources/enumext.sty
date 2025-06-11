@@ -663,16 +663,16 @@
 \__enumext_define_counter:Nn \l__enumext_counter_vii_tl  { enumXvii  }
 \__enumext_define_counter:Nn \l__enumext_counter_viii_tl { enumXviii }
 %% Register of counters style.
-\cs_new_protected:Npn \__enumext_default_label_width:Nn #1 #2
+\cs_new_protected:Npn \__enumext_register_default_label_wd:Nn #1 #2
   {
     \tl_const:cn { c__enumext_widest_ \cs_to_str:N #1 _tl } {#2}
     \tl_gput_right:Nn \g__enumext_counter_styles_tl {#1}
   }
-\__enumext_default_label_width:Nn \arabic { 0 }
-\__enumext_default_label_width:Nn \Alph   { M }
-\__enumext_default_label_width:Nn \alph   { m }
-\__enumext_default_label_width:Nn \Roman  { VIII }
-\__enumext_default_label_width:Nn \roman  { viii }
+\__enumext_register_default_label_wd:Nn \arabic { 0 }
+\__enumext_register_default_label_wd:Nn \Alph   { M }
+\__enumext_register_default_label_wd:Nn \alph   { m }
+\__enumext_register_default_label_wd:Nn \Roman  { VIII }
+\__enumext_register_default_label_wd:Nn \roman  { viii }
 %% Set default label width using a box width.
 \cs_new_protected:Npn \__enumext_label_width_by_box:Nn #1 #2
   {
@@ -2174,7 +2174,7 @@
       {
         \tl_if_empty:NF \g__enumext_standar_series_tl
           {
-            \__enumext_resume_counter:
+            \__enumext_resume_counter:n { }
             \keys_set:nV { enumext / level-1 } \g__enumext_standar_series_tl
           }
       }
@@ -2182,11 +2182,10 @@
       {
         \tl_if_empty:NF \g__enumext_starred_series_tl
           {
-            \__enumext_resume_counter:
+            \__enumext_resume_counter:n { }
             \keys_set:nV { enumext / enumext* } \g__enumext_starred_series_tl
           }
       }
-    \__enumext_resume_counter_save_ans:
   }
 %% Add |save-ans| key only on first level off |enumext| and |enumext*|.
 \cs_set_protected:Npn \__enumext_tmp:n #1
@@ -3742,7 +3741,7 @@
         \clist_map_inline:nn { topsep, parsep, partopsep, itemsep }
           { \skip_set_eq:cc {####1} { l__enumext_####1_#1_skip } }
         \usecounter { enumX#1 }
-        \setcounter { enumX#1 } { \int_eval:n { \int_use:c { l__enumext_start_#1_int } - 1 } }
+        %%%%% \setcounter { enumX#1 } { \int_eval:n { \int_use:c { l__enumext_start_#1_int } - 1 } }
         \str_if_eq:nnTF {#1} { v }
           {
             \__enumext_keyans_redefine_item:
@@ -3788,7 +3787,7 @@
         \skip_set_eq:Nc \parsep  { l__enumext_itemsep_#1_skip }
         \skip_zero:N \partopsep
         \usecounter { enumX#1 }
-        \setcounter { enumX#1 } { \int_eval:n { \int_use:c { l__enumext_start_#1_int } - 1 } }
+        %%%% \setcounter { enumX#1 } { \int_eval:n { \int_use:c { l__enumext_start_#1_int } - 1 } }
         \__enumext_starred_ref:
         \str_if_eq:nnTF {#1} { vii }
           {
@@ -3981,12 +3980,12 @@
           }
       }
   }
-%% Re-set start counter for |enumext| environment.
-\cs_new_protected:Nn \__enumext_tagged_set_start:
+%% Set start value for counter in |enumext| environment.
+\cs_new_protected:Nn \__enumext_start_counter:
   {
-    \IfDocumentMetadataT
+    \setcounter { enumX \__enumext_level: }
       {
-        \setcounter { enumX \__enumext_level: } { \int_eval:n { \int_use:c { l__enumext_start_ \__enumext_level: _int } - 1 } }
+        \int_eval:n { \int_use:c { l__enumext_start_ \__enumext_level: _int } - 1 }
       }
   }
 %% Definition of |enumext| environment.
@@ -4002,7 +4001,7 @@
         \use:c { __enumext_list_arg_two_ \__enumext_level: : }
         \__enumext_before_keys_exec:
       }
-    \__enumext_tagged_set_start:
+    \__enumext_start_counter:
     \__enumext_set_item_width:
     \__enumext_after_args_exec:
   }
@@ -4130,13 +4129,10 @@
         \dim_sub:Nn \itemwidth { \l__enumext_listoffset_v_dim }
       }
   }
-%% Re-set start counter for |enumext| environment.
-\cs_new_protected:Nn \__enumext_keyans_tagged_set_start:
+%% Start counter for |keyans| environment.
+\cs_new_protected:Nn \__enumext_keyans_start_counter:
   {
-    \IfDocumentMetadataT
-      {
-        \setcounter { enumXv } { \int_eval:n { \int_use:c { l__enumext_start_v_int } - 1 } }
-      }
+    \setcounter { enumXv } { \int_eval:n { \int_use:c { l__enumext_start_v_int } - 1 } }
   }
 %% Definition of |keyans| environment.
 \NewDocumentEnvironment{keyans}{ O{} }
@@ -4150,7 +4146,7 @@
         \__enumext_list_arg_two_v:
         \__enumext_before_keys_exec_v:
       }
-    \__enumext_keyans_tagged_set_start:
+    \__enumext_keyans_start_counter:
     \__enumext_keyans_set_item_width:
     \__enumext_after_args_exec_v:
   }
@@ -4872,11 +4868,8 @@
         \__enumext_list_arg_two_vii:
         \__enumext_before_keys_exec_vii:
       }
-    \IfDocumentMetadataT
-      {
-        \setcounter { enumXvii } { \int_eval:n { \int_use:c { l__enumext_start_vii_int } - 1 } }
-        \tag_suspend:n {enumext*}
-      }
+    \setcounter { enumXvii } { \int_eval:n { \int_use:c { l__enumext_start_vii_int } - 1 } }
+    \IfDocumentMetadataT { \tag_suspend:n {enumext*} }
     \__enumext_starred_columns_set_vii:
     \item[] \scan_stop:
     \cs_set_eq:NN \__enumext_stop_item_tmp_vii: \__enumext_first_item_tmp_vii:
@@ -5150,11 +5143,8 @@
         \__enumext_list_arg_two_viii:
         \__enumext_before_keys_exec_viii:
       }
-    \IfDocumentMetadataT
-      {
-        \setcounter { enumXviii } { \int_eval:n { \int_use:c { l__enumext_start_viii_int } - 1 } }
-        \tag_suspend:n {keyans*}
-      }
+    \setcounter { enumXviii } { \int_eval:n { \int_use:c { l__enumext_start_viii_int } - 1 } }
+    \IfDocumentMetadataT { \tag_suspend:n {keyans*} }
     \__enumext_starred_columns_set_viii:
     \item[] \scan_stop:
     \cs_set_eq:NN \__enumext_stop_item_tmp_viii: \__enumext_first_item_tmp_viii:

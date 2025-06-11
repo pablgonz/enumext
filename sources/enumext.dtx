@@ -595,7 +595,7 @@
                         SuspendTagging, ResumeTagging, NewCommandCopy, IfHyperBoolean, N, J, D, Nee, %
                         Nnn, nn, Ne, w, n, %
                     },%
-% Other words 2 -- use deletekeywords=[2]{ref},
+% Other words 2
     keywordstyle  = [2]{\color{blue!75}},%
     keywords      = [2]{usepackage, section, documentclass, input, listparindent, linewidth, emph, textbf, makesavenoteenv, makelabel,%
                     columnseprule, footnote, footnotemark, footnotetext, raggedcolumns, hspace, parindent, removelastskip, %
@@ -607,7 +607,7 @@
                     textborn, textbullet, textendash, textasteriskcentered, textperiodcentered, raggedleft, peek_remove_spaces, skip_horizontal, %
                     triangleright, diamond, circ, parleft, star, centering, ast, hyperlink, hypertarget, newtheorem, %
                     aux_i, aux_ii, aux_iii, exp_args, if@noitemarg, if, if@hyper@item, hyper, noitemarg, regex_match, regex_if_match,%
-                    skip_vertical, obeyedline, tl_replace_all, mbox, tl_rescan, tl_set_rescan, tex_scantokens, },%
+                    skip_vertical, obeyedline, tl_replace_all, mbox, tl_rescan, tl_set_rescan, tex_scantokens, setcounter, },%
 % Other words 3
     keywordstyle  = [3]{\color{optcolor!85}},%
     keywords      = [3]{document,article,setlength,pagestyle,definecolor, chapter,},%,
@@ -621,9 +621,9 @@
     keywords      = [5]{makeatletter,makeatother,let,verb,def,prevdepth,glue, if@minipage,% if@noitemarg
                     splittopskip,showboxdepth,topskip,showoutput,nointerlineskip, ignorespaces, unskip, unkern, lastnodetype,%
                     rightskip, @rightskip, flushglue, @flushglue, hbadness, hss, scantokens},%
-% Reserved words 6 (optcolor) KEYS
+% Reserved words 6 (optcolor) KEYS and counters
     keywordstyle  = [6]{\color{optcolor}},%
-    keywords      = [6]{save-ans,wrap-ans,save-ref,show-pos,show-ans,columns,list-offset, eunumXi,%
+    keywords      = [6]{save-ans,wrap-ans,save-ref,show-pos,show-ans,columns,list-offset, eunumXi, enumX, %
                     nosep,before,after,start, right, item-sym, item-sep, hyperfootnotes, item-star, %
                     scale,wrap-label,font,first,widest,mini-env,list-indent, no-store, save-key, save-sep, ref,%
                     store-env, print-env, write-out, force-eol, write-env, overwrite, unknown, base-fix,%
@@ -6976,7 +6976,16 @@ Some text here
 % \ilabel{Alph*}, \ilabel{alph*}, \ilabel{Roman*} and \ilabel{roman*}
 % to use them in the \mykey{label} key.
 %
-% \begin{macro}{\@@_default_label_width:Nn}
+% \smallskip
+%
+% \begin{important}*
+%  Direct support for this is provided since \hologo{LaTeX} release
+%  2025-06-01\cite{ltnews}, but we will keep the original implementation
+%  so as not to hinder the internal \emph{\enquote{label and ref}} system.
+% \end{important}
+%
+%
+% \begin{macro}{\@@_register_default_label_wd:Nn}
 %   These \mymeta{counters} will be used as default \mymeta{labels} if
 %   the \mykey{label} key is not used for the different levels of the
 %   \myenv*{enumext}, \myenv*{enumext*}, \myenv*{keyans} and \myenv*{keyans*}
@@ -6986,16 +6995,16 @@ Some text here
 %% Register of counters style.
 % \fi
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_default_label_width:Nn #1 #2
+\cs_new_protected:Npn \@@_register_default_label_wd:Nn #1 #2
   {
     \tl_const:cn { c_@@_widest_ \cs_to_str:N #1 _tl } {#2}
     \tl_gput_right:Nn \g_@@_counter_styles_tl {#1}
   }
-\@@_default_label_width:Nn \arabic { 0 }
-\@@_default_label_width:Nn \Alph   { M }
-\@@_default_label_width:Nn \alph   { m }
-\@@_default_label_width:Nn \Roman  { VIII }
-\@@_default_label_width:Nn \roman  { viii }
+\@@_register_default_label_wd:Nn \arabic { 0 }
+\@@_register_default_label_wd:Nn \Alph   { M }
+\@@_register_default_label_wd:Nn \alph   { m }
+\@@_register_default_label_wd:Nn \Roman  { VIII }
+\@@_register_default_label_wd:Nn \roman  { viii }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -9514,7 +9523,7 @@ Some text here
       {
         \tl_if_empty:NF \g_@@_standar_series_tl
           {
-            \@@_resume_counter:
+            \@@_resume_counter:n { }
             \keys_set:nV { enumext / level-1 } \g_@@_standar_series_tl
           }
       }
@@ -9522,11 +9531,10 @@ Some text here
       {
         \tl_if_empty:NF \g_@@_starred_series_tl
           {
-            \@@_resume_counter:
+            \@@_resume_counter:n { }
             \keys_set:nV { enumext / enumext* } \g_@@_starred_series_tl
           }
       }
-    \@@_resume_counter_save_ans:
   }
 %    \end{macrocode}
 % \end{macro}
@@ -12158,11 +12166,28 @@ Some text here
 %
 % \subsection{Second argument of the lists}\label{ltx:second-arg}
 %
-% At this point of the code we have already programmed most the necessary
-% tools to create a custom \myenv{list} environment, remember that the function
-% \cs{@@_start_list:nn} takes two arguments, the first one we have
-% ready, the second one we will define for all the levels of the
-% environment \myenv*{enumext} and the environment \myenv*{keyans}.
+% At this point in the code we have already programmed most of the tools
+% needed to create a \emph{custom} \myenv{list} environment, remember that the
+% \cs{@@_start_list:nn} function takes two arguments, we have the \enquote{first}
+% one ready, the \enquote{second} one we will define for all levels of the
+% \myenv*{enumext} environment, the \myenv*{keyans} environment and the
+% \myenv*{enumext*} and \myenv*{keyans*} environments.
+%
+% \smallskip
+%
+% Here we will implement the \myvarenv{__@@_list_arg_two_X:} function,
+% which will be responsible for setting all the list parameters, the
+% counter, the redefinition of |\item|, |\makelabel| along with the keys
+% \mykey{ref}, \mykey{itemindent} and \mykey{show-length}.
+%
+% \smallskip
+%
+% \begin{important}*
+% In the functions \myvarenv{__@@_list_arg_two_X:} we will implement the
+% \emph{\enquote{counter}} for the environments, but we do NOT set the
+% \emph{\enquote{start value}} for it to be compatible with \emph{tagged} \texttt{PDF}
+% that should be done later.
+% \end{important}
 %
 % \subsubsection{Calculation of \cs{leftmargin} and \cs{itemindent}}\label{int:leftmargin}
 %
@@ -12194,8 +12219,8 @@ Some text here
 %
 % The idea is to have control over these margins so that our list does
 % not overlap the left margin of the page. The \emph{key} relationship is that
-% the right edge of the |\labelsep| equals the right edge of the |\itemindent|,
-% so that the left edge of the \emph{label box} is at |\leftmargin+\itemindent| minus |\labelwidth+\labelsep|.
+% the \emph{\enquote{right edge}} of the |\labelsep| equals the \emph{\enquote{right edge}} of the |\itemindent|,
+% so that the left edge of the \emph{\enquote{label box}} is at |\leftmargin+\itemindent| minus |\labelwidth+\labelsep|.
 % Thus, the handling of the margins by the package will be as shown in
 % the figure \ref{fig:nine}.
 %
@@ -12261,11 +12286,7 @@ Some text here
 %  And returns the \emph{\enquote{adjusted}} values of |\leftmargin|
 %  and |\itemindent|.
 %
-%  \smallskip
 %
-%  This function is passed to \myvarenv{__@@_list_arg_two_X:} which
-%  is used in the definition of the \myenv*{enumext} and \myenv*{keyans}
-%  environments (\S\ref{ltx:second-arg}).
 % \iffalse
 %% Function to calc of horizontal length for all list environment.
 %% #1: \l__enumext_labelwidth_X_dim     #2: \l__enumext_labelsep_X_dim
@@ -12343,7 +12364,7 @@ Some text here
         \clist_map_inline:nn { topsep, parsep, partopsep, itemsep }
           { \skip_set_eq:cc {####1} { l_@@_####1_#1_skip } }
         \usecounter { enumX#1 }
-        \setcounter { enumX#1 } { \int_eval:n { \int_use:c { l_@@_start_#1_int } - 1 } }
+        %%%%% \setcounter { enumX#1 } { \int_eval:n { \int_use:c { l_@@_start_#1_int } - 1 } }
         \str_if_eq:nnTF {#1} { v }
           {
             \@@_keyans_redefine_item:
@@ -12403,7 +12424,7 @@ Some text here
         \skip_set_eq:Nc \parsep  { l_@@_itemsep_#1_skip }
         \skip_zero:N \partopsep
         \usecounter { enumX#1 }
-        \setcounter { enumX#1 } { \int_eval:n { \int_use:c { l_@@_start_#1_int } - 1 } }
+        %%%% \setcounter { enumX#1 } { \int_eval:n { \int_use:c { l_@@_start_#1_int } - 1 } }
         \@@_starred_ref:
         \str_if_eq:nnTF {#1} { vii }
           {
@@ -12750,18 +12771,29 @@ Some text here
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_tagged_set_start:}\label{res:set-start-enumext}
-%   The \cs{@@_tagged_set_start:} function will reset the counters value
-%   when \emph{tagged} \texttt{PDF} is active.
+% \begin{macro}{\@@_start_counter:}\label{key:start-counter-enumext}
+%   For compatibility with \emph{tagged} \texttt{PDF} and since we are
+%   using legacy code for the implementation, we must set the initial value
+%   of the counters after the second argument to the list environment and
+%   before the first execution of |\item| , i.e. |\begin{list}|\mymarg{arg
+%   one}\mymarg{arg two}|\setcounter{enumX}|.
+%
+%   \smallskip
+% \begin{important}* 
+%   This is described in \href{https://github.com/latex3/tagging-project/issues/893}{processing
+%   order of legacysetupcode in the block templates}
+%   and we will apply the workaround provided by Frank Mittelbach.
+% \end{important}
+%
 % \iffalse
-%% Re-set start counter for |enumext| environment.
+%% Set start value for counter in |enumext| environment.
 % \fi
 %    \begin{macrocode}
-\cs_new_protected:Nn \@@_tagged_set_start:
+\cs_new_protected:Nn \@@_start_counter:
   {
-    \IfDocumentMetadataT
+    \setcounter { enumX \@@_level: }
       {
-        \setcounter { enumX \@@_level: } { \int_eval:n { \int_use:c { l_@@_start_ \@@_level: _int } - 1 } }
+        \int_eval:n { \int_use:c { l_@@_start_ \@@_level: _int } - 1 }
       }
   }
 %    \end{macrocode}
@@ -12786,7 +12818,7 @@ Some text here
         \use:c { @@_list_arg_two_ \@@_level: : }
         \@@_before_keys_exec:
       }
-    \@@_tagged_set_start:
+    \@@_start_counter:
     \@@_set_item_width:
     \@@_after_args_exec:
   }
@@ -12972,19 +13004,19 @@ Some text here
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_keyans_tagged_set_start:}\label{res:keyans-set-start-enumext}
-%   The \cs{@@_keyans_tagged_set_start:} function will reset the counters value
-%   when \emph{tagged} \texttt{PDF} is active.
+% \begin{macro}{\@@_keyans_start_counter:}\label{res:keyans-set-start-counter}
+%   For compatibility with \emph{tagged} \texttt{PDF} and since we are
+%   using legacy code for the implementation, we must set the initial value
+%   of the counters after the second argument to the list environment and
+%   before the first execution of |\item| , i.e. |\begin{list}|\mymarg{arg
+%   one}\mymarg{arg two}|\setcounter{enumX}|.
 % \iffalse
-%% Re-set start counter for |enumext| environment.
+%% Start counter for |keyans| environment.
 % \fi
 %    \begin{macrocode}
-\cs_new_protected:Nn \@@_keyans_tagged_set_start:
+\cs_new_protected:Nn \@@_keyans_start_counter:
   {
-    \IfDocumentMetadataT
-      {
-        \setcounter { enumXv } { \int_eval:n { \int_use:c { l_@@_start_v_int } - 1 } }
-      }
+    \setcounter { enumXv } { \int_eval:n { \int_use:c { l_@@_start_v_int } - 1 } }
   }
 %    \end{macrocode}
 % \end{macro}
@@ -13006,7 +13038,7 @@ Some text here
         \@@_list_arg_two_v:
         \@@_before_keys_exec_v:
       }
-    \@@_keyans_tagged_set_start:
+    \@@_keyans_start_counter:
     \@@_keyans_set_item_width:
     \@@_after_args_exec_v:
   }
@@ -14208,11 +14240,8 @@ Some text here
         \@@_list_arg_two_vii:
         \@@_before_keys_exec_vii:
       }
-    \IfDocumentMetadataT
-      {
-        \setcounter { enumXvii } { \int_eval:n { \int_use:c { l_@@_start_vii_int } - 1 } }
-        \tag_suspend:n {enumext*}
-      }
+    \setcounter { enumXvii } { \int_eval:n { \int_use:c { l_@@_start_vii_int } - 1 } }
+    \IfDocumentMetadataT { \tag_suspend:n {enumext*} }
     \@@_starred_columns_set_vii:
     \item[] \scan_stop:
     \cs_set_eq:NN \@@_stop_item_tmp_vii: \@@_first_item_tmp_vii:
@@ -14220,7 +14249,7 @@ Some text here
     \ignorespaces
   }
   {
-    \IfDocumentMetadataT { \tag_struct_end:n {tag=text-unit} } 
+    \IfDocumentMetadataT { \tag_struct_end:n {tag=text-unit} }
     \@@_stop_item_tmp_vii:
     \@@_remove_extra_parsep_vii:
     \@@_after_list_vii:
@@ -14752,11 +14781,8 @@ Some text here
         \@@_list_arg_two_viii:
         \@@_before_keys_exec_viii:
       }
-    \IfDocumentMetadataT
-      {
-        \setcounter { enumXviii } { \int_eval:n { \int_use:c { l_@@_start_viii_int } - 1 } }
-        \tag_suspend:n {keyans*}
-      }
+    \setcounter { enumXviii } { \int_eval:n { \int_use:c { l_@@_start_viii_int } - 1 } }
+    \IfDocumentMetadataT { \tag_suspend:n {keyans*} }
     \@@_starred_columns_set_viii:
     \item[] \scan_stop:
     \cs_set_eq:NN \@@_stop_item_tmp_viii: \@@_first_item_tmp_viii:
