@@ -620,7 +620,8 @@
     keywordstyle  = [5]{\color{red}},%
     keywords      = [5]{makeatletter,makeatother,let,verb,def,prevdepth,glue, if@minipage,% if@noitemarg
                     splittopskip,showboxdepth,topskip,showoutput,nointerlineskip, ignorespaces, unskip, unkern, lastnodetype,%
-                    rightskip, @rightskip, flushglue, @flushglue, hbadness, hss, scantokens},%
+                    rightskip, @rightskip, flushglue, @flushglue, hbadness, hss, scantokens, beginparpenalty, itempenalty, %
+                    endparpenalty, lowpenalty,},%
 % Reserved words 6 (optcolor) KEYS and counters
     keywordstyle  = [6]{\color{optcolor}},%
     keywords      = [6]{save-ans,wrap-ans,save-ref,show-pos,show-ans,columns,list-offset, eunumXi, enumX, %
@@ -628,7 +629,8 @@
                     scale,wrap-label,font,first,widest,mini-env,list-indent, no-store, save-key, save-sep, ref,%
                     store-env, print-env, write-out, force-eol, write-env, overwrite, unknown, base-fix,%
                     midsep, wrapper,label-pos,label-sep, layout-sty, layout-sep, layout-top, lang, tagging, %
-                    pdfversion, pdfstandard, testphase, alt, mark-sep, wrap-ans*, mark-ans, mark-sep},%
+                    pdfversion, pdfstandard, testphase, alt, mark-sep, wrap-ans*, mark-ans, mark-sep, beginpenalty,%
+                    midpenalty, endpenalty,},%
 % Reserved words 7 (label values)
     keywordstyle  = [7]{\color{MediumOrchid}},%
     keywords      = [7]{m,s,M,VIII,viii,v,E,t,l,A,XXIII,true, false,test,sample,above,below,ua-2,phase-III,%
@@ -1936,6 +1938,46 @@
 % instead of using |\theenumXi|.
 % \end{important}
 %
+% \subsection{Keys for penalties}\label{subsec:penalties}
+%
+% Page breaks in the provided environments are controlled by the
+% following three parameters, which work together to ensure they look
+% good, avoiding unsightly page breaks that could distort the output.
+%
+% \smallskip
+%
+% \keyexamp{beginpenalty}{integer}{\mydim{-51}}
+% Set the \emph{page breaking} penalty for breaking at the beginning of
+% the \myenv*{enumext}, \myenv*{enumext*}, \myenv*{keyans}, and
+% \myenv*{keyans*} environments. Internally sets the value of \textcolor{red}{\texttt{\textbackslash}}|@beginparpenalty|.
+%
+% \smallskip
+%
+% \keyexamp{midpenalty}{integer}{\mydim{-51}}
+% Set the \emph{page breaking} penalty for breaking between items of
+% the \myenv*{enumext}, \myenv*{enumext*}, \myenv*{keyans}, and
+% \myenv*{keyans*} environments. Internally sets the value of \textcolor{red}{\texttt{\textbackslash}}|@itempenalty|.
+%
+% \smallskip
+%
+% \keyexamp{endpenalty}{integer}{\mydim{-51}}
+% Set the \emph{page breaking} penalty for breaking at the end of
+% the \myenv*{enumext}, \myenv*{enumext*}, \myenv*{keyans}, and
+% \myenv*{keyans*} environments. Internally sets the value of \textcolor{red}{\texttt{\textbackslash}}|@endparpenalty|.
+%
+% \smallskip
+%
+% \begin{important}*
+% The values ​​passed to these \mymeta{keys} affect the nested
+% environments in which they were set and cannot be reset.
+% \hologo{LaTeX} default is \textcolor{red}{\texttt{-}}\textcolor{red}{\texttt{\textbackslash}}|@lowpenalty|,
+% that is, \mydim{-51}. Because it is negative, it somewhat encourages a
+% page break at each spot. Change it with, e.g., \textcolor{red}{\texttt{\textbackslash}}|@beginparpenalty=|\mydim{9999}; a value
+% of \mydim{10000} prohibits a page break. Please, refer to your
+% \hologo{LaTeX} or \hologo{TeX} manual about how penalties control page
+% breaks.
+% \end{important}
+%
 % \subsection{Keys for spaces}
 %
 % \keyexamp{show-length}{true \textnormal{\textcolor{lightgray}{\textbar}} false}{false}
@@ -2062,7 +2104,7 @@
 %  \myenv*{enumext} environment.
 % \end{important}
 %
-% \newpage
+% \subsubsection*{Extra vertical spaces}
 %
 % \begin{important}*
 %  The following \mymeta{keys} should be used with \emph{\enquote{caution}}, they
@@ -2177,7 +2219,7 @@
 %  \mykey{list-indent} and get the same effect.
 % \end{important}
 %
-% \smallskip
+% \newpage
 %
 % \keyexamp{rightmargin}{rigid length}{\mydim{0}pt}
 %
@@ -2219,12 +2261,13 @@
 % \smallskip
 %
 % \keyexamp{before}{code}{not used}
-% Execute \mymarg{code} \emph{\enquote{before}} the
-% environment starts. The \mymarg{code} must be passed between braces, is executed
-% \emph{\enquote{after}} performing all calculations related to the
-% \emph{list parameters} in the environment and the parameters sets by
-% \myoarg{key \textnormal{\textcolor{gray}{=}} val} that is, in the second argument of the list after setting all the parameters
-% |\begin{list}|\mymarg{arg one}|{|\mymeta{arg two}\mymarg[cbc=pkgcolor,ac=araracolor]{code}|}|.
+% Execute \mymarg{code} \emph{\enquote{before}} the environment
+% starts. The \mymarg{code} must be passed between braces, is executed
+% \emph{\enquote{after}} all calculations related to the \emph{list
+% parameters} in the environment and the \mymeta{keys} sets by 
+% \myoarg{key \textnormal{\textcolor{gray}{=}} val} have been performed,
+% with the exception of the \mymeta{keys} \mykey{start} and \mykey{start*},
+% that is, in the \emph{second argument} of the list: |\begin{list}|\mymarg{arg one}|{|\mymeta{arg two}\mymarg[cbc=pkgcolor,ac=araracolor]{code}|}|.
 %
 % \smallskip
 %
@@ -2232,9 +2275,9 @@
 % Execute \mymarg{code} \emph{\enquote{before}} the
 % environment starts. The \mymarg{code} must be passed between braces, is executed
 % \emph{\enquote{before}} performing all calculations related to the \emph{list
-% parameters} and \myoarg{key \textnormal{\textcolor{gray}{=}}
-% val} sets in the environment that is,
-% before the arguments defining the environment are executed:
+% parameters} and the \mymeta{keys} sets in \myoarg{key \textnormal{\textcolor{gray}{=}}
+% val} of the environment that is, \emph{\enquote{before}} the arguments
+% defining the list environment are executed:
 % \mymarg[type=tt,cbc=pkgcolor,ac=araracolor]{code}|\begin{list}|\mymarg{arg
 % one}\mymarg{arg two}.
 %
@@ -2250,19 +2293,14 @@
 % \smallskip
 %
 % \begin{important}*
-% Keep in mind that the code set in this key will affect the entire
-% \emph{\enquote{body}} of the environment and therefore the inner levels
-% of the list and the \myenv*{keyans} environment. It is recommended to
-% set this key per level.
-% \end{important}
-%
-% \smallskip
-%
-% \begin{important}*
-%  In the \myenv*{enumext*} and \myenv*{keyans*} environments this key
-%  is executed after the \mykey{listparindent}, \mykey{parsep} and
-%  \mykey{itemindent} keys within the \myenv{minipage} environment in
-%  which the \emph{\enquote{item content}} is placed.
+%  Keep in mind that the \mymarg{code} set in this \mymeta{key} will affect
+%  the entire \emph{\enquote{body}} of the environment and therefore the
+%  inner levels of the list and the \myenv*{keyans}, \myenv*{keyans*} and
+%  \myenv*{keyanspic} environments. It is recommended to set this \mymeta{key}
+%  per level. In the \myenv*{enumext*} and \myenv*{keyans*} environments
+%  this \mymeta{key} is executed \emph{\enquote{after}} the \mykey{listparindent},
+%  \mykey{parsep} and \mykey{itemindent} \mymeta{keys} within the \myenv{minipage}
+%  environment in which the \emph{\enquote{item content}} is placed.
 % \end{important}
 %
 % \smallskip
@@ -2287,14 +2325,23 @@
 % Sets the \emph{start value} of the numbering on the current level.
 % Internally \mymeta{string} is converted and passed as value to the counter defined by
 % \mykey{label} key on the current level, i.e. it is equivalent to enter
-% |start=5|, |start=E| or |start=v|.
+% |start*=5|, |start*=E| or |start*=v|.
+%
+% \begin{important}
+%  For compatibility with \emph{tagged} \texttt{PDF}, the \emph{start counter} 
+%  ​​are set \emph{\enquote{after}} the \emph{second argument} to the \myenv{list}
+%  environment and \emph{\enquote{before}} the execution of the first |\item| and the |first| key:
+% |\begin{list}|\mymarg{arg one}\mymarg{arg two}|\setcounter{enumX}\item|.
+% \end{important}
 %
 % \smallskip
 %
-% The following \mymeta{keys} are \emph{\enquote{only}} available for the
-% \myenv*{enumext*} environment and the \emph{\enquote{first level}} of
-% the \myenv*{enumext} environment and are ignored if set when nested
-% within each other.
+% \begin{important}*
+%   The following \mymeta{keys} are \emph{\enquote{only}} available for the
+%   \myenv*{enumext*} environment and the \emph{\enquote{first level}} of
+%   the \myenv*{enumext} environment and are ignored if set when nested
+%   within each other.
+% \end{important}
 %
 % \keyexamp{series}{series name}{not used}
 %
@@ -2314,7 +2361,7 @@
 % \mykey{series}|=|\mymarg{series name} key was executed. If passed
 % \emph{without value} this will only set \emph{start value} continue the
 % numbering from the last environment in which \mykey{series}|=|\mymarg{series name}
-% or \mykey{resume}|=|\mymarg{series name} is not present and if the
+% or \mykey{resume}|=|\mymarg{series name} is NOT present and if the
 % \mykey{save-ans} key is active it will continue the numbering from the
 % last environment in which it was executed. The \emph{start value} can be
 % overwritten using \mykey{start} or \mykey{start*} keys.
@@ -2967,10 +3014,6 @@
 % \keyexampenv{overwrite}{true \textnormal{\textcolor{lightgray}{\textbar}} false}{false}
 % Sets whether the \mymeta{file.ext} generated by \mykey{write-env}
 % from the \myenv*{anskey*} environment will be rewritten.
-%
-% \enlargethispage{2\baselineskip}
-%
-% \newpage
 %
 % \keyexampenv{force-eol}{true \textnormal{\textcolor{lightgray}{\textbar}} false}{false}
 %
@@ -5499,6 +5542,7 @@ Some text here
 %  \item [\fileversion{} (ctan), \filedate]
 %    \begin{itemize}
 %      \item Replacing |\regex_match:| (deprecated) with |\regex_if_match:|.
+%      \item Add keys |beginpenalty|, |midpenalty| and |endpenalty|.
 %    \end{itemize}
 %  \item [v1.4 (ctan), 2025-06-09]
 %    \begin{itemize}
@@ -7454,15 +7498,14 @@ Some text here
 %    \item \myvarenv{l__@@_start_X_int}
 %    \item \meta{integer or string}
 % \end{arguments}
-%
 %    The first argument of this function are the \emph{\enquote{counter style}} set by
 %    \mykey{label} key, the second argument is returned by the function,
 %    the third argument can be an \mymeta{integer} or \mymeta{string} of the
 %    form \ics{Alph}, \ics{alph}, \ics{Roman} or \ics{roman}.
-%    This effectively allows \mykey{start}|=A| or \mykey{start}|=1| to
+%    This effectively allows \mykey{start*}|=A| or \mykey{start}|=1| to
 %    be used.
 % \iffalse
-%% Internal function for |start| key.
+%% Internal function for |start| and |start*| keys.
 %% #1 \l_enumext_label_X_tl
 %% #2 \l_enumext_start_X_int
 %% #3 integer or string
@@ -7563,6 +7606,38 @@ Some text here
                                 { l_@@_labelwidth_#2_dim } {##1}
                             },
         widest .value_required:n = true,
+      }
+  }
+\clist_map_inline:Nn \c_@@_all_envs_clist { \@@_tmp:nn #1 }
+%    \end{macrocode}
+% \end{macro}
+%
+% \subsection{Setting keys for penaltys}
+%
+% \begin{macro}[int]{beginpenalty, midpenalty, endpenalty}
+%   The three parameters \textcolor{red}{\texttt{\textbackslash}}|@beginparpenalty|,
+%   \textcolor{red}{\texttt{\textbackslash}}|@itempenalty| and
+%   \textcolor{red}{\texttt{\textbackslash}}|@endparpenalty| work together
+%   to ensure that list environments look good, avoiding unsightly page
+%   breaks that can break the flow of the \myenv{list}, so it's a good
+%   idea to have a \mymeta{keys} to access these.
+% \iffalse
+%% Add |beginpenalty|, |midpenalty| and |endpenalty| keys.
+% \fi
+%    \begin{macrocode}
+\cs_set_protected:Npn \@@_tmp:nn #1 #2
+  {
+    \keys_define:nn { enumext / #1 }
+      {
+        beginpenalty .int_set:c = { l_@@_beginparpenalty_#2_int },
+        beginpenalty .initial:n = -51,
+        beginpenalty .value_required:n = true,
+        midpenalty   .int_set:c = { l_@@_itempenalty_#2_int },
+        midpenalty   .initial:n = -51,
+        midpenalty   .value_required:n = true,
+        endpenalty   .int_set:c = { l_@@_endparpenalty_#2_int },
+        endpenalty   .initial:n = -51,
+        endpenalty   .value_required:n = true,
       }
   }
 \clist_map_inline:Nn \c_@@_all_envs_clist { \@@_tmp:nn #1 }
@@ -12363,6 +12438,8 @@ Some text here
           { \dim_set_eq:cc {####1} { l_@@_####1_#1_dim } }
         \clist_map_inline:nn { topsep, parsep, partopsep, itemsep }
           { \skip_set_eq:cc {####1} { l_@@_####1_#1_skip } }
+        \clist_map_inline:nn { beginparpenalty, itempenalty, endparpenalty }
+          { \int_set_eq:cc {@####1} { l_@@_####1_#1_int } }
         \usecounter { enumX#1 }
         \str_if_eq:nnTF {#1} { v }
           {
@@ -12420,6 +12497,8 @@ Some text here
           { \dim_set_eq:cc {####1} { l_@@_####1_#1_dim } }
         \clist_map_inline:nn { topsep, parsep, partopsep, itemsep }
           { \skip_set_eq:cc {####1} { l_@@_####1_#1_skip } }
+        \clist_map_inline:nn { beginparpenalty, itempenalty, endparpenalty }
+          { \int_set_eq:cc {@####1} { l_@@_####1_#1_int } }
         \skip_set_eq:Nc \parsep  { l_@@_itemsep_#1_skip }
         \skip_zero:N \partopsep
         \usecounter { enumX#1 }
