@@ -274,7 +274,7 @@ if options["target"] == "testpkg" then
     end
   end
   -- Copy generated .pdf files to maindir
-  local errorlevel = cp("*.pdf", tmpdir, maindir)
+  local errorlevel = cp("enumext-*.pdf", tmpdir, maindir)
   if errorlevel ~= 0 then
     error("** Error!!: Can't copy generated pdf files to ./"..maindir)
     return errorlevel
@@ -320,7 +320,7 @@ if options["target"] == "examples" then
     end
   end
   -- Copy generated .pdf files to maindir
-  local errorlevel = cp("*.pdf", tmpdir, maindir)
+  local errorlevel = cp("enumext-*.pdf", tmpdir, maindir)
   if errorlevel ~= 0 then
     error("** Error!!: Can't copy generated pdf files to ./"..maindir)
     return errorlevel
