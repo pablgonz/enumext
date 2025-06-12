@@ -36,7 +36,7 @@
 %% ------------------------------------------------------------------------
 %% 
 \NeedsTeXFormat{LaTeX2e}[2025-06-01]
-\ProvidesExplPackage {enumext} {2025-06-15} {1.5} {Enumerate exercise sheets}
+\ProvidesExplPackage {enumext} {2025-06-11} {1.5} {Enumerate exercise sheets}
 \hook_gput_code:nnn {begindocument} {enumext}
   {
     \IfPackageLoadedTF { multicol }
@@ -943,7 +943,7 @@
         \tl_use:N \l__enumext_renew_counter_v_tl
       }
   }
-%% Internal function for |start| key.
+%% Internal function for |start| and |start*| keys.
 %% #1 \l_enumext_label_X_tl
 %% #2 \l_enumext_start_X_int
 %% #3 integer or string
@@ -1006,6 +1006,23 @@
                                 { l__enumext_labelwidth_#2_dim } {##1}
                             },
         widest .value_required:n = true,
+      }
+  }
+\clist_map_inline:Nn \c__enumext_all_envs_clist { \__enumext_tmp:nn #1 }
+%% Add |beginpenalty|, |midpenalty| and |endpenalty| keys.
+\cs_set_protected:Npn \__enumext_tmp:nn #1 #2
+  {
+    \keys_define:nn { enumext / #1 }
+      {
+        beginpenalty .int_set:c = { l__enumext_beginparpenalty_#2_int },
+        beginpenalty .initial:n = -51,
+        beginpenalty .value_required:n = true,
+        midpenalty   .int_set:c = { l__enumext_itempenalty_#2_int },
+        midpenalty   .initial:n = -51,
+        midpenalty   .value_required:n = true,
+        endpenalty   .int_set:c = { l__enumext_endparpenalty_#2_int },
+        endpenalty   .initial:n = -51,
+        endpenalty   .value_required:n = true,
       }
   }
 \clist_map_inline:Nn \c__enumext_all_envs_clist { \__enumext_tmp:nn #1 }
@@ -3740,8 +3757,9 @@
           { \dim_set_eq:cc {####1} { l__enumext_####1_#1_dim } }
         \clist_map_inline:nn { topsep, parsep, partopsep, itemsep }
           { \skip_set_eq:cc {####1} { l__enumext_####1_#1_skip } }
+        \clist_map_inline:nn { beginparpenalty, itempenalty, endparpenalty }
+          { \int_set_eq:cc {@####1} { l__enumext_####1_#1_int } }
         \usecounter { enumX#1 }
-        %%%%% \setcounter { enumX#1 } { \int_eval:n { \int_use:c { l__enumext_start_#1_int } - 1 } }
         \str_if_eq:nnTF {#1} { v }
           {
             \__enumext_keyans_redefine_item:
@@ -3784,10 +3802,11 @@
           { \dim_set_eq:cc {####1} { l__enumext_####1_#1_dim } }
         \clist_map_inline:nn { topsep, parsep, partopsep, itemsep }
           { \skip_set_eq:cc {####1} { l__enumext_####1_#1_skip } }
+        \clist_map_inline:nn { beginparpenalty, itempenalty, endparpenalty }
+          { \int_set_eq:cc {@####1} { l__enumext_####1_#1_int } }
         \skip_set_eq:Nc \parsep  { l__enumext_itemsep_#1_skip }
         \skip_zero:N \partopsep
         \usecounter { enumX#1 }
-        %%%% \setcounter { enumX#1 } { \int_eval:n { \int_use:c { l__enumext_start_#1_int } - 1 } }
         \__enumext_starred_ref:
         \str_if_eq:nnTF {#1} { vii }
           {
