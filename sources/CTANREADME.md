@@ -1,6 +1,6 @@
 ## enumext — Enumerate exercise sheets
 
-Release v1.5 \[2025-06-11\]
+Release v1.6 \[2025-06-21\]
 
 ## Description
 

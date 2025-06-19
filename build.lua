@@ -21,8 +21,8 @@
 
 -- General package identification
 module     = "enumext"
-pkgversion = "1.5"
-pkgdate    = "2025-06-11"
+pkgversion = "1.6"
+pkgdate    = "2025-06-21"
 ltxrelease = "2025-06-01"
 
 -- Configuration of files for build and installation
@@ -90,9 +90,10 @@ function update_tag(file,content,tagname,tagdate)
                           "Release v"..tagname.." \\["..tagdate.."\\]")
   end
   if string.match(file,"ctan.ann") then
-    content = string.gsub(content,
-                          "v%d%.%d%w? %d%d%d%d%-%d%d%-%d%d",
-                          "v"..tagname..' '..tagdate)
+--    content = string.gsub(content,
+--                          "v%d%.%d%w? %d%d%d%d%-%d%d%-%d%d",
+--                          "v"..tagname..' '..tagdate)
+    content = string.gsub(content, "v%d%.%d%w?", "v"..tagname)
   end
   return content
 end
