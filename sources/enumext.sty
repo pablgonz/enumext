@@ -86,10 +86,10 @@
 \tl_new:N \l__enumext_series_name_tl
 \cs_set_protected:Npn \__enumext_tmp:n #1
   {
-    \bool_new:c { l__enumext_resume_#1_bool    }
-    \int_new:c  { g__enumext_resume_#1_int     }
-    \tl_new:c   { g__enumext_series_#1_tl      }
-    \tl_new:c   { l__enumext_series_name_#1_tl }
+    \bool_new:c { l__enumext_resume_#1_bool       }
+    \int_new:c  { g__enumext_resume_#1_int        }
+    \tl_new:c   { g__enumext_not_key_series_#1_tl }
+    \tl_new:c   { l__enumext_series_name_#1_tl    }
   }
 \clist_map_inline:nn { i, ii, iii, iv, vii } { \__enumext_tmp:n {#1} }
 %% Variables used by |label|, |ref| and |widest| keys.
@@ -1965,12 +1965,6 @@
       {
         series  .str_set:N = \l__enumext_series_name_str,
         series  .value_required:n = true,
-        resume  .code:n    = {
-                               \bool_if:NF \l__enumext_print_keyans_cmd_bool
-                                 {
-                                   \__enumext_resume_series:n {##1}
-                                 }
-                             },
         resume* .code:n    = {
                                \bool_if:NF \l__enumext_print_keyans_cmd_bool
                                  {
@@ -1981,6 +1975,28 @@
       }
   }
 \clist_map_inline:nn {level-1, level-2, level-3, level-4, enumext*} { \__enumext_tmp:n {#1} }
+\cs_set_protected:Npn \__enumext_tmp:n #1
+  {
+    \keys_define:nn { enumext / #1 }
+      {
+        resume .code:n = {
+                           \bool_if:NF \l__enumext_print_keyans_cmd_bool
+                             {
+                                \__enumext_resume_series:n {##1}
+                             }
+                          },
+      }
+  }
+\clist_map_inline:nn {level-1, level-2, level-3, level-4} { \__enumext_tmp:n {#1} }
+\keys_define:nn { enumext / enumext* }
+  {
+    resume .code:n = {
+                       \bool_if:NF \l__enumext_print_keyans_cmd_bool
+                         {
+                           \__enumext_resume_series_vii:n {#1}
+                         }
+                      },
+   }
 %% Internal function for filter keys.
 \cs_new:Npn \__enumext_filter_series:n #1
   {
@@ -2029,28 +2045,43 @@
           }
       }
       {
-        \tl_gclear_new:c { g__enumext_series_ \l__enumext_series_name_str _tl }
-        \tl_gset:ce { g__enumext_series_ \l__enumext_series_name_str _tl }
-          { \__enumext_filter_series:n {#1} }
-        \int_if_exist:cF { g__enumext_series_ \l__enumext_series_name_str _int }
+        \int_compare:nNnT { \l__enumext_level_int } > { 0 }
           {
-            \int_new:c { g__enumext_series_ \l__enumext_series_name_str _int }
+            \tl_gclear_new:c { g__enumext_series_ \l__enumext_series_name_str _ \__enumext_level: _tl }
+            \tl_gset:ce
+              { g__enumext_series_ \l__enumext_series_name_str _ \__enumext_level: _tl }
+              { \__enumext_filter_series:n {#1} }
+            \int_if_exist:cF { g__enumext_series_ \l__enumext_series_name_str _ \__enumext_level: _int }
+              {
+                \int_new:c { g__enumext_series_ \l__enumext_series_name_str _ \__enumext_level: _int }
+              }
+          }
+        \int_compare:nNnT { \l__enumext_level_h_int } = { 1 }
+          {
+            \tl_gclear_new:c { g__enumext_series_ \l__enumext_series_name_str _vii_tl }
+            \tl_gset:ce
+              { g__enumext_series_ \l__enumext_series_name_str _vii_tl }
+              { \__enumext_filter_series:n {#1} }
+            \int_if_exist:cF { g__enumext_series_ \l__enumext_series_name_str _vii_int }
+              {
+                \int_new:c { g__enumext_series_ \l__enumext_series_name_str _vii_int }
+              }
           }
       }
   }
-%% Save keys for last environment without |series| and |resume=name| keys active.
+%% Save keys for last environment "without" |series| and |resume=name| keys active.
 \cs_new_protected:Npn \__enumext_resume_last:n #1
   {
     \int_compare:nNnT { \l__enumext_level_int } > { 0 }
       {
-        \tl_gclear:c { g__enumext_series_ \__enumext_level: _tl }
+        \tl_gclear:c { g__enumext_not_key_series_ \__enumext_level: _tl }
         \tl_gset:ce
-          { g__enumext_series_ \__enumext_level: _tl }{ \__enumext_filter_series:n {#1} }
+          { g__enumext_not_key_series_ \__enumext_level: _tl }{ \__enumext_filter_series:n {#1} }
       }
     \int_compare:nNnT { \l__enumext_level_h_int } = { 1 }
       {
-        \tl_gclear:N \g__enumext_series_vii_tl
-        \tl_gset:Ne \g__enumext_series_vii_tl { \__enumext_filter_series:n {#1} }
+        \tl_gclear:N \g__enumext_not_key_series_vii_tl
+        \tl_gset:Ne \g__enumext_not_key_series_vii_tl { \__enumext_filter_series:n {#1} }
       }
   }
 %% Internal function to save counter value and set int vars for |series|, |resume| and |resume*| keys.
@@ -2077,7 +2108,7 @@
     \str_if_empty:NF \l__enumext_series_name_str
       {
         \int_gset_eq:cc
-          { g__enumext_series_ \l__enumext_series_name_str _int } { c@enumX \__enumext_level: }
+          { g__enumext_series_ \l__enumext_series_name_str _ \__enumext_level: _int } { c@enumX \__enumext_level: }
       }
     \tl_if_empty:NTF \l__enumext_series_name_tl
       {
@@ -2091,10 +2122,10 @@
           }
       }
       {
-        \int_if_exist:cT { g__enumext_series_ \l__enumext_series_name_tl _int }
+        \int_if_exist:cT { g__enumext_series_ \l__enumext_series_name_tl _ \__enumext_level: _int }
           {
             \int_gset_eq:cc
-              { g__enumext_series_ \l__enumext_series_name_tl _int } { c@enumX \__enumext_level: }
+              { g__enumext_series_ \l__enumext_series_name_tl _ \__enumext_level: _int } { c@enumX \__enumext_level: }
           }
       }
   }
@@ -2118,53 +2149,65 @@
     \str_if_empty:NF \l__enumext_series_name_str
       {
         \int_gset_eq:cN
-          { g__enumext_series_ \l__enumext_series_name_str _int } \value{enumXvii}
+          { g__enumext_series_ \l__enumext_series_name_str _vii_int } \value{enumXvii}
       }
     \tl_if_empty:NTF \l__enumext_series_name_tl
       {
         \str_if_empty:NT \l__enumext_series_name_str
           {
-            \int_gset_eq:NN \g__enumext_resume_vii_int \value{enumXvii}
+            \tl_if_empty:NT \l__enumext_store_name_tl
+              {
+                \int_gset_eq:NN \g__enumext_resume_vii_int \value{enumXvii}
+              }
           }
       }
       {
-        \int_if_exist:cT { g__enumext_series_ \l__enumext_series_name_tl _int }
+        \int_if_exist:cT { g__enumext_series_ \l__enumext_series_name_tl _vii_int }
           {
             \int_gset_eq:cN
-              { g__enumext_series_ \l__enumext_series_name_tl _int } \value{enumXvii}
+              { g__enumext_series_ \l__enumext_series_name_tl _vii_int } \value{enumXvii}
           }
       }
   }
 %% Internal function for |resume=series| key.
 \cs_new_protected:Npn \__enumext_resume_series:n #1
   {
-    \tl_if_empty:nTF {#1}
+    \int_compare:nNnT { \l__enumext_level_int } > { 0 }
       {
-        \__enumext_resume_counter:n { }
-      }
-      {
-        \tl_if_exist:cTF { g__enumext_series_ \tl_to_str:n {#1} _tl }
+        \tl_if_empty:nTF {#1}
           {
-            \__enumext_resume_counter:n {#1}
-            \int_compare:nNnT { \l__enumext_level_int } > { 0 }
-              {
-                \exp_args:Ne \keys_set:nv { enumext / level-\int_use:N \l__enumext_level_int }
-                  { g__enumext_series_ \tl_to_str:n {#1} _tl }
-              }
-            \int_compare:nNnT { \l__enumext_level_h_int } = { 1 }
-              {
-                \keys_set:nv { enumext / enumext* }
-                  { g__enumext_series_ \tl_to_str:n {#1} _tl }
-              }
+            \__enumext_resume_counter:n { }
           }
           {
-            \bool_if:NT \g__enumext_standar_bool
+            \tl_if_exist:cTF { g__enumext_series_ \tl_to_str:n {#1} _ \__enumext_level: _tl }
               {
-                \msg_error:nnn { enumext } { unknown-series } {#1}
+                \__enumext_resume_counter:n {#1}
+                \exp_args:Ne \keys_set:nv { enumext / level-\int_use:N \l__enumext_level_int }
+                  { g__enumext_series_ \tl_to_str:n {#1} _ \__enumext_level: _tl }
               }
-            \bool_if:NT \g__enumext_starred_bool
               {
-                \msg_error:nnn { enumext } { unknown-series } {#1}
+                \msg_error:nnn { enumext } { unknown-series-standar } {#1}
+              }
+          }
+      }
+  }
+\cs_new_protected:Npn \__enumext_resume_series_vii:n #1
+  {
+    \int_compare:nNnT { \l__enumext_level_h_int } = { 1 }
+      {
+        \tl_if_empty:nTF {#1}
+          {
+            \__enumext_resume_counter:n { }
+          }
+          {
+            \tl_if_exist:cTF { g__enumext_series_ \tl_to_str:n {#1} _vii_tl }
+              {
+                \__enumext_resume_counter:n {#1}
+                \keys_set:nv { enumext / enumext* }
+                  { g__enumext_series_ \tl_to_str:n {#1} _vii_tl }
+              }
+              {
+                \msg_error:nnn { enumext } { unknown-series-starred } {#1}
               }
           }
       }
@@ -2174,19 +2217,28 @@
     \int_compare:nNnT { \l__enumext_level_int } > { 0 }
       {
         \bool_set_true:c { l__enumext_resume_ \__enumext_level: _bool }
+        \tl_clear:N \l__enumext_series_name_tl
+        \tl_set:Nn \l__enumext_series_name_tl {#1}
+        \tl_if_empty:NTF \l__enumext_series_name_tl
+          {
+            \__enumext_resume_counter:
+          }
+          {
+            \__enumext_resume_counter_series:
+          }
       }
     \int_compare:nNnT { \l__enumext_level_h_int } = { 1 }
       {
         \bool_set_true:N \l__enumext_resume_vii_bool
-      }
-    \tl_clear:N \l__enumext_series_name_tl
-    \tl_set:Nn \l__enumext_series_name_tl {#1}
-    \tl_if_empty:NTF \l__enumext_series_name_tl
-      {
-        \__enumext_resume_counter:
-      }
-      {
-        \__enumext_resume_counter_series:
+        \tl_clear:N \l__enumext_series_name_tl
+        \tl_set:Nn \l__enumext_series_name_tl {#1}
+        \tl_if_empty:NTF \l__enumext_series_name_tl
+          {
+            \__enumext_resume_counter:
+          }
+          {
+            \__enumext_resume_counter_series:
+          }
       }
   }
 \cs_new_protected:Nn \__enumext_resume_counter:
@@ -2234,9 +2286,12 @@
   {
     \cs_set:Npn \__enumext_tmp:n ##1
       {
-        \exp_args:Ne \int_set:cn { l__enumext_start_ \int_to_roman:n {##1} _int }
+        \int_if_exist:cT { g__enumext_series_ \l__enumext_series_name_tl _ \int_to_roman:n {##1} _int }
           {
-            \int_use:c { g__enumext_series_ \l__enumext_series_name_tl _int } + 1
+            \exp_args:Ne \int_set:cn { l__enumext_start_ \int_to_roman:n {##1} _int }
+              {
+                \int_use:c { g__enumext_series_ \l__enumext_series_name_tl _ \int_to_roman:n {##1} _int } + 1
+              }
           }
       }
     \int_compare:nNnT { \l__enumext_level_int } > { 0 }
@@ -2269,7 +2324,7 @@
           {
             \int_set:Nn \l__enumext_start_vii_int
               {
-                \int_use:c { g__enumext_series_ \l__enumext_series_name_tl _int } + 1
+                \int_use:c { g__enumext_series_ \l__enumext_series_name_tl _vii_int } + 1
               }
           }
       }
@@ -2279,12 +2334,12 @@
   {
     \cs_set:Npn \__enumext_tmp:n ##1
       {
-        \tl_if_empty:cF { g__enumext_series_ \int_to_roman:n {##1} _tl }
+        \tl_if_empty:cF { g__enumext_not_key_series_ \int_to_roman:n {##1} _tl }
           {
             \__enumext_resume_counter:n { }
             \exp_args:Ne \keys_set:nv
               { enumext / level-\int_use:N \l__enumext_level_int }
-              { g__enumext_series_ \int_to_roman:n {##1} _tl }
+              { g__enumext_not_key_series_ \int_to_roman:n {##1} _tl }
           }
       }
     \int_compare:nNnT { \l__enumext_level_int } > { 0 }
@@ -2293,10 +2348,10 @@
       }
     \int_compare:nNnT { \l__enumext_level_h_int } = { 1 }
       {
-        \tl_if_empty:NF \g__enumext_series_vii_tl
+        \tl_if_empty:NF \g__enumext_not_key_series_vii_tl
           {
             \__enumext_resume_counter:n { }
-            \keys_set:nV { enumext / enumext* } \g__enumext_series_vii_tl
+            \keys_set:nV { enumext / enumext* } \g__enumext_not_key_series_vii_tl
           }
       }
   }
@@ -6315,6 +6370,16 @@
 \msg_new:nnn { enumext } { item-joined-columns }
   {
     Not~space~to~join~items~(#1)~>~#2 ~\msg_line_context:.
+  }
+\msg_new:nnn { enumext } { unknown-series-starred }
+  {
+    The~series~'#1'~for~the~resume~key~does~not~exist~in~the~
+    ~enumext*~environment~ \msg_line_context:.
+  }
+\msg_new:nnn { enumext } { unknown-series-standar }
+  {
+    The~series~'#1'~for~the~resume~key~does~not~exist~at~level~\int_use:N \l__enumext_level_int
+    \c_space_tl of~enumext~environment~ \msg_line_context:.
   }
 \file_input_stop:
 %% 

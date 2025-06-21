@@ -5787,7 +5787,7 @@ Some text here
 % \end{variable}
 %
 % \begin{variable}[int]{\l_@@_series_name_tl, \l_@@_resume_X_bool,
-%                       \g_@@_resume_X_int, \g_@@_series_X_tl,
+%                       \g_@@_resume_X_int, \g_@@_not_key_series_X_tl,
 %                       \g_@@_series_name_X_tl,}
 %   Internal variables used by \mykey{resume}, \mykey{resume*} and
 %   \mykey{series} keys (\S\ref{key:series}).
@@ -5798,10 +5798,10 @@ Some text here
 \tl_new:N \l_@@_series_name_tl
 \cs_set_protected:Npn \@@_tmp:n #1
   {
-    \bool_new:c { l_@@_resume_#1_bool    }
-    \int_new:c  { g_@@_resume_#1_int     }
-    \tl_new:c   { g_@@_series_#1_tl      }
-    \tl_new:c   { l_@@_series_name_#1_tl }
+    \bool_new:c { l_@@_resume_#1_bool       }
+    \int_new:c  { g_@@_resume_#1_int        }
+    \tl_new:c   { g_@@_not_key_series_#1_tl }
+    \tl_new:c   { l_@@_series_name_#1_tl    }
   }
 \clist_map_inline:nn { i, ii, iii, iv, vii } { \@@_tmp:n {#1} }
 %    \end{macrocode}
@@ -9219,12 +9219,6 @@ Some text here
       {
         series  .str_set:N = \l_@@_series_name_str,
         series  .value_required:n = true,
-        resume  .code:n    = {
-                               \bool_if:NF \l_@@_print_keyans_cmd_bool
-                                 {
-                                   \@@_resume_series:n {##1}
-                                 }
-                             },
         resume* .code:n    = {
                                \bool_if:NF \l_@@_print_keyans_cmd_bool
                                  {
@@ -9235,6 +9229,28 @@ Some text here
       }
   }
 \clist_map_inline:nn {level-1, level-2, level-3, level-4, enumext*} { \@@_tmp:n {#1} }
+\cs_set_protected:Npn \@@_tmp:n #1
+  {
+    \keys_define:nn { enumext / #1 }
+      {
+        resume .code:n = {
+                           \bool_if:NF \l_@@_print_keyans_cmd_bool
+                             {
+                                \@@_resume_series:n {##1}
+                             }
+                          },
+      }
+  }
+\clist_map_inline:nn {level-1, level-2, level-3, level-4} { \@@_tmp:n {#1} }
+\keys_define:nn { enumext / enumext* }
+  {
+    resume .code:n = {
+                       \bool_if:NF \l_@@_print_keyans_cmd_bool
+                         {
+                           \@@_resume_series_vii:n {#1}
+                         }
+                      },
+   }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -9301,7 +9317,7 @@ Some text here
 % \begin{important}*
 %   The value of boolean variable \cs[no-index]{l_@@_resume_X_bool} is set to
 %   true by the function \cs{@@_resume_counter:n} which is used by the keys
-%   \mykey{resume} and \mykey{resume*}, in this case we must Make sure it
+%   \mykey{resume} and \mykey{resume*}, in this case we must make sure it
 %   is set to false so that it does not overwrite the default filtered
 %   \mymeta{keys}.
 %   This function is passed to the function \cs{@@_parse_keys:n}
@@ -9333,12 +9349,27 @@ Some text here
           }
       }
       {
-        \tl_gclear_new:c { g_@@_series_ \l_@@_series_name_str _tl }
-        \tl_gset:ce { g_@@_series_ \l_@@_series_name_str _tl }
-          { \@@_filter_series:n {#1} }
-        \int_if_exist:cF { g_@@_series_ \l_@@_series_name_str _int }
+        \int_compare:nNnT { \l_@@_level_int } > { 0 }
           {
-            \int_new:c { g_@@_series_ \l_@@_series_name_str _int }
+            \tl_gclear_new:c { g_@@_series_ \l_@@_series_name_str _ \@@_level: _tl }
+            \tl_gset:ce
+              { g_@@_series_ \l_@@_series_name_str _ \@@_level: _tl }
+              { \@@_filter_series:n {#1} }
+            \int_if_exist:cF { g_@@_series_ \l_@@_series_name_str _ \@@_level: _int }
+              {
+                \int_new:c { g_@@_series_ \l_@@_series_name_str _ \@@_level: _int }
+              }
+          }
+        \int_compare:nNnT { \l_@@_level_h_int } = { 1 }
+          {
+            \tl_gclear_new:c { g_@@_series_ \l_@@_series_name_str _vii_tl }
+            \tl_gset:ce
+              { g_@@_series_ \l_@@_series_name_str _vii_tl }
+              { \@@_filter_series:n {#1} }
+            \int_if_exist:cF { g_@@_series_ \l_@@_series_name_str _vii_int }
+              {
+                \int_new:c { g_@@_series_ \l_@@_series_name_str _vii_int }
+              }
           }
       }
   }
@@ -9349,21 +9380,21 @@ Some text here
 %   \myenv*{enumext} environment and in the variable \myvarenv{g__@@_series_vii_tl}
 %   for the \myenv*{enumext*} environment.
 % \iffalse
-%% Save keys for last environment without |series| and |resume=name| keys active.
+%% Save keys for last environment "without" |series| and |resume=name| keys active.
 % \fi
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_resume_last:n #1
   {
     \int_compare:nNnT { \l_@@_level_int } > { 0 }
       {
-        \tl_gclear:c { g_@@_series_ \@@_level: _tl }
+        \tl_gclear:c { g_@@_not_key_series_ \@@_level: _tl }
         \tl_gset:ce
-          { g_@@_series_ \@@_level: _tl }{ \@@_filter_series:n {#1} }
+          { g_@@_not_key_series_ \@@_level: _tl }{ \@@_filter_series:n {#1} }
       }
     \int_compare:nNnT { \l_@@_level_h_int } = { 1 }
       {
-        \tl_gclear:N \g_@@_series_vii_tl
-        \tl_gset:Ne \g_@@_series_vii_tl { \@@_filter_series:n {#1} }
+        \tl_gclear:N \g_@@_not_key_series_vii_tl
+        \tl_gset:Ne \g_@@_not_key_series_vii_tl { \@@_filter_series:n {#1} }
       }
   }
 %    \end{macrocode}
@@ -9387,11 +9418,11 @@ Some text here
 %   \smallskip
 %
 % \begin{important}*
-%   The variables \cs{l_@@_series_name_str} and \cs{l_@@__series_name_tl}
+%   The variables \cs{l_@@_series_name_str} and \cs{l_@@_series_name_tl}
 %   contain the same \mymarg{series name} but are executed at different
 %   moments, the integer variable with \cs{l_@@_series_name_str} sets the value
 %   when execute \mykey{series}|=|\mymarg{series name} and the
-%   integer variable with \cs{l_@@__series_name_tl} sets the subsequent
+%   integer variable with \cs{l_@@_series_name_tl} sets the subsequent
 %   values when use \mykey{resume}|=|\mymarg{series name}.
 %   This function is passed to the \myenv*{enumext} environment definition (\S\ref{env:enumext})
 %   and the \myenv*{enumext*} environment definition (\S\ref{env:starred}).
@@ -9423,7 +9454,7 @@ Some text here
     \str_if_empty:NF \l_@@_series_name_str
       {
         \int_gset_eq:cc
-          { g_@@_series_ \l_@@_series_name_str _int } { c@enumX \@@_level: }
+          { g_@@_series_ \l_@@_series_name_str _ \@@_level: _int } { c@enumX \@@_level: }
       }
     \tl_if_empty:NTF \l_@@_series_name_tl
       {
@@ -9437,10 +9468,10 @@ Some text here
           }
       }
       {
-        \int_if_exist:cT { g_@@_series_ \l_@@_series_name_tl _int }
+        \int_if_exist:cT { g_@@_series_ \l_@@_series_name_tl _ \@@_level: _int }
           {
             \int_gset_eq:cc
-              { g_@@_series_ \l_@@_series_name_tl _int } { c@enumX \@@_level: }
+              { g_@@_series_ \l_@@_series_name_tl _ \@@_level: _int } { c@enumX \@@_level: }
           }
       }
   }
@@ -9464,20 +9495,23 @@ Some text here
     \str_if_empty:NF \l_@@_series_name_str
       {
         \int_gset_eq:cN
-          { g_@@_series_ \l_@@_series_name_str _int } \value{enumXvii}
+          { g_@@_series_ \l_@@_series_name_str _vii_int } \value{enumXvii}
       }
     \tl_if_empty:NTF \l_@@_series_name_tl
       {
         \str_if_empty:NT \l_@@_series_name_str
           {
-            \int_gset_eq:NN \g_@@_resume_vii_int \value{enumXvii}
+            \tl_if_empty:NT \l_@@_store_name_tl
+              {
+                \int_gset_eq:NN \g_@@_resume_vii_int \value{enumXvii}
+              }
           }
       }
       {
-        \int_if_exist:cT { g_@@_series_ \l_@@_series_name_tl _int }
+        \int_if_exist:cT { g_@@_series_ \l_@@_series_name_tl _vii_int }
           {
             \int_gset_eq:cN
-              { g_@@_series_ \l_@@_series_name_tl _int } \value{enumXvii}
+              { g_@@_series_ \l_@@_series_name_tl _vii_int } \value{enumXvii}
           }
       }
   }
@@ -9486,8 +9520,8 @@ Some text here
 %
 % \subsubsection{Internal functions for \texttt{resume} key}
 %
-% \begin{macro}{\@@_resume_series:n}
-%   The function \cs{@@_resume_series:n} will handle the \mymarg{argument}
+% \begin{macro}{\@@_resume_series:n, \@@_resume_series_vii:n}
+%   The functions \cs{@@_resume_series:n} and \cs{@@_resume_series_vii:n} will handle the \mymarg{argument}
 %   passed to the \mykey{resume} key in \myenv*{enumext} and \myenv*{enumext*} environments.
 %   If the key is passed \emph{without value} the function
 %   \cs{@@_resume_counter:n} is executed which will set the counter
@@ -9499,33 +9533,42 @@ Some text here
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_resume_series:n #1
   {
-    \tl_if_empty:nTF {#1}
+    \int_compare:nNnT { \l_@@_level_int } > { 0 }
       {
-        \@@_resume_counter:n { }
-      }
-      {
-        \tl_if_exist:cTF { g_@@_series_ \tl_to_str:n {#1} _tl }
+        \tl_if_empty:nTF {#1}
           {
-            \@@_resume_counter:n {#1}
-            \int_compare:nNnT { \l_@@_level_int } > { 0 }
-              {
-                \exp_args:Ne \keys_set:nv { enumext / level-\int_use:N \l_@@_level_int }
-                  { g_@@_series_ \tl_to_str:n {#1} _tl }
-              }
-            \int_compare:nNnT { \l_@@_level_h_int } = { 1 }
-              {
-                \keys_set:nv { enumext / enumext* }
-                  { g_@@_series_ \tl_to_str:n {#1} _tl }
-              }
+            \@@_resume_counter:n { }
           }
           {
-            \bool_if:NT \g_@@_standar_bool
+            \tl_if_exist:cTF { g_@@_series_ \tl_to_str:n {#1} _ \@@_level: _tl }
               {
-                \msg_error:nnn { enumext } { unknown-series } {#1}
+                \@@_resume_counter:n {#1}
+                \exp_args:Ne \keys_set:nv { enumext / level-\int_use:N \l_@@_level_int }
+                  { g_@@_series_ \tl_to_str:n {#1} _ \@@_level: _tl }
               }
-            \bool_if:NT \g_@@_starred_bool
               {
-                \msg_error:nnn { enumext } { unknown-series } {#1}
+                \msg_error:nnn { enumext } { unknown-series-standar } {#1}
+              }
+          }
+      }
+  }
+\cs_new_protected:Npn \@@_resume_series_vii:n #1
+  {
+    \int_compare:nNnT { \l_@@_level_h_int } = { 1 }
+      {
+        \tl_if_empty:nTF {#1}
+          {
+            \@@_resume_counter:n { }
+          }
+          {
+            \tl_if_exist:cTF { g_@@_series_ \tl_to_str:n {#1} _vii_tl }
+              {
+                \@@_resume_counter:n {#1}
+                \keys_set:nv { enumext / enumext* }
+                  { g_@@_series_ \tl_to_str:n {#1} _vii_tl }
+              }
+              {
+                \msg_error:nnn { enumext } { unknown-series-starred } {#1}
               }
           }
       }
@@ -9557,19 +9600,28 @@ Some text here
     \int_compare:nNnT { \l_@@_level_int } > { 0 }
       {
         \bool_set_true:c { l_@@_resume_ \@@_level: _bool }
+        \tl_clear:N \l_@@_series_name_tl
+        \tl_set:Nn \l_@@_series_name_tl {#1}
+        \tl_if_empty:NTF \l_@@_series_name_tl
+          {
+            \@@_resume_counter:
+          }
+          {
+            \@@_resume_counter_series:
+          }
       }
     \int_compare:nNnT { \l_@@_level_h_int } = { 1 }
       {
         \bool_set_true:N \l_@@_resume_vii_bool
-      }
-    \tl_clear:N \l_@@_series_name_tl
-    \tl_set:Nn \l_@@_series_name_tl {#1}
-    \tl_if_empty:NTF \l_@@_series_name_tl
-      {
-        \@@_resume_counter:
-      }
-      {
-        \@@_resume_counter_series:
+        \tl_clear:N \l_@@_series_name_tl
+        \tl_set:Nn \l_@@_series_name_tl {#1}
+        \tl_if_empty:NTF \l_@@_series_name_tl
+          {
+            \@@_resume_counter:
+          }
+          {
+            \@@_resume_counter_series:
+          }
       }
   }
 %    \end{macrocode}
@@ -9633,9 +9685,12 @@ Some text here
   {
     \cs_set:Npn \@@_tmp:n ##1
       {
-        \exp_args:Ne \int_set:cn { l_@@_start_ \int_to_roman:n {##1} _int }
+        \int_if_exist:cT { g_@@_series_ \l_@@_series_name_tl _ \int_to_roman:n {##1} _int }
           {
-            \int_use:c { g_@@_series_ \l_@@_series_name_tl _int } + 1
+            \exp_args:Ne \int_set:cn { l_@@_start_ \int_to_roman:n {##1} _int }
+              {
+                \int_use:c { g_@@_series_ \l_@@_series_name_tl _ \int_to_roman:n {##1} _int } + 1
+              }
           }
       }
     \int_compare:nNnT { \l_@@_level_int } > { 0 }
@@ -9668,7 +9723,7 @@ Some text here
           {
             \int_set:Nn \l_@@_start_vii_int
               {
-                \int_use:c { g_@@_series_ \l_@@_series_name_tl _int } + 1
+                \int_use:c { g_@@_series_ \l_@@_series_name_tl _vii_int } + 1
               }
           }
       }
@@ -9694,12 +9749,12 @@ Some text here
   {
     \cs_set:Npn \@@_tmp:n ##1
       {
-        \tl_if_empty:cF { g_@@_series_ \int_to_roman:n {##1} _tl }
+        \tl_if_empty:cF { g_@@_not_key_series_ \int_to_roman:n {##1} _tl }
           {
             \@@_resume_counter:n { }
             \exp_args:Ne \keys_set:nv
               { enumext / level-\int_use:N \l_@@_level_int }
-              { g_@@_series_ \int_to_roman:n {##1} _tl }
+              { g_@@_not_key_series_ \int_to_roman:n {##1} _tl }
           }
       }
     \int_compare:nNnT { \l_@@_level_int } > { 0 }
@@ -9708,10 +9763,10 @@ Some text here
       }
     \int_compare:nNnT { \l_@@_level_h_int } = { 1 }
       {
-        \tl_if_empty:NF \g_@@_series_vii_tl
+        \tl_if_empty:NF \g_@@_not_key_series_vii_tl
           {
             \@@_resume_counter:n { }
-            \keys_set:nV { enumext / enumext* } \g_@@_series_vii_tl
+            \keys_set:nV { enumext / enumext* } \g_@@_not_key_series_vii_tl
           }
       }
   }
@@ -16497,6 +16552,19 @@ Some text here
 \msg_new:nnn { enumext } { item-joined-columns }
   {
     Not~space~to~join~items~(#1)~>~#2 ~\msg_line_context:.
+  }
+%    \end{macrocode}
+% Messages used by \mykey{resume} key.
+%    \begin{macrocode}
+\msg_new:nnn { enumext } { unknown-series-starred }
+  {
+    The~series~'#1'~for~the~resume~key~does~not~exist~in~the~
+    ~enumext*~environment~ \msg_line_context:.
+  }
+\msg_new:nnn { enumext } { unknown-series-standar }
+  {
+    The~series~'#1'~for~the~resume~key~does~not~exist~at~level~\int_use:N \l_@@_level_int
+    \c_space_tl of~enumext~environment~ \msg_line_context:.
   }
 %    \end{macrocode}
 % \subsection{Finish package}
