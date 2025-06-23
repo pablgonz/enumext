@@ -5786,16 +5786,20 @@ Some text here
 %    \end{macrocode}
 % \end{variable}
 %
-% \begin{variable}[int]{\l_@@_series_name_tl, \l_@@_resume_X_bool,
-%                       \g_@@_resume_X_int, \g_@@_not_key_series_X_tl,
-%                       \g_@@_series_name_X_tl,}
+% \begin{variable}[int]{\l_@@_series_name_tl, \l_@@_reset_args_clist,
+%                       \l_@@_reset_name_str, \l_@@_reset_name_str,
+%                       \l_@@_resume_X_bool, \g_@@_resume_X_int,
+%                       \g_@@_not_key_series_X_tl, \g_@@_series_name_X_tl,}
 %   Internal variables used by \mykey{resume}, \mykey{resume*} and
 %   \mykey{series} keys (\S\ref{key:series}).
 % \iffalse
-%% Variables used by |series|, |resume| and |resume*| keys implementation.
+%% Variables used by |series|, |resume|, |resume*|, |reset| and |reset*| keys and \resetenumext.
 % \fi
 %    \begin{macrocode}
-\tl_new:N \l_@@_series_name_tl
+\tl_new:N    \l_@@_series_name_tl
+\clist_new:N \l_@@_reset_args_clist
+\str_new:N   \l_@@_reset_name_str
+\int_new:N   \l_@@_reset_level_int
 \cs_set_protected:Npn \@@_tmp:n #1
   {
     \bool_new:c { l_@@_resume_#1_bool       }
@@ -9772,6 +9776,100 @@ Some text here
   }
 %    \end{macrocode}
 % \end{macro}
+%
+% \subsection{The \cs{resetenumext}, \texttt{reset} and \texttt{reset*} keys}\label{key:reset}
+%
+%    \begin{macrocode}
+\NewDocumentCommand \resetenumext { s O{enumext,1} m }
+  {
+    \clist_set:Nn \l_@@_reset_args_clist {#2}
+    \int_compare:nTF { \clist_count:N \l_@@_reset_args_clist > 2 }
+      {
+        \msg_error:nne { enumext-reset } { too-many-elements } {#2}
+      }
+    \bool_if:nTF {#1}
+      {
+        \@@_reset_count_resume_all:n { #3 }
+      }
+      {
+        \int_compare:nTF { \clist_count:N \l_@@_reset_args_clist = 1 }
+         {
+           \@@_starred_reset:n {#3}
+         }
+         {
+           \int_compare:nTF { \clist_count:N \l_@@_reset_args_clist = 2 }
+             {
+               \@@_standar_reset:n {#3}
+             }
+             {  
+               \msg_error:nnn { enumext-reset } { invalid-clist } {#2}
+             }
+         }
+      }
+  }
+% #1 : internal list ; #2 : external (section/chapter/etc...)
+\cs_new_protected:Npn \@@_reset_count_resume:nn #1 #2
+  {
+    \counterwithin* {enumX#1}{#2}
+    \int_gzero:c { g_@@_resume_ #1 _int }
+  }
+\cs_new_protected:Npn \@@_reset_count_resume_all:n #1
+  {
+    \clist_map_inline:nn { i,ii,iii,iv,vii }
+      {
+        \@@_reset_count_resume:nn { ##1 } { #1 }
+      }
+  }
+\cs_new_protected:Npn \@@_starred_reset:n #1
+  {
+    \str_set:Ne \l_@@_reset_name_str { \clist_item:Nn \l_@@_reset_args_clist {1} }
+    \str_if_eq:eeTF { \l_@@_reset_name_str } { enumext* }
+      {
+        \@@_reset_count_resume:nn {vii} {#1}
+      }
+      {
+        \msg_error:nn { enumext-reset } { invalid-single-arg-no-star }
+      }
+  }
+% standar reset
+\cs_new_protected:Npn \@@_standar_reset:n #1
+  {
+    \str_set:Ne \l_@@_reset_name_str { \clist_item:Nn \l_@@_reset_args_clist {1} }
+    \int_set:Nn \l_@@_reset_level_int { \clist_item:Nn \l_@@_reset_args_clist {2} }
+    \str_if_eq:eeTF { \l_@@_reset_name_str } { enumext }
+      {
+        \int_case:nnF { \l_@@_reset_level_int }
+          {
+            { 1 }
+            {
+              \@@_reset_count_resume:nn
+                { \int_to_roman:n { \l_@@_reset_level_int } } {#1}
+            }
+            { 2 }
+            {
+              \@@_reset_count_resume:nn
+                { \int_to_roman:n { \l_@@_reset_level_int } } {#1}
+            }
+            { 3 }
+            {
+              \@@_reset_count_resume:nn
+                { \int_to_roman:n { \l_@@_reset_level_int } } {#1}
+            }
+            { 4 }
+            {
+              \@@_reset_count_resume:nn
+                { \int_to_roman:n { \l_@@_reset_level_int } } {#1}
+            }
+         }
+         {
+           \msg_error:nne { enumext-reset } { out-of-range } { \l_@@_reset_level_int }
+         }
+      }
+      {
+        \msg_error:nne { enumext-reset } { invalid-package } { \l_@@_reset_name_str }
+      }
+  }
+%    \end{macrocode}
 %
 % \subsection{Setting \texttt{save-ans}, \texttt{check-ans} and  \texttt{no-store} keys}
 %
@@ -16566,6 +16664,20 @@ Some text here
     The~series~'#1'~for~the~resume~key~does~not~exist~at~level~\int_use:N \l_@@_level_int
     \c_space_tl of~enumext~environment~ \msg_line_context:.
   }
+\msg_new:nnnn { enumext-reset } { invalid-clist }
+  { The~argument~must~have~1~or~2~elements~separated~by~a~comma. }
+  { Received:~'#1'. }
+\msg_new:nnn { enumext-reset } { invalid-single-arg-star }
+  { The~single~argument~must~be~exactly~'enumext*'~when~using~a~'*'. }
+\msg_new:nnnn { enumext-reset } { invalid-single-arg-no-star }
+  { A~single~argument~is~not~allowed~without~a~'*'. }
+  { Received:~'#1'. }
+\msg_new:nnnn { enumext-reset } { out-of-range }
+  { The~number~must~be~exactly~1,~2,~3~or~4. }
+  { Received:~'#1'. }
+\msg_new:nnnn { enumext-reset } { invalid-package }
+  { The~first~element~must~be~exactly~'enumext'. }
+  { Received:~'#1'. }
 %    \end{macrocode}
 % \subsection{Finish package}
 %

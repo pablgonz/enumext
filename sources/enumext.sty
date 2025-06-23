@@ -82,8 +82,11 @@
     \tl_set:ce { l__enumext_the_counter_#1_tl   } { \exp_not:c { theenumX#1 } }
   }
 \clist_map_inline:nn { i, ii, iii, iv, v, vi, vii, viii } { \__enumext_tmp:n {#1} }
-%% Variables used by |series|, |resume| and |resume*| keys implementation.
-\tl_new:N \l__enumext_series_name_tl
+%% Variables used by |series|, |resume|, |resume*|, |reset| and |reset*| keys and \resetenumext.
+\tl_new:N    \l__enumext_series_name_tl
+\clist_new:N \l__enumext_reset_args_clist
+\str_new:N   \l__enumext_reset_name_str
+\int_new:N   \l__enumext_reset_level_int
 \cs_set_protected:Npn \__enumext_tmp:n #1
   {
     \bool_new:c { l__enumext_resume_#1_bool       }
@@ -2353,6 +2356,93 @@
             \__enumext_resume_counter:n { }
             \keys_set:nV { enumext / enumext* } \g__enumext_not_key_series_vii_tl
           }
+      }
+  }
+\NewDocumentCommand \resetenumext { s O{enumext,1} m }
+  {
+    \clist_set:Nn \l__enumext_reset_args_clist {#2}
+    \int_compare:nTF { \clist_count:N \l__enumext_reset_args_clist > 2 }
+      {
+        \msg_error:nne { enumext-reset } { too-many-elements } {#2}
+      }
+    \bool_if:nTF {#1}
+      {
+        \__enumext_reset_count_resume_all:n { #3 }
+      }
+      {
+        \int_compare:nTF { \clist_count:N \l__enumext_reset_args_clist = 1 }
+         {
+           \__enumext_starred_reset:n {#3}
+         }
+         {
+           \int_compare:nTF { \clist_count:N \l__enumext_reset_args_clist = 2 }
+             {
+               \__enumext_standar_reset:n {#3}
+             }
+             {
+               \msg_error:nnn { enumext-reset } { invalid-clist } {#2}
+             }
+         }
+      }
+  }
+\cs_new_protected:Npn \__enumext_reset_count_resume:nn #1 #2
+  {
+    \counterwithin* {enumX#1}{#2}
+    \int_gzero:c { g__enumext_resume_ #1 _int }
+  }
+\cs_new_protected:Npn \__enumext_reset_count_resume_all:n #1
+  {
+    \clist_map_inline:nn { i,ii,iii,iv,vii }
+      {
+        \__enumext_reset_count_resume:nn { ##1 } { #1 }
+      }
+  }
+\cs_new_protected:Npn \__enumext_starred_reset:n #1
+  {
+    \str_set:Ne \l__enumext_reset_name_str { \clist_item:Nn \l__enumext_reset_args_clist {1} }
+    \str_if_eq:eeTF { \l__enumext_reset_name_str } { enumext* }
+      {
+        \__enumext_reset_count_resume:nn {vii} {#1}
+      }
+      {
+        \msg_error:nn { enumext-reset } { invalid-single-arg-no-star }
+      }
+  }
+\cs_new_protected:Npn \__enumext_standar_reset:n #1
+  {
+    \str_set:Ne \l__enumext_reset_name_str { \clist_item:Nn \l__enumext_reset_args_clist {1} }
+    \int_set:Nn \l__enumext_reset_level_int { \clist_item:Nn \l__enumext_reset_args_clist {2} }
+    \str_if_eq:eeTF { \l__enumext_reset_name_str } { enumext }
+      {
+        \int_case:nnF { \l__enumext_reset_level_int }
+          {
+            { 1 }
+            {
+              \__enumext_reset_count_resume:nn
+                { \int_to_roman:n { \l__enumext_reset_level_int } } {#1}
+            }
+            { 2 }
+            {
+              \__enumext_reset_count_resume:nn
+                { \int_to_roman:n { \l__enumext_reset_level_int } } {#1}
+            }
+            { 3 }
+            {
+              \__enumext_reset_count_resume:nn
+                { \int_to_roman:n { \l__enumext_reset_level_int } } {#1}
+            }
+            { 4 }
+            {
+              \__enumext_reset_count_resume:nn
+                { \int_to_roman:n { \l__enumext_reset_level_int } } {#1}
+            }
+         }
+         {
+           \msg_error:nne { enumext-reset } { out-of-range } { \l__enumext_reset_level_int }
+         }
+      }
+      {
+        \msg_error:nne { enumext-reset } { invalid-package } { \l__enumext_reset_name_str }
       }
   }
 %% Add |save-ans| key only on first level off |enumext| and |enumext*|.
@@ -6381,6 +6471,20 @@
     The~series~'#1'~for~the~resume~key~does~not~exist~at~level~\int_use:N \l__enumext_level_int
     \c_space_tl of~enumext~environment~ \msg_line_context:.
   }
+\msg_new:nnnn { enumext-reset } { invalid-clist }
+  { The~argument~must~have~1~or~2~elements~separated~by~a~comma. }
+  { Received:~'#1'. }
+\msg_new:nnn { enumext-reset } { invalid-single-arg-star }
+  { The~single~argument~must~be~exactly~'enumext*'~when~using~a~'*'. }
+\msg_new:nnnn { enumext-reset } { invalid-single-arg-no-star }
+  { A~single~argument~is~not~allowed~without~a~'*'. }
+  { Received:~'#1'. }
+\msg_new:nnnn { enumext-reset } { out-of-range }
+  { The~number~must~be~exactly~1,~2,~3~or~4. }
+  { Received:~'#1'. }
+\msg_new:nnnn { enumext-reset } { invalid-package }
+  { The~first~element~must~be~exactly~'enumext'. }
+  { Received:~'#1'. }
 \file_input_stop:
 %% 
 %%
