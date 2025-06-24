@@ -615,7 +615,8 @@
     keywordstyle  = [4]{\color{pkgcolor}},%
     keywords      = [4]{enumext,keyans,keyanspic, getkeyans, anskey, anspic, item, anskey*, itemwidth, enumextmeta, %
                     setenumext,printkeyans,miniright,labelbx, mywrap, descitemwd,theenumXi,theenumXii,theenumXiii,%
-                    setenumextmeta, foreachkeyans, theenumX, theenumXiv,theenumXv, theenumXvii, theenumXviii},%
+                    setenumextmeta, foreachkeyans, theenumX, theenumXiv,theenumXv, theenumXvii, theenumXviii,%
+                    resetenumext,},%
 % Reserved words 5 (plain TeX or internal)
     keywordstyle  = [5]{\color{red}},%
     keywords      = [5]{makeatletter,makeatother,let,verb,def,prevdepth,glue, if@minipage,% if@noitemarg
@@ -630,7 +631,7 @@
                     store-env, print-env, write-out, force-eol, write-env, overwrite, unknown, base-fix,%
                     midsep, wrapper,label-pos,label-sep, layout-sty, layout-sep, layout-top, lang, tagging, %
                     pdfversion, pdfstandard, testphase, alt, mark-sep, wrap-ans*, mark-ans, mark-sep, beginpenalty,%
-                    midpenalty, endpenalty,},%
+                    midpenalty, endpenalty,reset,},%
 % Reserved words 7 (label values)
     keywordstyle  = [7]{\color{MediumOrchid}},%
     keywords      = [7]{m,s,M,VIII,viii,v,E,t,l,A,XXIII,true, false,test,sample,above,below,ua-2,phase-III,%
@@ -1278,28 +1279,28 @@
 % all \emph{stored content}, |\miniright| for \myenv{minipage}, |\setenumext|
 % and |\setenumextmeta| to config \myoarg{key \textnormal{\textcolor{gray}{=}} val} options.
 %
-% \subsubsection{Internal counters}
+% \subsubsection{Public counters}
 %
-% The package \mypkg*{enumext} uses internally the \icounter{enumXi},
+% The package \mypkg*{enumext} uses the \icounter{enumXi},
 % \icounter{enumXii}, \icounter{enumXiii}, \icounter{enumXiv} counters
-% for the four nesting levels of the \myenv*{enumext} environment, the
-% \icounter{enumXv} counter for the \myenv*{keyans} environment, the
+% for the \emph{four} nesting levels of the \myenv*{enumext} environment, 
+% the \icounter{enumXv} counter for the \myenv*{keyans} environment, the
 % \icounter{enumXvi} counter for the \myenv*{keyanspic} environment,
-% the counter \icounter{enumXvii} for \myenv*{enumext*} environment and the counter
-% \icounter{enumXviii} for \myenv*{keyans*} environment.
+% the counter \icounter{enumXvii} for \myenv*{enumext*} environment and 
+% the counter \icounter{enumXviii} for \myenv*{keyans*} environment.
 %
 % \smallskip
 %
 % \begin{important}*
-% If any package defines these counters or they are user-defined
-% in the document, the package will return a fatal error and abort the
-% load.
+% If any package defines these \emph{counters} or they are user-defined
+% in the document, the package will return a \emph{\enquote{fatal error}} 
+% and abort the load.
 % \end{important}
 %
 % \subsubsection{Public dimension}
 %
-% The package \mypkg*{enumext} only provides a single public dimension
-% |\itemwidth| and is intended for user convenience only and is not
+% The package \mypkg*{enumext} only provides a \emph{single public dimension}
+% |\itemwidth| and is intended for user convenience only and is NOT
 % for internal use as such. The dimension |\itemwidth| is \emph{rigid length}
 % and contains the \emph{\enquote{width of the content}} of each |\item|
 % regardless of \mykey{labelwidth} and \mykey{labelsep}.
@@ -1689,8 +1690,6 @@
 % directly in the \emph{optional argument} of the \emph{\enquote{first level}}
 % of the environment in which they are executed.
 % \end{important}
-%
-% \smallskip
 %
 % \section{The command \cs[no-index]{setenumextmeta}}
 %
@@ -2311,8 +2310,6 @@
 %
 % \subsection{Keys for \texttt{start}, \texttt{series} and \texttt{resume}}
 %
-% \smallskip
-%
 % \keyexamp{start}{integer \textnormal{\textcolor{lightgray}{\textbar}} integer expression}{\mydim{1}}
 % Sets the \emph{start value} of the numbering on the current level.
 % The \mymarg{integer expression} must be passed between braces, internally is evaluated and pass
@@ -2327,50 +2324,79 @@
 % \mykey{label} key on the current level, i.e. it is equivalent to enter
 % |start*=5|, |start*=E| or |start*=v|.
 %
-% \begin{important}
-%  For compatibility with \emph{tagged} \texttt{PDF}, the \emph{start counter}
-%  ​​are set \emph{\enquote{after}} the \emph{second argument} to the \myenv{list}
-%  environment and \emph{\enquote{before}} the execution of the first |\item| and the |first| key:
-% |\begin{list}|\mymarg{arg one}\mymarg{arg two}|\setcounter{enumX}\item|.
-% \end{important}
+%^^A \begin{important}
+%^^A  For compatibility with \emph{tagged} \texttt{PDF}, the \emph{start counter}
+%^^A  ​​are set \emph{\enquote{after}} the \emph{second argument} to the \myenv{list}
+%^^A  environment and \emph{\enquote{before}} the execution of the first |\item| and the |first| key:
+%^^A |\begin{list}|\mymarg{arg one}\mymarg{arg two}|\setcounter{enumX}\item|.
+%^^A \end{important}
+%^^A
+%^^A \smallskip
+%^^A
+%^^A \begin{important}*
+%^^A   The following \mymeta{keys} are \emph{\enquote{only}} available for the
+%^^A   \myenv*{enumext*} environment and the \emph{\enquote{first level}} of
+%^^A   the \myenv*{enumext} environment and are ignored if set when nested
+%^^A   within each other.
+%^^A \end{important}
 %
 % \smallskip
 %
 % \begin{important}*
-%   The following \mymeta{keys} are \emph{\enquote{only}} available for the
-%   \myenv*{enumext*} environment and the \emph{\enquote{first level}} of
-%   the \myenv*{enumext} environment and are ignored if set when nested
-%   within each other.
+%   The following \mymeta{keys} are available only for the \myenv*{enumext} 
+%   and \myenv*{enumext*} environments.
 % \end{important}
-%
-% \keyexamp{series}{series name}{not used}
 %
 % \smallskip
 %
-% Stores the \emph{keys} of the \emph{optional argument} of the \emph{\enquote{first level}}
-% of the environment in which it is executed in \mymarg{series
-% name} which is used as an argument in the key \mykey{resume}. The \mymeta{keys}
-% stored in \mymarg{series name} are not cumulative and are overwritten
-% if the same \mymarg{series name} is used again.
+% \keyexamp{series}{series name}{not used}
+%
+%^^A Stores the \emph{keys} of the \emph{optional argument} of the \emph{\enquote{level}}
+%^^A of the environment in which it is executed in \mymarg{series
+%^^A name} which is used as an \emph{argument} in the key \mykey{resume}. The \mymeta{keys}
+%^^A stored in \mymarg{series name} are not cumulative and are overwritten
+%^^A if the same \mymarg{series name} is used again.
+%
+% Stores the \emph{keys} of the \emph{optional argument} of the \enquote{level} 
+% of the environment in which it is executed in \mymarg{series name} which 
+% is used as an argument in the \mykey{resume} key. The \mymeta{keys} 
+% stored in \mymarg{series name} are NOT cumulative and are overwritten 
+% if the same \mymarg{series name} is used again at the same level at 
+% which the key was executed.
+%
+% \smallskip
+%
+% \begin{important}*
+% For security reasons the \mykey{series} key will never save in
+% \mymarg{series name} the \mymeta{keys} \mykey{series}, \mykey{resume},
+% \mykey{resume*}, \mykey{save-ans}, \mykey{save-key}, \mykey{start*} and \mykey{start}.
+% \end{important}
 %
 % \smallskip
 %
 % \keyexamp{resume}{series name}{not used}
-% Sets the \emph{start value} and \emph{options} for the \emph{\enquote{first
-% level}} continuing the numbering of the environment in which the
+% Sets the \emph{start value} and \emph{options} for the \enquote{level} 
+% continuing the numbering of the environment in which the
 % \mykey{series}|=|\mymarg{series name} key was executed. If passed
-% \emph{without value} this will only set \emph{start value} continue the
-% numbering from the last environment in which \mykey{series}|=|\mymarg{series name}
+% \emph{\enquote{without value}} this will only set \emph{start value} continue the
+% numbering from the \enquote{last} environment in which \mykey{series}|=|\mymarg{series name}
 % or \mykey{resume}|=|\mymarg{series name} is NOT present and if the
 % \mykey{save-ans} key is active it will continue the numbering from the
-% last environment in which it was executed. The \emph{start value} can be
-% overwritten using \mykey{start} or \mykey{start*} keys.
+% \enquote{last} environment in which it was executed. The \emph{start value} 
+% can be overwritten using \mykey{start} or \mykey{start*} keys.
 %
 % \smallskip
 %
+% \begin{important}*
+% The \mykey{resume} key passed \emph{\enquote{without value}} must be
+% exactly \emph{\enquote{without value}}, i.e. \mykey{resume}|=| cannot
+% be used and if executed before \mykey{resume*} it will affect the
+% \emph{start value}.
+% \end{important}
+%
 % \keyexamp*{resume\textcolor{MediumOrchid}{*}}{value forbidden}{not used}
 % Sets the \emph{start value} and \emph{options} for the
-% \emph{\enquote{first level}} continuing the numbering of the
+% \emph{\enquote{level}} continuing the numbering of the
 % environment in which the \mykey{series}|=|\mymarg{series name} or
 % \mykey{resume}|=|\mymarg{series name} keys are NOT present, if the
 % \mykey{save-ans} key is active it will continue the numbering from the
@@ -2380,22 +2406,78 @@
 % \smallskip
 %
 % \begin{important}*
-% For security reasons the \mykey{series} key will never save in
-% \mymarg{series name} the keys \mykey{series}, \mykey{resume},
-% \mykey{resume*}, \mykey{save-ans}, \mykey{save-key}, \mykey{start*} and \mykey{start}.
 % When using the key \mykey{resume}|=|\mymarg{series name} it will
 % have hierarchy in the \mymeta{keys} that are saved in \mymarg{series
 % name}, in order to establish the value of a \mymeta{key} already saved
 % in \mymarg{series name} it must be placed to the \emph{\enquote{right}}
 % of \mykey{resume}|=|\mymarg{series name}, the same thing happens with
-% the \mykey{resume*} key, the exception is the \mykey{save-ans} key
-% that must be placed on the \emph{\enquote{left}} if you want to start
-% the numbering with its value.
-% The \mykey{resume} key passed \emph{\enquote{without value}} must be
-% exactly \emph{\enquote{without value}}, i.e. \mykey{resume}|=| cannot
-% be used and if executed before \mykey{resume*} it will affect the
-% \emph{start value}.
+% the \mykey{resume*} key.
 % \end{important}
+%
+% \subsection{Keys for \texttt{reset}}\label{sec:reset}
+%
+% \keyexamp*{reset}{value forbidden}{not used}
+% Sets the \emph{start value} and \emph{options} for the \enquote{level} 
+% continuing the numbering of the environment in which the
+% \mykey{series}|=|\mymarg{series name} key was executed. If passed
+% \emph{\enquote{without value}} this will only set \emph{start value} continue the
+% numbering from the \enquote{last} environment in which \mykey{series}|=|\mymarg{series name}
+% or \mykey{resume}|=|\mymarg{series name} is NOT present and if the
+% \mykey{save-ans} key is active it will continue the numbering from the
+% \enquote{last} environment in which it was executed. The \emph{start value} 
+% can be overwritten using \mykey{start} or \mykey{start*} keys.
+%
+% \keyexamp*{reset\textcolor{MediumOrchid}{*}}{value forbidden}{not used}
+% Sets the \emph{start value} and \emph{options} for the
+% \emph{\enquote{level}} continuing the numbering of the
+% environment in which the \mykey{series}|=|\mymarg{series name} or
+% \mykey{resume}|=|\mymarg{series name} keys are NOT present, if the
+% \mykey{save-ans} key is active it will continue the numbering from the
+% last environment in which it was executed. The \emph{start value}
+% can be overwritten using \mykey{start} or \mykey{start*} keys.
+%
+% \subsubsection{The command \cs{resetenumext}}\label{sec:resetenumext}
+%
+% \vspace*{-10pt}
+%
+% \begin{function}{\resetenumext}
+%   \begin{minipage}[t]{0.45\linewidth}
+%     \cmdexamp{resetenumext}[\textnormal{\textcolor{MediumOrchid}{\texttt{1}}}]{some counter}
+%     \cmdexamp{resetenumext}[\textnormal{\textcolor{MediumOrchid}{\texttt{2}}}]{some counter}
+%     \cmdexamp{resetenumext}[\textnormal{\textcolor{MediumOrchid}{\texttt{3}}}]{some counter}
+%   \end{minipage}\hfill
+%   \begin{minipage}[t]{0.45\linewidth}
+%     \cmdexamp{resetenumext}[\textnormal{\textcolor{MediumOrchid}{\texttt{4}}}]{some counter}
+%     \cmdexamp{resetenumext}[\textnormal{\textcolor{MediumOrchid}{\texttt{*}}}]{some counter}
+%     \cmdexamp{resetenumext\textcolor{MediumOrchid}{*}}{some counter}
+%   \end{minipage}
+%
+% \smallskip
+%
+%  The \ics*{resetenumext} command \emph{\enquote{resets}} the \mymeta{counters} ​​for the 
+%  \myenv*{enumext} and \myenv*{enumext*} environments along with the 
+%  \mymeta{internal values} ​​used by the keys \mykey{resume} \emph{without value} and 
+%  \mykey{resume*} according to the value of \mymarg{some counter}. 
+%  For example |\resetenumext{chapter}| will \emph{\enquote{reset}} the numbering 
+%  of \emph{\enquote{all levels}} of the \myenv*{enumext} environment for 
+%  each execution of a \emph{\enquote{numbered}} chapter.
+% \end{function}
+%
+% \smallskip
+%
+% The \emph{optional argument} of the form |[1]|, |[2]|, |[3]|, |[4]| 
+% \emph{\enquote{reset}} the values ​​for levels |1|, |2|, |3| and |4| 
+% of the \myenv*{enumext} environment, the form |[*]| 
+% \emph{\enquote{reset}} the values ​​for the \myenv*{enumext*} 
+% environment. If is run \emph{without} the \emph{optional argument}, it 
+% will \emph{\enquote{reset}} the values ​​for \emph{\enquote{all 
+% levels}} of the \myenv*{enumext} environment.
+%
+% \smallskip
+%
+% The \emph{starred argument} `|*|' will \emph{\enquote{reset}} the 
+% values ​​for \emph{\enquote{all levels}} of the \myenv*{enumext} and 
+% \myenv*{enumext*} environments.
 %
 % \subsection{Keys for \env{multicols}}\label{key:multi}
 %
@@ -5539,6 +5621,7 @@ Some text here
 % \begin{description}[font=\small\sffamily,wide=0pt,style=multiline,leftmargin=1.1\descrwidth,nosep,noitemsep]
 %  \item [\fileversion{} (ctan), \filedate]
 %    \begin{itemize}
+%      \item Add |\resetenumext|, \texttt{\textcolor{optcolor}{reset}} and \texttt{\textcolor{optcolor}{reset}}|*| keys.
 %      \item The \texttt{\textcolor{optcolor}{resume}}, \texttt{\textcolor{optcolor}{resume}}|*| and \texttt{\textcolor{optcolor}{series}}
 %            keys can now be set per level.
 %      \item Fixed bad interaction between |\printkeyans| and the \texttt{\textcolor{optcolor}{resume}}, \texttt{\textcolor{optcolor}{resume}}|*| keys.
@@ -5786,20 +5869,16 @@ Some text here
 %    \end{macrocode}
 % \end{variable}
 %
-% \begin{variable}[int]{\l_@@_series_name_tl, \l_@@_reset_args_clist,
-%                       \l_@@_reset_name_str, \l_@@_reset_name_str,
+% \begin{variable}[int]{\l_@@_series_name_tl,
 %                       \l_@@_resume_X_bool, \g_@@_resume_X_int,
 %                       \g_@@_not_key_series_X_tl, \g_@@_series_name_X_tl,}
 %   Internal variables used by \mykey{resume}, \mykey{resume*} and
 %   \mykey{series} keys (\S\ref{key:series}).
 % \iffalse
-%% Variables used by |series|, |resume|, |resume*|, |reset| and |reset*| keys and \resetenumext.
+%% Variables used by |series|, |resume| and |resume*| keys.
 % \fi
 %    \begin{macrocode}
 \tl_new:N    \l_@@_series_name_tl
-\clist_new:N \l_@@_reset_args_clist
-\str_new:N   \l_@@_reset_name_str
-\int_new:N   \l_@@_reset_level_int
 \cs_set_protected:Npn \@@_tmp:n #1
   {
     \bool_new:c { l_@@_resume_#1_bool       }
@@ -9779,40 +9858,47 @@ Some text here
 %
 % \subsection{The \cs{resetenumext}, \texttt{reset} and \texttt{reset*} keys}\label{key:reset}
 %
+% \begin{macro}[int]{\resetenumext, \@@_standard_reset:nn,
+%                    \@@_reset_count_resume:nn, \@@_reset_count_resume:en,
+%                    \@@_reset_count_resume_all:n, \@@_reset_count_resume_levels:n,
+%                    \@@_starred_reset:n,}
 %    \begin{macrocode}
-\NewDocumentCommand \resetenumext { s O{enumext,1} m }
+\NewDocumentCommand \resetenumext { s o m }
   {
-    \clist_set:Nn \l_@@_reset_args_clist {#2}
-    \int_compare:nTF { \clist_count:N \l_@@_reset_args_clist > 2 }
-      {
-        \msg_error:nne { enumext-reset } { too-many-elements } {#2}
-      }
     \bool_if:nTF {#1}
       {
-        \@@_reset_count_resume_all:n { #3 }
+        \@@_reset_count_resume_all:n {#3}
       }
       {
-        \int_compare:nTF { \clist_count:N \l_@@_reset_args_clist = 1 }
-         {
-           \@@_starred_reset:n {#3}
-         }
-         {
-           \int_compare:nTF { \clist_count:N \l_@@_reset_args_clist = 2 }
-             {
-               \@@_standar_reset:n {#3}
-             }
-             {  
-               \msg_error:nnn { enumext-reset } { invalid-clist } {#2}
-             }
-         }
+        \tl_if_novalue:nTF {#2}
+          {
+            \@@_reset_count_resume_levels:n {#3}
+          }
+          {
+            \str_if_eq:nnTF {#2} { * }
+              { \@@_starred_reset:n {#3} }
+              {
+                \bool_lazy_and:nnTF
+                  { \int_compare_p:nNn {#2} > 0 }
+                  { \int_compare_p:nNn {#2} < 5 }
+                  { \@@_standard_reset:nn {#2} {#3} }
+                  {
+                    \msg_error:nne { enumext } { out-of-range } { \int_eval:n {#2} }
+                  }
+              }
+          }
       }
   }
-% #1 : internal list ; #2 : external (section/chapter/etc...)
+\cs_new_protected:Npn \@@_standard_reset:nn #1
+  {
+    \@@_reset_count_resume:en { \int_to_roman:n {#1} }
+  }
 \cs_new_protected:Npn \@@_reset_count_resume:nn #1 #2
   {
-    \counterwithin* {enumX#1}{#2}
+    \counterwithin*{enumX#1}{#2}
     \int_gzero:c { g_@@_resume_ #1 _int }
   }
+\cs_generate_variant:Nn \@@_reset_count_resume:nn { e }
 \cs_new_protected:Npn \@@_reset_count_resume_all:n #1
   {
     \clist_map_inline:nn { i,ii,iii,iv,vii }
@@ -9820,56 +9906,19 @@ Some text here
         \@@_reset_count_resume:nn { ##1 } { #1 }
       }
   }
+\cs_new_protected:Npn \@@_reset_count_resume_levels:n #1
+  {
+    \clist_map_inline:nn { i,ii,iii,iv }
+      {
+        \@@_reset_count_resume:nn { ##1 } { #1 }
+      }
+  }
 \cs_new_protected:Npn \@@_starred_reset:n #1
   {
-    \str_set:Ne \l_@@_reset_name_str { \clist_item:Nn \l_@@_reset_args_clist {1} }
-    \str_if_eq:eeTF { \l_@@_reset_name_str } { enumext* }
-      {
-        \@@_reset_count_resume:nn {vii} {#1}
-      }
-      {
-        \msg_error:nn { enumext-reset } { invalid-single-arg-no-star }
-      }
-  }
-% standar reset
-\cs_new_protected:Npn \@@_standar_reset:n #1
-  {
-    \str_set:Ne \l_@@_reset_name_str { \clist_item:Nn \l_@@_reset_args_clist {1} }
-    \int_set:Nn \l_@@_reset_level_int { \clist_item:Nn \l_@@_reset_args_clist {2} }
-    \str_if_eq:eeTF { \l_@@_reset_name_str } { enumext }
-      {
-        \int_case:nnF { \l_@@_reset_level_int }
-          {
-            { 1 }
-            {
-              \@@_reset_count_resume:nn
-                { \int_to_roman:n { \l_@@_reset_level_int } } {#1}
-            }
-            { 2 }
-            {
-              \@@_reset_count_resume:nn
-                { \int_to_roman:n { \l_@@_reset_level_int } } {#1}
-            }
-            { 3 }
-            {
-              \@@_reset_count_resume:nn
-                { \int_to_roman:n { \l_@@_reset_level_int } } {#1}
-            }
-            { 4 }
-            {
-              \@@_reset_count_resume:nn
-                { \int_to_roman:n { \l_@@_reset_level_int } } {#1}
-            }
-         }
-         {
-           \msg_error:nne { enumext-reset } { out-of-range } { \l_@@_reset_level_int }
-         }
-      }
-      {
-        \msg_error:nne { enumext-reset } { invalid-package } { \l_@@_reset_name_str }
-      }
+    \@@_reset_count_resume:nn { vii } {#1}
   }
 %    \end{macrocode}
+% \end{macro}
 %
 % \subsection{Setting \texttt{save-ans}, \texttt{check-ans} and  \texttt{no-store} keys}
 %
