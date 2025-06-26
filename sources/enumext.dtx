@@ -591,7 +591,7 @@
     keywordstyle  = [1]{\color{gray}},%
     keywords      = [1]{begin,end,Verbatim,env,myseq,false,NewDocumentCommand,newlength, the, red, blue, gray,%
                         settowidth, dimeval, dimexpr, IfBooleanTF,footnotehyper, DocumentMetadata, %
-                        IfDocumentMetadataTF, IfDocumentMetadataF, RenewDocumentCommand, pt, em, %
+                        IfPDFManagementActiveTF, IfPDFManagementActiveF, RenewDocumentCommand, pt, em, %
                         SuspendTagging, ResumeTagging, NewCommandCopy, IfHyperBoolean, N, J, D, Nee, %
                         Nnn, nn, Ne, w, n, %
                     },%
@@ -1450,7 +1450,7 @@
 %<*example>
 % \fi
 \begin{examplecode}[frame=single]
-\IfDocumentMetadataF
+\IfPDFManagementActiveF
   {
     \usepackage{footnotehyper}
     \makesavenoteenv{enumext}
@@ -6927,7 +6927,7 @@ Some text here
   {
     \bool_if:NT \g_@@_standar_bool
       {
-        \IfDocumentMetadataTF
+        \IfPDFManagementActiveTF
           {
             \@@_renew_footnote:
           }
@@ -6943,7 +6943,7 @@ Some text here
   {
     \bool_if:NT \g_@@_standar_bool
       {
-        \IfDocumentMetadataTF
+        \IfPDFManagementActiveTF
           {
             \@@_print_footnote:
           }
@@ -6963,7 +6963,7 @@ Some text here
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_renew_footnote_starred:
   {
-    \IfDocumentMetadataTF
+    \IfPDFManagementActiveTF
       {
         \@@_renew_footnote_mini:
       }
@@ -6976,7 +6976,7 @@ Some text here
   }
 \cs_new_protected:Nn \@@_print_footnote_starred:
   {
-    \IfDocumentMetadataTF
+    \IfPDFManagementActiveTF
       {
         \@@_print_footnote_mini:
       }
@@ -7126,7 +7126,6 @@ Some text here
       }
   }
 \clist_map_inline:nn {i,ii,iii,iv,vii} { \@@_tmp:n {#1} }
-%% \int_show:c { c@ @@_resume_i_int }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -7223,7 +7222,7 @@ Some text here
 % When \emph{tagged} \texttt{PDF} is active |\makelabel| is redefined using
 % |\makebox| to work correctly (\S\ref{env:item-starred-enumext}). From
 % the user side it is convenient to have a key that allows using this
-% redefinition with |\makebox| without having |\IfDocumentMetadataTF| active.
+% redefinition with |\makebox| without having |\IfPDFManagementActiveTF| active.
 %
 % \begin{macro}[int]{mode-box}
 %   We define the key \mykey{mode-box} only for the \emph{\enquote{first level}}
@@ -12116,7 +12115,7 @@ Some text here
 % When \emph{labeling} \texttt{PDF} is active |\makelabel| is redefined
 % as |\hss #1| and the only way to get the \mykey{align} key to work
 % correctly is to redefine |\makelabel| using |\makebox|. The best way to
-% implement this is to use the conditional command |\IfDocumentMetadataTF|
+% implement this is to use the conditional command |\IfPDFManagementActiveTF|
 % to force this redefinition and the dedicated \mykey{mode-box} key to
 % manually activate it by the user.
 %
@@ -12269,7 +12268,7 @@ Some text here
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_make_label:
   {
-    \IfDocumentMetadataTF
+    \IfPDFManagementActiveTF
       {
         \@@_make_label_box:
       }
@@ -12607,7 +12606,7 @@ Some text here
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_keyans_make_label:
   {
-    \IfDocumentMetadataTF
+    \IfPDFManagementActiveTF
       {
         \@@_keyans_make_label_box:
       }
@@ -13644,7 +13643,7 @@ Some text here
 %    \begin{macrocode}
 \cs_new_protected_nopar:Npn \@@_start_list_tag:n #1
   {
-    \IfDocumentMetadataT
+    \IfPDFManagementActiveT
       {
         \socket_assign_plug:nn {tagsupport/@@/starred} {start-list-tags}
         \socket_use:nn {tagsupport/@@/starred} {#1}
@@ -13652,7 +13651,7 @@ Some text here
    }
 \cs_new_protected_nopar:Nn \@@_stop_start_list_tag:
   {
-    \IfDocumentMetadataT
+    \IfPDFManagementActiveT
       {
         \socket_assign_plug:nn {tagsupport/@@/starred} {stop-start-tags}
         \socket_use:nn {tagsupport/@@/starred} { }
@@ -13660,7 +13659,7 @@ Some text here
    }
 \cs_new_protected_nopar:Npn \@@_stop_list_tag:n #1
   {
-    \IfDocumentMetadataT
+    \IfPDFManagementActiveT
       {
         \socket_assign_plug:nn {tagsupport/@@/starred} {stop-list-tags}
         \socket_use:nn {tagsupport/@@/starred} {#1}
@@ -13717,7 +13716,7 @@ Some text here
 %    \begin{macrocode}
 \cs_new_protected_nopar:Nn \@@_anspic_start_list_tag:
   {
-    \IfDocumentMetadataT
+    \IfPDFManagementActiveT
       {
         \socket_assign_plug:nn {tagsupport/@@/keyanspic} {start-list-tags}
         \socket_use:n {tagsupport/@@/keyanspic}
@@ -13725,7 +13724,7 @@ Some text here
    }
 \cs_new_protected_nopar:Nn \@@_anspic_stop_start_list_tag:
   {
-    \IfDocumentMetadataT
+    \IfPDFManagementActiveT
       {
         \socket_assign_plug:nn {tagsupport/@@/keyanspic} {stop-start-tags}
         \socket_use:n {tagsupport/@@/keyanspic}
@@ -13733,7 +13732,7 @@ Some text here
    }
 \cs_new_protected_nopar:Nn \@@_anspic_stop_list_tag:
   {
-    \IfDocumentMetadataT
+    \IfPDFManagementActiveT
       {
         \socket_assign_plug:nn {tagsupport/@@/keyanspic} {stop-list-tags}
         \socket_use:n {tagsupport/@@/keyanspic}
@@ -13997,7 +13996,7 @@ Some text here
 % \begin{macro}{keyanspic}
 %   Now we define the environment \myenv*{keyanspic}. For compatibility
 %   with \emph{tagged} \texttt{PDF} we must use the |\begin{|\myenv{list}|}|
-%   form and a lot of conditional code using |\IfDocumentMetadataTF|.
+%   form and a lot of conditional code using |\IfPDFManagementActiveTF|.
 %   We will first stop the code for automatic \emph{tagged} \texttt{PDF}
 %   for \myenv{list} environments, redefine |\item| so that it cannot be
 %   used, and stop the code for automatic \emph{tagged} \texttt{PDF} for
@@ -14011,7 +14010,7 @@ Some text here
     \@@_keyans_pic_safe_exec:
     \@@_keyans_pic_parse_keys:n {#1}
     \begin{list} { } { \@@_keyans_pic_arg_two: }
-    \IfDocumentMetadataT
+    \IfPDFManagementActiveT
       {
         \tag_suspend:n {list}
       }
@@ -14020,7 +14019,7 @@ Some text here
       {
         \msg_error:nn { enumext } { keyanspic-item-cmd }
       }
-    \IfDocumentMetadataT
+    \IfPDFManagementActiveT
       {
         \tag_resume:n {keyanspic}
         \tag_tool:n {para/tagging=false}
@@ -14033,19 +14032,19 @@ Some text here
 %   |\anspic| using the \cs{@@_anspic_exec:} function.
 %    \begin{macrocode}
   {
-    \IfDocumentMetadataT
+    \IfPDFManagementActiveT
       {
         \tag_resume:n {keyanspic}
         \tag_mc_end_push:
         \tag_struct_begin:n {tag=L,attribute=enumerate}
       }
     \@@_anspic_exec:
-    \IfDocumentMetadataT
+    \IfPDFManagementActiveT
       {
         \tag_suspend:n {keyanspic}
       }
     \end{list}
-    \IfDocumentMetadataT
+    \IfPDFManagementActiveT
       {
         \tag_struct_end:n {tag=L}
         \tag_mc_begin_pop:n {}
@@ -14142,7 +14141,7 @@ Some text here
   {
     \bool_if:NF \l_@@_anspic_label_above_bool
       {
-        \IfDocumentMetadataT
+        \IfPDFManagementActiveT
           {
             \tag_suspend:n {keyanspic}
           }
@@ -14151,7 +14150,7 @@ Some text here
           {
             \box_ht_plus_dp:N \l_@@_anspic_body_box
           }
-        \IfDocumentMetadataT
+        \IfPDFManagementActiveT
           {
             \tag_resume:n {keyanspic}
           }
@@ -14282,7 +14281,7 @@ Some text here
       { \l_@@_anspic_above_int + 1 }
       { \l_@@_anspic_below_int }
       {
-        \IfDocumentMetadataT
+        \IfPDFManagementActiveT
           {
             \tag_suspend:n {minipage}
           }
@@ -14290,7 +14289,7 @@ Some text here
           \centering
           \seq_item:Nn \l_@@_anspic_args_seq { ##1 }
         \end{minipage}
-        \IfDocumentMetadataT
+        \IfPDFManagementActiveT
           {
             \tag_resume:n {minipage}
           }
@@ -14617,7 +14616,7 @@ Some text here
       {
         \@@_stop_list:
         \@@_stop_store_level_vii:
-        \IfDocumentMetadataT { \tag_resume:n {enumext*} }
+        \IfPDFManagementActiveT { \tag_resume:n {enumext*} }
         \end@@_mini_page
         \hfill
         \bool_gset_true:N \g_@@_minipage_active_vii_bool
@@ -14704,7 +14703,7 @@ Some text here
     \bool_if:NTF \l_@@_minipage_active_viii_bool
       {
         \@@_stop_list:
-        \IfDocumentMetadataTF { \tag_resume:n {keyans*} } { }
+        \IfPDFManagementActiveT { \tag_resume:n {keyans*} }
         \end@@_mini_page
         \hfill
         \bool_gset_true:N \g_@@_minipage_active_viii_bool
@@ -14770,7 +14769,7 @@ Some text here
         \@@_before_keys_exec_vii:
       }
     \setcounter { enumXvii } { \int_eval:n { \int_use:c { l_@@_start_vii_int } - 1 } }
-    \IfDocumentMetadataT { \tag_suspend:n {enumext*} }
+    \IfPDFManagementActiveT { \tag_suspend:n {enumext*} }
     \@@_starred_columns_set_vii:
     \item[] \scan_stop:
     \cs_set_eq:NN \@@_stop_item_tmp_vii: \@@_first_item_tmp_vii:
@@ -14778,7 +14777,7 @@ Some text here
     \ignorespaces
   }
   {
-    \IfDocumentMetadataT { \tag_struct_end:n {tag=text-unit} }
+    \IfPDFManagementActiveT { \tag_struct_end:n {tag=text-unit} }
     \@@_stop_item_tmp_vii:
     \@@_remove_extra_parsep_vii:
     \@@_after_list_vii:
@@ -15112,7 +15111,7 @@ Some text here
         \legacy_if_set_false:n { @noitemarg }
         \legacy_if:nT { @nmbrlist }
           {
-            \IfDocumentMetadataT
+            \IfPDFManagementActiveT
               {
                 \bool_if:NT \l_@@_hyperref_bool
                   {
@@ -15317,7 +15316,7 @@ Some text here
         \@@_before_keys_exec_viii:
       }
     \setcounter { enumXviii } { \int_eval:n { \int_use:c { l_@@_start_viii_int } - 1 } }
-    \IfDocumentMetadataT { \tag_suspend:n {keyans*} }
+    \IfPDFManagementActiveT { \tag_suspend:n {keyans*} }
     \@@_starred_columns_set_viii:
     \item[] \scan_stop:
     \cs_set_eq:NN \@@_stop_item_tmp_viii: \@@_first_item_tmp_viii:
@@ -15325,7 +15324,7 @@ Some text here
     \ignorespaces
   }
   {
-    \IfDocumentMetadataT { \tag_struct_end:n {tag=text-unit} }
+    \IfPDFManagementActiveT { \tag_struct_end:n {tag=text-unit} }
     \@@_stop_item_tmp_viii:
     \@@_remove_extra_parsep_viii:
     \@@_check_starred_cmd:n { item }
