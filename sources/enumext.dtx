@@ -2311,25 +2311,25 @@
 % \subsection{Keys for \texttt{start}, \texttt{series} and \texttt{resume}}
 %
 % \keyexamp{start}{integer \textnormal{\textcolor{lightgray}{\textbar}} integer expression}{\mydim{1}}
-% Sets the \emph{start value} of the numbering on the current level.
+% Sets the \emph{start value} of the numbering on the \emph{\enquote{current level}}.
 % The \mymarg{integer expression} must be passed between braces, internally is evaluated and pass
-% to the counter defined by \mykey{label} key on the current level, i.e. it is equivalent to enter
+% to the \emph{\enquote{counter}} defined by \mykey{label} key on the current level, i.e. it is equivalent to enter
 % |start={\dimeval{100*\value{chapter}}| or |start={100*\value{chapter}}|.
 %
 % \smallskip
 %
 % \keyexamp{start\textcolor{MediumOrchid}{*}}{integer \textnormal{\textcolor{lightgray}{\textbar}} string}{not used}
-% Sets the \emph{start value} of the numbering on the current level.
-% Internally \mymeta{string} is converted and passed as value to the counter defined by
-% \mykey{label} key on the current level, i.e. it is equivalent to enter
+% Sets the \emph{start value} of the numbering on the \emph{\enquote{current level}}.
+% Internally \mymeta{string} is converted and passed as value to the \emph{\enquote{counter}} 
+% defined by \mykey{label} key on the current level, i.e. it is equivalent to enter
 % |start*=5|, |start*=E| or |start*=v|.
 %
-%^^A \begin{important}
-%^^A  For compatibility with \emph{tagged} \texttt{PDF}, the \emph{start counter}
-%^^A  ​​are set \emph{\enquote{after}} the \emph{second argument} to the \myenv{list}
-%^^A  environment and \emph{\enquote{before}} the execution of the first |\item| and the |first| key:
-%^^A |\begin{list}|\mymarg{arg one}\mymarg{arg two}|\setcounter{enumX}\item|.
-%^^A \end{important}
+% \begin{important}
+%  For compatibility with \emph{tagged} \texttt{PDF}, the \emph{start value}
+%  ​​are set \emph{\enquote{after}} the \emph{second argument} to the \myenv{list}
+%  environment and \emph{\enquote{before}} the execution of the first |\item| and the |first| key:
+%  |\begin{list}|\mymarg{arg one}\mymarg{arg two}|\setcounter{enumX}\item|.
+% \end{important}
 %^^A
 %^^A \smallskip
 %^^A
@@ -2353,31 +2353,33 @@
 %
 % \smallskip
 %
-% Stores the \emph{keys} of the \emph{optional argument} of the \enquote{level}
+% Stores the \emph{keys} of the \emph{optional argument} of the \emph{\enquote{current level}}
 % of the environment in which it is executed in \mymarg{series name} which
-% is used as an argument in the \mykey{resume} key. The \mymeta{keys}
+% is used as an \emph{argument} in the \mykey{resume} key. The \mymeta{keys}
 % stored in \mymarg{series name} are NOT cumulative and are overwritten
-% if the same \mymarg{series name} is used again at the same level at
-% which the key was executed.
+% if the same \mymarg{series name} is used again at the \emph{\enquote{same level}} 
+% at which the key was executed.
 %
 % \smallskip
 %
 % \begin{important}*
 % For security reasons the \mykey{series} key will never save in
 % \mymarg{series name} the \mymeta{keys} \mykey{series}, \mykey{resume},
-% \mykey{resume*}, \mykey{save-ans}, \mykey{save-key}, \mykey{start*} and \mykey{start}.
+% \mykey{resume*}, \mykey{reset}, \mykey{reset*}, \mykey{save-ans}, \mykey{save-key}, 
+% \mykey{start*} and \mykey{start}.
 % \end{important}
 %
 % \smallskip
 %
 % \keyexamp{resume}{series name}{not used}
-% Sets the \emph{start value} and \emph{options} for the \enquote{level}
-% continuing the numbering of the environment in which the
-% \mykey{series}|=|\mymarg{series name} key was executed. If passed
-% \emph{\enquote{without value}} this will only set \emph{start value} continue the
-% numbering from the \enquote{last} environment in which \mykey{series}|=|\mymarg{series name}
+% Sets the \emph{start value} and \emph{options} for the \emph{\enquote{current level}}
+% continuing the numbering of the \emph{\enquote{same level}} as
+% the environment in which the \mykey{series}|=|\mymarg{series name} 
+% key was executed. If passed \emph{\enquote{without value}} this will 
+% only set \emph{start value} continue the numbering of the \emph{\enquote{same level}} 
+% from the \emph{\enquote{last}} environment and level in which \mykey{series}|=|\mymarg{series name}
 % or \mykey{resume}|=|\mymarg{series name} is NOT present and if the
-% \mykey{save-ans} key is active it will continue the numbering from the
+% \mykey{save-ans} key is active (on the left) it will continue the numbering from the
 % \enquote{last} environment in which it was executed. The \emph{start value}
 % can be overwritten using \mykey{start} or \mykey{start*} keys.
 %
@@ -2393,12 +2395,12 @@
 % \smallskip
 %
 % \keyexamp*{resume\textcolor{MediumOrchid}{*}}{value forbidden}{not used}
-% Sets the \emph{start value} and \emph{options} for the
-% \emph{\enquote{level}} continuing the numbering of the
-% environment in which the \mykey{series}|=|\mymarg{series name} or
-% \mykey{resume}|=|\mymarg{series name} keys are NOT present, if the
-% \mykey{save-ans} key is active it will continue the numbering from the
-% last environment in which it was executed. The \emph{start value}
+% Sets the \emph{start value} and \emph{options} for the \emph{\enquote{current level}} 
+% continuing the numbering and options of the \emph{\enquote{same level}} 
+% as the last environment and level in which the \mykey{series}|=|\mymarg{series name} or
+% \mykey{resume}|=|\mymarg{series name} keys are NOT present and if the
+% \mykey{save-ans} key is active (on the left) it will continue the numbering and options
+% from the \enquote{last} environment in which it was executed. The \emph{start value}
 % can be overwritten using \mykey{start} or \mykey{start*} keys.
 %
 % \smallskip
@@ -4496,7 +4498,7 @@ to \ref{simplews:3} is \getkeyans{simplews:3}.
 \end{enumext}
 \showrating{false}
 \RenewDocumentCommand \rating { }{10.5a, KSC}
-\begin{enumext}[resume*,save-ans=test2024]
+\begin{enumext}[save-ans=test2024,resume*]
   \item sample
     \begin{keyans}
       \item sample
@@ -4546,7 +4548,7 @@ to \ref{simplews:3} is \getkeyans{simplews:3}.
 % \end{enumext}
 % \showrating{false}
 % \RenewDocumentCommand \rating { }{10.5a, KSC}
-% \begin{enumext}[resume*,save-ans=test2024]
+% \begin{enumext}[save-ans=test2024,resume*]
 %  \item sample
 %    \begin{keyans}
 %      \item sample
@@ -9366,7 +9368,7 @@ Some text here
 %
 % \begin{macro}{\@@_filter_series:n, \@@_filter_series_key:n, \@@_filter_series_pair:nn}
 %   The function \cs{@@_filter_series:n} will be in charge of filtering the
-%   \mymeta{keys} we want to store where |{#1}| represents the \emph{optional argument}
+%   \mymeta{keys} we want to store where |#1| represents the \emph{optional argument}
 %   passed to the environment.
 % \iffalse
 %% Internal function for filter keys.
@@ -9384,13 +9386,14 @@ Some text here
 %    \end{macrocode}
 %   The function \cs{@@_filter_series_key:n} will be responsible for
 %   filtering the \mymeta{keys} that are passed \emph{\enquote{without value}} by
-%   excluding the \mykey{resume}, \mykey{resume*} and \mykey{base-fix} keys.
+%   excluding the \mykey{resume}, \mykey{resume*}, \mykey{reset}, \mykey{reset*} 
+%   and \mykey{base-fix} keys.
 %    \begin{macrocode}
 \cs_new:Npn \@@_filter_series_key:n #1
   {
     \str_case:nnF {#1}
       {
-        { resume } {} { resume* } {} { base-fix } {}
+        { resume } {} { resume* } {} { reset } {} { reset* } {} { base-fix } {}
       }
       { , { \exp_not:n {#1} } }
   }
@@ -10779,14 +10782,15 @@ Some text here
   }
 %    \end{macrocode}
 %   The function \cs{@@_filter_save_key_key:n} will be responsible for
-%   \emph{\enquote{filtering keys}} that are passed \emph{\enquote{without value}} by
-%   excluding the \mykey{resume}, \mykey{resume*}, \mykey{no-store} and \mykey{base-fix} keys.
+%   \emph{\enquote{filtering keys}} that are passed \emph{\enquote{without value}}
+%   by excluding the \mykey{resume}, \mykey{resume*}, \mykey{reset}, \mykey{reset*},
+%   \mykey{no-store} and \mykey{base-fix} keys.
 %    \begin{macrocode}
 \cs_new:Npn \@@_filter_save_key_key:n #1
   {
     \str_case:nnF {#1}
       {
-        { resume } {} { resume* } {} { no-store } {} { base-fix } {}
+        { resume } {} { resume* } {} { reset } {} { reset* } {} { no-store } {} { base-fix } {}
       }
       { , { \exp_not:n {#1} } }
   }
