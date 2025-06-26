@@ -2320,7 +2320,7 @@
 %
 % \keyexamp{start\textcolor{MediumOrchid}{*}}{integer \textnormal{\textcolor{lightgray}{\textbar}} string}{not used}
 % Sets the \emph{start value} of the numbering on the \emph{\enquote{current level}}.
-% Internally \mymeta{string} is converted and passed as value to the \emph{\enquote{counter}} 
+% Internally \mymeta{string} is converted and passed as value to the \emph{\enquote{counter}}
 % defined by \mykey{label} key on the current level, i.e. it is equivalent to enter
 % |start*=5|, |start*=E| or |start*=v|.
 %
@@ -2357,7 +2357,7 @@
 % of the environment in which it is executed in \mymarg{series name} which
 % is used as an \emph{argument} in the \mykey{resume} key. The \mymeta{keys}
 % stored in \mymarg{series name} are NOT cumulative and are overwritten
-% if the same \mymarg{series name} is used again at the \emph{\enquote{same level}} 
+% if the same \mymarg{series name} is used again at the \emph{\enquote{same level}}
 % at which the key was executed.
 %
 % \smallskip
@@ -2365,7 +2365,7 @@
 % \begin{important}*
 % For security reasons the \mykey{series} key will never save in
 % \mymarg{series name} the \mymeta{keys} \mykey{series}, \mykey{resume},
-% \mykey{resume*}, \mykey{reset}, \mykey{reset*}, \mykey{save-ans}, \mykey{save-key}, 
+% \mykey{resume*}, \mykey{reset}, \mykey{reset*}, \mykey{save-ans}, \mykey{save-key},
 % \mykey{start*} and \mykey{start}.
 % \end{important}
 %
@@ -2374,9 +2374,9 @@
 % \keyexamp{resume}{series name}{not used}
 % Sets the \emph{start value} and \emph{options} for the \emph{\enquote{current level}}
 % continuing the numbering of the \emph{\enquote{same level}} as
-% the environment in which the \mykey{series}|=|\mymarg{series name} 
-% key was executed. If passed \emph{\enquote{without value}} this will 
-% only set \emph{start value} continue the numbering of the \emph{\enquote{same level}} 
+% the environment in which the \mykey{series}|=|\mymarg{series name}
+% key was executed. If passed \emph{\enquote{without value}} this will
+% only set \emph{start value} continue the numbering of the \emph{\enquote{same level}}
 % from the \emph{\enquote{last}} environment and level in which \mykey{series}|=|\mymarg{series name}
 % or \mykey{resume}|=|\mymarg{series name} is NOT present and if the
 % \mykey{save-ans} key is active (on the left) it will continue the numbering from the
@@ -2395,8 +2395,8 @@
 % \smallskip
 %
 % \keyexamp*{resume\textcolor{MediumOrchid}{*}}{value forbidden}{not used}
-% Sets the \emph{start value} and \emph{options} for the \emph{\enquote{current level}} 
-% continuing the numbering and options of the \emph{\enquote{same level}} 
+% Sets the \emph{start value} and \emph{options} for the \emph{\enquote{current level}}
+% continuing the numbering and options of the \emph{\enquote{same level}}
 % as the last environment and level in which the \mykey{series}|=|\mymarg{series name} or
 % \mykey{resume}|=|\mymarg{series name} keys are NOT present and if the
 % \mykey{save-ans} key is active (on the left) it will continue the numbering and options
@@ -2421,9 +2421,9 @@
 % \keyexamp*{reset}{value forbidden}{not used}
 % Resets the \emph{start value} of the \emph{\enquote{counters}} in the
 % \myenv*{enumext} and \myenv*{enumext*} environments along with the
-% \emph{\enquote{internal counters}} used by the \mykey{resume} \emph{without value} 
-% and \mykey{resume*} keys at the \emph{\enquote{level}} at which it is 
-% executed. The \emph{start value} can be overwritten using the \mykey{start} 
+% \emph{\enquote{internal counters}} used by the \mykey{resume} \emph{without value}
+% and \mykey{resume*} keys at the \emph{\enquote{level}} at which it is
+% executed. The \emph{start value} can be overwritten using the \mykey{start}
 % or \mykey{start*} keys.
 %
 % \smallskip
@@ -2431,10 +2431,10 @@
 % \keyexamp*{reset\textcolor{MediumOrchid}{*}}{value forbidden}{not used}
 % Resets the \emph{start value} of the \emph{\enquote{counters}} in the
 % \myenv*{enumext} and \myenv*{enumext*} environments along with the
-% \emph{\enquote{internal counters}} used by the \mykey{resume} \emph{without value} 
-% and \mykey{resume*} keys at the \emph{\enquote{level}} at which it is 
-% executed and in the \emph{\enquote{levels below}} it in the case of 
-% the \myenv*{enumext} environment. The \emph{start value} can be overwritten 
+% \emph{\enquote{internal counters}} used by the \mykey{resume} \emph{without value}
+% and \mykey{resume*} keys at the \emph{\enquote{level}} at which it is
+% executed and in the \emph{\enquote{levels below}} it in the case of
+% the \myenv*{enumext} environment. The \emph{start value} can be overwritten
 % using the \mykey{start} or \mykey{start*} keys.
 %
 % \smallskip
@@ -2468,8 +2468,8 @@
 %  of the \emph{\enquote{counters}} ​​for the \myenv*{enumext} and \myenv*{enumext*}
 %  environments along with the \emph{\enquote{internal counters}} ​​used by
 %  the keys \mykey{resume} \emph{without value} and \mykey{resume*}
-%  according to the value of \mymarg{some counter}. For example |\resetenumext{chapter}| 
-%  will \emph{\enquote{reset}} the numbering of \emph{\enquote{all levels}} 
+%  according to the value of \mymarg{some counter}. For example |\resetenumext{chapter}|
+%  will \emph{\enquote{reset}} the numbering of \emph{\enquote{all levels}}
 %  of the \myenv*{enumext} environment for each execution of a \emph{\enquote{numbered}} chapter.
 % \end{function}
 %
@@ -9386,7 +9386,7 @@ Some text here
 %    \end{macrocode}
 %   The function \cs{@@_filter_series_key:n} will be responsible for
 %   filtering the \mymeta{keys} that are passed \emph{\enquote{without value}} by
-%   excluding the \mykey{resume}, \mykey{resume*}, \mykey{reset}, \mykey{reset*} 
+%   excluding the \mykey{resume}, \mykey{resume*}, \mykey{reset}, \mykey{reset*}
 %   and \mykey{base-fix} keys.
 %    \begin{macrocode}
 \cs_new:Npn \@@_filter_series_key:n #1
@@ -15993,54 +15993,52 @@ Some text here
 %
 % The command |\setenumext| will be in charge of managing the
 % \mymeta{keys} passed to all environments and to the |\printkeyans|
-% command. We must take precautions with the \myenv*{enumext*}
-% environment and \emph{\enquote{first level}} of the \myenv*{enumext}
-% environment so as not to capture \mymeta{keys} that complicate us.
+% command. We must take precautions with the \myenv*{enumext*} and \myenv*{enumext}
+% environments so as not to capture \mymeta{keys} that complicate us.
 %
-% \begin{macro}{\@@_filter_first_level:n, \@@_filter_first_level_key:n,
-%               \@@_filter_first_level_pair:nn,}
-%   The function \cs{@@_filter_first_level:n} will be in charge of
-%   filtering the \mymeta{keys} passed to the environment \myenv*{enumext*}
-%   and \emph{\enquote{first level}} of the environment \myenv*{enumext}.
+% \begin{macro}{\@@_filter_level:n, \@@_filter_level_key:n,
+%               \@@_filter_level_pair:nn,}
+%   The function \cs{@@_filter_level:n} will be in charge of
+%   filtering the \mymeta{keys} passed to the \myenv*{enumext}
+%   and \myenv*{enumext*} environments.
 % \iffalse
-%% Internal function for filter keys in |\setenumext| for first level.
+%% Internal function for filter keys in |\setenumext| for |enumext| and |enumext*|.
 % \fi
 %    \begin{macrocode}
-\cs_new:Npn \@@_filter_first_level:n #1
+\cs_new:Npn \@@_filter_level:n #1
   {
     \use:e
       {
         \keyval_parse:NNn
-          \@@_filter_first_level_key:n
-          \@@_filter_first_level_pair:nn {#1}
+          \@@_filter_level_key:n
+          \@@_filter_level_pair:nn {#1}
       }
   }
 %    \end{macrocode}
-%   The function \cs{@@_filter_first_level_key:n} will be responsible for
+%   The function \cs{@@_filter_level_key:n} will be responsible for
 %   filtering the \mymeta{keys} that are passed \emph{\enquote{without value}} by
-%   excluding the keys \mykey{resume} and \mykey{resume*}.
+%   excluding the keys \mykey{resume}, \mykey{resume*}, \mykey{reset} and \mykey{reset*}
+%   passed to the \myenv*{enumext} and \myenv*{enumext*} environments.
 %    \begin{macrocode}
-\cs_new:Npn \@@_filter_first_level_key:n #1
+\cs_new:Npn \@@_filter_level_key:n #1
   {
     \str_case:nnF {#1}
       {
-        { resume   } {}
-        { resume*  } {}
+        { resume } {} { resume* } {} { reset } {} { reset* } {}
       }
       { , { \exp_not:n {#1} } }
   }
 %    \end{macrocode}
-%   The function \cs{@@_filter_first_level_pair:nn} will be responsible for
+%   The function \cs{@@_filter_level_pair:nn} will be responsible for
 %   filtering the \mymeta{keys} that are passed \emph{\enquote{with value}} by
-%   excluding the \mykey{series}, \mykey{resume} and \mykey{save-ans} keys.
+%   excluding the \mykey{series}, \mykey{resume} and \mykey{save-ans} keys
+%   passed to the \myenv*{enumext} and \myenv*{enumext*} environments.
 %    \begin{macrocode}
-\cs_new:Npn \@@_filter_first_level_pair:nn #1#2
+\cs_new:Npn \@@_filter_level_pair:nn #1#2
   {
     \str_case:nnF {#1}
       {
-        { series } {}
-        { resume } {}
-        { save-ans } {}
+        { series } {}  { save-ans } {} { resume } {}
       }
       { , { \exp_not:n {#1} } = { \exp_not:n {#2} } }
   }
@@ -16056,32 +16054,45 @@ Some text here
 %    \begin{macrocode}
 \keys_define:nn { enumext / meta-families }
   {
-    enumext-1 .code:n =
-                {
-                  \keys_set:ne { enumext / level-1 }
-                    {
-                      \@@_filter_first_level:n {#1}
-                    }
-                } ,
-    enumext-2 .code:n = { \keys_set:nn { enumext / level-2 } {#1} } ,
-    enumext-3 .code:n = { \keys_set:nn { enumext / level-3 } {#1} } ,
-    enumext-4 .code:n = { \keys_set:nn { enumext / level-4 } {#1} } ,
-    keyans    .code:n = { \keys_set:nn { enumext / keyans  } {#1} } ,
-    enumext*  .code:n =
-                {
-                  \keys_set:ne { enumext / enumext* }
-                    {
-                      \@@_filter_first_level:n {#1}
-                    }
-                } ,
-    keyans*   .code:n = { \keys_set:nn { enumext / keyans* } {#1} } ,
-    print*    .code:n = { \keys_set:nn { enumext / print   } { print*  = {#1} } } ,
-    print-1   .code:n = { \keys_set:nn { enumext / print   } { print-1 = {#1} } } ,
-    print-2   .code:n = { \keys_set:nn { enumext / print   } { print-2 = {#1} } } ,
-    print-3   .code:n = { \keys_set:nn { enumext / print   } { print-3 = {#1} } } ,
-    print-4   .code:n = { \keys_set:nn { enumext / print   } { print-4 = {#1} } } ,
-    print-*   .code:n = { \keys_set:nn { enumext / print   } { print-* = {#1} } } ,
-    unknown   .code:n = { \msg_error:nn { enumext } { unknown-key-family } } ,
+    enumext-1 .code:n = {
+                          \keys_set:ne { enumext / level-1 }
+                            {
+                              \@@_filter_level:n {#1}
+                            }
+                        },
+    enumext-2 .code:n = {
+                           \keys_set:nn { enumext / level-2 }
+                            {
+                              \@@_filter_level:n {#1}
+                            }
+                        },
+    enumext-3 .code:n = {
+                          \keys_set:nn { enumext / level-3 }
+                            {
+                              \@@_filter_level:n {#1}
+                            }
+                        },
+    enumext-4 .code:n = {
+                          \keys_set:nn { enumext / level-4 }
+                            {
+                              \@@_filter_level:n {#1}
+                            }
+                        },
+    enumext*  .code:n = {
+                          \keys_set:ne { enumext / enumext* }
+                           {
+                             \@@_filter_level:n {#1}
+                           }
+                        },
+    keyans    .code:n = { \keys_set:nn { enumext / keyans  } {#1} },
+    keyans*   .code:n = { \keys_set:nn { enumext / keyans* } {#1} },
+    print*    .code:n = { \keys_set:nn { enumext / print   } { print*  = {#1} } },
+    print-1   .code:n = { \keys_set:nn { enumext / print   } { print-1 = {#1} } },
+    print-2   .code:n = { \keys_set:nn { enumext / print   } { print-2 = {#1} } },
+    print-3   .code:n = { \keys_set:nn { enumext / print   } { print-3 = {#1} } },
+    print-4   .code:n = { \keys_set:nn { enumext / print   } { print-4 = {#1} } },
+    print-*   .code:n = { \keys_set:nn { enumext / print   } { print-* = {#1} } },
+    unknown   .code:n = { \msg_error:nn { enumext } { unknown-key-family } },
   }
 %    \end{macrocode}
 %    We store them in the constant sequence \cs{c_@@_all_families_seq}
