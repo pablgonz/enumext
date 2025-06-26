@@ -36,7 +36,7 @@
 %% ------------------------------------------------------------------------
 %% 
 \NeedsTeXFormat{LaTeX2e}[2025-06-01]
-\ProvidesExplPackage {enumext} {2025-06-21} {1.6} {Enumerate exercise sheets}
+\ProvidesExplPackage {enumext} {2025-06-30} {1.6} {Enumerate exercise sheets}
 \hook_gput_code:nnn {begindocument} {enumext}
   {
     \IfPackageLoadedTF { multicol }
@@ -83,11 +83,10 @@
   }
 \clist_map_inline:nn { i, ii, iii, iv, v, vi, vii, viii } { \__enumext_tmp:n {#1} }
 %% Variables used by |series|, |resume| and |resume*| keys.
-\tl_new:N    \l__enumext_series_name_tl
+\tl_new:N \l__enumext_series_name_tl
 \cs_set_protected:Npn \__enumext_tmp:n #1
   {
     \bool_new:c { l__enumext_resume_#1_bool       }
-    \int_new:c  { g__enumext_resume_#1_int        }
     \tl_new:c   { g__enumext_not_key_series_#1_tl }
     \tl_new:c   { l__enumext_series_name_#1_tl    }
   }
@@ -648,7 +647,7 @@
   }
 %% Public dimension |\itemwidth|
 \dim_zero_new:N \itemwidth
-%% Definition of counters.
+%% Definition of counters for all environments.
 \cs_new_protected:Npn \__enumext_define_counter:Nn #1 #2
   {
     \cs_if_exist:cTF { c@ #2 }
@@ -666,6 +665,17 @@
 \__enumext_define_counter:Nn \l__enumext_counter_vi_tl   { enumXvi   }
 \__enumext_define_counter:Nn \l__enumext_counter_vii_tl  { enumXvii  }
 \__enumext_define_counter:Nn \l__enumext_counter_viii_tl { enumXviii }
+%% Definition of internal counters for |resume| and |resume*| keys.
+\cs_set_protected:Npn \__enumext_tmp:n #1
+  {
+    \cs_if_exist:cTF { c@ __enumext_resume_#1_int }
+      { \msg_fatal:nne { enumext } { counters }{ __enumext_resume_#1_int } }
+      {
+        \newcounter { __enumext_resume_#1_int }
+      }
+  }
+\clist_map_inline:nn {i,ii,iii,iv,vii} { \__enumext_tmp:n {#1} }
+%% \int_show:c { c@ @@_resume_i_int }
 %% Register of counters style.
 \cs_new_protected:Npn \__enumext_register_default_label_wd:Nn #1 #2
   {
@@ -2117,7 +2127,7 @@
             \tl_if_empty:NT \l__enumext_store_name_tl
               {
                 \int_gset_eq:cc
-                  { g__enumext_resume_ \__enumext_level: _int } { c@enumX \__enumext_level: }
+                  { c@ __enumext_resume_ \__enumext_level: _int } { c@enumX \__enumext_level: }
               }
           }
       }
@@ -2157,7 +2167,7 @@
           {
             \tl_if_empty:NT \l__enumext_store_name_tl
               {
-                \int_gset_eq:NN \g__enumext_resume_vii_int \value{enumXvii}
+                \int_gset_eq:cc { c@ __enumext_resume_vii_int } { c@enumXvii }
               }
           }
       }
@@ -2177,7 +2187,6 @@
         \tl_if_empty:nTF {#1}
           {
             \__enumext_resume_counter:n { }
-            %%\__enumext_resume_counter:
           }
           {
             \tl_if_exist:cTF { g__enumext_series_ \tl_to_str:n {#1} _ \__enumext_level: _tl }
@@ -2199,7 +2208,6 @@
         \tl_if_empty:nTF {#1}
           {
             \__enumext_resume_counter:n { }
-            %%\__enumext_resume_counter:
           }
           {
             \tl_if_exist:cTF { g__enumext_series_ \tl_to_str:n {#1} _vii_tl }
@@ -2223,11 +2231,7 @@
         \tl_set:Nn \l__enumext_series_name_tl {#1}
         \tl_if_empty:NTF \l__enumext_series_name_tl
           {
-            \typeout{resume~sin~valor}
-            %%\int_show:c { g__enumext_resume_ \int_to_roman:n {\l__enumext_level_int} _int }
-            \__enumext_resume_counter:%%%n { }
-            % \int_show:c {c@enumXi}
-            \int_show:c { g__enumext_resume_ \int_to_roman:n {\l__enumext_level_int} _int }
+            \__enumext_resume_counter:
           }
           {
             \__enumext_resume_counter_series:
@@ -2253,10 +2257,8 @@
       {
         \exp_args:Ne \int_set:cn { l__enumext_start_ \int_to_roman:n {##1} _int }
           {
-            \int_use:c {  g__enumext_resume_ \int_to_roman:n {##1} _int } + 1
+            \int_use:c { c@ __enumext_resume_ \int_to_roman:n {##1} _int } + 1
           }
-        % show this
-        %\int_show:c {  g__enumext_resume_ \int_to_roman:n {##1} _int }
       }
     \int_compare:nNnT { \l__enumext_level_int } > { 0 }
       {
@@ -2286,7 +2288,10 @@
               }
           }
           {
-            \int_set:Nn \l__enumext_start_vii_int { \g__enumext_resume_vii_int + 1 }
+            \int_set:Nn \l__enumext_start_vii_int
+              {
+                \int_use:c { c@ __enumext_resume_vii_int } + 1
+              }
           }
       }
   }
@@ -2390,9 +2395,9 @@
           }
       }
   }
-\cs_new_protected:Npn \__enumext_standard_reset:nn #1 %%%#2
+\cs_new_protected:Npn \__enumext_standard_reset:nn #1 %#2
   {
-    \__enumext_reset_count_resume:en { \int_to_roman:n {#1} } %%%{#2}
+    \__enumext_reset_count_resume:en { \int_to_roman:n {#1} } %{#2}
   }
 \cs_new_protected:Npn \__enumext_starred_reset:n #1
   {
@@ -2401,9 +2406,7 @@
 \cs_new_protected:Npn \__enumext_reset_count_resume:nn #1 #2
   {
     \counterwithin*{enumX#1}{#2}
-    \int_gzero:c { g__enumext_resume_#1_int }
-    \int_gzero:c { c@enumX #1 }
-    \int_show:c {c@enumXi}
+    \counterwithin*{__enumext_resume_#1_int}{#2}
   }
 \cs_generate_variant:Nn \__enumext_reset_count_resume:nn { e }
 \cs_new_protected:Npn \__enumext_reset_count_resume_all:n #1
@@ -2444,9 +2447,9 @@
   {
     \int_compare:nNnT { \l__enumext_level_int } > { 0 }
       {
-        \int_if_exist:cT { g__enumext_resume_  \int_to_roman:n { \l__enumext_level_int } _int }
+        \int_if_exist:cT { c@ __enumext_resume_ \int_to_roman:n { \l__enumext_level_int } _int }
           {
-            \int_gzero:c { g__enumext_resume_  \int_to_roman:n { \l__enumext_level_int } _int }
+            \int_gzero:c { c@ __enumext_resume_ \int_to_roman:n { \l__enumext_level_int } _int }
           }
       }
   }
@@ -2454,9 +2457,9 @@
   {
     \cs_set:Npn \__enumext_tmp:n ##1
       {
-        \int_if_exist:cT { g__enumext_resume_  \int_to_roman:n {##1} _int }
+        \int_if_exist:cT { c@ __enumext_resume_ \int_to_roman:n {##1} _int }
           {
-            \int_gzero:c { g__enumext_resume_  \int_to_roman:n {##1} _int }
+            \int_gzero:c { c@ __enumext_resume_ \int_to_roman:n {##1} _int }
           }
       }
     \int_compare:nNnT { \l__enumext_level_int } > { 0 }
@@ -2466,7 +2469,7 @@
   }
 \cs_new_protected:Nn \__enumext_starred_reset_key:
   {
-    \int_gzero:N \g__enumext_resume_vii_int
+    \int_gzero:c { c@ __enumext_resume_vii_int }
   }
 %% Add |save-ans| key only on first level off |enumext| and |enumext*|.
 \cs_set_protected:Npn \__enumext_tmp:n #1
