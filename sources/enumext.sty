@@ -84,11 +84,14 @@
 \clist_map_inline:nn { i, ii, iii, iv, v, vi, vii, viii } { \__enumext_tmp:n {#1} }
 %% Variables used by |series|, |resume| and |resume*| keys.
 \tl_new:N \l__enumext_series_name_tl
+\bool_new:N \l__enumext_resume_count_bool
 \cs_set_protected:Npn \__enumext_tmp:n #1
   {
-    \bool_new:c { l__enumext_resume_#1_bool       }
-    \tl_new:c   { g__enumext_not_key_series_#1_tl }
-    \tl_new:c   { l__enumext_series_name_#1_tl    }
+    \bool_new:c { l__enumext_resume_#1_bool        }
+    \bool_new:c { l__enumext_resume_empty_#1_bool  }
+    \bool_new:c { l__enumext_resume_series_#1_bool }
+    \tl_new:c   { g__enumext_not_key_series_#1_tl  }
+    \tl_new:c   { l__enumext_series_name_#1_tl     }
   }
 \clist_map_inline:nn { i, ii, iii, iv, vii } { \__enumext_tmp:n {#1} }
 %% Variables used by |label|, |ref| and |widest| keys.
@@ -962,6 +965,7 @@
 %% #3 integer or string
 \cs_new_protected:Npn \__enumext_start_from:NNn #1 #2 #3
   {
+    \bool_set_false:N \l__enumext_resume_count_bool
     \__enumext_if_is_int:nTF { #3 }
        {
          \int_set:Nn #2 {#3}
@@ -1991,7 +1995,17 @@
         resume .code:n = {
                            \bool_if:NF \l__enumext_print_keyans_cmd_bool
                              {
-                                \__enumext_resume_series:n {##1}
+                               \tl_set:Nn \l__enumext_series_name_tl {##1}
+                               \tl_if_empty:NTF \l__enumext_series_name_tl
+                                 {
+                                   \typeout{resume=empty-for-series}
+                                   \bool_set_true:N \l__enumext_resume_count_bool
+                                 }
+                                 {
+                                 % bool true for resume=name
+                                   \bool_set_true:c { l__enumext_resume_series_ \__enumext_level: _bool }
+                                   \__enumext_resume_series:n {##1}
+                                 }
                              }
                           },
       }
@@ -2043,6 +2057,15 @@
             \bool_if:cF { l__enumext_resume_ \__enumext_level: _bool }
               {
                 \__enumext_resume_last:n {#1}
+              }
+            % Aquí es necesario usar resume-counter...bool_lazy_and es la opción aquí
+            \bool_if:NT \l__enumext_resume_count_bool
+              {
+                \tl_if_empty:NT \l__enumext_series_name_tl
+                  {
+                    \typeout{resume~~~~EMPTY~~~only~count}
+                    \__enumext_resume_counter:
+                  }
               }
           }
         \int_compare:nNnT { \l__enumext_level_h_int } = { 1 }
@@ -2183,10 +2206,7 @@
   {
     \int_compare:nNnT { \l__enumext_level_int } > { 0 }
       {
-        \tl_if_empty:nTF {#1}
-          {
-            \__enumext_resume_counter:n { }
-          }
+        \tl_if_empty:nF {#1}
           {
             \tl_if_exist:cTF { g__enumext_series_ \tl_to_str:n {#1} _ \__enumext_level: _tl }
               {
@@ -2225,16 +2245,10 @@
   {
     \int_compare:nNnT { \l__enumext_level_int } > { 0 }
       {
-        \bool_set_true:c { l__enumext_resume_ \__enumext_level: _bool }
         \tl_clear:N \l__enumext_series_name_tl
         \tl_set:Nn \l__enumext_series_name_tl {#1}
-        \tl_if_empty:NTF \l__enumext_series_name_tl
-          {
-            \__enumext_resume_counter:
-          }
-          {
-            \__enumext_resume_counter_series:
-          }
+        \bool_set_true:c { l__enumext_resume_ \__enumext_level: _bool }
+        \__enumext_resume_counter_series:
       }
     \int_compare:nNnT { \l__enumext_level_h_int } = { 1 }
       {
@@ -2348,7 +2362,7 @@
       {
         \tl_if_empty:cF { g__enumext_not_key_series_ \int_to_roman:n {##1} _tl }
           {
-            \__enumext_resume_counter:n { }
+            \__enumext_resume_counter: % n { }
             \exp_args:Ne \keys_set:nv
               { enumext / level-\int_use:N \l__enumext_level_int }
               { g__enumext_not_key_series_ \int_to_roman:n {##1} _tl }
@@ -2362,7 +2376,7 @@
       {
         \tl_if_empty:NF \g__enumext_not_key_series_vii_tl
           {
-            \__enumext_resume_counter:n { }
+            \__enumext_resume_counter:% n { }
             \keys_set:nV { enumext / enumext* } \g__enumext_not_key_series_vii_tl
           }
       }
@@ -5862,7 +5876,8 @@
   {
     \str_case:nnF {#1}
       {
-        { resume } {} { resume* } {} { reset } {} { reset* } {}
+        %%%{ resume } {}
+        { resume* } {} { reset } {} { reset* } {}
       }
       { , { \exp_not:n {#1} } }
   }

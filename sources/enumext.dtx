@@ -7628,15 +7628,15 @@ Some text here
 %    The first argument of this function are the \emph{\enquote{counter style}} set by
 %    \mykey{label} key, the second argument is returned by the function,
 %    the third argument can be an \mymeta{integer} or \mymeta{string} of the
-%    form \ics{Alph}, \ics{alph}, \ics{Roman} or \ics{roman}. This effectively 
+%    form \ics{Alph}, \ics{alph}, \ics{Roman} or \ics{roman}. This effectively
 %    allows \mykey{start*}|=A| or \mykey{start}|=1| to be used.
-% 
+%
 % \begin{important}*
-%  In version 1.6 it is allowed to pass the \mykey{resume} key \emph{without 
-%  value} by means of the command |\setenumext|, for the correct operation 
-%  of this we must set the boolean variable \myvarenv{l__@@_resume_count_bool} 
+%  In version 1.6 it is allowed to pass the \mykey{resume} key \emph{without
+%  value} by means of the command |\setenumext|, for the correct operation
+%  of this we must set the boolean variable \myvarenv{l__@@_resume_count_bool}
 %  set by the \mykey{resume} key \emph{without value} to \emph{\enquote{false}}.
-%  This is necessary to be able to \enquote{reset} the \emph{start value} by 
+%  This is necessary to be able to \enquote{reset} the \emph{start value} by
 %  by means of the \mykey{start} or \mykey{start*} keys.
 % \end{important}
 %
@@ -9359,11 +9359,11 @@ Some text here
   }
 \clist_map_inline:nn {level-1, level-2, level-3, level-4, enumext*} { \@@_tmp:n {#1} }
 %    \end{macrocode}
-%   In version 1.6 it is allowed to pass the key \mykey{resume} \emph{without 
-%   value} by means of the command |\setenumext|, for the correct operation 
-%   of this we must set the boolean variable \myvarenv{l__@@_resume_count_bool} 
-%   set by the key \mykey{resume} \emph{without value} to \enquote{true} to 
-%   be later processed by the function \cs{@@_parse_series:n} in the definition 
+%   In version 1.6 it is allowed to pass the key \mykey{resume} \emph{without
+%   value} by means of the command |\setenumext|, for the correct operation
+%   of this we must set the boolean variable \myvarenv{l__@@_resume_count_bool}
+%   set by the key \mykey{resume} \emph{without value} to \enquote{true} to
+%   be later processed by the function \cs{@@_parse_series:n} in the definition
 %   of the environments \myenv*{enumext} and \myenv*{enumext*}.
 %    \begin{macrocode}
 \cs_set_protected:Npn \@@_tmp:n #1

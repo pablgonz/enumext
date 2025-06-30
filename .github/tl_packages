@@ -25,6 +25,7 @@ amsmath
 tools
 bibtex
 # For doc and test/examples
+anonymouspro
 accsupp
 adjustbox
 alphalph
