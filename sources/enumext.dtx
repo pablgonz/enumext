@@ -1686,9 +1686,9 @@
 %
 % \begin{important}*
 % For security reasons the keys \mykey{resume}, \mykey{resume*}, \mykey{reset},
-% \mykey{reset*}, \mykey{series} and \mykey{save-ans} they can NOT be set by 
-% this command and are ignored. The key \mykey{save-ans} that activate the 
-% \emph{\enquote{storage system}} must be passed directly in the 
+% \mykey{reset*}, \mykey{series} and \mykey{save-ans} they can NOT be set by
+% this command and are ignored. The key \mykey{save-ans} that activate the
+% \emph{\enquote{storage system}} must be passed directly in the
 % \emph{optional argument} of the \emph{\enquote{first level}}
 % of the environment in which they are executed.
 % \end{important}
@@ -5889,11 +5889,14 @@ Some text here
 % \fi
 %    \begin{macrocode}
 \tl_new:N \l_@@_series_name_tl
+\bool_new:N \l_@@_resume_count_bool
 \cs_set_protected:Npn \@@_tmp:n #1
   {
-    \bool_new:c { l_@@_resume_#1_bool       }
-    \tl_new:c   { g_@@_not_key_series_#1_tl }
-    \tl_new:c   { l_@@_series_name_#1_tl    }
+    \bool_new:c { l_@@_resume_#1_bool        }
+    \bool_new:c { l_@@_resume_empty_#1_bool  }
+    \bool_new:c { l_@@_resume_series_#1_bool }
+    \tl_new:c   { g_@@_not_key_series_#1_tl  }
+    \tl_new:c   { l_@@_series_name_#1_tl     }
   }
 \clist_map_inline:nn { i, ii, iii, iv, vii } { \@@_tmp:n {#1} }
 %    \end{macrocode}
@@ -7625,9 +7628,18 @@ Some text here
 %    The first argument of this function are the \emph{\enquote{counter style}} set by
 %    \mykey{label} key, the second argument is returned by the function,
 %    the third argument can be an \mymeta{integer} or \mymeta{string} of the
-%    form \ics{Alph}, \ics{alph}, \ics{Roman} or \ics{roman}.
-%    This effectively allows \mykey{start*}|=A| or \mykey{start}|=1| to
-%    be used.
+%    form \ics{Alph}, \ics{alph}, \ics{Roman} or \ics{roman}. This effectively 
+%    allows \mykey{start*}|=A| or \mykey{start}|=1| to be used.
+% 
+% \begin{important}*
+%  In version 1.6 it is allowed to pass the \mykey{resume} key \emph{without 
+%  value} by means of the command |\setenumext|, for the correct operation 
+%  of this we must set the boolean variable \myvarenv{l__@@_resume_count_bool} 
+%  set by the \mykey{resume} key \emph{without value} to \emph{\enquote{false}}.
+%  This is necessary to be able to \enquote{reset} the \emph{start value} by 
+%  by means of the \mykey{start} or \mykey{start*} keys.
+% \end{important}
+%
 % \iffalse
 %% Internal function for |start| and |start*| keys.
 %% #1 \l_enumext_label_X_tl
@@ -7637,6 +7649,7 @@ Some text here
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_start_from:NNn #1 #2 #3
   {
+    \bool_set_false:N \l_@@_resume_count_bool
     \@@_if_is_int:nTF { #3 }
        {
          \int_set:Nn #2 {#3}
@@ -9345,6 +9358,14 @@ Some text here
       }
   }
 \clist_map_inline:nn {level-1, level-2, level-3, level-4, enumext*} { \@@_tmp:n {#1} }
+%    \end{macrocode}
+%   In version 1.6 it is allowed to pass the key \mykey{resume} \emph{without 
+%   value} by means of the command |\setenumext|, for the correct operation 
+%   of this we must set the boolean variable \myvarenv{l__@@_resume_count_bool} 
+%   set by the key \mykey{resume} \emph{without value} to \enquote{true} to 
+%   be later processed by the function \cs{@@_parse_series:n} in the definition 
+%   of the environments \myenv*{enumext} and \myenv*{enumext*}.
+%    \begin{macrocode}
 \cs_set_protected:Npn \@@_tmp:n #1
   {
     \keys_define:nn { enumext / #1 }
@@ -9352,7 +9373,17 @@ Some text here
         resume .code:n = {
                            \bool_if:NF \l_@@_print_keyans_cmd_bool
                              {
-                                \@@_resume_series:n {##1}
+                               \tl_set:Nn \l_@@_series_name_tl {##1}
+                               \tl_if_empty:NTF \l_@@_series_name_tl
+                                 {
+                                   \typeout{resume=empty-for-series}
+                                   \bool_set_true:N \l_@@_resume_count_bool
+                                 }
+                                 {
+                                 % bool true for resume=name
+                                   \bool_set_true:c { l_@@_resume_series_ \@@_level: _bool }
+                                   \@@_resume_series:n {##1}
+                                 }
                              }
                           },
       }
@@ -9455,6 +9486,15 @@ Some text here
             \bool_if:cF { l_@@_resume_ \@@_level: _bool }
               {
                 \@@_resume_last:n {#1}
+              }
+            % Aquí es necesario usar resume-counter...bool_lazy_and es la opción aquí
+            \bool_if:NT \l_@@_resume_count_bool
+              {
+                \tl_if_empty:NT \l_@@_series_name_tl
+                  {
+                    \typeout{resume~~~~EMPTY~~~only~count}
+                    \@@_resume_counter:
+                  }
               }
           }
         \int_compare:nNnT { \l_@@_level_h_int } = { 1 }
@@ -9652,10 +9692,7 @@ Some text here
   {
     \int_compare:nNnT { \l_@@_level_int } > { 0 }
       {
-        \tl_if_empty:nTF {#1}
-          {
-            \@@_resume_counter:n { }
-          }
+        \tl_if_empty:nF {#1}
           {
             \tl_if_exist:cTF { g_@@_series_ \tl_to_str:n {#1} _ \@@_level: _tl }
               {
@@ -9716,16 +9753,10 @@ Some text here
   {
     \int_compare:nNnT { \l_@@_level_int } > { 0 }
       {
-        \bool_set_true:c { l_@@_resume_ \@@_level: _bool }
         \tl_clear:N \l_@@_series_name_tl
         \tl_set:Nn \l_@@_series_name_tl {#1}
-        \tl_if_empty:NTF \l_@@_series_name_tl
-          {
-            \@@_resume_counter:
-          }
-          {
-            \@@_resume_counter_series:
-          }
+        \bool_set_true:c { l_@@_resume_ \@@_level: _bool }
+        \@@_resume_counter_series:
       }
     \int_compare:nNnT { \l_@@_level_h_int } = { 1 }
       {
@@ -9871,7 +9902,7 @@ Some text here
       {
         \tl_if_empty:cF { g_@@_not_key_series_ \int_to_roman:n {##1} _tl }
           {
-            \@@_resume_counter:n { }
+            \@@_resume_counter: % n { }
             \exp_args:Ne \keys_set:nv
               { enumext / level-\int_use:N \l_@@_level_int }
               { g_@@_not_key_series_ \int_to_roman:n {##1} _tl }
@@ -9885,7 +9916,7 @@ Some text here
       {
         \tl_if_empty:NF \g_@@_not_key_series_vii_tl
           {
-            \@@_resume_counter:n { }
+            \@@_resume_counter:% n { }
             \keys_set:nV { enumext / enumext* } \g_@@_not_key_series_vii_tl
           }
       }
@@ -12450,9 +12481,9 @@ Some text here
 %    \begin{macrocode}
 \keys_define:nn { enumext / enumext* }
   {
-    unknown .code:n = { 
+    unknown .code:n = {
                         \tl_set:Nn \l_@@_envir_name_tl { enumext* }
-                        \@@_starred_unknown_keys:n {#1} 
+                        \@@_starred_unknown_keys:n {#1}
                       },
   }
 %    \end{macrocode}
@@ -12487,10 +12518,10 @@ Some text here
   {
     \keys_define:nn { enumext / level-#1 }
       {
-        unknown .code:n = { 
+        unknown .code:n = {
                             \int_set:Nn \l_@@_level_int { #1 }
                             \tl_set:Nn \l_@@_envir_name_tl { enumext }
-                            \@@_standar_unknown_keys:n {##1} 
+                            \@@_standar_unknown_keys:n {##1}
                           },
       }
   }
@@ -16037,7 +16068,8 @@ Some text here
   {
     \str_case:nnF {#1}
       {
-        { resume } {} { resume* } {} { reset } {} { reset* } {}
+        %%%{ resume } {}
+        { resume* } {} { reset } {} { reset* } {}
       }
       { , { \exp_not:n {#1} } }
   }
