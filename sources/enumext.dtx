@@ -5881,7 +5881,7 @@ Some text here
 % \end{variable}
 %
 % \begin{variable}[int]{\l_@@_series_name_tl, \l_@@_resume_X_bool,
-%                       \g_@@_not_key_series_X_tl, \g_@@_series_name_X_tl,}
+%                       \g_@@_save_last_keys_X_tl, \g_@@_series_name_X_tl,}
 %   Internal variables used by \mykey{resume}, \mykey{resume*} and
 %   \mykey{series} keys (\S\ref{key:series}).
 % \iffalse
@@ -5895,7 +5895,7 @@ Some text here
     \bool_new:c { l_@@_resume_#1_bool        }
     \bool_new:c { l_@@_resume_empty_#1_bool  }
     \bool_new:c { l_@@_resume_series_#1_bool }
-    \tl_new:c   { g_@@_not_key_series_#1_tl  }
+    \tl_new:c   { g_@@_save_last_keys_#1_tl  }
     \tl_new:c   { l_@@_series_name_#1_tl     }
   }
 \clist_map_inline:nn { i, ii, iii, iv, vii } { \@@_tmp:n {#1} }
@@ -7636,7 +7636,7 @@ Some text here
 %  value} by means of the command |\setenumext|, for the correct operation
 %  of this we must set the boolean variable \myvarenv{l__@@_resume_count_bool}
 %  set by the \mykey{resume} key \emph{without value} to \emph{\enquote{false}}.
-%  This is necessary to be able to \enquote{reset} the \emph{start value} by
+%  This is necessary to be able to \enquote{reset} the \emph{start value}
 %  by means of the \mykey{start} or \mykey{start*} keys.
 % \end{important}
 %
@@ -9382,7 +9382,7 @@ Some text here
                                  {
                                  % bool true for resume=name
                                    \bool_set_true:c { l_@@_resume_series_ \@@_level: _bool }
-                                   \@@_resume_series:n {##1}
+                                   \@@_resume:n {##1}
                                  }
                              }
                           },
@@ -9394,7 +9394,16 @@ Some text here
     resume .code:n = {
                        \bool_if:NF \l_@@_print_keyans_cmd_bool
                          {
-                           \@@_resume_series_vii:n {#1}
+                           \tl_set:Nn \l_@@_series_name_tl {##1}
+                           \tl_if_empty:NTF \l_@@_series_name_tl
+                             {
+                               \typeout{resume=empty-for-series}
+                               \bool_set_true:N \l_@@_resume_count_bool
+                             }
+                             {
+                               \bool_set_true:N \l_@@_resume_series_vii_bool
+                               \@@_resume_vii:n {#1}
+                             }
                          }
                       },
    }
@@ -9452,7 +9461,7 @@ Some text here
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_parse_series:n, \@@_resume_last:n}
+% \begin{macro}{\@@_parse_series:n, \@@_save_last_keys:n}
 %   The function \cs{@@_parse_series:n} will be responsible for
 %   storing the filtered \mymeta{keys} in the global variable
 %   \myvarenv{g__@@_series_\mymeta[cf=gray]{series name}_tl} along with the
@@ -9461,10 +9470,10 @@ Some text here
 %   is passed as an argument; otherwise, it will check the state of the
 %   boolean variable \cs[no-index]{l_@@_resume_X_bool} set by the keys
 %   \mykey{resume} and  \mykey{resume*} and will call the function
-%   \cs{@@_resume_last:n}.
+%   \cs{@@_save_last_keys:n}.
 % \begin{important}*
 %   The value of boolean variable \cs[no-index]{l_@@_resume_X_bool} is set to
-%   true by the function \cs{@@_resume_counter:n} which is used by the keys
+%   true by the function \cs{@@_resume_series:n} which is used by the keys
 %   \mykey{resume} and \mykey{resume*}, in this case we must make sure it
 %   is set to false so that it does not overwrite the default filtered
 %   \mymeta{keys}.
@@ -9485,7 +9494,7 @@ Some text here
           {
             \bool_if:cF { l_@@_resume_ \@@_level: _bool }
               {
-                \@@_resume_last:n {#1}
+                \@@_save_last_keys:n {#1}
               }
             % Aquí es necesario usar resume-counter...bool_lazy_and es la opción aquí
             \bool_if:NT \l_@@_resume_count_bool
@@ -9501,8 +9510,17 @@ Some text here
           {
             \bool_if:NF \l_@@_resume_vii_bool
               {
-                \@@_resume_last:n {#1}
+                \@@_save_last_keys:n {#1}
               }
+            % Aquí es necesario usar resume-counter...bool_lazy_and es la opción aquí
+            \bool_if:NT \l_@@_resume_count_bool
+              {
+                \tl_if_empty:NT \l_@@_series_name_tl
+                  {
+                    \typeout{resume~~~~EMPTY~~~only~count}
+                    \@@_resume_counter:
+                  }
+              }              
           }
       }
       {
@@ -9531,27 +9549,28 @@ Some text here
       }
   }
 %    \end{macrocode}
-%   The function \cs{@@_resume_last:n} will be in charge of saving the
-%   filtering \mymeta{keys} when the \mykey{series} key is \emph{NOT used}
-%   and will save them in the variable \myvarenv{g__@@_series_X_tl} for the
-%   \myenv*{enumext} environment and in the variable \myvarenv{g__@@_series_vii_tl}
+%   The function \cs{@@_save_last_keys:n} will be in charge of saving the
+%   filtering \mymeta{keys} when the keys \mykey{series}|=|\mymarg{series name} 
+%   or \mykey{resume}|=|\mymarg{series name} are NOT active and will save 
+%   them in the variable \myvarenv{g__@@_save_last_keys_X_tl} for the
+%   \myenv*{enumext} environment and in the variable \myvarenv{g__@@_save_last_keys_vii_tl}
 %   for the \myenv*{enumext*} environment.
 % \iffalse
 %% Save keys for last environment "without" |series| and |resume=name| keys active.
 % \fi
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_resume_last:n #1
+\cs_new_protected:Npn \@@_save_last_keys:n #1
   {
     \int_compare:nNnT { \l_@@_level_int } > { 0 }
       {
-        \tl_gclear:c { g_@@_not_key_series_ \@@_level: _tl }
+        \tl_gclear:c { g_@@_save_last_keys_ \@@_level: _tl }
         \tl_gset:ce
-          { g_@@_not_key_series_ \@@_level: _tl }{ \@@_filter_series:n {#1} }
+          { g_@@_save_last_keys_ \@@_level: _tl }{ \@@_filter_series:n {#1} }
       }
     \int_compare:nNnT { \l_@@_level_h_int } = { 1 }
       {
-        \tl_gclear:N \g_@@_not_key_series_vii_tl
-        \tl_gset:Ne \g_@@_not_key_series_vii_tl { \@@_filter_series:n {#1} }
+        \tl_gclear:N \g_@@_save_last_keys_vii_tl
+        \tl_gset:Ne \g_@@_save_last_keys_vii_tl { \@@_filter_series:n {#1} }
       }
   }
 %    \end{macrocode}
@@ -9676,11 +9695,11 @@ Some text here
 %
 % \subsubsection{Internal functions for \texttt{resume} key}
 %
-% \begin{macro}{\@@_resume_series:n, \@@_resume_series_vii:n}
-%   The functions \cs{@@_resume_series:n} and \cs{@@_resume_series_vii:n}
+% \begin{macro}{\@@_resume:n, \@@_resume_vii:n}
+%   The functions \cs{@@_resume:n} and \cs{@@_resume_vii:n}
 %   will handle the \mymarg{argument} passed to the \mykey{resume} key in
 %   \myenv*{enumext} and \myenv*{enumext*} environments. If the key is
-%   passed \emph{without value} the function \cs{@@_resume_counter:n}
+%   passed \emph{without value} the function \cs{@@_resume_series:n}
 %   is executed which will set the counter according to the numbering of
 %   the last \myenv*{enumext} or \myenv*{enumext*} environments in which
 %   \mykey{series}|=|\mymarg{series name} key is NOT present.
@@ -9688,94 +9707,44 @@ Some text here
 %% Internal function for |resume=series| key.
 % \fi
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_resume_series:n #1
+\cs_new_protected:Npn \@@_resume:n #1
   {
     \int_compare:nNnT { \l_@@_level_int } > { 0 }
       {
-        \tl_if_empty:nF {#1}
+        \tl_if_exist:cTF { g_@@_series_ \tl_to_str:n {#1} _ \@@_level: _tl }
           {
-            \tl_if_exist:cTF { g_@@_series_ \tl_to_str:n {#1} _ \@@_level: _tl }
-              {
-                \@@_resume_counter:n {#1}
-                \exp_args:Ne \keys_set:nv { enumext / level-\int_use:N \l_@@_level_int }
-                  { g_@@_series_ \tl_to_str:n {#1} _ \@@_level: _tl }
-              }
-              {
-                \msg_error:nnn { enumext } { unknown-series-standar } {#1}
-              }
+            \@@_resume_series:n {#1}
+            \exp_args:Ne \keys_set:nv { enumext / level-\int_use:N \l_@@_level_int }
+              { g_@@_series_ \tl_to_str:n {#1} _ \@@_level: _tl }
+          }
+          {
+            \msg_error:nnn { enumext } { unknown-series-standar } {#1}
           }
       }
   }
-\cs_new_protected:Npn \@@_resume_series_vii:n #1
+\cs_new_protected:Npn \@@_resume_vii:n #1
   {
     \int_compare:nNnT { \l_@@_level_h_int } = { 1 }
       {
-        \tl_if_empty:nTF {#1}
+        \tl_if_exist:cTF { g_@@_series_ \tl_to_str:n {#1} _vii_tl }
           {
-            \@@_resume_counter:n { }
+            \@@_resume_series:n {#1}
+            \keys_set:nv { enumext / enumext* }
+              { g_@@_series_ \tl_to_str:n {#1} _vii_tl }
           }
           {
-            \tl_if_exist:cTF { g_@@_series_ \tl_to_str:n {#1} _vii_tl }
-              {
-                \@@_resume_counter:n {#1}
-                \keys_set:nv { enumext / enumext* }
-                  { g_@@_series_ \tl_to_str:n {#1} _vii_tl }
-              }
-              {
-                \msg_error:nnn { enumext } { unknown-series-starred } {#1}
-              }
+            \msg_error:nnn { enumext } { unknown-series-starred } {#1}
           }
       }
   }
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_resume_counter:n, \@@_resume_counter:,
+% \begin{macro}{\@@_resume_counter:,\@@_resume_series:n,
 %               \@@_resume_counter_series:,}
-%   The function \cs{@@_resume_counter:n} will set the variable
-%   \cs[no-index]{l_@@_resume_X_bool} to true and pass the value of the key
-%   \mykey{resume} to the variable \cs{l_@@_series_name_tl} which will
-%   contain the \mymarg{series name}. If the variable \cs{l_@@_series_name_tl} is
-%   empty, that is, we are passing the key \mykey{resume} \emph{without value}, we
-%   will execute the function \cs{@@_resume_counter:} otherwise, when we
-%   pass \mykey{resume}|=|\mymarg{series name} we will execute the function
-%   \cs{@@_resume_counter_series:}.
-%^^A, otherwise it
-%^^A   will verify that the \myvarenv{g__@@_series_\mymeta[cf=gray]{series name}_tl}
-%^^A   variable set by the \mykey{series} key exists, if so it will pass these
-%^^A   keys to the \emph{first level} of the environment, otherwise it will
-%^^A   return an error.
-%^^A , finally we will execute the function
-%^^A   \cs{@@_resume_store_name:} which is associated with the key
-%^^A   \mykey{save-ans}.
-%    \begin{macrocode}
-\cs_new_protected:Npn \@@_resume_counter:n #1
-  {
-    \int_compare:nNnT { \l_@@_level_int } > { 0 }
-      {
-        \tl_clear:N \l_@@_series_name_tl
-        \tl_set:Nn \l_@@_series_name_tl {#1}
-        \bool_set_true:c { l_@@_resume_ \@@_level: _bool }
-        \@@_resume_counter_series:
-      }
-    \int_compare:nNnT { \l_@@_level_h_int } = { 1 }
-      {
-        \bool_set_true:N \l_@@_resume_vii_bool
-        \tl_clear:N \l_@@_series_name_tl
-        \tl_set:Nn \l_@@_series_name_tl {#1}
-        \tl_if_empty:NTF \l_@@_series_name_tl
-          {
-            \@@_resume_counter:
-          }
-          {
-            \@@_resume_counter_series:
-          }
-      }
-  }
-%    \end{macrocode}
 %   The \cs{@@_resume_counter:} function is executed when the
-%   \mykey{resume} key is used \emph{without value}, only the counters for
-%   the \emph{\enquote{levels}} of the environments will be set. If the
+%   \mykey{resume} key is used \emph{without value}, only the \emph{\enquote{counters}}
+%   for the \emph{\enquote{levels}} of the environments will be set. If the
 %   \mykey{save-ans} key is active it will set the counter according to
 %   the value of the integer variable created by that key.
 %    \begin{macrocode}
@@ -9821,6 +9790,41 @@ Some text here
                 \int_use:c { c@ @@_resume_vii_int } + 1
               }
           }
+      }
+  }
+%    \end{macrocode}
+%   The function \cs{@@_resume_series:n} will set the variable
+%   \cs[no-index]{l_@@_resume_X_bool} to true and pass the value of the key
+%   \mykey{resume} to the variable \cs{l_@@_series_name_tl} which will
+%   contain the \mymarg{series name}. If the variable \cs{l_@@_series_name_tl} is
+%   empty, that is, we are passing the key \mykey{resume} \emph{without value}, we
+%   will execute the function \cs{@@_resume_counter:} otherwise, when we
+%   pass \mykey{resume}|=|\mymarg{series name} we will execute the function
+%   \cs{@@_resume_counter_series:}.
+%^^A, otherwise it
+%^^A   will verify that the \myvarenv{g__@@_series_\mymeta[cf=gray]{series name}_tl}
+%^^A   variable set by the \mykey{series} key exists, if so it will pass these
+%^^A   keys to the \emph{first level} of the environment, otherwise it will
+%^^A   return an error.
+%^^A , finally we will execute the function
+%^^A   \cs{@@_resume_store_name:} which is associated with the key
+%^^A   \mykey{save-ans}.
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_resume_series:n #1
+  {
+    \int_compare:nNnT { \l_@@_level_int } > { 0 }
+      {
+        \tl_clear:N \l_@@_series_name_tl
+        \tl_set:Nn \l_@@_series_name_tl {#1}
+        \bool_set_true:c { l_@@_resume_ \@@_level: _bool }
+        \@@_resume_counter_series:
+      }
+    \int_compare:nNnT { \l_@@_level_h_int } = { 1 }
+      {
+        \tl_clear:N \l_@@_series_name_tl
+        \tl_set:Nn \l_@@_series_name_tl {#1}
+        \bool_set_true:N \l_@@_resume_vii_bool
+        \@@_resume_counter_series:
       }
   }
 %    \end{macrocode}
@@ -9900,12 +9904,12 @@ Some text here
   {
     \cs_set:Npn \@@_tmp:n ##1
       {
-        \tl_if_empty:cF { g_@@_not_key_series_ \int_to_roman:n {##1} _tl }
+        \tl_if_empty:cF { g_@@_save_last_keys_ \int_to_roman:n {##1} _tl }
           {
-            \@@_resume_counter: % n { }
+            \@@_resume_counter:
             \exp_args:Ne \keys_set:nv
               { enumext / level-\int_use:N \l_@@_level_int }
-              { g_@@_not_key_series_ \int_to_roman:n {##1} _tl }
+              { g_@@_save_last_keys_ \int_to_roman:n {##1} _tl }
           }
       }
     \int_compare:nNnT { \l_@@_level_int } > { 0 }
@@ -9914,10 +9918,10 @@ Some text here
       }
     \int_compare:nNnT { \l_@@_level_h_int } = { 1 }
       {
-        \tl_if_empty:NF \g_@@_not_key_series_vii_tl
+        \tl_if_empty:NF \g_@@_save_last_keys_vii_tl
           {
-            \@@_resume_counter:% n { }
-            \keys_set:nV { enumext / enumext* } \g_@@_not_key_series_vii_tl
+            \@@_resume_counter:
+            \keys_set:nV { enumext / enumext* } \g_@@_save_last_keys_vii_tl
           }
       }
   }
@@ -9928,8 +9932,8 @@ Some text here
 %
 % Sometimes it is necessary to be able to reset the \emph{\enquote{counters}}
 % of the environments according to some value, for example |\chapter|. Since we
-% use internal global variables for the \mykey{resume} and \mykey{resume*}
-% keys which set the \emph{start values}, but are not accessible by the user,
+% use \emph{\enquote{internal counters}} for the \mykey{resume} and \mykey{resume*}
+% keys which set the \emph{start value}, but are not accessible by the user,
 % it is to provide a public command for this. This implementation is an
 % adaptation of the answers given by Clea F. Rees \texttt{(@cfr)} and
 % Jonathan P. Spratte \texttt{(@Skillmon)} in \href{https://tex.stackexchange.com/q/746644}{Correct
@@ -16061,14 +16065,13 @@ Some text here
 %    \end{macrocode}
 %   The function \cs{@@_filter_level_key:n} will be responsible for
 %   filtering the \mymeta{keys} that are passed \emph{\enquote{without value}} by
-%   excluding the keys \mykey{resume}, \mykey{resume*}, \mykey{reset} and \mykey{reset*}
+%   excluding the keys \mykey{resume*}, \mykey{reset} and \mykey{reset*}
 %   passed to the \myenv*{enumext} and \myenv*{enumext*} environments.
 %    \begin{macrocode}
 \cs_new:Npn \@@_filter_level_key:n #1
   {
     \str_case:nnF {#1}
       {
-        %%%{ resume } {}
         { resume* } {} { reset } {} { reset* } {}
       }
       { , { \exp_not:n {#1} } }
