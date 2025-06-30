@@ -26,6 +26,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: 11
+          distribution: corretto
+
       - name: Setup TeX Live ${{ matrix.version }}
         uses: teatimeguest/setup-texlive-action@v3
         with:
