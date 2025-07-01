@@ -22,7 +22,7 @@
 -- General package identification
 module     = "enumext"
 pkgversion = "1.6"
-pkgdate    = "2025-06-30"
+pkgdate    = "2025-07-01"
 ltxrelease = "2025-06-01"
 
 -- Configuration of files for build and installation

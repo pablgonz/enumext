@@ -36,7 +36,7 @@
 %% ------------------------------------------------------------------------
 %% 
 \NeedsTeXFormat{LaTeX2e}[2025-06-01]
-\ProvidesExplPackage {enumext} {2025-06-30} {1.6} {Enumerate exercise sheets}
+\ProvidesExplPackage {enumext} {2025-07-01} {1.6} {Enumerate exercise sheets}
 \hook_gput_code:nnn {begindocument} {enumext}
   {
     \IfPackageLoadedTF { multicol }
@@ -87,11 +87,8 @@
 \bool_new:N \l__enumext_resume_count_bool
 \cs_set_protected:Npn \__enumext_tmp:n #1
   {
-    \bool_new:c { l__enumext_resume_#1_bool        }
-    \bool_new:c { l__enumext_resume_empty_#1_bool  }
     \bool_new:c { l__enumext_resume_series_#1_bool }
     \tl_new:c   { g__enumext_save_last_keys_#1_tl  }
-    \tl_new:c   { l__enumext_series_name_#1_tl     }
   }
 \clist_map_inline:nn { i, ii, iii, iv, vii } { \__enumext_tmp:n {#1} }
 %% Variables used by |label|, |ref| and |widest| keys.
@@ -1998,12 +1995,9 @@
                                \tl_set:Nn \l__enumext_series_name_tl {##1}
                                \tl_if_empty:NTF \l__enumext_series_name_tl
                                  {
-                                   \typeout{resume=empty-for-series}
                                    \bool_set_true:N \l__enumext_resume_count_bool
                                  }
                                  {
-                                 % bool true for resume=name
-                                   \bool_set_true:c { l__enumext_resume_series_ \__enumext_level: _bool }
                                    \__enumext_resume:n {##1}
                                  }
                              }
@@ -2019,121 +2013,14 @@
                            \tl_set:Nn \l__enumext_series_name_tl {##1}
                            \tl_if_empty:NTF \l__enumext_series_name_tl
                              {
-                               \typeout{resume=empty-for-series}
                                \bool_set_true:N \l__enumext_resume_count_bool
                              }
                              {
-                               \bool_set_true:N \l__enumext_resume_series_vii_bool
                                \__enumext_resume_vii:n {#1}
                              }
                          }
                       },
    }
-%% Internal function for filter keys.
-\cs_new:Npn \__enumext_filter_series:n #1
-  {
-    \use:e
-      {
-        \keyval_parse:NNn
-          \__enumext_filter_series_key:n
-          \__enumext_filter_series_pair:nn {#1}
-      }
-  }
-\cs_new:Npn \__enumext_filter_series_key:n #1
-  {
-    \str_case:nnF {#1}
-      {
-        { resume } {} { resume* } {} { reset } {} { reset* } {} { base-fix } {}
-      }
-      { , { \exp_not:n {#1} } }
-  }
-\cs_new:Npn \__enumext_filter_series_pair:nn #1#2
-  {
-    \str_case:nnF {#1}
-      {
-        { series } {} { resume } {} { start } {}
-        { start* } {}  { save-ans } {} { save-key } {}
-      }
-      { , { \exp_not:n {#1} } = { \exp_not:n {#2} } }
-  }
-%% Internal function for parse filter keys used by |series|, |resume| and |resume*| keys.
-\cs_new_protected:Npn \__enumext_parse_series:n #1
-  {
-    \str_if_empty:NTF \l__enumext_series_name_str
-      {
-        \int_compare:nNnT { \l__enumext_level_int } > { 0 }
-          {
-            \bool_if:cF { l__enumext_resume_ \__enumext_level: _bool }
-              {
-                \__enumext_save_last_keys:n {#1}
-              }
-            % Aquí es necesario usar resume-counter...bool_lazy_and es la opción aquí
-            \bool_if:NT \l__enumext_resume_count_bool
-              {
-                \tl_if_empty:NT \l__enumext_series_name_tl
-                  {
-                    \typeout{resume~~~~EMPTY~~~only~count}
-                    \__enumext_resume_counter:
-                  }
-              }
-          }
-        \int_compare:nNnT { \l__enumext_level_h_int } = { 1 }
-          {
-            \bool_if:NF \l__enumext_resume_vii_bool
-              {
-                \__enumext_save_last_keys:n {#1}
-              }
-            % Aquí es necesario usar resume-counter...bool_lazy_and es la opción aquí
-            \bool_if:NT \l__enumext_resume_count_bool
-              {
-                \tl_if_empty:NT \l__enumext_series_name_tl
-                  {
-                    \typeout{resume~~~~EMPTY~~~only~count}
-                    \__enumext_resume_counter:
-                  }
-              }
-          }
-      }
-      {
-        \int_compare:nNnT { \l__enumext_level_int } > { 0 }
-          {
-            \tl_gclear_new:c { g__enumext_series_ \l__enumext_series_name_str _ \__enumext_level: _tl }
-            \tl_gset:ce
-              { g__enumext_series_ \l__enumext_series_name_str _ \__enumext_level: _tl }
-              { \__enumext_filter_series:n {#1} }
-            \int_if_exist:cF { g__enumext_series_ \l__enumext_series_name_str _ \__enumext_level: _int }
-              {
-                \int_new:c { g__enumext_series_ \l__enumext_series_name_str _ \__enumext_level: _int }
-              }
-          }
-        \int_compare:nNnT { \l__enumext_level_h_int } = { 1 }
-          {
-            \tl_gclear_new:c { g__enumext_series_ \l__enumext_series_name_str _vii_tl }
-            \tl_gset:ce
-              { g__enumext_series_ \l__enumext_series_name_str _vii_tl }
-              { \__enumext_filter_series:n {#1} }
-            \int_if_exist:cF { g__enumext_series_ \l__enumext_series_name_str _vii_int }
-              {
-                \int_new:c { g__enumext_series_ \l__enumext_series_name_str _vii_int }
-              }
-          }
-      }
-  }
-%% Save keys for last environment "without" |series| and |resume=name| keys active.
-\cs_new_protected:Npn \__enumext_save_last_keys:n #1
-  {
-    \int_compare:nNnT { \l__enumext_level_int } > { 0 }
-      {
-        \tl_gclear:c { g__enumext_save_last_keys_ \__enumext_level: _tl }
-        \tl_gset:ce
-          { g__enumext_save_last_keys_ \__enumext_level: _tl }{ \__enumext_filter_series:n {#1} }
-      }
-    \int_compare:nNnT { \l__enumext_level_h_int } = { 1 }
-      {
-        \tl_gclear:N \g__enumext_save_last_keys_vii_tl
-        \tl_gset:Ne \g__enumext_save_last_keys_vii_tl { \__enumext_filter_series:n {#1} }
-      }
-  }
 %% Internal function to save counter value and set int vars for |series|, |resume| and |resume*| keys.
 \cs_new_protected:Nn \__enumext_standar_save_counter:
   {
@@ -2158,7 +2045,8 @@
     \str_if_empty:NF \l__enumext_series_name_str
       {
         \int_gset_eq:cc
-          { g__enumext_series_ \l__enumext_series_name_str _ \__enumext_level: _int } { c@enumX \__enumext_level: }
+          { g__enumext_series_ \l__enumext_series_name_str _ \__enumext_level: _int }
+          { c@enumX \__enumext_level: }
       }
     \tl_if_empty:NTF \l__enumext_series_name_tl
       {
@@ -2172,10 +2060,12 @@
           }
       }
       {
-        \int_if_exist:cT { g__enumext_series_ \l__enumext_series_name_tl _ \__enumext_level: _int }
+        \int_if_exist:cT
+          { g__enumext_series_ \l__enumext_series_name_tl _ \__enumext_level: _int }
           {
             \int_gset_eq:cc
-              { g__enumext_series_ \l__enumext_series_name_tl _ \__enumext_level: _int } { c@enumX \__enumext_level: }
+              { g__enumext_series_ \l__enumext_series_name_tl _ \__enumext_level: _int }
+              { c@enumX \__enumext_level: }
           }
       }
   }
@@ -2219,37 +2109,7 @@
           }
       }
   }
-%% Internal function for |resume=series| key.
-\cs_new_protected:Npn \__enumext_resume:n #1
-  {
-    \int_compare:nNnT { \l__enumext_level_int } > { 0 }
-      {
-        \tl_if_exist:cTF { g__enumext_series_ \tl_to_str:n {#1} _ \__enumext_level: _tl }
-          {
-            \__enumext_resume_series:n {#1}
-            \exp_args:Ne \keys_set:nv { enumext / level-\int_use:N \l__enumext_level_int }
-              { g__enumext_series_ \tl_to_str:n {#1} _ \__enumext_level: _tl }
-          }
-          {
-            \msg_error:nnn { enumext } { unknown-series-standar } {#1}
-          }
-      }
-  }
-\cs_new_protected:Npn \__enumext_resume_vii:n #1
-  {
-    \int_compare:nNnT { \l__enumext_level_h_int } = { 1 }
-      {
-        \tl_if_exist:cTF { g__enumext_series_ \tl_to_str:n {#1} _vii_tl }
-          {
-            \__enumext_resume_series:n {#1}
-            \keys_set:nv { enumext / enumext* }
-              { g__enumext_series_ \tl_to_str:n {#1} _vii_tl }
-          }
-          {
-            \msg_error:nnn { enumext } { unknown-series-starred } {#1}
-          }
-      }
-  }
+%% Internal function to resume counter value for |resume| and |resume*| keys.
 \cs_new_protected:Nn \__enumext_resume_counter:
   {
     \cs_set:Npn \__enumext_tmp:n ##1
@@ -2294,24 +2154,158 @@
           }
       }
   }
+%% Internal function for filter keys.
+\cs_new:Npn \__enumext_filter_series:n #1
+  {
+    \use:e
+      {
+        \keyval_parse:NNn
+          \__enumext_filter_series_key:n
+          \__enumext_filter_series_pair:nn {#1}
+      }
+  }
+\cs_new:Npn \__enumext_filter_series_key:n #1
+  {
+    \str_case:nnF {#1}
+      {
+        { resume } {} { resume* } {} { reset } {} { reset* } {} { base-fix } {}
+      }
+      { , { \exp_not:n {#1} } }
+  }
+\cs_new:Npn \__enumext_filter_series_pair:nn #1#2
+  {
+    \str_case:nnF {#1}
+      {
+        { series } {} { resume } {} { start } {}
+        { start* } {}  { save-ans } {} { save-key } {}
+      }
+      { , { \exp_not:n {#1} } = { \exp_not:n {#2} } }
+  }
+%% Save keys for last environment "without" |series| and |resume=name| keys active.
+\cs_new_protected:Npn \__enumext_save_last_keys:n #1
+  {
+    \int_compare:nNnT { \l__enumext_level_int } > { 0 }
+      {
+        \bool_if:cF { l__enumext_resume_series_ \__enumext_level: _bool }
+          {
+            \tl_gclear:c { g__enumext_save_last_keys_ \__enumext_level: _tl }
+            \tl_gset:ce
+              { g__enumext_save_last_keys_ \__enumext_level: _tl }
+              { \__enumext_filter_series:n {#1} }
+          }
+      }
+    \int_compare:nNnT { \l__enumext_level_h_int } = { 1 }
+      {
+        \bool_if:NF \l__enumext_resume_series_vii_bool
+          {
+            \tl_gclear:N \g__enumext_save_last_keys_vii_tl
+            \tl_gset:Ne \g__enumext_save_last_keys_vii_tl { \__enumext_filter_series:n {#1} }
+          }
+      }
+  }
+%% Resume the counters for last environment "without" |series| and |resume=name| keys active.
+\cs_new_protected:Nn \__enumext_resume_last_counter:
+  {
+    \bool_lazy_and:nnT
+      { \bool_if_p:N \l__enumext_resume_count_bool }
+      { \tl_if_empty_p:N \l__enumext_series_name_tl }
+      {
+        \__enumext_resume_counter:
+      }
+  }
+%% Internal function for parse filter keys used by |series|, |resume| and |resume*| keys.
+\cs_new_protected:Npn \__enumext_parse_series:n #1
+  {
+    \str_if_empty:NTF \l__enumext_series_name_str
+      {
+        \int_compare:nNnT { \l__enumext_level_int } > { 0 }
+          {
+            \__enumext_save_last_keys:n {#1}
+            \__enumext_resume_last_counter:
+          }
+        \int_compare:nNnT { \l__enumext_level_h_int } = { 1 }
+          {
+            \__enumext_save_last_keys:n {#1}
+            \__enumext_resume_last_counter:
+          }
+      }
+      {
+        \int_compare:nNnT { \l__enumext_level_int } > { 0 }
+          {
+            \tl_gclear_new:c
+              { g__enumext_series_ \l__enumext_series_name_str _ \__enumext_level: _tl }
+            \tl_gset:ce
+              { g__enumext_series_ \l__enumext_series_name_str _ \__enumext_level: _tl }
+              { \__enumext_filter_series:n {#1} }
+            \int_if_exist:cF
+              { g__enumext_series_ \l__enumext_series_name_str _ \__enumext_level: _int }
+              {
+                \int_new:c
+                  { g__enumext_series_ \l__enumext_series_name_str _ \__enumext_level: _int }
+              }
+          }
+        \int_compare:nNnT { \l__enumext_level_h_int } = { 1 }
+          {
+            \tl_gclear_new:c { g__enumext_series_ \l__enumext_series_name_str _vii_tl }
+            \tl_gset:ce
+              { g__enumext_series_ \l__enumext_series_name_str _vii_tl }
+              { \__enumext_filter_series:n {#1} }
+            \int_if_exist:cF { g__enumext_series_ \l__enumext_series_name_str _vii_int }
+              {
+                \int_new:c { g__enumext_series_ \l__enumext_series_name_str _vii_int }
+              }
+          }
+      }
+  }
+%% Internal function for |resume=series| key.
+\cs_new_protected:Npn \__enumext_resume:n #1
+  {
+    \int_compare:nNnT { \l__enumext_level_int } > { 0 }
+      {
+        \tl_if_exist:cTF { g__enumext_series_ \tl_to_str:n {#1} _ \__enumext_level: _tl }
+          {
+            \__enumext_resume_series:n {#1}
+            \exp_args:Ne \keys_set:nv { enumext / level-\int_use:N \l__enumext_level_int }
+              { g__enumext_series_ \tl_to_str:n {#1} _ \__enumext_level: _tl }
+          }
+          {
+            \msg_error:nnn { enumext } { unknown-series-standar } {#1}
+          }
+      }
+  }
+\cs_new_protected:Npn \__enumext_resume_vii:n #1
+  {
+    \int_compare:nNnT { \l__enumext_level_h_int } = { 1 }
+      {
+        \tl_if_exist:cTF { g__enumext_series_ \tl_to_str:n {#1} _vii_tl }
+          {
+            \__enumext_resume_series:n {#1}
+            \keys_set:nv { enumext / enumext* }
+              { g__enumext_series_ \tl_to_str:n {#1} _vii_tl }
+          }
+          {
+            \msg_error:nnn { enumext } { unknown-series-starred } {#1}
+          }
+      }
+  }
 \cs_new_protected:Npn \__enumext_resume_series:n #1
   {
     \int_compare:nNnT { \l__enumext_level_int } > { 0 }
       {
+        \bool_set_true:c { l__enumext_resume_series_ \__enumext_level: _bool }
         \tl_clear:N \l__enumext_series_name_tl
         \tl_set:Nn \l__enumext_series_name_tl {#1}
-        \bool_set_true:c { l__enumext_resume_ \__enumext_level: _bool }
-        \__enumext_resume_counter_series:
+        \__enumext_resume_integer_series:
       }
     \int_compare:nNnT { \l__enumext_level_h_int } = { 1 }
       {
+        \bool_set_true:N \l__enumext_resume_series_vii_bool
         \tl_clear:N \l__enumext_series_name_tl
         \tl_set:Nn \l__enumext_series_name_tl {#1}
-        \bool_set_true:N \l__enumext_resume_vii_bool
-        \__enumext_resume_counter_series:
+        \__enumext_resume_integer_series:
       }
   }
-\cs_new_protected:Nn \__enumext_resume_counter_series:
+\cs_new_protected:Nn \__enumext_resume_integer_series:
   {
     \cs_set:Npn \__enumext_tmp:n ##1
       {
