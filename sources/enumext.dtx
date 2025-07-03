@@ -1699,28 +1699,39 @@
 %
 % \begin{function}{\setenumextmeta}
 %   \begin{syntax}
-%     \ics*{setenumextmeta} \mymarg{key name}\mymarg{key-one \textnormal{\textcolor{gray}{=}} val\textnormal{\textcolor{gray}{,}} key-two \textnormal{\textcolor{gray}{=}} val\textnormal{\textcolor{gray}{,}} \dots}
+%     \ics*{setenumextmeta}\myoarg{\textnormal{\textcolor{MediumOrchid}{\texttt{1}}}}\mymarg{key name}\mymarg{key-one \textnormal{\textcolor{gray}{=}} val\textnormal{\textcolor{gray}{,}} key-two \textnormal{\textcolor{gray}{=}} val\textnormal{\textcolor{gray}{,}} \dots}
+%     \ics*{setenumextmeta}\myoarg{\textnormal{\textcolor{MediumOrchid}{\texttt{2}}}}\mymarg{key name}\mymarg{key-one \textnormal{\textcolor{gray}{=}} val\textnormal{\textcolor{gray}{,}} key-two \textnormal{\textcolor{gray}{=}} val\textnormal{\textcolor{gray}{,}} \dots}
+%     \ics*{setenumextmeta}\myoarg{\textnormal{\textcolor{MediumOrchid}{\texttt{3}}}}\mymarg{key name}\mymarg{key-one \textnormal{\textcolor{gray}{=}} val\textnormal{\textcolor{gray}{,}} key-two \textnormal{\textcolor{gray}{=}} val\textnormal{\textcolor{gray}{,}} \dots}
+%     \ics*{setenumextmeta}\myoarg{\textnormal{\textcolor{MediumOrchid}{\texttt{4}}}}\mymarg{key name}\mymarg{key-one \textnormal{\textcolor{gray}{=}} val\textnormal{\textcolor{gray}{,}} key-two \textnormal{\textcolor{gray}{=}} val\textnormal{\textcolor{gray}{,}} \dots}
+%     \ics*{setenumextmeta}\myoarg{\textnormal{\textcolor{MediumOrchid}{\texttt{*}}}}\mymarg{key name}\mymarg{key-one \textnormal{\textcolor{gray}{=}} val\textnormal{\textcolor{gray}{,}} key-two \textnormal{\textcolor{gray}{=}} val\textnormal{\textcolor{gray}{,}} \dots}
 %     \ics*{setenumextmeta}|*|\mymarg{key name}\mymarg{key-one \textnormal{\textcolor{gray}{=}} val\textnormal{\textcolor{gray}{,}} key-two \textnormal{\textcolor{gray}{=}} val\textnormal{\textcolor{gray}{,}} \dots}
-%     \ics*{setenumextmeta} \myoarg{enumext\textnormal{\textcolor{MediumOrchid}{\texttt{*}}}}\mymarg{key name}\mymarg{key-one \textnormal{\textcolor{gray}{=}} val\textnormal{\textcolor{gray}{,}} key-two \textnormal{\textcolor{gray}{=}} val\textnormal{\textcolor{gray}{,}} \dots}
-%     \ics*{setenumextmeta} \myoarg{enumext\textnormal{\textcolor{gray}{,}} level}\mymarg{key name}\mymarg{key-one \textnormal{\textcolor{gray}{=}} val\textnormal{\textcolor{gray}{,}} key-two \textnormal{\textcolor{gray}{=}} val\textnormal{\textcolor{gray}{,}} \dots}
 %   \end{syntax}
 %   The command \ics*{setenumextmeta} adds a new \emph{\enquote{meta-key}}
 %   for the environments \myenv*{enumext} and \myenv*{enumext*}, the
 %   \mymarg{key name} must be different from those defined by the package.
-%   If the \emph{optional argument} is not passed, the new \emph{\enquote{meta-key}}
-%   will be created for the \emph{\enquote{first level}} of the environment
-%   \myenv*{enumext}.
+%   The \emph{optional argument} of the form |[1]|, |[2]|, |[3]|, |[4]|
+%   adds a new \emph{\enquote{meta-key}} ​​for levels |1|, |2|, |3| and |4|
+%   of the \myenv*{enumext} environment, the form |[*]| adds a new
+%   \emph{\enquote{meta-key}}​​for the \myenv*{enumext*} environment. If is
+%   run \emph{without} the \emph{optional argument}, it will adds a new
+%   \emph{\enquote{meta-key}} ​​for the \emph{\enquote{first level}} of
+%   the \myenv*{enumext} environment.
 % \end{function}
 %
-% \smallskip
-%
 % The \emph{starred argument} ‘|*|’ will create the new \emph{\enquote{meta-key}}
-% for the environment \myenv*{enumext*} and for all levels of the
+% for the environment \myenv*{enumext*} and for \emph{\enquote{all levels}} of the
 % environment \myenv*{enumext}. For example: |\setenumextmeta*{midsep}{topsep=3pt, partopsep=0pt}|
 % will create a new key |midsep| available for all levels of the
 % \myenv*{enumext} environment and the \myenv*{enumext*} environment
 % and we can use it like any other key so |\begin{enumext}[midsep]|
 % and |\begin{enumext*}[midsep]| will be valid.
+%
+% \smallskip
+% \begin{important}*
+% The old syntax |\setenumextmeta|\myoarg{enumext\textnormal{\textcolor{MediumOrchid}{\texttt{*}}}}
+% and |\setenumextmeta|\myoarg{enumext\textnormal{\textcolor{gray}{,}} level}
+% is still supported but is not recommended and may be removed in the future.
+% \end{important}
 %
 % \section{The \texttt{keyval} system}
 %
@@ -1906,7 +1917,8 @@
 %
 % The same as the \mykey{wrap-label} key but also applies on \ics*{item}\myoarg{custom}.
 %
-% \newpage
+%
+% \smallskip
 %
 % \newsavebox{\refboxsample}
 % \begin{lrbox}{\refboxsample}
@@ -2220,7 +2232,7 @@
 %  \mykey{list-indent} and get the same effect.
 % \end{important}
 %
-% \newpage
+%^^A \newpage
 %
 % \keyexamp{rightmargin}{rigid length}{\mydim{0}pt}
 %
@@ -5619,6 +5631,7 @@ Some text here
 % \begin{description}[font=\small\sffamily,wide=0pt,style=multiline,leftmargin=1.1\descrwidth,nosep,noitemsep]
 %  \item [\fileversion{} (ctan), \filedate]
 %    \begin{itemize}
+%      \item Syntax simplification for |\setenumextmeta|.
 %      \item Environments can be started with the key \texttt{\textcolor{optcolor}{resume}} \emph{without value}.
 %      \item Add |\resetenumext|, \texttt{\textcolor{optcolor}{reset}} and \texttt{\textcolor{optcolor}{reset}}|*| keys.
 %      \item The \texttt{\textcolor{optcolor}{resume}}, \texttt{\textcolor{optcolor}{resume}}|*| and \texttt{\textcolor{optcolor}{series}}
@@ -5734,6 +5747,7 @@ Some text here
 %
 % All variables and functions defined in this package are private and
 % are NOT intended to work or be used by another package or module.
+%
 %
 % \subsection{Initial set up}
 %
@@ -16224,13 +16238,27 @@ Some text here
 %% Define |\setenumextmeta|.
 % \fi
 %    \begin{macrocode}
+\str_new:N \l_@@_path_str
+%% list of supported levels
+\int_step_inline:nn { 4 }
+  {
+    \keys_define:nn { enumext }
+      {
+         #1 .code:n = \str_set:Nn \l_@@_path_str { level-#1 }
+        ,#1 .value_forbidden:n = true
+      }
+  }
+% special cases
+\keys_define:nn { enumext }
+  {
+     * .meta:n = enumext*
+    ,* .value_forbidden:n = true
+  }
 \prop_const_from_keyval:Nn \c_@@_meta_paths_prop
   {
-    {enumext,1} = level-1,
-    {enumext,2} = level-2,
-    {enumext,3} = level-3,
-    {enumext,4} = level-4,
-    {enumext*}  = enumext*
+    {enumext,1} = level-1, {enumext,2} = level-2, {enumext,3} = level-3,
+    {enumext,4} = level-4, {enumext*}  = enumext*, {*} = enumext*,
+    {1} = level-1, {2} = level-2, {3} = level-3, {4} = level-4,
   }
 %    \end{macrocode}
 %   Now we create the user command taking care that \texttt{unknown}
@@ -16250,10 +16278,47 @@ Some text here
           { \@@_add_meta_key:nnn {#2} {#3} {#4} }
       }
   }
+%%%%% NEW
+\NewDocumentCommand \myenvmeta { s O{enumext,1} m +m }
+  {
+    \str_if_eq:eeTF { \tl_trim_spaces:n {#3} } { unknown }
+      { \msg_error:nn { mymodule } { prohibited-unknown } }
+      {
+        \bool_if:nTF {#1}
+          {
+            \int_step_inline:nn { 4 }
+              { \mymodule_env_meta:nnn { enumext, ##1 } {#3} {#4} }
+            \mymodule_env_meta:nnn { enumext* } {#3} {#4}
+          }
+          { \mymodule_env_meta:nnn {#2} {#3} {#4} }
+      }
+  }
 %    \end{macrocode}
 %   The internal functions \cs{@@_add_meta_key:nnn} and \cs{@@_def_meta_key:nnn}
 %   will check the \emph{optional argument} and create the \emph{\enquote{meta-key}}.
 %    \begin{macrocode}
+%% NEW
+\cs_new_protected:Npn \mymodule_env_meta:nnn #1
+  {
+    \keys_set:nn { enumext } {#1}
+    \__mymodule_env_meta:Vnn \l__mymodule_path_str
+  }
+\cs_new_protected:Npn \__mymodule_env_meta:nnn #1#2#3
+  {
+    \bool_lazy_or:nnTF
+      { \keys_if_exist_p:nn { enumext / #1} {#2} }
+      { \keys_if_exist_p:nn { enumext / enumext* } {#2} }
+      { \msg_error:nnn { enumext } { already-defined } {#2} }
+      {
+        \keys_define:nn { enumext / #1 }
+          {
+            #2 .meta:n = {#3},
+            #2 .value_forbidden:n = true
+          }
+      }
+  }
+\cs_generate_variant:Nn \__mymodule_env_meta:nnn { V }
+%%%%%%%%%%%%%%%%%%%%%%%%%
 \cs_new_protected:Npn \@@_add_meta_key:nnn #1
   {
     \tl_set:Nn \l_@@_meta_path_tl {#1}
