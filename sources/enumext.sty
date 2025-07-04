@@ -36,7 +36,7 @@
 %% ------------------------------------------------------------------------
 %% 
 \NeedsTeXFormat{LaTeX2e}[2025-06-01]
-\ProvidesExplPackage {enumext} {2025-07-01} {1.6} {Enumerate exercise sheets}
+\ProvidesExplPackage {enumext} {2025-07-04} {1.6} {Enumerate exercise sheets}
 \hook_gput_code:nnn {begindocument} {enumext}
   {
     \IfPackageLoadedTF { multicol }
@@ -163,7 +163,7 @@
 \int_new:N \l__enumext_setkey_tmpa_int
 \seq_new:N \l__enumext_setkey_tmpa_seq
 \seq_new:N \l__enumext_setkey_tmpb_seq
-\tl_new:N  \l__enumext_meta_path_tl
+\str_new:N \l__enumext_meta_path_str
 \seq_new:N \l__enumext_foreach_print_seq
 \tl_new:N  \l__enumext_foreach_name_prop_tl
 \tl_new:N  \l__enumext_foreach_default_keys_tl
@@ -5975,27 +5975,29 @@
   }
 \cs_new_protected:Npn \__enumext_set_error:nn #1 #2
   { \msg_error:nnn { enumext } { invalid-key } {#1} {#2} }
-%% Define |\setenumextmeta|.
-\str_new:N \l__enumext_path_str
-%% list of supported levels
+%% Define |.code:n| and |.meta:n| for |\setenumextmeta|.
 \int_step_inline:nn { 4 }
   {
     \keys_define:nn { enumext }
       {
-         #1 .code:n = \str_set:Nn \l__enumext_path_str { level-#1 }
+         #1 .code:n = \str_set:Nn \l__enumext_meta_path_str { level-#1 }
         ,#1 .value_forbidden:n = true
+      }
+  }
+\clist_map_inline:nn { enumext }
+  {
+    \keys_define:nn { enumext }
+      {
+         #1  .code:n = % ignored for now, might do something useful in the future
+        ,#1  .value_forbidden:n = true
+        ,#1* .code:n = \str_set:Nn \l__enumext_meta_path_str { #1* }
+        ,#1* .value_forbidden:n = true
       }
   }
 \keys_define:nn { enumext }
   {
      * .meta:n = enumext*
     ,* .value_forbidden:n = true
-  }
-\prop_const_from_keyval:Nn \c__enumext_meta_paths_prop
-  {
-    {enumext,1} = level-1, {enumext,2} = level-2, {enumext,3} = level-3,
-    {enumext,4} = level-4, {enumext*}  = enumext*, {*} = enumext*,
-    {1} = level-1, {2} = level-2, {3} = level-3, {4} = level-4,
   }
 \NewDocumentCommand \setenumextmeta { s O{enumext,1} m +m }
   {
@@ -6005,34 +6007,18 @@
         \bool_if:nTF {#1}
           {
             \int_step_inline:nn { 4 }
-              { \__enumext_add_meta_key:nnn { enumext, ##1 } {#3} {#4} }
-            \__enumext_add_meta_key:nnn { enumext* } {#3} {#4}
+              { \__enumext_key_set_meta:nnn { enumext, ##1 } {#3} {#4} }
+            \__enumext_key_set_meta:nnn { enumext* } {#3} {#4}
           }
-          { \__enumext_add_meta_key:nnn {#2} {#3} {#4} }
+          { \__enumext_key_set_meta:nnn {#2} {#3} {#4} }
       }
   }
-%%%%% NEW
-\NewDocumentCommand \myenvmeta { s O{enumext,1} m +m }
-  {
-    \str_if_eq:eeTF { \tl_trim_spaces:n {#3} } { unknown }
-      { \msg_error:nn { mymodule } { prohibited-unknown } }
-      {
-        \bool_if:nTF {#1}
-          {
-            \int_step_inline:nn { 4 }
-              { \mymodule_env_meta:nnn { enumext, ##1 } {#3} {#4} }
-            \mymodule_env_meta:nnn { enumext* } {#3} {#4}
-          }
-          { \mymodule_env_meta:nnn {#2} {#3} {#4} }
-      }
-  }
-%% NEW
-\cs_new_protected:Npn \mymodule_env_meta:nnn #1
+\cs_new_protected:Npn \__enumext_key_set_meta:nnn #1
   {
     \keys_set:nn { enumext } {#1}
-    \__mymodule_env_meta:Vnn \l__mymodule_path_str
+    \__enumext_key_def_meta:Vnn \l__enumext_meta_path_str
   }
-\cs_new_protected:Npn \__mymodule_env_meta:nnn #1#2#3
+\cs_new_protected:Npn \__enumext_key_def_meta:nnn #1#2#3
   {
     \bool_lazy_or:nnTF
       { \keys_if_exist_p:nn { enumext / #1} {#2} }
@@ -6046,35 +6032,7 @@
           }
       }
   }
-\cs_generate_variant:Nn \__mymodule_env_meta:nnn { V }
-%%%%%%%%%%%%%%%%%%%%%%%%%
-\cs_new_protected:Npn \__enumext_add_meta_key:nnn #1
-  {
-    \tl_set:Nn \l__enumext_meta_path_tl {#1}
-    \tl_replace_all:Nnn \l__enumext_meta_path_tl {~} {}
-    \prop_get:NVNTF
-      \c__enumext_meta_paths_prop \l__enumext_meta_path_tl \l__enumext_meta_path_tl
-      { \__enumext_def_meta_key:Vnn \l__enumext_meta_path_tl }
-      {
-        \msg_error:nnn { enumext } { unknown-set } {#1}
-        \use_none:nn
-      }
-  }
-\cs_new_protected:Npn \__enumext_def_meta_key:nnn #1#2#3
-  {
-    \bool_lazy_or:nnTF
-      { \keys_if_exist_p:nn { enumext / #1 } {#2} }
-      { \keys_if_exist_p:nn { enumext / enumext* } {#2} }
-      { \msg_error:nnn { enumext } { already-defined } {#2} }
-      {
-        \keys_define:nn { enumext / #1 }
-          {
-            #2 .meta:n = {#3},
-            #2 .value_forbidden:n = true
-          }
-      }
-  }
-\cs_generate_variant:Nn \__enumext_def_meta_key:nnn { V }
+\cs_generate_variant:Nn \__enumext_key_def_meta:nnn { V }
 %% Define |\foreachkeyans|.
 \keys_define:nn { enumext / foreach }
   {
@@ -6535,10 +6493,6 @@
 \msg_new:nnn { enumext } { many-miniright-used }
   {
     Can't~use ~\c_backslash_str miniright~more~than~once~ \msg_line_context:.
-  }
-\msg_new:nnn { enumext } { unknown-set }
-  {
-    Argument~[#1]~is~unknown~by~ \c_backslash_str setenumextmeta~\msg_line_context:.
   }
 \msg_new:nnn { enumext } { already-defined }
   {

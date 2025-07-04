@@ -1,6 +1,6 @@
 ## enumext — Enumerate exercise sheets
 
-Release v1.6 \[2025-07-01\]
+Release v1.6 \[2025-07-04\]
 
 ## Description
 
@@ -56,11 +56,11 @@ conditions of the [LaTeX Project Public License](https://www.latex-project.org/l
 
 ## Contents
 
-- &langle;`README.md`&rangle; \(this file\)
-- &langle;`enumext.pdf`&rangle; \(documentation\)
-- &langle;`enumext.dtx`&rangle; \(master file that produced all files\)
-- &langle;`enumext.ins`&rangle; \(installer to extract all files\)
+- README.md \(this file\)
+- enumext.pdf \(documentation\)
+- enumext.dtx \(master file that produced all files\)
+- enumext.ins \(installer to extract all files\)
 
 ## Author and copyright
 
-Copyright &#169; 2024-2025 by Pablo González L <pablgonz@educarchile.cl>
+Copyright &#169; 2024 — 2025 by Pablo González L <pablgonz@educarchile.cl>

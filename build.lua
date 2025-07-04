@@ -22,7 +22,7 @@
 -- General package identification
 module     = "enumext"
 pkgversion = "1.6"
-pkgdate    = "2025-07-01"
+pkgdate    = "2025-07-04"
 ltxrelease = "2025-06-01"
 
 -- Configuration of files for build and installation
@@ -261,7 +261,7 @@ if options["target"] == "testpkg" then
   end
   -- Compiling test files for "testpkg" target
   print("Compiling tagged PDF sample files in ./"..tmpdir.." using [arara]")
-  local samples = {"enumext-01", "enumext-02", "enumext-03", "enumext-04", "enumext-05", "enumext-06"}
+  local samples = {"enumext-01", "enumext-02", "enumext-03", "enumext-04", "enumext-05", "enumext-06", "enumext-07"}
   for i, samples in ipairs(samples) do
     local errorlevel = run(tmpdir, "arara -v "..samples..".tex")
     if errorlevel ~= 0 then

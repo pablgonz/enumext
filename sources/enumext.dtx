@@ -607,7 +607,8 @@
                     textborn, textbullet, textendash, textasteriskcentered, textperiodcentered, raggedleft, peek_remove_spaces, skip_horizontal, %
                     triangleright, diamond, circ, parleft, star, centering, ast, hyperlink, hypertarget, newtheorem, counterwithin, %
                     aux_i, aux_ii, aux_iii, exp_args, if@noitemarg, if, if@hyper@item, hyper, noitemarg, regex_match, regex_if_match,%
-                    skip_vertical, obeyedline, tl_replace_all, mbox, tl_rescan, tl_set_rescan, tex_scantokens, setcounter, },%
+                    skip_vertical, obeyedline, tl_replace_all, mbox, tl_rescan, tl_set_rescan, tex_scantokens, setcounter,
+                    .code, .meta, marginpar, },%
 % Other words 3
     keywordstyle  = [3]{\color{optcolor!85}},%
     keywords      = [3]{document,article,setlength,pagestyle,definecolor, chapter,},%,
@@ -631,7 +632,7 @@
                     store-env, print-env, write-out, force-eol, write-env, overwrite, unknown, base-fix,%
                     midsep, wrapper,label-pos,label-sep, layout-sty, layout-sep, layout-top, lang, tagging, %
                     pdfversion, pdfstandard, testphase, alt, mark-sep, wrap-ans*, mark-ans, mark-sep, beginpenalty,%
-                    midpenalty, endpenalty,reset,},%
+                    midpenalty, endpenalty,reset,resume,resume*,reset, reset*,},%
 % Reserved words 7 (label values)
     keywordstyle  = [7]{\color{MediumOrchid}},%
     keywords      = [7]{m,s,M,VIII,viii,v,E,t,l,A,XXIII,true, false,test,sample,above,below,ua-2,phase-III,%
@@ -866,7 +867,7 @@
       }
   }
 \ExplSyntaxOff
-\setenumextmeta[enumext,1]{azetinasty}{label={\arabic*.},labelwidth={\marginparwidth+\marginparsep+\itemwd},list-offset={-\marginparwidth-\marginparsep},}
+\setenumextmeta[1]{azetinasty}{label={\arabic*.},labelwidth={\marginparwidth+\marginparsep+\itemwd},list-offset={-\marginparwidth-\marginparsep},}
 \begin{document}
   \DocInput{\jobname.dtx}
 \end{document}
@@ -1275,9 +1276,11 @@
 % the command |\anskey| to \emph{\enquote{store content}} and the
 % environments |keyans|, |keyans*| and |keyanspic| for multiple choice.
 % It also provides the commands |\getkeyans| to print individual
-% \emph{stored content}, |\printkeyans| and |\foreachkeyans| to print
-% all \emph{stored content}, |\miniright| for \myenv{minipage}, |\setenumext|
-% and |\setenumextmeta| to config \myoarg{key \textnormal{\textcolor{gray}{=}} val} options.
+% \emph{stored content}, |\printkeyans| to print all \emph{stored content},
+% |\foreachkeyans| to print a rage of \emph{stored content}, |\miniright|
+% for \myenv{minipage}, |\setenumext| to config \myoarg{key \textnormal{\textcolor{gray}{=}} val},
+% |\setenumextmeta| to add a \emph{\enquote{meta-key}} and |\resetenumext|
+% for reset counters.
 %
 % \subsubsection{Public counters}
 %
@@ -1289,7 +1292,7 @@
 % the counter \icounter{enumXvii} for \myenv*{enumext*} environment and
 % the counter \icounter{enumXviii} for \myenv*{keyans*} environment.
 %
-% \smallskip
+%^^A \smallskip
 %
 % \begin{important}*
 % If any package defines these \emph{counters} or they are user-defined
@@ -1305,7 +1308,7 @@
 % and contains the \emph{\enquote{width of the content}} of each |\item|
 % regardless of \mykey{labelwidth} and \mykey{labelsep}.
 %
-% \smallskip
+%^^A \smallskip
 %
 % \begin{important}*
 % If any package defines |\itemwidth| or they are user-defined |\itemwidth|
@@ -1356,7 +1359,7 @@
 % together with the \mykey{mini-env} key. If you need to force a
 % start a new column \ics{columnbreak} must be used (see \S\ref{key:multi}).
 %
-% \smallskip
+%^^A \smallskip
 %
 % \begin{important}*
 % The |\columnseprule| command is not available as a key and is set to
@@ -1418,31 +1421,31 @@
 % \ics{label} and \ics{ref} commands work as usual.
 % It also provides an \emph{\enquote{internal reference}} system for the
 % \emph{\enquote{stored content}} by means of the key \mykey{save-ref}
-% (\S\ref{subsec:label-ref}) when the key \mykey{save-ans} (\S\ref{subsec:storage-keys}) is active.
+% (\S\ref{subsec:label-ref}) when the key \mykey{save-ans} is active (\S\ref{subsec:storage-keys}).
 %
 % \subsubsection{Support for \cs[no-index]{footnote}}\label{doc:footnote}
 %
 % The \myenv*{enumext*} and \myenv*{keyans*} environments and the
 % \mykey{mini-env} key use the \myenv{minipage} environment in their
-% implementation but in a transparent way for the user, i.e. it is only
-% used for typesetting and not directly. The \mypkg*{enumext} package provides an \emph{internal implementation} for the
-% command |\footnote| compatible with the \mypkg{hyperref} package to
-% work in the same way as if it were used anywhere in the document.
+% implementation but in a transparent way for the user, it is only
+% used for typesetting. The implementation supports |\footnote| and is 
+% compatible with \mypkg{hyperref} and works the same way as if used 
+% anywhere in the document.
 %
 % \enlargethispage{2\baselineskip}
 %
 % \newpage
 %
-% Unfortunately, if \emph{tagging} \texttt{PDF}  is not enabled, it will
-% not produce the expected \emph{\enquote{links}} because the internal
-% implementation uses |\footnotetext|\myoarg{number} and |\footnotemark|\myoarg{number}\mymarg{text}
-% and support for these is limited by the \mypkg{hyperref} package.
+% Unfortunately, if \mypkg{hyperref} is loaded and \emph{tagged} \texttt{PDF} is not 
+% active, it will not produce the \enquote{link's}, the internal implementation 
+% uses |\footnotetext|\myoarg{number} and |\footnotemark|\myoarg{number}\mymarg{text}
+% and \enquote{link's} for this are not supported by the \mypkg{hyperref} package.
 %
 % \smallskip
 %
 % The best way to solve this if \emph{tagged} \texttt{PDF} is NOT active
 % is to use Jean-François Burnol \mypkg{footnotehyper}\cite{footnotehyper}
-% package, it will support keeping the \emph{\enquote{links}} if
+% package, it will support keeping the \enquote{link's} if
 % \mypkg{hyperref} is loaded with the |hyperfootnotes=true| option (default).
 % Load it is as follows:
 %
@@ -1452,7 +1455,7 @@
 \begin{examplecode}[frame=single]
 \IfDocumentMetadataF
   {
-    \usepackage{footnotehyper}
+    \usepackage{`\mypkg{footnotehyper}`}
     \makesavenoteenv{enumext}
     \makesavenoteenv{enumext*}
   }
@@ -1462,7 +1465,7 @@
 % \fi
 %
 % \begin{important}
-%  At the moment the \mypkg{footnotehyper} package is not compatible
+%  At the moment the \mypkg{footnotehyper} package v1.1e (2021/08/13) is not compatible
 %  with \emph{tagged} \texttt{PDF}.
 % \end{important}
 %
@@ -1537,8 +1540,10 @@
 %   \mykey{labelsep}, only the \emph{width of the content}.
 %
 % \item You cannot have floating environments like \myenv{figure} or
-%   \myenv{table} but \ics{footnote} with \mypkg{hyperref} support is
-%   supported if the \mypkg{footnotehyper} package is loaded (see \S\ref{doc:footnote} for full support).
+%   \myenv{table} or |\marginpar| but \ics{footnote} with \mypkg{hyperref}
+%   is supported. If you want to activate link's \emph{\enquote{without}}
+%   \emph{tagged} \texttt{PDF} active you must load \mypkg{footnotehyper}
+%   and \mypkg{hyperref} packages (see \S\ref{doc:footnote}).
 %
 % \item You cannot have any standard list environments like \myenv{itemize},
 %   \myenv{enumerate}, \myenv{description}, \myenv{quote}, \myenv{quotation},
@@ -1573,10 +1578,9 @@
 %
 %    The \emph{starred argument} ‘|*|’ cannot be separated by spaces
 %    ‘\verb*| |’ from the command, i.e. \ics*{item*} and the
-%    \emph{first optional argument} does \enquote{NOT} support
-%    \emph{verbatim content}. Can be configure with the keys
-%    \mykey{item-sym*} and \mykey{item-pos*} locally in the environment
-%    or globally using \ics*{setenumext} command (\S\ref{sec:setenumext}).
+%    \emph{first optional argument} does NOT support \emph{verbatim content}. 
+%    Can be configure with the keys  \mykey{item-sym*} and \mykey{item-pos*} 
+%    locally in the environment or globally using \ics*{setenumext} command (\S\ref{sec:setenumext}).
 % \end{function}
 %
 % \smallskip
@@ -1685,12 +1689,12 @@
 % \smallskip
 %
 % \begin{important}*
-% For security reasons the keys \mykey{resume} \emph{with value}, \mykey{resume*}, \mykey{reset},
-% \mykey{reset*}, \mykey{series} and \mykey{save-ans} they can NOT be set by
-% this command and are ignored. The key \mykey{save-ans} that activate the
-% \emph{\enquote{storage system}} must be passed directly in the
-% \emph{optional argument} of the \emph{\enquote{first level}}
-% of the environment in which they are executed.
+% For security reasons the keys \mykey{resume} \emph{\enquote{with value}},
+% \mykey{resume*}, \mykey{reset}, \mykey{reset*}, \mykey{series} and
+% \mykey{save-ans} they can NOT be set by this command and are ignored.
+% The key \mykey{save-ans} that activate the \emph{\enquote{storage system}}
+% must be passed directly in the \emph{optional argument} of the
+% \emph{\enquote{first level}} of the environment in which they are executed.
 % \end{important}
 %
 % \section{The command \cs[no-index]{setenumextmeta}}
@@ -1745,8 +1749,8 @@
 % All \mymeta{keys} described in this section are available for the
 % \myenv*{enumext}, \myenv*{enumext*}, \myenv*{keyans} and \myenv*{keyans*}
 % environments with the exception of the keys \mykey{series}, \mykey{resume},
-% \mykey{resume*} which are only available for the \emph{\enquote{first level}}
-% of the environments \myenv*{enumext} and \myenv*{enumext*}; and the keys
+% \mykey{resume*}, \mykey{reset} and \mykey{reset*}  which are only available
+% for the \myenv*{enumext} and \myenv*{enumext*} environments; and the keys
 % \mykey{mini-right}, \mykey{mini-right*} which are only available for
 % the \myenv*{enumext*} and \myenv*{keyans*} environments.
 %
@@ -2208,7 +2212,7 @@
 %  equivalent to setting the value for the \mykey{list-offset} key.
 % \end{important}
 %
-% \smallskip
+% \newpage
 %
 % \keyexamp{itemindent}{rigid length}{\mydim{0}pt}
 %
@@ -3065,6 +3069,8 @@
 % execution}} unless |\item| or |\item*| open a nested level
 % or use the \mykey{no-store} key.
 %
+% \smallskip
+%
 % The \myenv*{anskey*} environment is implemented using the new
 % \emph{\enquote{collect code}} \texttt{c-type} argument
 % part of \hologo{LaTeX} release 2025-06-01\cite{ltnews}.
@@ -3092,22 +3098,30 @@
 % it is disabled for the \myenv*{keyans}, \myenv*{keyans*} and
 % \myenv*{keyanspic} environments.
 %
+% \smallskip
+%
 % \keyexampenv{write-env}{file.ext}{not used}
 %
-% Sets the name of the \mymeta{external file} in which the \mymeta{contents} of
+% \smallskip
+%
+% Sets the \emph{name} of the \mymeta{external file} in which the \mymeta{contents} of
 % the environment will be written. The \mymeta{file.ext} will be created
 % in the working directory, relative or absolute paths are not supported. If \mymeta{file.ext}
 % does not exist, it will be created or overwritten if the \mykey{overwrite} key is used.
+%
+% \newpage
 %
 % \keyexampenv{overwrite}{true \textnormal{\textcolor{lightgray}{\textbar}} false}{false}
 % Sets whether the \mymeta{file.ext} generated by \mykey{write-env}
 % from the \myenv*{anskey*} environment will be rewritten.
 %
+% \smallskip
+%
 % \keyexampenv{force-eol}{true \textnormal{\textcolor{lightgray}{\textbar}} false}{false}
 %
 % \smallskip
 %
-% Sets if the \emph{end of line} for the \mymeta{stored content} is hidden or not.
+% Sets if the \emph{last end of line} for the \mymeta{stored content} is hidden or not.
 % This key is necessary only if the last line is the closing of some
 % environment defined by the \mypkg{fancyvrb} package as |\end{|\myenv{Verbatim}|}|
 % or another environment that does not support a comments \enquote{\ttfamily\textcolor{gray}{\%}}
@@ -3121,13 +3135,11 @@
 \begin{examplecode}[frame=single]
 \begin{enumext}[save-ans=test,show-pos=true,start=5]
   \item* Text containing our instructions or questions.
-
     \begin{anskey*}[item-star]
       `\mymeta{first answer}`
     \end{anskey*}
 
   \item Text containing our instructions or questions.
-
     \begin{enumext}
       \item Question.
         \begin{anskey*}
@@ -3136,13 +3148,11 @@
     \end{enumext}
 
   \item Text containing our instructions or questions.
-
     \begin{anskey*}
       `\mymeta{third answer}`
     \end{anskey*}
 
   \item Text containing our instructions or questions.
-
     \begin{anskey*}
       `\mymeta{fourth answer}`
     \end{anskey*}
@@ -3177,6 +3187,9 @@
 %  The \myenv*{keyans} and \myenv*{keyans*} environments are
 %  \emph{\enquote{enumerated list}} environments designed for
 %  \emph{\enquote{multiple choice}} questions activated by the \mykey{save-ans} key.
+%
+%  \smallskip
+%
 %  This environments can NOT be nested and must always be at the
 %  \emph{\enquote{first level}} of the \myenv*{enumext} environment, the
 %  commands \ics*{item} and \ics*{item}\myoarg{custom} work in the usual
@@ -3542,6 +3555,8 @@
 % \iffalse
 %</example>
 % \fi
+%
+% \newpage
 %
 % \begin{enumext}[save-ans=test, mark-ans*={\oldtextasteriskcentered},show-ans=true,nosep, before={\setenumext[keyans]{nosep,parsep=5mm}}]
 % \item Question with images and labels below.
@@ -4090,8 +4105,8 @@ $ pdfdetach -saveall enumext.pdf
 \begin{document}
 \setenumext[keyans]{labelsep=8pt,label=\Alph*,font=\small,nosep,wrap-label={\myCircled{##1}}}
 \setenumext[keyans*]{labelsep=8pt,label=\Alph*,font=\small,nosep,wrap-label={\myCircled{##1}}}
-\setenumextmeta[enumext,2]{myroman}{no-store, label=\Roman*., noitemsep}
-\setenumextmeta[enumext,2]{myarabic}{no-store,list-offset=0.5cm,label=(\arabic*),noitemsep}
+\setenumextmeta[2]{myroman}{no-store, label=\Roman*., noitemsep}
+\setenumextmeta[2]{myarabic}{no-store,list-offset=0.5cm,label=(\arabic*),noitemsep}
 \begin{enumext}[mode-box,save-ans=simplemc,columns=1,nosep,save-ref=true]
 \item First type of questions
   \begin{keyans*}[columns=2,noitemsep]
@@ -4469,7 +4484,7 @@ to \ref{simplews:3} is \getkeyans{simplews:3}.
       }
   }
 \ExplSyntaxOff
-\setenumextmeta[enumext,1]{azetinasty}{label={\arabic*.},labelwidth={\marginparwidth+\marginparsep+\itemwd},list-offset={-\marginparwidth-\marginparsep},}
+\setenumextmeta[1]{azetinasty}{label={\arabic*.},labelwidth={\marginparwidth+\marginparsep+\itemwd},list-offset={-\marginparwidth-\marginparsep},}
 \setenumext[keyans]{
     label={\Alph*},
     font={\bfseries},
@@ -4591,10 +4606,7 @@ to \ref{simplews:3} is \getkeyans{simplews:3}.
 %<*example>
 % \fi
 \begin{examplecode}[frame=single]
-\DocumentMetadata
-  {
-    lang = en-US, pdfversion = 2.0, pdfstandard = `\mydim{ua-2}`, tagging=on,
-  }
+\DocumentMetadata{lang = en-US, pdfversion = 2.0, pdfstandard = `\mydim{ua-2}`, tagging=on,}
 \end{examplecode}
 % \iffalse
 %</example>
@@ -4969,8 +4981,8 @@ Some text here
 \setenumext[enumext,1]{columns=2,nosep,save-ref=true,save-sep={ },wrap-opt=\fbox{##1}, show-ans=true}
 \setenumext[keyans]{columns=2,noitemsep}
 \setenumext[keyans*]{columns=2,noitemsep}
-\setenumextmeta[enumext,2]{myroman}{no-store, label=\Roman*., noitemsep}
-\setenumextmeta[enumext,2]{myarabic}{no-store,list-offset=0.5cm,label=(\arabic*),noitemsep}
+\setenumextmeta[2]{myroman}{no-store, label=\Roman*., noitemsep}
+\setenumextmeta[2]{myarabic}{no-store,list-offset=0.5cm,label=(\arabic*),noitemsep}
 \begin{document}
 \section{The enumext package in action}
 
@@ -5213,6 +5225,96 @@ Some text here
 \end{document}
 \end{filecontents*}
 \IfFileExists{enumext-06.pdf}{}{\ShellEscape{arara enumext-06.tex}}
+\begin{filecontents*}[overwrite]{enumext-07.tex}
+% arara: lualatex: { branch: developer, draft: true }
+% arara: lualatex: { branch: developer, draft: true }
+% arara: lualatex: { branch: developer }
+% arara: clean: { extensions: [ aux, log, out] }
+% arara: move: { files: [ enumext-07-luamml-mathml.html ], target: 'enumext-07-mathml.html' }
+\DocumentMetadata
+  {
+    lang=en-US,
+    pdfversion=2.0,
+    pdfstandard=ua-2,
+    tagging=on,
+  }
+\documentclass{article}
+\usepackage[top=2cm,bottom=2cm,left=1cm,right=1cm]{geometry}
+\usepackage{unicode-math,hyperref,enumext}
+\hypersetup
+  {
+    colorlinks = true,
+    pdftitle   = {Test tagged PDF for enumext package},
+  }
+\resetenumext{section}
+\setenumext{resume,label=(\arabic*.),widest=99}
+\begin{document}
+\section{Started with \texttt{resume} key set by \texttt{\textbackslash setenumext}}
+\begin{enumext}[columns=2]
+  \item Salida 1
+  \item Salida 2
+  \item Salida 3
+\end{enumext}
+
+\begin{enumext}[label=\arabic*.,start=80]%
+  \item Salida 80
+  \item Salida 81
+\end{enumext}
+
+\begin{enumext}
+  \item Salida (82)
+\end{enumext}
+
+\section{Reset by \texttt{\textbackslash resetenumext}}
+
+\begin{enumext}
+  \item Salida 1
+  \item Salida 2
+\end{enumext}
+
+\section*{Unnumbered, reset by \texttt{reset} key}
+
+\begin{enumext}[reset]
+  \item Salida 1
+  \item Salida 2
+\end{enumext}
+
+\section{Using \texttt{series} and \texttt{resume} keys in inner levels}
+
+\begin{enumext}[columns=2]
+  \item first level
+    \begin{enumext}[series=foo]
+      \item second level
+      \item second level
+    \end{enumext}
+    Some text on first level
+    \begin{enumext}[resume=foo]
+      \item second level
+      \item second level
+    \end{enumext}
+  \item first level
+    \begin{enumext*}[series=baz]
+      \item second level starred
+      \item second level starred
+    \end{enumext*}
+    Some text on first level
+    \begin{enumext*}[resume=baz]
+      \item second level starred
+      \item second level starred
+    \end{enumext*}
+  \item first level
+  \item first level
+\end{enumext}
+
+\section*{Using \texttt{resume*} key}
+
+\begin{enumext}[resume*]
+  \item Salida 5 (two-columns)
+  \item Salida 6 (two-columns)
+\end{enumext}
+\end{document}
+\end{filecontents*}
+\IfFileExists{enumext-07.pdf}{}{\ShellEscape{arara enumext-07.tex}}
 % \iffalse
 %</example>
 % \fi
@@ -5256,6 +5358,12 @@ Some text here
 %   \myenv*{enumext} and \myenv*{enumext*} for \emph{fake} \myenv{itemize} and \myenv{description}.
 %   \IfFileExists{enumext-06.pdf}{Source file \textattachfile[color=red,print=false]{enumext-06.tex}{\faFile*[regular]}
 %   and \emph{tagged} \texttt{PDF} \textattachfile[color=red,print=false]{enumext-06.pdf}{\faFilePdf[regular]}}{}.%
+%
+% \item The file \myfile{enumext-07.tex} contains the tests for starting the
+%   environments with |\setenumext{resume}|, the |\resetenumext| command
+%   and the \mykey{series}, \mykey{resume}, \mykey{resume*} and \mykey{reset} keys.
+%   \IfFileExists{enumext-06.pdf}{Source file \textattachfile[color=red,print=false]{enumext-07.tex}{\faFile*[regular]}
+%   and \emph{tagged} \texttt{PDF} \textattachfile[color=red,print=false]{enumext-07.pdf}{\faFilePdf[regular]}}{}.%
 % \end{itemize}
 %
 % \section{The way of non-enumerated lists}
@@ -5770,7 +5878,7 @@ Some text here
 %    \end{macrocode}
 % Now declare the \mypkg*{enumext} package.
 %    \begin{macrocode}
-\ProvidesExplPackage {enumext} {2025-07-01} {1.6} {Enumerate exercise sheets}
+\ProvidesExplPackage {enumext} {2025-07-04} {1.6} {Enumerate exercise sheets}
 %    \end{macrocode}
 % Finally check if the \mypkg{multicol} package are loaded, if not we load it.
 %    \begin{macrocode}
@@ -6108,12 +6216,12 @@ Some text here
 %    \end{macrocode}
 % \end{variable}
 %
-% \begin{variable}[int]{\l_@@_meta_path_tl, \l_@@_foreach_print_seq,
+% \begin{variable}[int]{\l_@@_meta_path_str, \l_@@_foreach_print_seq,
 %                       \l_@@_foreach_name_prop_tl, \l_@@_foreach_default_keys_tl,}
-%   Internal variables used by the |\printkeyans| command (\S\ref{cmd:printkeyans})
+%   Internal variables used by the |\setenumextmeta| command (\S\ref{cmd:setenumextmeta})
 %   and |\foreachkeyans| command (\S\ref{cmd:foreachkeyans}).
 %    \begin{macrocode}
-\tl_new:N  \l_@@_meta_path_tl
+\str_new:N \l_@@_meta_path_str
 \seq_new:N \l_@@_foreach_print_seq
 \tl_new:N  \l_@@_foreach_name_prop_tl
 \tl_new:N  \l_@@_foreach_default_keys_tl
@@ -16227,38 +16335,43 @@ Some text here
 % The command \ics*{setenumextmeta} will be responsible for adding new
 % \emph{\enquote{meta-keys}} for the \myenv*{enumext} and \myenv*{enumext*} environments.
 % The implementation code was given by Jonathan P. Spratte \texttt{(@Skillmon)}
-% answer in \href{https://tex.stackexchange.com/a/721079}{Add \texttt{.meta} key to existing keys (l3keys)}.
+% answer in \href{https://tex.stackexchange.com/a/747159}{Simplify syntax for command that adds \texttt{.meta} key to existing keys (l3keys)}.
 %
-% \begin{macro}{\setenumextmeta, \c_@@_meta_paths_prop,
-%               \@@_add_meta_key:nnn, \@@_def_meta_key:nnn,
-%               \@@_def_meta_key:Vnn }
-%   First we will create a prop list \cs{c_@@_meta_paths_prop} to
-%   handle the \emph{optional argument}.
+% \begin{macro}{\setenumextmeta, \@@_key_set_meta:nnn,
+%               \@@_key_def_meta:nnn, \@@_key_def_meta:Vnn, }
+%    First we will create a \mymeta{keys} of type |.code:n| for \emph{\enquote{all levels}}
+%    of the \myenv*{enumext} environment.
 % \iffalse
-%% Define |\setenumextmeta|.
+%% Define |.code:n| and |.meta:n| for |\setenumextmeta|.
 % \fi
 %    \begin{macrocode}
-\str_new:N \l_@@_path_str
-%% list of supported levels
 \int_step_inline:nn { 4 }
   {
     \keys_define:nn { enumext }
       {
-         #1 .code:n = \str_set:Nn \l_@@_path_str { level-#1 }
+         #1 .code:n = \str_set:Nn \l_@@_meta_path_str { level-#1 }
         ,#1 .value_forbidden:n = true
       }
   }
-% special cases
+%    \end{macrocode}
+%   And now we define the \mymeta{keys} for the environments using
+%   |.code:n| for the \myenv*{enumext} environment and |.meta:n| for the
+%   \myenv*{enumext*} environment.
+%    \begin{macrocode}
+\clist_map_inline:nn { enumext }
+  {
+    \keys_define:nn { enumext }
+      {
+         #1  .code:n = % ignored for now, might do something useful in the future
+        ,#1  .value_forbidden:n = true
+        ,#1* .code:n = \str_set:Nn \l_@@_meta_path_str { #1* }
+        ,#1* .value_forbidden:n = true
+      }
+  }
 \keys_define:nn { enumext }
   {
      * .meta:n = enumext*
     ,* .value_forbidden:n = true
-  }
-\prop_const_from_keyval:Nn \c_@@_meta_paths_prop
-  {
-    {enumext,1} = level-1, {enumext,2} = level-2, {enumext,3} = level-3,
-    {enumext,4} = level-4, {enumext*}  = enumext*, {*} = enumext*,
-    {1} = level-1, {2} = level-2, {3} = level-3, {4} = level-4,
   }
 %    \end{macrocode}
 %   Now we create the user command taking care that \texttt{unknown}
@@ -16272,38 +16385,22 @@ Some text here
         \bool_if:nTF {#1}
           {
             \int_step_inline:nn { 4 }
-              { \@@_add_meta_key:nnn { enumext, ##1 } {#3} {#4} }
-            \@@_add_meta_key:nnn { enumext* } {#3} {#4}
+              { \@@_key_set_meta:nnn { enumext, ##1 } {#3} {#4} }
+            \@@_key_set_meta:nnn { enumext* } {#3} {#4}
           }
-          { \@@_add_meta_key:nnn {#2} {#3} {#4} }
-      }
-  }
-%%%%% NEW
-\NewDocumentCommand \myenvmeta { s O{enumext,1} m +m }
-  {
-    \str_if_eq:eeTF { \tl_trim_spaces:n {#3} } { unknown }
-      { \msg_error:nn { mymodule } { prohibited-unknown } }
-      {
-        \bool_if:nTF {#1}
-          {
-            \int_step_inline:nn { 4 }
-              { \mymodule_env_meta:nnn { enumext, ##1 } {#3} {#4} }
-            \mymodule_env_meta:nnn { enumext* } {#3} {#4}
-          }
-          { \mymodule_env_meta:nnn {#2} {#3} {#4} }
+          { \@@_key_set_meta:nnn {#2} {#3} {#4} }
       }
   }
 %    \end{macrocode}
-%   The internal functions \cs{@@_add_meta_key:nnn} and \cs{@@_def_meta_key:nnn}
+%   The internal functions \cs{@@_key_set_meta:nnn} and \cs{@@_key_def_meta:nnn}
 %   will check the \emph{optional argument} and create the \emph{\enquote{meta-key}}.
 %    \begin{macrocode}
-%% NEW
-\cs_new_protected:Npn \mymodule_env_meta:nnn #1
+\cs_new_protected:Npn \@@_key_set_meta:nnn #1
   {
     \keys_set:nn { enumext } {#1}
-    \__mymodule_env_meta:Vnn \l__mymodule_path_str
+    \@@_key_def_meta:Vnn \l_@@_meta_path_str
   }
-\cs_new_protected:Npn \__mymodule_env_meta:nnn #1#2#3
+\cs_new_protected:Npn \@@_key_def_meta:nnn #1#2#3
   {
     \bool_lazy_or:nnTF
       { \keys_if_exist_p:nn { enumext / #1} {#2} }
@@ -16317,35 +16414,7 @@ Some text here
           }
       }
   }
-\cs_generate_variant:Nn \__mymodule_env_meta:nnn { V }
-%%%%%%%%%%%%%%%%%%%%%%%%%
-\cs_new_protected:Npn \@@_add_meta_key:nnn #1
-  {
-    \tl_set:Nn \l_@@_meta_path_tl {#1}
-    \tl_replace_all:Nnn \l_@@_meta_path_tl {~} {}
-    \prop_get:NVNTF
-      \c_@@_meta_paths_prop \l_@@_meta_path_tl \l_@@_meta_path_tl
-      { \@@_def_meta_key:Vnn \l_@@_meta_path_tl }
-      {
-        \msg_error:nnn { enumext } { unknown-set } {#1}
-        \use_none:nn
-      }
-  }
-\cs_new_protected:Npn \@@_def_meta_key:nnn #1#2#3
-  {
-    \bool_lazy_or:nnTF
-      { \keys_if_exist_p:nn { enumext / #1 } {#2} }
-      { \keys_if_exist_p:nn { enumext / enumext* } {#2} }
-      { \msg_error:nnn { enumext } { already-defined } {#2} }
-      {
-        \keys_define:nn { enumext / #1 }
-          {
-            #2 .meta:n = {#3},
-            #2 .value_forbidden:n = true
-          }
-      }
-  }
-\cs_generate_variant:Nn \@@_def_meta_key:nnn { V }
+\cs_generate_variant:Nn \@@_key_def_meta:nnn { V }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -16934,10 +17003,6 @@ Some text here
 %    \end{macrocode}
 % Messages used by \ics*{setenumextmeta} command.
 %    \begin{macrocode}
-\msg_new:nnn { enumext } { unknown-set }
-  {
-    Argument~[#1]~is~unknown~by~ \c_backslash_str setenumextmeta~\msg_line_context:.
-  }
 \msg_new:nnn { enumext } { already-defined }
   {
     The~key~'#1'~is~already~defined~\msg_line_context:.
