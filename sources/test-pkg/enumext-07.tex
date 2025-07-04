@@ -1,0 +1,87 @@
+% arara: lualatex: { branch: developer, draft: true }
+% arara: lualatex: { branch: developer, draft: true }
+% arara: lualatex: { branch: developer }
+% arara: clean: { extensions: [ aux, log, out] }
+% arara: move: { files: [ enumext-07-luamml-mathml.html ], target: 'enumext-07-mathml.html' }
+\DocumentMetadata
+  {
+    lang=en-US,
+    pdfversion=2.0,
+    pdfstandard=ua-2,
+    tagging=on,
+  }
+\documentclass{article}
+\usepackage[top=2cm,bottom=2cm,left=1cm,right=1cm]{geometry}
+\usepackage{unicode-math,hyperref,enumext}
+\hypersetup
+  {
+    colorlinks = true,
+    pdftitle   = {Test tagged PDF for enumext package},
+  }
+\resetenumext{section}
+\setenumext{resume,label=(\arabic*.),widest=99}
+\begin{document}
+\section{Started with \texttt{resume} key set by \texttt{\textbackslash setenumext}}
+\begin{enumext}[columns=2]
+  \item Salida 1
+  \item Salida 2
+  \item Salida 3
+\end{enumext}
+
+\begin{enumext}[label=\arabic*.,start=80]%
+  \item Salida 80
+  \item Salida 81
+\end{enumext}
+
+\begin{enumext}
+  \item Salida (82)
+\end{enumext}
+
+\section{Reset by \texttt{\textbackslash resetenumext}}
+
+\begin{enumext}
+  \item Salida 1
+  \item Salida 2
+\end{enumext}
+
+\section*{Unnumbered, reset by \texttt{reset} key}
+
+\begin{enumext}[reset]
+  \item Salida 1
+  \item Salida 2
+\end{enumext}
+
+\section{Using \texttt{series} and \texttt{resume} keys in inner levels}
+
+\begin{enumext}[columns=2]
+  \item first level
+    \begin{enumext}[series=foo]
+      \item second level
+      \item second level
+    \end{enumext}
+    Some text on first level
+    \begin{enumext}[resume=foo]
+      \item second level
+      \item second level
+    \end{enumext}
+  \item first level
+    \begin{enumext*}[series=baz]
+      \item second level starred
+      \item second level starred
+    \end{enumext*}
+    Some text on first level
+    \begin{enumext*}[resume=baz]
+      \item second level starred
+      \item second level starred
+    \end{enumext*}
+  \item first level
+  \item first level
+\end{enumext}
+
+\section*{Using \texttt{resume*} key}
+
+\begin{enumext}[resume*]
+  \item Salida 5 (two-columns)
+  \item Salida 6 (two-columns)
+\end{enumext}
+\end{document}

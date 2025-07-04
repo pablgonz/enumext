@@ -259,7 +259,7 @@ if options["target"] == "testpkg" then
   else
     os_message("** Copying files from sources/test-pkg to ./"..tmpdir)
   end
-  -- Compiling test files for "testpkg" target
+  -- Compiling static test files for "testpkg" target
   print("Compiling tagged PDF sample files in ./"..tmpdir.." using [arara]")
   local samples = {"enumext-01", "enumext-02", "enumext-03", "enumext-04", "enumext-05", "enumext-06", "enumext-07"}
   for i, samples in ipairs(samples) do
