@@ -1428,16 +1428,16 @@
 % The \myenv*{enumext*} and \myenv*{keyans*} environments and the
 % \mykey{mini-env} key use the \myenv{minipage} environment in their
 % implementation but in a transparent way for the user, it is only
-% used for typesetting. The implementation supports |\footnote| and is 
-% compatible with \mypkg{hyperref} and works the same way as if used 
+% used for typesetting. The implementation supports |\footnote| and is
+% compatible with \mypkg{hyperref} and works the same way as if used
 % anywhere in the document.
 %
 % \enlargethispage{2\baselineskip}
 %
 % \newpage
 %
-% Unfortunately, if \mypkg{hyperref} is loaded and \emph{tagged} \texttt{PDF} is not 
-% active, it will not produce the \enquote{link's}, the internal implementation 
+% Unfortunately, if \mypkg{hyperref} is loaded and \emph{tagged} \texttt{PDF} is not
+% active, it will not produce the \enquote{link's}, the internal implementation
 % uses |\footnotetext|\myoarg{number} and |\footnotemark|\myoarg{number}\mymarg{text}
 % and \enquote{link's} for this are not supported by the \mypkg{hyperref} package.
 %
@@ -1578,8 +1578,8 @@
 %
 %    The \emph{starred argument} ‘|*|’ cannot be separated by spaces
 %    ‘\verb*| |’ from the command, i.e. \ics*{item*} and the
-%    \emph{first optional argument} does NOT support \emph{verbatim content}. 
-%    Can be configure with the keys  \mykey{item-sym*} and \mykey{item-pos*} 
+%    \emph{first optional argument} does NOT support \emph{verbatim content}.
+%    Can be configure with the keys  \mykey{item-sym*} and \mykey{item-pos*}
 %    locally in the environment or globally using \ics*{setenumext} command (\S\ref{sec:setenumext}).
 % \end{function}
 %
@@ -6001,8 +6001,9 @@ Some text here
 \bool_new:N \l_@@_resume_count_bool
 \cs_set_protected:Npn \@@_tmp:n #1
   {
-    \bool_new:c { l_@@_resume_series_#1_bool }
-    \tl_new:c   { g_@@_save_last_keys_#1_tl  }
+    \bool_new:c { l_@@_resume_count_#1_bool }
+    \bool_new:c { l_@@_resume_series_#1_bool  }
+    \tl_new:c   { g_@@_save_last_keys_#1_tl   }
   }
 \clist_map_inline:nn { i, ii, iii, iv, vii } { \@@_tmp:n {#1} }
 %    \end{macrocode}
@@ -9447,22 +9448,7 @@ Some text here
 %% Add |series|, |resume| and |resume*| keys for |enumext| and |enumext*|.
 % \fi
 %    \begin{macrocode}
-\cs_set_protected:Npn \@@_tmp:n #1
-  {
-    \keys_define:nn { enumext / #1 }
-      {
-        series  .str_set:N = \l_@@_series_name_str,
-        series  .value_required:n = true,
-        resume* .code:n    = {
-                               \bool_if:NF \l_@@_print_keyans_cmd_bool
-                                 {
-                                   \@@_resume_star:
-                                 }
-                             },
-        resume* .value_forbidden:n = true,
-      }
-  }
-\clist_map_inline:nn {level-1, level-2, level-3, level-4, enumext*} { \@@_tmp:n {#1} }
+\str_clear_new:N \l_@@_series_name_str
 %    \end{macrocode}
 %   In version 1.6 it is allowed to pass the key \mykey{resume} \emph{without
 %   value} by means of the command |\setenumext|, for the correct operation
@@ -9471,42 +9457,32 @@ Some text here
 %   be later processed by the function \cs{@@_parse_series:n} in the definition
 %   of the environments \myenv*{enumext} and \myenv*{enumext*}.
 %    \begin{macrocode}
-\cs_set_protected:Npn \@@_tmp:n #1
+\cs_set_protected:Npn \@@_tmp:nn #1 #2
   {
     \keys_define:nn { enumext / #1 }
       {
-        resume .code:n = {
-                           \bool_if:NF \l_@@_print_keyans_cmd_bool
-                             {
-                               \tl_set:Nn \l_@@_series_name_tl {##1}
-                               \tl_if_empty:NTF \l_@@_series_name_tl
-                                 {
-                                   \bool_set_true:N \l_@@_resume_count_bool
-                                 }
-                                 {
-                                   \@@_resume:n {##1}
-                                 }
-                             }
-                          },
+        series .str_set:c = { l_@@_series_name_#2_str },
+        series .value_required:n = true,
+        resume .code:n    =
+                            \bool_if:NF \l_@@_print_keyans_cmd_bool
+                              {
+                                \tl_set:Nn \l_@@_series_name_tl {##1}
+                                \tl_if_empty:NTF \l_@@_series_name_tl
+                                  {
+                                    \bool_set_true:c { l_@@_resume_count_#2_bool }
+                                    \typeout{HERENEWCODE}
+                                  }
+                                  {
+                                    \@@_resume:n {##1}
+                                  }
+                              },
       }
   }
-\clist_map_inline:nn {level-1, level-2, level-3, level-4} { \@@_tmp:n {#1} }
-\keys_define:nn { enumext / enumext* }
+\clist_map_inline:nn
   {
-    resume .code:n = {
-                       \bool_if:NF \l_@@_print_keyans_cmd_bool
-                         {
-                           \tl_set:Nn \l_@@_series_name_tl {##1}
-                           \tl_if_empty:NTF \l_@@_series_name_tl
-                             {
-                               \bool_set_true:N \l_@@_resume_count_bool
-                             }
-                             {
-                               \@@_resume_vii:n {#1}
-                             }
-                         }
-                      },
-   }
+    {level-1}{i}, {level-2}{ii}, {level-3}{iii}, {level-4}{iv},{enumext*}{vii},
+  }
+  { \@@_tmp:nn #1 }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -9662,10 +9638,12 @@ Some text here
                {
                  \int_use:c { g_@@_resume_ \l_@@_store_name_tl _int } + 1
                }
-             \int_step_function:nnN { 2 } { \l_@@_level_int } \@@_tmp:n
            }
            {
-             \int_step_function:nnN { 1 } { \l_@@_level_int } \@@_tmp:n
+			 \int_set:cn { l_@@_start_ \@@_level: _int }
+			   {
+				 \int_use:c { c@ @@_resume_ \@@_level: _int } + 1
+			   }
            }
       }
     \int_compare:nNnT { \l_@@_level_h_int } = { 1 }
@@ -9798,11 +9776,15 @@ Some text here
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_resume_last_counter:
   {
-    \bool_lazy_and:nnT
-      { \bool_if_p:N \l_@@_resume_count_bool }
-      { \tl_if_empty_p:N \l_@@_series_name_tl }
+    \int_compare:nNnT { \l_@@_level_int } > { 0 }
       {
-        \@@_resume_counter:
+        \bool_lazy_and:nnT
+          { \bool_if_p:c { l_@@_resume_count_ \@@_level: _bool } }
+          { \tl_if_empty_p:N \l_@@_series_name_tl }
+          {
+            \typeout{ZZZZZZZZZZZZZZZZZZZZZzz}
+            \@@_resume_counter:
+          }
       }
   }
 %    \end{macrocode}
@@ -9837,12 +9819,14 @@ Some text here
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_parse_series:n #1
   {
+    \str_set_eq:Nc \l_@@_series_name_str { l_@@_series_name_ \@@_level: _str }
     \str_if_empty:NTF \l_@@_series_name_str
       {
         \int_compare:nNnT { \l_@@_level_int } > { 0 }
           {
             \@@_save_last_keys:n {#1}
             \@@_resume_last_counter:
+            %%\@@_resume_standar_last_counter:
           }
         \int_compare:nNnT { \l_@@_level_h_int } = { 1 }
           {

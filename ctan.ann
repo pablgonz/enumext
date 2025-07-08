@@ -2,5 +2,5 @@ Release v1.6:
 - Syntax simplification for `\setenumextmeta`.
 - Environments can be started with the key `resume` _without value_.
 - Add `\resetenumext` command and `reset`, `reset*` keys.
-– The `resume`, `resume*` and `series` keys can now be set per level.
-– Fixed bad interaction between `\printkeyans` and the `resume`, `resume*` keys.
+- The `resume`, `resume*` and `series` keys can now be set per level.
+- Fixed bad interaction between `\printkeyans` and the `resume`, `resume*` keys.
