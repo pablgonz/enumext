@@ -36,7 +36,7 @@
 %% ------------------------------------------------------------------------
 %% 
 \NeedsTeXFormat{LaTeX2e}[2025-06-01]
-\ProvidesExplPackage {enumext} {2025-07-04} {1.6} {Enumerate exercise sheets}
+\ProvidesExplPackage {enumext} {2025-07-09} {1.7} {Enumerate exercise sheets}
 \hook_gput_code:nnn {begindocument} {enumext}
   {
     \IfPackageLoadedTF { multicol }
@@ -87,6 +87,9 @@
 \bool_new:N \l__enumext_resume_count_bool
 \cs_set_protected:Npn \__enumext_tmp:n #1
   {
+    \bool_new:c { l__enumext_resume_count_#1_bool  }
+    \tl_new:c   { l__enumext_series_name_#1_tl     }
+    \str_new:c  { l__enumext_series_name_#1_str    }
     \bool_new:c { l__enumext_resume_series_#1_bool }
     \tl_new:c   { g__enumext_save_last_keys_#1_tl  }
   }
@@ -1969,58 +1972,40 @@
       }
   }
 %% Add |series|, |resume| and |resume*| keys for |enumext| and |enumext*|.
-\cs_set_protected:Npn \__enumext_tmp:n #1
+\cs_set_protected:Npn \__enumext_tmp:nn #1 #2
   {
     \keys_define:nn { enumext / #1 }
       {
         series  .str_set:N = \l__enumext_series_name_str,
         series  .value_required:n = true,
-        resume* .code:n    = {
-                               \bool_if:NF \l__enumext_print_keyans_cmd_bool
-                                 {
-                                   \__enumext_resume_star:
-                                 }
-                             },
+        resume  .code:n = {
+                            \bool_if:NF \l__enumext_print_keyans_cmd_bool
+                              {
+                                \tl_set:Nn \l__enumext_series_name_tl {##1}
+                                \tl_if_empty:NTF \l__enumext_series_name_tl
+                                  {
+                                    \bool_set_true:c { l__enumext_resume_count_#2_bool }
+                                    \bool_set_eq:Nc \l__enumext_resume_count_bool { l__enumext_resume_count_#2_bool }
+                                  }
+                                  {
+                                    \__enumext_resume:n {##1}
+                                  }
+                              }
+                          },
+        resume* .code:n = {
+                            \bool_if:NF \l__enumext_print_keyans_cmd_bool
+                              {
+                                \__enumext_resume_star:
+                              }
+                           },
         resume* .value_forbidden:n = true,
       }
   }
-\clist_map_inline:nn {level-1, level-2, level-3, level-4, enumext*} { \__enumext_tmp:n {#1} }
-\cs_set_protected:Npn \__enumext_tmp:n #1
+\clist_map_inline:nn
   {
-    \keys_define:nn { enumext / #1 }
-      {
-        resume .code:n = {
-                           \bool_if:NF \l__enumext_print_keyans_cmd_bool
-                             {
-                               \tl_set:Nn \l__enumext_series_name_tl {##1}
-                               \tl_if_empty:NTF \l__enumext_series_name_tl
-                                 {
-                                   \bool_set_true:N \l__enumext_resume_count_bool
-                                 }
-                                 {
-                                   \__enumext_resume:n {##1}
-                                 }
-                             }
-                          },
-      }
+    {level-1}{i}, {level-2}{ii}, {level-3}{iii}, {level-4}{iv},{enumext*}{vii},
   }
-\clist_map_inline:nn {level-1, level-2, level-3, level-4} { \__enumext_tmp:n {#1} }
-\keys_define:nn { enumext / enumext* }
-  {
-    resume .code:n = {
-                       \bool_if:NF \l__enumext_print_keyans_cmd_bool
-                         {
-                           \tl_set:Nn \l__enumext_series_name_tl {##1}
-                           \tl_if_empty:NTF \l__enumext_series_name_tl
-                             {
-                               \bool_set_true:N \l__enumext_resume_count_bool
-                             }
-                             {
-                               \__enumext_resume_vii:n {#1}
-                             }
-                         }
-                      },
-   }
+  { \__enumext_tmp:nn #1 }
 %% Internal function to save counter value and set int vars for |series|, |resume| and |resume*| keys.
 \cs_new_protected:Nn \__enumext_standar_save_counter:
   {
@@ -2114,9 +2099,12 @@
   {
     \cs_set:Npn \__enumext_tmp:n ##1
       {
-        \exp_args:Ne \int_set:cn { l__enumext_start_ \int_to_roman:n {##1} _int }
+        \bool_if:cT { l__enumext_resume_count_ \int_to_roman:n {##1} _bool }
           {
-            \int_use:c { c@ __enumext_resume_ \int_to_roman:n {##1} _int } + 1
+            \exp_args:Ne \int_set:cn { l__enumext_start_ \int_to_roman:n {##1} _int }
+              {
+                \int_use:c { c@ __enumext_resume_ \int_to_roman:n {##1} _int } + 1
+              }
           }
       }
     \int_compare:nNnT { \l__enumext_level_int } > { 0 }
@@ -2129,10 +2117,9 @@
                {
                  \int_use:c { g__enumext_resume_ \l__enumext_store_name_tl _int } + 1
                }
-             \int_step_function:nnN { 2 } { \l__enumext_level_int } \__enumext_tmp:n
            }
            {
-             \int_step_function:nnN { 1 } { \l__enumext_level_int } \__enumext_tmp:n
+             \int_step_function:nN { \l__enumext_level_int } \__enumext_tmp:n
            }
       }
     \int_compare:nNnT { \l__enumext_level_h_int } = { 1 }
@@ -2147,9 +2134,12 @@
               }
           }
           {
-            \int_set:Nn \l__enumext_start_vii_int
+            \bool_if:NT \l__enumext_resume_count_vii_bool
               {
-                \int_use:c { c@ __enumext_resume_vii_int } + 1
+                \int_set:Nn \l__enumext_start_vii_int
+                  {
+                    \int_use:c { c@ __enumext_resume_vii_int } + 1
+                  }
               }
           }
       }
@@ -2272,9 +2262,6 @@
             \msg_error:nnn { enumext } { unknown-series-standar } {#1}
           }
       }
-  }
-\cs_new_protected:Npn \__enumext_resume_vii:n #1
-  {
     \int_compare:nNnT { \l__enumext_level_h_int } = { 1 }
       {
         \tl_if_exist:cTF { g__enumext_series_ \tl_to_str:n {#1} _vii_tl }
@@ -2327,10 +2314,9 @@
                {
                  \int_use:c { g__enumext_resume_ \l__enumext_store_name_tl _int } + 1
                }
-             \int_step_function:nnN { 2 } { \l__enumext_level_int } \__enumext_tmp:n
            }
            {
-             \int_step_function:nnN { 1 } { \l__enumext_level_int } \__enumext_tmp:n
+             \int_step_function:nN { \l__enumext_level_int } \__enumext_tmp:n
            }
       }
     \int_compare:nNnT { \l__enumext_level_h_int } = { 1 }
@@ -2357,8 +2343,13 @@
   {
     \cs_set:Npn \__enumext_tmp:n ##1
       {
-        \tl_if_empty:cF { g__enumext_save_last_keys_ \int_to_roman:n {##1} _tl }
+        \tl_if_empty:cTF { g__enumext_save_last_keys_ \int_to_roman:n {##1} _tl }
           {
+            \bool_set_true:c { l__enumext_resume_count_ \int_to_roman:n {##1} _bool }
+            \__enumext_resume_counter:
+          }
+          {
+            \bool_set_true:c { l__enumext_resume_count_ \int_to_roman:n {##1} _bool }
             \__enumext_resume_counter:
             \exp_args:Ne \keys_set:nv
               { enumext / level-\int_use:N \l__enumext_level_int }
@@ -2367,12 +2358,17 @@
       }
     \int_compare:nNnT { \l__enumext_level_int } > { 0 }
       {
-        \int_step_function:nnN { 1 } { \l__enumext_level_int } \__enumext_tmp:n
+        \int_step_function:nN { \l__enumext_level_int } \__enumext_tmp:n
       }
     \int_compare:nNnT { \l__enumext_level_h_int } = { 1 }
       {
-        \tl_if_empty:NF \g__enumext_save_last_keys_vii_tl
+        \tl_if_empty:NTF \g__enumext_save_last_keys_vii_tl
           {
+            \bool_set_true:N \l__enumext_resume_count_vii_bool
+            \__enumext_resume_counter:
+          }
+          {
+            \bool_set_true:N \l__enumext_resume_count_vii_bool
             \__enumext_resume_counter:
             \keys_set:nV { enumext / enumext* } \g__enumext_save_last_keys_vii_tl
           }
@@ -5216,14 +5212,19 @@
 %% Parse |key=val| and store keys for |enumext*| environment.
 \cs_new_protected:Npn \__enumext_parse_keys_vii:n #1
   {
+    \bool_if:NT \l__enumext_resume_count_vii_bool
+      {
+        \typeout{RESSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS}
+        \__enumext_resume_last_counter:
+      }
     \tl_if_novalue:nF {#1}
       {
-        \str_clear:N \l__enumext_series_name_str
-        \keys_set:nn { enumext / enumext* } {#1}
-        \bool_if:NF \l__enumext_print_keyans_cmd_bool
-          {
-            \__enumext_parse_series:n {#1}
-          }
+         \str_clear:N \l__enumext_series_name_str
+         \keys_set:nn { enumext / enumext* } {#1}
+         \bool_if:NF \l__enumext_print_keyans_cmd_bool
+           {
+             \__enumext_parse_series:n {#1}
+           }
         \__enumext_store_active_keys_vii:n {#1}
       }
   }
@@ -6528,19 +6529,8 @@
     The~series~'#1'~for~the~resume~key~does~not~exist~at~level~\int_use:N \l__enumext_level_int
     \c_space_tl of~enumext~environment~ \msg_line_context:.
   }
-\msg_new:nnnn { enumext-reset } { invalid-clist }
-  { The~argument~must~have~1~or~2~elements~separated~by~a~comma. }
-  { Received:~'#1'. }
-\msg_new:nnn { enumext-reset } { invalid-single-arg-star }
-  { The~single~argument~must~be~exactly~'enumext*'~when~using~a~'*'. }
-\msg_new:nnnn { enumext-reset } { invalid-single-arg-no-star }
-  { A~single~argument~is~not~allowed~without~a~'*'. }
-  { Received:~'#1'. }
-\msg_new:nnnn { enumext-reset } { out-of-range }
+\msg_new:nnnn { enumext } { out-of-range }
   { The~number~must~be~exactly~1,~2,~3~or~4. }
-  { Received:~'#1'. }
-\msg_new:nnnn { enumext-reset } { invalid-package }
-  { The~first~element~must~be~exactly~'enumext'. }
   { Received:~'#1'. }
 \file_input_stop:
 %% 

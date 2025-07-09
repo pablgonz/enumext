@@ -5739,6 +5739,10 @@ Some text here
 % \begin{description}[font=\small\sffamily,wide=0pt,style=multiline,leftmargin=1.1\descrwidth,nosep,noitemsep]
 %  \item [\fileversion{} (ctan), \filedate]
 %    \begin{itemize}
+%      \item Fixed bad interaction between |\setenumext| and the \texttt{\textcolor{optcolor}{resume}} key.
+%    \end{itemize}
+%  \item [v1.6 (ctan), 2025-07-04]
+%    \begin{itemize}
 %      \item Syntax simplification for |\setenumextmeta|.
 %      \item Environments can be started with the key \texttt{\textcolor{optcolor}{resume}} \emph{without value}.
 %      \item Add |\resetenumext|, \texttt{\textcolor{optcolor}{reset}} and \texttt{\textcolor{optcolor}{reset}}|*| keys.
@@ -5878,7 +5882,7 @@ Some text here
 %    \end{macrocode}
 % Now declare the \mypkg*{enumext} package.
 %    \begin{macrocode}
-\ProvidesExplPackage {enumext} {2025-07-04} {1.6} {Enumerate exercise sheets}
+\ProvidesExplPackage {enumext} {2025-07-09} {1.7} {Enumerate exercise sheets}
 %    \end{macrocode}
 % Finally check if the \mypkg{multicol} package are loaded, if not we load it.
 %    \begin{macrocode}
@@ -6001,9 +6005,11 @@ Some text here
 \bool_new:N \l_@@_resume_count_bool
 \cs_set_protected:Npn \@@_tmp:n #1
   {
-    \bool_new:c { l_@@_resume_count_#1_bool }
-    \bool_new:c { l_@@_resume_series_#1_bool  }
-    \tl_new:c   { g_@@_save_last_keys_#1_tl   }
+    \bool_new:c { l_@@_resume_count_#1_bool  }
+    \tl_new:c   { l_@@_series_name_#1_tl     }
+    \str_new:c  { l_@@_series_name_#1_str    }
+    \bool_new:c { l_@@_resume_series_#1_bool }
+    \tl_new:c   { g_@@_save_last_keys_#1_tl  }
   }
 \clist_map_inline:nn { i, ii, iii, iv, vii } { \@@_tmp:n {#1} }
 %    \end{macrocode}
@@ -9438,44 +9444,50 @@ Some text here
 % some specific \mymeta{keys}.
 %
 % \begin{macro}[int]{series, resume, resume*, }
-%     We define the keys \mykey{series}, \mykey{resume}
-%     and \mykey{resume*} for the \emph{\enquote{all levels}}
-%     of \myenv*{enumext} and \myenv*{enumext*}.
-%     Here we do not need to make sure that |\printkeyans| is not running
-%     otherwise the \emph{start value} of the environments would be increased when
-%     using \mykey{resume} or \mykey{resume}|*| keys.
-% \iffalse
-%% Add |series|, |resume| and |resume*| keys for |enumext| and |enumext*|.
-% \fi
-%    \begin{macrocode}
-\str_clear_new:N \l_@@_series_name_str
-%    \end{macrocode}
+%   We define the keys \mykey{series}, \mykey{resume}
+%   and \mykey{resume*} for the \emph{\enquote{all levels}}
+%   of \myenv*{enumext} and \myenv*{enumext*}.
+%   Here we do not need to make sure that |\printkeyans| is not running
+%   otherwise the \emph{start value} of the environments would be increased when
+%   using \mykey{resume} or \mykey{resume}|*| keys.
+%
 %   In version 1.6 it is allowed to pass the key \mykey{resume} \emph{without
 %   value} by means of the command |\setenumext|, for the correct operation
 %   of this we must set the boolean variable \myvarenv{l__@@_resume_count_bool}
 %   set by the key \mykey{resume} \emph{without value} to \enquote{true} to
 %   be later processed by the function \cs{@@_parse_series:n} in the definition
 %   of the environments \myenv*{enumext} and \myenv*{enumext*}.
+% \iffalse
+%% Add |series|, |resume| and |resume*| keys for |enumext| and |enumext*|.
+% \fi
 %    \begin{macrocode}
 \cs_set_protected:Npn \@@_tmp:nn #1 #2
   {
     \keys_define:nn { enumext / #1 }
       {
-        series .str_set:c = { l_@@_series_name_#2_str },
-        series .value_required:n = true,
-        resume .code:n    =
+        series  .str_set:N = \l_@@_series_name_str,
+        series  .value_required:n = true,
+        resume  .code:n = {
                             \bool_if:NF \l_@@_print_keyans_cmd_bool
                               {
                                 \tl_set:Nn \l_@@_series_name_tl {##1}
                                 \tl_if_empty:NTF \l_@@_series_name_tl
                                   {
                                     \bool_set_true:c { l_@@_resume_count_#2_bool }
-                                    \typeout{HERENEWCODE}
+                                    \bool_set_eq:Nc \l_@@_resume_count_bool { l_@@_resume_count_#2_bool }
                                   }
                                   {
                                     \@@_resume:n {##1}
                                   }
-                              },
+                              }
+                          },
+        resume* .code:n = {
+                            \bool_if:NF \l_@@_print_keyans_cmd_bool
+                              {
+                                \@@_resume_star:
+                              }
+                           },
+        resume* .value_forbidden:n = true,
       }
   }
 \clist_map_inline:nn
@@ -9623,9 +9635,12 @@ Some text here
   {
     \cs_set:Npn \@@_tmp:n ##1
       {
-        \exp_args:Ne \int_set:cn { l_@@_start_ \int_to_roman:n {##1} _int }
+        \bool_if:cT { l_@@_resume_count_ \int_to_roman:n {##1} _bool }
           {
-            \int_use:c { c@ @@_resume_ \int_to_roman:n {##1} _int } + 1
+            \exp_args:Ne \int_set:cn { l_@@_start_ \int_to_roman:n {##1} _int }
+              {
+                \int_use:c { c@ @@_resume_ \int_to_roman:n {##1} _int } + 1
+              }
           }
       }
     \int_compare:nNnT { \l_@@_level_int } > { 0 }
@@ -9640,10 +9655,7 @@ Some text here
                }
            }
            {
-			 \int_set:cn { l_@@_start_ \@@_level: _int }
-			   {
-				 \int_use:c { c@ @@_resume_ \@@_level: _int } + 1
-			   }
+             \int_step_function:nN { \l_@@_level_int } \@@_tmp:n
            }
       }
     \int_compare:nNnT { \l_@@_level_h_int } = { 1 }
@@ -9658,9 +9670,12 @@ Some text here
               }
           }
           {
-            \int_set:Nn \l_@@_start_vii_int
+            \bool_if:NT \l_@@_resume_count_vii_bool
               {
-                \int_use:c { c@ @@_resume_vii_int } + 1
+                \int_set:Nn \l_@@_start_vii_int
+                  {
+                    \int_use:c { c@ @@_resume_vii_int } + 1
+                  }
               }
           }
       }
@@ -9776,15 +9791,11 @@ Some text here
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_resume_last_counter:
   {
-    \int_compare:nNnT { \l_@@_level_int } > { 0 }
+    \bool_lazy_and:nnT
+      { \bool_if_p:N \l_@@_resume_count_bool }
+      { \tl_if_empty_p:N \l_@@_series_name_tl }
       {
-        \bool_lazy_and:nnT
-          { \bool_if_p:c { l_@@_resume_count_ \@@_level: _bool } }
-          { \tl_if_empty_p:N \l_@@_series_name_tl }
-          {
-            \typeout{ZZZZZZZZZZZZZZZZZZZZZzz}
-            \@@_resume_counter:
-          }
+        \@@_resume_counter:
       }
   }
 %    \end{macrocode}
@@ -9819,14 +9830,12 @@ Some text here
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_parse_series:n #1
   {
-    \str_set_eq:Nc \l_@@_series_name_str { l_@@_series_name_ \@@_level: _str }
     \str_if_empty:NTF \l_@@_series_name_str
       {
         \int_compare:nNnT { \l_@@_level_int } > { 0 }
           {
             \@@_save_last_keys:n {#1}
             \@@_resume_last_counter:
-            %%\@@_resume_standar_last_counter:
           }
         \int_compare:nNnT { \l_@@_level_h_int } = { 1 }
           {
@@ -9867,10 +9876,9 @@ Some text here
 %
 % \subsubsection{Internal functions for \texttt{resume} key with value}
 %
-% \begin{macro}{\@@_resume:n, \@@_resume_vii:n}
-%   The functions \cs{@@_resume:n} and \cs{@@_resume_vii:n}
-%   will handle the \emph{argument} \mymarg{series name} passed to the
-%   \mykey{resume} key in \myenv*{enumext} and \myenv*{enumext*} environments.
+% \begin{macro}{\@@_resume:n}
+%   The function \cs{@@_resume:n} will handle the \emph{argument} \mymarg{series name}
+%   passed to the \mykey{resume} key in \myenv*{enumext} and \myenv*{enumext*} environments.
 %   First we will check if the global variable \myvarenv{g__@@_series_\mymeta[cf=gray]{series name}_X_tl}
 %   exists, if so we will call the function \cs{@@_resume_series:n} and pass the \mymeta{keys}
 %   stored in \myvarenv{g__@@_series_\mymeta[cf=gray]{series name}_X_tl} to the environments,
@@ -9893,9 +9901,6 @@ Some text here
             \msg_error:nnn { enumext } { unknown-series-standar } {#1}
           }
       }
-  }
-\cs_new_protected:Npn \@@_resume_vii:n #1
-  {
     \int_compare:nNnT { \l_@@_level_h_int } = { 1 }
       {
         \tl_if_exist:cTF { g_@@_series_ \tl_to_str:n {#1} _vii_tl }
@@ -9966,10 +9971,9 @@ Some text here
                {
                  \int_use:c { g_@@_resume_ \l_@@_store_name_tl _int } + 1
                }
-             \int_step_function:nnN { 2 } { \l_@@_level_int } \@@_tmp:n
            }
            {
-             \int_step_function:nnN { 1 } { \l_@@_level_int } \@@_tmp:n
+             \int_step_function:nN { \l_@@_level_int } \@@_tmp:n
            }
       }
     \int_compare:nNnT { \l_@@_level_h_int } = { 1 }
@@ -10012,8 +10016,13 @@ Some text here
   {
     \cs_set:Npn \@@_tmp:n ##1
       {
-        \tl_if_empty:cF { g_@@_save_last_keys_ \int_to_roman:n {##1} _tl }
+        \tl_if_empty:cTF { g_@@_save_last_keys_ \int_to_roman:n {##1} _tl }
           {
+            \bool_set_true:c { l_@@_resume_count_ \int_to_roman:n {##1} _bool }
+            \@@_resume_counter:
+          }
+          {
+            \bool_set_true:c { l_@@_resume_count_ \int_to_roman:n {##1} _bool }
             \@@_resume_counter:
             \exp_args:Ne \keys_set:nv
               { enumext / level-\int_use:N \l_@@_level_int }
@@ -10022,12 +10031,17 @@ Some text here
       }
     \int_compare:nNnT { \l_@@_level_int } > { 0 }
       {
-        \int_step_function:nnN { 1 } { \l_@@_level_int } \@@_tmp:n
+        \int_step_function:nN { \l_@@_level_int } \@@_tmp:n
       }
     \int_compare:nNnT { \l_@@_level_h_int } = { 1 }
       {
-        \tl_if_empty:NF \g_@@_save_last_keys_vii_tl
+        \tl_if_empty:NTF \g_@@_save_last_keys_vii_tl
           {
+            \bool_set_true:N \l_@@_resume_count_vii_bool
+            \@@_resume_counter:
+          }
+          {
+            \bool_set_true:N \l_@@_resume_count_vii_bool
             \@@_resume_counter:
             \keys_set:nV { enumext / enumext* } \g_@@_save_last_keys_vii_tl
           }
@@ -14994,14 +15008,19 @@ Some text here
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_parse_keys_vii:n #1
   {
+    \bool_if:NT \l_@@_resume_count_vii_bool
+      {
+        \typeout{RESSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS}
+        \@@_resume_last_counter:
+      }
     \tl_if_novalue:nF {#1}
       {
-        \str_clear:N \l_@@_series_name_str
-        \keys_set:nn { enumext / enumext* } {#1}
-        \bool_if:NF \l_@@_print_keyans_cmd_bool
-          {
-            \@@_parse_series:n {#1}
-          }
+         \str_clear:N \l_@@_series_name_str
+         \keys_set:nn { enumext / enumext* } {#1}
+         \bool_if:NF \l_@@_print_keyans_cmd_bool
+           {
+             \@@_parse_series:n {#1}
+           }
         \@@_store_active_keys_vii:n {#1}
       }
   }
@@ -17027,19 +17046,8 @@ Some text here
     The~series~'#1'~for~the~resume~key~does~not~exist~at~level~\int_use:N \l_@@_level_int
     \c_space_tl of~enumext~environment~ \msg_line_context:.
   }
-\msg_new:nnnn { enumext-reset } { invalid-clist }
-  { The~argument~must~have~1~or~2~elements~separated~by~a~comma. }
-  { Received:~'#1'. }
-\msg_new:nnn { enumext-reset } { invalid-single-arg-star }
-  { The~single~argument~must~be~exactly~'enumext*'~when~using~a~'*'. }
-\msg_new:nnnn { enumext-reset } { invalid-single-arg-no-star }
-  { A~single~argument~is~not~allowed~without~a~'*'. }
-  { Received:~'#1'. }
-\msg_new:nnnn { enumext-reset } { out-of-range }
+\msg_new:nnnn { enumext } { out-of-range }
   { The~number~must~be~exactly~1,~2,~3~or~4. }
-  { Received:~'#1'. }
-\msg_new:nnnn { enumext-reset } { invalid-package }
-  { The~first~element~must~be~exactly~'enumext'. }
   { Received:~'#1'. }
 %    \end{macrocode}
 % \subsection{Finish package}
