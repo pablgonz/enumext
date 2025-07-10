@@ -36,7 +36,7 @@
 %% ------------------------------------------------------------------------
 %% 
 \NeedsTeXFormat{LaTeX2e}[2025-06-01]
-\ProvidesExplPackage {enumext} {2025-07-09} {1.7} {Enumerate exercise sheets}
+\ProvidesExplPackage {enumext} {2025-07-10} {1.7} {Enumerate exercise sheets}
 \hook_gput_code:nnn {begindocument} {enumext}
   {
     \IfPackageLoadedTF { multicol }
@@ -87,11 +87,10 @@
 \bool_new:N \l__enumext_resume_count_bool
 \cs_set_protected:Npn \__enumext_tmp:n #1
   {
-    \bool_new:c { l__enumext_resume_count_#1_bool  }
-    \tl_new:c   { l__enumext_series_name_#1_tl     }
-    \str_new:c  { l__enumext_series_name_#1_str    }
-    \bool_new:c { l__enumext_resume_series_#1_bool }
-    \tl_new:c   { g__enumext_save_last_keys_#1_tl  }
+    \bool_new:c { l__enumext_resume_count_#1_bool    }
+    \bool_new:c { l__enumext_resume_series_#1_bool   }
+    \bool_new:c { l__enumext_resume_star_key_#1_bool }
+    \tl_new:c   { g__enumext_resume_last_keys_#1_tl  }
   }
 \clist_map_inline:nn { i, ii, iii, iv, vii } { \__enumext_tmp:n {#1} }
 %% Variables used by |label|, |ref| and |widest| keys.
@@ -1985,7 +1984,9 @@
                                 \tl_if_empty:NTF \l__enumext_series_name_tl
                                   {
                                     \bool_set_true:c { l__enumext_resume_count_#2_bool }
-                                    \bool_set_eq:Nc \l__enumext_resume_count_bool { l__enumext_resume_count_#2_bool }
+                                    \bool_set_eq:Nc
+                                      \l__enumext_resume_count_bool
+                                      { l__enumext_resume_count_#2_bool }
                                   }
                                   {
                                     \__enumext_resume:n {##1}
@@ -1995,6 +1996,10 @@
         resume* .code:n = {
                             \bool_if:NF \l__enumext_print_keyans_cmd_bool
                               {
+                                \bool_set_true:c { l__enumext_resume_count_#2_bool }
+                                \bool_set_eq:Nc
+                                  \l__enumext_resume_count_bool { l__enumext_resume_count_#2_bool }
+                                \bool_set_true:c { l__enumext_resume_star_key_#2_bool }
                                 \__enumext_resume_star:
                               }
                            },
@@ -2178,18 +2183,21 @@
       {
         \bool_if:cF { l__enumext_resume_series_ \__enumext_level: _bool }
           {
-            \tl_gclear:c { g__enumext_save_last_keys_ \__enumext_level: _tl }
-            \tl_gset:ce
-              { g__enumext_save_last_keys_ \__enumext_level: _tl }
-              { \__enumext_filter_series:n {#1} }
+            \bool_if:cF { l__enumext_resume_star_key_ \__enumext_level: _bool }
+              {
+                \tl_gclear:c { g__enumext_resume_last_keys_ \__enumext_level: _tl }
+                \tl_gset:ce
+                  { g__enumext_resume_last_keys_ \__enumext_level: _tl }
+                  { \__enumext_filter_series:n {#1} }
+              }
           }
       }
     \int_compare:nNnT { \l__enumext_level_h_int } = { 1 }
       {
         \bool_if:NF \l__enumext_resume_series_vii_bool
           {
-            \tl_gclear:N \g__enumext_save_last_keys_vii_tl
-            \tl_gset:Ne \g__enumext_save_last_keys_vii_tl { \__enumext_filter_series:n {#1} }
+            \tl_gclear:N \g__enumext_resume_last_keys_vii_tl
+            \tl_gset:Ne \g__enumext_resume_last_keys_vii_tl { \__enumext_filter_series:n {#1} }
           }
       }
   }
@@ -2343,17 +2351,15 @@
   {
     \cs_set:Npn \__enumext_tmp:n ##1
       {
-        \tl_if_empty:cTF { g__enumext_save_last_keys_ \int_to_roman:n {##1} _tl }
+        \tl_if_empty:cTF { g__enumext_resume_last_keys_ \int_to_roman:n {##1} _tl }
           {
-            \bool_set_true:c { l__enumext_resume_count_ \int_to_roman:n {##1} _bool }
             \__enumext_resume_counter:
           }
           {
-            \bool_set_true:c { l__enumext_resume_count_ \int_to_roman:n {##1} _bool }
             \__enumext_resume_counter:
             \exp_args:Ne \keys_set:nv
               { enumext / level-\int_use:N \l__enumext_level_int }
-              { g__enumext_save_last_keys_ \int_to_roman:n {##1} _tl }
+              { g__enumext_resume_last_keys_ \int_to_roman:n {##1} _tl }
           }
       }
     \int_compare:nNnT { \l__enumext_level_int } > { 0 }
@@ -2362,15 +2368,13 @@
       }
     \int_compare:nNnT { \l__enumext_level_h_int } = { 1 }
       {
-        \tl_if_empty:NTF \g__enumext_save_last_keys_vii_tl
+        \tl_if_empty:NTF \g__enumext_resume_last_keys_vii_tl
           {
-            \bool_set_true:N \l__enumext_resume_count_vii_bool
             \__enumext_resume_counter:
           }
           {
-            \bool_set_true:N \l__enumext_resume_count_vii_bool
             \__enumext_resume_counter:
-            \keys_set:nV { enumext / enumext* } \g__enumext_save_last_keys_vii_tl
+            \keys_set:nV { enumext / enumext* } \g__enumext_resume_last_keys_vii_tl
           }
       }
   }
@@ -5214,7 +5218,6 @@
   {
     \bool_if:NT \l__enumext_resume_count_vii_bool
       {
-        \typeout{RESSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS}
         \__enumext_resume_last_counter:
       }
     \tl_if_novalue:nF {#1}

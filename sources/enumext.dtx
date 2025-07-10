@@ -608,7 +608,7 @@
                     triangleright, diamond, circ, parleft, star, centering, ast, hyperlink, hypertarget, newtheorem, counterwithin, %
                     aux_i, aux_ii, aux_iii, exp_args, if@noitemarg, if, if@hyper@item, hyper, noitemarg, regex_match, regex_if_match,%
                     skip_vertical, obeyedline, tl_replace_all, mbox, tl_rescan, tl_set_rescan, tex_scantokens, setcounter,
-                    .code, .meta, marginpar, },%
+                    .code, .meta, marginpar, c_zero_skip,},%
 % Other words 3
     keywordstyle  = [3]{\color{optcolor!85}},%
     keywords      = [3]{document,article,setlength,pagestyle,definecolor, chapter,},%,
@@ -1845,7 +1845,7 @@
 % \smallskip
 %
 % \keyexamp{labelwidth}{rigid length}{by label}
-% Sets the \emph{width} of the box containing the current \mymeta{label}
+% Sets the \emph{width} of the label box containing the current \mymeta{label}
 % set by the \mykey{label} key.
 % Internally sets the value of \ics{labelwidth} for the current level.
 % The default values are calculated by means of the \emph{width} of a box
@@ -1874,7 +1874,7 @@
 %
 % \keyexamp{align}{left \textnormal{\textcolor{lightgray}{\textbar}} right \textnormal{\textcolor{lightgray}{\textbar}} center}{left}
 % Sets the \emph{aligned} of \mymeta{label} defined by \mykey{label}
-% key on the current level in the label box.
+% key on the current level in the label box of width set by \mykey{labelwidth}.
 %
 % \smallskip
 %
@@ -2418,6 +2418,16 @@
 %  \mymarg{series name} or in an internal version of \mymarg{series name}
 %  this must be placed to the \emph{right} of the key
 %  \mykey{resume}|=|\mymarg{series name} or \mykey{resume*}.
+% \end{important}
+%
+% \smallskip
+%
+% \begin{important}*
+%  When the \mykey{resume}|*| key is executed consecutively, it does not
+%  rewrite the \mymeta{keys} stored in the internal version of
+%  \mymarg{series name} and if the environment that precedes it does not
+%  have the \emph{optional argument}, it will just continue with the
+%  numbering.
 % \end{important}
 %
 % \subsection{Keys for \texttt{reset}}\label{sec:reset}
@@ -5739,7 +5749,9 @@ Some text here
 % \begin{description}[font=\small\sffamily,wide=0pt,style=multiline,leftmargin=1.1\descrwidth,nosep,noitemsep]
 %  \item [\fileversion{} (ctan), \filedate]
 %    \begin{itemize}
+%      \item Fixed |\setenumext{enumext*}{|\texttt{\textcolor{optcolor}{resume}}|}|.
 %      \item Fixed bad interaction between |\setenumext| and the \texttt{\textcolor{optcolor}{resume}} key.
+%      \item The behavior of the key \texttt{\textcolor{optcolor}{resume}}|*| has been updated and documented.
 %    \end{itemize}
 %  \item [v1.6 (ctan), 2025-07-04]
 %    \begin{itemize}
@@ -5882,7 +5894,7 @@ Some text here
 %    \end{macrocode}
 % Now declare the \mypkg*{enumext} package.
 %    \begin{macrocode}
-\ProvidesExplPackage {enumext} {2025-07-09} {1.7} {Enumerate exercise sheets}
+\ProvidesExplPackage {enumext} {2025-07-10} {1.7} {Enumerate exercise sheets}
 %    \end{macrocode}
 % Finally check if the \mypkg{multicol} package are loaded, if not we load it.
 %    \begin{macrocode}
@@ -5994,7 +6006,8 @@ Some text here
 % \end{variable}
 %
 % \begin{variable}[int]{\l_@@_series_name_tl, \l_@@_resume_count_bool,
-%                       \l_@@_resume_series_X_bool, \g_@@_save_last_keys_X_tl,}
+%                       \l_@@_resume_count_X_bool, \l_@@_resume_series_X_bool,
+%                       \l_@@_resume_star_key_X_bool, \g_@@_resume_last_keys_X_tl,}
 %   Internal variables used by \mykey{resume}, \mykey{resume*} and
 %   \mykey{series} keys (\S\ref{key:series}).
 % \iffalse
@@ -6005,11 +6018,10 @@ Some text here
 \bool_new:N \l_@@_resume_count_bool
 \cs_set_protected:Npn \@@_tmp:n #1
   {
-    \bool_new:c { l_@@_resume_count_#1_bool  }
-    \tl_new:c   { l_@@_series_name_#1_tl     }
-    \str_new:c  { l_@@_series_name_#1_str    }
-    \bool_new:c { l_@@_resume_series_#1_bool }
-    \tl_new:c   { g_@@_save_last_keys_#1_tl  }
+    \bool_new:c { l_@@_resume_count_#1_bool    }
+    \bool_new:c { l_@@_resume_series_#1_bool   }
+    \bool_new:c { l_@@_resume_star_key_#1_bool }
+    \tl_new:c   { g_@@_resume_last_keys_#1_tl  }
   }
 \clist_map_inline:nn { i, ii, iii, iv, vii } { \@@_tmp:n {#1} }
 %    \end{macrocode}
@@ -7140,10 +7152,17 @@ Some text here
 %   will be used internally by the \mykey{mini-env} key, it is NOT documented
 %   in the user interface and is for internal use only. Within this environment
 %   we redefine |\footnote| to make them look the same as if they were
-%   elsewhere in the document. This function is passed to the function
-%   \cs{@@_safe_exec:} in the \myenv*{enumext} environment definition (\S\ref{env:enumext})
+%   elsewhere in the document. This implementation is adapted from the answer
+%   given by Max Chernoff \texttt{(@MaxChernoff)} in \href{https://tex.stackexchange.com/a/720966/7832}{Customize \texttt{minipage} to support spaces below it}.
+%
+% \smallskip
+%
+% \begin{important}*
+%   This function is passed to the function \cs{@@_safe_exec:} in the
+%   \myenv*{enumext} environment definition (\S\ref{env:enumext})
 %   and \cs{@@_safe_exec_vii:} in the \myenv*{enumext*} environment
-%   definition (\S\ref{env:starred})
+%   definition (\S\ref{env:starred}).
+% \end{important}
 % \iffalse
 %% Function for define a internal |minipage| environment with |\footnote| support.
 % \fi
@@ -9474,7 +9493,9 @@ Some text here
                                 \tl_if_empty:NTF \l_@@_series_name_tl
                                   {
                                     \bool_set_true:c { l_@@_resume_count_#2_bool }
-                                    \bool_set_eq:Nc \l_@@_resume_count_bool { l_@@_resume_count_#2_bool }
+                                    \bool_set_eq:Nc
+                                      \l_@@_resume_count_bool
+                                      { l_@@_resume_count_#2_bool }
                                   }
                                   {
                                     \@@_resume:n {##1}
@@ -9484,6 +9505,10 @@ Some text here
         resume* .code:n = {
                             \bool_if:NF \l_@@_print_keyans_cmd_bool
                               {
+                                \bool_set_true:c { l_@@_resume_count_#2_bool }
+                                \bool_set_eq:Nc
+                                  \l_@@_resume_count_bool { l_@@_resume_count_#2_bool }
+                                \bool_set_true:c { l_@@_resume_star_key_#2_bool }
                                 \@@_resume_star:
                               }
                            },
@@ -9738,15 +9763,20 @@ Some text here
 % \begin{macro}{\@@_save_last_keys:n, \@@_resume_last_counter:,}
 %   The function \cs{@@_save_last_keys:n} will be in charge of saving the
 %   filtering \mymeta{keys} when the keys \mykey{series}|=|\mymarg{series name}
-%   or \mykey{resume}|=|\mymarg{series name} are NOT active and will save
-%   them in the variable \myvarenv{g__@@_save_last_keys_X_tl} for the
-%   \myenv*{enumext} environment and in the variable \myvarenv{g__@@_save_last_keys_vii_tl}
+%   or \mykey{resume}|=|\mymarg{series name} or \mykey{resume}|*| are NOT
+%   active and will save them in the variable \myvarenv{g__@@_resume_last_keys_X_tl} for the
+%   \myenv*{enumext} environment and in the variable \myvarenv{g__@@_resume_last_keys_vii_tl}
 %   for the \myenv*{enumext*} environment.
+%
+% \smallskip
+%
 % \begin{important}*
-%   The value of boolean variable \cs[no-index]{l_@@_resume_series_X_bool}
+%   The boolean variable \myvarenv{l__@@_resume_series_X_bool}
 %   is set to \enquote{true} by the key \mykey{resume}|=|\mymarg{series name},
-%   in this case we must make sure it is set to \enquote{false} so that it
-%   does not overwrite the default filtered \mymeta{keys}.
+%   the boolean variable \myvarenv{l__@@_resume_star_key_X_bool}
+%   is set to \enquote{true} by the key \mykey{resume}|*|, in this case
+%   we need to make sure both variables are set to “\enquote{false} so that
+%   they don’t override the default filtered \mymeta{keys}.
 % \end{important}
 % \iffalse
 %% Save keys for last environment "without" |series| and |resume=name| keys active.
@@ -9758,18 +9788,21 @@ Some text here
       {
         \bool_if:cF { l_@@_resume_series_ \@@_level: _bool }
           {
-            \tl_gclear:c { g_@@_save_last_keys_ \@@_level: _tl }
-            \tl_gset:ce
-              { g_@@_save_last_keys_ \@@_level: _tl }
-              { \@@_filter_series:n {#1} }
+            \bool_if:cF { l_@@_resume_star_key_ \@@_level: _bool }
+              {
+                \tl_gclear:c { g_@@_resume_last_keys_ \@@_level: _tl }
+                \tl_gset:ce
+                  { g_@@_resume_last_keys_ \@@_level: _tl }
+                  { \@@_filter_series:n {#1} }
+              }
           }
       }
     \int_compare:nNnT { \l_@@_level_h_int } = { 1 }
       {
         \bool_if:NF \l_@@_resume_series_vii_bool
           {
-            \tl_gclear:N \g_@@_save_last_keys_vii_tl
-            \tl_gset:Ne \g_@@_save_last_keys_vii_tl { \@@_filter_series:n {#1} }
+            \tl_gclear:N \g_@@_resume_last_keys_vii_tl
+            \tl_gset:Ne \g_@@_resume_last_keys_vii_tl { \@@_filter_series:n {#1} }
           }
       }
   }
@@ -9780,10 +9813,14 @@ Some text here
 %   \mykey{resume} key is being used \emph{without value} either in the
 %   \emph{optional argument} of the environments or through the
 %   |\setenumext| command.
+%
+% \smallskip
+%
 % \begin{important}*
-%   The value of boolean variable \cs[no-index]{l_@@_resume_count_bool}
-%   is set to \enquote{true} by the key \mykey{resume} \emph{without value}
-%   and set to \enquote{false} by the keys \mykey{start} and \mykey{start*} (\S\ref{key:start-widest}).
+%   The boolean variable \cs[no-index]{l_@@_resume_count_bool}
+%   is set to \enquote{true} by the keys \mykey{resume} \emph{without value}
+%   and \mykey{resume}|*|; and set to \enquote{false} by the keys
+%   \mykey{start} and \mykey{start*} (\S\ref{key:start-widest}).
 % \end{important}
 % \iffalse
 %% Resume the counters for last environment "without" |series| and |resume=name| keys active.
@@ -10016,17 +10053,15 @@ Some text here
   {
     \cs_set:Npn \@@_tmp:n ##1
       {
-        \tl_if_empty:cTF { g_@@_save_last_keys_ \int_to_roman:n {##1} _tl }
+        \tl_if_empty:cTF { g_@@_resume_last_keys_ \int_to_roman:n {##1} _tl }
           {
-            \bool_set_true:c { l_@@_resume_count_ \int_to_roman:n {##1} _bool }
             \@@_resume_counter:
           }
           {
-            \bool_set_true:c { l_@@_resume_count_ \int_to_roman:n {##1} _bool }
             \@@_resume_counter:
             \exp_args:Ne \keys_set:nv
               { enumext / level-\int_use:N \l_@@_level_int }
-              { g_@@_save_last_keys_ \int_to_roman:n {##1} _tl }
+              { g_@@_resume_last_keys_ \int_to_roman:n {##1} _tl }
           }
       }
     \int_compare:nNnT { \l_@@_level_int } > { 0 }
@@ -10035,15 +10070,13 @@ Some text here
       }
     \int_compare:nNnT { \l_@@_level_h_int } = { 1 }
       {
-        \tl_if_empty:NTF \g_@@_save_last_keys_vii_tl
+        \tl_if_empty:NTF \g_@@_resume_last_keys_vii_tl
           {
-            \bool_set_true:N \l_@@_resume_count_vii_bool
             \@@_resume_counter:
           }
           {
-            \bool_set_true:N \l_@@_resume_count_vii_bool
             \@@_resume_counter:
-            \keys_set:nV { enumext / enumext* } \g_@@_save_last_keys_vii_tl
+            \keys_set:nV { enumext / enumext* } \g_@@_resume_last_keys_vii_tl
           }
       }
   }
@@ -14994,14 +15027,24 @@ Some text here
 % \end{macro}
 %
 % \begin{macro}{\@@_parse_keys_vii:n}
-%  First we will clear the variable \cs{l_@@_series_name_str} used by the key
-%  \mykey{series}, process the environment \myoarg{key \textnormal{\textcolor{gray}{=}} val}
-%  and execute the function \cs{@@_parse_series:n} and used by the key
-%  \mykey{series}, then we execute the function \cs{@@_store_active_keys_vii:n}
-%  and reprocess the \mymeta{keys} to pass them to the storage \emph{sequence}
-%  if the key \mykey{save-key} is not active.
-%^^A  and finally we call the function
-%^^A  \cs{@@_nested_base_line_fix:} used by the key \mykey{base-fix}.
+%   We will first check the state of the variable \cs{l_@@_resume_count_vii_bool}
+%   set by the key \mykey{resume} and call the function \cs{@@_resume_last_counter:}
+%   if it is \enquote{true}, then we will clear the variable \cs{l_@@_series_name_str}
+%   used by the key \mykey{series}, process the environment \myoarg{key \textnormal{\textcolor{gray}{=}} val}
+%   and execute the function \cs{@@_parse_series:n} used by the key
+%   \mykey{series}, then we execute the function \cs{@@_store_active_keys_vii:n}
+%   and reprocess the \mymeta{keys} to pass them to the storage \emph{sequence}
+%   if the key \mykey{save-key} is not active.
+%
+% \smallskip
+%
+% \begin{important}*
+%  Here it is necessary to check the status of \cs{l_@@_resume_count_vii_bool}
+%  in case the key \mykey{resume} is set using |\setenumext{enumext*}{resume}|.
+% \end{important}
+%
+% \smallskip
+%
 % \iffalse
 %% Parse |key=val| and store keys for |enumext*| environment.
 % \fi
@@ -15010,7 +15053,6 @@ Some text here
   {
     \bool_if:NT \l_@@_resume_count_vii_bool
       {
-        \typeout{RESSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS}
         \@@_resume_last_counter:
       }
     \tl_if_novalue:nF {#1}

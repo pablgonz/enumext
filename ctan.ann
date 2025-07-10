@@ -1,2 +1,4 @@
 Release v1.7:
+- Fixed `\setenumext{enumext*}{resume}`.
 - Fixed bad interaction between `\setenumext` and the `resume` key.
+- The behavior of the `resume*` key has been updated and documented.
