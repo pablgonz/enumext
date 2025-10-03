@@ -608,7 +608,7 @@
                     triangleright, diamond, circ, parleft, star, centering, ast, hyperlink, hypertarget, newtheorem, counterwithin, %
                     aux_i, aux_ii, aux_iii, exp_args, if@noitemarg, if, if@hyper@item, hyper, noitemarg, regex_match, regex_if_match,%
                     skip_vertical, obeyedline, tl_replace_all, mbox, tl_rescan, tl_set_rescan, tex_scantokens, setcounter,
-                    .code, .meta, marginpar, c_zero_skip,},%
+                    .code, .meta, marginpar, c_zero_skip, tl_retokenize, },%
 % Other words 3
     keywordstyle  = [3]{\color{optcolor!85}},%
     keywords      = [3]{document,article,setlength,pagestyle,definecolor, chapter,},%,
@@ -5749,6 +5749,11 @@ Some text here
 % \begin{description}[font=\small\sffamily,wide=0pt,style=multiline,leftmargin=1.1\descrwidth,nosep,noitemsep]
 %  \item [\fileversion{} (ctan), \filedate]
 %    \begin{itemize}
+%      \item Replacing |\scantokens| (primitive) with |\tl_retokenize:n|.
+%      \item Cleanup warnings and details returned by |expltools|.
+%    \end{itemize}
+%  \item [v1.7 (ctan), 2025-07-10]
+%    \begin{itemize}
 %      \item Fixed |\setenumext{enumext*}{|\texttt{\textcolor{optcolor}{resume}}|}|.
 %      \item Fixed bad interaction between |\setenumext| and the \texttt{\textcolor{optcolor}{resume}} key.
 %      \item The behavior of the key \texttt{\textcolor{optcolor}{resume}}|*| has been updated and documented.
@@ -5894,7 +5899,7 @@ Some text here
 %    \end{macrocode}
 % Now declare the \mypkg*{enumext} package.
 %    \begin{macrocode}
-\ProvidesExplPackage {enumext} {2025-07-10} {1.7} {Enumerate exercise sheets}
+\ProvidesExplPackage {enumext} {2025-10-03} {1.8} {Enumerate exercise sheets}
 %    \end{macrocode}
 % Finally check if the \mypkg{multicol} package are loaded, if not we load it.
 %    \begin{macrocode}
@@ -6449,21 +6454,6 @@ Some text here
 %    \begin{macrocode}
 \cs_generate_variant:Nn \keys_precompile:nnN { neN }
 \cs_generate_variant:Nn \seq_use:Nn { NV }
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{\@@_scan_tokens:n,}
-%    The functions |\tl_rescan:nn| and |\tl_set_rescan:Nnn| provided
-%    by \pkg{expl3} doesn't fit the needs of this package because it does
-%    not allow catcode changes inside the argument, so verbatim stuff
-%    used inside one of \myenv*{anskey*} environment will not work. Here we
-%    create a private copy of |\tex_scantokens:D| which will serve our
-%    purposes. See the answer by Ulrich Diez in
-%    \href{https://tex.stackexchange.com/a/577183/7832}{How do use
-%    \{<setup>\} in \textbackslash tl_set_rescan:Nnn to replace
-%    \textbackslash scantokens?}.
-%    \begin{macrocode}
-\cs_new_protected:Npn \@@_scan_tokens:n #1 { \tex_scantokens:D {#1} }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -7787,9 +7777,11 @@ Some text here
          \int_set:Nn #2 {#3}
        }
        {
-         \regex_if_match:nVT { \c{Alph} | \c{alph} } {#1}
+         %%\regex_if_match:nVT { \c{Alph} | \c{alph} } {#1}
+         \regex_if_match:nVT { \c{Alph} | \c{alph} } #1
            { \int_set:Nn #2 { \int_from_alph:n {#3} } }
-         \regex_if_match:nVT { \c{Roman} | \c{roman} } {#1}
+         %%\regex_if_match:nVT { \c{Roman} | \c{roman} } {#1}
+         \regex_if_match:nVT { \c{Roman} | \c{roman} } #1
            { \int_set:Nn #2  { \int_from_roman:n {#3} } }
        }
   }
@@ -7831,9 +7823,11 @@ Some text here
         \setcounter{enumX#1} { #4 }
       }
       {
-        \regex_if_match:nVT { \c{Alph} | \c{alph} } {#2}
+        %%\regex_if_match:nVT { \c{Alph} | \c{alph} } {#2}
+        \regex_if_match:nVT { \c{Alph} | \c{alph} } #2
           { \setcounter{enumX#1} { \int_from_alph:n {#4} } }
-        \regex_if_match:nVT { \c{Roman} | \c{roman} } {#2}
+        %%\regex_if_match:nVT { \c{Roman} | \c{roman} } {#2}
+        \regex_if_match:nVT { \c{Alph} | \c{alph} } #2
           { \setcounter{enumX#1} { \int_from_roman:n {#4} } }
       }
      \@@_label_width_by_box:cv
@@ -11653,8 +11647,9 @@ Some text here
 % non-public functions from the \mypkg{scontents}\cite{scontents} package,
 % which was not the best approach. Fortunately \hologo{LaTeX} release 2025-06-01
 % implemented the new \texttt{c-type} argument in the \mypkg{ltcmd}\cite{ltnews},
-% with which we can record the \mymeta{body }of the environment in
-% \emph{verbatim mode} and, together with |\scantokens| do the work as the
+% with which we can record the \mymeta{body} of the environment in
+% \emph{verbatim mode} and |\tl_retokenize:n| (wrapper around the |\scantokens|)
+% provide by \hologo{LaTeX}3 release 2025-07-08 do the work as the
 % original implementation.
 %
 % \begin{macro}[int]{break-col, item-join, item-star, item-sym*, item-pos*,
@@ -11773,7 +11768,7 @@ Some text here
 %   sure where we're running the environment, then, we'll check the state
 %   of the variable \cs{l_@@_check_answers_bool} set by the key
 %   \mykey{no-store}. If it's true, we'll look for \myoarg{key \textnormal{\textcolor{gray}{=}} val}
-%   and verify that the \emph{argument} |c| \mymeta{body} is not empty.
+%   and verify that the \emph{argument} \texttt{c-type} \mymeta{body} is not empty.
 %   Finally, we'll run the internal check function \cs{@@_anskey_env_safe_inner:n}
 %   and call the function \cs{@@_store_anskey_arg:n}.
 % \iffalse
@@ -11854,14 +11849,14 @@ Some text here
       }
   }
 %    \end{macrocode}
-%   The \cs{@@_store_anskey_env:n} function will first pass the argument
-%   |c| \mymeta{body} to the variable \cs{l_@@_store_anskey_env_tl} and
+%   The \cs{@@_store_anskey_env:n} function will first pass the
+%   \texttt{c-type} argument \mymeta{body} to the variable \cs{l_@@_store_anskey_env_tl} and
 %   replace the macro |\obeyedline| with |^^J| and then execute the
 %   |write-env| and |overwrite| keys, check the state of the
 %   variable \cs{l_@@_anskey_env_force_eol_bool} managed by the |force-eol|
 %   key and we will add \cs{c_@@_anskey_env_hidden_space_str} if
 %   necessary. Finally we will use |\exp_args:Ne| on the
-%   \cs{@@_store_anskey_arg:n} to expand the \cs{@@_scan_tokens:n}
+%   \cs{@@_store_anskey_arg:n} to expand the |\tl_retokenize:n|
 %   function which rescans the \cs{l_@@_store_anskey_env_tl} variable
 %   before processing it.
 %    \begin{macrocode}
@@ -11882,7 +11877,7 @@ Some text here
     \exp_args:Ne
       \@@_store_anskey_arg:n
         {
-          \@@_scan_tokens:n { \l_@@_store_anskey_env_tl }
+          \tl_retokenize:n { \l_@@_store_anskey_env_tl }
         }
   }
 %    \end{macrocode}
@@ -13022,12 +13017,12 @@ Some text here
   {
     \dim_compare:nNnT { #1 } < { \c_zero_dim }
       {
-        \msg_warning:nnnV { enumext } { width-non-positive }{ labelwidth }{ #1 }
+        \msg_warning:nnnV { enumext } { width-non-positive }{ labelwidth } #1
         \dim_set:Nn #1 { \dim_abs:n { #1 } }
       }
     \dim_compare:nNnT { #2 } < { \c_zero_dim }
       {
-        \msg_warning:nnnV { enumext } { width-negative }{ labelsep }{ #2 }
+        \msg_warning:nnnV { enumext } { width-negative }{ labelsep }  #2
         \dim_set:Nn #2 { \dim_abs:n { #2 } }
       }
 %    \end{macrocode}
@@ -16371,7 +16366,7 @@ Some text here
       { \@@_set_error:nn {#1} { } }
   }
 \cs_new_protected:Npn \@@_set_error:nn #1 #2
-  { \msg_error:nnn { enumext } { invalid-key } {#1} {#2} }
+  { \msg_error:nnnn { enumext } { invalid-key } {#1} {#2} }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -16584,10 +16579,6 @@ Some text here
   {
     The~'#1'~package~will~be~loaded~as~a~dependency.
   }
-\msg_new:nnn { enumext } { package-load-foot }
-  {
-    The~'#1'~package~is~loaded~with~the~option~'#2'.
-  }
 %    \end{macrocode}
 %
 % Message used in the creation of counters by \mypkg*{enumext} package.
@@ -16618,10 +16609,6 @@ Some text here
   {
     The~environment~'#1'~is~defined~internally ~
     for~the~'save-ans'~key~with~save-ans~key~active.~See~documentation.\\
-  }
-\msg_new:nnn { enumext } { anskey-env-nested }
-  {
-    The~#1~'#2'~can't~be~nested~\msg_line_context:.
   }
 %    \end{macrocode}
 %
@@ -16680,11 +16667,6 @@ Some text here
   {
     Ignoring~negative~value~'#1=#2'~\msg_line_context:.\\
     The~key~'#1'~ accepts~values ~>=~0pt.
-  }
-\msg_new:nnn { enumext } { width-zero }
-  {
-    Invalid~'#1=#2'~\msg_line_context:.\\
-    The~key~'#1'~ accepts~values ~>~0pt.
   }
 %    \end{macrocode}
 % Messages used by \mykey{show-length} key in \myenv*{enumext}.
@@ -16748,19 +16730,11 @@ Some text here
   {
     *~Package~enumext:~Stop~#1\c_space_tl with~save-ans=#2~\msg_line_context:.
   }
-\msg_new:nnn { enumext } { save-ans-hook }
-  {
-    Stop~storing~for~'save-ans=#1'~\msg_line_context:.
-  }
 %    \end{macrocode}
 %
 %  Messages used by the internal system to check answer used by
 %  \mykey{check-ans} key.
 %    \begin{macrocode}
-\msg_new:nnn { enumext } { need-save-ans }
-  {
-    Key~'#1'~ works~only~with~the~'save-ans'~key~in~'#2'~ \msg_line_context:.
-  }
 \msg_new:nnn { enumext } { items-same-answer }
   {
     ****************************************\\
@@ -16817,10 +16791,6 @@ Some text here
   {
     Can't~store~with~a~unnumbered~\c_backslash_str item~\msg_line_context:.
   }
-\msg_new:nnn { enumext } { anskey-already-stored }
-  {
-    Content~already~stored~for~this~\c_backslash_str item~\msg_line_context:.
-  }
 \msg_new:nnn { enumext } { anskey-empty-arg }
   {
     Can't~store~empty~content~\msg_line_context:.
@@ -16841,11 +16811,6 @@ Some text here
 \msg_new:nnn { enumext } { anskey-env-wrong }
   {
     The~environment~anskey*~cannot~use~in~'#1'~\msg_line_context:.
-  }
-\msg_new:nnn { enumext } { anspic-wrong-place }
-  {
-    Wrong~place~for~command~'\c_backslash_str #1'~\msg_line_context:.~ \\
-    '\c_backslash_str #1'~works~in~the~environment~'#2'.
   }
 \msg_new:nnn { enumext } { command-wrong-place }
   {

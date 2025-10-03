@@ -36,7 +36,7 @@
 %% ------------------------------------------------------------------------
 %% 
 \NeedsTeXFormat{LaTeX2e}[2025-06-01]
-\ProvidesExplPackage {enumext} {2025-07-10} {1.7} {Enumerate exercise sheets}
+\ProvidesExplPackage {enumext} {2025-10-03} {1.8} {Enumerate exercise sheets}
 \hook_gput_code:nnn {begindocument} {enumext}
   {
     \IfPackageLoadedTF { multicol }
@@ -257,7 +257,6 @@
   }
 \cs_generate_variant:Nn \keys_precompile:nnN { neN }
 \cs_generate_variant:Nn \seq_use:Nn { NV }
-\cs_new_protected:Npn \__enumext_scan_tokens:n #1 { \tex_scantokens:D {#1} }
 %% A internal "hooks" functions used for copying and execute code.
 \cs_new_protected:Npn \__enumext_at_begin_document:n #1
   {
@@ -970,9 +969,11 @@
          \int_set:Nn #2 {#3}
        }
        {
-         \regex_if_match:nVT { \c{Alph} | \c{alph} } {#1}
+         %%\regex_if_match:nVT { \c{Alph} | \c{alph} } {#1}
+         \regex_if_match:nVT { \c{Alph} | \c{alph} } #1
            { \int_set:Nn #2 { \int_from_alph:n {#3} } }
-         \regex_if_match:nVT { \c{Roman} | \c{roman} } {#1}
+         %%\regex_if_match:nVT { \c{Roman} | \c{roman} } {#1}
+         \regex_if_match:nVT { \c{Roman} | \c{roman} } #1
            { \int_set:Nn #2  { \int_from_roman:n {#3} } }
        }
   }
@@ -989,9 +990,11 @@
         \setcounter{enumX#1} { #4 }
       }
       {
-        \regex_if_match:nVT { \c{Alph} | \c{alph} } {#2}
+        %%\regex_if_match:nVT { \c{Alph} | \c{alph} } {#2}
+        \regex_if_match:nVT { \c{Alph} | \c{alph} } #2
           { \setcounter{enumX#1} { \int_from_alph:n {#4} } }
-        \regex_if_match:nVT { \c{Roman} | \c{roman} } {#2}
+        %%\regex_if_match:nVT { \c{Roman} | \c{roman} } {#2}
+        \regex_if_match:nVT { \c{Alph} | \c{alph} } #2
           { \setcounter{enumX#1} { \int_from_roman:n {#4} } }
       }
      \__enumext_label_width_by_box:cv
@@ -3417,7 +3420,7 @@
     \exp_args:Ne
       \__enumext_store_anskey_arg:n
         {
-          \__enumext_scan_tokens:n { \l__enumext_store_anskey_env_tl }
+          \tl_retokenize:n { \l__enumext_store_anskey_env_tl }
         }
   }
 %% Function internal checking answer mechanism, clean vars and undefine |anskey*| environment.
@@ -3998,12 +4001,12 @@
   {
     \dim_compare:nNnT { #1 } < { \c_zero_dim }
       {
-        \msg_warning:nnnV { enumext } { width-non-positive }{ labelwidth }{ #1 }
+        \msg_warning:nnnV { enumext } { width-non-positive }{ labelwidth } #1
         \dim_set:Nn #1 { \dim_abs:n { #1 } }
       }
     \dim_compare:nNnT { #2 } < { \c_zero_dim }
       {
-        \msg_warning:nnnV { enumext } { width-negative }{ labelsep }{ #2 }
+        \msg_warning:nnnV { enumext } { width-negative }{ labelsep }  #2
         \dim_set:Nn #2 { \dim_abs:n { #2 } }
       }
     \bool_if:NF #7 { \dim_set:Nn #4 { #1 + #2} }
@@ -5978,7 +5981,7 @@
       { \__enumext_set_error:nn {#1} { } }
   }
 \cs_new_protected:Npn \__enumext_set_error:nn #1 #2
-  { \msg_error:nnn { enumext } { invalid-key } {#1} {#2} }
+  { \msg_error:nnnn { enumext } { invalid-key } {#1} {#2} }
 %% Define |.code:n| and |.meta:n| for |\setenumextmeta|.
 \int_step_inline:nn { 4 }
   {
@@ -6122,10 +6125,6 @@
   {
     The~'#1'~package~will~be~loaded~as~a~dependency.
   }
-\msg_new:nnn { enumext } { package-load-foot }
-  {
-    The~'#1'~package~is~loaded~with~the~option~'#2'.
-  }
 \msg_new:nnn { enumext } { counters }
   {
     The~counter~'#1'~is~already~defined~by~some~\\
@@ -6143,10 +6142,6 @@
   {
     The~environment~'#1'~is~defined~internally ~
     for~the~'save-ans'~key~with~save-ans~key~active.~See~documentation.\\
-  }
-\msg_new:nnn { enumext } { anskey-env-nested }
-  {
-    The~#1~'#2'~can't~be~nested~\msg_line_context:.
   }
 \msg_new:nnn { enumext } { store-prop }
   {
@@ -6192,11 +6187,6 @@
   {
     Ignoring~negative~value~'#1=#2'~\msg_line_context:.\\
     The~key~'#1'~ accepts~values ~>=~0pt.
-  }
-\msg_new:nnn { enumext } { width-zero }
-  {
-    Invalid~'#1=#2'~\msg_line_context:.\\
-    The~key~'#1'~ accepts~values ~>~0pt.
   }
 \msg_new:nnn { enumext } { list-lengths }
   {
@@ -6244,14 +6234,6 @@
   {
     *~Package~enumext:~Stop~#1\c_space_tl with~save-ans=#2~\msg_line_context:.
   }
-\msg_new:nnn { enumext } { save-ans-hook }
-  {
-    Stop~storing~for~'save-ans=#1'~\msg_line_context:.
-  }
-\msg_new:nnn { enumext } { need-save-ans }
-  {
-    Key~'#1'~ works~only~with~the~'save-ans'~key~in~'#2'~ \msg_line_context:.
-  }
 \msg_new:nnn { enumext } { items-same-answer }
   {
     ****************************************\\
@@ -6295,10 +6277,6 @@
   {
     Can't~store~with~a~unnumbered~\c_backslash_str item~\msg_line_context:.
   }
-\msg_new:nnn { enumext } { anskey-already-stored }
-  {
-    Content~already~stored~for~this~\c_backslash_str item~\msg_line_context:.
-  }
 \msg_new:nnn { enumext } { anskey-empty-arg }
   {
     Can't~store~empty~content~\msg_line_context:.
@@ -6319,11 +6297,6 @@
 \msg_new:nnn { enumext } { anskey-env-wrong }
   {
     The~environment~anskey*~cannot~use~in~'#1'~\msg_line_context:.
-  }
-\msg_new:nnn { enumext } { anspic-wrong-place }
-  {
-    Wrong~place~for~command~'\c_backslash_str #1'~\msg_line_context:.~ \\
-    '\c_backslash_str #1'~works~in~the~environment~'#2'.
   }
 \msg_new:nnn { enumext } { command-wrong-place }
   {

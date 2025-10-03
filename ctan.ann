@@ -1,4 +1,3 @@
-Release v1.7:
-- Fixed `\setenumext{enumext*}{resume}`.
-- Fixed bad interaction between `\setenumext` and the `resume` key.
-- The behavior of the `resume*` key has been updated and documented.
+Release v1.8:
+- Replacing `\scantokens` (primitive) with `\tl_retokenize:n`.
+- Cleanup warnings and details returned by `expltools`.
