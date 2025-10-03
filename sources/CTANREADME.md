@@ -12,7 +12,7 @@ using <code>&langle;multicol&rangle;</code> package.
 ## Requirements
 
 The minimum requirement is LaTeX release 2025-06-01. Loads and depends
-on updated versions of [multicol](https://ctan.org/pkg/multicol).
+on updated version of [multicol](https://ctan.org/pkg/multicol).
 
 ## Installation
 
