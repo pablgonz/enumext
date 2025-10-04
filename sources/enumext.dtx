@@ -906,7 +906,7 @@
 %
 % \section*{Motivation and acknowledgments}
 %
-% Usually it is enough to use the classic \myenv{enumerate} environment to
+% Usually, it is enough to use the classic \myenv{enumerate} environment to
 % generate \emph{\enquote{simple exercise sheets}} or
 % \emph{\enquote{multiple choice questions}}, the basic idea behind
 % \mypkg*{enumext} is to cover three points:
@@ -924,7 +924,7 @@
 % collaborated and adapted a large part of the code and all
 % \hologo{LaTeX} team for their great work and to the different members
 % of the \href{https://tex.stackexchange.com}{TeX-SX} community who have
-% provided great answers and ideas. Here a note of the main ones:
+% provided great answers and ideas. Here are notes on the main ones:
 %
 % \begin{enumerate}[left=0pt, labelsep=5pt, nosep, label=\small\arabic*.,topsep=2pt]
 % \item Answer given by Alan Munn in \href{https://tex.stackexchange.com/a/300418}{\textbackslash topsep,  \textbackslash itemsep, \textbackslash partopsep, \textbackslash parsep - what do they each mean (and what about the bottom)?}
@@ -973,7 +973,7 @@
 %
 % In my work (and in the work of many teachers) it is common to use
 % \emph{\enquote{simple exercise sheets}} also known as
-% \emph{\enquote{informal lists of exercises}}, as an example:
+% \emph{\enquote{informal lists of exercises}}, for example:
 %
 % \smallskip
 %
@@ -987,7 +987,7 @@
 %    \end{enumext}
 %  \item Related to Linux
 %    \begin{enumext}[nosep]
-%      \item You use linux? \anskey{Yes}
+%      \item You use Linux? \anskey{Yes}
 %      \item Usually uses the package manager? \anskey{Yes, \texttt{dnf}}
 %      \item Rate the following package and class
 %        \begin{enumext}[nosep]
@@ -1015,7 +1015,7 @@
 %    \end{enumext}
 %  \item Related to Linux
 %    \begin{enumext}[nosep]
-%      \item You use linux? \anskey{Yes}
+%      \item You use Linux? \anskey{Yes}
 %      \item Usually uses the package manager? \anskey{Yes, \texttt{dnf}}
 %      \item Rate the following package and class
 %        \begin{enumext}[nosep]
@@ -1110,7 +1110,7 @@
 %
 % \smallskip
 %
-% Where what we are interested in the \mymeta{label} and a
+% Where we are interested in the \mymeta{label} and a
 % \emph{\enquote{short note}} that we leave as an explanation, and then
 % print them:
 %
@@ -1145,7 +1145,7 @@
 % \smallskip
 %
 % \begin{important}*
-% This package is NOT intend to replace the \myenv{enumerate} environment
+% This package is NOT intended to replace the \myenv{enumerate} environment
 % nor replace the powerful \mypkg{enumitem}\cite{enumitem}, the approach
 % is intended to work without hindering either of them.
 % \end{important}
@@ -1190,7 +1190,7 @@
 %
 % There is a direct relationship between the parameters |\leftmargin|,
 % |\itemindent|, \ics{labelwidth} and \ics{labelsep} plus an
-% \emph{\enquote{extra space}} that makes it difficult to obtain the
+% \emph{\enquote{extra space}}, which makes it difficult to obtain the
 % desired \emph{horizontal spaces} in a \myenv{list} environment.
 % Usually we don't want the \myenv{list} to go beyond the left margin of the
 % page, but since these four values are related, that causes a problem.
@@ -1277,10 +1277,10 @@
 % environments |keyans|, |keyans*| and |keyanspic| for multiple choice.
 % It also provides the commands |\getkeyans| to print individual
 % \emph{stored content}, |\printkeyans| to print all \emph{stored content},
-% |\foreachkeyans| to print a rage of \emph{stored content}, |\miniright|
+% |\foreachkeyans| to print a range of \emph{stored content}, |\miniright|
 % for \myenv{minipage}, |\setenumext| to config \myoarg{key \textnormal{\textcolor{gray}{=}} val},
 % |\setenumextmeta| to add a \emph{\enquote{meta-key}} and |\resetenumext|
-% for reset counters.
+% to reset counters.
 %
 % \subsubsection{Public counters}
 %
@@ -1304,21 +1304,21 @@
 %
 % The package \mypkg*{enumext} only provides a \emph{single public dimension}
 % |\itemwidth| and is intended for user convenience only and is NOT
-% for internal use as such. The dimension |\itemwidth| is \emph{rigid length}
+% for internal use as such. The dimension |\itemwidth| is a \emph{rigid length}
 % and contains the \emph{\enquote{width of the content}} of each |\item|
 % regardless of \mykey{labelwidth} and \mykey{labelsep}.
 %
 %^^A \smallskip
 %
 % \begin{important}*
-% If any package defines |\itemwidth| or they are user-defined |\itemwidth|
+% If any package defines |\itemwidth| or the user defines |\itemwidth|
 % in the document, the package will overwrite it without warning.
 % \end{important}
 %
 % \subsubsection{Support for \pkg{multicol}}
 %
 % The package provides direct support for using the \mypkg{multicol}\cite{multicol}
-% package. This allows to obtain directly a two-column output as shown
+% package. This allows for a two-column output as shown
 % in the figure \ref{fig:fourth}.
 %
 % \begin{figure}[ht]
@@ -1404,8 +1404,8 @@
 %   \label{fig:five}
 % \end{figure}
 %
-% The \myenv{minipage} environments on \emph{\enquote{left side}} and
-% \emph{\enquote{right side}} is always used with \emph{\enquote{aligned
+% The \myenv{minipage} environments on the \emph{\enquote{left side}} and
+% \emph{\enquote{right side}} are always used with \emph{\enquote{aligned
 % on top}} |[t]|. It can be used in all nesting levels of the
 % environment |enumext| and the environment |keyans| and is controlled
 % by \mykey{mini-env} and \mykey{mini-sep} keys. In order to switch from
@@ -1437,15 +1437,15 @@
 % \newpage
 %
 % Unfortunately, if \mypkg{hyperref} is loaded and \emph{tagged} \texttt{PDF} is not
-% active, it will not produce the \enquote{link's}, the internal implementation
+% active, it will not produce the \enquote{links}, the internal implementation
 % uses |\footnotetext|\myoarg{number} and |\footnotemark|\myoarg{number}\mymarg{text}
 % and \enquote{link's} for this are not supported by the \mypkg{hyperref} package.
 %
 % \smallskip
 %
 % The best way to solve this if \emph{tagged} \texttt{PDF} is NOT active
-% is to use Jean-François Burnol \mypkg{footnotehyper}\cite{footnotehyper}
-% package, it will support keeping the \enquote{link's} if
+% is to use Jean-François Burnol's \mypkg{footnotehyper}\cite{footnotehyper}
+% package. It will support keeping the \enquote{links} if
 % \mypkg{hyperref} is loaded with the |hyperfootnotes=true| option (default).
 % Load it is as follows:
 %
@@ -1536,12 +1536,12 @@
 %
 % \item Each \emph{\enquote{item content}} in the environment is placed
 %   within a \myenv{minipage} environment whose \emph{width} is stored
-%   in the dimension |\itemwidth| that NOT includes \mykey{labelwith},
+%   in the dimension |\itemwidth| does NOT include \mykey{labelwith} and
 %   \mykey{labelsep}, only the \emph{width of the content}.
 %
 % \item You cannot have floating environments like \myenv{figure} or
 %   \myenv{table} or |\marginpar| but \ics{footnote} with \mypkg{hyperref}
-%   is supported. If you want to activate link's \emph{\enquote{without}}
+%   is supported. If you want to activate links \emph{\enquote{without}}
 %   \emph{tagged} \texttt{PDF} active you must load \mypkg{footnotehyper}
 %   and \mypkg{hyperref} packages (see \S\ref{doc:footnote}).
 %
@@ -1570,7 +1570,7 @@
 %     \ics*{item*}\myoarg{symbol}\myoarg{offset}
 %   \end{syntax}
 %    The \ics*{item*}, \ics*{item*}\myoarg{symbol} and \ics*{item*}\myoarg{symbol}\myoarg{offset}
-%    works like the numbered |\item|, but placing a \mymeta{symbol} to
+%    works like the numbered |\item|, but places a \mymeta{symbol} to
 %    the \emph{\enquote{left}} of the \mymeta{label} separated from it by
 %    the \mymeta{offset} set by the the \emph{second optional argument}.
 %
@@ -1579,11 +1579,11 @@
 %    The \emph{starred argument} ‘|*|’ cannot be separated by spaces
 %    ‘\verb*| |’ from the command, i.e. \ics*{item*} and the
 %    \emph{first optional argument} does NOT support \emph{verbatim content}.
-%    Can be configure with the keys  \mykey{item-sym*} and \mykey{item-pos*}
+%    It can be configured with the keys  \mykey{item-sym*} and \mykey{item-pos*}
 %    locally in the environment or globally using \ics*{setenumext} command (\S\ref{sec:setenumext}).
 % \end{function}
 %
-% \smallskip
+% \newpage
 %
 % \begin{important}*
 % The behavior of \ics*{item*} in the \myenv*{enumext} and \myenv*{enumext*} environments is NOT
@@ -1593,7 +1593,7 @@
 % \subsubsection{Keys for \cs[no-index]{item*}}
 %
 % \keyexamp{item-sym\textcolor{MediumOrchid}{*}}{symbol}{\textbackslash{}textborn}
-% Sets the \emph{symbol} to be displayed in the \emph{\enquote{left}} of the
+% Sets the \emph{symbol} to be displayed to the \emph{\enquote{left}} of the
 % box containing the current \mymeta{label} set by \mykey{labelwidth} key for \ics*{item*} in
 % \myenv*{enumext} and \myenv*{enumext*}. The \emph{symbol} can be in
 % \emph{text} or \emph{math} mode, for example \mykey{item-sym*}|={$\star$}|.
@@ -1605,13 +1605,13 @@
 % current \mymeta{label} defined by \mykey{labelwidth} key and the
 % \mymeta{symbol} set by \mykey{item-sym*} key. The default values are
 % set by \mykey{labelsep} key at each level. If positive values are
-% passed it will \emph{offset to the left} and if negative values are
+% passed, it will \emph{offset to the left}; if negative values are
 % passed it will \emph{offset to the right}.
 %
 % \subsection{The command \cs[no-index]{item} in \texttt{enumext*}}
 %
 % The \ics*{item} command for the \myenv*{enumext*} environment provides
-% an \emph{\enquote{first optional argument}} \ics*{item}\myparg{columns} which \emph{\enquote{joins items}}
+% a \emph{\enquote{first optional argument}} \ics*{item}\myparg{columns} which \emph{\enquote{joins items}}
 % between columns. Let's consider the following examples adapted directly from
 % the \mypkg{task} package:
 %
@@ -1716,7 +1716,7 @@
 %   The \emph{optional argument} of the form |[1]|, |[2]|, |[3]|, |[4]|
 %   adds a new \emph{\enquote{meta-key}} ​​for levels |1|, |2|, |3| and |4|
 %   of the \myenv*{enumext} environment, the form |[*]| adds a new
-%   \emph{\enquote{meta-key}}​​for the \myenv*{enumext*} environment. If is
+%   \emph{\enquote{meta-key}}​​ for the \myenv*{enumext*} environment. If it is
 %   run \emph{without} the \emph{optional argument}, it will adds a new
 %   \emph{\enquote{meta-key}} ​​for the \emph{\enquote{first level}} of
 %   the \myenv*{enumext} environment.
@@ -1740,8 +1740,8 @@
 % \section{The \texttt{keyval} system}
 %
 % The \mymeta{key = val} system used by the \mypkg*{enumext} package is implemented
-% using \mypkg{l3keys} so it must be taken into consideration that those
-% keys marked as \emph{\enquote{value forbidden}}, that is \mymeta{key} is
+% using \mypkg{l3keys} so it must be noted that \mymeta{keys} marked as 
+% \emph{\enquote{value forbidden}}, that is \mymeta{key} is
 % different from \mymeta{key=}.
 %
 % \smallskip
@@ -1765,7 +1765,7 @@
 %
 % \begin{important}*
 %  It should be kept in mind that using any \mymeta{key} that sets
-%  a \emph{rubber lengths} or \emph{rigid lengths} for vertical or
+%  \emph{rubber lengths} or \emph{rigid lengths} for vertical or
 %  horizontal space on a level will influence the vertical and horizontal
 %  space for \emph{inners levels} and \myenv*{keyans}, \myenv*{keyans*} and
 %  \myenv*{keyanspic} environments.
@@ -1796,7 +1796,7 @@
 %
 % \begin{important}*
 % In the \myenv*{enumext*} and \myenv*{keyans*} environments |\makelabel|
-% are redefined using |\makebox| by default. If \myenv*{enumext} or
+% is redefined using |\makebox| by default. If \myenv*{enumext} or
 % \myenv*{keyans} is used in the \myenv*{enumext*} environment the key
 % must be activated manually.
 % \end{important}
@@ -1816,9 +1816,9 @@
 % Sets the \mymeta{label} that will be printed at the \emph{current level}
 % and default value for \mykey{labelwidth} key.
 % The default value for the first level of the environments
-% \myenv*{enumext} and \myenv*{enumext*} are \ilabel{arabic*.}, for
+% \myenv*{enumext} and \myenv*{enumext*} is \ilabel{arabic*.}, for
 % second level are \ilabel*{alph*)}, for third level are \ilabel{roman*.}
-% and for fourth level are \ilabel{Alph*.}. For \myenv*{keyans}
+% and for fourth level is \ilabel{Alph*.}. For \myenv*{keyans}
 % and \myenv*{keyans*} environments the default value is \ilabel{Alph*)}.
 %
 % \smallskip
@@ -1857,7 +1857,7 @@
 % \smallskip
 %
 % \keyexamp{widest}{integer \textnormal{\textcolor{lightgray}{\textbar}} string}{empty}
-% Sets the \mykey{labelwidth} key pass the \mymeta{integer} or converting
+% Sets the \mykey{labelwidth} key passing the \mymeta{integer} or converting
 % the \mymeta{string} of the form |\Alph|, |\alph|, |\Roman| or |\roman|
 % to a \emph{value} for the current counter defined by \mykey{label} key,
 % then calculating the \emph{width} by means of a box. For example |widest={XXIII}|
@@ -1889,8 +1889,8 @@
 %
 % Wraps the \emph{current} \mymeta{label} defined by \mykey{label} key
 % referenced by |{#1}| after executing the \mykey{align} and \mykey{font}
-% keys. The \mymarg{code} must be passed between braces and this does not
-% modify the value set by the \mykey{labelwidth} key and is applied \emph{only}
+% keys. The \mymarg{code} must be passed between braces and it does not modify
+% the value set by the \mykey{labelwidth} key and is applied \emph{only}
 % on \ics*{item} and \ics*{item*}.
 % When using it in the \ics*{setenumext} command it is necessary to use the
 % \emph{double} ‘|{##1}|’. For example |wrap-label={\fbox{#1}}|
@@ -1965,21 +1965,21 @@
 %
 % \keyexamp{beginpenalty}{integer}{\mydim{-51}}
 % Set the \emph{page breaking} penalty for breaking at the beginning of
-% the \myenv*{enumext}, \myenv*{enumext*}, \myenv*{keyans}, and
+% the \myenv*{enumext}, \myenv*{enumext*}, \myenv*{keyans} and
 % \myenv*{keyans*} environments. Internally sets the value of \textcolor{red}{\texttt{\textbackslash}}|@beginparpenalty|.
 %
 % \smallskip
 %
 % \keyexamp{midpenalty}{integer}{\mydim{-51}}
 % Set the \emph{page breaking} penalty for breaking between items of
-% the \myenv*{enumext}, \myenv*{enumext*}, \myenv*{keyans}, and
+% the \myenv*{enumext}, \myenv*{enumext*}, \myenv*{keyans} and
 % \myenv*{keyans*} environments. Internally sets the value of \textcolor{red}{\texttt{\textbackslash}}|@itempenalty|.
 %
 % \smallskip
 %
 % \keyexamp{endpenalty}{integer}{\mydim{-51}}
 % Set the \emph{page breaking} penalty for breaking at the end of
-% the \myenv*{enumext}, \myenv*{enumext*}, \myenv*{keyans}, and
+% the \myenv*{enumext}, \myenv*{enumext*}, \myenv*{keyans} and
 % \myenv*{keyans*} environments. Internally sets the value of \textcolor{red}{\texttt{\textbackslash}}|@endparpenalty|.
 %
 % \smallskip
@@ -2208,7 +2208,7 @@
 %  The \myenv*{enumext*} and \myenv*{keyans*} environments are
 %  implemented using |\makebox| and \myenv{minipage} which causes
 %  \emph{\enquote{list indent}} to always be equal to the value passed to
-%  \mykey{labewdith} plus \mykey{labelsep}. Passing a value to this key is
+%  \mykey{labelwdith} plus \mykey{labelsep}. Passing a value to this key is
 %  equivalent to setting the value for the \mykey{list-offset} key.
 % \end{important}
 %
@@ -2219,7 +2219,7 @@
 % \smallskip
 %
 % Sets the extra \emph{horizontal indentation}, beyond \mykey{labelsep},
-% of the \emph{\enquote{first line}} off each |\item| that is not followed
+% of the \emph{\enquote{first line}} of each |\item| that is not followed
 % by a \emph{\enquote{blank line}} or the |\par| command . This value must
 % be greater than or equal to \mydim{0pt} and is applied internally using
 % |\hspace| \emph{without} modifying the value of |\itemindent|.
@@ -3806,7 +3806,7 @@
   \item Related to Linux
 
     \begin{enumext}[nosep]
-      \item You use linux? \anskey{Yes}
+      \item You use Linux? \anskey{Yes}
       \item Rate the following package and class
         \begin{enumext}[nosep]
           \item \texttt{xsim} \anskey{very good}
@@ -3832,7 +3832,7 @@ all the worksheets are as follows:
 %    \end{enumext}
 %  \item Related to Linux
 %    \begin{enumext}[nosep]
-%      \item You use linux? \anskey{Yes}
+%      \item You use Linux? \anskey{Yes}
 %      \item Rate the following package and class
 %        \begin{enumext}[nosep]
 %          \item \texttt{xsim} \anskey{very good}
@@ -4271,7 +4271,7 @@ Test keys
     \end{enumext}
   \item Related to Linux
     \begin{enumext}[nosep]
-      \item You use linux? \anskey{Yes}
+      \item You use Linux? \anskey{Yes}
       \item Usually uses the package manager? \anskey{Yes, \texttt{dnf}}
       \item Rate the following package and class
         \begin{enumext}[nosep]
@@ -4305,7 +4305,7 @@ to \ref{simplews:3} is \getkeyans{simplews:3}.
 %    \end{enumext}
 %  \item Related to Linux
 %    \begin{enumext}[nosep]
-%      \item You use linux? \anskey{Yes}
+%      \item You use Linux? \anskey{Yes}
 %      \item Usually uses the package manager? \anskey{Yes, \texttt{dnf}}
 %      \item Rate the following package and class
 %        \begin{enumext}[nosep]
@@ -6503,7 +6503,7 @@ Some text here
 % \end{macro}
 %
 % \begin{macro}[int]{\@@_if_is_int:nT, \@@_if_is_int:nF, \@@_if_is_int:nTF}
-%    A conditional function to know if the variable we are passing is
+%    A conditional function to determine whether the variable we are passing is
 %    an integer used by \mykey{start} and \mykey{widest} keys.
 %    This function is taken directly from the answer given by Henri Menke
 %    in \href{https://tex.stackexchange.com/a/427559}{How to test if an expl3 function argument is an integer expression?}.
@@ -6522,7 +6522,7 @@ Some text here
 %
 % \begin{macro}{\@@_show_length:nnn}
 %    Internal function used by \mykey{show-length} key to show
-%    \emph{\enquote{all lengths}} calculated and use in
+%    \emph{\enquote{all lengths}} calculated and used in
 %    \myenv*{enumext}, \myenv*{enumext*}, \myenv*{keyans} and
 %    \myenv*{keyans*} environments.
 % \iffalse
@@ -6541,8 +6541,8 @@ Some text here
 % \begin{macro}{\@@_unskip_unkern:}
 %   The function \cs{@@_unskip_unkern:} will remove the last \mymeta{skip}
 %   or \mymeta{kern} at execution time using the values ​​\mydim{11} and
-%   \mydim{12} of |\lastnodetype| to apply |\unskip| or |\unkern| according
-%   to the case.
+%   \mydim{12} of |\lastnodetype| to apply |\unskip| or |\unkern| depending 
+%   on the case.
 % \iffalse
 %% Remove last skip or kern.
 % \fi
@@ -6561,10 +6561,10 @@ Some text here
 % \subsubsection{Utilities for environments and levels}\label{fun:utilities}
 %
 % \begin{macro}{\@@_is_not_nested:, \@@_is_on_first_level:}
-%   The function \cs{@@_is_not_nested:} set the variables \cs{g_@@_standar_bool}
+%   The function \cs{@@_is_not_nested:} sets the variables \cs{g_@@_standar_bool}
 %   and \cs{g_@@_starred_bool} to \emph{\enquote{true}} only if the
 %   environments \myenv*{enumext} and \myenv*{enumext*} are NOT nested
-%   in each other and save the environment name in \cs{l_@@_envir_name_tl}.
+%   in each other and saves the environment name in \cs{l_@@_envir_name_tl}.
 % \iffalse
 %% Function to check/set current environment for |enumext| and |enumext*|.
 % \fi
@@ -6596,7 +6596,7 @@ Some text here
       }
   }
 %    \end{macrocode}
-%   The function \cs{@@_is_on_first_level:} will set the variables
+%   The function \cs{@@_is_on_first_level:} will sets the variables
 %   \cs{l_@@_standar_first_bool} (\S\ref{key:save-ans}),
 %   \cs{l_@@_starred_first_bool} (\S\ref{key:save-ans}) to \emph{\enquote{true}}
 %   only if the environment is not nested and we are in the \emph{\enquote{first level}}
@@ -8427,8 +8427,7 @@ Some text here
 %
 % When nesting a \emph{\enquote{list environment}} inside the \myenv{multicols} environment,
 % the values of the \emph{\enquote{vertical spaces}} are lost, basically the
-% \myenv{multicols} environment takes control over them. Graphically it can
-% be seen like in the figure \ref{fig:six}.
+% \myenv{multicols} environment takes control over them. Graphically, this can be seen in figure \ref{fig:six}.
 %
 % \begin{figure}[!htbp]
 %   \centering
