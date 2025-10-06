@@ -36,7 +36,7 @@
 %% ------------------------------------------------------------------------
 %% 
 \NeedsTeXFormat{LaTeX2e}[2025-06-01]
-\ProvidesExplPackage {enumext} {2025-10-04} {1.8} {Enumerate exercise sheets}
+\ProvidesExplPackage {enumext} {2025-10-06} {1.9} {Enumerate exercise sheets}
 \hook_gput_code:nnn {begindocument} {enumext}
   {
     \IfPackageLoadedTF { multicol }
@@ -969,10 +969,8 @@
          \int_set:Nn #2 {#3}
        }
        {
-         %%\regex_if_match:nVT { \c{Alph} | \c{alph} } {#1}
          \regex_if_match:nVT { \c{Alph} | \c{alph} } #1
            { \int_set:Nn #2 { \int_from_alph:n {#3} } }
-         %%\regex_if_match:nVT { \c{Roman} | \c{roman} } {#1}
          \regex_if_match:nVT { \c{Roman} | \c{roman} } #1
            { \int_set:Nn #2  { \int_from_roman:n {#3} } }
        }
@@ -990,10 +988,8 @@
         \setcounter{enumX#1} { #4 }
       }
       {
-        %%\regex_if_match:nVT { \c{Alph} | \c{alph} } {#2}
         \regex_if_match:nVT { \c{Alph} | \c{alph} } #2
           { \setcounter{enumX#1} { \int_from_alph:n {#4} } }
-        %%\regex_if_match:nVT { \c{Roman} | \c{roman} } {#2}
         \regex_if_match:nVT { \c{Alph} | \c{alph} } #2
           { \setcounter{enumX#1} { \int_from_roman:n {#4} } }
       }
@@ -1001,7 +997,7 @@
        { l__enumext_labelwidth_#1_dim } { l__enumext_label_#1_tl }
   }
 \cs_generate_variant:Nn \__enumext_widest_from:nNNn { nccn }
-%% Add |start*|, |start| and |widest| key.
+%% Add |start*|, |start| and |widest| keys.
 \cs_set_protected:Npn \__enumext_tmp:nn #1 #2
   {
     \keys_define:nn { enumext / #1 }

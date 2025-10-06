@@ -1740,7 +1740,7 @@
 % \section{The \texttt{keyval} system}
 %
 % The \mymeta{key = val} system used by the \mypkg*{enumext} package is implemented
-% using \mypkg{l3keys} so it must be noted that \mymeta{keys} marked as 
+% using \mypkg{l3keys} so it must be noted that \mymeta{keys} marked as
 % \emph{\enquote{value forbidden}}, that is \mymeta{key} is
 % different from \mymeta{key=}.
 %
@@ -5899,7 +5899,7 @@ Some text here
 %    \end{macrocode}
 % Now declare the \mypkg*{enumext} package.
 %    \begin{macrocode}
-\ProvidesExplPackage {enumext} {2025-10-04} {1.8} {Enumerate exercise sheets}
+\ProvidesExplPackage {enumext} {2025-10-06} {1.9} {Enumerate exercise sheets}
 %    \end{macrocode}
 % Finally check if the \mypkg{multicol} package are loaded, if not we load it.
 %    \begin{macrocode}
@@ -6541,7 +6541,7 @@ Some text here
 % \begin{macro}{\@@_unskip_unkern:}
 %   The function \cs{@@_unskip_unkern:} will remove the last \mymeta{skip}
 %   or \mymeta{kern} at execution time using the values ​​\mydim{11} and
-%   \mydim{12} of |\lastnodetype| to apply |\unskip| or |\unkern| depending 
+%   \mydim{12} of |\lastnodetype| to apply |\unskip| or |\unkern| depending
 %   on the case.
 % \iffalse
 %% Remove last skip or kern.
@@ -7777,10 +7777,8 @@ Some text here
          \int_set:Nn #2 {#3}
        }
        {
-         %%\regex_if_match:nVT { \c{Alph} | \c{alph} } {#1}
          \regex_if_match:nVT { \c{Alph} | \c{alph} } #1
            { \int_set:Nn #2 { \int_from_alph:n {#3} } }
-         %%\regex_if_match:nVT { \c{Roman} | \c{roman} } {#1}
          \regex_if_match:nVT { \c{Roman} | \c{roman} } #1
            { \int_set:Nn #2  { \int_from_roman:n {#3} } }
        }
@@ -7823,10 +7821,8 @@ Some text here
         \setcounter{enumX#1} { #4 }
       }
       {
-        %%\regex_if_match:nVT { \c{Alph} | \c{alph} } {#2}
         \regex_if_match:nVT { \c{Alph} | \c{alph} } #2
           { \setcounter{enumX#1} { \int_from_alph:n {#4} } }
-        %%\regex_if_match:nVT { \c{Roman} | \c{roman} } {#2}
         \regex_if_match:nVT { \c{Alph} | \c{alph} } #2
           { \setcounter{enumX#1} { \int_from_roman:n {#4} } }
       }
@@ -7843,7 +7839,7 @@ Some text here
 %    \myenv*{keyans*} environments.
 %
 % \iffalse
-%% Add |start*|, |start| and |widest| key.
+%% Add |start*|, |start| and |widest| keys.
 % \fi
 %    \begin{macrocode}
 \cs_set_protected:Npn \@@_tmp:nn #1 #2
@@ -14299,7 +14295,7 @@ Some text here
 % \begin{macro}{\anspic, \@@_anspic_body_dim:n, \@@_anspic_label:nn,
 %               \@@_anspic_label_pos:nnn, \@@_anspic_args:nnn,
 %               \@@_anspic_print:n, \@@_anspic_print:e, \@@_anspic_print:V,
-%               \@@_anspic_row:n, @@_anspic_exec:,}
+%               \@@_anspic_row:n, \@@_anspic_exec:,}
 %   We check that the command is active in the \myenv*{keyanspic}
 %   environment only if the \mykey{save-ans} key is present, otherwise
 %   we return an error.
