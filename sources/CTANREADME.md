@@ -1,6 +1,6 @@
 ## enumext — Enumerate exercise sheets
 
-Release v1.9 \[2025-10-06\]
+Release v1.9 \[2025-11-01\]
 
 ## Description
 
@@ -11,7 +11,7 @@ using <code>&langle;multicol&rangle;</code> package.
 
 ## Requirements
 
-The minimum requirement is LaTeX release 2025-06-01. Loads and depends
+The minimum requirement is LaTeX release 2025-11-01. Loads and depend
 on updated version of [multicol](https://ctan.org/pkg/multicol).
 
 ## Installation

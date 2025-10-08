@@ -470,6 +470,13 @@
     \textcolor{optcolor}{\ttfamily #1}
     \MYSortIndex{Counters}{Counters~defined~by~\pkglogo :>\texttt{#1}}
   }
+% \idimen{m}
+\NewDocumentCommand \idimen { m }
+  {
+    \textcolor{pkgcolor}{\ttfamily\textbackslash #1}
+    \MYSortIndex{#1}{\texttt{\textbackslash#1}}
+    \MYSortIndex{Dimension}{Dimension~defined~by~\pkglogo :>\texttt{\textbackslash#1}}
+  }
 % \ilabel{sm}
 \NewDocumentCommand \ilabel {s m }
   {
@@ -956,7 +963,7 @@
 % \smallskip
 %
 % \begin{important}*
-%  The minimum requirement is \hologo{LaTeX} release 2025-06-01.
+%  The minimum requirement is \hologo{LaTeX} release 2025-11-01.
 % \end{important}
 %
 % \pagestyle{myheader}
@@ -1292,8 +1299,6 @@
 % the counter \icounter{enumXvii} for \myenv*{enumext*} environment and
 % the counter \icounter{enumXviii} for \myenv*{keyans*} environment.
 %
-%^^A \smallskip
-%
 % \begin{important}*
 % If any package defines these \emph{counters} or they are user-defined
 % in the document, the package will return a \emph{\enquote{fatal error}}
@@ -1303,12 +1308,10 @@
 % \subsubsection{Public dimension}
 %
 % The package \mypkg*{enumext} only provides a \emph{single public dimension}
-% |\itemwidth| and is intended for user convenience only and is NOT
+% \idimen{itemwidth} and is intended for user convenience only and is NOT
 % for internal use as such. The dimension |\itemwidth| is a \emph{rigid length}
 % and contains the \emph{\enquote{width of the content}} of each |\item|
 % regardless of \mykey{labelwidth} and \mykey{labelsep}.
-%
-%^^A \smallskip
 %
 % \begin{important}*
 % If any package defines |\itemwidth| or the user defines |\itemwidth|
@@ -1358,8 +1361,6 @@
 % environment |enumext| and the environment |keyans| and can
 % together with the \mykey{mini-env} key. If you need to force a
 % start a new column \ics{columnbreak} must be used (see \S\ref{key:multi}).
-%
-%^^A \smallskip
 %
 % \begin{important}*
 % The |\columnseprule| command is not available as a key and is set to
@@ -1439,7 +1440,7 @@
 % Unfortunately, if \mypkg{hyperref} is loaded and \emph{tagged} \texttt{PDF} is not
 % active, it will not produce the \enquote{links}, the internal implementation
 % uses |\footnotetext|\myoarg{number} and |\footnotemark|\myoarg{number}\mymarg{text}
-% and \enquote{link's} for this are not supported by the \mypkg{hyperref} package.
+% and \enquote{links} for this are not supported by the \mypkg{hyperref} package.
 %
 % \smallskip
 %
@@ -1536,7 +1537,7 @@
 %
 % \item Each \emph{\enquote{item content}} in the environment is placed
 %   within a \myenv{minipage} environment whose \emph{width} is stored
-%   in the dimension |\itemwidth| does NOT include \mykey{labelwidth} and
+%   in the dimension \idimen{itemwidth} does NOT include \mykey{labelwidth} and
 %   \mykey{labelsep}, only the \emph{width of the content}.
 %
 % \item You cannot have floating environments like \myenv{figure} or
@@ -1613,7 +1614,7 @@
 % The \ics*{item} command for the \myenv*{enumext*} environment provides
 % a \emph{\enquote{first optional argument}} \ics*{item}\myparg{columns} which \emph{\enquote{joins items}}
 % between columns. Let's consider the following examples adapted directly from
-% the \mypkg{task} package:
+% the \mypkg{tasks} package:
 %
 % \iffalse
 %<*example>
@@ -1730,18 +1731,11 @@
 % and we can use it like any other key so |\begin{enumext}[midsep]|
 % and |\begin{enumext*}[midsep]| will be valid.
 %
-% \smallskip
-% \begin{important}*
-% The old syntax |\setenumextmeta|\myoarg{enumext\textnormal{\textcolor{MediumOrchid}{\texttt{*}}}}
-% and |\setenumextmeta|\myoarg{enumext\textnormal{\textcolor{gray}{,}} level}
-% is still supported but is not recommended and may be removed in the future.
-% \end{important}
-%
 % \section{The \texttt{keyval} system}
 %
-% The \mymeta{key = val} system used by the \mypkg*{enumext} package is implemented
-% using \mypkg{l3keys} so it must be noted that \mymeta{keys} marked as
-% \emph{\enquote{value forbidden}}, that is \mymeta{key} is
+% The \mymeta{key = val} system used by the \mypkg*{enumext} package is
+% implemented using \mypkg{l3keys} so it must be noted that \mymeta{keys}
+% marked as \emph{\enquote{value forbidden}}, that is \mymeta{key} is
 % different from \mymeta{key=}.
 %
 % \smallskip
@@ -1868,7 +1862,9 @@
 %
 % \keyexamp{font}{font commands}{empty}
 % Sets the \emph{font style} for the current \mymeta{label} defined by \mykey{label} key.
-% For example |font={\bfseries\small}|.
+% You cannot use commands with an argument, for example |font={\small\textbf{#1}}| will
+% return an error, but |font={\bfseries\small}| it will work. For full customization
+% of how \mymeta{label} is displayed use \mykey{wrap-label} and/or \mykey{wrap-label*} keys.
 %
 % \smallskip
 %
@@ -2236,8 +2232,6 @@
 %  \mykey{list-indent} and get the same effect.
 % \end{important}
 %
-%^^A \newpage
-%
 % \keyexamp{rightmargin}{rigid length}{\mydim{0}pt}
 %
 % \smallskip
@@ -2283,7 +2277,6 @@
 % \emph{\enquote{after}} all calculations related to the \emph{list
 % parameters} in the environment and the \mymeta{keys} sets by
 % \myoarg{key \textnormal{\textcolor{gray}{=}} val} have been performed,
-% with the exception of the \mymeta{keys} \mykey{start} and \mykey{start*},
 % that is, in the \emph{second argument} of the list: |\begin{list}|\mymarg{arg one}|{|\mymeta{arg two}\mymarg[cbc=pkgcolor,ac=araracolor]{code}|}|.
 %
 % \smallskip
@@ -2507,12 +2500,16 @@
 %
 % \keyexamp{columns}{integer}{\mydim{1}}
 %
+% \smallskip
+%
 % Set the \emph{number of columns} to be used by the \myenv{multicols}
 % environment within the environments \myenv*{enumext} and \myenv*{keyans}. The value must be a positive
 % integer less than or equal to \mydim{10}.
 % In the \myenv*{enumext*} and \myenv*{keyans*} environments they
 % correspond to the default number of columns (without joining) and
-% internally adjust the value of |\itemwidth|.
+% internally adjust the value of \idimen{itemwidth}.
+%
+% \smallskip
 %
 % \keyexamp{columns-sep}{rigid length}{by level}
 %
@@ -2525,7 +2522,7 @@
 % current level.
 % In the \myenv*{enumext*} and \myenv*{keyans*} environments they
 % correspond to the \emph{space between} columns (without joining) and
-% internally adjust the value of |\itemwidth|.
+% internally adjust the value of \idimen{itemwidth}.
 %
 % \subsection{Keys for \env{minipage}}\label{key:mini}
 %
@@ -2601,7 +2598,7 @@
 %
 % \smallskip
 %
-% \section{The storage system}\label{sec:storage system}
+% \section{The storage system}\label{sec:storage-system}
 %
 % The entire mechanism for \emph{\enquote{storing content}} it is
 % activated according to \mykey{save-ans} key on the
@@ -2688,12 +2685,14 @@
 % \smallskip
 %
 % \keyexamp{save-key}{key list}{not set}
-% This key \emph{overrides} the default \emph{\enquote{stored keys}} of the
-% \emph{optional argument} of the inner levels or nested environment that will
-% be passed to the \emph{sequence}. The \mymeta{key list} passed to
-% this key ignores any \mymeta{keys} in the \emph{\enquote{stored
-% structure}} and must be passed between braces. For example, if we
-% execute at a second level:
+% This key \emph{overrides} the default \emph{\enquote{stored keys}} of
+% the \emph{optional argument} of the inner levels or nested environment
+% that will be passed to the \emph{sequence} \mymarg{store name} set by
+% \mykey{save-ans} key. The \mymeta{key list} passed to this key ignores
+% any \mymeta{keys} in the \emph{\enquote{stored structure}} and must be
+% passed between braces. For example, if we execute at a second level:
+%
+% \newpage
 %
 % \iffalse
 %<*example>
@@ -2712,7 +2711,7 @@
 % \fi
 %
 % The \emph{\enquote{stored keys}} by default in the \emph{sequence}
-% \mymarg{store name} would be |nosep, columns=2|, but using the key
+% \mymarg{store name} would be |nosep| and |columns=2|, but using the key
 % \mykey{save-key}|={columns=3}| will overwrite and the
 % \emph{\enquote{stored key}} in the \emph{sequence} \mymarg{store name}
 % are only |columns=3| ignoring all the others.
@@ -2805,7 +2804,6 @@
 % the \emph{mandatory argument} \mymeta{content} passed to the |\anskey|
 % command and \mymeta{body} for the \myenv*{anskey*} environment using
 % the \mykey{wrap-ans} key if set.
-%
 % For \ics*{item*} and \ics*{anspic}|*| the \myenv*{keyans},
 % \myenv*{keyans*} and \myenv*{keyanspic} environments it will display
 % the \emph{symbol} set by the \mykey{mark-ans*} key to the left of the
@@ -2823,7 +2821,7 @@
 % separated by the value of the key \mykey{mark-sep} and aligned by
 % the value of the key \mykey{mark-pos}. This key is not affected by the
 % keys \mykey{font} or \mykey{wrap-label} so if you want to apply
-% \emph{styling} you have to do it directly, for example: |mark-ans={\textcolor{red}{\textbf{\textasteriskcentered}}|
+% \emph{styling} you have to do it directly, for example: |mark-ans={\textcolor{red}{\textbf{\textasteriskcentered}}|.
 %
 % \smallskip
 %
@@ -2841,7 +2839,7 @@
 % Sets the \emph{horizontal space} between the box containing the
 % \emph{\enquote{symbol}} defined by \mykey{mark-ans} key and the
 % \emph{mandatory argument} \mymeta{content} passed to the \ics*{anskey}
-% command and the \emph{body} in \myenv*{anskey*} environment.
+% command and the \mymeta{body} in \myenv*{anskey*} environment.
 %
 % \smallskip
 %
@@ -2850,7 +2848,7 @@
 % and the \mymeta{body} in \myenv*{anskey*} environment referenced by |{#1}|
 % when using the \mykey{show-ans} or \mykey{show-pos} keys.
 % The \mymarg{code} must be passed between  braces and only affects how the
-% \emph{argument} or \emph{body} is displayed and NOT the \emph{\enquote{stored
+% \mymeta{content} or \mymeta{body} is displayed and NOT the \emph{\enquote{stored
 % content}} in the \emph{sequence} and \emph{prop list} \mymarg{store
 % name} set by \mykey{save-ans} key. If this key is passed using
 % \ics*{setenumext} it is necessary to use double ‘|{##1}|’.
@@ -5567,7 +5565,7 @@ Some text here
 %</example>
 % \fi
 %
-% Now we just need to set |wrap-label*={\labelbx{#1}}|.%^^A |mode-box| and
+% Now we just need to set |wrap-label*={\labelbx{#1}}|.
 %
 % \begin{enumext}[mode-box,label={},labelsep=4pt,labelwidth=\descitemwd,list-offset=-\dimeval{\descitemwd+4pt}, wrap-label*={\labelbx{#1}}, font=\bfseries,noitemsep,topsep=3pt]
 %  \item[SomeThing] A short one-line description.
@@ -5749,6 +5747,11 @@ Some text here
 % \begin{description}[font=\small\sffamily,wide=0pt,style=multiline,leftmargin=1.1\descrwidth,nosep,noitemsep]
 %  \item [\fileversion{} (ctan), \filedate]
 %    \begin{itemize}
+%      \item Update requirement to \hologo{LaTeX} release 2025-11-01.
+%      \item Move |\setcounter| to |\begin{list}|\mymarg{arg one}|{|\mymeta{arg two}|\setcounter}|.
+%    \end{itemize}
+%  \item [v1.8 (ctan), 2025-10-04]
+%    \begin{itemize}
 %      \item Replacing |\scantokens| (primitive) with |\tl_retokenize:n|.
 %      \item Cleanup warnings and details returned by |expltools|.
 %    \end{itemize}
@@ -5895,11 +5898,11 @@ Some text here
 % First we will make sure we have a minimum (super updated) version of
 % \hologo{LaTeX} to work correctly.
 %    \begin{macrocode}
-\NeedsTeXFormat{LaTeX2e}[2025-06-01]
+\NeedsTeXFormat{LaTeX2e}[2025-11-01]
 %    \end{macrocode}
 % Now declare the \mypkg*{enumext} package.
 %    \begin{macrocode}
-\ProvidesExplPackage {enumext} {2025-10-06} {1.9} {Enumerate exercise sheets}
+\ProvidesExplPackage {enumext} {2025-11-01} {1.9} {Enumerate exercise sheets}
 %    \end{macrocode}
 % Finally check if the \mypkg{multicol} package are loaded, if not we load it.
 %    \begin{macrocode}
@@ -5911,7 +5914,7 @@ Some text here
       }
       {
         \msg_info:nnn { enumext } { package-not-load } { multicol }
-        \RequirePackage{multicol}[2025-05-25]
+        \RequirePackage{multicol}[2025-06-05]
       }
   }
 %    \end{macrocode}
@@ -6216,7 +6219,7 @@ Some text here
 %   The \cs{c_@@_anskey_env_hidden_space_str} is a constant \emph{string}
 %   to used to hide the \mymeta{forced space} added by \hologo{TeX} when
 %   recording content in a macro. This \emph{string} contains the \emph{reserved phrase}
-%   ``|%^^Aenumextheol%|'' which is added to the end of the argument stored
+%   `|%^^Aenumextheol%|' which is added to the end of the argument stored
 %   in \emph{sequence} and \emph{prop list} when the key |force-eol| is false.
 %    \begin{macrocode}
 \str_const:Ne \c_@@_anskey_env_hidden_space_str
@@ -10415,8 +10418,6 @@ Some text here
 %   \item If the list has \emph{nested levels}, for each level of nesting we need to
 %    decrementing by one (for the |\item| or |\item*| that opens the nest) so that the account
 %    remains the same.
-%^^A   \item If there is the option \mykey{no-store} we must add the items within this
-%^^A    level plus one to maintain the equality.
 % \end{enumerate}
 %
 % With \myenv*{keyans}, \myenv*{keyans*} and \myenv*{keyanspic} it is
@@ -12893,15 +12894,6 @@ Some text here
 % counter, the redefinition of |\item|, |\makelabel| along with the keys
 % \mykey{ref}, \mykey{itemindent} and \mykey{show-length}.
 %
-% \smallskip
-%
-% \begin{important}*
-% In the functions \myvarenv{__@@_list_arg_two_X:} we will implement the
-% \emph{\enquote{counter}} for the environments, but we do NOT set the
-% \emph{\enquote{start value}} for it to be compatible with \emph{tagged} \texttt{PDF}
-% that should be done later.
-% \end{important}
-%
 % \subsubsection{Calculation of \cs{leftmargin} and \cs{itemindent}}\label{int:leftmargin}
 %
 % Consider the figure \ref{fig:eight} where the default margins (on the
@@ -13079,6 +13071,7 @@ Some text here
         \clist_map_inline:nn { beginparpenalty, itempenalty, endparpenalty }
           { \int_set_eq:cc {@####1} { l_@@_####1_#1_int } }
         \usecounter { enumX#1 }
+        \setcounter { enumX#1 } { \int_eval:n { \int_use:c { l_@@_start_#1_int } - 1 } }
         \str_if_eq:nnTF {#1} { v }
           {
             \@@_keyans_redefine_item:
@@ -13140,6 +13133,7 @@ Some text here
         \skip_set_eq:Nc \parsep  { l_@@_itemsep_#1_skip }
         \skip_zero:N \partopsep
         \usecounter { enumX#1 }
+        \setcounter { enumX#1 } { \int_eval:n { \int_use:c { l_@@_start_#1_int } - 1 } }
         \@@_starred_ref:
         \str_if_eq:nnTF {#1} { vii }
           {
@@ -13496,34 +13490,6 @@ Some text here
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_start_counter:}\label{key:start-counter-enumext}
-%   For compatibility with \emph{tagged} \texttt{PDF} and since we are
-%   using legacy code for the implementation, we must set the initial value
-%   of the counters after the second argument to the list environment and
-%   before the first execution of |\item| , i.e. |\begin{list}|\mymarg{arg
-%   one}\mymarg{arg two}|\setcounter{enumX}|.
-%
-%   \smallskip
-% \begin{important}*
-%   This is described in \href{https://github.com/latex3/tagging-project/issues/893}{processing
-%   order of legacysetupcode in the block templates}
-%   and we will apply the workaround provided by Frank Mittelbach.
-% \end{important}
-%
-% \iffalse
-%% Set start value for counter in |enumext| environment.
-% \fi
-%    \begin{macrocode}
-\cs_new_protected:Nn \@@_start_counter:
-  {
-    \setcounter { enumX \@@_level: }
-      {
-        \int_eval:n { \int_use:c { l_@@_start_ \@@_level: _int } - 1 }
-      }
-  }
-%    \end{macrocode}
-% \end{macro}
-%
 % \begin{macro}{enumext}
 %   Now create the \myenv*{enumext} environment based on \myenv{list}
 %   environment by levels.
@@ -13543,7 +13509,6 @@ Some text here
         \use:c { @@_list_arg_two_ \@@_level: : }
         \@@_before_keys_exec:
       }
-    \@@_start_counter:
     \@@_set_item_width:
     \@@_after_args_exec:
   }
@@ -13729,23 +13694,6 @@ Some text here
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_keyans_start_counter:}\label{res:keyans-set-start-counter}
-%   For compatibility with \emph{tagged} \texttt{PDF} and since we are
-%   using legacy code for the implementation, we must set the initial value
-%   of the counters after the second argument to the list environment and
-%   before the first execution of |\item| , i.e. |\begin{list}|\mymarg{arg
-%   one}\mymarg{arg two}|\setcounter{enumX}|.
-% \iffalse
-%% Start counter for |keyans| environment.
-% \fi
-%    \begin{macrocode}
-\cs_new_protected:Nn \@@_keyans_start_counter:
-  {
-    \setcounter { enumXv } { \int_eval:n { \int_use:c { l_@@_start_v_int } - 1 } }
-  }
-%    \end{macrocode}
-% \end{macro}
-%
 % \begin{macro}{keyans}
 %   Now we define the environment \myenv*{keyans} also based on lists.
 % \iffalse
@@ -13763,7 +13711,6 @@ Some text here
         \@@_list_arg_two_v:
         \@@_before_keys_exec_v:
       }
-    \@@_keyans_start_counter:
     \@@_keyans_set_item_width:
     \@@_after_args_exec_v:
   }
@@ -13777,14 +13724,14 @@ Some text here
 % \subsection{Tagging PDF support for non-standart list environments}\label{ltx:tag-nonestandarlist}
 %
 % The \hologo{LaTeX} release 2022-06-01 brings automatic support for
-% \emph{tagged} \texttt{PDF} in several aspects, including the standard \emph{list environments}
-% and the \myenv{list} environment. Unfortunately non-standard \emph{list environments}
-% like \myenv*{keyanspic} or the horizontal list environments
-% \myenv*{enumext*} and \myenv*{keyans*} are not structured in a nice
-% way, i.e. the expected result in the \texttt{PDF} file is the expected
-% one, but the underlying structure is not correct. In simple terms, for
-% \emph{tagged} \texttt{PDF} a \myenv{list} environment is a \myenv{list} environment, no matter
-% what it looks like in the \texttt{PDF} file.
+% \emph{tagged} \texttt{PDF} in several aspects, including the standard
+% \emph{list environments} and the \myenv{list} environment. Unfortunately
+% non-standard \emph{list environments} like \myenv*{keyanspic} or the
+% horizontal list environments \myenv*{enumext*} and \myenv*{keyans*} are
+% not structured in a nice way, i.e. the expected result in the \texttt{PDF}
+% file is the expected one, but the underlying structure is not correct. In
+% simple terms, for \emph{tagged} \texttt{PDF} a \myenv{list} environment
+% is a \myenv{list} environment, no matter what it looks like in the \texttt{PDF} file.
 %
 % \smallskip
 %
@@ -14033,9 +13980,9 @@ Some text here
 % \subsubsection{The environment \env{keyanspic}}\label{env:keyanspic}
 %
 % \begin{macro}[int]{label-pos, label-sep, layout-sty, layout-sep,
-%                   layout-top, mark-ans, mark-pos, mark-sep, save-sep,
-%                   wrap-opt, wrap-ans*, show-ans, show-pos}
-%   First we define the key that allows us to process the position of the
+%                    layout-top, mark-ans, mark-pos, mark-sep, save-sep,
+%                    wrap-opt, wrap-ans*, show-ans, show-pos}
+%   First we define the keys that allows us to process the position of the
 %   \mymeta{label} centered \enquote{above} or \enquote{below} which will be \mykey{label-pos},
 %   the vertical separation of these from \emph{drawing or tabular} will be
 %   handled with the key \mykey{label-sep}.
@@ -14965,7 +14912,6 @@ Some text here
         \@@_list_arg_two_vii:
         \@@_before_keys_exec_vii:
       }
-    \setcounter { enumXvii } { \int_eval:n { \int_use:c { l_@@_start_vii_int } - 1 } }
     \IfDocumentMetadataT { \tag_suspend:n {enumext*} }
     \@@_starred_columns_set_vii:
     \item[] \scan_stop:
@@ -15526,7 +15472,6 @@ Some text here
         \@@_list_arg_two_viii:
         \@@_before_keys_exec_viii:
       }
-    \setcounter { enumXviii } { \int_eval:n { \int_use:c { l_@@_start_viii_int } - 1 } }
     \IfDocumentMetadataT { \tag_suspend:n {keyans*} }
     \@@_starred_columns_set_viii:
     \item[] \scan_stop:
