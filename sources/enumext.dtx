@@ -5747,6 +5747,10 @@ Some text here
 % \begin{description}[font=\small\sffamily,wide=0pt,style=multiline,leftmargin=1.1\descrwidth,nosep,noitemsep]
 %  \item [\fileversion{} (ctan), \filedate]
 %    \begin{itemize}
+%      \item Update requirement to \mypkg{multicol} release 2025-10-21.
+%    \end{itemize}
+%  \item [v1.9 (ctan), 2025-11-01]
+%    \begin{itemize}
 %      \item Update requirement to \hologo{LaTeX} release 2025-11-01.
 %      \item Move |\setcounter| to |\begin{list}|\mymarg{arg one}|{|\mymeta{arg two}|\setcounter}|.
 %      \item Update code for \emph{tagged} \texttt{PDF}.
@@ -5903,7 +5907,7 @@ Some text here
 %    \end{macrocode}
 % Now declare the \mypkg*{enumext} package.
 %    \begin{macrocode}
-\ProvidesExplPackage {enumext} {2025-11-01} {1.9} {Enumerate exercise sheets}
+\ProvidesExplPackage {enumext} {2025-11-28} {2.0} {Enumerate exercise sheets}
 %    \end{macrocode}
 % Finally check if the \mypkg{multicol} package are loaded, if not we load it.
 %    \begin{macrocode}
@@ -5915,7 +5919,7 @@ Some text here
       }
       {
         \msg_info:nnn { enumext } { package-not-load } { multicol }
-        \RequirePackage{multicol}[2025-06-05]
+        \RequirePackage{multicol}[2025-10-21]
       }
   }
 %    \end{macrocode}

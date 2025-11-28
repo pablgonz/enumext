@@ -1,4 +1,4 @@
-Release v1.9:
+Release v2.0:
 - Replacing `\scantokens` (primitive) with `\tl_retokenize:n`.
 - Cleanup warnings and details returned by `expltools`.
 - Update code for _tagged_ PDF.

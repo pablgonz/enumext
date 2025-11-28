@@ -36,7 +36,7 @@
 %% ------------------------------------------------------------------------
 %% 
 \NeedsTeXFormat{LaTeX2e}[2025-11-01]
-\ProvidesExplPackage {enumext} {2025-11-01} {1.9} {Enumerate exercise sheets}
+\ProvidesExplPackage {enumext} {2025-11-28} {2.0} {Enumerate exercise sheets}
 \hook_gput_code:nnn {begindocument} {enumext}
   {
     \IfPackageLoadedTF { multicol }
@@ -45,7 +45,7 @@
       }
       {
         \msg_info:nnn { enumext } { package-not-load } { multicol }
-        \RequirePackage{multicol}[2025-06-05]
+        \RequirePackage{multicol}[2025-10-21]
       }
   }
 %% Variable for levels and nesting off all environments and |\anskey|, |anskey*|.
