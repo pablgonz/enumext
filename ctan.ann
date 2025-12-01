@@ -1,4 +1,3 @@
 Release v2.0:
-- Replacing `\scantokens` (primitive) with `\tl_retokenize:n`.
-- Cleanup warnings and details returned by `expltools`.
-- Update code for _tagged_ PDF.
+- Update requirement to `multicol` release 2025-10-21.
+– Adjustments in the documentation.

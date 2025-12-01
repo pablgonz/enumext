@@ -22,7 +22,7 @@
 -- General package identification
 module     = "enumext"
 pkgversion = "2.0"
-pkgdate    = "2025-11-28"
+pkgdate    = "2025-12-01"
 ltxrelease = "2025-11-01"
 
 -- Configuration of files for build and installation
@@ -119,7 +119,7 @@ uploadconfig = {
   description  =[[This package provides enumerated list environments compatible with tagging PDF for creating
                   “simple exercise sheets” along with “multiple choice questions”, storing the “answers” to these in memory using
                    multicol package.]],
-  topic        = { "List", "Tagged PDF", "Exercise", "Experimental LaTeX3", "List enumerate" },
+  topic        = { "exercise", "list-enum", "list", "tagged-pdf" },
   ctanPath     = "/macros/latex/contrib/" .. ctanpkg,
   repository   = "https://github.com/pablgonz/" .. module,
   bugtracker   = "https://github.com/pablgonz/" .. module .. "/issues",

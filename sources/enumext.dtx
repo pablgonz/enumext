@@ -599,7 +599,7 @@
     keywords      = [1]{begin,end,Verbatim,env,myseq,false,NewDocumentCommand,newlength, the, red, blue, gray,%
                         settowidth, dimeval, dimexpr, IfBooleanTF,footnotehyper, DocumentMetadata, %
                         IfDocumentMetadataTF, IfDocumentMetadataF, RenewDocumentCommand, pt, em, %
-                        SuspendTagging, ResumeTagging, NewCommandCopy, IfHyperBoolean, N, J, D, Nee, %
+                        SuspendTagging, ResumeTagging, NewCommandCopy, IfHyperBoolean, N, NN, J, D, Nee, %
                         Nnn, nn, Ne, w, n, %
                     },%
 % Other words 2
@@ -615,7 +615,7 @@
                     triangleright, diamond, circ, parleft, star, centering, ast, hyperlink, hypertarget, newtheorem, counterwithin, %
                     aux_i, aux_ii, aux_iii, exp_args, if@noitemarg, if, if@hyper@item, hyper, noitemarg, regex_match, regex_if_match,%
                     skip_vertical, obeyedline, tl_replace_all, mbox, tl_rescan, tl_set_rescan, tex_scantokens, setcounter,
-                    .code, .meta, marginpar, c_zero_skip, tl_retokenize, },%
+                    .code, .meta, marginpar, c_zero_skip, tl_retokenize, keys_define,},%
 % Other words 3
     keywordstyle  = [3]{\color{optcolor!85}},%
     keywords      = [3]{document,article,setlength,pagestyle,definecolor, chapter,},%,
@@ -1466,7 +1466,7 @@
 % \fi
 %
 % \begin{important}
-%  At the moment the \mypkg{footnotehyper} package v1.1e (2021/08/13) is not compatible
+%  At the moment the \mypkg{footnotehyper} package v1.1f (2025/11/15) is not compatible
 %  with \emph{tagged} \texttt{PDF}.
 % \end{important}
 %
@@ -2335,12 +2335,16 @@
 % defined by \mykey{label} key on the current level, i.e. it is equivalent to enter
 % |start*=5|, |start*=E| or |start*=v|.
 %
+% \smallskip
+%
 % \begin{important}
-%  For compatibility with \emph{tagged} \texttt{PDF}, the \emph{start value}
-%  ​​are set \emph{\enquote{after}} the \emph{second argument} to the \myenv{list}
-%  environment and \emph{\enquote{before}} the execution of the first |\item| and the |first| key:
-%  |\begin{list}|\mymarg{arg one}\mymarg{arg two}|\setcounter{enumX}\item|.
+%   The \emph{start value} are set in the \emph{second argument} of the \myenv{list}
+%   environment and \emph{\enquote{before}} the execution of the keys \mykey{before}
+%   and \mykey{first}: |\begin{list}|\mymarg{arg one}|{|\mymeta{arg two}|\setcounter}|.
 % \end{important}
+%
+% \smallskip
+%
 % \begin{important}*
 %   The following \mymeta{keys} are available only for the \myenv*{enumext}
 %   and \myenv*{enumext*} environments.
@@ -3089,11 +3093,11 @@
 %
 % \smallskip
 %
-% Comments \enquote{\textcolor{gray}{\%}} or \enquote{any character}
+% Comments `\textcolor{gray}{\ttfamily\%}' or \emph{any character}
 % after |\begin{anskey*}| or \myoarg{key \textnormal{\textcolor{gray}{=}} val}
 % on the same line are NOT supported, \hologo{LaTeX} will return an
 % \enquote{error} message if this happens. In a similar way comments
-% \enquote{\textcolor{gray}{\%}} or \enquote{any character} after
+% `\textcolor{gray}{\ttfamily\%}' or \emph{any character} after
 % |\end{anskey*}| on the same line \hologo{LaTeX} will
 % return a \enquote{warning} message.
 %
@@ -3132,7 +3136,7 @@
 % Sets if the \emph{last end of line} for the \mymeta{stored content} is hidden or not.
 % This key is necessary only if the last line is the closing of some
 % environment defined by the \mypkg{fancyvrb} package as |\end{|\myenv{Verbatim}|}|
-% or another environment that does not support a comments \enquote{\ttfamily\textcolor{gray}{\%}}
+% or another environment that does not support a comments `{\textcolor{gray}{\ttfamily\%}}'
 % after closing |\end{|\myenv{Verbatim}|}%|.
 %
 % \subsubsection*{Example}
@@ -5688,7 +5692,7 @@ Some text here
 %
 % \bibitem{footnotehyper} \textsc{Burnol, Jean-François}. \enquote{The \textsf{footnotehyper}
 % package}. Available from
-% \textsc{ctan}, \url{https://www.ctan.org/pkg/footnotehyper}, 2021.
+% \textsc{ctan}, \url{https://www.ctan.org/pkg/footnotehyper}, 2025.
 %
 % \bibitem{expl3} The \hologo{LaTeX} Project. \enquote{The \textsf{expl3}
 % package}. Available from
@@ -5748,6 +5752,7 @@ Some text here
 %  \item [\fileversion{} (ctan), \filedate]
 %    \begin{itemize}
 %      \item Update requirement to \mypkg{multicol} release 2025-10-21.
+%      \item Adjustments in the documentation.
 %    \end{itemize}
 %  \item [v1.9 (ctan), 2025-11-01]
 %    \begin{itemize}
@@ -5907,7 +5912,7 @@ Some text here
 %    \end{macrocode}
 % Now declare the \mypkg*{enumext} package.
 %    \begin{macrocode}
-\ProvidesExplPackage {enumext} {2025-11-28} {2.0} {Enumerate exercise sheets}
+\ProvidesExplPackage {enumext} {2025-12-01} {2.0} {Enumerate exercise sheets}
 %    \end{macrocode}
 % Finally check if the \mypkg{multicol} package are loaded, if not we load it.
 %    \begin{macrocode}
@@ -5927,7 +5932,7 @@ Some text here
 % \subsection{Definition of variables}
 %
 % Variables that do not appear in this section are created by means of
-% \cs[no-index]{keys_define:nn} or some function described below.
+% |\keys_define:nn| or some function described below.
 %
 % \begin{variable}[int]{\l_@@_level_int, \l_@@_level_h_int, \l_@@_anskey_level_int,
 %                       \l_@@_keyans_level_int, \l_@@_keyans_level_h_int, \l_@@_keyans_pic_level_int,}
