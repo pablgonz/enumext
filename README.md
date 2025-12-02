@@ -90,7 +90,8 @@ conditions of the [LaTeX Project Public License](https://www.latex-project.org/l
         ├── enumext-03.tex
         ├── enumext-04.tex
         ├── enumext-05.tex
-        ├── enumext-06.tex     
+        ├── enumext-06.tex
+        ├── enumext-07.tex
 ```
 
 ## Copyright

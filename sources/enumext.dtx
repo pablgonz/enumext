@@ -3093,11 +3093,11 @@
 %
 % \smallskip
 %
-% Comments `\textcolor{gray}{\ttfamily\%}' or \emph{any character}
+% Comments `\textcolor{gray}{\texttt{\%}}' or \emph{any character}
 % after |\begin{anskey*}| or \myoarg{key \textnormal{\textcolor{gray}{=}} val}
 % on the same line are NOT supported, \hologo{LaTeX} will return an
 % \enquote{error} message if this happens. In a similar way comments
-% `\textcolor{gray}{\ttfamily\%}' or \emph{any character} after
+% `\textcolor{gray}{\texttt{\%}}' or \emph{any character} after
 % |\end{anskey*}| on the same line \hologo{LaTeX} will
 % return a \enquote{warning} message.
 %
@@ -3136,7 +3136,7 @@
 % Sets if the \emph{last end of line} for the \mymeta{stored content} is hidden or not.
 % This key is necessary only if the last line is the closing of some
 % environment defined by the \mypkg{fancyvrb} package as |\end{|\myenv{Verbatim}|}|
-% or another environment that does not support a comments `{\textcolor{gray}{\ttfamily\%}}'
+% or another environment that does not support a comments `\textcolor{gray}{\texttt{\%}}'
 % after closing |\end{|\myenv{Verbatim}|}%|.
 %
 % \subsubsection*{Example}
@@ -5912,7 +5912,7 @@ Some text here
 %    \end{macrocode}
 % Now declare the \mypkg*{enumext} package.
 %    \begin{macrocode}
-\ProvidesExplPackage {enumext} {2025-12-01} {2.0} {Enumerate exercise sheets}
+\ProvidesExplPackage {enumext} {2025-12-02} {2.0} {Enumerate exercise sheets}
 %    \end{macrocode}
 % Finally check if the \mypkg{multicol} package are loaded, if not we load it.
 %    \begin{macrocode}
