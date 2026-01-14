@@ -1,6 +1,6 @@
 ## enumext — Enumerate exercise sheets
 
-Release v2.0 \[2025-12-02\]
+Release v2.1 \[2026-01-15\]
 
 ## Description
 
@@ -63,4 +63,4 @@ conditions of the [LaTeX Project Public License](https://www.latex-project.org/l
 
 ## Author and copyright
 
-Copyright &#169; 2024 — 2025 by Pablo González L <pablgonz@educarchile.cl>
+Copyright &#169; 2024 — 2026 by Pablo González L <pablgonz@educarchile.cl>

@@ -8,7 +8,7 @@
 %
 % File: enumext.dtx
 %
-% Copyright (C) 2024-2025 by Pablo González L <pablgonz@educarchile.cl>
+% Copyright (C) 2024-2026 by Pablo González L <pablgonz@educarchile.cl>
 %
 % This work may be distributed and/or modified under the conditions of the
 % LaTeX Project Public License, either version 1.3c of this license or (at
@@ -752,7 +752,7 @@
 }
 \setfoot{\rlap{\hskip\dimexpr-\oddsidemargin-1in\relax%
          \parbox{1.93\paperwidth}{\hfil\thepage\,/\,\pageref{LastPage}}}}%
-        {\parbox{\textwidth}{\raggedright \textcolor{gray}{\raisebox{-1pt}{\textcopyright}{}2024--2025 by Pablo González L}}}%
+        {\parbox{\textwidth}{\raggedright \textcolor{gray}{\raisebox{-1pt}{\textcopyright}{}2024--2026 by Pablo González L}}}%
         {}%
 \sethead{\llap{\raisebox{0.55cm}{\parbox{\dimexpr\oddsidemargin+1in\relax}{\makebox[0pt][l]{\hspace{15pt}\pkglogo\space\fileversion}}}}}
         {\raisebox{0.55cm}{\parbox{\textwidth}{\hspace*{-\oddsidemargin}\centering\small\S.\thesection\space\sectiontitle}}}%
@@ -889,7 +889,7 @@
 %    \filedate.}\\[25pt]
 %    \author{
 %    \large
-%    \raisebox{-1pt}{\textcopyright}{}2024--2025 by Pablo González L\thanks{
+%    \raisebox{-1pt}{\textcopyright}{}2024--2026 by Pablo González L\thanks{
 %    E-mail: \textcolor{OrangeRed}{\textsf{\guillemotleft}}\email{pablgonz@educarchile.cl}\textcolor{OrangeRed}{\textsf{\guillemotright}}.
 %       }%
 %    }
@@ -5751,6 +5751,10 @@ Some text here
 % \begin{description}[font=\small\sffamily,wide=0pt,style=multiline,leftmargin=1.1\descrwidth,nosep,noitemsep]
 %  \item [\fileversion{} (ctan), \filedate]
 %    \begin{itemize}
+%      \item Fixed bad interaction between |\setenumext| and the \texttt{\textcolor{optcolor}{ref}} key.
+%    \end{itemize}
+%  \item [v2.0 (ctan), 2025-12-02]
+%    \begin{itemize}
 %      \item Update requirement to \mypkg{multicol} release 2025-10-21.
 %      \item Adjustments in the documentation.
 %    \end{itemize}
@@ -5912,7 +5916,7 @@ Some text here
 %    \end{macrocode}
 % Now declare the \mypkg*{enumext} package.
 %    \begin{macrocode}
-\ProvidesExplPackage {enumext} {2025-12-02} {2.0} {Enumerate exercise sheets}
+\ProvidesExplPackage {enumext} {2026-01-15} {2.1} {Enumerate exercise sheets}
 %    \end{macrocode}
 % Finally check if the \mypkg{multicol} package are loaded, if not we load it.
 %    \begin{macrocode}
@@ -7501,8 +7505,8 @@ Some text here
 %
 % \begin{macro}[int]{label,ref,\l_@@_label_i_tl,\l_@@_label_ii_tl, \l_@@_label_iii_tl, \l_@@_label_iv_tl}
 %   Here we set the default \mymeta{labels} of the \emph{four levels} of
-%   \myenv*{enumext} environment, along with the default value for
-%   \mykey{labelwidth} key and \mykey{ref} key.
+%   \myenv*{enumext} environment, along with the default values for
+%   \mykey{labelwidth}, \mykey{widest} and \mykey{ref} keys.
 % \iffalse
 %% Define and set |label| and |ref| keys for |enumext|.
 % \fi
@@ -7519,7 +7523,7 @@ Some text here
                            },
         label .initial:n = #3,
         label .value_required:n = true,
-        ref   .code:n    = \@@_standar_ref:n {##1},
+        ref   .code:n    = \@@_standar_ref:nn {#2} {##1},
         ref   .value_required:n = true,
       }
   }
@@ -7530,8 +7534,8 @@ Some text here
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}[int]{\@@_standar_ref:n, \@@_standar_ref:,}
-%   The \cs{@@_standard_ref:n} function will first pass the key
+% \begin{macro}[int]{\@@_standar_ref:nn, \@@_standar_ref:,}
+%   The \cs{@@_standard_ref:nn} function will first pass the key
 %   \emph{argument} \texttt{\textcolor{optcolor}{ref}} to the variable
 %   \cs{l_@@_ref_key_arg_t}l and analyze its state, if it is not \emph{empty}
 %   it will set a copy of of the \emph{current counter style} save in
@@ -7542,19 +7546,16 @@ Some text here
 %% Internal function used by |ref| key in enumext environment.
 % \fi
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_standar_ref:n #1
+\cs_new_protected:Npn \@@_standar_ref:nn #1 #2
   {
-    \tl_set:Nn \l_@@_ref_key_arg_tl {#1}
+    \tl_set:Nn \l_@@_ref_key_arg_tl {#2}
     \tl_if_empty:NTF \l_@@_ref_key_arg_tl
       {
         \msg_error:nnn { enumext } { key-ref-empty } { enumext }
       }
       {
-        \tl_set_eq:Nc \l_@@_ref_the_count_tl
-          {
-            l_@@_the_counter_ \@@_level: _tl
-          }
-        \tl_set:ce { l_@@_renew_counter_ \@@_level: _tl }
+        \tl_set_eq:Nc \l_@@_ref_the_count_tl { l_@@_the_counter_#1_tl }
+        \tl_set:ce { l_@@_renew_counter_#1_tl }
           {
             \exp_not:N \renewcommand { \exp_not:V \l_@@_ref_the_count_tl }
               { \exp_not:V \l_@@_ref_key_arg_tl }

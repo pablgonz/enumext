@@ -96,4 +96,4 @@ conditions of the [LaTeX Project Public License](https://www.latex-project.org/l
 
 ## Copyright
 
-Copyright &#169; 2024-2025 by Pablo González L <pablgonz@educarchile.cl>
+Copyright &#169; 2024-2026 by Pablo González L <pablgonz@educarchile.cl>
