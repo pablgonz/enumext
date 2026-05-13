@@ -1,7 +1,7 @@
 % \iffalse meta-comment
 % arara: lualatex: { branch: developer, draft: true }
 % arara: clean: { files: [ enumext-01.pdf, enumext-02.pdf, enumext-03.pdf, enumext-04.pdf, enumext-05.pdf ] }
-% arara: lualatex: { branch: developer, shell: true }
+% arara: lualatex: { branch: developer, interaction: batchmode, shell: false }
 % arara: clean: { extensions: [ aux, log, out, glo, gls, hd, ind, ilg, idx, toc, atfi ] }
 % arara: clean: { files: [ userdoc.idx, userdoc.ilg, userdoc.ind ] }
 % arara: halt
@@ -963,7 +963,7 @@
 % \smallskip
 %
 % \begin{important}*
-%  The minimum requirement is \hologo{LaTeX} release 2025-11-01.
+%  The minimum requirement is \hologo{LaTeX} release 2026-06-01.
 % \end{important}
 %
 % \pagestyle{myheader}
@@ -2311,6 +2311,8 @@
 %  this \mymeta{key} is executed \emph{\enquote{after}} the \mykey{listparindent},
 %  \mykey{parsep} and \mykey{itemindent} \mymeta{keys} within the \myenv{minipage}
 %  environment in which the \emph{\enquote{item content}} is placed.
+%  Making modifications to |\setcounter| in these environments using this \mymeta{key} 
+%  will not have the expected effect.
 % \end{important}
 %
 % \smallskip
@@ -2338,9 +2340,9 @@
 % \smallskip
 %
 % \begin{important}
-%   The \emph{start value} are set in the \emph{second argument} of the \myenv{list}
+%   The \emph{start value} in |enumext| and |keyans| are set in the \emph{second argument} of the \myenv{list}
 %   environment and \emph{\enquote{before}} the execution of the keys \mykey{before}
-%   and \mykey{first}: |\begin{list}|\mymarg{arg one}|{|\mymeta{arg two}|\setcounter}|.
+%   and \mykey{first}, but in the |enumext*| and |keyans*| it is set much later: |\begin{list}|\mymarg{arg one}\mymarg{arg two}|\setcounter|.
 % \end{important}
 %
 % \smallskip
@@ -4635,9 +4637,9 @@ to \ref{simplews:3} is \getkeyans{simplews:3}.
 %<*example>
 % \fi
 \begin{filecontents*}[overwrite]{enumext-01.tex}
-% arara: lualatex: { branch: developer, draft: true }
-% arara: lualatex: { branch: developer, draft: true }
-% arara: lualatex: { branch: developer }
+% arara: lualatex: { branch: developer, interaction: batchmode, draft: true }
+% arara: lualatex: { branch: developer, interaction: batchmode, draft: true }
+% arara: lualatex: { branch: developer, interaction: batchmode }
 % arara: clean: { extensions: [ aux, log, out] }
 % arara: move: { files: [ enumext-01-luamml-mathml.html ], target: 'enumext-01-mathml.html' }
 \DocumentMetadata
@@ -5337,45 +5339,45 @@ Some text here
 %   between them plus the use of the \mykey{label}, \mykey{labelwidth},
 %   \mykey{labelsep}, \mykey{ref}, \mykey{align} and \mykey{wrap-label} keys.
 %   \IfFileExists{enumext-01.pdf}{Source file \textattachfile[color=red,print=false]{enumext-01.tex}{\faFile*[regular]}
-%   and \emph{tagged} \texttt{PDF} \textattachfile[color=red,print=false]{enumext-01.pdf}{\faFilePdf[regular]}}{}.%
+%   and \emph{tagged} \texttt{PDF} \textattachfile[color=red,print=false]{enumext-01.pdf}{\faFilePdf[regular]}.}{}%
 %
 % \item The file \myfile{enumext-02.tex} contains the tests for the \myenv*{enumext}
 %   and \myenv*{enumext*} environments and the support for \myenv{minipage}
 %   and \myenv{multicols} environments using the keys \mykey{columns},
 %   \mykey{columns-sep}, \mykey{mini-env}, \mykey{mini-right} and
 %   |\miniright| command. \IfFileExists{enumext-02.pdf}{Source file \textattachfile[color=red,print=false]{enumext-02.tex}{\faFile*[regular]}
-%   and \emph{tagged} \texttt{PDF} \textattachfile[color=red,print=false]{enumext-02.pdf}{\faFilePdf[regular]}}{}.%
+%   and \emph{tagged} \texttt{PDF} \textattachfile[color=red,print=false]{enumext-02.pdf}{\faFilePdf[regular]}.}{}%
 %
 % \item The file \myfile{enumext-03.tex} contains the tests for the \myenv*{enumext}
 %   and \myenv*{keyanspic} environments activated by the \mykey{save-ans}
 %   key together with the \mykey{save-sep} and \mykey{save-ref} keys and
 %   the |\printkeyans| command.
 %   \IfFileExists{enumext-03.pdf}{Source file \textattachfile[color=red,print=false]{enumext-03.tex}{\faFile*[regular]}
-%   and \emph{tagged} \texttt{PDF} \textattachfile[color=red,print=false]{enumext-03.pdf}{\faFilePdf[regular]}}{}.%
+%   and \emph{tagged} \texttt{PDF} \textattachfile[color=red,print=false]{enumext-03.pdf}{\faFilePdf[regular]}.}{}%
 %
 % \item The file \myfile{enumext-04.tex} contains the tests for the |\anskey|
 %   command and the \myenv*{anskey*} environment activated by the
 %   \mykey{save-ans} key along with the |\getkeyans| and |\printkeyans| commands.
 %   \IfFileExists{enumext-04.pdf}{Source file \textattachfile[color=red,print=false]{enumext-04.tex}{\faFile*[regular]}
-%   and \emph{tagged} \texttt{PDF} \textattachfile[color=red,print=false]{enumext-04.pdf}{\faFilePdf[regular]}}{}.%
+%   and \emph{tagged} \texttt{PDF} \textattachfile[color=red,print=false]{enumext-04.pdf}{\faFilePdf[regular]}.}{}%
 %
 % \item The file \myfile{enumext-05.tex} contains the tests for the environments
 %   \myenv*{keyans}, \myenv*{keyans*} and \myenv*{keyanspic} activated by the key
 %   \mykey{save-ans} together with the keys \mykey{no-store} and \mykey{show-ans}
 %   and the commands |\setenumext|, |\setenumextmeta|, |\printkeyans| and |\foreachkeyans|.
 %   \IfFileExists{enumext-05.pdf}{Source file \textattachfile[color=red,print=false]{enumext-05.tex}{\faFile*[regular]}
-%   and \emph{tagged} \texttt{PDF} \textattachfile[color=red,print=false]{enumext-05.pdf}{\faFilePdf[regular]}}{}.%
+%   and \emph{tagged} \texttt{PDF} \textattachfile[color=red,print=false]{enumext-05.pdf}{\faFilePdf[regular]}.}{}%
 %
 % \item The file \myfile{enumext-06.tex} contains the tests for the environments
 %   \myenv*{enumext} and \myenv*{enumext*} for \emph{fake} \myenv{itemize} and \myenv{description}.
 %   \IfFileExists{enumext-06.pdf}{Source file \textattachfile[color=red,print=false]{enumext-06.tex}{\faFile*[regular]}
-%   and \emph{tagged} \texttt{PDF} \textattachfile[color=red,print=false]{enumext-06.pdf}{\faFilePdf[regular]}}{}.%
+%   and \emph{tagged} \texttt{PDF} \textattachfile[color=red,print=false]{enumext-06.pdf}{\faFilePdf[regular]}.}{}%
 %
 % \item The file \myfile{enumext-07.tex} contains the tests for starting the
 %   environments with |\setenumext{resume}|, the |\resetenumext| command
 %   and the \mykey{series}, \mykey{resume}, \mykey{resume*} and \mykey{reset} keys.
 %   \IfFileExists{enumext-06.pdf}{Source file \textattachfile[color=red,print=false]{enumext-07.tex}{\faFile*[regular]}
-%   and \emph{tagged} \texttt{PDF} \textattachfile[color=red,print=false]{enumext-07.pdf}{\faFilePdf[regular]}}{}.%
+%   and \emph{tagged} \texttt{PDF} \textattachfile[color=red,print=false]{enumext-07.pdf}{\faFilePdf[regular]}.}{}%
 % \end{itemize}
 %
 % \section{The way of non-enumerated lists}
@@ -5672,7 +5674,7 @@ Some text here
 %
 % \bibitem{scontents} \textsc{González, Pablo}. \enquote{\textsf{scontents} - Stores
 % \hologo{LaTeX} contents in memory or files}. Available from
-% \textsc{ctan}, \url{https://www.ctan.org/pkg/scontents}, 2025.
+% \textsc{ctan}, \url{https://www.ctan.org/pkg/scontents}, 2026.
 %
 % \bibitem{enumerate} The \hologo{LaTeX} Project. \enquote{\textsf{enumerate} – Enumerate
 % with redefinable labels}. Available from
@@ -5684,11 +5686,11 @@ Some text here
 %
 % \bibitem{latexref} \textsc{Berry, Karl}. \enquote{\hologo{LaTeX2e}: An
 % Unofficial Reference Manual}. Available from \textsc{ctan},
-% \url{https://ctan.org/pkg/latex2e-help-texinfo}, 2025.
+% \url{https://ctan.org/pkg/latex2e-help-texinfo}, 2026.
 %
 % \bibitem{hyperref} The \hologo{LaTeX} Project. \enquote{Extensive support
 % for hypertext in \hologo{LaTeX}}. Available from
-% \textsc{ctan}, \url{https://www.ctan.org/pkg/hyperref}, 2025.
+% \textsc{ctan}, \url{https://www.ctan.org/pkg/hyperref}, 2026.
 %
 % \bibitem{footnotehyper} \textsc{Burnol, Jean-François}. \enquote{The \textsf{footnotehyper}
 % package}. Available from
@@ -5696,15 +5698,15 @@ Some text here
 %
 % \bibitem{expl3} The \hologo{LaTeX} Project. \enquote{The \textsf{expl3}
 % package}. Available from
-% \textsc{ctan}, \url{https://www.ctan.org/pkg/l3kernel}, 2025.
+% \textsc{ctan}, \url{https://www.ctan.org/pkg/l3kernel}, 2026.
 %
 % \bibitem{inter3} The \hologo{LaTeX} Project. \enquote{The \hologo{LaTeX}3
 % Interfaces}. Available from
-% \textsc{ctan}, \url{https://www.ctan.org/pkg/l3kernel}, 2025.
+% \textsc{ctan}, \url{https://www.ctan.org/pkg/l3kernel}, 2026.
 %
 % \bibitem{latex2e} The \hologo{LaTeX} Project. \enquote{The \hologo{LaTeX2e}
 % sources}. Available from
-% \textsc{ctan}, \url{https://ctan.org/tex-archive/macros/latex/base}, 2025.
+% \textsc{ctan}, \url{https://ctan.org/tex-archive/macros/latex/base}, 2026.
 %
 % \bibitem{ltnews} The \hologo{LaTeX} Project. \enquote{\hologo{LaTeX} News,
 % Issue 41, June 2025}. Available from
@@ -5712,11 +5714,11 @@ Some text here
 %
 % \bibitem{userguide} The \hologo{LaTeX} Project. \enquote{\hologo{LaTeX} for authors
 % current version}. Available from
-% \textsc{ctan}, \url{https://ctan.org/pkg/latex-base}, 2025.
+% \textsc{ctan}, \url{https://ctan.org/pkg/latex-base}, 2026.
 %
 % \bibitem{luavisual} \textsc{Gundlach, Patrick}. \enquote{The \textsf{lua-visual-debug}
 % package}. Available from
-% \textsc{ctan}, \url{https://www.ctan.org/pkg/lua-visual-debug}, 2023.
+% \textsc{ctan}, \url{https://www.ctan.org/pkg/lua-visual-debug}, 2026.
 %
 % \bibitem{shortlst} \textsc{Lemvig, Mogens}. \enquote{The \textsf{shortlst}
 % package}. Available from
@@ -5728,15 +5730,15 @@ Some text here
 %
 % \bibitem{tagpdf} \textsc{Fischer, Ulrike}. \enquote{\textsf{tagpdf} – \hologo{LaTeX}
 % kernel code for PDF tagging}. Available from
-% \textsc{ctan}, \url{https://www.ctan.org/pkg/tagpdf}, 2025.
+% \textsc{ctan}, \url{https://www.ctan.org/pkg/tagpdf}, 2026.
 %
 % \bibitem{latexlab} The \hologo{LaTeX} Project. \enquote{\textsf{latex-lab} – \hologo{LaTeX}
 % laboratory}. Available from
-% \textsc{ctan}, \url{https://www.ctan.org/pkg/latex-lab}, 2025.
+% \textsc{ctan}, \url{https://www.ctan.org/pkg/latex-lab}, 2026.
 %
 % \bibitem{ltsockets} \textsc{Mittelbach, Frank}. \enquote{\hologo{LaTeX}’s
 % socket management}. Available from
-% \textsc{ctan}, \url{https://ctan.org/tex-archive/macros/latex/base}, 2025.
+% \textsc{ctan}, \url{https://ctan.org/tex-archive/macros/latex/base}, 2026.
 %
 % \end{thebibliography}
 %
@@ -5750,6 +5752,12 @@ Some text here
 % \settowidth{\descrwidth}{\textsf{v1.0, (ctan), 2024-11-01} }
 % \begin{description}[font=\small\sffamily,wide=0pt,style=multiline,leftmargin=1.1\descrwidth,nosep,noitemsep]
 %  \item [\fileversion{} (ctan), \filedate]
+%    \begin{itemize}
+%      \item Update requirement to \hologo{LaTeX} release 2026-06-01.
+%      \item Move |\setcounter| to |\begin{list}|\mymarg{arg one}|{|\mymeta{arg two}|\setcounter}| for |enumext*|.
+%      \item Adjustments in the documentation.
+%    \end{itemize}
+%  \item [v2.1 (ctan), 2026-01-15]
 %    \begin{itemize}
 %      \item Fixed bad interaction between |\setenumext| and the \texttt{\textcolor{optcolor}{ref}} key.
 %    \end{itemize}
@@ -5912,11 +5920,11 @@ Some text here
 % First we will make sure we have a minimum (super updated) version of
 % \hologo{LaTeX} to work correctly.
 %    \begin{macrocode}
-\NeedsTeXFormat{LaTeX2e}[2025-11-01]
+\NeedsTeXFormat{LaTeX2e}[2026-06-01]
 %    \end{macrocode}
 % Now declare the \mypkg*{enumext} package.
 %    \begin{macrocode}
-\ProvidesExplPackage {enumext} {2026-01-15} {2.1} {Enumerate exercise sheets}
+\ProvidesExplPackage {enumext} {2026-06-01} {2.2} {Enumerate exercise sheets}
 %    \end{macrocode}
 % Finally check if the \mypkg{multicol} package are loaded, if not we load it.
 %    \begin{macrocode}
@@ -13119,6 +13127,20 @@ Some text here
 %   environment definition, we will modify \mykey{parindent} to make it set
 %   the value of \mykey{lisparindent} and \mykey{parsep} to set the value
 %   of |\parskip| locally.
+%
+%  \smallskip
+%
+% \begin{important}*
+%  For compatibility with \emph{tagged} \texttt{PDF} and \hologo{LaTeX}
+%  release 2026-06-01 we will move |\setcounter| to |\begin{list}|\mymarg{arg one}|{|\mymeta{arg two}|}\setcounter|
+%  in the definition of the environments |enumext*| and |keyans*| (see \S\ref{env:starred} and \S\ref{env:keyans-starred}).
+%  This resolves the nesting problem reported by \texttt{@teepeemm} in
+%  \href{https://github.com/pablgonz/enumext/issues/5}{enumext* nested in enumext starts at 2 with DocumentMetadata}
+%  this was caused by the \mypkg{latex-lab-block}\cite{latexlab} update in this release.
+% \end{important}
+%
+%  \smallskip
+%
 % \iffalse
 %% Define "second arg" of list for |enumext*| and |keyans*|.
 % \fi
@@ -13144,7 +13166,7 @@ Some text here
         \skip_set_eq:Nc \parsep  { l_@@_itemsep_#1_skip }
         \skip_zero:N \partopsep
         \usecounter { enumX#1 }
-        \setcounter { enumX#1 } { \int_eval:n { \int_use:c { l_@@_start_#1_int } - 1 } }
+        % \setcounter { enumX#1 } { \int_eval:n { \int_use:c { l_@@_start_#1_int } - 1 } }
         \@@_starred_ref:
         \str_if_eq:nnTF {#1} { vii }
           {
@@ -14917,6 +14939,14 @@ Some text here
     \IfDocumentMetadataT { \tag_suspend:n {enumext*} }
     \@@_starred_columns_set_vii:
     \item[] \scan_stop:
+%    \end{macrocode}
+%   For compatibility with \emph{tagged} \texttt{PDF} in \hologo{LaTeX}
+%   release 2026-06-01, we will set |\setcounter| at this point in the
+%   environment definition, thereby avoiding the problem reported by
+%   \texttt{@teepeemm} in \href{https://github.com/pablgonz/enumext/issues/5}{enumext* nested in enumext starts at 2 with DocumentMetadata}
+%   this was caused by the \mypkg{latex-lab-block}\cite{latexlab} update in this release.
+%    \begin{macrocode}
+    \setcounter { enumXvii } { \int_eval:n { \int_use:c { l_@@_start_vii_int } - 1 } }
     \cs_set_eq:NN \@@_stop_item_tmp_vii: \@@_first_item_tmp_vii:
     \cs_set_eq:NN \item \@@_start_item_tmp_vii:
     \ignorespaces
@@ -15477,6 +15507,8 @@ Some text here
     \IfDocumentMetadataT { \tag_suspend:n {keyans*} }
     \@@_starred_columns_set_viii:
     \item[] \scan_stop:
+    % Set start counter
+    \setcounter { enumXviii } { \int_eval:n { \int_use:c { l_@@_start_viii_int } - 1 } }
     \cs_set_eq:NN \@@_stop_item_tmp_viii: \@@_first_item_tmp_viii:
     \cs_set_eq:NN \item \@@_start_item_tmp_viii:
     \ignorespaces

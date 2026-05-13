@@ -6,7 +6,7 @@
 %%
 %% enumext.dtx  (with options: `package')
 %% 
-%% Copyright (C) 2024-2025 by Pablo González L <pablgonz@educarchile.cl>
+%% Copyright (C) 2024-2026 by Pablo González L <pablgonz@educarchile.cl>
 %% 
 %% This work may be distributed and/or modified under the conditions of the
 %% LaTeX Project Public License, either version 1.3c of this license or (at
@@ -35,8 +35,8 @@
 %% 
 %% ------------------------------------------------------------------------
 %% 
-\NeedsTeXFormat{LaTeX2e}[2025-11-01]
-\ProvidesExplPackage {enumext} {2026-01-15} {2.1} {Enumerate exercise sheets}
+\NeedsTeXFormat{LaTeX2e}[2026-06-01]
+\ProvidesExplPackage {enumext} {2026-06-01} {2.2} {Enumerate exercise sheets}
 \hook_gput_code:nnn {begindocument} {enumext}
   {
     \IfPackageLoadedTF { multicol }
@@ -811,7 +811,7 @@
                            },
         label .initial:n = #3,
         label .value_required:n = true,
-        ref   .code:n    = \__enumext_standar_ref:n {##1},
+        ref   .code:n    = \__enumext_standar_ref:nn {#2} {##1},
         ref   .value_required:n = true,
       }
   }
@@ -820,19 +820,16 @@
 \__enumext_tmp:nnn { level-3 } { iii } { \roman*. }
 \__enumext_tmp:nnn { level-4 } {  iv } { \Alph*.  }
 %% Internal function used by |ref| key in enumext environment.
-\cs_new_protected:Npn \__enumext_standar_ref:n #1
+\cs_new_protected:Npn \__enumext_standar_ref:nn #1 #2
   {
-    \tl_set:Nn \l__enumext_ref_key_arg_tl {#1}
+    \tl_set:Nn \l__enumext_ref_key_arg_tl {#2}
     \tl_if_empty:NTF \l__enumext_ref_key_arg_tl
       {
         \msg_error:nnn { enumext } { key-ref-empty } { enumext }
       }
       {
-        \tl_set_eq:Nc \l__enumext_ref_the_count_tl
-          {
-            l__enumext_the_counter_ \__enumext_level: _tl
-          }
-        \tl_set:ce { l__enumext_renew_counter_ \__enumext_level: _tl }
+        \tl_set_eq:Nc \l__enumext_ref_the_count_tl { l__enumext_the_counter_#1_tl }
+        \tl_set:ce { l__enumext_renew_counter_#1_tl }
           {
             \exp_not:N \renewcommand { \exp_not:V \l__enumext_ref_the_count_tl }
               { \exp_not:V \l__enumext_ref_key_arg_tl }
@@ -4091,7 +4088,7 @@
         \skip_set_eq:Nc \parsep  { l__enumext_itemsep_#1_skip }
         \skip_zero:N \partopsep
         \usecounter { enumX#1 }
-        \setcounter { enumX#1 } { \int_eval:n { \int_use:c { l__enumext_start_#1_int } - 1 } }
+        % \setcounter { enumX#1 } { \int_eval:n { \int_use:c { l__enumext_start_#1_int } - 1 } }
         \__enumext_starred_ref:
         \str_if_eq:nnTF {#1} { vii }
           {
@@ -5161,6 +5158,7 @@
     \IfDocumentMetadataT { \tag_suspend:n {enumext*} }
     \__enumext_starred_columns_set_vii:
     \item[] \scan_stop:
+    \setcounter { enumXvii } { \int_eval:n { \int_use:c { l__enumext_start_vii_int } - 1 } }
     \cs_set_eq:NN \__enumext_stop_item_tmp_vii: \__enumext_first_item_tmp_vii:
     \cs_set_eq:NN \item \__enumext_start_item_tmp_vii:
     \ignorespaces
@@ -5445,6 +5443,8 @@
     \IfDocumentMetadataT { \tag_suspend:n {keyans*} }
     \__enumext_starred_columns_set_viii:
     \item[] \scan_stop:
+    % Set start counter
+    \setcounter { enumXviii } { \int_eval:n { \int_use:c { l__enumext_start_viii_int } - 1 } }
     \cs_set_eq:NN \__enumext_stop_item_tmp_viii: \__enumext_first_item_tmp_viii:
     \cs_set_eq:NN \item \__enumext_start_item_tmp_viii:
     \ignorespaces

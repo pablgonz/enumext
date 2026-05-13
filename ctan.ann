@@ -1,2 +1,4 @@
-Release v2.1:
-- Fixed bad interaction between `\setenumext` and the `ref` key.
+Release v2.2:
+– Update requirement to LaTeX release 2026-06-01.
+– Move \setcounter to \begin{list}{arg one}{arg two}\setcounter for `enumext*`.
+– Adjustments in the documentation.
