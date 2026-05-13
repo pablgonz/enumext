@@ -17,7 +17,8 @@ colorprofiles
 latex-lab
 tagpdf
 bookmark
-pdfmanagement-testphase
+# pdfmanagement-testphase
+pdfmanagement
 luamml
 xcolor
 microtype
