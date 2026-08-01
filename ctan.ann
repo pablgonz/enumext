@@ -1,4 +1,4 @@
-Release v2.2:
-– Update requirement to LaTeX release 2026-06-01.
-– Move \setcounter to `\begin{list}{arg one}{arg two}\setcounter` for `enumext*`.
-– Adjustments in the documentation.
+Release v2.3:
+– Update requirement to LaTeX release 2026-11-01.
+– Cleanup warnings and details returned by `expltools`.
+– Update code for _tagged_ PDF.

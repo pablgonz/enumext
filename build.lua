@@ -21,9 +21,9 @@
 
 -- General package identification
 module     = "enumext"
-pkgversion = "2.2"
-pkgdate    = "2026-06-01"
-ltxrelease = "2026-06-01"
+pkgversion = "2.3"
+pkgdate    = "2026-11-01"
+ltxrelease = "2026-11-01"
 
 -- Configuration of files for build and installation
 maindir       = "."
@@ -115,7 +115,7 @@ uploadconfig = {
   pkg          = ctanpkg,
   version      = pkgversion,
   license      = "lppl1.3c",
-  summary      = "Stores LaTeX contents in memory or files",
+  summary      = "Enumerate exercise sheets",
   description  =[[This package provides enumerated list environments compatible with tagging PDF for creating
                   “simple exercise sheets” along with “multiple choice questions”, storing the “answers” to these in memory using
                    multicol package.]],

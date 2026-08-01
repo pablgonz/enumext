@@ -1,7 +1,7 @@
 % \iffalse meta-comment
 % arara: lualatex: { branch: developer, draft: true }
 % arara: clean: { files: [ enumext-01.pdf, enumext-02.pdf, enumext-03.pdf, enumext-04.pdf, enumext-05.pdf ] }
-% arara: lualatex: { branch: developer, interaction: batchmode, shell: false }
+% arara: lualatex: { branch: developer, interaction: batchmode, shell: true }
 % arara: clean: { extensions: [ aux, log, out, glo, gls, hd, ind, ilg, idx, toc, atfi ] }
 % arara: clean: { files: [ userdoc.idx, userdoc.ilg, userdoc.ind ] }
 % arara: halt
@@ -963,7 +963,7 @@
 % \smallskip
 %
 % \begin{important}*
-%  The minimum requirement is \hologo{LaTeX} release 2026-06-01.
+%  The minimum requirement is \hologo{LaTeX} release 2026-11-01.
 % \end{important}
 %
 % \pagestyle{myheader}
@@ -2311,7 +2311,7 @@
 %  this \mymeta{key} is executed \emph{\enquote{after}} the \mykey{listparindent},
 %  \mykey{parsep} and \mykey{itemindent} \mymeta{keys} within the \myenv{minipage}
 %  environment in which the \emph{\enquote{item content}} is placed.
-%  Making modifications to |\setcounter| in these environments using this \mymeta{key} 
+%  Making modifications to |\setcounter| in these environments using this \mymeta{key}
 %  will not have the expected effect.
 % \end{important}
 %
@@ -4733,7 +4733,7 @@ Some refs here \ref{E} and \ref{F} \footnotetext[50]{foot note in neseted enumex
 Some refs here \ref{G} and \ref{H}
 \end{document}
 \end{filecontents*}
-\IfFileExists{enumext-01.pdf}{}{\ShellEscape{arara enumext-01.tex}}
+% \IfFileExists{enumext-01.pdf}{}{\ShellEscape{arara enumext-01.tex}} % see (https://github.com/latex3/tagging-project/issues/1337)
 % \iffalse
 %</example>
 % \fi
@@ -5338,8 +5338,8 @@ Some text here
 %   \myenv*{enumext} and \myenv*{enumext*} environments and the nesting
 %   between them plus the use of the \mykey{label}, \mykey{labelwidth},
 %   \mykey{labelsep}, \mykey{ref}, \mykey{align} and \mykey{wrap-label} keys.
-%   \IfFileExists{enumext-01.pdf}{Source file \textattachfile[color=red,print=false]{enumext-01.tex}{\faFile*[regular]}
-%   and \emph{tagged} \texttt{PDF} \textattachfile[color=red,print=false]{enumext-01.pdf}{\faFilePdf[regular]}.}{}%
+%^^A   \IfFileExists{enumext-01.pdf}{Source file \textattachfile[color=red,print=false]{enumext-01.tex}{\faFile*[regular]}
+%^^A   and \emph{tagged} \texttt{PDF} \textattachfile[color=red,print=false]{enumext-01.pdf}{\faFilePdf[regular]}.}{}%
 %
 % \item The file \myfile{enumext-02.tex} contains the tests for the \myenv*{enumext}
 %   and \myenv*{enumext*} environments and the support for \myenv{minipage}
@@ -5753,6 +5753,13 @@ Some text here
 % \begin{description}[font=\small\sffamily,wide=0pt,style=multiline,leftmargin=1.1\descrwidth,nosep,noitemsep]
 %  \item [\fileversion{} (ctan), \filedate]
 %    \begin{itemize}
+%      \item Update requirement to \hologo{LaTeX} release 2026-11-01.
+%      \item Cleanup warnings and details returned by |expltools|.
+%      \item Update code for \emph{tagged} \texttt{PDF}.
+%      \item Adjustments in the documentation.
+%    \end{itemize}
+%  \item [v2.2 (ctan), 2026-06-01]
+%    \begin{itemize}
 %      \item Update requirement to \hologo{LaTeX} release 2026-06-01.
 %      \item Move |\setcounter| to |\begin{list}|\mymarg{arg one}|{|\mymeta{arg two}|\setcounter}| for |enumext*|.
 %      \item Adjustments in the documentation.
@@ -5920,11 +5927,11 @@ Some text here
 % First we will make sure we have a minimum (super updated) version of
 % \hologo{LaTeX} to work correctly.
 %    \begin{macrocode}
-\NeedsTeXFormat{LaTeX2e}[2026-06-01]
+\NeedsTeXFormat{LaTeX2e}[2026-11-01]
 %    \end{macrocode}
 % Now declare the \mypkg*{enumext} package.
 %    \begin{macrocode}
-\ProvidesExplPackage {enumext} {2026-06-01} {2.2} {Enumerate exercise sheets}
+\ProvidesExplPackage {enumext} {2026-11-01} {2.3} {Enumerate exercise sheets}
 %    \end{macrocode}
 % Finally check if the \mypkg{multicol} package are loaded, if not we load it.
 %    \begin{macrocode}
@@ -10135,8 +10142,8 @@ Some text here
               { \@@_starred_reset:n {#3} }
               {
                 \bool_lazy_and:nnTF
-                  { \int_compare_p:nNn {#2} > 0 }
-                  { \int_compare_p:nNn {#2} < 5 }
+                  { \int_compare_p:nNn {#2} > { 0 } }
+                  { \int_compare_p:nNn {#2} < { 5 } }
                   { \@@_standard_reset:nn {#2} {#3} }
                   {
                     \msg_error:nne { enumext } { out-of-range } { \int_eval:n {#2} }
@@ -13798,8 +13805,8 @@ Some text here
            \tag_mc_end:
         \tag_struct_end:n {tag=Lbl}
         \tag_struct_begin:n {tag=LBody}
-          \tag_struct_begin:n {tag=text-unit}
-            \tag_struct_begin:n {tag=text}
+          \tag_struct_begin:n {tag=text-unit} % now "semantic-para" (https://github.com/latex3/latex2e/commit/83f054afc042e82a664085b6f2fd7c8d61705fb9)
+            \tag_struct_begin:n {tag=text} % now "text-block"
   }
 \socket_new_plug:nnn {tagsupport/@@/starred} {stop-list-tags}
   {
