@@ -34,7 +34,7 @@ jobs:
           package_file: .github/tl_packages
           texlive_version: ${{ matrix.version }} # TL version
 
-      - name: Install spintent package
+      - name: Install enumext package
         run: l3build install
 
       - name: Run "l3build ${{ matrix.command }}" (TeX Live ${{ matrix.version }})
