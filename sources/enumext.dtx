@@ -87,44 +87,6 @@
 \usepackage{imakeidx,tikz,enumext} % main
 \usepackage{scontents}
 \usepackage{shellesc}
-\usepackage[contents]{colordoc}
-% \show\docCodelineNo
-\def\textnew#1{\color{color-def}#1\/}
-\def\AltMacroFont{\fontencoding\encodingdefault
-                  \fontfamily\ttdefault
-                  \fontseries\mddefault
-                  \fontshape\updefault
-                  \small
-                  }%
-% Patching colordoc.sty to work with l3doc.cls
-\ExplSyntaxOn
-\cs_new_eq:cN { liii@xmacro@code } \__codedoc_xmacro_code:n
-\ExplSyntaxOff
-\begingroup
-\makeatletter
-\catcode`\[\@ne\catcode`\]\tw@
-\@makebracesactive
-\gdef{[\@openingbrace[\char'173]]
-\gdef}[\@closingbrace[\char'175]]
-\catcode`\|\z@\catcode`\%12
-\catcode`\ \active\catcode`\\\active
-|gdef|xmacro@code#1%    \end{macrocode}[|liii@xmacro@code[#1]|end[macrocode]]
-|catcode`| 12|gdef|sxmacro@code#1%    \end{macrocode*}[|liii@xmacro@code[#1]|end[macrocode*]]
-|endgroup
-% Patching colordoc.sty to work with doc v3 (TeX Live 2023 & lualatex-dev)
-\usepackage{etoolbox}
-\makeatletter
-\@ifpackagelater{doc}{2022-06-01}%
-  {\patchcmd\macro@finish
-    {\ifnot@excluded % \if
-      \edef\@tempa{\noexpand\SpecialIndex{\bslash\macro@namepart}}%
-      \@tempa \fi}%
-    {\maybe@index@macro \macro@namepart}
-    {}{\FAILED}%
-   \let\default@color\current@color
-  }%
-  {}
-\makeatother
 
 \EnableCrossrefs
 % \PageIndex, \CodelineIndex undoes what \PageIndex does
@@ -875,6 +837,612 @@
   }
 \ExplSyntaxOff
 \setenumextmeta[1]{azetinasty}{label={\arabic*.},labelwidth={\marginparwidth+\marginparsep+\itemwd},list-offset={-\marginparwidth-\marginparsep},}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{filecontents*}[overwrite]{mylhmc.lua}
+-- mylhmc.lua v1.0
+-- LuaLaTeX syntax highlighter for l3doc macrocode environments
+
+-- Register TeX commands (Max style:)
+
+local function register_tex_cmd(name, func, args)
+  name = "__mylhmc_" .. name .. ":" .. ("n"):rep(#args)
+  local scanners = {}
+  for i = 1, #args do
+    local scan_type = (args[i] == "string" and "scan_argument") or "scan_" .. args[i]
+    scanners[i] = token[scan_type]
+  end
+  local scanning_func
+  if #scanners == 0 then
+    scanning_func = func
+  elseif #scanners == 1 then
+    local s1 = scanners[1]
+    scanning_func = function() func(s1()) end
+  elseif #scanners == 2 then
+    local s1, s2 = scanners[1], scanners[2]
+    scanning_func = function() func(s1(), s2()) end
+  else
+    scanning_func = function()
+      local values = {}
+      for i = 1, #scanners do values[i] = scanners[i]() end
+      func(table.unpack(values))
+    end
+  end
+  local index = luatexbase.new_luafunction(name)
+  lua.get_functions_table()[index] = scanning_func
+  token.set_lua(name, index, "global", "protected")
+end
+
+-- LPeg setup
+
+local P, S, V, Cp = lpeg.P, lpeg.S, lpeg.V, lpeg.Cp
+lpeg.locale(lpeg)
+local alpha = lpeg.alpha
+local digit = lpeg.digit
+
+local function anywhere(p)
+  return P{ Cp() * p * Cp() + 1 * V(1) }
+end
+
+-- Grammar
+
+local sig_chars  = S"NnVvoxefpTFwDcq"
+local hex_chars  = S"0123456789abcdefABCDEF"
+local name_chars = alpha + S"_@"
+local var_prefix = P"\\" * S"lg"
+
+local structure_names =
+  P"NeedsTeXFormat" + P"ProvidesExplPackage" + P"ProvidesPackage" +
+  P"ProvidesFile" + P"DocumentMetadata" +
+  P"RequirePackage" + P"RequirePackageWithOptions" +
+  P"LoadClass" + P"LoadClassWithOptions" +
+  P"If" * alpha ^ 1 * (P"TF" + P"T" + P"F") ^ -1
+
+local ltcmd_names =
+  P"NewDocumentCommand" + P"NewDocumentEnvironment" +
+  P"DeclareDocumentCommand" + P"DeclareDocumentEnvironment" +
+  P"NewExpandableDocumentCommand" + P"DeclareExpandableDocumentCommand" +
+  P"RenewDocumentCommand" + P"RenewDocumentEnvironment" +
+  P"ProvideDocumentCommand" + P"ProvideDocumentEnvironment"
+
+local gen_variant_suffix = P"cs_generate_variant:" * S"Nc" * P"n"
+
+local code_rules = {
+  {1,  P"#" ^ 1},
+  {24, P"#" ^ 1 * digit},
+  -- Math delimiters
+  {21, P"$$"},
+  {21, P"$"},
+  {21, P"\\" * S"(["},
+  {21, P"\\" * S")]"},
+  -- Escape sequences: 4-caret Unicode, then \^^XX or ^^XX
+  {18, P(("^"):rep(4)) * hex_chars * hex_chars * hex_chars * hex_chars},
+  {18, P"\\" ^ -1 * P"^^" * P(1) * P(1) ^ -1},
+  {18, P"~"},
+  -- Comparison operators (surrounded by spaces)
+  {22, P" " * (P"<=" + P">=" + P"!=" + P"<" + P">" + P"=") * P" "},
+  -- Danger: :D suffix
+  {13, P"\\" * (alpha + S"_@") ^ 1 * P":D"},
+  -- Scan marks
+  {10, P"\\" * P"s__" * (alpha + S"_") ^ 1},
+  {10, P"\\" * P"s_"  * (alpha + S"_") ^ 1},
+  -- Quarks
+  {11, P"\\" * P"q__" * (alpha + S"_") ^ 1},
+  {11, P"\\" * P"q_"  * (alpha + S"_") ^ 1},
+  -- Structure commands
+  {25, P"\\" * structure_names},
+  -- ltcmd commands
+  {14, P"\\" * ltcmd_names},
+  -- Constants: \c__ and \c_
+  {19, P"\\" * P"c__" * name_chars ^ 1},
+  {20, P"\\" * P"c_"  * (alpha + S"@") * name_chars ^ 0},
+  -- Private variables: \l__, \g__
+  {2,  var_prefix * P"__" * name_chars ^ 1},
+  -- Public variables: \l_, \g_
+  {4,  var_prefix * P"_" * (alpha + S"@") * name_chars ^ 0},
+  -- Legacy @-commands
+  {15, P"\\" * (alpha ^ 0 * P"@" * alpha ^ 0) ^ 1},
+  -- Private functions: \__foo:Nnn
+  {5,  P"\\" * P"__" * name_chars ^ 1 * (P":" * sig_chars ^ 0) ^ -1},
+  -- generate_variant
+  {26, P"\\" * gen_variant_suffix},
+  -- Keys: .meta:n
+  {16, P"." * (alpha + S"_") ^ 1 * P":" * (alpha + S"_") ^ 0},
+  -- Backtick
+  {17, P"`" * (P"\\" * alpha ^ 1 + P(1))},
+  -- Double backslash \\
+  {23, P"\\\\" },
+  -- Quote delimiters
+  {18, P"'" },
+  {18, P'"' },
+  -- Special escaped chars and spacing commands
+  {23, P"\\" * S",:;!>~|/*+-={}#$_&%^"},
+  -- Numbers
+  {12, digit ^ 1},
+  -- Public functions with signature
+  {6,  P"\\" * alpha * name_chars ^ 0 * P":" * sig_chars ^ 0},
+  -- LaTeX classic commands
+  {23, P"\\" * alpha * name_chars ^ 0},
+  {8,  S"{}"},
+  {3,  S"[]"},
+  {9,  P"%" * (P(1) - S"\r\n") ^ 0 * (S"\r\n" + -1)},
+}
+
+local function find_match(str)
+  local best_b, best_e, best_t = -1, -1, 0
+  for _, rule in ipairs(code_rules) do
+    local b, e = anywhere(rule[2]):match(str)
+    if b and (best_b == -1 or b < best_b or (b == best_b and e > best_e)) then
+      best_b, best_e, best_t = b, e, rule[1]
+    end
+  end
+  return best_b, best_e, best_t
+end
+
+-- Color table
+
+local colors = {}
+
+register_tex_cmd("set_color", function(name, spec)
+  local r, g, b = spec:match('([%d%.]+)%s+([%d%.]+)%s+([%d%.]+)')
+  if r then colors[name] = { tonumber(r), tonumber(g), tonumber(b) } end
+end, {"string", "string"})
+
+-- Node builders
+
+local function colorstack_push(r, g, b)
+  local n = node.new('whatsit', 'pdf_colorstack')
+  n.stack = 0; n.command = 1
+  n.data  = string.format('%.4f %.4f %.4f rg %.4f %.4f %.4f RG', r,g,b,r,g,b)
+  return n
+end
+
+local function colorstack_pop()
+  local n = node.new('whatsit', 'pdf_colorstack')
+  n.stack = 0; n.command = 2; n.data = ''
+  return n
+end
+
+local function append(rh, rt, n)
+  if not n then return rh, rt end
+  local tail = n
+  while tail.next do tail = tail.next end
+  if rt then rt.next = n; n.prev = rt else rh = n end
+  return rh, tail
+end
+
+local function str_to_nodes(str, fid)
+  if not str or str == '' then return nil, nil end
+  fid = fid or font.current()
+  local head, tail
+  for _, cp in utf8.codes(str) do
+    local g = node.new('glyph')
+    g.font = fid; g.char = cp; g.subtype = 1
+    if head then tail.next = g; g.prev = tail else head = g end
+    tail = g
+  end
+  return head, tail
+end
+
+local function colored_str(str, color_name, fid)
+  local h, t = str_to_nodes(str, fid)
+  if not h then return nil, nil end
+  local c = colors[color_name]
+  if c then
+    local push = colorstack_push(c[1], c[2], c[3])
+    local pop  = colorstack_pop()
+    push.next = h; h.prev = push
+    t.next = pop; pop.prev = t
+    return push, pop
+  end
+  return h, t
+end
+
+-- Type color table
+
+local type_colors = {
+  [1] ='argument',   [2] ='privatevar', [3] ='bracket',
+  [4] ='publicvar',  [5] ='privatefun', [6] ='publicfun',
+  [8] ='brace',      [9] ='comment',    [10]='scan',
+  [11]='quark',      [12]='number',     [13]='danger',
+  [14]='ltcmd',      [15]='legacy_at',  [16]='key',
+  [17]='backtick',   [18]='escape',     [19]='constant',
+  [20]='constant',   [21]='math',       [22]='compare',
+  [23]='latex_cmd',  [24]='argument',   [25]='structure',
+  [26]='publicfun',
+}
+
+-- emit_with_signature
+
+local function emit_with_signature(chunk, base_color, fid)
+  local colon = chunk:find(':', 2, true)
+  if not colon then
+    return colored_str(chunk, base_color, fid)
+  end
+  local name = chunk:sub(1, colon - 1)
+  local sig  = chunk:sub(colon + 1)
+  local rh, rt = nil, nil
+  local h, t
+  h, t = colored_str(name, base_color, fid); rh, rt = append(rh, rt, h); rt = t or rt
+  h, t = colored_str(':', 'signature', fid); rh, rt = append(rh, rt, h); rt = t or rt
+  if sig ~= '' then
+    h, t = colored_str(sig, 'sigargs', fid); rh, rt = append(rh, rt, h); rt = t or rt
+  end
+  return rh, rt
+end
+
+-- colorize_code
+
+local function colorize_code(line, fid)
+  local rh, rt = nil, nil
+  local next_brace_is_variant = false
+  while line ~= '' do
+    local b, e, t = find_match(line)
+    if b == -1 then
+      local h, tl
+      if next_brace_is_variant then
+        h, tl = colored_str(line, 'sigargs', fid)
+      else
+        h, tl = str_to_nodes(line, fid)
+      end
+      rh, rt = append(rh, rt, h); rt = tl or rt; break
+    end
+    if b > 1 then
+      local h, tl
+      if next_brace_is_variant then
+        h, tl = colored_str(line:sub(1, b-1), 'sigargs', fid)
+      else
+        h, tl = str_to_nodes(line:sub(1, b-1), fid)
+      end
+      rh, rt = append(rh, rt, h); rt = tl or rt
+    end
+    local chunk = line:sub(b, e-1)
+    local h, tl
+    if t == 24 then
+      local hashes = chunk:match('^#+')
+      local num    = chunk:sub(#hashes + 1)
+      h, tl = colored_str(hashes, 'argument', fid); rh, rt = append(rh, rt, h); rt = tl or rt
+      h, tl = colored_str(num, 'argnum', fid)
+    elseif t == 26 then
+      next_brace_is_variant = true
+      h, tl = emit_with_signature(chunk, 'publicfun', fid)
+    elseif t == 8 and next_brace_is_variant then
+      h, tl = colored_str(chunk, 'brace', fid)
+      if chunk == '}' then next_brace_is_variant = false end
+    elseif t == 16 then
+      local dot  = chunk:sub(1, 1)
+      local rest = chunk:sub(2)
+      local colon = rest:find(':', 1, true)
+      h, tl = colored_str(dot, 'signature', fid); rh, rt = append(rh, rt, h); rt = tl or rt
+      if colon then
+        local kname = rest:sub(1, colon - 1)
+        local kargs = rest:sub(colon + 1)
+        h, tl = colored_str(kname, 'key', fid);      rh, rt = append(rh, rt, h); rt = tl or rt
+        h, tl = colored_str(':', 'signature', fid);  rh, rt = append(rh, rt, h); rt = tl or rt
+        h, tl = colored_str(kargs, 'sigargs', fid)
+      else
+        h, tl = colored_str(rest, 'key', fid)
+      end
+    elseif t == 5 or t == 6 or t == 14 or t == 25 then
+      h, tl = emit_with_signature(chunk, type_colors[t], fid)
+    elseif t == 18 then
+      local four_caret = ("^"):rep(4)
+      if chunk:sub(1, 4) == four_caret then
+        h, tl = colored_str(four_caret, 'escape', fid); rh, rt = append(rh, rt, h); rt = tl or rt
+        h, tl = colored_str(chunk:sub(5), 'number', fid)
+      else
+        h, tl = colored_str(chunk, 'escape', fid)
+      end
+    elseif t == 13 then
+      h, tl = emit_with_signature(chunk, 'danger', fid)
+    else
+      if t ~= 8 then next_brace_is_variant = false end
+      h, tl = colored_str(chunk, type_colors[t], fid)
+    end
+    rh, rt = append(rh, rt, h); rt = tl or rt
+    line = line:sub(e)
+  end
+  return rh, rt
+end
+
+-- Angle brackets in LM Roman OTF
+
+local LM_LANGLE = 0x2329
+local LM_RANGLE = 0x232A
+local lm_fid    = nil
+
+local function get_lm_fid()
+  if lm_fid then return lm_fid end
+  for i = 1, font.max() do
+    local f = font.getfont(i)
+    if f and f.filename and f.filename:find('lmroman10%-regular') then
+      if f.characters and f.characters[LM_LANGLE] then
+        lm_fid = i; return i
+      end
+    end
+  end
+  local id = font.define({ name = '[lmroman10-regular]:+tlig;', size = tex.sp('10pt') })
+  if id and id > 0 then lm_fid = id; return id end
+  return font.current()
+end
+
+local function make_angle_nodes(content_head, content_tail, angle_color)
+  local fid = get_lm_fid()
+  local c   = colors[angle_color] or colors['guard/angle']
+  local function angle_glyph(cp)
+    local g = node.new('glyph')
+    g.font = fid; g.char = cp; g.subtype = 1
+    return g
+  end
+  local lg = angle_glyph(LM_LANGLE)
+  local rg = angle_glyph(LM_RANGLE)
+  local rh, rt = nil, nil
+  if c then rh, rt = append(rh, rt, colorstack_push(c[1], c[2], c[3])) end
+  rh, rt = append(rh, rt, lg)
+  if c then rh, rt = append(rh, rt, colorstack_pop()) end
+  if content_head then rh, rt = append(rh, rt, content_head); rt = content_tail or rt end
+  if c then rh, rt = append(rh, rt, colorstack_push(c[1], c[2], c[3])) end
+  rh, rt = append(rh, rt, rg)
+  if c then rh, rt = append(rh, rt, colorstack_pop()) end
+  return rh, rt
+end
+
+-- Guard expression colorizer
+
+local function colorize_guard_expr(expr, fid)
+  local rh, rt = nil, nil
+  local name_start = 1
+  local function flush(s, e_)
+    if s <= e_ then
+      local h, t = colored_str(expr:sub(s, e_), 'guard/name', fid)
+      rh, rt = append(rh, rt, h); rt = t or rt
+    end
+  end
+  for i = 1, #expr do
+    local c = expr:sub(i, i)
+    if c:match('[!&|()*/ ]') then
+      flush(name_start, i - 1)
+      name_start = i + 1
+      if c ~= ' ' then
+        local h, t = colored_str(c, 'guard/operator', fid)
+        rh, rt = append(rh, rt, h); rt = t or rt
+      end
+    end
+  end
+  flush(name_start, #expr)
+  return rh, rt
+end
+
+-- Guard line renderer
+
+local function render_guard(line, fid)
+  local rest = line:gsub('^%s*', '')
+  if rest:sub(1,1) ~= '<' then
+    local h, t = colored_str('%' .. line, 'guard/name', fid)
+    if h then node.write(h) end
+    return
+  end
+  local close = rest:find('>', 2)
+  if not close then
+    local h, t = colored_str('%' .. line, 'guard/name', fid)
+    if h then node.write(h) end
+    return
+  end
+  local inner = rest:sub(2, close - 1)
+  local after = rest:sub(close + 1)
+  local ch, ct = nil, nil
+  local h, t
+
+  if inner:sub(1,3) == '@@=' then
+    local modname = inner:sub(4)
+    token.set_macro('g__codedoc_module_name_tl', modname, 'global')
+    h, t = colored_str('@@',      'module_at',   fid); ch, ct = append(ch, ct, h); ct = t or ct
+    h, t = colored_str('=',       'module_eq',   fid); ch, ct = append(ch, ct, h); ct = t or ct
+    h, t = colored_str(modname,   'module_name', fid); ch, ct = append(ch, ct, h); ct = t or ct
+  else
+    local sigil = ''
+    local expr  = inner
+    local first = inner:sub(1,1)
+    if first == '*' or first == '/' then sigil = first; expr = inner:sub(2) end
+    if sigil ~= '' then
+      h, t = colored_str(sigil, 'guard/operator', fid); ch, ct = append(ch, ct, h); ct = t or ct
+    end
+    if expr ~= '' then
+      h, t = colorize_guard_expr(expr, fid); ch, ct = append(ch, ct, h); ct = t or ct
+    end
+  end
+
+  local rh, rt = make_angle_nodes(ch, ct, 'guard/angle')
+  if rh then node.write(rh) end
+
+  if after and after ~= '' then
+    local ah, at = colorize_code(after, fid)
+    if ah then node.write(ah) end
+  end
+end
+
+-- @@ substitution
+
+local function apply_at_at(line)
+  local modname = token.get_macro('g__codedoc_module_name_tl')
+  if modname and modname ~= '' then
+    line = line:gsub('@@@@', '\0')
+    line = line:gsub('__@@', '__' .. modname)
+    line = line:gsub('_@@',  '__' .. modname)
+    line = line:gsub('@@',   '__' .. modname)
+    line = line:gsub('\0',   '@@')
+  end
+  return line
+end
+
+-- Main entry point
+
+register_tex_cmd("process_line", function()
+  local line = token.get_macro('l__mylhmc_verbatim_line_tl')
+  if not line or line == '' then return end
+  line = line:gsub('[\r\n]+$', '')
+  if line == '' then return end
+
+  line = apply_at_at(line)
+  local fid = font.current()
+
+  if line:sub(1,1) == '%' then
+    render_guard(line:sub(2), fid)
+  else
+    local rh, rt = colorize_code(line, fid)
+    if rh then node.write(rh) end
+  end
+end, {})
+\end{filecontents*}
+\begin{filecontents*}[overwrite]{mylhmc.sty}
+\NeedsTeXFormat{LaTeX2e}[2026-11-01]
+\ProvidesExplPackage{mylhmc}{2025-08-07}{1.0}
+  {Line-by-line macrocode reader for l3doc in Lua}
+% Require LuaTeX
+\sys_if_engine_luatex:F
+  {
+    \msg_new:nnn { mylhmc } { luatex-required } { mylhmc~requires~LuaTeX. }
+    \msg_fatal:nn { mylhmc } { luatex-required }
+  }
+% Require l3doc.cls
+\tl_if_exist:NF \g__codedoc_module_name_tl
+  {
+    \msg_new:nnn { mylhmc } { l3doc-required } { mylhmc~must~be~loaded~via~l3doc.cls. }
+    \msg_fatal:nn { mylhmc } { l3doc-required }
+  }
+% Load module
+\lua_load_module:n { mylhmc.lua }
+\cs_generate_variant:Nn \__mylhmc_set_color:nn { VV }
+
+% Colors — code token classes
+\color_set:nnn { mylhmc / argument   } { HTML } { 48467C } % Violáceo Oscuro -> # (sin número)
+\color_set:nnn { mylhmc / argnum     } { HTML } { 6A1B9A } % Púrpura         -> número en #1
+\color_set:nnn { mylhmc / privatevar } { HTML } { 006400 } % Verde Pygments  -> \g__var \l__var
+\color_set:nnn { mylhmc / bracket    } { HTML } { 4A5568 } % Gris Carbón     -> []
+\color_set:nnn { mylhmc / publicvar  } { HTML } { 0066CC } % Azul Medio      -> \l_var \g_var
+\color_set:nnn { mylhmc / privatefun } { HTML } { 00695C } % Menta Oscuro    -> \__foo:Nn
+\color_set:nnn { mylhmc / publicfun  } { HTML } { 004085 } % Azul Denim      -> \cs_new:Nn
+\color_set:nnn { mylhmc / brace      } { HTML } { 4A5568 } % Gris Carbón     -> { }
+\color_set:nnn { mylhmc / comment    } { HTML } { 5A6370 } % Gris Pizarra
+\color_set:nnn { mylhmc / signature  } { HTML } { 5C6BC0 } % Azul Acero      -> :
+\color_set:nnn { mylhmc / sigargs    } { HTML } { 7F8C8D } % Gris Medio      -> Nn nTF
+\color_set:nnn { mylhmc / number     } { HTML } { 6A1B9A } % Púrpura         -> 10 100
+\color_set:nnn { mylhmc / constant   } { HTML } { 5E2A84 } % Púrpura Oscuro  -> \c_foo \c__foo
+\color_set:nnn { mylhmc / ltcmd      } { HTML } { 002EA6 } % Azul Eléctrico  -> \NewDocumentCommand
+\color_set:nnn { mylhmc / ltcmd_arg  } { HTML } { 00BFA5 } % Verde Menta     -> { O{} m +m t }
+\color_set:nnn { mylhmc / legacy_at  } { HTML } { 607D8B } % Gris Azulado    -> \mi@cmd
+\color_set:nnn { mylhmc / scan       } { HTML } { A64426 } % Rojo Ladrillo   -> \s_stop
+\color_set:nnn { mylhmc / quark      } { HTML } { 800040 } % Vino            -> \q_nil
+\color_set:nnn { mylhmc / key        } { HTML } { B27A00 } % Oro Viejo       -> .meta:n
+\color_set:nnn { mylhmc / backtick   } { HTML } { 558B2F } % Verde Manzana   -> `A
+\color_set:nnn { mylhmc / escape     } { HTML } { D81B60 } % Rosa Eléctrico  -> ^^M ~
+\color_set:nnn { mylhmc / danger     } { HTML } { D32F2F } % Rojo Sangre     -> :D
+\color_set:nnn { mylhmc / math       } { HTML } { C0392B } % Rojo Alizarín   -> $ $$ \( \) \[ \]
+\color_set:nnn { mylhmc / compare    } { HTML } { 95A5A6 } % Gris Plata      -> < > = <= >= !=
+\color_set:nnn { mylhmc / latex_cmd  } { HTML } { 3F3FFF } % Azul Brillante  -> \mathrm \textbf \,
+\color_set:nnn { mylhmc / structure  } { HTML } { 4169E1 } % Azul Rey        -> \NeedsTeXFormat \ProvidesExplPackage
+
+% Colors — guard/module annotation
+\color_set:nnn { mylhmc / guard / angle    } { HTML } { 34495E } % Gris Plomo   -> 〈 〉
+\color_set:nnn { mylhmc / guard / name     } { HTML } { 5A6370 } % Gris Pizarra -> nombre módulo
+\color_set:nnn { mylhmc / guard / operator } { HTML } { 95A5A6 } % Gris Plata   -> * / ( ) & | !
+\color_set:nnn { mylhmc / module_at        } { HTML } { 008080 } % Teal         -> @@
+\color_set:nnn { mylhmc / module_name      } { HTML } { 008080 } % Teal         -> nombre módulo en @@=
+\color_set:nnn { mylhmc / module_eq        } { HTML } { 95A5A6 } % Gris Plata   -> =
+
+
+% Export colors to Lua module
+\tl_new:N \l__mylhmc_color_export_tl
+\tl_new:N \l__mylhmc_export_name_tl
+
+\cs_new_protected:Npn \__mylhmc_export_code_color:n #1
+  {
+    \tl_set:Nn \l__mylhmc_export_name_tl {#1}
+    \color_export:nnN { mylhmc / #1 } { space-sep-rgb } \l__mylhmc_color_export_tl
+    \__mylhmc_set_color:VV \l__mylhmc_export_name_tl \l__mylhmc_color_export_tl
+  }
+\cs_new_protected:Npn \__mylhmc_export_guard_color:n #1
+  {
+    \tl_set:Nn \l__mylhmc_export_name_tl { guard/#1 }
+    \color_export:nnN { mylhmc / guard / #1 } { space-sep-rgb } \l__mylhmc_color_export_tl
+    \__mylhmc_set_color:VV \l__mylhmc_export_name_tl \l__mylhmc_color_export_tl
+  }
+\clist_map_function:nN
+  { argument , argnum , privatevar , bracket , publicvar , privatefun , publicfun ,
+    brace , comment , signature , sigargs , number , constant ,
+    ltcmd , ltcmd_arg , legacy_at , scan , quark , key , backtick , escape ,
+    danger , math , compare , latex_cmd , structure }
+  \__mylhmc_export_code_color:n
+\clist_map_function:nN
+  { angle , name , operator }
+  \__mylhmc_export_guard_color:n
+\clist_map_function:nN
+  { module_at , module_name , module_eq }
+  \__mylhmc_export_code_color:n
+
+% Verbatim line reader
+\group_begin:
+  \int_set:Nn \tex_endlinechar:D { -1 }
+  \use:n
+    {
+      \char_set_catcode_active:n { 32 }
+      \tl_const:Nn \c__mylhmc_active_space_tl
+    }{ }
+\group_end:
+
+\tl_new:N \l__mylhmc_verbatim_line_tl
+\tl_new:N \l__mylhmc_verbatim_finish_tl
+
+\group_begin:
+  \char_set_catcode_active:n { 13 }
+  \cs_new_protected:Npx \__mylhmc_set_end_pattern:n #1
+    {
+      \tl_set:Nn \exp_not:N \l__mylhmc_verbatim_finish_tl
+        {
+          \c_percent_str
+          \prg_replicate:nn { 4 } { \exp_not:o { \c__mylhmc_active_space_tl } }
+          \exp_not:o { \active@escape@char } end
+          \c_left_brace_str #1 \c_right_brace_str
+          \exp_not:N ^^M
+        }
+    }
+  \cs_new_protected:Npn \__mylhmc_verbatim_start:w #1
+    {
+      \str_if_eq:nnTF { #1 } { ^^M }
+        { \__mylhmc_verbatim_read_line:w }
+        { \__mylhmc_verbatim_read_line:w #1 }
+    }
+  \cs_new_protected:Npn \__mylhmc_verbatim_read_line:w #1 ^^M
+    {
+      \tl_set:Nn \l__mylhmc_verbatim_line_tl { #1 ^^M }
+      \tl_if_eq:NNTF \l__mylhmc_verbatim_line_tl \l__mylhmc_verbatim_finish_tl
+        { \exp_args:Nx \end { \@currenvir } }
+        {
+          \__mylhmc_output_line:
+          \__mylhmc_verbatim_read_line:w
+        }
+    }
+\group_end:
+
+% Line output
+\cs_new_protected_nopar:Nn \__mylhmc_output_line:
+  {
+    \tex_noindent:D
+    \__mylhmc_process_line:
+    \tex_par:D
+  }
+
+% \xmacro@code
+\cs_generate_variant:Nn \__mylhmc_set_end_pattern:n { V }
+\cs_set_protected_nopar:Npn \xmacro@code
+  {
+    \__mylhmc_set_end_pattern:V \@currenvir
+    \__mylhmc_verbatim_start:w
+  }
+\cs_set_eq:cN { xmacro@code* } \xmacro@code
+
+\file_input_stop:
+\end{filecontents*}
+\usepackage{mylhmc}
 \begin{document}
   \DocInput{\jobname.dtx}
 \end{document}
