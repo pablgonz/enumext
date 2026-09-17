@@ -36,7 +36,7 @@
 %% ------------------------------------------------------------------------
 %% 
 \NeedsTeXFormat{LaTeX2e}[2026-11-01]
-\ProvidesExplPackage {enumext} {2026-08-09} {2.3} {Enumerate exercise sheets}
+\ProvidesExplPackage {enumext} {2026-09-17} {2.3} {Enumerate exercise sheets}
 \hook_gput_code:nnn {begindocument} {enumext}
   {
     \IfPackageLoadedTF { multicol }
@@ -2391,8 +2391,8 @@
               { \__enumext_starred_reset:n {#3} }
               {
                 \bool_lazy_and:nnTF
-                  { \int_compare_p:nNn {#2} > 0 }
-                  { \int_compare_p:nNn {#2} < 5 }
+                  { \int_compare_p:nNn {#2} > { 0 } }
+                  { \int_compare_p:nNn {#2} < { 5 } }
                   { \__enumext_standard_reset:nn {#2} {#3} }
                   {
                     \msg_error:nne { enumext } { out-of-range } { \int_eval:n {#2} }
@@ -4464,8 +4464,8 @@
            \tag_mc_end:
         \tag_struct_end:n {tag=Lbl}
         \tag_struct_begin:n {tag=LBody}
-          \tag_struct_begin:n {tag=text-unit}
-            \tag_struct_begin:n {tag=text}
+          \tag_struct_begin:n {tag=text-unit} % now "semantic-para" (https://github.com/latex3/latex2e/commit/83f054afc042e82a664085b6f2fd7c8d61705fb9)
+            \tag_struct_begin:n {tag=text} % now "text-block"
   }
 \socket_new_plug:nnn {tagsupport/__enumext/starred} {stop-list-tags}
   {
@@ -5735,7 +5735,7 @@
             \cs_set:Npn \exp_not:N \__enumext_tmp:w ##1 \c_colon_str ##2 \scan_stop:
               { {##1} {##2} }
           }
-        \exp_after:wN \__enumext_getkeyans:nn \__enumext_tmp:w #1 \scan_stop:
+        \exp_after:w \__enumext_getkeyans:nn \__enumext_tmp:w #1 \scan_stop:
       }
       { \msg_error:nnn { enumext } { missing-colon } {#1} }
   }
