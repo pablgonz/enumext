@@ -14963,13 +14963,13 @@ Some text here
            \tag_mc_end:
         \tag_struct_end:n {tag=Lbl}
         \tag_struct_begin:n {tag=LBody}
-          \tag_struct_begin:n {tag=text-unit} % now "semantic-para" (https://github.com/latex3/latex2e/commit/83f054afc042e82a664085b6f2fd7c8d61705fb9)
-            \tag_struct_begin:n {tag=text} % now "text-block"
+          \tag_struct_begin:n {tag=semantic-para} % {tag=text-unit} now "semantic-para" (https://github.com/latex3/latex2e/commit/83f054afc042e82a664085b6f2fd7c8d61705fb9)
+            \tag_struct_begin:n {tag=text-block} % {tag=text} now "text-block"
   }
 \socket_new_plug:nnn {tagsupport/@@/starred} {stop-list-tags}
   {
             \tag_struct_end:n {tag=text}
-          \tag_struct_end:n {tag=text-unit}
+          \tag_struct_end:n {tag=semantic-para} % {tag=text-unit}
         \tag_struct_end:n {tag=LBody}
       \tag_struct_end:n {tag=LI}
     \tag_suspend:n {#1}
@@ -16117,7 +16117,7 @@ Some text here
     \ignorespaces
   }
   {
-    \IfDocumentMetadataT { \tag_struct_end:n {tag=text-unit} }
+    \IfDocumentMetadataT { \tag_struct_end:n {tag=semantic-para} } % {tag=text-unit}
     \@@_stop_item_tmp_vii:
     \@@_remove_extra_parsep_vii:
     \@@_after_list_vii:
@@ -16679,7 +16679,7 @@ Some text here
     \ignorespaces
   }
   {
-    \IfDocumentMetadataT { \tag_struct_end:n {tag=text-unit} }
+    \IfDocumentMetadataT { \tag_struct_end:n {tag=semantic-para} } % {tag=text-unit}
     \@@_stop_item_tmp_viii:
     \@@_remove_extra_parsep_viii:
     \@@_check_starred_cmd:n { item }
