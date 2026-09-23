@@ -1,0 +1,264 @@
+\NeedsTeXFormat{LaTeX2e}[2026-11-01]
+\ProvidesExplPackage{mylhmc}{2026-09-20}{0.99}
+  {Line-by-line macrocode reader for l3doc in Lua}
+\sys_if_engine_luatex:F
+  {
+    \msg_new:nnn { mylhmc } { luatex-required } { mylhmc~requires~LuaTeX. }
+    \msg_fatal:nn { mylhmc } { luatex-required }
+  }
+\tl_if_exist:NF \g__codedoc_module_name_tl
+  {
+    \msg_new:nnn { mylhmc } { l3doc-required } { mylhmc~must~be~loaded~via~l3doc.cls. }
+    \msg_fatal:nn { mylhmc } { l3doc-required }
+  }
+\lua_load_module:n { mylhmc.lua }
+\cs_generate_variant:Nn \__mylhmc_luafun_set_color:nn { VV }
+
+\seq_new:N \g__mylhmc_colors_export_seq
+\seq_new:N \l__mylhmc_path_seq
+\tl_new:N  \l__mylhmc_color_export_tl
+\tl_new:N  \l__mylhmc_export_name_tl
+
+\cs_new_protected:Npn \__mylhmc_define_xcolor:nnn #1#2#3
+  {
+    \definecolor { #1 } { #2 } { #3 }
+  }
+\cs_generate_variant:Nn \__mylhmc_define_xcolor:nnn { Vnn }
+
+\cs_new_protected:Npn \__mylhmc_color_export_name:n #1
+  {
+    % Clave Lua = path completo unido con '_' -- evita colisiones entre
+    % paths distintos que compartan el último segmento (guard/name vs
+    % module/name).
+    \seq_set_split:Nnn \l__mylhmc_path_seq { / } { #1 }
+    \seq_set_map:NNn \l__mylhmc_path_seq \l__mylhmc_path_seq { \tl_trim_spaces:n {##1} }
+    \tl_set:Ne \l__mylhmc_export_name_tl { \seq_use:Nn \l__mylhmc_path_seq { _ } }
+  }
+
+\cs_new_protected:Npn \__mylhmc_export_color_aux:nnn #1#2#3
+  {
+    \__mylhmc_color_export_name:n { #1 }
+    \__mylhmc_define_xcolor:Vnn \l__mylhmc_export_name_tl { #2 } { #3 }
+  }
+\cs_new_protected:Npn \__mylhmc_process_color_export:n #1
+  {
+    \__mylhmc_export_color_aux:nnn #1
+  }
+
+\cs_new_protected:Npn \__mylhmc_define_color:nnn #1#2#3
+  {
+    % Native expl3 color
+    \color_set:nnn { mylhmc / #1 } { #2 } { #3 }
+    % Export to Lua using the full path joined with '_'
+    \__mylhmc_color_export_name:n { #1 }
+    \color_export:nnN { mylhmc / #1 } { space-sep-rgb } \l__mylhmc_color_export_tl
+    \__mylhmc_luafun_set_color:VV \l__mylhmc_export_name_tl \l__mylhmc_color_export_tl
+    % Defer xcolor definition until xcolor is available
+    \seq_gput_right:Nn \g__mylhmc_colors_export_seq { { #1 } { #2 } { #3 } }
+  }
+
+\__mylhmc_define_color:nnn { argument   } { HTML } { 48467C } % Violáceo Oscuro   -> # (sin número)
+\__mylhmc_define_color:nnn { argnum     } { HTML } { 6A1B9A } % Púrpura           -> número en #1
+\__mylhmc_define_color:nnn { privatevar } { HTML } { 3D7A7A } % Verde azulado     -> \g__var \l__var
+\__mylhmc_define_color:nnn { bracket    } { HTML } { 4A5568 } % Gris Carbón       -> []
+\__mylhmc_define_color:nnn { publicvar  } { HTML } { 0066CC } % Azul Medio        -> \l_var \g_var
+\__mylhmc_define_color:nnn { privatefun } { HTML } { 00695C } % Menta Oscuro      -> \__foo:Nn
+\__mylhmc_define_color:nnn { publicfun  } { HTML } { 004085 } % Azul Denim        -> \cs_new:Nn
+\__mylhmc_define_color:nnn { brace      } { HTML } { 4A5568 } % Gris Carbón       -> { }
+\__mylhmc_define_color:nnn { comment    } { HTML } { 7F8C8D } % Gris Medio        -> %
+\__mylhmc_define_color:nnn { signature  } { HTML } { 5C6BC0 } % Azul Acero        -> :
+\__mylhmc_define_color:nnn { sigargs    } { HTML } { 7F8C8D } % Gris Medio        -> Nn nTF
+\__mylhmc_define_color:nnn { number     } { HTML } { 6A1B9A } % Púrpura           -> 10 100
+\__mylhmc_define_color:nnn { constant   } { HTML } { 5E2A84 } % Púrpura Oscuro    -> \c_foo \c__foo
+\__mylhmc_define_color:nnn { ltcmd      } { HTML } { 002EA6 } % Azul Eléctrico    -> \NewDocumentCommand
+\__mylhmc_define_color:nnn { ltcmd_arg  } { HTML } { 5C658A } % Azul Pizarra      -> { O{} m +m t }
+\__mylhmc_define_color:nnn { legacy_at  } { HTML } { 607D8B } % Gris Azulado      -> \mi@cmd
+\__mylhmc_define_color:nnn { scan       } { HTML } { A64426 } % Rojo Ladrillo     -> \s_stop
+\__mylhmc_define_color:nnn { quark      } { HTML } { 800040 } % Vino              -> \q_nil
+\__mylhmc_define_color:nnn { keyfun     } { HTML } { B27A00 } % Oro Viejo         -> .meta:n
+\__mylhmc_define_color:nnn { backtick   } { HTML } { 558B2F } % Verde Manzana     -> `A
+\__mylhmc_define_color:nnn { escape     } { HTML } { D81B60 } % Rosa Eléctrico    -> ^^M ~
+\__mylhmc_define_color:nnn { danger     } { HTML } { D32F2F } % Rojo Sangre       -> :D
+\__mylhmc_define_color:nnn { quote      } { HTML } { E65100 } % Naranja Profundo  -> ' "
+\__mylhmc_define_color:nnn { math       } { HTML } { FF1818 } % Rojo Neón         -> $ $$ \( \) \[ \]
+\__mylhmc_define_color:nnn { compare    } { HTML } { 808080 } % Gris Medio        -> < > = <= >= !=
+\__mylhmc_define_color:nnn { operator   } { HTML } { F9A825 } % Ámbar Dorado      -> + && || !
+\__mylhmc_define_color:nnn { latex_cmd  } { HTML } { 3F3FFF } % Azul Brillante    -> \mathrm \textbf \,
+\__mylhmc_define_color:nnn { structure  } { HTML } { 004085 } % Azul Denim (bold) -> \NeedsTeXFormat \ProvidesExplPackage
+\__mylhmc_define_color:nnn { unit       } { HTML } { E67E22 } % Naranja Calabaza  -> pt em cm mu
+\__mylhmc_define_color:nnn { pkgstruct  } { HTML } { 064FA5 } % Azul cuerpo       -> \RequirePackage \IfPackageLoadedTF
+\__mylhmc_define_color:nnn { support    } { HTML } { 3587B1 } % Azul Boston       -> hyperref, fontspec, unicode-math
+\__mylhmc_define_color:nnn { mathtag    } { HTML } { 2036D2 } % Azul MathML       -> \MathMLintent \MathMLarg \luamml_annotate:en \tagpdfsetup etc
+\__mylhmc_define_color:nnn { mathml_var } { HTML } { 008000 } % Verde Puro        -> $foo identifiers in MathMLintent/MathMLarg
+\__mylhmc_define_color:nnn { intent     } { HTML } { 5C658A } % Azul Pizarra      -> :prefix :postfix :infix :silent etc (global)
+\__mylhmc_define_color:nnn { filename   } { HTML } { 4A5568 } % Gris Carbón       -> \file_... \input \include \IfFileExists (nombre de archivo)
+\__mylhmc_define_color:nnn { percent    } { HTML } { 4A5568 } % Gris Carbón       -> %
+\__mylhmc_define_color:nnn { arroba     } { HTML } { D81B60 } % Rosa Eléctrico    -> @
+\__mylhmc_define_color:nnn { star       } { HTML } { D81B60 } % Rosa Eléctrico    -> *
+\__mylhmc_define_color:nnn { keyname    } { HTML } { 483D8B } % Gris Índigo       -> cifras-sep read-sign terse clear
+\__mylhmc_define_color:nnn { other_np   } { HTML } { D32F2F } % Rojo Sangre       -> \__other_mod: privados ajenos
+\__mylhmc_define_color:nnn { pkgname    } { HTML } { 6A5ACD } % SlateBlue         -> nombre de paquete (negrita)
+\__mylhmc_define_color:nnn { clsname    } { HTML } { 8470FF } % LightSlateBlue    -> nombre de clase (negrita)
+
+\__mylhmc_define_color:nnn { guard / angle } { HTML } { 4A5568 } % Gris Carbón  -> 〈 〉
+\__mylhmc_define_color:nnn { guard / name  } { HTML } { 5A6370 } % Gris Pizarra -> nombre módulo
+\__mylhmc_define_color:nnn { guard / star  } { HTML } { 95A5A6 } % Gris Plata   -> * (guardas)
+\__mylhmc_define_color:nnn { guard / slash } { HTML } { 95A5A6 } % Gris Plata   -> / (guardas)
+\__mylhmc_define_color:nnn { guard / paren } { HTML } { 95A5A6 } % Gris Plata   -> ( ) (guardas)
+\__mylhmc_define_color:nnn { guard / amp   } { HTML } { 95A5A6 } % Gris Plata   -> & (guardas)
+\__mylhmc_define_color:nnn { guard / pipe  } { HTML } { 95A5A6 } % Gris Plata   -> | (guardas)
+\__mylhmc_define_color:nnn { guard / bang  } { HTML } { 95A5A6 } % Gris Plata   -> ! (guardas)
+\__mylhmc_define_color:nnn { module / at   } { HTML } { 008080 } % Teal         -> __spintent
+\__mylhmc_define_color:nnn { module / name } { HTML } { 008080 } % Teal         -> nombre módulo en __spintent=
+\__mylhmc_define_color:nnn { module / eq   } { HTML } { 808080 } % Gris Medio   -> =
+
+\hook_gput_code:nnn { begindocument } { mylhmc }
+  {
+    \IfPackageLoadedT { xcolor }
+      {
+        \seq_map_function:NN \g__mylhmc_colors_export_seq \__mylhmc_process_color_export:n
+      }
+  }
+
+\NewDocumentCommand \myhlc { v }
+  {
+    \mode_leave_vertical:
+    \group_begin:
+      \ttfamily
+      \__mylhmc_luafun_inline:n {#1}
+    \group_end:
+  }
+\cs_new_protected:Npn \__mylhmc_luafun_inline:n #1
+  {
+    \tl_set:Nn \l__mylhmc_verbatim_line_tl {#1}
+    \__mylhmc_luafun_inline:
+  }
+
+\hook_gput_code:nnn { begindocument } { mylhmc }
+  {
+    \renewcommand \theCodelineNo
+      {
+        \__mylhmc_luafun_actual_text_begin:
+        \group_begin:
+          \color_select:n { mylhmc / guard / angle }
+          \ttfamily \tiny \arabic { CodelineNo }
+        \group_end:
+        \__mylhmc_luafun_actual_text_end:
+      }
+  }
+
+\group_begin:
+  \int_set:Nn \tex_endlinechar:D { -1 }
+  \use:n
+    {
+      \char_set_catcode_active:n { 32 }
+      \tl_const:Nn \c__mylhmc_active_space_tl
+    }{ }
+\group_end:
+
+\tl_new:N \l__mylhmc_verbatim_line_tl
+\tl_new:N \l__mylhmc_verbatim_finish_tl
+
+\group_begin:
+  \char_set_catcode_active:n { 13 }
+  \cs_new_protected:Npe \__mylhmc_set_end_pattern:n #1
+    {
+      \tl_set:Nn \exp_not:N \l__mylhmc_verbatim_finish_tl
+        {
+          \c_percent_str
+          \prg_replicate:nn { 4 } { \exp_not:o { \c__mylhmc_active_space_tl } }
+          \exp_not:o { \active@escape@char } end
+          \c_left_brace_str #1 \c_right_brace_str
+          \exp_not:N ^^M
+        }
+    }
+  \cs_new_protected:Npn \__mylhmc_verbatim_start:w #1
+    {
+      \str_if_eq:nnTF { #1 } { ^^M }
+        { \__mylhmc_verbatim_read_line:w }
+        { \__mylhmc_verbatim_read_line:w #1 }
+    }
+  \cs_new_protected:Npn \__mylhmc_verbatim_read_line:w #1 ^^M
+    {
+      \tl_set:Nn \l__mylhmc_verbatim_line_tl { #1 ^^M }
+      \tl_if_eq:NNTF \l__mylhmc_verbatim_line_tl \l__mylhmc_verbatim_finish_tl
+        { \exp_args:Ne \end { \@currenvir } }
+        {
+          \__mylhmc_output_line:
+          \__mylhmc_verbatim_read_line:w
+        }
+    }
+\group_end:
+
+\cs_new_protected_nopar:Nn \__mylhmc_output_line:
+  {
+    \tex_noindent:D
+    \__mylhmc_luafun_process_line:
+    \tex_par:D
+  }
+
+\cs_generate_variant:Nn \__mylhmc_set_end_pattern:n { V }
+\cs_set_protected_nopar:Npn \xmacro@code
+  {
+    \__mylhmc_set_end_pattern:V \@currenvir
+    \__mylhmc_verbatim_start:w
+  }
+\cs_set_eq:cN { xmacro@code* } \xmacro@code
+
+\msg_new:nnnn { mylhmc } { invalid-hex-color }
+  { Invalid~color~value~'#2'~for~key~'#1':~expected~6~hex~digits~(e.g.~FF0000). }
+  { The~color~was~not~changed~and~keeps~its~previous~value. }
+\msg_new:nnnn { mylhmc } { unknown-key }
+  { Unknown~mylhmc~key~'#1'. }
+  { Check~the~color~name~(use~its~full~path,~e.g.~guard/star)~or~use~
+    provide~to~register~module~commands. }
+
+\keys_define:nn { mylhmc }
+  {
+    unknown .code:n =
+      { \msg_error:nne { mylhmc } { unknown-key } { \l_keys_key_str } } ,
+    provide .code:n =
+      { \clist_map_function:nN {#1} \__mylhmc_luafun_register_module_cmd:n } ,
+    provide .value_required:n = true ,
+    % Respaldo de nombre de módulo para \myhlc antes de la primera
+    % guarda %<@@=modulo> real -- vive solo del lado de Lua, nunca toca
+    % \g__codedoc_module_name_tl (variable global de l3doc.cls).
+    module .code:n =
+      { \__mylhmc_luafun_set_module_backup:n {#1} } ,
+    module .value_required:n = true ,
+    % Fallback de itálica para comentarios: true (por defecto) = siempre
+    % Latin Modern Mono Italic; false = busca primero una itálica
+    % hermana de la fuente actual (como ya hace la negrita), cayendo a
+    % Latin Modern solo si no encuentra ninguna.
+    lmmono .code:n =
+      { \__mylhmc_luafun_set_lmmono:n {#1} } ,
+    lmmono .value_required:n = true ,
+    % Palabra clave de prioridad extra para la negrita (p.ej.
+    % bold=Semibold): si coincide con una fuente hermana cargada, gana
+    % por encima de medium/semibold/bold; si no coincide con ninguna
+    % (o nunca se fija), cae al comportamiento actual sin cambios.
+    bold .code:n =
+      { \__mylhmc_luafun_set_bold_weight:n {#1} } ,
+    bold .value_required:n = true ,
+  }
+
+\cs_new_protected:Npn \__mylhmc_define_color_key:nnn #1#2#3
+  {
+    \keys_define:nn { mylhmc }
+      {
+        #1 .code:n =
+          {
+            \regex_match:nnTF { ^ [0-9A-Fa-f] {6} $ } {##1}
+              { \__mylhmc_define_color:nnn { #1 } { HTML } {##1} }
+              { \msg_error:nnnn { mylhmc } { invalid-hex-color } { #1 } {##1} }
+          } ,
+        #1 .value_required:n = true ,
+      }
+  }
+\seq_map_inline:Nn \g__mylhmc_colors_export_seq
+  { \__mylhmc_define_color_key:nnn #1 }
+
+\NewDocumentCommand \setmylhmc { m }
+  { \keys_set:nn { mylhmc } { #1 } }
+
+\file_input_stop:

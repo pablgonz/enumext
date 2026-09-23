@@ -1,7 +1,6 @@
 --[[
-   Configuration script for l3build from the enumext package
-   At the moment the possible options that can be passed on to
-   l3build are:
+   Configuration script for l3build from the enumext package.
+   At the moment the possible targets that can be passed are:
    * tag        : Update the version and date
    * doc        : Generate the documentation [-q]
    * unpack     : Unpacks the source files [-q]
@@ -12,7 +11,7 @@
    * ctan       : Generate the compressed package (.zip)
    * upload     : Upload the package to ctan, you must add
                   -F ctan.ann in conjunction with [--debug]
-   * tagged     : Check version and date in files
+   * tagcheck   : Check version and date in files
    * testpkg    : Compile all example files included in /test-pkg
    * examples   : Compile all example files included in .dtx file
    * release    : It performs the checks before generating a public
@@ -22,7 +21,7 @@
 -- General package identification
 module     = "enumext"
 pkgversion = "2.3"
-pkgdate    = "2026-09-17"
+pkgdate    = "2026-09-23"
 ltxrelease = "2026-11-01"
 
 -- Configuration of files for build and installation
@@ -39,63 +38,31 @@ tdslocations  = {
   "source/latex/enumext/enumext.ins"
 }
 
--- Unpacking files from .ins file
+-- Unpacking files from enumext.ins
 unpackfiles = { "enumext.ins" }
 unpackopts  = "--interaction=batchmode"
 unpackexe   = "luatex"
 
--- Generating documentation
-typesetfiles  = {"enumext.dtx"}
+-- Typesetting enumext documentation step by step :)
 
--- Update package date and version
-tagfiles = {"sources/enumext.dtx", "sources/enumext.sty", "sources/CTANREADME.md", "ctan.ann"}
-local mydate = os.date("!%Y-%m-%d")
+function docinit_hook()
+  local errorlevel = (cp("*.tex", unpackdir, typesetdir) + cp("*.sty", unpackdir, typesetdir))
+  if errorlevel ~= 0 then
+    error("** Error!!: Can't copy .tex and .sty files from "..unpackdir.." to "..typesetdir)
+    return errorlevel
+  end
+  return 0
+end
 
-function update_tag(file,content,tagname,tagdate)
-  if not tagname and tagdate == mydate or "" then
-    tagname = pkgversion
-    tagdate = pkgdate
-    print("** "..file.." have been tagged with the version and date of build.lua")
-  else
-    local v_maj, v_min = string.match(tagname, "^v?(%d+)(%S*)$")
-    if v_maj == "" or not v_min then
-      print("Error!!: Invalid tag '"..tagname.."', none of the files have been tagged")
-      os.exit(0)
-    else
-      tagname = string.format("%i%s", v_maj, v_min)
-      tagdate = mydate
-    end
-    print("** "..file.." have been tagged with the version "..tagname.." and date "..mydate)
+function typeset(file)
+  print("** Running: arara "..file..".dtx")
+  local file = jobname(sourcefiledir.."/enumext.dtx")
+  local errorlevel = runcmd("arara "..file..".dtx", typesetdir, {"TEXINPUTS","LUAINPUTS"})
+  if errorlevel ~= 0 then
+    error("Error!!: Typesetting "..file..".dtx")
+    return errorlevel
   end
-
-  if string.match(file, "enumext.dtx") then
-    content = string.gsub(content,
-                          "\\ProvidesExplPackage %{enumext%} %{[^}]+%} %{[^}]+%}",
-                          "\\ProvidesExplPackage {enumext} {"..tagdate.."} {"..tagname.."}")
-    content = string.gsub(content,
-                          "\\NeedsTeXFormat%{LaTeX2e%}%[%d%d%d%d%-%d%d%-%d%d%]",
-                          "\\NeedsTeXFormat{LaTeX2e}["..ltxrelease.."]")
-  end
-  if string.match(file, "enumext.sty") then
-    content = string.gsub(content,
-                          "\\ProvidesExplPackage %{enumext%} %{[^}]+%} %{[^}]+%}",
-                          "\\ProvidesExplPackage {enumext} {"..tagdate.."} {"..tagname.."}")
-    content = string.gsub(content,
-                          "\\NeedsTeXFormat%{LaTeX2e%}%[%d%d%d%d%-%d%d%-%d%d%]",
-                          "\\NeedsTeXFormat{LaTeX2e}["..ltxrelease.."]")
-  end
-  if string.match(file, "CTANREADME.md") then
-    content = string.gsub(content,
-                          "Release v%d+.%d+%a* \\%[%d%d%d%d%-%d%d%-%d%d\\%]",
-                          "Release v"..tagname.." \\["..tagdate.."\\]")
-  end
-  if string.match(file,"ctan.ann") then
---    content = string.gsub(content,
---                          "v%d%.%d%w? %d%d%d%d%-%d%d%-%d%d",
---                          "v"..tagname..' '..tagdate)
-    content = string.gsub(content, "v%d%.%d%w?", "v"..tagname)
-  end
-  return content
+  return 0
 end
 
 -- Configuration for ctan
@@ -103,9 +70,6 @@ ctanreadme = "CTANREADME.md"
 ctanpkg    = "enumext"
 ctanzip    = ctanpkg.."-"..pkgversion
 packtdszip = false
-
--- Clean files
-cleanfiles = {module..".pdf", ctanzip..".curlopt", ctanzip..".zip"}
 
 --  Configuration for package distribution in ctan
 uploadconfig = {
@@ -129,283 +93,400 @@ uploadconfig = {
   update       = true
 }
 
--- Line length in 80 characters
+-- Clean files
+cleanfiles = {module..".pdf", ctanzip..".curlopt", ctanzip..".zip"}
+
+-- Update package date and version
+tagfiles = {
+  "sources/enumext.dtx",
+  "sources/enumext.sty",
+  "sources/CTANREADME.md",
+  "ctan.ann"
+}
+
+-- Line length helper (80 chars layout)
 local function os_message(text)
   local mymax = 77 - string.len(text) - string.len("done")
-  local msg = text.." "..string.rep(".", mymax).." done"
-  return print(msg)
+  if mymax < 1 then mymax = 1 end
+  print(text .. " " .. string.rep(".", mymax) .. " done")
 end
 
--- Typesetting enumext documentation step by step :)
-function docinit_hook()
-  local errorlevel = (cp("*.tex", unpackdir, typesetdir) + cp("*.sty", unpackdir, typesetdir))
-  if errorlevel ~= 0 then
-    error("** Error!!: Can't copy .tex and .sty files from "..unpackdir.." to "..typesetdir)
-    return errorlevel
-  end
-  return 0
-end
-
-function typeset(file)
-  print("** Running: arara "..file..".dtx")
-  local file = jobname(sourcefiledir.."/enumext.dtx")
-  local errorlevel = runcmd("arara "..file..".dtx", typesetdir, {"TEXINPUTS","LUAINPUTS"})
-  if errorlevel ~= 0 then
-    error("Error!!: Typesetting "..file..".tex")
-    return errorlevel
-  end
-  return 0
-end
-
--- Create check_marked_tags() function
-local function check_marked_tags()
-  local f = assert(io.open("sources/enumext.dtx", "r"))
-  marked_tags = f:read("*all")
+-- Helper to safely read file content
+local function read_file(filepath)
+  local f = io.open(filepath, "r")
+  if not f then return nil end
+  local content = f:read("*all")
   f:close()
-  local m_pkgd = string.match(marked_tags, "\\ProvidesExplPackage %{enumext%} {(.-)}")
-  local m_pkgv = string.match(marked_tags, "\\ProvidesExplPackage %{enumext%} %{[^}]+%} {(.-)}")
-  if pkgversion == m_pkgv and pkgdate == m_pkgd then
-    os_message("Checking version and date in enumext.dtx")
-  else
-    print("** Warning: enumext.dtx is marked with version "..m_pkgv.." and date "..m_pkgd)
-    print("** Warning: build.lua is marked with version "..pkgversion.." and date "..pkgdate)
-    print("** Check version and date in build.lua then run l3build tag")
-  end
+  return content
 end
 
--- Create check_readme_tags() function
+-- Update function with smart check (avoids redundant rewrites) --
+-- checks FIRST whether the file already has the right tag/date before
+-- touching the content; if it matches, no gsub runs at all.
+function update_tag(file, content, tagname, tagdate)
+  tagname = pkgversion
+  tagdate = pkgdate
+
+  -- Is this file already up to date?
+  local already_ok = nil
+
+  if string.match(file, "enumext%.dtx$") then
+    local pkgd, pkgv = string.match(content, "\\ProvidesExplPackage%s*{enumext}%s*{(.-)}%s*{(.-)}")
+    local ltxr = string.match(content, "\\NeedsTeXFormat%s*{LaTeX2e}%s*%[(%d%d%d%d%-%d%d%-%d%d)%]")
+    already_ok = (pkgv == tagname and pkgd == tagdate and ltxr == ltxrelease)
+
+  elseif string.match(file, "enumext%.sty$") then
+    local pkgd, pkgv = string.match(content, "\\ProvidesExplPackage%s*{enumext}%s*{(.-)}%s*{(.-)}")
+    local ltxr = string.match(content, "\\NeedsTeXFormat%s*{LaTeX2e}%s*%[(%d%d%d%d%-%d%d%-%d%d)%]")
+    already_ok = (pkgv == tagname and pkgd == tagdate and ltxr == ltxrelease)
+
+  elseif string.match(file, "CTANREADME%.md$") then
+    local m_readmev, m_readmed = string.match(content, "Release%s+(v%d+%.%d+%a*)%s+\\%[(%d%d%d%d%-%d%d%-%d%d)\\%]")
+    already_ok = (m_readmev == "v" .. tagname and m_readmed == tagdate)
+
+  elseif string.match(file, "ctan%.ann$") then
+    local annv = string.match(content, "v%d+%.%d+%a*")
+    already_ok = (annv == "v" .. tagname)
+  end
+
+  if already_ok then
+    print("** " .. file .. " is already up to date")
+    return content
+  end
+
+  local original_content = content
+
+  -- Substitutions in enumext.dtx
+  if string.match(file, "enumext%.dtx$") then
+    content = string.gsub(content, "(\\ProvidesExplPackage%s*{enumext}%s*){[^}]+}%s*{[^}]+}", "%1{" .. tagdate .. "} {" .. tagname .. "}")
+    content = string.gsub(content, "(\\NeedsTeXFormat{LaTeX2e})%[%d%d%d%d%-%d%d%-%d%d%]", "%1[" .. ltxrelease .. "]")
+  end
+
+  -- Substitutions in enumext.sty
+  if string.match(file, "enumext%.sty$") then
+    content = string.gsub(content, "(\\ProvidesExplPackage%s*{enumext}%s*){[^}]+}%s*{[^}]+}", "%1{" .. tagdate .. "} {" .. tagname .. "}")
+    content = string.gsub(content, "(\\NeedsTeXFormat{LaTeX2e})%[%d%d%d%d%-%d%d%-%d%d%]", "%1[" .. ltxrelease .. "]")
+  end
+
+  -- Substitutions in CTANREADME.md
+  if string.match(file, "CTANREADME%.md$") then
+    content = string.gsub(content, "Release v%d+%.%d+%a*%s*\\%[%d%d%d%d%-%d%d%-%d%d\\%]", "Release v" .. tagname .. " \\[" .. tagdate .. "\\]")
+  end
+
+  -- Substitutions in ctan.ann
+  if string.match(file, "ctan%.ann$") then
+    content = string.gsub(content, "v%d+%.%d+%a*", "v" .. tagname)
+  end
+
+  print("** " .. file .. " has been tagged with version " .. tagname .. " and date " .. tagdate)
+
+  return content
+end
+
+-- Individual verification functions
+local function check_dtx_tags()
+  local content = read_file("sources/enumext.dtx")
+  if not content then return false end
+
+  local pkgd, pkgv = string.match(content, "\\ProvidesExplPackage%s*{enumext}%s*{(.-)}%s*{(.-)}")
+  local ltxr = string.match(content, "\\NeedsTeXFormat%s*{LaTeX2e}%s*%[(%d%d%d%d%-%d%d%-%d%d)%]")
+
+  if pkgv ~= pkgversion or pkgd ~= pkgdate or ltxr ~= ltxrelease then
+    print("** Warning: Mismatches found in sources/enumext.dtx")
+    return false
+  end
+  os_message("Checking version, date, and LaTeX release in enumext.dtx")
+  return true
+end
+
+local function check_sty_tags()
+  local content = read_file("sources/enumext.sty")
+  if not content then return true end
+
+  local pkgd, pkgv = string.match(content, "\\ProvidesExplPackage%s*{enumext}%s*{(.-)}%s*{(.-)}")
+  local ltxr = string.match(content, "\\NeedsTeXFormat%s*{LaTeX2e}%s*%[(%d%d%d%d%-%d%d%-%d%d)%]")
+
+  if pkgv ~= pkgversion or pkgd ~= pkgdate or ltxr ~= ltxrelease then
+    print("** Warning: Mismatches found in sources/enumext.sty")
+    return false
+  end
+  os_message("Checking version, date, and LaTeX release in enumext.sty")
+  return true
+end
+
 local function check_readme_tags()
-  local pkgversion = "v"..pkgversion
+  local content = read_file("sources/CTANREADME.md")
+  if not content then return false end
 
-  local f = assert(io.open("sources/CTANREADME.md", "r"))
-  readme_tags = f:read("*all")
-  f:close()
-  local m_readmev, m_readmed = string.match(readme_tags, "Release (v%d+.%d+%a*) \\%[(%d%d%d%d%-%d%d%-%d%d)\\%]")
+  local target_version = "v" .. pkgversion
+  local m_readmev, m_readmed = string.match(content, "Release%s+(v%d+%.%d+%a*)%s+\\%[(%d%d%d%d%-%d%d%-%d%d)\\%]")
 
-  if pkgversion == m_readmev and pkgdate == m_readmed then
-    os_message("Checking version and date in README.md")
-  else
-    print("** Warning: README.md is marked with version "..m_readmev.." and date "..m_readmed)
-    print("** Warning: build.lua is marked with version "..pkgversion.." and date "..pkgdate)
-    print("** Check version and date in build.lua then run l3build tag")
+  if target_version ~= m_readmev or pkgdate ~= m_readmed then
+    print("** Warning: Mismatches found in sources/CTANREADME.md")
+    return false
   end
+  os_message("Checking version and date in README.md")
+  return true
 end
 
--- Config tag_hook
+-- Unified verification runner
+local function check_all_tags()
+  local ok_dtx = check_dtx_tags()
+  local ok_sty = check_sty_tags()
+  local ok_readme = check_readme_tags()
+  return ok_dtx and ok_sty and ok_readme
+end
+
+-- Leave tag_hook empty so 'l3build tag' doesn't execute redundant checks after writing
 function tag_hook(tagname)
-  check_marked_tags()
-  check_readme_tags()
 end
 
--- Add "tagged" target to l3build CLI
-if options["target"] == "tagged" then
-  check_marked_tags()
-  check_readme_tags()
-  os.exit(0)
-end
-
--- Create make_tmp_dir() function
-local function make_tmp_dir()
-  check_marked_tags()
-  check_readme_tags()
-  -- Fix basename(path) in windows
-  local function basename(path)
-    return path:match("^.*[\\/]([^/\\]*)$")
+-- Standalone audit target: l3build tagcheck
+if options["target"] == "tagcheck" then
+  if check_all_tags() then
+    os.exit(0)
+  else
+    os.exit(1)
   end
+end
+
+-- Helper function to generate an isolated build environment --
+local function system_temp_dir()
+  local is_windows = package.config:sub(1, 1) == "\\"
+  if is_windows then
+    return os.getenv("TEMP") or os.getenv("TMP") or "C:\\Windows\\Temp"
+  else
+    return os.getenv("TMPDIR") or "/tmp"
+  end
+end
+
+local function make_tmp_dir()
+  -- Unified tag verification before unpacking
+  if not check_all_tags() then
+    error("** Error!!: Tag verification failed before preparing environment")
+  end
+
+  local sep = package.config:sub(1, 1)
+  local base = system_temp_dir()
   local tmpname = os.tmpname()
-  tmpdir = basename(tmpname)
-  -- Create a ./tmp dir
+  local unique = tmpname:match("([^/\\]+)$") or tostring(os.time())
+  os.remove(tmpname) -- os.tmpname() sometimes creates an empty file; not needed
+
+  tmpdir = base .. sep .. "enumext-build-" .. unique -- Global variable consumed by custom targets
+
+  -- Create temporary directory
   local errorlevel = mkdir(tmpdir)
   if errorlevel ~= 0 then
-    error("** Error!!: The ./"..tmpdir.." directory could not be created")
-    return errorlevel
+    error("** Error!!: Could not create temporary directory " .. tmpdir)
   else
-    os_message("Creating the temporary directory ./"..tmpdir)
+    os_message("Creating temporary directory " .. tmpdir)
   end
-  -- Copy source files
-  local errorlevel = (cp("*.dtx", sourcefiledir, tmpdir) + cp("*.ins", sourcefiledir, tmpdir))
+
+  -- Copy source files (.dtx and .ins)
+  errorlevel = cp("*.dtx", sourcefiledir, tmpdir) + cp("*.ins", sourcefiledir, tmpdir)
   if errorlevel ~= 0 then
-    error("** Error!!: Can't copy .dtx and .ins files from "..sourcefiledir.." to ./"..tmpdir)
-    return errorlevel
+    error("** Error!!: Failed to copy source files to " .. tmpdir)
   else
-    os_message("Copying enumext.dtx and enumext.ins from "..sourcefiledir.." to ./"..tmpdir)
+    os_message("Copying enumext.dtx and enumext.ins to " .. tmpdir)
   end
-  -- Unpack files
-  print("Unpacks the source files into ./"..tmpdir)
-  local file = jobname(tmpdir.."/enumext.ins")
-  local errorlevel = run(tmpdir, "luatex -interaction=batchmode "..file..".ins > "..os_null)
+
+  -- Unpack source files
+  os_message("Unpacking source files in " .. tmpdir)
+  local file = jobname("enumext.ins")
+  errorlevel = run(tmpdir, "luatex -interaction=batchmode " .. file .. ".ins > " .. os_null)
   if errorlevel ~= 0 then
-    local f = assert(io.open(tmpdir.."/"..file..".log", "r"))
-    err_log_file = f:read("*all")
-    print(err_log_file)
-    cp(file..".log", tmpdir, maindir)
-    cp(file..".ins", tmpdir, maindir)
-    error("** Error!!: luatex -interaction=batchmode "..file..".ins")
-    return errorlevel
+    local f = io.open(tmpdir .. "/" .. file .. ".log", "r")
+    if f then
+      print(f:read("*all"))
+      f:close()
+    end
+    cp(file .. ".log", tmpdir, maindir)
+    cp(file .. ".ins", tmpdir, maindir)
+    error("** Error!!: Unpacking failed with luatex")
   else
-    os_message("** Running: luatex -interaction=batchmode "..file..".ins")
-    rm(tmpdir, file..".log")
+    os_message("Successfully unpacked " .. file .. ".ins")
+    rm(tmpdir, file .. ".log")
   end
   return 0
 end
 
--- We added a new target "testpkg" to run the tests files in ./test-pkg
+-- Custom target: l3build testpkg
 if options["target"] == "testpkg" then
   make_tmp_dir()
+
   local errorlevel = cp("*.*", "sources/test-pkg", tmpdir)
   if errorlevel ~= 0 then
-    error("** Error!!: Can't copy files from sources/test-pkg to ./"..tmpdir)
-    return errorlevel
+    error("** Error!!: Failed to copy test files from sources/test-pkg to " .. tmpdir)
   else
-    os_message("** Copying files from sources/test-pkg to ./"..tmpdir)
+    os_message("Copied test files from sources/test-pkg to " .. tmpdir)
   end
-  -- Compiling static test files for "testpkg" target
-  print("Compiling tagged PDF sample files in ./"..tmpdir.." using [arara]")
-  local samples = {"enumext-02", "enumext-03", "enumext-04", "enumext-05", "enumext-06", "enumext-07"} -- "enumext-01",
-  for i, samples in ipairs(samples) do
-    local errorlevel = run(tmpdir, "arara -v "..samples..".tex")
+
+  os_message("Compiling test files with arara")
+  local samples = {"enumext-02", "enumext-03", "enumext-04", "enumext-05", "enumext-06", "enumext-07"}
+  for _, sample in ipairs(samples) do
+    errorlevel = run(tmpdir, "arara -v " .. sample .. ".tex")
     if errorlevel ~= 0 then
-      local f = assert(io.open(tmpdir.."/"..samples..".log", "r"))
-      err_log_file = f:read("*all")
-      print(err_log_file)
-      cp(samples..".tex", tmpdir, maindir)
-      cp(samples..".log", tmpdir, maindir)
-      error("** Error!!: arara "..samples..".tex")
-      return errorlevel
+      local f = io.open(tmpdir .. "/" .. sample .. ".log", "r")
+      if f then
+        print(f:read("*all"))
+        f:close()
+      end
+      error("** Error!!: arara compilation failed for " .. sample .. ".tex")
     end
   end
-  -- Copy generated .pdf files to maindir
-  local errorlevel = cp("enumext-*.pdf", tmpdir, maindir)
+
+  errorlevel = cp("enumext-*.pdf", tmpdir, maindir)
   if errorlevel ~= 0 then
-    error("** Error!!: Can't copy generated pdf files to ./"..maindir)
-    return errorlevel
+    error("** Error!!: Failed to copy generated PDF files to main directory")
   else
-    os_message("Copy generated .pdf files to ./"..maindir)
+    os_message("Copied generated PDF files to main directory")
   end
-  -- If are OK then remove ./temp dir
+
   cleandir(tmpdir)
   lfs.rmdir(tmpdir)
-  os_message("Remove temporary directory ./"..tmpdir)
+  os_message("Removed temporary directory " .. tmpdir)
   os.exit(0)
 end
 
--- We added a new target "examples" to run examples from enumext.dtx
+-- Custom target: l3build examples
 if options["target"] == "examples" then
-  -- Create a tmp dir and unpack files
   make_tmp_dir()
-  local file = jobname(tmpdir.."/enumext.dtx")
-  -- Unpack examples files from .dtx
-  print("Extract examples into ./"..tmpdir.." from file "..file..".dtx")
-  local errorlevel = run(tmpdir, "lualatex-dev "..file..".dtx > "..os_null)
+
+  local file = jobname("enumext.dtx")
+  os_message("Extracting examples from " .. file .. ".dtx")
+
+  local errorlevel = run(tmpdir, "lualatex-dev " .. file .. ".dtx > " .. os_null)
   if errorlevel ~= 0 then
-    error("** Error!!: lualatex-dev -draftmode -interaction=batchmode "..file..".dtx")
-    return errorlevel
+    error("** Error!!: Example extraction failed on " .. file .. ".dtx")
   else
-    os_message("** Running: lualatex-dev -draftmode -interaction=batchmode "..file..".dtx")
+    os_message("Extracted examples from " .. file .. ".dtx")
   end
-  -- Compiling example files
-  print("Compiling sample files in ./"..tmpdir.." using [arara]")
-  local samples = {"enumext-exa-1","enumext-exa-2","enumext-exa-3","enumext-exa-4","enumext-exa-5","enumext-exa-6"}
-  for i, samples in ipairs(samples) do
-    local errorlevel = run(tmpdir, "arara "..samples..".tex > "..os_null)
+
+  os_message("Compiling example files with arara")
+  local samples = {"enumext-exa-1", "enumext-exa-2", "enumext-exa-3", "enumext-exa-4", "enumext-exa-5", "enumext-exa-6"}
+  for _, sample in ipairs(samples) do
+    errorlevel = run(tmpdir, "arara " .. sample .. ".tex > " .. os_null)
     if errorlevel ~= 0 then
-      local f = assert(io.open(tmpdir.."/"..samples..".log", "r"))
-      err_log_file = f:read("*all")
-      print(err_log_file)
-      cp(samples..".tex", tmpdir, maindir)
-      cp(samples..".log", tmpdir, maindir)
-      error("** Error!!: arara "..samples..".tex")
-      return errorlevel
+      local f = io.open(tmpdir .. "/" .. sample .. ".log", "r")
+      if f then
+        print(f:read("*all"))
+        f:close()
+      end
+      cp(sample .. ".tex", tmpdir, maindir)
+      cp(sample .. ".log", tmpdir, maindir)
+      error("** Error!!: arara compilation failed for " .. sample .. ".tex")
     else
-      os_message("** Running: arara "..samples..".tex")
+      os_message("Compiled " .. sample .. ".tex")
     end
   end
-  -- Copy generated .pdf files to maindir
-  local errorlevel = cp("enumext-*.pdf", tmpdir, maindir)
+
+  errorlevel = cp("enumext-*.pdf", tmpdir, maindir)
   if errorlevel ~= 0 then
-    error("** Error!!: Can't copy generated pdf files to ./"..maindir)
-    return errorlevel
+    error("** Error!!: Failed to copy generated PDF files to main directory")
   else
-    os_message("Copy generated .pdf files to ./"..maindir)
+    os_message("Copied generated PDF files to main directory")
   end
-  -- If are OK then remove ./temp dir
+
   cleandir(tmpdir)
   lfs.rmdir(tmpdir)
-  os_message("Remove temporary directory ./"..tmpdir)
+  os_message("Removed temporary directory " .. tmpdir)
   os.exit(0)
 end
 
--- Clean repo
+-- Clean repo with Git
 if options["target"] == "clean" then
-  print("Clean files in repo")
+  os_message("Cleaning untracked repository files with Git")
   os.execute("git clean -xdfq")
-  os_message("** Running: git clean -xdfq")
 end
 
--- Capture os cmd for git
+-- Capture shell output safely (e.g. for Git queries)
 local function os_capture(cmd, raw)
-  local f = assert(io.popen(cmd, 'r'))
-  local s = assert(f:read('*a'))
+  local f = io.popen(cmd, "r")
+  if not f then return "" end
+
+  local s = f:read("*a") or ""
   f:close()
+
   if raw then return s end
-    s = string.gsub(s, '^%s+', '')
-    s = string.gsub(s, '%s+$', '')
-    s = string.gsub(s, '[\n\r]+', ' ')
+
+  s = string.gsub(s, "^%s+", "")
+  s = string.gsub(s, "%s+$", "")
+  s = string.gsub(s, "[\n\r]+", " ")
   return s
 end
 
--- We added a new target "release" to do the final checks for git and ctan
+-- Target "release": performs pre-release checks for Git and CTAN
 if options["target"] == "release" then
-  -- os.execute("git clean -xdfq")
+  -- 1. Verify working branch is 'main'
   local gitbranch = os_capture("git symbolic-ref --short HEAD")
-  local gitstatus = os_capture("git status --porcelain")
-  local tagongit  = os_capture('git for-each-ref refs/tags --sort=-taggerdate --format="%(refname:short)" --count=1')
-  local gitpush   = os_capture("git log --branches --not --remotes")
-
   if gitbranch == "main" then
-    os_message("** Checking git branch '"..gitbranch.."': OK")
+    os_message("Checking git branch 'main'")
   else
-    error("** Error!!: You must be on the 'main' branch")
+    error("** Error!!: You must be on the 'main' branch (currently on '" .. gitbranch .. "')")
   end
-  local file = jobname(sourcefiledir.."/enumext.ins")
-  local errorlevel = run(sourcefiledir, "luatex --interaction=batchmode "..file..".ins > "..os_null)
-  if errorlevel ~= 0 then
-    error("** Error!!: luatex -interaction=batchmode "..file..".ins")
-    return errorlevel
-  else
-    os_message("** Running: luatex -interaction=batchmode "..file..".ins")
-  end
+
+  -- 2. Verify clean working directory (before generating any build files)
+  local gitstatus = os_capture("git status --porcelain")
   if gitstatus == "" then
-    os_message("** Checking status of the files: OK")
+    os_message("Checking working directory status")
   else
-    error("** Error!!: Files have been edited, please commit all changes")
+    error("** Error!!: Uncommitted changes detected. Please commit all changes before release.")
   end
+
+  -- 3. Verify local commits are pushed
+  local gitpush = os_capture("git log --branches --not --remotes")
   if gitpush == "" then
-    os_message("** Checking pending commits: OK")
+    os_message("Checking pending commits")
   else
-    error("** Error!!: There are pending commits, please run git push")
+    error("** Error!!: There are unpushed local commits. Run 'git push' first.")
   end
-  check_marked_tags()
-  local pkgversion = "v"..pkgversion
-  os_message("** Checking last tag marked in GitHub "..tagongit..": OK")
-  local errorlevel = os.execute("git tag -a "..pkgversion.." -m 'Release "..pkgversion.." "..pkgdate.."'")
+
+  -- 4. Audit version/date consistency across all files
+  if not check_all_tags() then
+    error("** Error!!: Tag verification failed. Update build.lua or run 'l3build tag'")
+  end
+
+  -- 5. Test source extraction via luatex
+  local file = jobname(sourcefiledir .. "/enumext.ins")
+  local errorlevel = run(sourcefiledir, "luatex --interaction=batchmode " .. file .. ".ins > " .. os_null)
   if errorlevel ~= 0 then
-    error("** Error!!: run git tag -d "..pkgversion.." && git push --delete origin "..pkgversion)
-    return errorlevel
+    error("** Error!!: Failed to process " .. file .. ".ins with luatex")
   else
-    os_message("** Running: git tag -a "..pkgversion.." -m 'Release "..pkgversion.." "..pkgdate.."'")
+    os_message("Unpacking " .. file .. ".ins with luatex")
   end
-  os_message("** Running: git push --tags --quiet")
+
+  -- 6. Tag commit in Git
+  local tag_version = "v" .. pkgversion
+  local tagongit = os_capture('git for-each-ref refs/tags --sort=-taggerdate --format="%(refname:short)" --count=1')
+  os_message("Checking latest Git tag (latest: " .. (tagongit ~= "" and tagongit or "none") .. ")")
+
+  local tag_cmd = string.format('git tag -a %s -m "Release %s %s"', tag_version, tag_version, pkgdate)
+  local res = os.execute(tag_cmd)
+  if res ~= 0 and res ~= true then
+    error("** Error!!: Could not create Git tag " .. tag_version .. ". Verify if it already exists.")
+  else
+    os_message("Creating Git tag " .. tag_version)
+  end
+
+  os_message("Pushing Git tags to remote")
   os.execute("git push --tags --quiet")
-  if fileexists(ctanzip..".zip") then
-    os_message("** Checking "..ctanzip..".zip file to send to CTAN: OK")
+
+  -- 7. Build CTAN package archive if absent
+  if fileexists(ctanzip .. ".zip") then
+    os_message("Checking CTAN package " .. ctanzip .. ".zip")
   else
-    os_message("** Creating "..ctanzip..".zip file to send to CTAN")
-    os.execute("l3build ctan > "..os_null)
+    os_message("Building CTAN package " .. ctanzip .. ".zip")
+    os.execute("l3build ctan > " .. os_null)
   end
-  os_message("** Running: l3build upload -F ctan.ann --debug")
-  os.execute("l3build upload -F ctan.ann --debug >"..os_null)
-  print("** Now check "..ctanzip..".curlopt file and add changes to ctan.ann")
-  print("** If everything is OK run (manually): l3build upload")
+
+  -- 8. Perform CTAN upload dry run
+  os_message("Running dry-run upload check")
+  os.execute("l3build upload -F ctan.ann --debug > " .. os_null)
+
+  print("-----------------------------------------------------------------")
+  print("** Pre-release checks completed successfully!")
+  print("** Review '" .. ctanzip .. ".curlopt' and verify 'ctan.ann'")
+  print("** To publish to CTAN, run manually: l3build upload")
+  print("-----------------------------------------------------------------")
   os.exit(0)
 end
