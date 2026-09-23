@@ -55,7 +55,7 @@ function docinit_hook()
 end
 
 function typeset(file)
-  print("** Running: arara -v "..file..".dtx")
+  print("** Running: arara "..file..".dtx")
   local file = jobname(sourcefiledir.."/enumext.dtx")
   local errorlevel = runcmd("arara "..file..".dtx", typesetdir, {"TEXINPUTS","LUAINPUTS"})
   if errorlevel ~= 0 then
@@ -355,7 +355,8 @@ if options["target"] == "examples" then
   local file = jobname("enumext.dtx")
   os_message("Extracting examples from " .. file .. ".dtx")
 
-  local errorlevel = run(tmpdir, "lualatex-dev " .. file .. ".dtx > " .. os_null)
+  --local errorlevel = run(tmpdir, "lualatex-dev " .. file .. ".dtx > " .. os_null)
+  local errorlevel = run(tmpdir, "lualatex-dev " .. file .. ".dtx")
   if errorlevel ~= 0 then
     error("** Error!!: Example extraction failed on " .. file .. ".dtx")
   else
