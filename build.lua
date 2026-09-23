@@ -352,11 +352,15 @@ end
 if options["target"] == "examples" then
   make_tmp_dir()
 
+  local errorlevel = (cp("*mylhmc.lua", sourcefiledir, tmpdir) + cp("*mylhmc.sty", sourcefiledir, tmpdir))
+  if errorlevel ~= 0 then
+    error("** Error!!: Can't copy mylhmc.lua and mylhmc.lua files from "..sourcefiledir.." to "..tmpdir)
+  end
+
   local file = jobname("enumext.dtx")
   os_message("Extracting examples from " .. file .. ".dtx")
 
-  --local errorlevel = run(tmpdir, "lualatex-dev " .. file .. ".dtx > " .. os_null)
-  local errorlevel = run(tmpdir, "lualatex-dev " .. file .. ".dtx")
+  local errorlevel = run(tmpdir, "lualatex-dev " .. file .. ".dtx > " .. os_null)
   if errorlevel ~= 0 then
     error("** Error!!: Example extraction failed on " .. file .. ".dtx")
   else
