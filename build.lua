@@ -46,16 +46,16 @@ unpackexe   = "luatex"
 -- Typesetting enumext documentation step by step :)
 
 function docinit_hook()
-  local errorlevel = (cp("*.tex", unpackdir, typesetdir) + cp("*.sty", unpackdir, typesetdir))
+  local errorlevel = (cp("*mylhmc.lua", sourcefiledir, typesetdir) + cp("*mylhmc.sty", sourcefiledir, typesetdir))
   if errorlevel ~= 0 then
-    error("** Error!!: Can't copy .tex and .sty files from "..unpackdir.." to "..typesetdir)
+    error("** Error!!: Can't copy mylhmc.lua and mylhmc.lua files from "..sourcefiledir.." to "..typesetdir)
     return errorlevel
   end
   return 0
 end
 
 function typeset(file)
-  print("** Running: arara "..file..".dtx")
+  print("** Running: arara -v "..file..".dtx")
   local file = jobname(sourcefiledir.."/enumext.dtx")
   local errorlevel = runcmd("arara "..file..".dtx", typesetdir, {"TEXINPUTS","LUAINPUTS"})
   if errorlevel ~= 0 then
