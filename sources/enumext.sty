@@ -59,9 +59,9 @@
 \bool_new:N \l__enumext_starred_bool
 \bool_new:N \g__enumext_starred_bool
 \bool_new:N \l__enumext_starred_first_bool
-\bool_new:N \l__enumext_standar_bool
-\bool_new:N \g__enumext_standar_bool
-\bool_new:N \l__enumext_standar_first_bool
+\bool_new:N \l__enumext_standard_bool
+\bool_new:N \g__enumext_standard_bool
+\bool_new:N \l__enumext_standard_first_bool
 \bool_new:N \l__enumext_keyans_env_bool
 \tl_new:N   \g__enumext_start_line_tl
 \tl_new:N   \g__enumext_envir_name_tl
@@ -100,7 +100,7 @@
 \box_new:N \l__enumext_label_width_by_box
 %% Add \l__enumext_leftmargin_tmp_X_bool, \l__enumext_leftmargin_tmp_X_dim,
 %% \l__enumext_leftmargin_X_dim, \l__enumext_itemindent_X_dim used by the
-%% function \enumext_calc_hspace:NNNNNNNNNNNN and |list-indent| key.
+%% function \enumext_calc_hspace:NNNNNNN and |list-indent| key.
 \cs_set_protected:Npn \__enumext_tmp:n #1
   {
     \bool_new:c { l__enumext_leftmargin_tmp_#1_bool }
@@ -222,11 +222,11 @@
   }
 \clist_map_inline:nn { i, ii, iii, iv, v, vi, vii, viii } { \__enumext_tmp:n {#1} }
 %% Variables used by |footnote| redefinition.
-\int_new:N \g__enumext_footnote_standar_int
+\int_new:N \g__enumext_footnote_standard_int
 \int_new:N \g__enumext_footnote_starred_int
-\seq_new:N \g__enumext_footnote_standar_arg_seq
+\seq_new:N \g__enumext_footnote_standard_arg_seq
 \seq_new:N \g__enumext_footnote_starred_arg_seq
-\seq_new:N \g__enumext_footnote_standar_int_seq
+\seq_new:N \g__enumext_footnote_standard_int_seq
 \seq_new:N \g__enumext_footnote_starred_int_seq
 %% Variables used by |enumext*| and |keyans*| environments.
 \cs_set_protected:Npn \__enumext_tmp:n #1
@@ -307,10 +307,10 @@
           {
             \tl_set:Nn \l__enumext_envir_name_tl { enumext }
             \bool_lazy_and:nnT
-              { \bool_not_p:n { \g__enumext_standar_bool } }
+              { \bool_not_p:n { \g__enumext_standard_bool } }
               { \int_compare_p:nNn { \l__enumext_level_h_int } = { 0 } }
               {
-                \bool_gset_true:N \g__enumext_standar_bool
+                \bool_gset_true:N \g__enumext_standard_bool
               }
           }
         {enumext*}
@@ -330,12 +330,12 @@
   {
     \bool_lazy_all:nT
       {
-        { \bool_if_p:N \g__enumext_standar_bool }
+        { \bool_if_p:N \g__enumext_standard_bool }
         { \int_compare_p:nNn { \l__enumext_level_int } = { 1 } }
         { \int_compare_p:nNn { \l__enumext_level_h_int } = { 0 } }
       }
       {
-        \bool_set_true:N \l__enumext_standar_first_bool
+        \bool_set_true:N \l__enumext_standard_first_bool
         \tl_gset:Nn \g__enumext_envir_name_tl { enumext }
         \tl_gset:Ne \g__enumext_start_line_tl
           {
@@ -404,7 +404,7 @@
 \cs_new_protected:Nn \__enumext_reset_global_bool:
   {
     \bool_gset_false:N \g__enumext_check_ans_key_bool
-    \bool_gset_false:N \g__enumext_standar_bool
+    \bool_gset_false:N \g__enumext_standard_bool
     \bool_gset_false:N \g__enumext_starred_bool
   }
 \cs_new_protected:Nn \__enumext_reset_global_tl:
@@ -507,28 +507,28 @@
         \tl_if_novalue:nTF {##1}
           {
             \stepcounter{footnote}
-            \int_gset_eq:Nc \g__enumext_footnote_standar_int { c@footnote }
+            \int_gset_eq:Nc \g__enumext_footnote_standard_int { c@footnote }
           }
           {
-            \int_gset:Nn \g__enumext_footnote_standar_int { ##1 }
+            \int_gset:Nn \g__enumext_footnote_standard_int { ##1 }
           }
-        \footnotemark [ \g__enumext_footnote_standar_int ]
-        \seq_gput_right:Nn \g__enumext_footnote_standar_arg_seq { ##2 }
+        \footnotemark [ \g__enumext_footnote_standard_int ]
+        \seq_gput_right:Nn \g__enumext_footnote_standard_arg_seq { ##2 }
         \seq_gput_right:NV
-          \g__enumext_footnote_standar_int_seq \g__enumext_footnote_standar_int
+          \g__enumext_footnote_standard_int_seq \g__enumext_footnote_standard_int
       }
   }
 \cs_new_protected:Nn \__enumext_print_footnote:
   {
-    \seq_if_empty:NF \g__enumext_footnote_standar_int_seq
+    \seq_if_empty:NF \g__enumext_footnote_standard_int_seq
       {
         \seq_map_pairwise_function:NNN
-          \g__enumext_footnote_standar_int_seq
-          \g__enumext_footnote_standar_arg_seq
+          \g__enumext_footnote_standard_int_seq
+          \g__enumext_footnote_standard_arg_seq
           \__enumext_footnotetext:nn
       }
-    \seq_gclear:N \g__enumext_footnote_standar_arg_seq
-    \seq_gclear:N \g__enumext_footnote_standar_int_seq
+    \seq_gclear:N \g__enumext_footnote_standard_arg_seq
+    \seq_gclear:N \g__enumext_footnote_standard_int_seq
   }
 %% Redefining |\footnote| for |enumext*| and |keyans*| environments.
 \cs_new_protected:Nn \__enumext_renew_footnote_mini:
@@ -561,9 +561,9 @@
     \seq_gclear:N \g__enumext_footnote_starred_arg_seq
     \seq_gclear:N \g__enumext_footnote_starred_int_seq
   }
-\cs_new_protected:Nn \__enumext_renew_footnote_standar:
+\cs_new_protected:Nn \__enumext_renew_footnote_standard:
   {
-    \bool_if:NT \g__enumext_standar_bool
+    \bool_if:NT \g__enumext_standard_bool
       {
         \IfDocumentMetadataTF
           {
@@ -577,9 +577,9 @@
           }
       }
   }
-\cs_new_protected:Nn \__enumext_print_footnote_standar:
+\cs_new_protected:Nn \__enumext_print_footnote_standard:
   {
-    \bool_if:NT \g__enumext_standar_bool
+    \bool_if:NT \g__enumext_standard_bool
       {
         \IfDocumentMetadataTF
           {
@@ -634,7 +634,7 @@
       {
         \DeclareDocumentEnvironment{__enumext_mini_page}{ m }
           {
-            \__enumext_renew_footnote_standar:
+            \__enumext_renew_footnote_standard:
             \__enumext_minipage:w [ t ] { ##1 }
               \legacy_if_gset_false:n { @minipage }
               \skip_vertical:N \c_zero_skip
@@ -642,7 +642,7 @@
           {
               \skip_vertical:N \c_zero_skip
             \__enumext_endminipage:
-            \__enumext_print_footnote_standar:
+            \__enumext_print_footnote_standard:
           }
       }
   }
@@ -717,7 +717,7 @@
     \keys_define:nn { enumext /  #1 }
       {
         mode-box .bool_set:N = \l__enumext_mode_box_bool,
-        mode-box .initial:n  = false,
+        mode-box .initial:n = false,
         mode-box .value_forbidden:n = true,
       }
   }
@@ -727,20 +727,21 @@
   {
     \keys_define:nn { enumext / #1 }
       {
-        font        .tl_set:c   = { l__enumext_label_font_style_#2_tl },
+        font        .tl_set:c = { l__enumext_label_font_style_#2_tl },
         font        .value_required:n = true,
-        labelsep    .dim_set:c  = { l__enumext_labelsep_#2_dim },
-        labelsep    .initial:n  = {0.3333em},
+        labelsep    .dim_set:c = { l__enumext_labelsep_#2_dim },
+        labelsep    .initial:n = {0.3333em},
         labelsep    .value_required:n = true,
-        labelwidth  .dim_set:c  = { l__enumext_labelwidth_#2_dim },
+        labelwidth  .dim_set:c = { l__enumext_labelwidth_#2_dim },
         labelwidth  .value_required:n = true,
         wrap-label  .cs_set_protected:cp = { __enumext_wrapper_label_#2:n } ##1,
-        wrap-label  .initial:n  = {##1},
+        wrap-label  .initial:n = {##1},
         wrap-label  .value_required:n = true,
-        wrap-label* .code:n = {
-                                \bool_set_true:c { l__enumext_wrap_label_opt_#2_bool }
-                                \keys_set:nn { enumext / #1 } { wrap-label = {##1} }
-                              },
+        wrap-label* .code:n =
+          {
+            \bool_set_true:c { l__enumext_wrap_label_opt_#2_bool }
+            \keys_set:nn { enumext / #1 } { wrap-label = {##1} }
+          },
         wrap-label* .value_required:n = true,
       }
   }
@@ -750,30 +751,36 @@
   {
     \keys_define:nn { enumext / #1 }
       {
-        align .choice:,
-        align / left    .code:n =
-                          {
-                            \tl_clear:c { l__enumext_label_fill_left_#2_tl  }
-                            \tl_set:cn  { l__enumext_label_fill_right_#2_tl } { \hfill }
-                            \str_set:cn { l__enumext_align_label_pos_#2_str } { l }
-                          },
-        align / right   .code:n =
-                          {
-                            \tl_set:cn  { l__enumext_label_fill_left_#2_tl  } { \hfill }
-                            \tl_clear:c { l__enumext_label_fill_right_#2_tl }
-                            \str_set:cn { l__enumext_align_label_pos_#2_str } { r }
-                          },
-        align / center  .code:n =
-                          {
-                            \tl_set:cn { l__enumext_label_fill_left_#2_tl  } { \hfill }
-                            \tl_set:cn { l__enumext_label_fill_right_#2_tl } { \hfill }
-                            \str_set:cn { l__enumext_align_label_pos_#2_str } { c }
-                          },
-        align / unknown .code:n =
-                          \msg_error:nneee { enumext } { unknown-choice }
-                            { align } { left,~right,~ center } { \exp_not:n {##1} },
+        align .choices:nn =
+          { left , right , center }
+          {
+            \int_case:nn { \l_keys_choice_int }
+              {
+                {1}
+                  {
+                    \tl_clear:c { l__enumext_label_fill_left_#2_tl  }
+                    \tl_set:cn  { l__enumext_label_fill_right_#2_tl } { \hfill }
+                    \str_set:cn { l__enumext_align_label_pos_#2_str } { l }
+                  }
+                {2}
+                  {
+                    \tl_set:cn  { l__enumext_label_fill_left_#2_tl  } { \hfill }
+                    \tl_clear:c { l__enumext_label_fill_right_#2_tl }
+                    \str_set:cn { l__enumext_align_label_pos_#2_str } { r }
+                  }
+                {3}
+                  {
+                    \tl_set:cn { l__enumext_label_fill_left_#2_tl  } { \hfill }
+                    \tl_set:cn { l__enumext_label_fill_right_#2_tl } { \hfill }
+                    \str_set:cn { l__enumext_align_label_pos_#2_str } { c }
+                  }
+              }
+          },
         align .initial:n = left,
-        align .value_required:n  = true,
+        align .value_required:n = true,
+        align / unknown .code:n =
+          \msg_error:nneee { enumext } { unknown-choice }
+            { align } { left,~right,~ center } { \exp_not:n {##1} },
       }
   }
 \clist_map_inline:nn
@@ -786,15 +793,21 @@
   {
     \keys_define:nn { enumext / #1 }
       {
-        align .choice:,
-        align / left    .code:n = \str_set:cn { l__enumext_align_label_#2_str } { l },
-        align / right   .code:n = \str_set:cn { l__enumext_align_label_#2_str } { r },
-        align / center  .code:n = \str_set:cn { l__enumext_align_label_#2_str } { c },
-        align / unknown .code:n =
-                          \msg_error:nneee { enumext } { unknown-choice }
-                            { align } { left,~right,~ center } { \exp_not:n {##1} },
+        align .choices:nn =
+          { left , right , center }
+          {
+            \int_case:nn { \l_keys_choice_int }
+              {
+                {1} { \str_set:cn { l__enumext_align_label_#2_str } { l } }
+                {2} { \str_set:cn { l__enumext_align_label_#2_str } { r } }
+                {3} { \str_set:cn { l__enumext_align_label_#2_str } { c } }
+              }
+          },
         align .initial:n = left,
         align .value_required:n = true,
+        align / unknown .code:n =
+          \msg_error:nneee { enumext } { unknown-choice }
+            { align } { left,~right,~ center } { \exp_not:n {##1} },
       }
   }
 \clist_map_inline:nn { {enumext*}{vii}, {keyans*}{viii} } { \__enumext_tmp:nn #1 }
@@ -803,15 +816,16 @@
   {
     \keys_define:nn { enumext / #1 }
       {
-        label .code:n    = {
-                             \__enumext_label_style:cvn { l__enumext_label_#2_tl }
-                               { l__enumext_counter_#2_tl } {##1}
-                             \dim_set_eq:cN  { l__enumext_labelwidth_#2_dim }
-                               \l__enumext_current_widest_dim
-                           },
+        label .code:n =
+          {
+            \__enumext_label_style:cvn { l__enumext_label_#2_tl }
+              { l__enumext_counter_#2_tl } {##1}
+            \dim_set_eq:cN  { l__enumext_labelwidth_#2_dim }
+              \l__enumext_current_widest_dim
+          },
         label .initial:n = #3,
         label .value_required:n = true,
-        ref   .code:n    = \__enumext_standar_ref:nn {#2} {##1},
+        ref   .code:n = { \__enumext_standard_ref:nn {#2} {##1} },
         ref   .value_required:n = true,
       }
   }
@@ -820,7 +834,7 @@
 \__enumext_tmp:nnn { level-3 } { iii } { \roman*. }
 \__enumext_tmp:nnn { level-4 } {  iv } { \Alph*.  }
 %% Internal function used by |ref| key in enumext environment.
-\cs_new_protected:Npn \__enumext_standar_ref:nn #1 #2
+\cs_new_protected:Npn \__enumext_standard_ref:nn #1 #2
   {
     \tl_set:Nn \l__enumext_ref_key_arg_tl {#2}
     \tl_if_empty:NTF \l__enumext_ref_key_arg_tl
@@ -837,7 +851,7 @@
       }
   }
 %% Activate |ref| key in second arg of list for |enumext| environment.
-\cs_new_protected:Nn \__enumext_standar_ref:
+\cs_new_protected:Nn \__enumext_standard_ref:
   {
     \tl_if_empty:cF { l__enumext_renew_counter_ \__enumext_level: _tl }
       {
@@ -849,15 +863,16 @@
   {
     \keys_define:nn { enumext / #1 }
       {
-        label .code:n    = {
-                             \__enumext_label_style:cvn { l__enumext_label_#2_tl }
-                               { l__enumext_counter_#2_tl } {##1}
-                             \dim_set_eq:cN  { l__enumext_labelwidth_#2_dim }
-                                 \l__enumext_current_widest_dim
-                           },
+        label .code:n =
+          {
+            \__enumext_label_style:cvn { l__enumext_label_#2_tl }
+              { l__enumext_counter_#2_tl } {##1}
+            \dim_set_eq:cN  { l__enumext_labelwidth_#2_dim }
+                \l__enumext_current_widest_dim
+          },
         label .initial:n = #3,
         label .value_required:n = true,
-        ref   .code:n    = \__enumext_starred_ref:n {##1},
+        ref   .code:n = { \__enumext_starred_ref:n {##1} },
         ref   .value_required:n = true,
       }
   }
@@ -917,17 +932,18 @@
 %% Define and set |label| and |ref| keys for |keyans| and |keyanspic|.
 \keys_define:nn { enumext / keyans }
   {
-    label .code:n    = {
-                         \__enumext_label_style:cvn { l__enumext_label_v_tl }
-                           { l__enumext_counter_v_tl } {#1}
-                         \__enumext_label_style:cvn { l__enumext_label_vi_tl }
-                           { l__enumext_counter_vi_tl } {#1}
-                         \dim_set_eq:NN
-                           \l__enumext_labelwidth_v_dim \l__enumext_current_widest_dim
-                       },
+    label .code:n =
+      {
+        \__enumext_label_style:cvn { l__enumext_label_v_tl }
+          { l__enumext_counter_v_tl } {#1}
+        \__enumext_label_style:cvn { l__enumext_label_vi_tl }
+          { l__enumext_counter_vi_tl } {#1}
+        \dim_set_eq:NN
+          \l__enumext_labelwidth_v_dim \l__enumext_current_widest_dim
+      },
     label .initial:n = \Alph*),
     label .value_required:n = true,
-    ref   .code:n    = \__enumext_keyans_ref:n {#1},
+    ref   .code:n = { \__enumext_keyans_ref:n {#1} },
     ref   .value_required:n = true,
   }
 %% Internal function used by |ref| key in |keyans| environment.
@@ -999,24 +1015,27 @@
   {
     \keys_define:nn { enumext / #1 }
       {
-        start* .code:n    = {
-                              \__enumext_start_from:ccn
-                                { l__enumext_label_#2_tl }
-                                { l__enumext_start_#2_int } {##1}
-                            },
+        start* .code:n =
+          {
+            \__enumext_start_from:ccn
+              { l__enumext_label_#2_tl }
+              { l__enumext_start_#2_int } {##1}
+          },
         start* .value_required:n = true,
-        start  .code:n    = {
-                              \__enumext_start_from:cce
-                                { l__enumext_label_#2_tl }
-                                { l__enumext_start_#2_int } { \int_eval:n {##1} }
-                            },
+        start  .code:n =
+          {
+            \__enumext_start_from:cce
+              { l__enumext_label_#2_tl }
+              { l__enumext_start_#2_int } { \int_eval:n {##1} }
+          },
         start  .initial:n = 1,
         start  .value_required:n = true,
-        widest .code:n    = {
-                              \__enumext_widest_from:nccn {#2}
-                                { l__enumext_label_#2_tl }
-                                { l__enumext_labelwidth_#2_dim } {##1}
-                            },
+        widest .code:n =
+          {
+            \__enumext_widest_from:nccn {#2}
+              { l__enumext_label_#2_tl }
+              { l__enumext_labelwidth_#2_dim } {##1}
+          },
         widest .value_required:n = true,
       }
   }
@@ -1044,23 +1063,23 @@
     \keys_define:nn { enumext / #1 }
       {
         topsep    .skip_set:c = { l__enumext_topsep_#2_skip },
-        topsep    .initial:n  = {#3},
+        topsep    .initial:n = {#3},
         topsep    .value_required:n = true,
         partopsep .skip_set:c = { l__enumext_partopsep_#2_skip },
-        partopsep .initial:n  = {#4},
+        partopsep .initial:n = {#4},
         partopsep .value_required:n = true,
         parsep    .skip_set:c = { l__enumext_parsep_#2_skip },
-        parsep    .initial:n  = {#5},
+        parsep    .initial:n = {#5},
         parsep    .value_required:n = true,
         itemsep   .skip_set:c = { l__enumext_itemsep_#2_skip },
-        itemsep   .initial:n  = {#6},
+        itemsep   .initial:n = {#6},
         itemsep   .value_required:n = true,
-        noitemsep .meta:n     = { itemsep = 0pt, parsep = 0pt },
+        noitemsep .meta:n = { itemsep = 0pt, parsep = 0pt },
         noitemsep .value_forbidden:n = true,
-        nosep     .meta:n     = {
-                                  itemsep = 0pt, parsep= 0pt,
-                                  topsep = 0pt, partopsep = 0pt,
-                                },
+        nosep     .meta:n = {
+                              itemsep = 0pt, parsep= 0pt,
+                              topsep = 0pt, partopsep = 0pt,
+                            },
         nosep     .value_forbidden:n = true,
       }
   }
@@ -1087,7 +1106,7 @@
 \keys_define:nn { enumext /  level-1 }
   {
     base-fix .bool_set:N = \l__enumext_base_line_fix_bool,
-    base-fix .initial:n  = false,
+    base-fix .initial:n = false,
     base-fix .value_forbidden:n = true,
   }
 %% Internal function for |base-fix| key in |enumext| environment.
@@ -1134,9 +1153,11 @@
         listparindent .value_required:n = true,
         list-offset   .dim_set:c = { l__enumext_listoffset_#2_dim },
         list-offset   .value_required:n = true,
-        list-indent   .code:n    =
-                        \bool_set_true:c { l__enumext_leftmargin_tmp_#2_bool }
-                        \dim_set:cn { l__enumext_leftmargin_tmp_#2_dim } {##1},
+        list-indent   .code:n =
+          {
+            \bool_set_true:c { l__enumext_leftmargin_tmp_#2_bool }
+            \dim_set:cn { l__enumext_leftmargin_tmp_#2_dim } {##1}
+          },
         list-indent   .value_required:n = true,
       }
   }
@@ -1158,7 +1179,7 @@
         listparindent .value_required:n = true,
         list-offset   .dim_set:c = { l__enumext_listoffset_#2_dim },
         list-offset   .value_required:n = true,
-        list-indent   .meta:n    = { list-offset = ##1 },
+        list-indent   .meta:n = { list-offset = ##1 },
         list-indent   .value_required:n = true,
       }
   }
@@ -1227,7 +1248,7 @@
     \keys_define:nn { enumext / #1 }
       {
         show-length .bool_set:c = { l__enumext_show_length_#2_bool },
-        show-length .initial:n  = false,
+        show-length .initial:n = false,
       }
   }
 \clist_map_inline:Nn \c__enumext_all_envs_clist { \__enumext_tmp:nn #1 }
@@ -1236,13 +1257,13 @@
   {
     \keys_define:nn { enumext / #1 }
       {
-        before  .tl_set:c   = { l__enumext_before_no_starred_key_#2_tl },
+        before  .tl_set:c = { l__enumext_before_no_starred_key_#2_tl },
         before  .value_required:n = true,
-        before* .tl_set:c   = { l__enumext_before_starred_key_#2_tl },
+        before* .tl_set:c = { l__enumext_before_starred_key_#2_tl },
         before* .value_required:n = true,
-        after   .tl_set:c   = { l__enumext_after_stop_list_#2_tl },
+        after   .tl_set:c = { l__enumext_after_stop_list_#2_tl },
         after   .value_required:n = true,
-        first   .tl_set:c   = { l__enumext_after_list_args_#2_tl },
+        first   .tl_set:c = { l__enumext_after_list_args_#2_tl },
         first   .value_required:n = true,
       }
   }
@@ -1319,15 +1340,15 @@
   {
     \keys_define:nn { enumext / #1 }
       {
-        mini-env    .dim_set:c  = { l__enumext_minipage_right_#2_dim },
+        mini-env    .dim_set:c = { l__enumext_minipage_right_#2_dim },
         mini-env    .value_required:n = true,
-        mini-sep    .dim_set:c  = { l__enumext_minipage_hsep_#2_dim },
-        mini-sep    .initial:n  = 0.3333em,
+        mini-sep    .dim_set:c = { l__enumext_minipage_hsep_#2_dim },
+        mini-sep    .initial:n = 0.3333em,
         mini-sep    .value_required:n = true,
-        columns-sep .dim_set:c  = { l__enumext_columns_sep_#2_dim },
+        columns-sep .dim_set:c = { l__enumext_columns_sep_#2_dim },
         columns-sep .value_required:n = true,
-        columns     .int_set:c  = { l__enumext_columns_#2_int },
-        columns     .initial:n  = 1,
+        columns     .int_set:c = { l__enumext_columns_#2_int },
+        columns     .initial:n = 1,
         columns     .value_required:n = true,
       }
   }
@@ -1339,10 +1360,11 @@
       {
         mini-right  .tl_gset:c = { g__enumext_miniright_code_#2_tl },
         mini-right  .value_required:n = true,
-        mini-right* .code:n    = {
-                                  \bool_gset_true:c { g__enumext_minipage_center_#2_bool }
-                                  \keys_set:nn { enumext / #1 } { mini-right = {##1} }
-                                },
+        mini-right* .code:n =
+          {
+            \bool_gset_true:c { g__enumext_minipage_center_#2_bool }
+            \keys_set:nn { enumext / #1 } { mini-right = {##1} }
+          },
         mini-right* .value_required:n = true,
       }
   }
@@ -1782,7 +1804,7 @@
     % starred env
     \bool_lazy_and:nnT
       { \bool_if_p:N \g__enumext_starred_bool }
-      { \bool_not_p:n { \l__enumext_standar_bool } }
+      { \bool_not_p:n { \l__enumext_standard_bool } }
       {
         \msg_error:nnn { enumext } { wrong-miniright-starred }
       }
@@ -1858,13 +1880,19 @@
       {
         above  .skip_set:c = { l__enumext_vspace_above_#2_skip },
         above  .value_required:n = true,
-        above* .code:n     = \bool_set_true:c { l__enumext_vspace_a_star_#2_bool }
-                             \keys_set:nn { enumext / #1 } { above = {##1} },
+        above* .code:n =
+          {
+            \bool_set_true:c { l__enumext_vspace_a_star_#2_bool }
+              \keys_set:nn { enumext / #1 } { above = {##1} }
+          },
         above* .value_required:n = true,
         below  .skip_set:c = { l__enumext_vspace_below_#2_skip },
         below  .value_required:n = true,
-        below* .code:n     = \bool_set_true:c { l__enumext_vspace_b_star_#2_bool }
-                             \keys_set:nn { enumext / #1 } { below = {##1} },
+        below* .code:n =
+          {
+            \bool_set_true:c { l__enumext_vspace_b_star_#2_bool }
+              \keys_set:nn { enumext / #1 } { below = {##1} }
+          },
         below* .value_required:n = true,
       }
   }
@@ -1973,32 +2001,34 @@
       {
         series  .str_set:N = \l__enumext_series_name_str,
         series  .value_required:n = true,
-        resume  .code:n = {
-                            \bool_if:NF \l__enumext_print_keyans_cmd_bool
-                              {
-                                \tl_set:Nn \l__enumext_series_name_tl {##1}
-                                \tl_if_empty:NTF \l__enumext_series_name_tl
-                                  {
-                                    \bool_set_true:c { l__enumext_resume_count_#2_bool }
-                                    \bool_set_eq:Nc
-                                      \l__enumext_resume_count_bool
-                                      { l__enumext_resume_count_#2_bool }
-                                  }
-                                  {
-                                    \__enumext_resume:n {##1}
-                                  }
-                              }
-                          },
-        resume* .code:n = {
-                            \bool_if:NF \l__enumext_print_keyans_cmd_bool
-                              {
-                                \bool_set_true:c { l__enumext_resume_count_#2_bool }
-                                \bool_set_eq:Nc
-                                  \l__enumext_resume_count_bool { l__enumext_resume_count_#2_bool }
-                                \bool_set_true:c { l__enumext_resume_star_key_#2_bool }
-                                \__enumext_resume_star:
-                              }
-                           },
+        resume  .code:n =
+          {
+            \bool_if:NF \l__enumext_print_keyans_cmd_bool
+              {
+                \tl_set:Nn \l__enumext_series_name_tl {##1}
+                \tl_if_empty:NTF \l__enumext_series_name_tl
+                  {
+                    \bool_set_true:c { l__enumext_resume_count_#2_bool }
+                    \bool_set_eq:Nc
+                      \l__enumext_resume_count_bool
+                      { l__enumext_resume_count_#2_bool }
+                  }
+                  {
+                    \__enumext_resume:n {##1}
+                  }
+              }
+          },
+        resume* .code:n =
+          {
+            \bool_if:NF \l__enumext_print_keyans_cmd_bool
+              {
+                \bool_set_true:c { l__enumext_resume_count_#2_bool }
+                \bool_set_eq:Nc
+                  \l__enumext_resume_count_bool { l__enumext_resume_count_#2_bool }
+                \bool_set_true:c { l__enumext_resume_star_key_#2_bool }
+                \__enumext_resume_star:
+              }
+          },
         resume* .value_forbidden:n = true,
       }
   }
@@ -2008,11 +2038,11 @@
   }
   { \__enumext_tmp:nn #1 }
 %% Internal function to save counter value and set int vars for |series|, |resume| and |resume*| keys.
-\cs_new_protected:Nn \__enumext_standar_save_counter:
+\cs_new_protected:Nn \__enumext_standard_save_counter:
   {
-    \bool_if:NTF \g__enumext_standar_bool
+    \bool_if:NTF \g__enumext_standard_bool
       {
-        \__enumext_standar_save_counter_aux:
+        \__enumext_standard_save_counter_aux:
         \int_compare:nNnT { \l__enumext_level_int } = { 1 }
           {
             \int_if_exist:cT { g__enumext_resume_ \l__enumext_store_name_tl _int }
@@ -2023,10 +2053,10 @@
           }
       }
       {
-        \__enumext_standar_save_counter_aux:
+        \__enumext_standard_save_counter_aux:
       }
   }
-\cs_new_protected:Nn \__enumext_standar_save_counter_aux:
+\cs_new_protected:Nn \__enumext_standard_save_counter_aux:
   {
     \str_if_empty:NF \l__enumext_series_name_str
       {
@@ -2111,7 +2141,7 @@
     \int_compare:nNnT { \l__enumext_level_int } > { 0 }
       {
         \bool_lazy_and:nnTF
-           { \bool_if_p:N \l__enumext_standar_first_bool }
+           { \bool_if_p:N \l__enumext_standard_first_bool }
            { \bool_if_p:N \l__enumext_store_active_bool }
            {
              \int_set:Nn \l__enumext_start_i_int
@@ -2263,7 +2293,7 @@
               { g__enumext_series_ \tl_to_str:n {#1} _ \__enumext_level: _tl }
           }
           {
-            \msg_error:nnn { enumext } { unknown-series-standar } {#1}
+            \msg_error:nnn { enumext } { unknown-series-standard } {#1}
           }
       }
     \int_compare:nNnT { \l__enumext_level_h_int } = { 1 }
@@ -2311,7 +2341,7 @@
     \int_compare:nNnT { \l__enumext_level_int } > { 0 }
       {
         \bool_lazy_and:nnTF
-           { \bool_if_p:N \l__enumext_standar_first_bool }
+           { \bool_if_p:N \l__enumext_standard_first_bool }
            { \bool_if_p:N \l__enumext_store_active_bool }
            {
              \int_set:Nn \l__enumext_start_i_int
@@ -2434,18 +2464,18 @@
   {
     \keys_define:nn { enumext / #1 }
       {
-        reset  .code:n = \__enumext_standard_reset_key:,
+        reset  .code:n = { \__enumext_standard_reset_key: },
         reset  .value_forbidden:n = true,
-        reset* .code:n = \__enumext_standard_reset_key_star:,
+        reset* .code:n = { \__enumext_standard_reset_key_star: },
         reset* .value_forbidden:n = true,
       }
   }
 \clist_map_inline:nn {level-1, level-2, level-3, level-4} { \__enumext_tmp:n {#1} }
 \keys_define:nn { enumext / enumext* }
   {
-    reset  .code:n = \__enumext_starred_reset_key:,
+    reset  .code:n = { \__enumext_starred_reset_key: },
     reset  .value_forbidden:n = true,
-    reset* .code:n = \__enumext_starred_reset_key:,
+    reset* .code:n = { \__enumext_starred_reset_key: },
     reset* .value_forbidden:n = true,
   }
 %% Internal functions for |reset| and |reset*| keys
@@ -2482,7 +2512,7 @@
   {
     \keys_define:nn { enumext / #1 }
       {
-        save-ans .code:n = \__enumext_storing_set:n {##1},
+        save-ans .code:n = { \__enumext_storing_set:n {##1} },
         save-ans .value_required:n = true,
       }
   }
@@ -2505,14 +2535,14 @@
     \tl_if_empty:NTF \l__enumext_store_name_tl
       {
         \bool_lazy_or:nnT
-          { \l__enumext_standar_first_bool } { \l__enumext_starred_first_bool }
+          { \l__enumext_standard_first_bool } { \l__enumext_starred_first_bool }
           {
             \msg_error:nnV { enumext } { save-ans-empty } \g__enumext_envir_name_tl
           }
       }
       {
         \bool_lazy_or:nnT
-          { \l__enumext_standar_first_bool } { \l__enumext_starred_first_bool }
+          { \l__enumext_standard_first_bool } { \l__enumext_starred_first_bool }
           {
             \__enumext_start_save_ans_msg:
             \__enumext_storing_exec:
@@ -2546,12 +2576,13 @@
     \keys_define:nn { enumext / #1 }
       {
         check-ans .bool_set:N = \l__enumext_check_ans_key_bool,
-        check-ans .initial:n  = false,
+        check-ans .initial:n = false,
         check-ans .value_required:n = true,
-        no-store  .code:n = {
-                              \bool_set_false:N \l__enumext_check_answers_bool
-                              \bool_set_false:N \l__enumext_check_ans_key_bool
-                            },
+        no-store  .code:n =
+          {
+            \bool_set_false:N \l__enumext_check_answers_bool
+            \bool_set_false:N \l__enumext_check_ans_key_bool
+          },
         no-store  .value_forbidden:n = true,
       }
   }
@@ -2605,7 +2636,7 @@
         { 1 }{
                \bool_lazy_all:nT
                  {
-                   { \bool_if_p:N \g__enumext_standar_bool }
+                   { \bool_if_p:N \g__enumext_standard_bool }
                    { \int_compare_p:nNn { \l__enumext_level_int } = { 1 } }
                  }
                  {
@@ -2620,7 +2651,7 @@
   {
     \bool_lazy_and:nnT
       { \bool_if_p:N \l__enumext_check_ans_key_bool }
-      { \bool_if_p:N \g__enumext_standar_bool }
+      { \bool_if_p:N \g__enumext_standard_bool }
       {
         \bool_gset_true:N \g__enumext_check_ans_key_bool
       }
@@ -2712,34 +2743,40 @@
   {
     \keys_define:nn { enumext / #1 }
       {
-        mark-ans*  .tl_set:c  = { l__enumext_mark_answer_sym_#2_tl },
-        mark-ans*  .initial:n = \textasteriskcentered,
-        mark-ans*  .value_required:n = true,
-        mark-pos*  .choice:,
-        mark-pos* / left    .code:n = \str_set:cn { l__enumext_mark_position_#2_str } { l },
-        mark-pos* / right   .code:n = \str_set:cn { l__enumext_mark_position_#2_str } { r },
-        mark-pos* / center  .code:n = \str_set:cn { l__enumext_mark_position_#2_str } { c },
+        mark-ans* .tl_set:c = { l__enumext_mark_answer_sym_#2_tl },
+        mark-ans* .initial:n = \textasteriskcentered,
+        mark-ans* .value_required:n = true,
+        mark-pos* .choices:nn =
+          { left , right , center }
+          {
+            \int_case:nn { \l_keys_choice_int }
+              {
+                {1} { \str_set:cn { l__enumext_mark_position_#2_str } { l } }
+                {2} { \str_set:cn { l__enumext_mark_position_#2_str } { r } }
+                {3} { \str_set:cn { l__enumext_mark_position_#2_str } { c } }
+              }
+          },
+        mark-pos* .initial:n = right,
+        mark-pos* .value_required:n = true,
         mark-pos* / unknown .code:n =
-                           \msg_error:nneee { enumext } { unknown-choice }
-                             { mark-pos } { left,~right,~center } { \exp_not:n {##1} },
-        mark-pos*  .initial:n = right,
-        mark-pos*  .value_required:n = true,
-        mark-sep*  .dim_set:c = { l__enumext_mark_sym_sep_#2_dim },
-        mark-sep*  .value_required:n = true,
-        wrap-ans*  .cs_set_protected:cp = { __enumext_keyans_wrapper_item_#2:n } ##1,
-        wrap-ans*  .value_required:n = true,
-        wrap-opt   .cs_set_protected:cp = { __enumext_keyans_wrapper_opt_#2:n } ##1,
-        wrap-opt   .initial:n = [{##1}],
-        wrap-opt   .value_required:n = true,
-        save-sep   .tl_set:c = { l__enumext_store_keyans_item_opt_sep_#2_tl },
-        save-sep   .initial:n = {,~},
-        save-sep   .value_required:n = true,
-        show-ans   .bool_set:N = \l__enumext_show_answer_bool,
-        show-ans   .initial:n = false,
-        show-ans   .value_required:n = true,
-        show-pos   .bool_set:N = \l__enumext_show_position_bool,
-        show-pos   .initial:n = false,
-        show-pos   .value_required:n = true,
+          \msg_error:nneee { enumext } { unknown-choice }
+            { mark-pos } { left,~right,~center } { \exp_not:n {##1} },
+        mark-sep* .dim_set:c = { l__enumext_mark_sym_sep_#2_dim },
+        mark-sep* .value_required:n = true,
+        wrap-ans* .cs_set_protected:cp = { __enumext_keyans_wrapper_item_#2:n } ##1,
+        wrap-ans* .value_required:n = true,
+        wrap-opt  .cs_set_protected:cp = { __enumext_keyans_wrapper_opt_#2:n } ##1,
+        wrap-opt  .initial:n = [{##1}],
+        wrap-opt  .value_required:n = true,
+        save-sep  .tl_set:c = { l__enumext_store_keyans_item_opt_sep_#2_tl },
+        save-sep  .initial:n = {,~},
+        save-sep  .value_required:n = true,
+        show-ans  .bool_set:N = \l__enumext_show_answer_bool,
+        show-ans  .initial:n = false,
+        show-ans  .value_required:n = true,
+        show-pos  .bool_set:N = \l__enumext_show_position_bool,
+        show-pos  .initial:n = false,
+        show-pos  .value_required:n = true,
       }
   }
 \clist_map_inline:nn { {keyans}{v}, {keyans*}{viii} } { \__enumext_tmp:nn #1 }
@@ -2748,32 +2785,38 @@
   {
     \keys_define:nn { enumext / #1 }
       {
-        mark-ref  .tl_set:N   = \l__enumext_mark_ref_sym_tl,
-        mark-ref  .initial:n  = \textreferencemark,
-        mark-ref  .value_required:n = true,
-        save-ref  .bool_set:N = \l__enumext_store_ref_key_bool,
-        save-ref  .initial:n  = false,
-        save-ref  .value_required:n = true,
-        show-ans  .bool_set:N = \l__enumext_show_answer_bool,
-        show-ans  .initial:n  = false,
-        show-ans  .value_required:n = true,
-        show-pos  .bool_set:N = \l__enumext_show_position_bool,
-        show-pos  .initial:n  = false,
-        show-pos  .value_required:n = true,
-        mark-ans  .tl_set:N  = \l__enumext_mark_answer_sym_tl,
-        mark-ans  .initial:n = \textasteriskcentered,
-        mark-ans  .value_required:n = true,
-        mark-sep  .dim_set:N  = \l__enumext_mark_sym_sep_dim,
-        mark-sep  .value_required:n = true,
-        mark-pos  .choice:,
-        mark-pos / left    .code:n = \str_set:Nn \l__enumext_mark_position_str { l },
-        mark-pos / right   .code:n = \str_set:Nn \l__enumext_mark_position_str { r },
-        mark-pos / center  .code:n = \str_set:Nn \l__enumext_mark_position_str { c },
+        mark-ref .tl_set:N = \l__enumext_mark_ref_sym_tl,
+        mark-ref .initial:n = \textreferencemark,
+        mark-ref .value_required:n = true,
+        save-ref .bool_set:N = \l__enumext_store_ref_key_bool,
+        save-ref .initial:n = false,
+        save-ref .value_required:n = true,
+        show-ans .bool_set:N = \l__enumext_show_answer_bool,
+        show-ans .initial:n = false,
+        show-ans .value_required:n = true,
+        show-pos .bool_set:N = \l__enumext_show_position_bool,
+        show-pos .initial:n = false,
+        show-pos .value_required:n = true,
+        mark-ans .tl_set:N = \l__enumext_mark_answer_sym_tl,
+        mark-ans .initial:n = \textasteriskcentered,
+        mark-ans .value_required:n = true,
+        mark-sep .dim_set:N = \l__enumext_mark_sym_sep_dim,
+        mark-sep .value_required:n = true,
+        mark-pos .choices:nn =
+          { left , right , center }
+          {
+            \int_case:nn { \l_keys_choice_int }
+              {
+                {1} { \str_set:Nn \l__enumext_mark_position_str { l } }
+                {2} { \str_set:Nn \l__enumext_mark_position_str { r } }
+                {3} { \str_set:Nn \l__enumext_mark_position_str { c } }
+              }
+          },
+        mark-pos .initial:n = right,
+        mark-pos .value_required:n = true,
         mark-pos / unknown .code:n =
-                           \msg_error:nneee { enumext } { unknown-choice }
-                             { mark-pos } { left,~right,~center } { \exp_not:n {##1} },
-        mark-pos  .initial:n = right,
-        mark-pos  .value_required:n = true,
+          \msg_error:nneee { enumext } { unknown-choice }
+            { mark-pos } { left,~right,~center } { \exp_not:n {##1} },
 
         wrap-ans  .cs_set_protected:Np = \__enumext_anskey_wrapper:n ##1,
         wrap-ans  .initial:n =
@@ -2781,35 +2824,41 @@
                       \fbox{\parbox[t]{\dimeval{\itemwidth -2\fboxsep -2\fboxrule}}{##1}}
                     },
         wrap-ans  .value_required:n = true,
-        mark-ans* .code:n = {
-                              \keys_set:nn { enumext / keyans  } { mark-ans* = {##1} }
-                              \keys_set:nn { enumext / keyans* } { mark-ans* = {##1} }
-                            },
+        mark-ans* .code:n =
+          {
+            \keys_set:nn { enumext / keyans  } { mark-ans* = {##1} }
+            \keys_set:nn { enumext / keyans* } { mark-ans* = {##1} }
+          },
         mark-ans* .value_required:n = true,
-        mark-pos* .code:n = {
-                              \keys_set:nn { enumext / keyans  } { mark-pos* = {##1} }
-                              \keys_set:nn { enumext / keyans* } { mark-pos* = {##1} }
-                            },
+        mark-pos* .code:n =
+          {
+            \keys_set:nn { enumext / keyans  } { mark-pos* = {##1} }
+            \keys_set:nn { enumext / keyans* } { mark-pos* = {##1} }
+          },
         mark-pos* .value_required:n = true,
-        mark-sep* .code:n = {
-                              \keys_set:nn { enumext / keyans  } { mark-sep* = {##1} }
-                              \keys_set:nn { enumext / keyans* } { mark-sep* = {##1} }
-                            },
+        mark-sep* .code:n =
+          {
+            \keys_set:nn { enumext / keyans  } { mark-sep* = {##1} }
+            \keys_set:nn { enumext / keyans* } { mark-sep* = {##1} }
+          },
         mark-sep* .value_required:n = true,
-        wrap-ans* .code:n = {
-                              \keys_set:nn { enumext / keyans  } { wrap-ans* = {##1} }
-                              \keys_set:nn { enumext / keyans* } { wrap-ans* = {##1} }
-                            },
+        wrap-ans* .code:n =
+          {
+            \keys_set:nn { enumext / keyans  } { wrap-ans* = {##1} }
+            \keys_set:nn { enumext / keyans* } { wrap-ans* = {##1} }
+          },
         wrap-ans* .value_required:n = true,
-        wrap-opt  .code:n = {
-                              \keys_set:nn { enumext / keyans  } { wrap-opt = {##1} }
-                              \keys_set:nn { enumext / keyans* } { wrap-opt = {##1} }
-                            },
+        wrap-opt  .code:n =
+          {
+            \keys_set:nn { enumext / keyans  } { wrap-opt = {##1} }
+            \keys_set:nn { enumext / keyans* } { wrap-opt = {##1} }
+          },
         wrap-opt  .value_required:n = true,
-        save-sep  .code:n = {
-                              \keys_set:nn { enumext / keyans  } { save-sep = {##1} }
-                              \keys_set:nn { enumext / keyans* } { save-sep = {##1} }
-                            },
+        save-sep  .code:n =
+          {
+            \keys_set:nn { enumext / keyans  } { save-sep = {##1} }
+            \keys_set:nn { enumext / keyans* } { save-sep = {##1} }
+          },
         save-sep  .value_required:n = true,
       }
   }
@@ -2838,12 +2887,12 @@
   {
     \keys_define:nn { enumext / enumext* }
       {
-        save-key .code:n = \__enumext_parse_save_key_vii:n {##1},
+        save-key .code:n = { \__enumext_parse_save_key_vii:n {##1} },
         save-key .value_required:n = true,
       }
     \keys_define:nn { enumext / #1 }
       {
-        save-key .code:n = \__enumext_parse_save_key:n {##1},
+        save-key .code:n = { \__enumext_parse_save_key:n {##1} },
         save-key .value_required:n = true,
       }
   }
@@ -3013,8 +3062,8 @@
       }
     \bool_lazy_all:nT
       {
-        { \bool_not_p:n { \g__enumext_standar_bool } }
-        { \bool_if_p:N \l__enumext_standar_bool }
+        { \bool_not_p:n { \g__enumext_standard_bool } }
+        { \bool_if_p:N \l__enumext_standard_bool }
         { \int_compare_p:nNn { \l__enumext_level_int } > { 0 } }
       }
       {
@@ -3026,7 +3075,7 @@
       }
     \bool_lazy_all:nT
       {
-        { \bool_if_p:N \g__enumext_standar_bool }
+        { \bool_if_p:N \g__enumext_standard_bool }
         { \int_compare_p:nNn { \l__enumext_level_int } > { 0 } }
         { \int_compare_p:nNn { \l__enumext_level_h_int } = { 0 } }
       }
@@ -3041,7 +3090,7 @@
       { \tl_use:c { l__enumext_label_copy_ \int_to_roman:n {##1} _tl } . }
     \bool_lazy_all:nT
       {
-        { \bool_if_p:N \g__enumext_standar_bool }
+        { \bool_if_p:N \g__enumext_standard_bool }
         { \bool_if_p:N \l__enumext_starred_bool }
         { \int_compare_p:nNn { \l__enumext_level_int } > { 0 } }
       }
@@ -3182,18 +3231,18 @@
 \keys_define:nn { enumext / anskey }
   {
     break-col .bool_set:N = \l__enumext_store_columns_break_bool,
-    break-col .default:n  = true,
+    break-col .default:n = true,
     break-col .value_forbidden:n = true,
-    item-join .int_set:N  = \l__enumext_store_item_join_int,
+    item-join .int_set:N = \l__enumext_store_item_join_int,
     item-join .value_required:n = true,
     item-star .bool_set:N = \l__enumext_store_item_star_bool,
-    item-star .default:n  = true,
+    item-star .default:n = true,
     item-star .value_forbidden:n = true,
-    item-sym* .tl_set:N   = \l__enumext_store_item_symbol_tl,
+    item-sym* .tl_set:N = \l__enumext_store_item_symbol_tl,
     item-sym* .value_required:n = true,
-    item-pos* .dim_set:N  = \l__enumext_store_item_symbol_sep_dim,
+    item-pos* .dim_set:N = \l__enumext_store_item_symbol_sep_dim,
     item-pos* .value_required:n = true,
-    unknown   .code:n     = { \__enumext_anskey_unknown:n {#1} },
+    unknown   .code:n = { \__enumext_anskey_unknown:n {#1} },
   }
 \cs_new_protected:Npn \__enumext_anskey_unknown:n #1
   {
@@ -3272,29 +3321,30 @@
 \keys_define:nn { enumext / anskey* }
   {
     break-col .bool_set:N = \l__enumext_store_columns_break_bool,
-    break-col .default:n  = true,
+    break-col .default:n = true,
     break-col .value_forbidden:n = true,
-    item-join .int_set:N  = \l__enumext_store_item_join_int,
+    item-join .int_set:N = \l__enumext_store_item_join_int,
     item-join .value_required:n = true,
     item-star .bool_set:N = \l__enumext_store_item_star_bool,
-    item-star .default:n  = true,
+    item-star .default:n = true,
     item-star .value_forbidden:n = true,
-    item-sym* .tl_set:N   = \l__enumext_store_item_symbol_tl,
+    item-sym* .tl_set:N = \l__enumext_store_item_symbol_tl,
     item-sym* .value_required:n = true,
-    item-pos* .dim_set:N  = \l__enumext_store_item_symbol_sep_dim,
+    item-pos* .dim_set:N = \l__enumext_store_item_symbol_sep_dim,
     item-pos* .value_required:n = true,
     force-eol .bool_set:N = \l__enumext_anskey_env_force_eol_bool,
-    force-eol .initial:n  = false,
-    force-eol .default:n  = true,
-    write-env .code:n     = {
-                              \bool_set_true:N \l__enumext_write_anskey_env_bool
-                              \tl_set:Nn \l__enumext_write_anskey_env_file_name_tl {#1}
-                            },
+    force-eol .initial:n = false,
+    force-eol .default:n = true,
+    write-env .code:n =
+      {
+        \bool_set_true:N \l__enumext_write_anskey_env_bool
+        \tl_set:Nn \l__enumext_write_anskey_env_file_name_tl {#1}
+      },
     write-env .value_required:n = true,
     overwrite .bool_set:N = \l__enumext_anskey_env_overwrite_bool,
-    overwrite .initial:n  = false,
-    overwrite .default:n  = true,
-    unknown   .code:n     = { \__enumext_anskey_env_unknown:n {#1} },
+    overwrite .initial:n = false,
+    overwrite .default:n = true,
+    unknown   .code:n = { \__enumext_anskey_env_unknown:n {#1} },
   }
 \cs_new_protected:Npn \__enumext_anskey_env_unknown:n #1
   {
@@ -3793,10 +3843,10 @@
   {
     \keys_define:nn { enumext / #1 }
       {
-        item-sym* .tl_set:c  = { l__enumext_item_symbol_#2_tl },
+        item-sym* .tl_set:c = { l__enumext_item_symbol_#2_tl },
         item-sym* .value_required:n = true,
-        item-sym* .initial:n  = {\textborn},
-        item-pos* .dim_set:c  = { l__enumext_item_symbol_sep_#2_dim },
+        item-sym* .initial:n = {\textborn},
+        item-pos* .dim_set:c = { l__enumext_item_symbol_sep_#2_dim },
         item-pos* .value_required:n = true,
       }
   }
@@ -3810,10 +3860,11 @@
   {
     \keys_define:nn { enumext / #1 }
       {
-        unknown .code:n = {
-                            \tl_set:Nn \l__enumext_envir_name_tl {#1}
-                            \__enumext_keyans_unknown_keys:n {##1}
-                          },
+        unknown .code:n =
+          {
+            \tl_set:Nn \l__enumext_envir_name_tl {#1}
+            \__enumext_keyans_unknown_keys:n {##1}
+          },
       }
   }
 \clist_map_inline:nn { keyans, keyans*, keyanspic } { \__enumext_tmp:n {#1} }
@@ -3834,10 +3885,11 @@
 %% Add keys |unknown| for |enumext*| environment.
 \keys_define:nn { enumext / enumext* }
   {
-    unknown .code:n = {
-                        \tl_set:Nn \l__enumext_envir_name_tl { enumext* }
-                        \__enumext_starred_unknown_keys:n {#1}
-                      },
+    unknown .code:n =
+      {
+        \tl_set:Nn \l__enumext_envir_name_tl { enumext* }
+        \__enumext_starred_unknown_keys:n {#1}
+      },
   }
 \cs_new_protected:Npn \__enumext_starred_unknown_keys:n #1
   {
@@ -3858,26 +3910,27 @@
   {
     \keys_define:nn { enumext / level-#1 }
       {
-        unknown .code:n = {
-                            \int_set:Nn \l__enumext_level_int { #1 }
-                            \tl_set:Nn \l__enumext_envir_name_tl { enumext }
-                            \__enumext_standar_unknown_keys:n {##1}
-                          },
+        unknown .code:n =
+          {
+            \int_set:Nn \l__enumext_level_int { #1 }
+            \tl_set:Nn \l__enumext_envir_name_tl { enumext }
+            \__enumext_standard_unknown_keys:n {##1}
+          },
       }
   }
 \clist_map_inline:nn {1, 2, 3, 4} { \__enumext_tmp:n {#1} }
-\cs_new_protected:Npn \__enumext_standar_unknown_keys:n #1
+\cs_new_protected:Npn \__enumext_standard_unknown_keys:n #1
   {
-    \exp_args:NV \__enumext_standar_unknown_keys:nn \l_keys_key_str {#1}
+    \exp_args:NV \__enumext_standard_unknown_keys:nn \l_keys_key_str {#1}
   }
-\cs_new_protected:Npn \__enumext_standar_unknown_keys:nn #1#2
+\cs_new_protected:Npn \__enumext_standard_unknown_keys:nn #1#2
   {
     \tl_if_blank:nTF {#2}
       {
-        \msg_error:nne { enumext } { standar-unknown-key } {#1}
+        \msg_error:nne { enumext } { standard-unknown-key } {#1}
       }
       {
-        \msg_error:nnee { enumext } { standar-unknown-key-value } {#1} {#2}
+        \msg_error:nnee { enumext } { standard-unknown-key-value } {#1} {#2}
       }
   }
 \cs_new_protected:Npn \__enumext_keyans_default_item:n #1
@@ -4055,7 +4108,7 @@
           {
             \__enumext_redefine_item:
             \__enumext_make_label:
-            \__enumext_standar_ref:
+            \__enumext_standard_ref:
             \__enumext_fake_item_indent:
             \bool_if:cT { l__enumext_show_length_#1_bool }
               {
@@ -4112,7 +4165,7 @@
     \int_incr:N \l__enumext_level_int
     \int_compare:nNnT { \l__enumext_level_int } > { 4 }
       { \msg_fatal:nn { enumext } { list-too-deep } }
-    \bool_set_true:N \l__enumext_standar_bool
+    \bool_set_true:N \l__enumext_standard_bool
     \bool_set_false:N \l__enumext_starred_bool
     \__enumext_is_on_first_level:
   }
@@ -4149,7 +4202,7 @@
       {
         { \bool_if_p:N \l__enumext_store_active_bool }
         { \bool_not_p:n { \l__enumext_keyans_env_bool } }
-        { \bool_if_p:N \g__enumext_standar_bool }
+        { \bool_if_p:N \g__enumext_standard_bool }
       }
       {
         \int_compare:nNnT { \l__enumext_level_int } > { 1 }
@@ -4270,10 +4323,10 @@
     \__enumext_after_stop_list:
     \__enumext_check_ans_key_hook:
     \__enumext_vspace_below:
-    \bool_set_false:N \l__enumext_standar_bool
+    \bool_set_false:N \l__enumext_standard_bool
     \bool_if:NF \l__enumext_print_keyans_cmd_bool
       {
-        \__enumext_standar_save_counter:
+        \__enumext_standard_save_counter:
       }
   }
 %% Set |\itemwidth| for |enumext| environment.
@@ -4555,46 +4608,57 @@
 %% Add keys for |keyanspic| environment.
 \keys_define:nn { enumext / keyanspic }
   {
-    label-pos .choice:,
-    label-pos / above   .code:n =
-                              \bool_set_true:N \l__enumext_anspic_label_above_bool
-                              \str_set:Nn \l__enumext_anspic_mini_pos_str { t },
-    label-pos / below   .code:n =
-                              \bool_set_false:N \l__enumext_anspic_label_above_bool
-                              \str_set:Nn \l__enumext_anspic_mini_pos_str { b },
-    label-pos / unknown .code:n =
-                              \msg_error:nneee { enumext } { unknown-choice }
-                                { label-pos } { above,~ below } { \exp_not:n {#1} },
-    label-pos  .initial:n        = below,
+    label-pos  .choices:nn =
+      { above , below }
+      {
+        \int_case:nn { \l_keys_choice_int }
+          {
+            {1}
+              {
+                \bool_set_true:N \l__enumext_anspic_label_above_bool
+                \str_set:Nn \l__enumext_anspic_mini_pos_str { t }
+              }
+            {2}
+              {
+                \bool_set_false:N \l__enumext_anspic_label_above_bool
+                \str_set:Nn \l__enumext_anspic_mini_pos_str { b }
+              }
+          }
+      },
+    label-pos  .initial:n = below,
     label-pos  .value_required:n = true,
-    label-sep  .skip_set:N       = \l__enumext_anspic_label_sep_skip,
+    label-pos / unknown .code:n =
+      \msg_error:nneee { enumext } { unknown-choice }
+        { label-pos } { above,~ below } { \exp_not:n {#1} },
+    label-sep  .skip_set:N = \l__enumext_anspic_label_sep_skip,
     label-sep  .value_required:n = true,
-    layout-sty .tl_set:N         = \l__enumext_anspic_layout_style_tl,
+    layout-sty .tl_set:N = \l__enumext_anspic_layout_style_tl,
     layout-sty .value_required:n = true,
-    layout-sep .code:n           = \keys_set:nn { enumext / keyans } { parsep = #1 },
+    layout-sep .code:n = { \keys_set:nn { enumext / keyans } { parsep = #1 } },
     layout-sep .value_required:n = true,
-    layout-top .code:n           = \keys_set:nn { enumext / keyans } { topsep = #1 },
+    layout-top .code:n = { \keys_set:nn { enumext / keyans } { topsep = #1 } },
     layout-top .value_required:n = true,
-    mark-ans   .code:n           = \keys_set:nn { enumext / keyans } { mark-ans = #1 },
+    mark-ans   .code:n = { \keys_set:nn { enumext / keyans } { mark-ans = #1 } },
     mark-ans   .value_required:n = true,
-    mark-pos   .code:n           = \keys_set:nn { enumext / keyans } { mark-pos = #1 },
+    mark-pos   .code:n = { \keys_set:nn { enumext / keyans } { mark-pos = #1 } },
     mark-pos   .value_required:n = true,
-    mark-sep   .code:n           = \keys_set:nn { enumext / keyans } { mark-sep = #1 },
+    mark-sep   .code:n = { \keys_set:nn { enumext / keyans } { mark-sep = #1 } },
     mark-sep   .value_required:n = true,
-    save-sep   .code:n           = \keys_set:nn { enumext / keyans } { save-sep = #1 },
+    save-sep   .code:n = { \keys_set:nn { enumext / keyans } { save-sep = #1 } },
     save-sep   .value_required:n = true,
-    wrap-opt   .code:n           = \keys_set:nn { enumext / keyans } { wrap-opt = #1 },
+    wrap-opt   .code:n = { \keys_set:nn { enumext / keyans } { wrap-opt = #1 } },
     wrap-opt   .value_required:n = true,
-    wrap-ans*  .code:n           = \keys_set:nn { enumext / keyans } { wrap-ans* = #1 },
+    wrap-ans*  .code:n = { \keys_set:nn { enumext / keyans } { wrap-ans* = #1 } },
     wrap-ans*  .value_required:n = true,
-    show-ans   .code:n           = \keys_set:nn { enumext / keyans } { show-ans = #1 },
+    show-ans   .code:n = { \keys_set:nn { enumext / keyans } { show-ans = #1 } },
     show-ans   .value_required:n = true,
-    show-pos   .code:n           = \keys_set:nn { enumext / keyans } { show-pos = #1 },
+    show-pos   .code:n = { \keys_set:nn { enumext / keyans } { show-pos = #1 } },
     show-pos   .value_required:n = true,
-    unknown    .code:n           = {
-                                     \tl_set:Nn \l__enumext_envir_name_tl { keyanspic }
-                                     \__enumext_keyans_unknown_keys:n {#1}
-                                   },
+    unknown    .code:n =
+      {
+        \tl_set:Nn \l__enumext_envir_name_tl { keyanspic }
+        \__enumext_keyans_unknown_keys:n {#1}
+      },
   }
 %% Internal check code for |keyanspic| environment.
 \cs_new_protected:Nn \__enumext_keyans_pic_safe_exec:
@@ -5184,7 +5248,7 @@
         \msg_error:nnn { enumext } { nested-horizontal } { keyans*}
       }
     \bool_set_true:N \l__enumext_starred_bool
-    \bool_set_false:N \l__enumext_standar_bool
+    \bool_set_false:N \l__enumext_standard_bool
     \__enumext_is_on_first_level:
   }
 %% Parse |key=val| and store keys for |enumext*| environment.
@@ -5274,10 +5338,10 @@
     \__enumext_starred_joined_item_vii:n {#1}
     \peek_meaning_remove:NTF *
       { \__enumext_starred_item_vii:w  }
-      { \__enumext_standar_item_vii:w }
+      { \__enumext_standard_item_vii:w }
   }
 %% Set \item[opt] for |enumext*| environment.
-\cs_new_protected:Npn \__enumext_standar_item_vii:w
+\cs_new_protected:Npn \__enumext_standard_item_vii:w
   {
     \bool_set_false:N \l__enumext_item_starred_vii_bool
     \peek_meaning:NTF [
@@ -5531,10 +5595,10 @@
     \__enumext_starred_joined_item_viii:n {#1}
     \peek_meaning_remove:NTF *
       { \__enumext_starred_item_viii:w }
-      { \__enumext_standar_item_viii:w }
+      { \__enumext_standard_item_viii:w }
   }
 %% Set standard \item[opt] for |keyans*| environment.
-\cs_new_protected:Npn \__enumext_standar_item_viii:w
+\cs_new_protected:Npn \__enumext_standard_item_viii:w
   {
     \bool_set_false:N \l__enumext_item_starred_viii_bool
     \bool_set_false:N \l__enumext_item_wrap_key_bool
@@ -5617,7 +5681,7 @@
       }
   }
 %% Define a fake |\makelabel| for |keyans*| environment.
-\cs_new_protected:Npn \__enumext_keyans_wraper_label_viii:n #1
+\cs_new_protected:Npn \__enumext_keyans_wrapper_label_viii:n #1
   {
     \bool_lazy_all:nT
       {
@@ -5653,7 +5717,7 @@
     \makebox[ \l__enumext_labelwidth_viii_dim ][ \l__enumext_align_label_viii_str ]
       {
         \tl_use:N \l__enumext_label_font_style_viii_tl
-        \__enumext_keyans_wraper_label_viii:n {#1}
+        \__enumext_keyans_wrapper_label_viii:n {#1}
       }
     \skip_horizontal:N \l__enumext_labelsep_viii_dim \ignorespaces
   }
@@ -5752,42 +5816,60 @@
 %% Add keys for |\printkeyans|.
 \keys_define:nn  { enumext / print }
   {
-    print*  .code:n     = \keys_precompile:neN { enumext / enumext* }
-                            { \__enumext_filter_save_key:n {#1} }
-                            \l__enumext_print_keyans_starred_tl, % starred cmd
-    print*  .initial:n  = { labelwidth=0pt, labelsep=0.3333em, itemindent=0pt, list-offset=0pt,
-                            rightmargin=0pt, listparindent=0pt, nosep, label=\arabic*.,
-                            columns=2, first=\small, font=\small },
-    print-1 .code:n     = \keys_precompile:neN { enumext / level-1 }
-                            { \__enumext_filter_save_key:n {#1} }
-                            \l__enumext_print_keyans_i_tl,
-    print-1 .initial:n  = { labelwidth=0pt, labelsep=0.3333em, itemindent=0pt, list-offset=0pt,
-                            rightmargin=0pt, listparindent=0pt, nosep, label=\arabic*.,
-                            columns=2, first=\small, font=\small },
-    print-2 .code:n     = \keys_precompile:neN { enumext / level-2 }
-                            { \__enumext_filter_save_key:n {#1} }
-                            \l__enumext_print_keyans_ii_tl,
-    print-2 .initial:n  = { labelwidth=0pt, labelsep=0.3333em, itemindent=0pt, list-offset=0pt,
-                            rightmargin=0pt, listparindent=0pt,  nosep, label=(\alph*),
-                            first=\small, font=\small },
-    print-3 .code:n     = \keys_precompile:neN { enumext / level-3 }
-                            { \__enumext_filter_save_key:n {#1} }
-                            \l__enumext_print_keyans_iii_tl,
-    print-3 .initial:n  = { labelwidth=0pt, labelsep=0.3333em, itemindent=0pt, list-offset=0pt,
-                            rightmargin=0pt, listparindent=0pt, nosep, label=\roman*.,
-                            first=\small, font=\small },
-    print-4 .code:n     = \keys_precompile:neN { enumext / level-4 }
-                            { \__enumext_filter_save_key:n {#1} }
-                            \l__enumext_print_keyans_iv_tl,
-    print-4 .initial:n  = { labelwidth=0pt, labelsep=0.3333em, itemindent=0pt, list-offset=0pt,
-                            rightmargin=0pt, listparindent=0pt, nosep, label=\Alph*.,
-                            first=\small, font=\small },
-    print-* .code:n     = \keys_precompile:neN { enumext / enumext* }
-                            { \__enumext_filter_save_key:n {#1} }
-                            \l__enumext_print_keyans_vii_tl, % starred nested
-    print-* .initial:n  = { labelwidth=0pt, labelsep=0.3333em, itemindent=0pt, list-offset=0pt,
-                            rightmargin=0pt, listparindent=0pt, nosep, label=\arabic*.,
-                            first=\small, font=\small },
+    print*  .code:n =
+      {
+        \keys_precompile:neN { enumext / enumext* }
+          { \__enumext_filter_save_key:n {#1} }
+          \l__enumext_print_keyans_starred_tl
+      }, % starred cmd
+    print*  .initial:n = { labelwidth=0pt, labelsep=0.3333em, itemindent=0pt, list-offset=0pt,
+                           rightmargin=0pt, listparindent=0pt, nosep, label=\arabic*.,
+                           columns=2, first=\small, font=\small },
+    print-1 .code:n =
+      {
+        \keys_precompile:neN { enumext / level-1 }
+          { \__enumext_filter_save_key:n {#1} }
+          \l__enumext_print_keyans_i_tl
+      },
+    print-1 .initial:n = { labelwidth=0pt, labelsep=0.3333em, itemindent=0pt, list-offset=0pt,
+                           rightmargin=0pt, listparindent=0pt, nosep, label=\arabic*.,
+                           columns=2, first=\small, font=\small },
+    print-2 .code:n =
+      {
+        \keys_precompile:neN { enumext / level-2 }
+          { \__enumext_filter_save_key:n {#1} }
+          \l__enumext_print_keyans_ii_tl
+      },
+    print-2 .initial:n = { labelwidth=0pt, labelsep=0.3333em, itemindent=0pt, list-offset=0pt,
+                           rightmargin=0pt, listparindent=0pt,  nosep, label=(\alph*),
+                           first=\small, font=\small },
+    print-3 .code:n =
+      {
+        \keys_precompile:neN { enumext / level-3 }
+          { \__enumext_filter_save_key:n {#1} }
+          \l__enumext_print_keyans_iii_tl
+      },
+    print-3 .initial:n = { labelwidth=0pt, labelsep=0.3333em, itemindent=0pt, list-offset=0pt,
+                           rightmargin=0pt, listparindent=0pt, nosep, label=\roman*.,
+                           first=\small, font=\small },
+    print-4 .code:n =
+      {
+        \keys_precompile:neN { enumext / level-4 }
+          { \__enumext_filter_save_key:n {#1} }
+          \l__enumext_print_keyans_iv_tl
+      },
+    print-4 .initial:n = { labelwidth=0pt, labelsep=0.3333em, itemindent=0pt, list-offset=0pt,
+                           rightmargin=0pt, listparindent=0pt, nosep, label=\Alph*.,
+                           first=\small, font=\small },
+    print-* .code:n =
+      {
+        \keys_precompile:neN { enumext / enumext* }
+          { \__enumext_filter_save_key:n {#1} }
+          \l__enumext_print_keyans_vii_tl
+      }, % starred nested
+    print-* .initial:n = { labelwidth=0pt, labelsep=0.3333em, itemindent=0pt, list-offset=0pt,
+                           rightmargin=0pt, listparindent=0pt, nosep, label=\arabic*.,
+                           first=\small, font=\small },
   }
 %% Define |\printkeyans|.
 \NewDocumentCommand \printkeyans { s O{} m }
@@ -5867,36 +5949,41 @@
 %% Add keys for |\setenumext|.
 \keys_define:nn { enumext / meta-families }
   {
-    enumext-1 .code:n = {
-                          \keys_set:ne { enumext / level-1 }
-                            {
-                              \__enumext_filter_level:n {#1}
-                            }
-                        },
-    enumext-2 .code:n = {
-                           \keys_set:ne { enumext / level-2 }
-                            {
-                              \__enumext_filter_level:n {#1}
-                            }
-                        },
-    enumext-3 .code:n = {
-                          \keys_set:ne { enumext / level-3 }
-                            {
-                              \__enumext_filter_level:n {#1}
-                            }
-                        },
-    enumext-4 .code:n = {
-                          \keys_set:ne { enumext / level-4 }
-                            {
-                              \__enumext_filter_level:n {#1}
-                            }
-                        },
-    enumext*  .code:n = {
-                          \keys_set:ne { enumext / enumext* }
-                           {
-                             \__enumext_filter_level:n {#1}
-                           }
-                        },
+    enumext-1 .code:n =
+      {
+        \keys_set:ne { enumext / level-1 }
+          {
+            \__enumext_filter_level:n {#1}
+          }
+      },
+    enumext-2 .code:n =
+      {
+        \keys_set:ne { enumext / level-2 }
+         {
+           \__enumext_filter_level:n {#1}
+         }
+      },
+    enumext-3 .code:n =
+      {
+        \keys_set:ne { enumext / level-3 }
+          {
+            \__enumext_filter_level:n {#1}
+          }
+      },
+    enumext-4 .code:n =
+      {
+        \keys_set:ne { enumext / level-4 }
+          {
+            \__enumext_filter_level:n {#1}
+          }
+      },
+    enumext*  .code:n =
+      {
+        \keys_set:ne { enumext / enumext* }
+         {
+           \__enumext_filter_level:n {#1}
+         }
+      },
     keyans    .code:n = { \keys_set:nn { enumext / keyans  } {#1} },
     keyans*   .code:n = { \keys_set:nn { enumext / keyans* } {#1} },
     print*    .code:n = { \keys_set:nn { enumext / print   } { print*  = {#1} } },
@@ -6015,9 +6102,9 @@
 %% Define |\foreachkeyans|.
 \keys_define:nn { enumext / foreach }
   {
-    before  .tl_set:N  = \l__enumext_foreach_before_tl,
+    before  .tl_set:N = \l__enumext_foreach_before_tl,
     before  .value_required:n = true,
-    after   .tl_set:N  = \l__enumext_foreach_after_tl,
+    after   .tl_set:N = \l__enumext_foreach_after_tl,
     after   .value_required:n = true,
     start   .int_set:N = \l__enumext_foreach_start_int,
     start   .value_required:n = true,
@@ -6027,9 +6114,9 @@
     step    .value_required:n = true,
     wrapper .cs_set_protected:Np = \__enumext_foreach_wrapper:n #1,
     wrapper .value_required:n = true,
-    sep     .tl_set:N  = \l__enumext_foreach_sep_tl,
+    sep     .tl_set:N = \l__enumext_foreach_sep_tl,
     sep     .value_required:n = true,
-    unknown .code:n    = { \__enumext_parse_foreach_keys:n {#1} }
+    unknown .code:n = { \__enumext_parse_foreach_keys:n {#1} }
   }
 \keys_precompile:nnN { enumext / foreach }
   {
@@ -6384,7 +6471,7 @@
    ~have~a~key~called ~'#1'.\\
     Check~that~you~have~spelled~the~key~name~correctly.
   }
-\msg_new:nnnn { enumext } { standar-unknown-key }
+\msg_new:nnnn { enumext } { standard-unknown-key }
   {
     The~key~'#1'~is~unknown~by~environment~'\l__enumext_envir_name_tl' \c_space_tl
    ~on~level~\int_use:N \l__enumext_level_int \c_space_tl and~is~being~ignored.
@@ -6394,7 +6481,7 @@
    ~have~a~key~called ~'#1'~on~level~\int_use:N \l__enumext_level_int.\\
     Check~that~you~have~spelled~the~key~name~correctly.
   }
-\msg_new:nnnn { enumext } { standar-unknown-key-value }
+\msg_new:nnnn { enumext } { standard-unknown-key-value }
   {
     The~key~'#1=#2'~is~unknown~by~environment~'\l__enumext_envir_name_tl' \c_space_tl
    ~on~level~\int_use:N \l__enumext_level_int \c_space_tl and~is~being~ignored.
@@ -6419,6 +6506,14 @@
 \msg_new:nnn { enumext } { undefined-storage-anskey }
   {
     Storage~named~'#1'~is~not~defined~\msg_line_context:.
+  }
+\msg_new:nnnn { enumext } { missing-colon }
+  {
+    The~argument~'#1'~has~no~colon~\msg_line_context:.
+  }
+  {
+    The~argument~of~'\token_to_str:N \getkeyans'~must~have~the~form~
+    'store~name:position'.
   }
 \msg_new:nnn { enumext } { missing-miniright }
   {
@@ -6472,7 +6567,7 @@
     The~series~'#1'~for~the~resume~key~does~not~exist~in~the~
     ~enumext*~environment~ \msg_line_context:.
   }
-\msg_new:nnn { enumext } { unknown-series-standar }
+\msg_new:nnn { enumext } { unknown-series-standard }
   {
     The~series~'#1'~for~the~resume~key~does~not~exist~at~level~\int_use:N \l__enumext_level_int
     \c_space_tl of~enumext~environment~ \msg_line_context:.

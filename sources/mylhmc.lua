@@ -1,4 +1,4 @@
--- mylhmc.lua v0.99 2026-09-20 (node.direct + Loop/Memory Micro-Optimized)
+-- mylhmc.lua v0.99 2026-10-21 (node.direct + Loop/Memory Micro-Optimized)
 -- LuaLaTeX syntax highlighter for l3doc macrocode environments
 
 local require      = require
@@ -44,8 +44,28 @@ local t_scan_word    = token.scan_word
 local token_set_lua  = token.set_lua
 
 local kpse_find      = kpse.find_file
-local f_read         = fonts.constructors.readanddefine
-local f_hashes       = fonts.hashes.identifiers
+local f_read         = fonts and fonts.constructors and fonts.constructors.readanddefine
+local f_hashes       = fonts and fonts.hashes and fonts.hashes.identifiers
+
+local mod_warning    = luatexbase.module_warning
+local mod_error      = luatexbase.module_error
+
+if not (f_read and f_hashes) then
+  mod_error('mylhmc',
+    'luaotfload (fontloader) is not loaded; load fontspec or luaotfload first.')
+  -- Si el error se ignora, evitamos nil-index posteriores.
+  f_read   = function() return nil end
+  f_hashes = {}
+end
+
+-- Avisa una sola vez por clave (evita inundar el log).
+local warned = {}
+local function warn_once(key, msg)
+  if not warned[key] then
+    warned[key] = true
+    mod_warning('mylhmc', msg)
+  end
+end
 
 local luatexbase_new = luatexbase.new_luafunction
 local lua_get_funcs  = lua.get_functions_table
@@ -457,6 +477,11 @@ local function mylhmc_ensure_lm_paths()
     LM_REGULAR_PATH = kpse_find('lmroman10-regular.otf', 'opentype fonts')
     LM_ITALIC_PATH  = kpse_find('lmmono10-italic.otf',   'opentype fonts')
     LM_BOLD_PATH    = kpse_find('lmmonolt10-bold.otf',   'opentype fonts')
+    if not (LM_REGULAR_PATH and LM_ITALIC_PATH and LM_BOLD_PATH) then
+      warn_once('lm_paths',
+        'Latin Modern OpenType fonts not found (lmroman10-regular, '
+        .. 'lmmono10-italic, lmmonolt10-bold); using the current font instead.')
+    end
   end
 end
 
@@ -464,7 +489,10 @@ local function mylhmc_load_font_at_size(filepath, target_size)
   if not filepath then return nil end
   local font_spec = '[' .. filepath .. ']'
   local ok, data, new_id = pcall(f_read, font_spec, target_size)
-  if not ok or not data or not new_id or new_id <= 0 then return nil end
+  if not ok or not data or not new_id or new_id <= 0 then
+    warn_once('load:' .. filepath, 'could not load font ' .. filepath)
+    return nil
+  end
   f_hashes[new_id] = data
   return new_id
 end
@@ -602,6 +630,10 @@ register_tex_cmd('luafun_set_color', function(name, spec)
     local nr, ng, nb = tonumber(r), tonumber(g), tonumber(b)
     color_data[name] = s_format(
       '%.4f %.4f %.4f rg %.4f %.4f %.4f RG', nr, ng, nb, nr, ng, nb)
+  else
+    warn_once('color:' .. tostring(name),
+      'invalid color specification for "' .. tostring(name)
+      .. '": expected three numbers, got "' .. tostring(spec) .. '"')
   end
 end, {'string', 'string'})
 
@@ -786,6 +818,10 @@ local in_mathml_intent, in_mathml_arg = false, false
 local mathml_brace_count, mathml_after_dollar = 0, false
 local in_keys_context, keys_body_opened, keys_depth = false, false, 0
 local keys_in_choices = false
+-- Pila para \keys_define:nn/\keys_set:nn anidados (p.ej. dentro de
+-- .choices:nn): guarda el contexto exterior al entrar a uno interior
+-- y lo restaura al cerrarlo, en vez de perderlo.
+local keys_context_stack = {}
 
 -- .meta:nn (2 args: ruta módulo/clave + lista de claves) y .meta:n
 -- (1 arg: lista de claves). Reutiliza mylhmc_colorize_keys_path para la ruta
@@ -1145,10 +1181,19 @@ local function mylhmc_colorize_mathml_intent(text, fid, rh, rt)
         j = j + 1
       end
       local chunk = s_sub(text, i, j-1)
-      local saved_intent, saved_arg = in_mathml_intent, in_mathml_arg
-      in_mathml_intent, in_mathml_arg = false, false
+      -- También aislamos mathml_brace_count/mathml_after_dollar, no
+      -- solo in_mathml_intent/in_mathml_arg: un \MathMLarg anidado aquí
+      -- (p.ej. :infix(\MathMLarg{a}, \MathMLarg{b})) vuelve a pasar por
+      -- el dispatcher principal y reinicia ese contador compartido;
+      -- sin guardarlo/restaurarlo, la llave de cierre del \MathMLintent
+      -- exterior queda sin efecto y el modo mathml no se apaga nunca.
+      local saved_intent, saved_arg, saved_bc, saved_dollar =
+        in_mathml_intent, in_mathml_arg, mathml_brace_count, mathml_after_dollar
+      in_mathml_intent, in_mathml_arg, mathml_brace_count, mathml_after_dollar =
+        false, false, 0, false
       local ch, ct = mylhmc_colorize_code(chunk, fid)
-      in_mathml_intent, in_mathml_arg = saved_intent, saved_arg
+      in_mathml_intent, in_mathml_arg, mathml_brace_count, mathml_after_dollar =
+        saved_intent, saved_arg, saved_bc, saved_dollar
       rh, rt = mylhmc_append(rh, rt, ch, ct); i = j
     end
   end
@@ -1482,7 +1527,16 @@ mylhmc_colorize_code = function(line, fid)
             if not keys_body_opened then
               keys_body_opened = true
             else
-              in_keys_context, keys_body_opened = false, false
+              -- Restaura el contexto exterior si este venía anidado.
+              local saved = keys_context_stack[#keys_context_stack]
+              if saved then
+                keys_context_stack[#keys_context_stack] = nil
+                keys_body_opened, keys_depth, keys_in_choices =
+                  saved[1], saved[2], saved[3]
+                in_keys_context = true
+              else
+                in_keys_context, keys_body_opened = false, false
+              end
             end
           end
         end
@@ -1639,6 +1693,10 @@ mylhmc_colorize_code = function(line, fid)
       arg_counter, ltcmd_brace_count, ltcmd_name_pending, ltcmd_in_args = 0, 0, true, false
       h, tl = mylhmc_emit_with_signature(chunk, 'ltcmd', fid)
     elseif t == 39 then
+      if in_keys_context then
+        keys_context_stack[#keys_context_stack + 1] =
+          { keys_body_opened, keys_depth, keys_in_choices }
+      end
       in_keys_context, keys_body_opened, keys_depth = true, false, 0
       keys_in_choices = false
       h, tl = mylhmc_emit_with_signature(chunk, 'publicfun', fid)
@@ -2063,13 +2121,8 @@ register_tex_cmd('luafun_process_line', function()
   if line == '' then return end
   mylhmc_init_line_state()
   local fid = f_current()
-  -- Detecta líneas de guarda (%<...>) ANTES de aplicar la sustitución
-  -- de @@: una guarda como %<@@=modulo> debe verse tal cual, o
-  -- apply_at_at se come el '@@=' (usando el current_module_name
-  -- vigente ANTES de esta declaración) y render_guard ya no la
-  -- reconoce como el caso especial -- cae al renderizado genérico de
-  -- guarda entre ángulos, mostrando algo como 〈__Spintent=spintent〉
-  -- en vez de procesar la declaración real.
+  -- Detecta guardas (%<...>) ANTES de aplicar @@: si no, apply_at_at
+  -- consume el '@@=' y render_guard ya no reconoce %<@@=modulo>.
   if s_sub(line, 1, 1) == '%' then
     local rest = s_sub(line, 2)
     local trimmed = s_match(rest, '^%s*(.*)')
