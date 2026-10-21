@@ -1576,9 +1576,9 @@
 %     \ics*{item*}\myoarg{symbol}\myoarg{offset}
 %   \end{syntax}
 %    The \ics*{item*}, \ics*{item*}\myoarg{symbol} and \ics*{item*}\myoarg{symbol}\myoarg{offset}
-%    works like the numbered |\item|, but places a \mymeta{symbol} to
+%    work like the numbered |\item|, but places a \mymeta{symbol} to
 %    the \emph{\enquote{left}} of the \mymeta{label} separated from it by
-%    the \mymeta{offset} set by the the \emph{second optional argument}.
+%    the \mymeta{offset} set by the \emph{second optional argument}.
 %
 %    \smallskip
 %
@@ -1698,7 +1698,7 @@
 % For security reasons the keys \mykey{resume} \emph{\enquote{with value}},
 % \mykey{resume*}, \mykey{reset}, \mykey{reset*}, \mykey{series} and
 % \mykey{save-ans} they can NOT be set by this command and are ignored.
-% The key \mykey{save-ans} that activate the \emph{\enquote{storage system}}
+% The key \mykey{save-ans} that activates the \emph{\enquote{storage system}}
 % must be passed directly in the \emph{optional argument} of the
 % \emph{\enquote{first level}} of the environment in which they are executed.
 % \end{important}
@@ -1766,7 +1766,7 @@
 %  It should be kept in mind that using any \mymeta{key} that sets
 %  \emph{rubber lengths} or \emph{rigid lengths} for vertical or
 %  horizontal space on a level will influence the vertical and horizontal
-%  space for \emph{inners levels} and \myenv*{keyans}, \myenv*{keyans*} and
+%  space for \emph{inner levels} and \myenv*{keyans}, \myenv*{keyans*} and
 %  \myenv*{keyanspic} environments.
 % \end{important}
 %
@@ -1952,7 +1952,7 @@
 % \mykey{ref} keys are not cumulative by levels, so if you have used the \mykey{ref}
 % key in the first level and then want to associate the counter with
 % \mykey{label} or \mykey{ref} in the second level you must use the direct commands,
-% i.e. |\arabic{eunumXi}| to indicate the count of the first level
+% i.e. |\arabic{enumXi}| to indicate the count of the first level
 % instead of using |\theenumXi|.
 % \end{important}
 %
@@ -2563,8 +2563,8 @@
 % \vspace*{-1.0\baselineskip}
 % \begin{function}{\miniright}
 %   \begin{syntax}
-%     |\begin{enumext}[mini-env=|\mymarg{rigid length}|]| \mymeta[cf=gray]{item's before} |\item \miniright| \mymeta[cf=gray]{content} |\end{enumext}|\par
-%     |\begin{enumext}[mini-env=|\mymarg{rigid length}|]| \mymeta[cf=gray]{item's before} |\item \miniright*|\mymeta[cf=gray]{content} |\end{enumext}|
+%     |\begin{enumext}[mini-env=|\mymarg{rigid length}|]| \mymeta[cf=gray]{items before} |\item \miniright| \mymeta[cf=gray]{content} |\end{enumext}|\par
+%     |\begin{enumext}[mini-env=|\mymarg{rigid length}|]| \mymeta[cf=gray]{items before} |\item \miniright*|\mymeta[cf=gray]{content} |\end{enumext}|
 %   \end{syntax}
 % \end{function}
 %
@@ -3518,7 +3518,7 @@
 %      \cmdexamp{anspic}{drawing or tabular}
 %      \cmdexamp[*]{anspic}[content]{drawing or tabular}
 %   \end{syntax}
-%  The \ics*{anspic} command take three arguments, the \emph{starred
+%  The \ics*{anspic} command takes three arguments, the \emph{starred
 %  argument} ‘|*|’ store the current \mymeta{label} next to the
 %  \emph{optional argument} \mymeta{content} in \emph{sequence} and
 %  \emph{prop list} \mymarg{store name} set by \mykey{save-ans} key.
@@ -5381,7 +5381,7 @@ Some text here
 % \item The file \myfile{enumext-07.tex} contains the tests for starting the
 %   environments with |\setenumext{resume}|, the |\resetenumext| command
 %   and the \mykey{series}, \mykey{resume}, \mykey{resume*} and \mykey{reset} keys.
-%   \IfFileExists{enumext-06.pdf}{Source file \textattachfile[color=red,print=false]{enumext-07.tex}{\faFile*[regular]}
+%   \IfFileExists{enumext-07.pdf}{Source file \textattachfile[color=red,print=false]{enumext-07.tex}{\faFile*[regular]}
 %   and \emph{tagged} \texttt{PDF} \textattachfile[color=red,print=false]{enumext-07.pdf}{\faFilePdf[regular]}.}{}%
 % \end{itemize}
 %
@@ -5639,7 +5639,7 @@ Some text here
 %
 % The \emph{\enquote{random}} type questions I love and hate them at the
 % same time, although they simplify a lot the work when creating a
-% multiple choice test, but you lose the beauty of typessetting a
+% multiple choice test, but you lose the beauty of typesetting a
 % document with \hologo{LaTeX}, that is to say the output does not always
 % look as nice as it should, even if they are only alternatives these
 % must follow a certain order when presented either numerical or
@@ -7170,7 +7170,7 @@ Some text here
 % \subsection{The internal \env{minipage} environment}
 %
 % \begin{macro}[int]{\@@_internal_mini_page:, \__@@_mini_page}
-%   The function \myhlc|\@@_internal_mini_page:| creates a internal
+%   The function \myhlc|\@@_internal_mini_page:| creates an internal
 %   \myhlc|\__@@_mini_page| environment (\emph{custom version} of
 %   \myenv{minipage}) setting the |\if@minipage| switch to \emph{\enquote{false}}
 %   to allow spaces at the \emph{\enquote{above}} of the environment,
@@ -7192,7 +7192,7 @@ Some text here
 %   definition (\S\ref{env:starred}).
 % \end{important}
 % \iffalse
-%% Function for define a internal |minipage| environment with |\footnote| support.
+%% Function for define an internal |minipage| environment with |\footnote| support.
 % \fi
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_internal_mini_page:
@@ -7235,7 +7235,7 @@ Some text here
 %                    enumXiv, enumXv, enumXvi, enumXvii, enumXviii}
 %   To create the necessary \emph{\enquote{counters}} we must first
 %   make sure that they are not already defined by the user or a
-%   package such as \mypkg{enumitem}, otherwise a error will be
+%   package such as \mypkg{enumitem}, otherwise an error will be
 %   returned and the package loading will be aborted. The arguments
 %   taken by the function are:
 %
@@ -7358,7 +7358,7 @@ Some text here
 % \begin{macro}{\@@_label_style:Nnn, \@@_label_style:cvn}
 %   The function \myhlc|\@@_label_style:Nnn| is used by the \mykey{label}
 %   key to creates the variables containing the \mymeta{label style}
-%   and will allow to use \ilabel{arabic*}, \ilabel{Alph*}, \ilabel{alph*},
+%   and will allow us to use \ilabel{arabic*}, \ilabel{Alph*}, \ilabel{alph*},
 %   \ilabel{Roman*} and \ilabel{roman*} as arguments.
 %
 %   It loops through the defined counter styles in \myhlc|\g_@@_counter_styles_tl|
@@ -7925,7 +7925,7 @@ Some text here
 %    \end{macrocode}
 % \end{macro}
 %
-% \subsection{Setting keys for penaltys}
+% \subsection{Setting keys for penalties}
 %
 % \begin{macro}[int]{beginpenalty, midpenalty, endpenalty}
 %   The three parameters \textcolor{red}{\texttt{\textbackslash}}|@beginparpenalty|,
@@ -8252,7 +8252,7 @@ Some text here
 %    values of the \emph{\enquote{vertical}} and \emph{\enquote{horizontal}}
 %    parameters calculated and used.
 % \iffalse
-%% Add |show-length| key for all environments..
+%% Add |show-length| key for all environments.
 % \fi
 %    \begin{macrocode}
 \cs_set_protected:Npn \@@_tmp:nn #1 #2
@@ -10832,7 +10832,7 @@ Some text here
 %   \emph{\enquote{label and ref}} along with the \mymeta{keys} \mykey{show-ans},
 %   \mykey{show-pos} and the\mymeta{keys} \mykey{mark-ans}, \mykey{mark-pos},
 %   \mykey{mark-sep} and \mykey{wrap-ans} for the command |\anskey|,
-%   the environment \myenv*{anskey*} and the the \mymeta{keys} for environments
+%   the environment \myenv*{anskey*} and the \mymeta{keys} for environments
 %   \myenv*{keyans} and \myenv*{keyans*} only at the \emph{first level}
 %   of \myenv*{enumext} and \myenv*{enumext*}.
 % \iffalse
@@ -11129,7 +11129,7 @@ Some text here
 %    \smallskip
 %
 %   The form in which the \mymarg{content} is stored in \emph{sequence} is in
-%   a internal \myenv*{enumext} or \myenv*{enumext*} environments with
+%   an internal \myenv*{enumext} or \myenv*{enumext*} environments with
 %   the \emph{\enquote{same structure}} in which the command was executed.
 %
 %   The \emph{\enquote{stored content}} is retrieved by means of the
@@ -11273,7 +11273,7 @@ Some text here
 %
 % The function \myhlc|\@@_store_internal_ref:| handles the
 % \emph{\enquote{internal label and ref}} system used by the \mykey{save-ref}
-% and \mykey{mark-ref} keys for \ics*{anskey} will allow to execute
+% and \mykey{mark-ref} keys for \ics*{anskey} will allow us to execute
 % \ics{ref}\mymarg{store name \textnormal{\textcolor{red}{:}} position} and
 % will return |1||.(a)||.i||.A|.
 %
@@ -12015,7 +12015,7 @@ Some text here
 % \begin{important}*
 %  This function is passed to the  function \myhlc|\@@_after_env:nn| for the
 %  environments \myenv*{enumext} (\S\ref{env:enumext}) and \myenv*{enumext*} (\S\ref{env:starred})
-%  and it is executed only when the environments are not nested or at some level of these..
+%  and it is executed only when the environments are not nested or at some level of these.
 % \end{important}
 % \end{macro}
 %
@@ -12024,7 +12024,7 @@ Some text here
 % \subsubsection{Storing content in prop list}
 %
 % \begin{macro}{\@@_keyans_addto_prop:n}
-%   The function \myhlc|\@@_keyans_addto_prop:n| will pass the the current \mymeta{label} for |\item*|
+%   The function \myhlc|\@@_keyans_addto_prop:n| will pass the current \mymeta{label} for |\item*|
 %   in \myenv*{keyans} environment and the current \mymeta{label} for
 %   |\anspic*| in \myenv*{keyanspic} environment followed by the
 %   \mymeta{contents} of the \emph{optional argument} of both commands
@@ -12069,7 +12069,7 @@ Some text here
 % with the one implemented for \ics*{anskey} basically because in this
 % environments the interest is in the current \mymeta{label} for |\item*|
 % and |\anspic*| with the \mymeta{contents} of the \emph{optional argument}. The mechanism
-% defined here will allow to execute \ics{ref}\mymarg{store name \textcolor{red}{:} position} and
+% defined here will allow us to execute \ics{ref}\mymarg{store name \textcolor{red}{:} position} and
 % will return |1.(A)|.
 %
 % \begin{macro}{\@@_keyans_store_ref:, \@@_keyans_store_ref_aux_i:,
@@ -12437,7 +12437,7 @@ Some text here
 %
 % \begin{macro}[int]{\@@_item_starred_exec:nn, \@@_item_starred_exec:,}
 %    The \ics*{item*}, \ics*{item*}\myoarg{symbol} and \ics*{item*}\myoarg{symbol}\myoarg{offset}
-%    works like the \emph{numbered} |\item|, but placing a \mymeta{symbol}
+%    work like the \emph{numbered} |\item|, but placing a \mymeta{symbol}
 %    to the \emph{\enquote{left}} of the \mymeta{label} separated from
 %    it by the value the second \emph{optional argument} \mymeta{offset}.
 %
@@ -12509,7 +12509,7 @@ Some text here
 % \begin{macro}{\@@_redefine_item:}
 %   The function \myhlc|\@@_redefine_item:| will redefine the |\item|
 %   command in the \myenv*{enumext} environment adding |\item*|.
-%   This function are passed to \myhlc|\__@@_list_arg_two_X:| used
+%   This function is passed to \myhlc|\__@@_list_arg_two_X:| used
 %   in the definition of the \myenv*{enumext} environment (\S\ref{env:enumext}).
 % \iffalse
 %% Redefinition of |\item| for |\item*[sym][sep]| in |enumext| environment.
@@ -12532,10 +12532,10 @@ Some text here
 % \medskip
 %
 % \begin{macro}{\@@_make_label:,\@@_make_label_std:,\@@_make_label_box:}
-%   The function \myhlc|\@@_make_label:| redefine \ics{makelabel} for the keys
+%   The function \myhlc|\@@_make_label:| redefines \ics{makelabel} for the keys
 %   \mykey{mode-box}, \mykey{align}, \mykey{font}, \mykey{wrap-label},
 %   \mykey{wrap-label*} and |\item*| for \myenv*{enumext} environment.
-%   This function are passed to \myhlc|\__@@_list_arg_two_X:| used
+%   This function is passed to \myhlc|\__@@_list_arg_two_X:| used
 %   in the definition of the \myenv*{enumext} environment (\S\ref{env:enumext}).
 % \iffalse
 %% Redefinition of |\makelabel| for |\item| and |\item*[sym][sep]| in |enumext| environment.
@@ -12850,7 +12850,7 @@ Some text here
 %   only when |\item*| is executed and additionally we need to use
 %   |\peek_remove_spaces:n| to avoid an unwanted space when using
 %   |\item*| together with the \mykey{itemindent} key.
-%   This function are passed to \myhlc|\__@@_list_arg_two_v:| used
+%   This function is passed to \myhlc|\__@@_list_arg_two_v:| used
 %   in the definition of the \myenv*{keyans} environment (\S\ref{ltx:second-arg}).
 % \iffalse
 %% Redefine |\item| for |keyans| environment.
@@ -12880,11 +12880,11 @@ Some text here
 % \begin{macro}{\@@_keyans_make_label:,\@@_keyans_wrapper_label:n,
 %               \@@_keyans_make_label_std:,\@@_keyans_make_label_box:,
 %               \@@_wrapper_label_v:n}
-%   The function \myhlc|\@@_keyans_make_label:| redefine \ics{makelabel}
+%   The function \myhlc|\@@_keyans_make_label:| redefines \ics{makelabel}
 %   for the keys \mykey{mode-box}, \mykey{align}, \mykey{font},
 %   \mykey{wrap-label}, \mykey{wrap-label*}, \mykey{wrap-ans*} and |\item*|
 %   for \myenv*{keyans} environment.
-%   This function are passed to \myhlc|\__@@_list_arg_two_v:| used
+%   This function is passed to \myhlc|\__@@_list_arg_two_v:| used
 %   in the definition of the \myenv*{keyans} environment (\S\ref{ltx:second-arg}).
 % \iffalse
 %% Redefine |\makelabel| for |keyans| environment.
@@ -13257,7 +13257,7 @@ Some text here
 % \subsection{The environment \env{enumext}}\label{env:enumext}
 %
 % \begin{macro}{\@@_safe_exec:}\label{fun:enumext:safe-exe}
-%   The \myhlc|\@@_safe_exec:| function first call the function \myhlc|\@@_is_not_nested:|
+%   The \myhlc|\@@_safe_exec:| function first calls the function \myhlc|\@@_is_not_nested:|
 %   which sets \myhlc|\g_@@_standard_bool| to \emph{\enquote{true}} if we
 %   are NOT nested within \myenv*{enumext*}, then call the function
 %   \myhlc|\@@_internal_mini_page:| to create the environment \myhlc|\__@@_mini_page|,
@@ -13328,7 +13328,7 @@ Some text here
 % \end{macro}
 %
 % \begin{macro}{\@@_start_store_level:}
-%   The \myhlc|\@@_start_store_level:| function activate the \emph{\enquote{storing structure}}
+%   The \myhlc|\@@_start_store_level:| function activates the \emph{\enquote{storing structure}}
 %   mechanism in the \emph{sequence} for the command
 %   \ics*{anskey} and the environment \myenv*{anskey*}.
 % \iffalse
@@ -13372,7 +13372,7 @@ Some text here
 % \end{macro}
 %
 % \begin{macro}{\@@_stop_store_level:}
-%   The \myhlc|\@@_stop_store_level:| function stop the \emph{\enquote{storing structure}}
+%   The \myhlc|\@@_stop_store_level:| function stops the \emph{\enquote{storing structure}}
 %   mechanism in the \emph{sequence} for the command
 %   \ics*{anskey} and the environment \myenv*{anskey*}.
 % \iffalse
@@ -14325,7 +14325,7 @@ Some text here
 % \end{macro}
 %
 % \subsubsection{The command \cs{anspic}}\label{cmd:anspic}
-% The \ics*{anspic} command take three arguments, the \emph{starred versions} \ics*{anspic*}\myoarg{content}
+% The \ics*{anspic} command takes three arguments, the \emph{starred versions} \ics*{anspic*}\myoarg{content}
 % \emph{store} the current \mymeta{label} next to the \emph{optional argument}
 % \myoarg{content} in the \emph{sequence} and \emph{prop list}
 % defined by \mykey{save-ans} key. The third \emph{mandatory argument}
@@ -14382,7 +14382,7 @@ Some text here
 %   of the \emph{mandatory argument} if the key \mykey{label-pos} is set
 %   \enquote{below}.
 % \iffalse
-%% Set the height plus depth off body arg in dim var for |\anspic|.
+%% Set the height plus depth of body arg in dim var for |\anspic|.
 % \fi
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_anspic_body_dim:n #1
@@ -14702,7 +14702,7 @@ Some text here
 %   passed to \ics*{item}\myparg{columns} will be stored together with
 %   the value of |\itemwidth| for the \myenv*{enumext*} environment.
 % \iffalse
-%% Set width for joined item's for |enumext*| and |keyans*| environments.
+%% Set width for joined items for |enumext*| and |keyans*| environments.
 % \fi
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_starred_joined_item_vii:n #1
@@ -15222,13 +15222,13 @@ Some text here
 %               \@@_starred_item_vii_aux_ii:w, \@@_starred_item_vii_aux_iii:w,}
 %   First we will call the function \myhlc|\@@_stop_item_tmp_vii:| that we
 %   will redefine later, we will increment the value of
-%   \myhlc|\l_@@_item_column_pos_vii_int| that will count the item's by rows and
+%   \myhlc|\l_@@_item_column_pos_vii_int| that will count the items by rows and
 %   the value of \myhlc|\g_@@_item_count_all_vii_int| that will count the
-%   total of item's in the environment. After that we will call the
+%   total of items in the environment. After that we will call the
 %   function \myhlc|\@@_item_peek_args_vii:| that will handle the
 %   arguments passed to \ics*{item}.
 % \iffalse
-%% Start boxed item's for |enumext*| environment.
+%% Start boxed items for |enumext*| environment.
 % \fi
 %    \begin{macrocode}
 \cs_new_protected_nopar:Nn \@@_start_item_tmp_vii:
@@ -15242,7 +15242,7 @@ Some text here
 %   The function \myhlc|\@@_item_peek_args_vii:| will handle the \ics*{item}\myparg{number}.
 %   Look for the argument \enquote{\textcolor{star}{\ttfamily (}},
 %   if it is present we will call the function \myhlc|\@@_joined_item_vii:w| \myparg{number},
-%   which is in charge of joining the item's in the same row, in case they
+%   which is in charge of joining the items in the same row, in case they
 %   are not present we will set the default value \textcolor{gray}{\ttfamily(\mydim{1})}.
 % \iffalse
 %% Peek argument for \item()*[][] for |enumext*| environment.
@@ -15262,7 +15262,7 @@ Some text here
 %    function \myhlc|\@@_starred_item_vii:w| otherwise we will call the
 %    function \myhlc|\@@_standard_item_vii:w|.
 % \iffalse
-%% Joined item's for |enumext*| environment.
+%% Joined items for |enumext*| environment.
 % \fi
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_joined_item_vii:w (#1)
@@ -15484,7 +15484,7 @@ Some text here
         \tl_use:N \l_@@_after_list_args_vii_tl
    }
 %    \end{macrocode}
-%   The \myhlc|\@@_stop_item_vii:| function will finish the fetching |\item|
+%   The \myhlc|\@@_stop_item_vii:| function will finish fetching |\item|
 %   and \emph{\enquote{item content}} by closing the \myenv{minipage}
 %   environment, the \emph{sockets} for \emph{tagging} \texttt{PDF} and the
 %   \emph{horizontal box}.
@@ -15497,7 +15497,7 @@ Some text here
 %    \end{macrocode}
 %   Here we will reduce the \emph{warnings} a bit by setting the value
 %   of |\hbadness| to \mydim{10000}, print |\item| and \emph{\enquote{item content}}
-%   from the \emph{horizontal box},.
+%   from the \emph{horizontal box}.
 %    \begin{macrocode}
     \int_set:Nn \hbadness { 10000 }
     \box_use_drop:N \l_@@_item_text_vii_box
@@ -15667,7 +15667,7 @@ Some text here
 %    The function \myhlc|\@@_before_list_viii:| will add the vertical
 %    spacing on the environment if the \mykey{above} key is active next to
 %    the \mymarg{code} defined by the \mykey{before*} key if
-%    it is active, the call the function \myhlc|\@@_start_mini_viii:| handle by
+%    it is active, then call the function \myhlc|\@@_start_mini_viii:| handled by
 %    \mykey{mini-env}.
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_before_list_viii:
@@ -15680,7 +15680,7 @@ Some text here
 % \end{macro}
 %
 % \begin{macro}{\@@_after_list_viii:}
-%    The function \myhlc|\@@_after_list_viii:| first call the function \myhlc|\@@_stop_mini_viii:|,
+%    The function \myhlc|\@@_after_list_viii:| first calls the function \myhlc|\@@_stop_mini_viii:|,
 %    then apply the \mymarg{code} handled by the \mykey{after} key
 %    together with the \emph{vertical space} handled by the \mykey{below} key if
 %    they are present.
@@ -15731,13 +15731,13 @@ Some text here
 %               \@@_joined_item_viii:w, \@@_standard_item_viii:w}
 %   First we will call the function \myhlc|\@@_stop_item_tmp_viii:| that we
 %   will redefine later, we will increment the value of
-%   \myhlc|\l_@@_item_column_pos_viii_int| that will count the item's by rows and
+%   \myhlc|\l_@@_item_column_pos_viii_int| that will count the items by rows and
 %   the value of \myhlc|\g_@@_item_count_all_viii_int| that will count the
-%   total of item's in the environment. After that we will call the
+%   total of items in the environment. After that we will call the
 %   function \myhlc|\@@_item_peek_args_viii:| that will handle the
 %   arguments passed to \ics*{item}.
 % \iffalse
-%% Start boxed item's for |keyans*| environment.
+%% Start boxed items for |keyans*| environment.
 % \fi
 %    \begin{macrocode}
 \cs_new_protected_nopar:Nn \@@_start_item_tmp_viii:
@@ -15751,7 +15751,7 @@ Some text here
 %   The function \myhlc|\@@_item_peek_args_viii:| will handle the \ics*{item}\myparg{number}.
 %   Look for the argument \enquote{\textcolor{star}{\ttfamily (}}, if it is
 %   present we will call the function \myhlc|\@@_joined_item_viii:w| \myparg{number},
-%   which is in charge of joining the item's in the same row, in case they
+%   which is in charge of joining the items in the same row, in case they
 %   are not present we will set the default value \textcolor{gray}{\ttfamily(\mydim{1})}.
 % \iffalse
 %% Peek argument for \item(number)*[opt] for |keyans*| environment.
@@ -15771,7 +15771,7 @@ Some text here
 %   function \myhlc|\@@_starred_item_viii:w| otherwise we will call the
 %   function \myhlc|\@@_standard_item_viii:w|.
 % \iffalse
-%% Joined item's for |keyans*| environment.
+%% Joined items for |keyans*| environment.
 % \fi
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_joined_item_viii:w (#1)
@@ -15912,7 +15912,7 @@ Some text here
 %
 % \begin{macro}{\@@_keyans_wrapper_label_viii:n, \@@_fake_make_label_viii:n,
 %               \@@_wrapper_label_viii:n}
-%    The implementation at this is very similar to that of the
+%    The implementation at this point is very similar to that of the
 %    \myenv*{enumext*} environment.
 % \iffalse
 %% Define a fake |\makelabel| for |keyans*| environment.
@@ -15964,7 +15964,7 @@ Some text here
 % \subsubsection{Real definition of \cs{item} in \env{keyans*}}
 %
 % \begin{macro}{\@@_start_item_viii:w, \@@_stop_item_viii:}
-%    The implementation at this is very similar to that of the
+%    The implementation at this point is very similar to that of the
 %    \myenv*{enumext*} environment.
 % \iffalse
 %% Real |\item| definition for |keyans*| environment.
@@ -16017,7 +16017,7 @@ Some text here
 % \end{macro}
 %
 % \begin{macro}{\@@_remove_extra_parsep_viii:}
-%    The implementation at this is very similar to that of the
+%    The implementation at this point is very similar to that of the
 %    \myenv*{enumext*} environment.
 % \iffalse
 %% Remove extra \parsep in |keyans*| environment.
