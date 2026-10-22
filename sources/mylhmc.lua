@@ -1,4 +1,4 @@
--- mylhmc.lua v0.99 2026-09-21 (node.direct + Loop/Memory Micro-Optimized)
+-- mylhmc.lua v0.99 2026-09-20 (node.direct + Loop/Memory Micro-Optimized)
 -- LuaLaTeX syntax highlighter for l3doc macrocode environments
 
 local require      = require
@@ -253,7 +253,7 @@ local mathtag_names =
   P'invisibletimes' + P'functionapplication' +
   -- tagpdf: comandos públicos estilo LaTeX2e (sin guión bajo, no
   -- colisionan con los \tag_*:n de arriba, que sí llevan guión bajo).
-  P'tagpdfsetup' + P'tagtool' +
+  P'tagpdfsetup' + P'tagtool' + P'tag_tool:n' +
   P'tagmcifinTF' + P'tagmcuse' + P'tagmcbegin' + P'tagmcend' +
   P'tagstructbegin' + P'tagstructend' + P'tagstructuse' +
   P'ShowTagging'
@@ -275,7 +275,8 @@ local keys_module_arg_names =
    P'precompile' +
    P'if_choice_exist_p' + P'if_choice_exist' +
    P'if_exist_p' + P'if_exist' +
-   P'show' + P'log') *
+   P'show' + P'log' +
+   P'set') *   -- keys_set:nv/nV/ne... (keys_set:nn lo cubre keys_names)
   P':' * P'n' * sig_chars ^ 0
 
 -- \file_..., \lua_load_module:n, y la familia clásica \input/\include/
@@ -321,9 +322,12 @@ local msgerror_names =
   P'msg_error:nneee'
 
 local msg_generic_names =
-  P'msg_' * (P'new' + P'error' + P'warning' + P'info' + P'note' +
+  P'msg_' * (P'new' + P'set' + P'error' + P'warning' + P'info' + P'note' +
              P'critical' + P'fatal' + P'expandable_error' +
-             P'redirect_name' + P'redirect_class' + P'log' + P'term') *
+             P'redirect_name' + P'redirect_class' + P'redirect_module' +
+             P'log' + P'term' + P'none' + P'show' +
+             P'if_exist_p' + P'if_exist' +
+             P'module_name' + P'module_type') *
   P':' * sig_chars ^ 1
 
 -- Paréntesis balanceados (con soporte de anidación, p.ej. e:infix($x,$y)
@@ -412,6 +416,9 @@ code_rules = {
   {20, P'\\' * P'c_'  * (alpha + S'@') * name_chars ^ 0},
   {2,  var_prefix * P'__' * name_chars_argnum ^ 1},
   {4,  var_prefix * P'_' * (alpha + S'@') * name_chars_argnum ^ 0},
+  -- Contadores \c@nombre, con '_' y #N admitidos (\c@__@@_resume_#1_int).
+  -- Admite espacios antes de un nombre privado (\c@ @@_x -> \c@ __mod_x).
+  {52, P'\\c@' * (P' ' ^ 1 * P'__' + (alpha + P'_')) * (alpha + P'_' + P'#' ^ 1 * digit) ^ 0},
   {15, P'\\' * (alpha ^ 0 * (P'@' + P'!' + P'&' + P'*') * alpha ^ 0) ^ 1},
   {5,  P'\\' * P'__' * name_chars ^ 1 * (P':' * sig_chars ^ 0) ^ -1},
   {34, P'\\' * legacy_names},
@@ -811,6 +818,10 @@ local type_colors = {
 
 local csname_positions = {}
 local arg_counter = 0
+-- Profundidad de llaves y marcos de comandos exteriores con argumentos aún
+-- pendientes: una función dentro de un grupo {…} (p.ej. \int_use:N en el 1er
+-- argumento de \keys_set:nv) no debe borrar las posiciones c/v del exterior.
+local brace_depth, csname_frame_depth, csname_frames = 0, 0, {}
 local in_csname, csname_base_color, csname_depth = false, nil, 0
 local variant_braces_remaining, variant_depth = 0, 0
 local in_variant_group = false
@@ -925,8 +936,20 @@ local font_bracket_depth   = 0
 local mylhmc_colorize_code
 
 local function mylhmc_reset_csname_state()
+  if brace_depth > csname_frame_depth then
+    local pending = false
+    for k in pairs(csname_positions) do
+      if k > arg_counter then pending = true; break end
+    end
+    if pending then
+      local saved = {}
+      for k, v in pairs(csname_positions) do saved[k] = v end
+      csname_frames[#csname_frames + 1] = { saved, arg_counter, csname_frame_depth }
+    end
+  end
   for k in pairs(csname_positions) do csname_positions[k] = nil end
   arg_counter, in_csname, csname_base_color, csname_depth = 0, false, nil, 0
+  csname_frame_depth = brace_depth
 end
 
 local function mylhmc_module_aware_color(chunk, base_color)
@@ -946,6 +969,109 @@ end
 -- Detecta \l__foo, \g__foo, \c__foo, \__foo cuyo segmento de módulo NO
 -- coincide con current_module_name: acceso explícito a privados de OTRO
 -- módulo (hackeo de internos ajenos) -> color de advertencia 'other_np'.
+local env_name_cmds = {
+  ['\\begin'] = true, ['\\end'] = true,
+  ['\\newenvironment'] = true, ['\\renewenvironment'] = true,
+}
+local tag_label_cmds = {
+  ['\\tag_suspend:n'] = true, ['\\tag_resume:n'] = true,
+  ['\\tag_start:n'] = true,   ['\\tag_stop:n'] = true,
+}
+
+-- Si justo después de un comando viene {nombre} y nombre es del módulo
+-- (provide o contiene el nombre del módulo), emite el grupo con el nombre
+-- en module_name y devuelve la nueva posición; si no, no consume nada.
+local function mylhmc_module_brace_arg(line, e, fid, rh, rt)
+  local ws, name, nxt = s_match(line, '^(%s*){([^{}]-)}()', e)
+  if not name then return rh, rt, e end
+  -- Espacios opcionales dentro de las llaves ({ nombre } es válido en expl3).
+  local lead, inner, trail = s_match(name, '^(%s*)(.-)(%s*)$')
+  local core, star = s_match(inner, '^(.-)(%*?)$')
+  if core == '' or inner ~= core .. star
+     or mylhmc_module_aware_color(core, nil) ~= 'module_name' then
+    return rh, rt, e
+  end
+  local h, tl
+  if ws ~= '' then
+    h, tl = mylhmc_str_to_nodes(ws, fid); rh, rt = mylhmc_append(rh, rt, h, tl)
+  end
+  h, tl = mylhmc_colored_str('{', 'brace', fid); rh, rt = mylhmc_append(rh, rt, h, tl)
+  if lead ~= '' then
+    h, tl = mylhmc_str_to_nodes(lead, fid); rh, rt = mylhmc_append(rh, rt, h, tl)
+  end
+  h, tl = mylhmc_colored_str(core, 'module_name', fid); rh, rt = mylhmc_append(rh, rt, h, tl)
+  if star ~= '' then
+    h, tl = mylhmc_colored_str(star, 'star', fid); rh, rt = mylhmc_append(rh, rt, h, tl)
+  end
+  if trail ~= '' then
+    h, tl = mylhmc_str_to_nodes(trail, fid); rh, rt = mylhmc_append(rh, rt, h, tl)
+  end
+  h, tl = mylhmc_colored_str('}', 'brace', fid); rh, rt = mylhmc_append(rh, rt, h, tl)
+  return rh, rt, nxt
+end
+
+-- Cuántos de los primeros argumentos {…} de cada comando de sockets son
+-- nombres (de socket o de plug) con forma de camino a/b/c.
+local socket_cmds = {
+  ['\\socket_new:nn'] = 1, ['\\socket_new_plug:nnn'] = 2,
+  ['\\socket_assign_plug:nn'] = 2,
+  ['\\socket_use:n'] = 1, ['\\socket_use:nn'] = 1, ['\\socket_use:nnn'] = 1,
+  ['\\socket_use_expandable:n'] = 1,
+  ['\\socket_if_exist:nTF'] = 1, ['\\socket_if_exist:nT'] = 1,
+  ['\\socket_if_exist:nF'] = 1,
+  ['\\socket_show:n'] = 1, ['\\socket_log:n'] = 1,
+  ['\\tag_socket_use:n'] = 1, ['\\tag_socket_use:nn'] = 1,
+  ['\\tag_socket_use:nnn'] = 1, ['\\tag_socket_use_expandable:n'] = 1,
+}
+
+-- Colorea un camino a/b/c segmento a segmento: module_name solo para los
+-- segmentos del módulo (provide, nombre del módulo o __módulo); el resto
+-- y las '/' quedan como texto normal.
+local function mylhmc_colorize_module_path(text, fid, rh, rt)
+  local pos, len = 1, #text
+  while pos <= len do
+    local s, e2 = s_find(text, '[^/]+', pos)
+    if not s then
+      local h, t = mylhmc_str_to_nodes(s_sub(text, pos), fid)
+      return mylhmc_append(rh, rt, h, t)
+    end
+    if s > pos then
+      local h, t = mylhmc_str_to_nodes(s_sub(text, pos, s - 1), fid)
+      rh, rt = mylhmc_append(rh, rt, h, t)
+    end
+    local seg = s_sub(text, s, e2)
+    local lead, word, trail = s_match(seg, '^(%s*)(.-)(%s*)$')
+    local core = s_match(word, '^__(.+)$') or word
+    local h, t
+    if core ~= '' and mylhmc_module_aware_color(core, nil) == 'module_name' then
+      if lead ~= '' then h, t = mylhmc_str_to_nodes(lead, fid); rh, rt = mylhmc_append(rh, rt, h, t) end
+      h, t = mylhmc_colored_str(word, 'module_name', fid); rh, rt = mylhmc_append(rh, rt, h, t)
+      if trail ~= '' then h, t = mylhmc_str_to_nodes(trail, fid); rh, rt = mylhmc_append(rh, rt, h, t) end
+    else
+      h, t = mylhmc_str_to_nodes(seg, fid); rh, rt = mylhmc_append(rh, rt, h, t)
+    end
+    pos = e2 + 1
+  end
+  return rh, rt
+end
+
+-- Consume los primeros n grupos {…} simples tras un comando de sockets y los
+-- emite con el camino coloreado por segmentos. Se detiene en el primer
+-- argumento que no sea un grupo simple (sin llaves anidadas).
+local function mylhmc_socket_args(line, e, fid, rh, rt, n)
+  for _ = 1, n do
+    local ws, body, nxt = s_match(line, '^(%s*){([^{}]*)}()', e)
+    if not body then break end
+    local h, t
+    if ws ~= '' then h, t = mylhmc_str_to_nodes(ws, fid); rh, rt = mylhmc_append(rh, rt, h, t) end
+    h, t = mylhmc_colored_str('{', 'brace', fid); rh, rt = mylhmc_append(rh, rt, h, t)
+    rh, rt = mylhmc_colorize_module_path(body, fid, rh, rt)
+    h, t = mylhmc_colored_str('}', 'brace', fid); rh, rt = mylhmc_append(rh, rt, h, t)
+    e = nxt
+  end
+  return rh, rt, e
+end
+
 local function mylhmc_private_owner_color(chunk, fallback_color)
   local name = s_sub(chunk, 1, 1) == '\\' and s_sub(chunk, 2) or chunk
   local c3 = s_sub(name, 1, 3)
@@ -1017,9 +1143,11 @@ local function mylhmc_emit_with_signature(chunk, base_color, fid)
   end
   local name, sig = s_sub(chunk, 1, colon - 1), s_sub(chunk, colon + 1)
   mylhmc_reset_csname_state()
+  -- Índice por GRUPO {…}: N, V, p, w, D son un solo token (no abren llaves),
+  -- así que no cuentan; 'c'/'v' marcan el grupo que contiene un csname.
   local pos = 0
   for ch in s_gmatch(sig, '.') do
-    if s_match(ch, '[NnVvoxefpTFwDcq]') then
+    if s_match(ch, '[nvoxefTFcq]') then
       pos = pos + 1
       if ch == 'c' or ch == 'v' then csname_positions[pos] = true end
     end
@@ -1073,7 +1201,13 @@ local function mylhmc_csname_color_from_prefix(text)
   text = s_match(text, '^%s*(.-)%s*$') or text
   local p2, p3 = s_sub(text, 1, 2), s_sub(text, 1, 3)
   local base, rest
-  if p3 == 'l__' or p3 == 'g__' then base, rest = 'privatevar', s_sub(text, 4)
+  -- Contador c@<nombre>: si el nombre es privado (__módulo_...), el color
+  -- lo decide el módulo, no el prefijo c@ (LaTeX2e).
+  if p2 == 'c@' then
+    local cnt = s_match(text, '^c@%s*(.*)$')
+    if s_sub(cnt, 1, 2) ~= '__' then return 'latex_cmd' end
+    base, rest = 'privatevar', s_sub(cnt, 3)
+  elseif p3 == 'l__' or p3 == 'g__' then base, rest = 'privatevar', s_sub(text, 4)
   elseif p3 == 'c__' then base, rest = 'constant', s_sub(text, 4)
   elseif p2 == '__' then base, rest = 'privatefun', s_sub(text, 3)
   elseif p2 == 'l_' or p2 == 'g_' then return 'publicvar'
@@ -1102,7 +1236,11 @@ local function mylhmc_emit_csname_text(text, base_color, fid, rh, rt)
     local b = s_byte(text, i)
     if b == 64 or b == 33 or b == 38 or b == 94 or b == 42 then
       if i > cur then
-        local h, t = mylhmc_colored_str(s_sub(text, cur, i-1), base_color, fid)
+        local piece = s_sub(text, cur, i-1)
+        -- La 'c' de c@ es siempre LaTeX2e, aunque el nombre sea del módulo.
+        local pc = (b == 64 and base_color ~= 'latex_cmd' and s_match(piece, '^%s*c$'))
+                   and 'latex_cmd' or base_color
+        local h, t = mylhmc_colored_str(piece, pc, fid)
         rh, rt = mylhmc_append(rh, rt, h, t)
       end
       local color_name = (b == 64 and 'arroba') or (b == 42 and 'star') or 'escape'
@@ -1421,13 +1559,12 @@ mylhmc_colorize_code = function(line, fid)
     local h, tl
     if t == 8 then
       if chunk == '{' then
-        arg_counter = arg_counter + 1
-        local is_csname = csname_positions[arg_counter]
-        if not is_csname and arg_counter == 1 then
-          for k in pairs(csname_positions) do
-            if k >= 1 then is_csname = true; break end
-          end
-        end
+        -- Solo los grupos de primer nivel del comando vigente cuentan como
+        -- sus argumentos; los anidados no.
+        local top = (brace_depth == csname_frame_depth)
+        if top then arg_counter = arg_counter + 1 end
+        local is_csname = top and csname_positions[arg_counter]
+        brace_depth = brace_depth + 1
         if is_csname then
           in_csname, csname_base_color, csname_depth = true, nil, 0
           in_variant_group, variant_braces_remaining, variant_depth = false, 0, 0
@@ -1493,6 +1630,20 @@ mylhmc_colorize_code = function(line, fid)
         -- (sin corchete de por medio), descartamos la espera.
         font_bracket_pending = false
       elseif chunk == '}' then
+        brace_depth = brace_depth - 1
+        if brace_depth < csname_frame_depth then
+          -- Se cerró el grupo que contenía al comando vigente: volvemos al
+          -- marco del comando exterior (si lo hay).
+          local fr = csname_frames[#csname_frames]
+          for k in pairs(csname_positions) do csname_positions[k] = nil end
+          if fr then
+            csname_frames[#csname_frames] = nil
+            for k, v in pairs(fr[1]) do csname_positions[k] = v end
+            arg_counter, csname_frame_depth = fr[2], fr[3]
+          else
+            csname_frame_depth = brace_depth
+          end
+        end
         if in_csname then
           if csname_depth > 0 then csname_depth = csname_depth - 1
           else in_csname, csname_depth = false, 0 end
@@ -1783,7 +1934,6 @@ mylhmc_colorize_code = function(line, fid)
         h, tl = mylhmc_colored_str(chunk, type_colors[t], fid)
       else rh, rt = mylhmc_emit_csname_text(chunk, csname_base_color, fid, rh, rt); h, tl = nil, nil end
     elseif t == 5 or t == 6 then
-      arg_counter = 0
       if ltcmd_in_args or ltcmd_name_pending then
         ltcmd_in_args, ltcmd_name_pending, ltcmd_brace_count = false, false, 0
       end
@@ -1862,10 +2012,18 @@ mylhmc_colorize_code = function(line, fid)
          or s_find(chunk, 'tagstructbegin', 1, true)
          or s_find(chunk, 'ShowTagging', 1, true)
          or s_find(chunk, 'tag_struct_begin:n', 1, true)
-         or s_find(chunk, 'tag_mc_begin:n', 1, true) then
+         or s_find(chunk, 'tag_struct_end:n', 1, true)
+         or s_find(chunk, 'tag_mc_begin:n', 1, true)
+         or s_find(chunk, 'tag_mc_begin_pop:n', 1, true)
+         or s_find(chunk, 'tag_tool:n', 1, true) then
         in_single_keyval, single_keyval_depth = true, 0
       end
       h, tl = mylhmc_emit_with_signature(chunk, 'mathtag', fid)
+      -- \tag_suspend:n{label} etc.: si la etiqueta es del módulo, module_name.
+      if tag_label_cmds[chunk] then
+        rh, rt = mylhmc_append(rh, rt, h, tl); h, tl = nil, nil
+        rh, rt, e = mylhmc_module_brace_arg(line, e, fid, rh, rt)
+      end
     elseif in_mathml_intent and t ~= 8 then
       if t == 21 then mathml_after_dollar = true; h, tl = mylhmc_colored_str(s_sub(chunk, 1, 1), 'math', fid)
       elseif mathml_after_dollar then
@@ -1933,6 +2091,19 @@ mylhmc_colorize_code = function(line, fid)
         local trailing = (cur == 2 and '\\' or '') .. s_sub(chunk, cur)
         h, tl = mylhmc_colored_str(trailing, mylhmc_module_aware_color(trailing, 'latex_cmd'), fid)
       else h, tl = nil, nil end
+    elseif t == 52 then
+      local name = s_sub(chunk, 4)
+      local sp = s_match(name, '^ *')
+      name = s_sub(name, #sp + 1)
+      h, tl = mylhmc_colored_str('\\c', 'latex_cmd', fid); rh, rt = mylhmc_append(rh, rt, h, tl)
+      h, tl = mylhmc_colored_str('@', 'arroba', fid); rh, rt = mylhmc_append(rh, rt, h, tl)
+      if sp ~= '' then
+        h, tl = mylhmc_str_to_nodes(sp, fid); rh, rt = mylhmc_append(rh, rt, h, tl)
+      end
+      local base
+      if s_sub(name, 1, 2) == '__' then base = mylhmc_private_owner_color(name, 'privatevar')
+      else base = mylhmc_module_aware_color(name, 'latex_cmd') end
+      h, tl = mylhmc_colorize_name_with_argnum(name, fid, base)
     elseif t == 4 then
       h, tl = mylhmc_colorize_name_with_argnum(chunk, fid, mylhmc_module_aware_color(chunk, 'publicvar'))
     elseif t == 2 then
@@ -1946,6 +2117,17 @@ mylhmc_colorize_code = function(line, fid)
         if module_user_cmds[bare] or module_user_cmds[chunk] then effective = 'module_name' end
       end
       h, tl = mylhmc_colored_str(chunk, effective, fid)
+      -- \begin{env}/\end{env}/\newenvironment{env}: si env es del módulo
+      -- (provide o nombre con el módulo), se colorea como module_name.
+      if env_name_cmds[chunk] then
+        rh, rt = mylhmc_append(rh, rt, h, tl); h, tl = nil, nil
+        rh, rt, e = mylhmc_module_brace_arg(line, e, fid, rh, rt)
+      end
+    end
+    local sock_n = socket_cmds[chunk]
+    if sock_n then
+      rh, rt = mylhmc_append(rh, rt, h, tl); h, tl = nil, nil
+      rh, rt, e = mylhmc_socket_args(line, e, fid, rh, rt, sock_n)
     end
     rh, rt = mylhmc_append(rh, rt, h, tl); pos = e
   end
@@ -2109,6 +2291,20 @@ register_tex_cmd('luafun_inline', function()
     if h then n_write(d_tonode(h)) end
     font_bracket_pending = false
     return
+  end
+  -- Expresión de intent suelta (\myhlc|nombre:prefix($a)|): se colorea
+  -- como dentro de \MathMLintent{…} en macrocode (palabra de intent en
+  -- ltcmd_arg, $var en mathml_var, etc.).
+  do
+    local kw = s_match(text, '^%s*[%w_%-]+%s*:%s*(%a+)')
+    if kw and (kw == 'prefix' or kw == 'postfix' or kw == 'function' or
+               kw == 'nofix' or kw == 'silent' or kw == 'time' or
+               kw == 'date' or kw == 'infix') then
+      local rh, rt = mylhmc_colorize_mathml_intent(text, fid, nil, nil)
+      if rh then n_write(d_tonode(rh)) end
+      font_bracket_pending = false
+      return
+    end
   end
   local rh, rt = mylhmc_colorize_code(text, fid)
   if rh then n_write(d_tonode(rh)) end

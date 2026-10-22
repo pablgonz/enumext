@@ -55,11 +55,11 @@
     Extension = .otf,
   }
 \setmonofont[
-    UprightFont    = *-Regular,
-    ItalicFont     = *-RegularIt,
-    BoldFont       = *-Semibold,
-    BoldItalicFont = *-SemiboldIt,
-    RawFeature     = {+zero,+ss01}]{SourceCodePro}
+    UprightFont       = *-Regular,
+    ItalicFont        = *-RegularIt,
+    BoldFont          = *-Medium,
+    BoldItalicFont    = *-MediumIt,
+    RawFeature        = {+zero,+ss01}]{SourceCodePro}
 \newfontfamily\mysourcecodeprolight{SourceCodePro-Regular.otf}[
     Scale = 0.80,FakeStretch =0.75,
     FontFace = {m}{it}{Font =SourceCodePro-RegularIt.otf,Color=FF0000}]
@@ -8917,7 +8917,7 @@ Some text here
 %   The \myhlc|\@@_standard_save_counter:| and \myhlc|\@@_starred_save_counter:|
 %   functions will save the last counter value to \myhlc|\g__@@_series_#1_int|
 %   if the \mykey[env]{series}|=|\mymarg{series name} key has been passed, to
-%   \myhlc|\c@__@@_resume_X_int| if it has passed the key \mykey[env]{resume}
+%   \myhlc|\c@ @@_resume_#1_int| if it has passed the key \mykey[env]{resume}
 %   \emph{without value} and the key \mykey{series} is not active, in
 %   \myhlc|\g__@@_series_#1_X_int| if the key
 %   \mykey{resume}|=|\mymarg{series name} has been passed and in
