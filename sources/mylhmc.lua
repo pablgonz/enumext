@@ -1,4 +1,4 @@
--- mylhmc.lua v0.99 2026-10-21 (node.direct + Loop/Memory Micro-Optimized)
+-- mylhmc.lua v0.99 2026-09-21 (node.direct + Loop/Memory Micro-Optimized)
 -- LuaLaTeX syntax highlighter for l3doc macrocode environments
 
 local require      = require
@@ -435,6 +435,7 @@ code_rules = {
   {12, digit ^ 1},
   {6,  P'\\' * alpha * name_chars_no_at ^ 0 * P':' * sig_chars ^ 0},
   {23, P'\\' * alpha * name_chars_no_at ^ 0},
+  {51, P'*'},  -- '*' suelto en cualquier contexto (color 'star')
   {8,  S'{}'},
   {3,  S'[]'},
   {9,  P'%' * (P(1) - S'\r\n') ^ 0 * (S'\r\n' + -1)},
@@ -805,7 +806,7 @@ local type_colors = {
   [41]='publicfun',  [42]='intent',     [44]='publicfun',
   [46]='publicfun',
   [47]='publicfun',  [48]='module_name', [49]='support',
-  [50]='operator',
+  [50]='operator',    [51]='star',
 }
 
 local csname_positions = {}
