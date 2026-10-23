@@ -1,0 +1,80 @@
+% arara: lualatex: { branch: developer }
+% arara: lualatex: { branch: developer }
+% arara: clean: { extensions: [ aux, log, out] }
+\documentclass{article}
+\usepackage[margin=2cm]{geometry}
+\usepackage{tikz}
+\newcommand*{\myCircled}[1]{%
+  \begin{tikzpicture}[baseline=(number.base)]
+    \node[circle, draw=green!10!gray, inner sep=1pt, fill=blue!30!green!10] (number) {#1};
+  \end{tikzpicture}%
+}
+\usepackage[colorlinks]{hyperref}
+\usepackage{enumext}
+\pagestyle{empty}
+\begin{document}
+\setenumext[keyans]{labelsep=8pt,label=\Alph*,font=\small,nosep,wrap-label={\myCircled{##1}}}
+\setenumext[keyans*]{labelsep=8pt,label=\Alph*,font=\small,nosep,wrap-label={\myCircled{##1}}}
+\setenumextmeta[2]{myroman}{no-store, label=\Roman*., noitemsep}
+\setenumextmeta[2]{myarabic}{no-store,list-offset=0.5cm,label=(\arabic*),noitemsep}
+\begin{enumext}[mode-box,save-ans=simplemc,columns=1,nosep,save-ref=true]
+\item First type of questions
+  \begin{keyans*}[columns=2,noitemsep]
+    \item value
+    \item*[$x=5$] correct
+    \item value
+    \item value
+  \end{keyans*}
+\item Second type of questions
+  \begin{enumext}[myroman]
+    \item $2\alpha+2\delta=90^{\circ}$
+    \item $\alpha=\delta$
+    \item $\angle EDF=45^{\circ}$
+  \end{enumext}
+  \begin{keyans}[columns=2,noitemsep]
+    \item I only
+    \item II only
+    \item I and II only
+    \item* I and III only
+    \item I, II, and III
+  \end{keyans}
+\item Third type of questions
+    \begin{enumext}[myarabic]
+        \item $2\alpha+2\delta=90^{\circ}$
+        \item $\angle EDF=45^{\circ}$
+    \end{enumext}
+\begin{keyans}[columns=2,noitemsep]
+    \item value
+    \item value
+    \item*[some note] value
+    \item value
+    \item value
+\end{keyans}
+
+\item Question with image and label below:
+\begin{keyanspic}[layout-sty={3,2},label-sep=3pt]
+\anspic{\includegraphics[scale=0.15]{example-image-a}}
+\anspic{\includegraphics[scale=0.15]{example-image-b}}
+\anspic{\includegraphics[scale=0.15]{example-image-a}}
+\anspic{\includegraphics[scale=0.15]{example-image-a}}
+\anspic*[A duck]{\includegraphics[scale=0.32]{example-image-duck}}
+\end{keyanspic}
+
+\item Question with image on right side:
+\begin{keyans}[mini-env=0.5\linewidth, columns=1,noitemsep]
+    \item value
+    \item value
+    \item value
+    \item*[other note] correct
+    \item value
+    \miniright
+    \includegraphics[scale=0.15]{example-image-b}
+\end{keyans}
+\end{enumext}
+
+\medskip
+
+Test keys
+
+\printkeyans{simplemc}
+\end{document}

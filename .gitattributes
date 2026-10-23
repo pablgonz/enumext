@@ -1,0 +1,12 @@
+# Text always in LF, on Linux and Windows
+* text=auto eol=lf
+
+*.pdf binary
+
+# git archive: what does NOT go in the package
+/.github/           export-ignore
+/.gitignore         export-ignore
+/.gitattributes     export-ignore
+/sources/test-pkg/  export-ignore
+/sources/samples/   export-ignore
+/ctan.ann           export-ignore

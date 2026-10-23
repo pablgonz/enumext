@@ -1,0 +1,59 @@
+% arara: lualatex: { branch: developer }
+% arara: lualatex: { branch: developer }
+% arara: clean: { extensions: [ aux, log, out] }
+\documentclass{article}
+\usepackage[colorlinks]{hyperref}
+\usepackage{siunitx,amssymb,tikz,enumext,libertinus}
+\usetikzlibrary{shapes.geometric}
+\sisetup{output-decimal-marker={,}}
+\DeclareSIUnit{\angstrom}{\textup{\AA}}
+\newcommand*{\mySquared}[1]{%
+  \begin{tikzpicture}[baseline=(number.base),square/.style={regular polygon,regular polygon sides=4}]
+    \node[square, rounded corners=1pt, inner sep=1pt, draw=none, fill=gray!40] (number) {\makebox[\height]{#1}};
+  \end{tikzpicture}%
+}
+\pagestyle{empty}
+\begin{document}
+\setenumext[keyans]{label=\Alph*,font=\small,nosep,wrap-label={\mySquared{##1}}}
+\begin{enumext}[columns=1,save-ans=sabastiano2,mark-sep*=2pt,mark-ans*={\textcolor{gray}{✔}},save-ref=true,show-ans=true,itemsep=0pt]
+ \item La velocità di \qty{1,00e2}{m/s} espressa in \unit{km/h} è:
+   \begin{keyans}
+     \item \qty{36}{km/h}.
+     \item* \qty{360}{km/h}.
+     \item \qty{27,8}{km/h}.
+     \item \qty{3,60e8}{km/h}.
+   \end{keyans}
+
+ \item In fisica nucleare si usa l'angstrom (simbolo:
+ $\qty{1}{\angstrom} = \qty{1e-10}{m}$) e il fermi o femtometro
+ ($\qty{1}{fm} = \qty{1e-15}{m}$). Qual è la relazione tra queste due
+ unità di misura?
+   \begin{keyans}
+     \item* $\qty{1}{\angstrom}=\qty{1e5}{fm}$.
+     \item $\qty{1}{\angstrom}=\qty{1e-5}{fm}$.
+     \item $\qty{1}{\angstrom}=\qty{1e-15}{fm}$.
+     \item $\qty{1}{\angstrom}=\qty{1e3}{fm}$.
+   \end{keyans}
+
+ \item La velocità di \qty{1,00e2}{m/s} espressa in \unit{km/h} è:
+   \begin{keyans}
+     \item \qty{36}{km/h}.
+     \item* \qty{360}{km/h}.
+     \item \qty{27,8}{km/h}.
+     \item \qty{3,60e8}{km/h}.
+   \end{keyans}
+
+ \item In fisica nucleare si usa l'angstrom (simbolo:
+ $\qty{1}{\angstrom} = \qty{1e-10}{m}$) e il fermi o femtometro
+ ($\qty{1}{fm} = \qty{1e-15}{m}$). Qual è la relazione tra queste due
+ unità di misura?
+   \begin{keyans}
+     \item* $\qty{1}{\angstrom}=\qty{1e5}{fm}$.
+     \item $\qty{1}{\angstrom}=\qty{1e-5}{fm}$.
+     \item $\qty{1}{\angstrom}=\qty{1e-15}{fm}$.
+     \item $\qty{1}{\angstrom}=\qty{1e3}{fm}$.
+   \end{keyans}
+\end{enumext}
+
+\printkeyans[columns=4]{sabastiano2}
+\end{document}

@@ -52,3 +52,8 @@ _minted*
 **/sources/test-pkg/enumext.ins
 **/sources/test-pkg/enumext.dtx
 **/sources/test-pkg/enumext.sty
+
+## PDFs versioned: the manual (l3build doc) and those of the examples and tests
+!/enumext.pdf
+!sources/test-pkg/*.pdf
+!sources/samples/*.pdf

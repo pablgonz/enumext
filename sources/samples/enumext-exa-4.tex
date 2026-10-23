@@ -1,0 +1,35 @@
+% arara: lualatex: { branch: developer, draft: true }
+% arara: lualatex: { branch: developer, draft: true }
+% arara: lualatex: { branch: developer }
+% arara: clean: { extensions: [ aux, log, out] }
+\documentclass{article}
+\usepackage[top=2cm,bottom=2cm,left=2cm,right=2cm]{geometry}%
+\usepackage[osf]{libertinus}
+\usepackage{unicode-math,tikzducks,graphicx,hyperref,enumext}
+\begin{document}
+\begin{enumext}[mode-box,save-ans=simplews,labelsep=10pt,columns=2,check-ans=true,show-ans=true,nosep,save-ref=true,wrap-label={\tikz[scale=0.25]\duck[signpost=\scalebox{0.6}{#1}];}]
+  \item Factor $x^{2}-2x+1$ \anskey{$\left(x-1\right)^{2}$}
+  \item Factor $3x+3y+3z$ \anskey{$3(x+y+z)$}
+  \item True False
+    \begin{enumext}[nosep]
+      \item $\alpha > \delta$ \anskey{False}
+      \item \LaTeX2e\ is cool? \anskey{Very True!}
+    \end{enumext}
+  \item Related to Linux
+    \begin{enumext}[nosep]
+      \item You use Linux? \anskey{Yes}
+      \item Usually uses the package manager? \anskey{Yes, \texttt{dnf}}
+      \item Rate the following package and class
+        \begin{enumext}[nosep]
+          \item \texttt{xsim-exam} \anskey{doesn't exist for now :(}
+          \item \texttt{xsim} \anskey{very good}
+          \item \texttt{exsheets} \anskey{obsolete}
+        \end{enumext}
+    \end{enumext}
+\end{enumext}
+
+The answer to \ref{simplews:1} is \getkeyans{simplews:1} and the answer
+to \ref{simplews:3} is \getkeyans{simplews:3}.
+
+\printkeyans[columns=2]{simplews}
+\end{document}

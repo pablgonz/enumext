@@ -1,0 +1,105 @@
+% arara: lualatex: { branch: developer }
+% arara: clean: { extensions: [ aux, log] }
+\documentclass[letterpaper,twoside]{article}
+\usepackage{xcolor,enumext,libertinus}
+\newlength{\itemwd}
+\settowidth{\itemwd}{\bfseries 10.} % max width
+\NewDocumentCommand \rating { }{8.5a, KSC}
+\ExplSyntaxOn
+\bool_new:N \l_azetina_rating_bool
+\NewDocumentCommand \showrating { m }
+  {
+    \str_case:nn {#1}
+      {
+        { true  }
+                {
+                  \bool_set_true:N \l_azetina_rating_bool
+                  \setenumext{show-ans=true,save-sep={ ~ }}
+                }
+        { false }
+                {
+                  \bool_set_false:N \l_azetina_rating_bool
+                  \setenumext{show-ans=false,save-sep={ ~ }}
+                }
+      }
+  }
+\NewDocumentCommand \myans { m +m }
+  {
+    \bool_if:NTF \l_azetina_rating_bool
+      {
+        \item*[(#1)] \textcolor{red}{#2}
+      }
+      {
+        \item*[(#1)] \textcolor{black}{#2}
+      }
+  }
+\NewDocumentCommand \azwrapp { m }
+  {
+    \bool_if:NTF \l_azetina_rating_bool
+      {
+        \makebox[\dim_eval:n{\marginparwidth}][r]
+          {
+            \textcolor{red}{\bfseries\footnotesize\rating}
+          }
+        \hspace{\marginparsep}\textbf{#1}
+      }
+      {
+        \makebox[\dim_eval:n{\marginparwidth+\marginparsep}][l]{ }\textbf{#1}
+      }
+  }
+\ExplSyntaxOff
+\setenumextmeta[1]{azetinasty}{label={\arabic*.},labelwidth={\marginparwidth+\marginparsep+\itemwd},list-offset={-\marginparwidth-\marginparsep},}
+\setenumext[keyans]{
+    label={\Alph*},
+    font={\bfseries},
+    wrap-ans*={\textcolor{red}{\bfseries##1}},
+    mark-ans*={\textcolor{red}{✔}},
+    wrap-opt={ },
+    }
+\begin{document}
+
+\showrating{true}
+\begin{enumext}[azetinasty,start=10,wrap-label={\azwrapp{#1}},save-ans=test2024]
+  \item sample
+    \begin{keyans}
+      \item sample
+      %\item*[(8.5a, KSC)] answer
+      \myans{8.5a, KSC}{answer}
+      \item sample
+      \item sample
+    \end{keyans}
+  % Renew \rating here
+  \RenewDocumentCommand \rating { }{9.5a, KSC}
+  \item sample
+      \begin{keyans}
+      \item sample
+      \item sample
+      \item sample
+      %\item*[(9.5a, KSC)] answer
+      \myans{9.5a, KSC}{answer}
+    \end{keyans}
+\end{enumext}
+\showrating{false}
+\RenewDocumentCommand \rating { }{10.5a, KSC}
+\begin{enumext}[save-ans=test2024,resume*]
+  \item sample
+    \begin{keyans}
+      \item sample
+      %\item*[(10.5a, KSC)] answer
+      \myans{10.5a, KSC}{answer}
+      \item sample
+      \item sample
+    \end{keyans}
+  % Renew \rating here
+  \RenewDocumentCommand \rating { }{11.5a, KSC}
+  \item sample
+      \begin{keyans}
+      \item sample
+      \item sample
+      \item sample
+      %\item*[(11.5a, KSC)] answer
+      \myans{11.5a, KSC}{answer}
+    \end{keyans}
+\end{enumext}
+\printkeyans[start=10]{test2024}
+\end{document}

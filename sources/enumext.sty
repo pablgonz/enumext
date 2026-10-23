@@ -45,7 +45,7 @@
         later.~Update~your~TeX~distribution.
       }
   }
-\ProvidesExplPackage {enumext} {2026-10-03} {2.3} {Enumerate exercise sheets}
+\ProvidesExplPackage {enumext} {2026-10-23} {2.3} {Enumerate exercise sheets}
 \hook_gput_code:nnn {begindocument} {enumext}
   {
     \IfPackageLoadedTF { multicol }
@@ -400,6 +400,23 @@
       { \int_use:N \g__enumext_item_anskey_int }
       { \int_eval:n { \g__enumext_item_number_int - \g__enumext_item_anskey_int} }
   }
+\msg_new:nnn { enumext } { prop-seq-int-hook }
+  {
+    *~Package~enumext:~Elements~in~
+    \c_backslash_str g__enumext_#1_prop~=~#2.\\
+    *~Package~enumext:~Elements~in~
+    \c_backslash_str g__enumext_#1_seq~=~#3.\\
+    *~Package~enumext:~Value~of~
+    \c_backslash_str g__enumext_resume_#1_int~=~#4.
+  }
+\msg_new:nnn { enumext } { item-answer-hook }
+  {
+    *~Package~enumext:~Value~of~
+    \c_backslash_str g__enumext_item_number_int~=~#1.\\
+    *~Package~enumext:~Value~of~
+    \c_backslash_str g__enumext_item_anskey_int~=~#2.\\
+    *~Package~enumext:~Difference~item_number_int~-~item_anskey_int~=~#3.
+  }
 \__enumext_at_begin_document:n
   {
     \cs_new_eq:NN   \__enumext_start_list:nn \list
@@ -637,7 +654,7 @@
 \clist_map_inline:nn {i,ii,iii,iv,vii} { \__enumext_tmp:n {#1} }
 \msg_new:nnn { enumext } { counters }
   {
-    The~counter~'#1'~is~already~defined~by~some~\\
+    The~counter~'#1'~is~already~defined~by~some\\
     package~or~macro,~it~cannot~be~continued.
   }
 \cs_new_protected:Nn \__enumext_register_default_label_wd:Nn
@@ -923,7 +940,7 @@
   }
 \msg_new:nnn { enumext } { key-ref-empty }
   {
-    Key~'ref'~need~a~value~in~'#1'~ \msg_line_context:.
+    Key~'ref'~needs~a~value~in~'#1'~\msg_line_context:.
   }
 \cs_new_protected:Nn \__enumext_start_from:NNn
   {
@@ -1797,6 +1814,25 @@
         \msg_error:nn { enumext } { many-miniright-used }
       }
   }
+\msg_new:nnn { enumext } { wrong-miniright-place }
+  {
+    Wrong~place~for~'\c_backslash_str miniright'~\msg_line_context:.\\
+    Works~in~'enumext'~and~'keyans'~with~key~'mini-env'.
+  }
+\msg_new:nnn { enumext } { wrong-miniright-use }
+  {
+    Wrong~use~for~'\c_backslash_str miniright'~\msg_line_context:.\\
+    '\c_backslash_str miniright'~needs~a~key~'mini-env'.
+  }
+\msg_new:nnn { enumext } { wrong-miniright-starred }
+  {
+    Can't~use~\c_backslash_str miniright~in~starred~environments~
+    \msg_line_context:.
+  }
+\msg_new:nnn { enumext } { many-miniright-used }
+  {
+    Can't~use~\c_backslash_str miniright~more~than~once~\msg_line_context:.
+  }
 \cs_set_protected:Nn \__enumext_tmp:nn
   {
     \keys_define:nn { enumext / #1 }
@@ -2092,6 +2128,17 @@
           }
       }
   }
+\msg_new:nnn { enumext } { unknown-series-starred }
+  {
+    The~series~'#1'~for~the~resume~key~does~not~exist~in~the~
+    enumext*~environment~\msg_line_context:.
+  }
+\msg_new:nnn { enumext } { unknown-series-standard }
+  {
+    The~series~'#1'~for~the~resume~key~does~not~exist~at~level~
+    \int_use:N \l__enumext_level_int
+    \c_space_tl of~enumext~environment~\msg_line_context:.
+  }
 \cs_new:Nn \__enumext_filter_series:n
   {
     \use:e
@@ -2374,6 +2421,13 @@
         \__enumext_reset_count_resume:nn {##1} {#1}
       }
   }
+\msg_new:nnnn { enumext } { out-of-range }
+  {
+    The~number~must~be~exactly~1,~2,~3~or~4.
+  }
+  {
+    Received:~'#1'.
+  }
 \cs_set_protected:Nn \__enumext_tmp:n
   {
     \keys_define:nn { enumext / #1 }
@@ -2433,35 +2487,35 @@
 \clist_map_inline:nn { level-1, enumext* } { \__enumext_tmp:n {#1} }
 \msg_new:nnn { enumext } { save-ans-empty }
   {
-    Key~'save-ans'~need~a~value~in~'#1'~ \msg_line_context:.
+    Key~'save-ans'~needs~a~value~in~'#1'~\msg_line_context:.
   }
 \msg_new:nnn { enumext } { save-ans-log }
   {
-    *~Package~enumext:~Start~#1\c_space_tl with~save-ans=#2~\msg_line_context:.
+    *~Package~enumext:~Start~#1~with~save-ans=#2~\msg_line_context:.
   }
 \msg_new:nnn { enumext } { save-ans-log-hook }
   {
-    *~Package~enumext:~Stop~#1\c_space_tl with~save-ans=#2~\msg_line_context:.
+    *~Package~enumext:~Stop~#1~with~save-ans=#2~\msg_line_context:.
   }
 \msg_new:nnn { enumext } { items-same-answer }
   {
     ****************************************\\
-    *~Package~enumext:~Checking~answers~in~'#1' ~
+    *~Package~enumext:~Checking~answers~in~'#1'~
     for~\c_left_brace_str #2 \c_right_brace_str\\
-    *~started~#3~and~close~\msg_line_context: : ~
+    *~started~#3~and~close~\msg_line_context: :~
     'OK',~all~items~with~answer.\\
     ****************************************
   }
 \msg_new:nnn { enumext } { item-greater-answer }
   {
     Checking~answers~in~'#1'~for~\c_left_brace_str #2 \c_right_brace_str\\
-    started~#3~and~close~\msg_line_context: : ~'NOT~OK'\\
+    started~#3~and~close~\msg_line_context: :~'NOT~OK'\\
     Items~>~Answers.
   }
 \msg_new:nnn { enumext } { item-less-answer }
   {
     Checking~answers~in~'#1'~for~\c_left_brace_str #2 \c_right_brace_str\\
-    started~#3~and~close~\msg_line_context: : ~'NOT~OK'\\
+    started~#3~and~close~\msg_line_context: :~'NOT~OK'\\
     Items~<~Answers.
   }
 \msg_new:nnn { enumext } { missing-starred }
@@ -2471,6 +2525,21 @@
 \msg_new:nnn { enumext } { many-starred }
   {
     Many~'\c_backslash_str #1*'~#2.
+  }
+\msg_new:nnn { enumext } { store-prop }
+  {
+    *~Package~enumext:~Creating~
+    \c_backslash_str g__enumext_#1_prop~\msg_line_context:.
+  }
+\msg_new:nnn { enumext } { store-seq }
+  {
+    *~Package~enumext:~Creating~
+    \c_backslash_str g__enumext_#1_seq~\msg_line_context:.
+  }
+\msg_new:nnn { enumext } { store-int }
+  {
+    *~Package~enumext:~Creating~
+    \c_backslash_str g__enumext_resume_#1_int~\msg_line_context:.
   }
 \cs_new_protected:Nn \__enumext_start_save_ans_msg:
   {
@@ -3161,6 +3230,18 @@
         \__enumext_anskey_show_wrap_arg:n {#1}
       }
   }
+\msg_new:nnn { enumext } { anskey-unnumber-item }
+  {
+    Can't~store~with~an~unnumbered~\c_backslash_str item~\msg_line_context:.
+  }
+\msg_new:nnn { enumext } { anskey-empty-arg }
+  {
+    Can't~store~empty~content~\msg_line_context:.
+  }
+\msg_new:nnn { enumext } { anskey-math-mode }
+  {
+    #1~can't~work~in~math~mode~\msg_line_context:.
+  }
 \keys_define:nn { enumext / anskey }
   {
     break-col .bool_set:N = \l__enumext_store_columns_break_bool,
@@ -3211,6 +3292,33 @@
             }
         }
     \group_end:
+  }
+\msg_new:nnn { enumext } { anskey-wrong-place }
+  {
+    Wrong~place~for~command~'\c_backslash_str #1'~\msg_line_context:.\\
+    '\c_backslash_str #1'~works~in~the~environment~'#2'.
+  }
+\msg_new:nnn { enumext } { anskey-nested }
+  {
+    The~command~\c_backslash_str anskey~can't~be~nested~\msg_line_context:.
+  }
+\msg_new:nnnn { enumext } { anskey-cmd-key-unknown }
+  {
+    The~key~'#1'~is~unknown~by~'\c_backslash_str anskey'~and~is~being~ignored~
+    \msg_line_context:.
+  }
+  {
+    The~command~'\c_backslash_str anskey'~does~not~have~a~key~called~'#1'.\\
+    Check~that~you~have~spelled~the~key~name~correctly.
+  }
+\msg_new:nnnn { enumext } { anskey-cmd-key-value-unknown }
+  {
+    The~key~'#1=#2'~is~unknown~by~'\c_backslash_str anskey'~and~is~being~
+    ignored~\msg_line_context:.
+  }
+  {
+    The~command~'\c_backslash_str anskey'~does~not~have~a~key~called~'#1'.\\
+    Check~that~you~have~spelled~the~key~name~correctly.
   }
 \cs_new_protected:Nn \__enumext_anskey_safe_outer:
   {
@@ -3346,12 +3454,46 @@
   } { }
 \msg_new:nnnn { enumext } { anskey-env-error }
   {
-    The~environment~'#1'~is~reserved~by ~\\
+    The~environment~'#1'~is~reserved~by\\
     'enumext'~package,~It~is~already~defined.
   }
   {
-    The~environment~'#1'~is~defined~internally ~
+    The~environment~'#1'~is~defined~internally~
     for~the~'save-ans'~key~with~save-ans~key~active.~See~documentation.\\
+  }
+\msg_new:nnn { enumext } { anskey-env-wrong }
+  {
+    The~environment~anskey*~cannot~be~used~in~'#1'~\msg_line_context:.
+  }
+\msg_new:nnnn { enumext } { anskey-env-key-unknown }
+  {
+    The~key~'#1'~is~unknown~by~environment~
+    'anskey*'~and~is~being~ignored~\msg_line_context:.
+  }
+  {
+    The~environment~'anskey*'~does~not~have~a~key~called~'#1'.\\
+    Check~that~you~have~spelled~the~key~name~correctly.
+  }
+\msg_new:nnnn { enumext } { anskey-env-key-value-unknown }
+  {
+    The~key~'#1=#2'~is~unknown~by~environment~
+    'anskey*'~and~is~being~ignored~\msg_line_context:.
+  }
+  {
+    The~environment~'anskey*'~does~not~have~a~key~called~'#1'.\\
+    Check~that~you~have~spelled~the~key~name~correctly.
+  }
+\msg_new:nnn { enumext } { overwrite-file }
+  {
+    Overwriting~file~'#1'.
+  }
+\msg_new:nnn { enumext } { writing-file }
+  {
+    Writing~file~'#1'.
+  }
+\msg_new:nnn { enumext } { not-writing }
+  {
+    File~'#1'~already~exists.~Not~writing.
   }
 \cs_new_protected:Nn \__enumext_anskey_env_safe_outer:
   {
@@ -3647,6 +3789,16 @@
           \l__enumext_labelwidth_v_dim \l__enumext_mark_sym_sep_v_dim
       }
   }
+\msg_new:nnn { enumext } { keyans-wrong-level }
+  {
+    Wrong~level~position~for~'keyans'~\msg_line_context:.\\
+    The~environment~'keyans'~can~only~be~in~the~first~level.
+  }
+\msg_new:nnn { enumext } { wrong-place }
+  {
+    Wrong~place~for~'#1'~environment~\msg_line_context:.\\
+    '#1'~is~only~found~with~'#2'~in~'enumext'.
+  }
 \cs_new_protected:Nn \__enumext_default_item:n
   {
     \tl_if_novalue:nTF {#1}
@@ -3864,41 +4016,63 @@
 \msg_new:nnnn { enumext } { starred-unknown-key }
   {
     The~key~'#1'~is~unknown~by~environment~
-    '\l__enumext_envir_name_tl'~and~is~being~ignored.
+    '\l__enumext_envir_name_tl'~and~is~being~ignored~\msg_line_context:.
   }
   {
-    The~environment~'\l__enumext_envir_name_tl'~does~not
-    ~have~a~key~called ~'#1'.\\
+    The~environment~'\l__enumext_envir_name_tl'~does~not~
+    have~a~key~called~'#1'.\\
     Check~that~you~have~spelled~the~key~name~correctly.
   }
 \msg_new:nnnn { enumext } { starred-unknown-key-value }
   {
-    The~key~'#1=#2'~is~unknown~by~environment ~
-    '\l__enumext_envir_name_tl'~and~is~being~ignored.
+    The~key~'#1=#2'~is~unknown~by~environment~
+    '\l__enumext_envir_name_tl'~and~is~being~ignored~\msg_line_context:.
   }
   {
-    The~environment~'\l__enumext_envir_name_tl'~does~not
-    ~have~a~key~called ~'#1'.\\
+    The~environment~'\l__enumext_envir_name_tl'~does~not~
+    have~a~key~called~'#1'.\\
     Check~that~you~have~spelled~the~key~name~correctly.
   }
 \msg_new:nnnn { enumext } { standard-unknown-key }
   {
-    The~key~'#1'~is~unknown~by~environment~'\l__enumext_envir_name_tl' \c_space_tl
-    ~on~level~\int_use:N \l__enumext_level_int \c_space_tl and~is~being~ignored.
+    The~key~'#1'~is~unknown~by~environment~'\l__enumext_envir_name_tl'~on~level~
+    \int_use:N \l__enumext_level_int \c_space_tl and~is~being~ignored~
+    \msg_line_context:.
   }
   {
-    The~environment~'\l__enumext_envir_name_tl'~does~not
-    ~have~a~key~called ~'#1'~on~level~\int_use:N \l__enumext_level_int.\\
+    The~environment~'\l__enumext_envir_name_tl'~does~not~
+    have~a~key~called~'#1'~on~level~\int_use:N \l__enumext_level_int.\\
     Check~that~you~have~spelled~the~key~name~correctly.
   }
 \msg_new:nnnn { enumext } { standard-unknown-key-value }
   {
-    The~key~'#1=#2'~is~unknown~by~environment~'\l__enumext_envir_name_tl' \c_space_tl
-    ~on~level~\int_use:N \l__enumext_level_int \c_space_tl and~is~being~ignored.
+    The~key~'#1=#2'~is~unknown~by~environment~'\l__enumext_envir_name_tl'~on~level~
+    \int_use:N \l__enumext_level_int \c_space_tl and~is~being~ignored~
+    \msg_line_context:.
   }
   {
-    The~environment~'\l__enumext_envir_name_tl'~does~not
-    ~have~a~key~called ~'#1'~on~level~\int_use:N \l__enumext_level_int.\\
+    The~environment~'\l__enumext_envir_name_tl'~does~not~
+    have~a~key~called~'#1'~on~level~\int_use:N \l__enumext_level_int.\\
+    Check~that~you~have~spelled~the~key~name~correctly.
+  }
+\msg_new:nnnn { enumext } { keyans-unknown-key }
+  {
+    The~key~'#1'~is~unknown~by~environment~
+    '\l__enumext_envir_name_tl'~and~is~being~ignored~\msg_line_context:.
+  }
+  {
+    The~environment~'\l__enumext_envir_name_tl'~does~not~
+    have~a~key~called~'#1'.\\
+    Check~that~you~have~spelled~the~key~name~correctly.
+  }
+\msg_new:nnnn { enumext } { keyans-unknown-key-value }
+  {
+    The~key~'#1=#2'~is~unknown~by~environment~
+    '\l__enumext_envir_name_tl'~and~is~being~ignored~\msg_line_context:.
+  }
+  {
+    The~environment~'\l__enumext_envir_name_tl'~does~not~
+    have~a~key~called~'#1'.\\
     Check~that~you~have~spelled~the~key~name~correctly.
   }
 \cs_new_protected:Nn \__enumext_keyans_default_item:n
@@ -4008,7 +4182,7 @@
   {
     \dim_compare:nNnT {#1} < { \c_zero_dim }
       {
-        \msg_warning:nnnV { enumext } { width-non-positive }{ labelwidth } #1
+        \msg_warning:nnnV { enumext } { width-negative }{ labelwidth } #1
         \dim_set:Nn #1 { \dim_abs:n {#1} }
       }
     \dim_compare:nNnT {#2} < { \c_zero_dim }
@@ -4125,7 +4299,7 @@
 \msg_new:nnn { enumext } { width-negative }
   {
     Ignoring~negative~value~'#1=#2'~\msg_line_context:.\\
-    The~key~'#1'~ accepts~values ~>=~0pt.
+    The~key~'#1'~accepts~values~>=~0pt.
   }
 \msg_new:nnn { enumext } { list-lengths }
   {
@@ -4361,8 +4535,8 @@
   }
 \msg_new:nnn { enumext } { list-too-deep }
   {
-    Too~deep~nesting ~for~'enumext'~\msg_line_context:.~ \\
-    The~maximum ~level ~of ~nesting ~is~4.
+    Too~deep~nesting~for~'enumext'~\msg_line_context:.\\
+    The~maximum~level~of~nesting~is~4.
   }
 \cs_new_protected:Nn \__enumext_keyans_safe_exec:
   {
@@ -4493,6 +4667,10 @@
   {
     \__enumext_check_starred_cmd:n { item }
     \__enumext_second_part_v:
+  }
+\msg_new:nnn { enumext } { keyans-nested }
+  {
+    The~environment~'keyans'~can't~be~nested~\msg_line_context:.
   }
 \socket_new:nn {tagsupport/__enumext/starred}{ 1 }
 \socket_new_plug:nnn {tagsupport/__enumext/starred} {start-list-tags}
@@ -4897,6 +5075,19 @@
         \__enumext_anspic_args:nnn {#1} {#2} {#3}
       }
   }
+\msg_new:nnn { enumext } { keyanspic-nested }
+  {
+    The~environment~'keyanspic'~can't~be~nested~\msg_line_context:.
+  }
+\msg_new:nnn { enumext } { keyanspic-wrong-level }
+  {
+    Wrong~level~position~for~'keyanspic'~\msg_line_context:.\\
+    The~environment~'keyanspic'~can~only~be~in~the~first~level.
+  }
+\msg_new:nnn { enumext } { keyanspic-item-cmd }
+  {
+    Can't~use~\c_backslash_str item~in~keyanspic~\msg_line_context:.
+  }
 \cs_new_protected:Nn \__enumext_starred_columns_set_vii:
   {
     \dim_compare:nNnT { \l__enumext_columns_sep_vii_dim } = { \c_zero_dim }
@@ -5185,6 +5376,19 @@
     \bool_gset_true:N \g__enumext_minipage_center_viii_bool
     \tl_gclear:N \g__enumext_miniright_code_viii_tl
     \dim_gzero:N \g__enumext_minipage_right_viii_dim
+  }
+\msg_new:nnn { enumext } { nested-horizontal }
+  {
+    The~environment~\l__enumext_envir_name_tl \c_space_tl can't~be~nested~in~'#1'~
+    \msg_line_context:.
+  }
+\msg_new:nnn { enumext } { item-joined }
+  {
+    Items~joined~(#1)~>~#2~columns~\msg_line_context:.
+  }
+\msg_new:nnn { enumext } { item-joined-columns }
+  {
+    Not~enough~space~to~join~items~(#1)~>~#2~\msg_line_context:.
   }
 \NewDocumentEnvironment{enumext*}{ o }
   {
@@ -5741,6 +5945,14 @@
         \int_gzero:N \g__enumext_item_count_all_viii_int
       }
   }
+\msg_new:nnnn { enumext } { missing-colon }
+  {
+    The~argument~'#1'~has~no~colon~\msg_line_context:.
+  }
+  {
+    The~argument~of~'\token_to_str:N \getkeyans'~must~have~the~form~
+    'store~name:position'.
+  }
 \cs_new_protected:Nn \__enumext_getkeyans_aux:n
   {
     \str_if_in:nnTF {#1} { : }
@@ -5840,8 +6052,8 @@
   }
 \msg_new:nnn { enumext } { print-starred }
   {
-    \c_backslash_str printkeyans*:~ The~sequence~'#1'~already~contains ~
-    #2~environment~ \msg_line_context:.
+    \c_backslash_str printkeyans*:~The~sequence~'#1'~already~contains~
+    #2~environment~\msg_line_context:.
   }
 \cs_new_protected:Nn \__enumext_printkeyans:nnn
   {
@@ -6011,11 +6223,11 @@
   }
 \msg_new:nnn { enumext } { invalid-key }
   {
-    The~key~'#1'~is~not~know~the~level~#2.
+    The~key~'#1'~is~not~known~at~level~#2~\msg_line_context:.
   }
 \msg_new:nnn { enumext } { unknown-key-family }
   {
-    Unknown~key~family~`\l_keys_key_str'~for~enumext.
+    Unknown~key~family~'\l_keys_key_str'~for~enumext~\msg_line_context:.
   }
 \msg_new:nnn { enumext } { already-defined }
   {
@@ -6023,7 +6235,7 @@
   }
 \msg_new:nnn { enumext } { prohibited-unknown }
   {
-    The~name~'unknown'~can't~be~chosen~ for~a~meta~key~\msg_line_context:.
+    The~name~'unknown'~can't~be~chosen~for~a~meta~key~\msg_line_context:.
   }
 \int_step_inline:nn { 4 }
   {
@@ -6083,15 +6295,23 @@
       }
   }
 \msg_new:nnnn { enumext } { for-key-unknown }
-  { The~key~'#1'~is~unknown~by~'\c_backslash_str foreachkeyans'~and~is~being~ignored.}
   {
-    The~command~'\c_backslash_str foreachkeyans'~does~not~have~a~key~called~'#1'.\\
+    The~key~'#1'~is~unknown~by~'\c_backslash_str foreachkeyans'~and~is~being~
+    ignored~\msg_line_context:.
+  }
+  {
+    The~command~'\c_backslash_str foreachkeyans'~does~not~have~a~key~called~
+    '#1'.\\
     Check~that~you~have~spelled~the~key~name~correctly.
   }
 \msg_new:nnnn { enumext } { for-key-value-unknown }
-  { The~key~'#1=#2'~is~unknown~by~'\c_backslash_str foreachkeyans'~and~is~being~ignored. }
   {
-    The~command~'\c_backslash_str foreachkeyans'~does~not~have~a~key~called~'#1'.\\
+    The~key~'#1=#2'~is~unknown~by~'\c_backslash_str foreachkeyans'~and~is~
+    being~ignored~\msg_line_context:.
+  }
+  {
+    The~command~'\c_backslash_str foreachkeyans'~does~not~have~a~key~called~
+    '#1'.\\
     Check~that~you~have~spelled~the~key~name~correctly.
   }
 \keys_define:nn { enumext / foreach }
@@ -6179,223 +6399,27 @@
   }
 \msg_new:nnn { enumext } { unknown-choice }
   {
-    The~value~'#3'~for~'#1'~key~is~invalid~use~('#2').
-  }
-\msg_new:nnn { enumext } { store-prop }
-  {
-    *~Package~enumext:~Creating ~
-    \c_backslash_str g__enumext_#1_prop~\msg_line_context:.
-  }
-\msg_new:nnn { enumext } { store-seq }
-  {
-    *~Package~enumext:~Creating ~
-    \c_backslash_str g__enumext_#1_seq~\msg_line_context:.
-  }
-\msg_new:nnn { enumext } { store-int }
-  {
-    *~Package~enumext:~Creating ~
-    \c_backslash_str g__enumext_resume_#1_int~\msg_line_context:.
-  }
-\msg_new:nnn { enumext } { prop-seq-int-hook }
-  {
-    *~Package~enumext:~Elements~in ~
-    \c_backslash_str g__enumext_#1_prop~=~#2.\\
-    *~Package~enumext:~Elements~in ~
-    \c_backslash_str g__enumext_#1_seq~=~#3.\\
-    *~Package~enumext:~Value~off ~
-    \c_backslash_str g__enumext_resume_#1_int~=~#4.
-  }
-\msg_new:nnn { enumext } { item-answer-hook }
-  {
-    *~Package~enumext:~Value~off ~
-    \c_backslash_str g__enumext_item_number_int~=~#1.\\
-    *~Package~enumext:~Value~off ~
-    \c_backslash_str g__enumext_item_anskey_int~=~#2.\\
-    *~Package~enumext:~Difference~item_number_int~-~item_anskey_int~=~#3.
-  }
-\msg_new:nnn { enumext } { anskey-unnumber-item }
-  {
-    Can't~store~with~a~unnumbered~\c_backslash_str item~\msg_line_context:.
-  }
-\msg_new:nnn { enumext } { anskey-empty-arg }
-  {
-    Can't~store~empty~content~\msg_line_context:.
-  }
-\msg_new:nnn { enumext } { anskey-wrong-place }
-  {
-    Wrong~place~for~command~'\c_backslash_str #1'~\msg_line_context:.~ \\
-    '\c_backslash_str #1'~works~in~the~environment~'#2'.
-  }
-\msg_new:nnn { enumext } { anskey-nested }
-  {
-    The~command~\c_backslash_str anskey~ can't~be~nested~\msg_line_context:.
-  }
-\msg_new:nnn { enumext } { anskey-math-mode }
-  {
-    #1~can't~work~in~math~mode~\msg_line_context:.
-  }
-\msg_new:nnn { enumext } { anskey-env-wrong }
-  {
-    The~environment~anskey*~cannot~use~in~'#1'~\msg_line_context:.
+    Invalid~value~'#3'~for~key~'#1';~use~one~of:~#2~\msg_line_context:.
   }
 \msg_new:nnn { enumext } { command-wrong-place }
   {
-    Wrong~place~for~command~'\c_backslash_str #1'~\msg_line_context:.~ \\
+    Wrong~place~for~command~'\c_backslash_str #1'~\msg_line_context:.\\
     '\c_backslash_str #1'~works~outside~the~environment~'#2'.
-  }
-\msg_new:nnnn { enumext } { anskey-env-key-unknown }
-  {
-    The~key~'#1'~is~unknown~by~environment~
-    'anskey*'~and~is~being~ignored.
-  }
-  {
-    The~environment~'anskey*'~does~not~have~a~key~called ~'#1'.\\
-    Check~that~you~have~spelled~the~key~name~correctly.
-  }
-\msg_new:nnnn { enumext } { anskey-env-key-value-unknown }
-  {
-    The~key~'#1=#2'~is~unknown~by~environment ~
-    'anskey*'~and~is~being~ignored.
-  }
-  {
-    The~environment~'anskey*'~does~not~have~a~key~called ~'#1'.\\
-    Check~that~you~have~spelled~the~key~name~correctly.
-  }
-\msg_new:nnnn { enumext } { anskey-cmd-key-unknown }
-  { The~key~'#1'~is~unknown~by~'\c_backslash_str anskey'~and~is~being~ignored.}
-  {
-    The~command ~'\c_backslash_str anskey'~does~not~have~a~key~called ~'#1'.\\
-    Check~that~you~have~spelled~the~key~name~correctly.
-  }
-\msg_new:nnnn { enumext } { anskey-cmd-key-value-unknown }
-  { The~key~'#1=#2'~is~unknown~by~'\c_backslash_str anskey'~and~is~being~ignored. }
-  {
-    The~command~'\c_backslash_str anskey'~does~not~have~a~key~called ~'#1'.\\
-    Check~that~you~have~spelled~the~key~name~correctly.
-  }
-\msg_new:nnn { enumext } { overwrite-file }
-  {
-    Overwriting~file~'#1'.
-  }
-\msg_new:nnn { enumext } { writing-file }
-  {
-    Writing~file~'#1'.
-  }
-\msg_new:nnn { enumext } { not-writing }
-  {
-    File~`#1'~already~exists.~Not~writing.
-  }
-\msg_new:nnn { enumext } { keyans-nested }
-  {
-    The~environment~'keyans'~can't~be ~nested ~\msg_line_context:.
-  }
-\msg_new:nnn { enumext } { keyans-wrong-level }
-  {
-    Wrong~level~position~for~'keyans'~\msg_line_context:.~ \\
-    The~environment~'keyans'~can~only~be~in~the~first~level.
-  }
-\msg_new:nnn { enumext } { wrong-place }
-  {
-    Wrong~place~for~'#1'~environment ~\msg_line_context:.~ \\
-    '#1'~is~only~found~with~'#2'~ in ~ 'enumext.
-  }
-\msg_new:nnn { enumext } { keyanspic-nested }
-  {
-    The~environment~'keyanspic'~can't~be ~nested~ \msg_line_context:.~.
-  }
-\msg_new:nnn { enumext } { keyanspic-wrong-level }
-  {
-    Wrong~level~position~for~'keyanspic'~\msg_line_context:.~ \\
-    The~environment~'keyans'~can~only~be~in~the~first~level.
-  }
-\msg_new:nnn { enumext } { keyanspic-item-cmd }
-  {
-    Can't~use ~\c_backslash_str item~in~keyanspic~\msg_line_context:.
-  }
-\msg_new:nnnn { enumext } { keyans-unknown-key }
-  {
-    The~key~'#1'~is~unknown~by~environment~
-    '\l__enumext_envir_name_tl'~and~is~being~ignored.
-  }
-  {
-    The~environment~'\l__enumext_envir_name_tl'~does~not
-    ~have~a~key~called ~'#1'.\\
-    Check~that~you~have~spelled~the~key~name~correctly.
-  }
-\msg_new:nnnn { enumext } { keyans-unknown-key-value }
-  {
-    The~key~'#1=#2'~is~unknown~by~environment ~
-    '\l__enumext_envir_name_tl'~and~is~being~ignored.
-  }
-  {
-    The~environment~'\l__enumext_envir_name_tl'~does~not
-    ~have~a~key~called ~'#1'.\\
-    Check~that~you~have~spelled~the~key~name~correctly.
   }
 \msg_new:nnn { enumext } { undefined-storage-anskey }
   {
     Storage~named~'#1'~is~not~defined~\msg_line_context:.
   }
-\msg_new:nnnn { enumext } { missing-colon }
-  {
-    The~argument~'#1'~has~no~colon~\msg_line_context:.
-  }
-  {
-    The~argument~of~'\token_to_str:N \getkeyans'~must~have~the~form~
-    'store~name:position'.
-  }
 \msg_new:nnn { enumext } { missing-miniright }
   {
-    Missing~'\c_backslash_str miniright'~in~\msg_line_context:.\\
-    The~key~'mini-env'~need~'\c_backslash_str miniright'.
-  }
-\msg_new:nnn { enumext } { wrong-miniright-place }
-  {
-    Wrong~place~for~'\c_backslash_str miniright'~\msg_line_context:.~ \\
-    Works~in~'enumext'~and~'keyans'~with~key~'mini-env'.
-  }
-\msg_new:nnn { enumext } { wrong-miniright-use }
-  {
-    Wrong~use~for~'\c_backslash_str miniright'~\msg_line_context:.~ \\
-    '\c_backslash_str miniright'~need~a~key~'mini-env'.
-  }
-\msg_new:nnn { enumext } { wrong-miniright-starred }
-  {
-    Can't~use ~\c_backslash_str miniright~in~starred~environments~\msg_line_context:.
-  }
-\msg_new:nnn { enumext } { many-miniright-used }
-  {
-    Can't~use ~\c_backslash_str miniright~more~than~once~ \msg_line_context:.
+    Missing~'\c_backslash_str miniright'~\msg_line_context:.\\
+    The~key~'mini-env'~needs~'\c_backslash_str miniright'.
   }
 \msg_new:nnn { enumext } { nested }
   {
-    The~environment~\l__enumext_envir_name_tl \c_space_tl can't~be~nested~\msg_line_context:.
+    The~environment~\l__enumext_envir_name_tl \c_space_tl can't~be~nested~
+    \msg_line_context:.
   }
-\msg_new:nnn { enumext } { nested-horizontal }
-  {
-    The~environment~\l__enumext_envir_name_tl \c_space_tl can't~be~nested~in~'#1'~ \msg_line_context:.
-  }
-\msg_new:nnn { enumext } { item-joined }
-  {
-    Items~joined~(#1)~>~#2 ~columns ~\msg_line_context:.
-  }
-\msg_new:nnn { enumext } { item-joined-columns }
-  {
-    Not~space~to~join~items~(#1)~>~#2 ~\msg_line_context:.
-  }
-\msg_new:nnn { enumext } { unknown-series-starred }
-  {
-    The~series~'#1'~for~the~resume~key~does~not~exist~in~the~
-    ~enumext*~environment~ \msg_line_context:.
-  }
-\msg_new:nnn { enumext } { unknown-series-standard }
-  {
-    The~series~'#1'~for~the~resume~key~does~not~exist~at~level~\int_use:N \l__enumext_level_int
-    \c_space_tl of~enumext~environment~ \msg_line_context:.
-  }
-\msg_new:nnnn { enumext } { out-of-range }
-  { The~number~must~be~exactly~1,~2,~3~or~4. }
-  { Received:~'#1'. }
 \file_input_stop:
 %% 
 %%

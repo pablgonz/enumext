@@ -1,6 +1,5 @@
 % \iffalse meta-comment
 % arara: lualatex: { branch: developer, draft: true }
-% arara: clean: { files: [ enumext-01.pdf, enumext-02.pdf, enumext-03.pdf, enumext-04.pdf, enumext-05.pdf ] }
 % arara: lualatex: { branch: developer, interaction: batchmode, shell: true }
 % arara: clean: { extensions: [ aux, log, out, glo, gls, hd, ind, ilg, idx, toc, atfi ] }
 % arara: clean: { files: [ userdoc.idx, userdoc.ilg, userdoc.ind, mylhmc.lua, mylhmc.sty ] }
@@ -533,6 +532,31 @@
       \__mydoc_color_all:Nnn \l_tmpa_tl { \d } { number }
       \__mydoc_color_all:Nnn \l_tmpa_tl { \. } { star }
       \textcolor { filename } { \ttfamily \tl_use:N \l_tmpa_tl }
+    \group_end:
+  }
+% \myattachfile{s m}, the star version attaches only the \texttt{.tex} file
+\NewDocumentCommand \myattachfile { s m }
+  {
+    \group_begin:
+      \IfBooleanTF { #1 }
+        {
+          \IfFileExists { #2.tex }
+            {
+              Source~file~
+              \textattachfile[color=newlinkcolor,print=false]{#2.tex}{\faFile*[regular]}.
+            }
+            { }
+        }
+        {
+          \IfFileExists { #2.pdf }
+            {
+              Source~file~
+              \textattachfile[color=newlinkcolor,print=false]{#2.tex}{\faFile*[regular]}~
+              and~\emph{tagged}~\texttt{PDF}~
+              \textattachfile[color=newlinkcolor,print=false]{#2.pdf}{\faFilePdf[regular]}.
+            }
+            { }
+        }
     \group_end:
   }
 % Icons in the margin for the environment important (internal use)
@@ -3498,125 +3522,54 @@ all the worksheets are as follows:
 % \section{Full examples}
 %
 % Some adapted questions taken from \href{https://tex.stackexchange.com}{TeX-SX} are included as an example.
-% The examples are attached to this documentation and can be extracted
-% from your PDF viewer or from the command line by running:
-% \iffalse
-%<*example>
-% \fi
-\begin{examplecode}[frame=single]
-$ pdfdetach -saveall enumext.pdf
-\end{examplecode}
-% \iffalse
-%</example>
-% \fi
-% and then you can use the excellent \arara\footnote{The cool \TeX\ automation tool:
-% \url{https://www.ctan.org/pkg/arara}} tool to compile them.
+% The source files of the examples can be compiled with the excellent \arara\footnote{The cool \TeX\ automation tool:
+% \url{https://www.ctan.org/pkg/arara}} tool.
 %
 % \subsubsection*{Example 1}
 %
-% \iffalse
-%<*example>
-% \fi
-\begin{filecontents*}[overwrite]{enumext-exa-1.tex}
-% arara: lualatex: { branch: developer }
-% arara: clean: { extensions: [ aux, log] }
-\documentclass{article}
-\usepackage{siunitx,amssymb,enumext}
-\sisetup{output-decimal-marker={,}}
-\DeclareSIUnit{\angstrom}{\textup{\AA}}
-\pagestyle{empty}
-\begin{document}
-\setenumext[keyans]{label=\Alph*,labelsep=10pt,font=\small,nosep,itemsep=2pt,wrap-label={\fbox{\makebox[\height]{##1}}}}
-\begin{enumext}[mode-box,columns=2,columns-sep=1cm,save-ans=sabastiano]
- \item La velocità di \qty{1,00e2}{m/s} espressa in \unit{km/h} è:
-   \begin{keyans}
-     \item \qty{36}{km/h}.
-     \item* \qty{360}{km/h}.
-     \item \qty{27,8}{km/h}.
-     \item \qty{3,60e8}{km/h}.
-   \end{keyans}
-
- \item In fisica nucleare si usa l'angstrom (simbolo:
- $\qty{1}{\angstrom} = \qty{1e-10}{m}$) e il fermi o femtometro
- ($\qty{1}{fm} = \qty{1e-15}{m}$). Qual è la relazione tra queste due
- unità di misura?
-   \begin{keyans}
-     \item* $\qty{1}{\angstrom}=\qty{1e5}{fm}$.
-     \item $\qty{1}{\angstrom}=\qty{1e-5}{fm}$.
-     \item $\qty{1}{\angstrom}=\qty{1e-15}{fm}$.
-     \item $\qty{1}{\angstrom}=\qty{1e3}{fm}$.
-   \end{keyans}
-
- \item La velocità di \qty{1,00e2}{m/s} espressa in \unit{km/h} è:
-   \begin{keyans}
-     \item \qty{36}{km/h}.
-     \item* \qty{360}{km/h}.
-     \item \qty{27,8}{km/h}.
-     \item \qty{3,60e8}{km/h}.
-   \end{keyans}
-
- \item In fisica nucleare si usa l'angstrom (simbolo:
- $\qty{1}{\angstrom} = \qty{1e-10}{m}$) e il fermi o femtometro
- ($\qty{1}{fm} = \qty{1e-15}{m}$). Qual è la relazione tra queste due
- unità di misura?
-   \begin{keyans}
-     \item* $\qty{1}{\angstrom}=\qty{1e5}{fm}$.
-     \item $\qty{1}{\angstrom}=\qty{1e-5}{fm}$.
-     \item $\qty{1}{\angstrom}=\qty{1e-15}{fm}$.
-     \item $\qty{1}{\angstrom}=\qty{1e3}{fm}$.
-   \end{keyans}
-\end{enumext}
-
-\printkeyans[columns=4]{sabastiano}
-\end{document}
-\end{filecontents*}
-% \iffalse
-%</example>
-% \fi
-%
-% Adapted from the response given by Enrico Gregorio in \href{https://tex.stackexchange.com/q/461730/7832}{Squares for answer choice options and perfect alignment to mathematical answers}
-% \textattachfile[color=red,print=false]{enumext-exa-1.tex}{\faFile*[regular]}.
+% Adapted from the response given by Enrico Gregorio in \href{https://tex.stackexchange.com/q/461730/7832}{Squares for answer choice options and perfect alignment to mathematical answers}.
+%   \myattachfile*{enumext-exa-1}
 %
 % \setenumext[keyans]{label=\Alph*,font=\small,nosep,wrap-label={\fbox{\makebox[\height]{##1}}}}
 % \begin{enumext}[columns=2,save-ans=sabastiano,itemsep=2pt, topsep=5pt,below*={8pt}]
-% \item La velocità di \SI{1,00e2}{m/s} espressa in \si{km/h} è:
+% \item La velocità di \qty{1,00e2}{m/s} espressa in \unit{km/h} è:
 %
 %   \begin{keyans}
-%     \item \SI{36}{km/h}.
-%     \item* \SI{360}{km/h}.
-%     \item \SI{27,8}{km/h}.
-%     \item \SI{3,60e8}{km/h}.
+%     \item \qty{36}{km/h}.
+%     \item* \qty{360}{km/h}.
+%     \item \qty{27,8}{km/h}.
+%     \item \qty{3,60e8}{km/h}.
 %   \end{keyans}
 %
 % \item  In fisica nucleare si usa l'angstrom (simbolo:
-% $\SI{1}{\angstrom} = \SI{1e-10}{m}$) e il fermi o femtometro
-% ($\SI{1}{fm} = \SI{1e-15}{m}$). Qual è la relazione tra queste due
+% $\qty{1}{\angstrom} = \qty{1e-10}{m}$) e il fermi o femtometro
+% ($\qty{1}{fm} = \qty{1e-15}{m}$). Qual è la relazione tra queste due
 % unità di misura?
 %   \begin{keyans}
-%     \item* $\SI{1}{\angstrom}=\SI{1e5}{fm}$.
-%     \item $\SI{1}{\angstrom}=\SI{1e-5}{fm}$.
-%     \item $\SI{1}{\angstrom}=\SI{1e-15}{fm}$.
-%     \item $\SI{1}{\angstrom}=\SI{1e3}{fm}$.
+%     \item* $\qty{1}{\angstrom}=\qty{1e5}{fm}$.
+%     \item $\qty{1}{\angstrom}=\qty{1e-5}{fm}$.
+%     \item $\qty{1}{\angstrom}=\qty{1e-15}{fm}$.
+%     \item $\qty{1}{\angstrom}=\qty{1e3}{fm}$.
 %   \end{keyans}
 %
-% \item La velocità di \SI{1,00e2}{m/s} espressa in \si{km/h} è:
+% \item La velocità di \qty{1,00e2}{m/s} espressa in \unit{km/h} è:
 %
 %   \begin{keyans}
-%     \item \SI{36}{km/h}.
-%     \item* \SI{360}{km/h}.
-%     \item \SI{27,8}{km/h}.
-%     \item \SI{3,60e8}{km/h}.
+%     \item \qty{36}{km/h}.
+%     \item* \qty{360}{km/h}.
+%     \item \qty{27,8}{km/h}.
+%     \item \qty{3,60e8}{km/h}.
 %   \end{keyans}
 %
 % \item  In fisica nucleare si usa l'angstrom (simbolo:
-% $\SI{1}{\angstrom} = \SI{1e-10}{m}$) e il fermi o femtometro
-% ($\SI{1}{fm} = \SI{1e-15}{m}$). Qual è la relazione tra queste due
+% $\qty{1}{\angstrom} = \qty{1e-10}{m}$) e il fermi o femtometro
+% ($\qty{1}{fm} = \qty{1e-15}{m}$). Qual è la relazione tra queste due
 % unità di misura?
 %   \begin{keyans}
-%     \item* $\SI{1}{\angstrom}=\SI{1e5}{fm}$.
-%     \item $\SI{1}{\angstrom}=\SI{1e-5}{fm}$.
-%     \item $\SI{1}{\angstrom}=\SI{1e-15}{fm}$.
-%     \item $\SI{1}{\angstrom}=\SI{1e3}{fm}$.
+%     \item* $\qty{1}{\angstrom}=\qty{1e5}{fm}$.
+%     \item $\qty{1}{\angstrom}=\qty{1e-5}{fm}$.
+%     \item $\qty{1}{\angstrom}=\qty{1e-15}{fm}$.
+%     \item $\qty{1}{\angstrom}=\qty{1e3}{fm}$.
 %   \end{keyans}
 % \end{enumext}
 %
@@ -3624,114 +3577,46 @@ $ pdfdetach -saveall enumext.pdf
 %
 % \subsubsection*{Example 2}
 %
-% \iffalse
-%<*example>
-% \fi
-\begin{filecontents*}[overwrite]{enumext-exa-2.tex}
-% arara: lualatex: { branch: developer }
-% arara: lualatex: { branch: developer }
-% arara: clean: { extensions: [ aux, log, out] }
-\documentclass{article}
-\usepackage[colorlinks]{hyperref}
-\usepackage{siunitx,amssymb,tikz,enumext,libertinus}
-\usetikzlibrary{shapes.geometric}
-\sisetup{output-decimal-marker={,}}
-\DeclareSIUnit{\angstrom}{\textup{\AA}}
-\newcommand*{\mySquared}[1]{%
-  \begin{tikzpicture}[baseline=(number.base),square/.style={regular polygon,regular polygon sides=4}]
-    \node[square, rounded corners=1pt, inner sep=1pt, draw=none, fill=gray!40] (number) {\makebox[\height]{#1}};
-  \end{tikzpicture}%
-}
-\pagestyle{empty}
-\begin{document}
-\setenumext[keyans]{label=\Alph*,font=\small,nosep,wrap-label={\mySquared{##1}}}
-\begin{enumext}[columns=1,save-ans=sabastiano2,mark-sep*=2pt,mark-ans*={\textcolor{gray}{✔}},save-ref=true,show-ans=true,itemsep=0pt]
- \item La velocità di \qty{1,00e2}{m/s} espressa in \unit{km/h} è:
-   \begin{keyans}
-     \item \qty{36}{km/h}.
-     \item* \qty{360}{km/h}.
-     \item \qty{27,8}{km/h}.
-     \item \qty{3,60e8}{km/h}.
-   \end{keyans}
-
- \item In fisica nucleare si usa l'angstrom (simbolo:
- $\qty{1}{\angstrom} = \qty{1e-10}{m}$) e il fermi o femtometro
- ($\qty{1}{fm} = \qty{1e-15}{m}$). Qual è la relazione tra queste due
- unità di misura?
-   \begin{keyans}
-     \item* $\qty{1}{\angstrom}=\qty{1e5}{fm}$.
-     \item $\qty{1}{\angstrom}=\qty{1e-5}{fm}$.
-     \item $\qty{1}{\angstrom}=\qty{1e-15}{fm}$.
-     \item $\qty{1}{\angstrom}=\qty{1e3}{fm}$.
-   \end{keyans}
-
- \item La velocità di \qty{1,00e2}{m/s} espressa in \unit{km/h} è:
-   \begin{keyans}
-     \item \qty{36}{km/h}.
-     \item* \qty{360}{km/h}.
-     \item \qty{27,8}{km/h}.
-     \item \qty{3,60e8}{km/h}.
-   \end{keyans}
-
- \item In fisica nucleare si usa l'angstrom (simbolo:
- $\qty{1}{\angstrom} = \qty{1e-10}{m}$) e il fermi o femtometro
- ($\qty{1}{fm} = \qty{1e-15}{m}$). Qual è la relazione tra queste due
- unità di misura?
-   \begin{keyans}
-     \item* $\qty{1}{\angstrom}=\qty{1e5}{fm}$.
-     \item $\qty{1}{\angstrom}=\qty{1e-5}{fm}$.
-     \item $\qty{1}{\angstrom}=\qty{1e-15}{fm}$.
-     \item $\qty{1}{\angstrom}=\qty{1e3}{fm}$.
-   \end{keyans}
-\end{enumext}
-
-\printkeyans[columns=4]{sabastiano2}
-\end{document}
-\end{filecontents*}
-% \iffalse
-%</example>
-% \fi
-%
-% Adapted from the response given by Florent Rougon in \href{https://tex.stackexchange.com/q/529034/7832}{Multiple choice questions with proposed answers in random order — addition of automatic correction (cross mark)}
-% \textattachfile[color=red,print=false]{enumext-exa-2.tex}{\faFile*[regular]}.
+% Adapted from the response given by Florent Rougon in \href{https://tex.stackexchange.com/q/529034/7832}{Multiple choice questions with proposed answers in random order — addition of automatic correction (cross mark)}.
+%   \myattachfile*{enumext-exa-2}
 % \setenumext[keyans]{label=\Alph*,font=\small,nosep,wrap-label={\mySquared{##1}}}
 % \begin{enumext}[columns=2,save-ans=sabastiano2,mark-sep*=2pt,mark-ans*={\textcolor{gray}{✔}},save-ref=true,show-ans=true,itemsep=0pt]
-% \item La velocità di \SI{1,00e2}{m/s} espressa in \si{km/h} è:
+% \item La velocità di \qty{1,00e2}{m/s} espressa in \unit{km/h} è:
 %   \begin{keyans}
-%     \item \SI{36}{km/h}.
-%     \item* \SI{360}{km/h}.
-%     \item \SI{27,8}{km/h}.
-%     \item \SI{3,60e8}{km/h}.
+%     \item \qty{36}{km/h}.
+%     \item* \qty{360}{km/h}.
+%     \item \qty{27,8}{km/h}.
+%     \item \qty{3,60e8}{km/h}.
 %   \end{keyans}
 %
 % \item In fisica nucleare si usa l'angstrom (simbolo:
-% $\SI{1}{\angstrom} = \SI{1e-10}{m}$) e il fermi o femtometro
-% ($\SI{1}{fm} = \SI{1e-15}{m}$). Qual è la relazione tra queste due
+% $\qty{1}{\angstrom} = \qty{1e-10}{m}$) e il fermi o femtometro
+% ($\qty{1}{fm} = \qty{1e-15}{m}$). Qual è la relazione tra queste due
 % unità di misura?
 %   \begin{keyans}
-%     \item* $\SI{1}{\angstrom}=\SI{1e5}{fm}$.
-%     \item $\SI{1}{\angstrom}=\SI{1e-5}{fm}$.
-%     \item $\SI{1}{\angstrom}=\SI{1e-15}{fm}$.
-%     \item $\SI{1}{\angstrom}=\SI{1e3}{fm}$.
+%     \item* $\qty{1}{\angstrom}=\qty{1e5}{fm}$.
+%     \item $\qty{1}{\angstrom}=\qty{1e-5}{fm}$.
+%     \item $\qty{1}{\angstrom}=\qty{1e-15}{fm}$.
+%     \item $\qty{1}{\angstrom}=\qty{1e3}{fm}$.
 %   \end{keyans}
 %
-% \item La velocità di \SI{1,00e2}{m/s} espressa in \si{km/h} è:
+% \item La velocità di \qty{1,00e2}{m/s} espressa in \unit{km/h} è:
 %   \begin{keyans}
-%     \item \SI{36}{km/h}.
-%     \item* \SI{360}{km/h}.
-%     \item \SI{27,8}{km/h}.
-%     \item \SI{3,60e8}{km/h}.
+%     \item \qty{36}{km/h}.
+%     \item* \qty{360}{km/h}.
+%     \item \qty{27,8}{km/h}.
+%     \item \qty{3,60e8}{km/h}.
 %   \end{keyans}
 %
 % \item In fisica nucleare si usa l'angstrom (simbolo:
-% $\SI{1}{\angstrom} = \SI{1e-10}{m}$) e il fermi o femtometro
-% ($\SI{1}{fm} = \SI{1e-15}{m}$). Qual è la relazione tra queste due
+% $\qty{1}{\angstrom} = \qty{1e-10}{m}$) e il fermi o femtometro
+% ($\qty{1}{fm} = \qty{1e-15}{m}$). Qual è la relazione tra queste due
 % unità di misura?
 %   \begin{keyans}
-%     \item* $\SI{1}{\angstrom}=\SI{1e5}{fm}$.
-%     \item $\SI{1}{\angstrom}=\SI{1e-5}{fm}$.
-%     \item $\SI{1}{\angstrom}=\SI{1e-15}{fm}$.
-%     \item $\SI{1}{\angstrom}=\SI{1e3}{fm}$.
+%     \item* $\qty{1}{\angstrom}=\qty{1e5}{fm}$.
+%     \item $\qty{1}{\angstrom}=\qty{1e-5}{fm}$.
+%     \item $\qty{1}{\angstrom}=\qty{1e-15}{fm}$.
+%     \item $\qty{1}{\angstrom}=\qty{1e3}{fm}$.
 %   \end{keyans}
 % \end{enumext}
 %
@@ -3739,96 +3624,8 @@ $ pdfdetach -saveall enumext.pdf
 %
 % \subsubsection*{Example 3}
 %
-% \iffalse
-%<*example>
-% \fi
-\begin{filecontents*}[overwrite]{enumext-exa-3.tex}
-% arara: lualatex: { branch: developer }
-% arara: lualatex: { branch: developer }
-% arara: clean: { extensions: [ aux, log, out] }
-\documentclass{article}
-\usepackage[margin=2cm]{geometry}
-\usepackage{tikz}
-\newcommand*{\myCircled}[1]{%
-  \begin{tikzpicture}[baseline=(number.base)]
-    \node[circle, draw=green!10!gray, inner sep=1pt, fill=blue!30!green!10] (number) {#1};
-  \end{tikzpicture}%
-}
-\usepackage[colorlinks]{hyperref}
-\usepackage{enumext}
-\pagestyle{empty}
-\begin{document}
-\setenumext[keyans]{labelsep=8pt,label=\Alph*,font=\small,nosep,wrap-label={\myCircled{##1}}}
-\setenumext[keyans*]{labelsep=8pt,label=\Alph*,font=\small,nosep,wrap-label={\myCircled{##1}}}
-\setenumextmeta[2]{myroman}{no-store, label=\Roman*., noitemsep}
-\setenumextmeta[2]{myarabic}{no-store,list-offset=0.5cm,label=(\arabic*),noitemsep}
-\begin{enumext}[mode-box,save-ans=simplemc,columns=1,nosep,save-ref=true]
-\item First type of questions
-  \begin{keyans*}[columns=2,noitemsep]
-    \item value
-    \item*[$x=5$] correct
-    \item value
-    \item value
-  \end{keyans*}
-\item Second type of questions
-  \begin{enumext}[myroman]
-    \item $2\alpha+2\delta=90^{\circ}$
-    \item $\alpha=\delta$
-    \item $\angle EDF=45^{\circ}$
-  \end{enumext}
-  \begin{keyans}[columns=2,noitemsep]
-    \item I only
-    \item II only
-    \item I and II only
-    \item* I and III only
-    \item I, II, and III
-  \end{keyans}
-\item Third type of questions
-    \begin{enumext}[myarabic]
-        \item $2\alpha+2\delta=90^{\circ}$
-        \item $\angle EDF=45^{\circ}$
-    \end{enumext}
-\begin{keyans}[columns=2,noitemsep]
-    \item value
-    \item value
-    \item*[some note] value
-    \item value
-    \item value
-\end{keyans}
-
-\item Question with image and label below:
-\begin{keyanspic}[layout-sty={3,2},label-sep=3pt]
-\anspic{\includegraphics[scale=0.15]{example-image-a}}
-\anspic{\includegraphics[scale=0.15]{example-image-b}}
-\anspic{\includegraphics[scale=0.15]{example-image-a}}
-\anspic{\includegraphics[scale=0.15]{example-image-a}}
-\anspic*[A duck]{\includegraphics[scale=0.32]{example-image-duck}}
-\end{keyanspic}
-
-\item Question with image on right side:
-\begin{keyans}[mini-env=0.5\linewidth, columns=1,noitemsep]
-    \item value
-    \item value
-    \item value
-    \item*[other note] correct
-    \item value
-    \miniright
-    \includegraphics[scale=0.15]{example-image-b}
-\end{keyans}
-\end{enumext}
-
-\medskip
-
-Test keys
-
-\printkeyans{simplemc}
-\end{document}
-\end{filecontents*}
-% \iffalse
-%</example>
-% \fi
-%
-% A \emph{\enquote{simple multiple choice}} test \textattachfile[color=red,print=false]{enumext-exa-3.tex}{\faFile*[regular]}.
+% A \emph{\enquote{simple multiple choice}} test.
+%   \myattachfile*{enumext-exa-3}
 % \setenumext[keyans]{labelsep=8pt,label=\Alph*,font=\small,nosep,wrap-label={\myCircled{##1}}}
 % \begin{enumext}[mode-box,save-ans=simplemc,columns=1,nosep,save-ref=true]
 %   \item First type of questions
@@ -3891,51 +3688,8 @@ Test keys
 %
 % \subsubsection*{Example 4}
 %
-% \iffalse
-%<*example>
-% \fi
-\begin{filecontents*}[overwrite]{enumext-exa-4.tex}
-% arara: lualatex: { branch: developer, draft: true }
-% arara: lualatex: { branch: developer, draft: true }
-% arara: lualatex: { branch: developer }
-% arara: clean: { extensions: [ aux, log, out] }
-\documentclass{article}
-\usepackage[top=2cm,bottom=2cm,left=2cm,right=2cm]{geometry}%
-\usepackage[osf]{libertinus}
-\usepackage{unicode-math,tikzducks,graphicx,hyperref,enumext}
-\begin{document}
-\begin{enumext}[mode-box,save-ans=simplews,labelsep=10pt,columns=2,check-ans=true,show-ans=true,nosep,save-ref=true,wrap-label={\tikz[scale=0.25]\duck[signpost=\scalebox{0.6}{#1}];}]
-  \item Factor $x^{2}-2x+1$ \anskey{$\left(x-1\right)^{2}$}
-  \item Factor $3x+3y+3z$ \anskey{$3(x+y+z)$}
-  \item True False
-    \begin{enumext}[nosep]
-      \item $\alpha > \delta$ \anskey{False}
-      \item \LaTeX2e\ is cool? \anskey{Very True!}
-    \end{enumext}
-  \item Related to Linux
-    \begin{enumext}[nosep]
-      \item You use Linux? \anskey{Yes}
-      \item Usually uses the package manager? \anskey{Yes, \texttt{dnf}}
-      \item Rate the following package and class
-        \begin{enumext}[nosep]
-          \item \texttt{xsim-exam} \anskey{doesn't exist for now :(}
-          \item \texttt{xsim} \anskey{very good}
-          \item \texttt{exsheets} \anskey{obsolete}
-        \end{enumext}
-    \end{enumext}
-\end{enumext}
-
-The answer to \ref{simplews:1} is \getkeyans{simplews:1} and the answer
-to \ref{simplews:3} is \getkeyans{simplews:3}.
-
-\printkeyans[columns=2]{simplews}
-\end{document}
-\end{filecontents*}
-% \iffalse
-%</example>
-% \fi
-%
-% A \emph{\enquote{simple worksheet}} using ducks :) \textattachfile[color=red,print=false]{enumext-exa-4.tex}{\faFile*[regular]}.
+% A \emph{\enquote{simple worksheet}} using ducks :)
+%   \myattachfile*{enumext-exa-4}
 %
 % \begin{enumext}[save-ans=simplews,columns=1,check-ans=true,nosep,save-ref=true,wrap-label={\tikz[scale=0.25]\duck[signpost=\scalebox{0.6}{#1}];}]
 %  \item Factor $x^{2}-2x+1$ \anskey{$\left(x-1\right)^{2}$}
@@ -3966,84 +3720,8 @@ to \ref{simplews:3} is \getkeyans{simplews:3}.
 %
 % \subsubsection*{Example 5}
 %
-% \iffalse
-%<*example>
-% \fi
-\begin{filecontents*}[overwrite]{enumext-exa-5.tex}
-% arara: lualatex: { branch: developer, draft: true }
-% arara: lualatex: { branch: developer, draft: true }
-% arara: lualatex: { branch: developer }
-% arara: clean: { extensions: [ aux, log, out] }
-% arara: move: { files: [ enumext-exa-5-luamml-mathml.html ], target: 'enumext-exa-5-mathml.html' }
-\DocumentMetadata{
-    lang=en-US,
-    pdfversion=2.0,
-    pdfstandard=ua-2,
-    tagging=on,
-  }
-\documentclass{article}
-\usepackage[top=2cm,bottom=2cm,left=2cm,right=2cm]{geometry}%
-\usepackage[osf]{libertinus}
-\usepackage{unicode-math,xcolor,graphicx,hyperref,enumext}
-\hypersetup
-  {
-    colorlinks = true,
-    pdftitle   = {Test tagged PDF for SAT style enumext package},
-  }
-\newsavebox{\satbox}
-\sbox\satbox{\small\textbf{67}}%
-\NewDocumentCommand \stylesat { m }
-  {%
-    \setlength{\fboxsep}{2pt}%
-    \raisebox{7\fboxsep}{%
-    \noindent\colorbox{black}{\textcolor{white}{\makebox[\dimeval{\labelwidth-2\fboxsep}][c]{\small\textbf{\vphantom{67}#1}}}}%
-    \colorbox{lightgray}{\phantom{\rule[-\dp\satbox]{\dimeval{\linewidth-2\fboxsep}}{\dimeval{\dp\satbox+\ht\satbox}}}}}%
-  }
-\begin{document}
-\setenumext[keyans]{label=\Alph*),nosep,below*={0.3cm}}
-\begin{enumext}[mode-box,label=\arabic*,labelwidth=20pt,labelsep=0pt,columns=2,columns-sep=30pt,save-ans=stylesat, wrap-label={\stylesat{#1}}]
- \item Which choice best describes what happens in the passage?
-   \begin{keyans}
-    \item* One character argues with another character who intrudes on her home.
-    \item One character receives a surprising request from another character.
-    \item One character reminisces about choices she has made over the years.
-    \item One character criticizes another character for pursuing an unexpected course of action.
-   \end{keyans}
-
- \item Which choice best describes what happens in the passage?
-   \begin{keyans}
-    \item One character argues with another character who intrudes on her home.
-    \item One character receives a surprising request from another character.
-    \item* One character reminisces about choices she has made over the years.
-    \item One character criticizes another character for pursuing an unexpected course of action.
-   \end{keyans}
-
- \item Which choice best describes what happens in the passage?
-   \begin{keyans}
-    \item One character argues with another character who intrudes on her home.
-    \item* One character receives a surprising request from another character.
-    \item One character reminisces about choices she has made over the years.
-    \item One character criticizes another character for pursuing an unexpected course of action.
-   \end{keyans}
-
- \item Which choice best describes what happens in the passage?
-   \begin{keyans}
-    \item One character argues with another character who intrudes on her home.
-    \item One character receives a surprising request from another character.
-    \item One character reminisces about choices she has made over the years.
-    \item* One character criticizes another character for pursuing an unexpected course of action.
-   \end{keyans}
-\end{enumext}
-
-\printkeyans[columns=4]{stylesat}
-\end{document}
-\end{filecontents*}
-% \iffalse
-%</example>
-% \fi
-%
-% Adapted from the response given by Stephen in \href{https://tex.stackexchange.com/a/691544}{SAT like question format}
-% \textattachfile[color=red,print=false]{enumext-exa-5.tex}{\faFile*[regular]}.
+% Adapted from the response given by Stephen in \href{https://tex.stackexchange.com/a/691544}{SAT like question format}.
+%   \myattachfile*{enumext-exa-5}
 % \setenumext[keyans]{label=\Alph*),font=\small,nosep,wrap-label={##1}}
 % \begin{enumext}[label=\arabic*,labelwidth=20pt,labelsep=0pt,columns=2,save-ans=stylesat, wrap-label={\stylesat{#1}}]
 %  \item Which choice best describes what happens in the passage?
@@ -4083,122 +3761,8 @@ to \ref{simplews:3} is \getkeyans{simplews:3}.
 %
 % \subsubsection*{Example 6}
 %
-% \iffalse
-%<*example>
-% \fi
-\begin{filecontents*}[overwrite]{enumext-exa-6.tex}
-% arara: lualatex: { branch: developer }
-% arara: clean: { extensions: [ aux, log] }
-\documentclass[letterpaper,twoside]{article}
-\usepackage{xcolor,enumext,libertinus}
-\newlength{\itemwd}
-\settowidth{\itemwd}{\bfseries 10.} % max width
-\NewDocumentCommand \rating { }{8.5a, KSC}
-\ExplSyntaxOn
-\bool_new:N \l_azetina_rating_bool
-\NewDocumentCommand \showrating { m }
-  {
-    \str_case:nn {#1}
-      {
-        { true  }
-                {
-                  \bool_set_true:N \l_azetina_rating_bool
-                  \setenumext{show-ans=true,save-sep={ ~ }}
-                }
-        { false }
-                {
-                  \bool_set_false:N \l_azetina_rating_bool
-                  \setenumext{show-ans=false,save-sep={ ~ }}
-                }
-      }
-  }
-\NewDocumentCommand \myans { m +m }
-  {
-    \bool_if:NTF \l_azetina_rating_bool
-      {
-        \item*[(#1)] \textcolor{red}{#2}
-      }
-      {
-        \item*[(#1)] \textcolor{black}{#2}
-      }
-  }
-\NewDocumentCommand \azwrapp { m }
-  {
-    \bool_if:NTF \l_azetina_rating_bool
-      {
-        \makebox[\dim_eval:n{\marginparwidth}][r]
-          {
-            \textcolor{red}{\bfseries\footnotesize\rating}
-          }
-        \hspace{\marginparsep}\textbf{#1}
-      }
-      {
-        \makebox[\dim_eval:n{\marginparwidth+\marginparsep}][l]{ }\textbf{#1}
-      }
-  }
-\ExplSyntaxOff
-\setenumextmeta[1]{azetinasty}{label={\arabic*.},labelwidth={\marginparwidth+\marginparsep+\itemwd},list-offset={-\marginparwidth-\marginparsep},}
-\setenumext[keyans]{
-    label={\Alph*},
-    font={\bfseries},
-    wrap-ans*={\textcolor{red}{\bfseries##1}},
-    mark-ans*={\textcolor{red}{✔}},
-    wrap-opt={ },
-    }
-\begin{document}
-
-\showrating{true}
-\begin{enumext}[azetinasty,start=10,wrap-label={\azwrapp{#1}},save-ans=test2024]
-  \item sample
-    \begin{keyans}
-      \item sample
-      %\item*[(8.5a, KSC)] answer
-      \myans{8.5a, KSC}{answer}
-      \item sample
-      \item sample
-    \end{keyans}
-  % Renew \rating here
-  \RenewDocumentCommand \rating { }{9.5a, KSC}
-  \item sample
-      \begin{keyans}
-      \item sample
-      \item sample
-      \item sample
-      %\item*[(9.5a, KSC)] answer
-      \myans{9.5a, KSC}{answer}
-    \end{keyans}
-\end{enumext}
-\showrating{false}
-\RenewDocumentCommand \rating { }{10.5a, KSC}
-\begin{enumext}[save-ans=test2024,resume*]
-  \item sample
-    \begin{keyans}
-      \item sample
-      %\item*[(10.5a, KSC)] answer
-      \myans{10.5a, KSC}{answer}
-      \item sample
-      \item sample
-    \end{keyans}
-  % Renew \rating here
-  \RenewDocumentCommand \rating { }{11.5a, KSC}
-  \item sample
-      \begin{keyans}
-      \item sample
-      \item sample
-      \item sample
-      %\item*[(11.5a, KSC)] answer
-      \myans{11.5a, KSC}{answer}
-    \end{keyans}
-\end{enumext}
-\printkeyans[start=10]{test2024}
-\end{document}
-\end{filecontents*}
-% \iffalse
-%</example>
-% \fi
-%
-% Adapted from the response to \href{https://tex.stackexchange.com/q/728584}{Environment for enumerate environment}
-% \textattachfile[color=red,print=false]{enumext-exa-6.tex}{\faFile*[regular]}.
+% Adapted from the response to \href{https://tex.stackexchange.com/q/728584}{Environment for enumerate environment}.
+%   \myattachfile*{enumext-exa-6}
 % \setenumext[keyans]{label={\Alph*},font={\bfseries},wrap-ans*={\textcolor{red}{\bfseries##1}},mark-ans*={\textcolor{red}{✔}},wrap-opt={ },save-sep={ }}
 % \showrating{true}
 % \begin{enumext}[azetinasty,start=10,wrap-label={\azwrapp{#1}},save-ans=test2024]
@@ -4242,7 +3806,7 @@ to \ref{simplews:3} is \getkeyans{simplews:3}.
 % \section{Tagged PDF examples}
 %
 % This section is just to show the compatibility of \mypkg*[no-index]{enumext} with
-% \emph{tagged} \texttt{PDF} using |lualatex|. The attached files here
+% \emph{tagged} \texttt{PDF} using |lualatex|. The files described below
 % are just for testing and are intended as examples and, in a way, to
 % simplify the time of Matthew Bertucci (\texttt{@mbertucci}) when he sees this
 % excellent package and adds it to \href{https://github.com/latex3/tagging-project}{The LaTeX Tagged PDF repository}.
@@ -4266,751 +3830,44 @@ to \ref{simplews:3} is \getkeyans{simplews:3}.
 %  together with \href{https://ngpdf.com}{\texttt{ngpdf}}.
 % \end{important}
 %
-% \iffalse
-%<*example>
-% \fi
-\begin{filecontents*}[overwrite]{enumext-01.tex}
-% arara: lualatex: { branch: developer, interaction: batchmode, draft: true }
-% arara: lualatex: { branch: developer, interaction: batchmode, draft: true }
-% arara: lualatex: { branch: developer, interaction: batchmode }
-% arara: clean: { extensions: [ aux, log, out] }
-% arara: move: { files: [ enumext-01-luamml-mathml.html ], target: 'enumext-01-mathml.html' }
-\DocumentMetadata
-  {
-    lang=en-US,
-    pdfversion=2.0,
-    pdfstandard=ua-2,
-    tagging=on,
-  }
-\documentclass{article}
-\usepackage[top=2cm,bottom=2cm,left=1cm,right=1cm]{geometry}
-\usepackage{unicode-math,hyperref,enumext}
-\hypersetup
-  {
-    colorlinks = true,
-    pdftitle   = {Test tagged PDF for enumext package},
-  }
-\begin{document}
-\section{only enumext}
-Some text here
-
-\begin{enumext}[labelwidth=1cm,labelsep=0.25cm,align=left, wrap-label=\textbf{(#1}, label=\arabic*.)]
-  \item This text is in the first level.\label{A}
-    \begin{enumext}
-      \item This text is in the second level.\footnote{foot note in enumext}
-        \begin{enumext}
-          \item This text is in the third level.
-            \begin{enumext}
-              \item This text is in the fourth level.\footnotemark[20]
-            \end{enumext}
-        \end{enumext}
-    \end{enumext}
-  \item[X] This text is in the first level.
-  \item* This text is in the first level.
-\end{enumext}
-
-Some ref here \ref{A}\footnotetext[20]{foot note in enumext [20]}
-
-\section{only enumext*}
-
-Some text here
-
-\begin{enumext*}[columns=2,labelwidth=1cm,labelsep=0.25cm,align=left, wrap-label=\textbf{#1)}, label=(\arabic*.]
-  \item This text is in the first level.\label{B}
-  \item[X] This text is in the first level.\footnotemark[30]
-  \item* This text is in the first level.\footnote{foot note in enumext*}
-  \item This text is in the first level.
-\end{enumext*}
-
-Some ref here \ref{B}\footnotetext[30]{foot note in enumext* [30]}
-
-\section{enumext nested in enumext*}
-
-Some text here
-
-\begin{enumext*}
-  \item This text is in the first level.\label{C}
-  \item \begin{enumext}[base-fix]
-              \item This text is in nested enumext.\label{D}\footnote{foot note in neseted enumext}
-              \item This text is in nested enumext.\footnotemark[40]
-         \end{enumext}
-  \item This text is in the first level.
-\end{enumext*}
-
-Some refs here \ref{C} and \ref{D} \footnotetext[40]{foot note in neseted enumext [40]}
-
-\section{enumext* nested in enumext}
-
-\begin{enumext}
-  \item This text is in the first level. \label{E}
-  \item \begin{enumext*}[label=\roman*.]
-              \item This text is in nested enumext*.\label{F}\footnotemark[50]
-              \item This text is in nested enumext*.\footnote{foot note in neseted enumext*}
-         \end{enumext*}
-  \item This text is in the first level.
-\end{enumext}
-
-Some refs here \ref{E} and \ref{F} \footnotetext[50]{foot note in neseted enumext* [50]}
-
-\section{Custom ref}
-
-\begin{enumext}[ref={enumext-level-\arabic*}]
-  \item This text is in the first level. \label{G}
-  \item \begin{enumext*}[label=\roman*., ref={nested-\arabic{enumXi}.\roman*}]
-              \item This text is in nested enumext*.\label{H}
-              \item This text is in nested enumext*.
-         \end{enumext*}
-  \item This text is in the first level.
-\end{enumext}
-
-Some refs here \ref{G} and \ref{H}
-\end{document}
-\end{filecontents*}
-% \IfFileExists{enumext-01.pdf}{}{\ShellEscape{arara enumext-01.tex}} % see (https://github.com/latex3/tagging-project/issues/1337)
-% \iffalse
-%</example>
-% \fi
-%
-% \iffalse
-%<*example>
-% \fi
-\begin{filecontents*}[overwrite]{enumext-02.tex}
-% arara: lualatex: { branch: developer, draft: true }
-% arara: lualatex: { branch: developer }
-% arara: clean: { extensions: [ aux, log, out] }
-% arara: move: { files: [ enumext-02-luamml-mathml.html ], target: 'enumext-02-mathml.html' }
-\DocumentMetadata
-  {
-    lang=en-US,
-    pdfversion=2.0,
-    pdfstandard=ua-2,
-    tagging=on,
-  }
-\documentclass{article}
-\usepackage[top=2cm,bottom=2cm,left=1cm,right=1cm]{geometry}
-\usepackage{unicode-math,hyperref,enumext}
-\hypersetup
-  {
-    colorlinks = true,
-    pdftitle   = {Test tagged PDF for enumext package},
-  }
-\begin{document}
-\section{enumext + multicols}
-Some text here
-
-\begin{enumext}[columns=2, labelwidth=1cm,labelsep=0.25cm,align=left, wrap-label=\textbf{(#1}, label=\arabic*.),partopsep=0.5cm]
-  \item This text is in the first level.
-  \item This text is in the first level.
-  \item This text is in the first level.
-  \item This text is in the first level.
-  \item[X] This text is in the first level.
-  \item* This text is in the first level.
-\end{enumext}
-
-Some text here
-
-\section{enumext + minipage}
-
-Some text here
-
-\begin{enumext}[labelwidth=1cm,labelsep=0.25cm,align=left,partopsep=0.5cm,mini-env=0.4\linewidth]
-  \item This text is in the first level.
-  \item This text is in the first level.
-  \item This text is in the first level.
-  \item This text is in the first level.
-  \miniright
-    This text is in minipage.
-\end{enumext}
-
-\section{enumext + minipage + multicols}
-
-Some text here
-
-\begin{enumext}[columns=2,labelwidth=1cm,labelsep=0.25cm,align=left,partopsep=0.5cm,mini-env=0.4\linewidth]
-  \item This text is in the first level.
-  \item This text is in the first level.
-  \item This text is in the first level.
-  \item This text is in the first level.
-  \miniright
-    This text is in minipage.
-\end{enumext}
-
-Some text here
-
-\section{enumext* + minipage}
-
-Some text here
-
-\begin{enumext*}[columns=2,labelwidth=1cm,labelsep=0.25cm,align=left,partopsep=0.5cm,mini-env=0.4\linewidth, mini-right = {This text is in minipage.}]
-  \item This text is in the first level.
-  \item This text is in the first level.
-  \item This text is in the first level.
-  \item This text is in the first level.
-\end{enumext*}
-\end{document}
-\end{filecontents*}
-\IfFileExists{enumext-02.pdf}{}{\ShellEscape{arara enumext-02.tex}}
-% \iffalse
-%</example>
-% \fi
-%
-% \iffalse
-%<*example>
-% \fi
-\begin{filecontents*}[overwrite]{enumext-03.tex}
-% arara: lualatex: { branch: developer, draft: true }
-% arara: lualatex: { branch: developer, draft: true }
-% arara: lualatex: { branch: developer }
-% arara: clean: { extensions: [ aux, log, out] }
-% arara: move: { files: [ enumext-03-luamml-mathml.html ], target: 'enumext-03-mathml.html' }
-\DocumentMetadata
-  {
-    lang=en-US,
-    pdfversion=2.0,
-    pdfstandard=ua-2,
-    tagging=on,
-  }
-\documentclass{article}
-\usepackage[top=2cm,bottom=2cm,left=1cm,right=1cm]{geometry}
-\usepackage{unicode-math,graphicx,hyperref,enumext}
-\hypersetup
-  {
-    colorlinks = true,
-    pdftitle   = {Test tagged PDF for enumext package},
-  }
-\begin{document}
-\section{enumext+keyanspic}
-
-Some text here
-
-\begin{enumext}[save-ans=test,save-sep={ },save-ref = true]
-  \item Question with images.
-    \begin{keyanspic}[layout-sty={3,2}]
-      \anspic{\includegraphics[scale=0.30, alt={Un pato de color amarillo}]{example-image-duck}}
-      \anspic{\includegraphics[scale=0.15, alt={Una letra mayuscula A}]{example-image-a}}
-      \anspic*{\includegraphics[scale=0.15, alt={Una letra mayuscula B}]{example-image-b}}
-      \anspic{\includegraphics[scale=0.15, alt={Una letra mayuscula C}]{example-image-c}}
-      \anspic{\includegraphics[scale=0.15, alt={La palabra Image}]{example-image}}
-    \end{keyanspic}
-   \item Question with images.\label{dos}
-    \begin{keyanspic}[label-pos=above, layout-sty={3,2}]
-      \anspic{\includegraphics[scale=0.15, alt={Una letra mayuscula A}]{example-image-a}}
-      \anspic{\includegraphics[scale=0.15, alt={Una letra mayuscula B}]{example-image-b}}
-      \anspic{\includegraphics[scale=0.15, alt={Una letra mayuscula C}]{example-image-c}}
-      \anspic{\includegraphics[scale=0.15, alt={La palabra Image}]{example-image}}
-      \anspic*[A duck]{\includegraphics[scale=0.30, alt={Un pato de color amarillo}]{example-image-duck}}
-    \end{keyanspic}
-   \item Question with images.
-    \begin{keyanspic}
-      \anspic*[La letra A]{\includegraphics[scale=0.15, alt={Una letra mayuscula A}]{example-image-a}}
-      \anspic{\includegraphics[scale=0.15, alt={Una letra mayuscula B}]{example-image-b}}
-      \anspic{\includegraphics[scale=0.30, alt={Un pato de color amarillo}]{example-image-duck}}
-      \anspic{\includegraphics[scale=0.15, alt={Una letra mayuscula C}]{example-image-c}}
-      \anspic{\includegraphics[scale=0.15, alt={La palabra Image}]{example-image}}
-    \end{keyanspic}
-   \item Question with images.
-    \begin{keyanspic}[label-pos=above]
-      \anspic{\includegraphics[scale=0.30, alt={Un pato de color amarillo}]{example-image-duck}}
-      \anspic{\includegraphics[scale=0.15, alt={Una letra mayuscula A}]{example-image-a}}
-      \anspic*{\includegraphics[scale=0.15, alt={Una letra mayuscula B}]{example-image-b}}
-      \anspic{\includegraphics[scale=0.15, alt={Una letra mayuscula C}]{example-image-c}}
-      \anspic{\includegraphics[scale=0.15, alt={La palabra Image}]{example-image}}
-    \end{keyanspic}
-\end{enumext}
-
-The answer to question \ref{dos} is \getkeyans{test:2}
-
-\printkeyans*{test}
-\end{document}
-\end{filecontents*}
-\IfFileExists{enumext-03.pdf}{}{\ShellEscape{arara enumext-03.tex}}
-% \iffalse
-%</example>
-% \fi
-%
-% \iffalse
-%<*example>
-% \fi
-\begin{filecontents*}[overwrite]{enumext-04.tex}
-% arara: lualatex: { branch: developer, draft: true }
-% arara: lualatex: { branch: developer, draft: true }
-% arara: lualatex: { branch: developer }
-% arara: clean: { extensions: [ aux, log, out] }
-% arara: move: { files: [ enumext-04-luamml-mathml.html ], target: 'enumext-04-mathml.html' }
-\listfiles
-\DocumentMetadata
-  {
-    lang=en-US,
-    pdfversion=2.0,
-    pdfstandard=ua-2,
-    tagging=on,
-  }
-\documentclass{article}
-\usepackage[top=2cm,bottom=2cm,left=1cm,right=1cm]{geometry}
-\usepackage{unicode-math,graphicx,hyperref,enumext}
-\hypersetup
-  {
-    colorlinks = true,
-    pdftitle   = {Test tagged PDF for enumext package},
-  }
-\begin{document}
-\section{enumext + anskey + anskey*}
-
-Some text here
-
-\begin{enumext}[save-ans=test,save-sep={ },save-ref = true]
-  \item Question A. \anskey{Answer A}
-  \item Question B. \anskey{Answer B}
-  \item Question C.
-    \begin{anskey*}
-    Answer with \verb+code+ and more
-      \begin{verbatim}
-        Some code here
-      \end{verbatim}
-    And text
-    \end{anskey*}
-\end{enumext}
-
-The answer to question \ref{test:2} is \getkeyans{test:2}
-
-\printkeyans*{test}
-
-\section{enumext* + anskey + anskey*}
-
-Some text here
-
-\begin{enumext*}[save-ans=test-2,save-sep={ },save-ref = true]
-  \item Question A. \anskey{Answer A}
-  \item Question B. \anskey{Answer B}
-  \item Question C.
-    \begin{anskey*}
-    Answer with \verb+code+ and more
-      \begin{verbatim}
-        Some code here
-      \end{verbatim}
-    And text
-    \end{anskey*}
-\end{enumext*}
-
-\printkeyans{test-2}
-\end{document}
-\end{filecontents*}
-\IfFileExists{enumext-04.pdf}{}{\ShellEscape{arara enumext-04.tex}}
-% \iffalse
-%</example>
-% \fi
-%
-% \iffalse
-%<*example>
-% \fi
-\begin{filecontents*}[overwrite]{enumext-05.tex}
-% arara: lualatex: { branch: developer, draft: true }
-% arara: lualatex: { branch: developer, draft: true }
-% arara: lualatex: { branch: developer }
-% arara: clean: { extensions: [ aux, log, out] }
-% arara: move: { files: [ enumext-05-luamml-mathml.html ], target: 'enumext-05-mathml.html' }
-\DocumentMetadata{
-    lang=en-US,
-    pdfversion=2.0,
-    pdfstandard=ua-2,
-    tagging=on,
-  }
-\documentclass{article}
-\usepackage[top=2cm,bottom=2cm,left=1cm,right=1cm]{geometry}
-\usepackage{unicode-math,graphicx,hyperref,enumext}
-\hypersetup
-  {
-    colorlinks = true,
-    pdftitle   = {Test tagged PDF for enumext package},
-  }
-\setenumext[print,1]{columns=2, columns-sep=1cm, font=\bfseries}
-\setenumext[print*]{columns=2, columns-sep=1cm,first=\bfseries}
-\setenumext[enumext,1]{columns=2,nosep,save-ref=true,save-sep={ },wrap-opt=\fbox{##1}, show-ans=true}
-\setenumext[keyans]{columns=2,noitemsep}
-\setenumext[keyans*]{columns=2,noitemsep}
-\setenumextmeta[2]{myroman}{no-store, label=\Roman*., noitemsep}
-\setenumextmeta[2]{myarabic}{no-store,list-offset=0.5cm,label=(\arabic*),noitemsep}
-\begin{document}
-\section{The enumext package in action}
-
-\begin{enumext}[save-ans=mytest]
-\item First type of questions
-  \begin{keyans*}
-    \item value
-    \item*[$x=5$] correct
-    \item value
-    \item value
-  \end{keyans*}
-\item Second type of questions
-  \begin{enumext}[myroman]
-    \item $2\alpha+2\delta=90^{\circ}$
-    \item $\alpha=\delta$
-    \item $\angle EDF=45^{\circ}$
-  \end{enumext}
-  \begin{keyans}
-    \item I only
-    \item II only
-    \item I and II only
-    \item* I and III only
-    \item I, II, and III
-  \end{keyans}
-\item* Third type of questions
-  \begin{enumext}[myarabic]
-    \item $2\alpha+2\delta=90^{\circ}$
-    \item $\angle EDF=45^{\circ}$
-  \end{enumext}
-  \begin{keyans}
-    \item value
-    \item value
-    \item*[some note $y$] value
-    \item value
-    \item value
-  \end{keyans}
-\item Question with image and label above:
-  \begin{keyanspic}[label-pos=above, layout-sty={3,2}]
-    \anspic*[La letra A]{\includegraphics[scale=0.15, alt={Una letra mayuscula A}]{example-image-a}}
-    \anspic{\includegraphics[scale=0.15, alt={Una letra mayuscula B}]{example-image-b}}
-    \anspic{\includegraphics[scale=0.30, alt={Un pato de color amarillo}]{example-image-duck}}
-    \anspic{\includegraphics[scale=0.15, alt={Una letra mayuscula C}]{example-image-c}}
-    \anspic{\includegraphics[scale=0.15, alt={La palabra Image}]{example-image}}
-  \end{keyanspic}
-\item A question
-  \begin{keyans}[mini-env=0.5\linewidth, columns=1]
-    \item value
-    \item value
-    \item value
-    \item*[other note] correct
-    \item value
-    \miniright
-    \includegraphics[scale=0.15,alt={Una letra mayuscula B}]{example-image-b}
-  \end{keyans}
-\item Question with image on left side: \anskey[item-star]{Mucak}
-\end{enumext}
-
-Some text here
-\section{printkeyans}
-Some text here
-
-\printkeyans{mytest}
-
-\section{printkeyans*}
-Some text here
-
-\printkeyans*{mytest}
-
-\section{foreachkeyans}
-Some text here
-
-\foreachkeyans[sep={\par}]{mytest}
-
-Some text here
-\end{document}
-\end{filecontents*}
-\IfFileExists{enumext-05.pdf}{}{\ShellEscape{arara enumext-05.tex}}
-% \iffalse
-%</example>
-% \fi
-%
-%
-% \iffalse
-%<*example>
-% \fi
-\begin{filecontents*}[overwrite]{enumext-06.tex}
-% arara: lualatex: { branch: developer, draft: true }
-% arara: lualatex: { branch: developer, draft: true }
-% arara: lualatex: { branch: developer }
-% arara: clean: { extensions: [ aux, log, out] }
-% arara: move: { files: [ enumext-06-luamml-mathml.html ], target: 'enumext-06-mathml.html' }
-\DocumentMetadata
-  {
-    lang=en-US,
-    pdfversion=2.0,
-    pdfstandard=ua-2,
-    tagging=on,
-  }
-\documentclass{article}
-\usepackage[top=2cm,bottom=2cm,left=3cm,right=3cm]{geometry}
-\usepackage{unicode-math,graphicx,hyperref,enumext}
-\hypersetup
-  {
-    colorlinks = true,
-    pdftitle   = {Test tagged PDF for enumext package},
-  }
-\newlength{\descitemwd}
-\NewDocumentCommand \labelbx { s +m }
-  {%
-    \SuspendTagging{\parbox}%
-    \IfBooleanTF{#1}%
-      {\strut\smash{\parbox[t]{\labelwidth}{\raggedright{#2}}}}%
-      {\strut\smash{\parbox[t]{\labelwidth}{\raggedleft{#2}}}}%
-    \ResumeTagging{\parbox}
-  }
-\begin{document}
-
-\section{Fake \texttt{itemize} environment}
-
-\noindent\begin{minipage}[t]{0.45\linewidth}
-\begin{enumext}[nosep, label=\textbullet]
-  \item First level item
-    \begin{enumext}[nosep,label=\normalfont\bfseries\textendash]
-      \item Second level item
-        \begin{enumext}[nosep,label=\textasteriskcentered]
-          \item Third level item
-            \begin{enumext}[nosep,label=\textperiodcentered]
-               \item Fourth level item
-            \end{enumext}
-        \end{enumext}
-    \end{enumext}
-  \item First level item
-\end{enumext}
-\end{minipage}\hfill
-\begin{minipage}[t]{0.45\linewidth}
-\begin{enumext}[nosep, label=$\ast$]
-  \item First level item
-    \begin{enumext}[nosep,label=$\diamond$]
-      \item Second level item
-        \begin{enumext}[nosep,label=$\circ$]
-          \item Third level item
-            \begin{enumext}[nosep,label=$\star$]
-               \item Fourth level item
-            \end{enumext}
-        \end{enumext}
-    \end{enumext}
-  \item First level item
-\end{enumext}
-\end{minipage}
-
-\section{Fake \texttt{description} environment}
-
-\settowidth{\descitemwd}{\textbf{Something long}}
-\begin{enumext}[label={},labelwidth=\descitemwd,font=\bfseries,noitemsep,topsep=3pt]
-  \item[SomeThing] A short one-line description.
-  \item[] This is an entry \emph{without} a label.
-  \item[Something] A short \emph{one-line} description text.
-  \item[Something long] A much \emph{longer} description text may take
-    more than one line or more than one paragraph.
-
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-    tempor incididunt ut labore et dolore magna aliqua.
-\end{enumext}
-
-\begin{enumext*}[label={},labelwidth=\descitemwd,font=\bfseries,noitemsep,topsep=3pt]
-  \item[SomeThing] A short one-line description.
-  \item[] This is an entry \emph{without} a label.
-  \item[Something] A short \emph{one-line} description text.
-  \item[Something long] A much \emph{longer} description text may take
-    more than one line or more than one paragraph.
-
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-    tempor incididunt ut labore et dolore magna aliqua.
-\end{enumext*}
-
-\begin{enumext}[label={},labelwidth=\descitemwd,list-indent=0pt,font=\bfseries,noitemsep,topsep=3pt]
-  \item[SomeThing] A short one-line description.
-  \item[] This is an entry \emph{without} a label.
-  \item[Something] A short \emph{one-line} description text.
-  \item[Something long] A much \emph{longer} description text may take
-    more than one line or more than one paragraph.
-
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-    tempor incididunt ut labore et dolore magna aliqua.
-\end{enumext}
-
-\begin{enumext*}[label={},labelwidth=\descitemwd,list-indent=0pt,font=\bfseries,noitemsep,topsep=3pt]
-  \item[SomeThing] A short one-line description.
-  \item[] This is an entry \emph{without} a label.
-  \item[Something] A short \emph{one-line} description text.
-  \item[Something long] A much \emph{longer} description text may take
-    more than one line or more than one paragraph.
-
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-    tempor incididunt ut labore et dolore magna aliqua.
-\end{enumext*}
-
-\section{Fake \texttt{description} environment in margin}
-
-\begin{enumext}[align=right, label={},labelsep=4pt,labelwidth=\descitemwd,list-offset={-\descitemwd-4pt}, font=\bfseries,noitemsep,topsep=3pt]
-  \item[SomeThing] A short one-line description.
-  \item This is an entry \textit{without} a label.
-  \item[Something] A short one-line description.
-  \item[Something long] A much longer description. Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-    Ut purus elit, vestibulum ut, placerat ac, adipiscing vitae, felis.
-    Curabitur dictum gravida mauris.
-\end{enumext}
-
-\begin{enumext*}[align=right, label={},labelsep=4pt,labelwidth=\descitemwd,list-offset={-\descitemwd-4pt}, font=\bfseries,noitemsep,topsep=3pt]
-  \item[SomeThing] A short one-line description.
-  \item This is an entry \textit{without} a label.
-  \item[Something] A short one-line description.
-  \item[Something long] A much longer description. Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-    Ut purus elit, vestibulum ut, placerat ac, adipiscing vitae, felis.
-    Curabitur dictum gravida mauris.
-\end{enumext*}
-
-\section{Fake \texttt{description} with multi-line labels}
-
-\begin{enumext}[label={},labelsep=4pt,labelwidth=\descitemwd,list-offset=-\dimeval{\descitemwd+4pt}, wrap-label*={\labelbx{#1}}, font=\bfseries,noitemsep,topsep=3pt]
-  \item[SomeThing] A short one-line description.
-  \item This is an entry \textit{without} a label.
-  \item[Something] A short one-line description.
-  \item[Something \\ long] A much longer description. Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-    Ut purus elit, vestibulum ut, placerat ac, adipiscing vitae, felis.
-    Curabitur dictum gravida mauris.
-
-    Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-    Ut purus elit, vestibulum ut, placerat ac, adipiscing vitae, felis.
-    Curabitur dictum gravida mauris.
-
-  \item[SoMeThInG \\ LoNg] A much longer description. Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-    Ut purus elit, vestibulum ut, placerat ac, adipiscing vitae, felis.
-    Curabitur dictum gravida mauris.
-
-    Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-    Ut purus elit, vestibulum ut, placerat ac, adipiscing vitae, felis.
-    Curabitur dictum gravida mauris.
-\end{enumext}
-\end{document}
-\end{filecontents*}
-\IfFileExists{enumext-06.pdf}{}{\ShellEscape{arara enumext-06.tex}}
-\begin{filecontents*}[overwrite]{enumext-07.tex}
-% arara: lualatex: { branch: developer, draft: true }
-% arara: lualatex: { branch: developer, draft: true }
-% arara: lualatex: { branch: developer }
-% arara: clean: { extensions: [ aux, log, out] }
-% arara: move: { files: [ enumext-07-luamml-mathml.html ], target: 'enumext-07-mathml.html' }
-\DocumentMetadata
-  {
-    lang=en-US,
-    pdfversion=2.0,
-    pdfstandard=ua-2,
-    tagging=on,
-  }
-\documentclass{article}
-\usepackage[top=2cm,bottom=2cm,left=1cm,right=1cm]{geometry}
-\usepackage{unicode-math,hyperref,enumext}
-\hypersetup
-  {
-    colorlinks = true,
-    pdftitle   = {Test tagged PDF for enumext package},
-  }
-\resetenumext{section}
-\setenumext{resume,label=(\arabic*.),widest=99}
-\begin{document}
-\section{Started with \texttt{resume} key set by \texttt{\textbackslash setenumext}}
-\begin{enumext}[columns=2]
-  \item Salida 1
-  \item Salida 2
-  \item Salida 3
-\end{enumext}
-
-\begin{enumext}[label=\arabic*.,start=80]%
-  \item Salida 80
-  \item Salida 81
-\end{enumext}
-
-\begin{enumext}
-  \item Salida (82)
-\end{enumext}
-
-\section{Reset by \texttt{\textbackslash resetenumext}}
-
-\begin{enumext}
-  \item Salida 1
-  \item Salida 2
-\end{enumext}
-
-\section*{Unnumbered, reset by \texttt{reset} key}
-
-\begin{enumext}[reset]
-  \item Salida 1
-  \item Salida 2
-\end{enumext}
-
-\section{Using \texttt{series} and \texttt{resume} keys in inner levels}
-
-\begin{enumext}[columns=2]
-  \item first level
-    \begin{enumext}[series=foo]
-      \item second level
-      \item second level
-    \end{enumext}
-    Some text on first level
-    \begin{enumext}[resume=foo]
-      \item second level
-      \item second level
-    \end{enumext}
-  \item first level
-    \begin{enumext*}[series=baz]
-      \item second level starred
-      \item second level starred
-    \end{enumext*}
-    Some text on first level
-    \begin{enumext*}[resume=baz]
-      \item second level starred
-      \item second level starred
-    \end{enumext*}
-  \item first level
-  \item first level
-\end{enumext}
-
-\section*{Using \texttt{resume*} key}
-
-\begin{enumext}[resume*]
-  \item Salida 5 (two-columns)
-  \item Salida 6 (two-columns)
-\end{enumext}
-\end{document}
-\end{filecontents*}
-\IfFileExists{enumext-07.pdf}{}{\ShellEscape{arara enumext-07.tex}}
-% \iffalse
-%</example>
-% \fi
-%
 % \begin{itemize}[topsep=1pt,partopsep=0pt,parsep=1pt,itemsep=1pt]
 % \item The file \myfile{enumext-01.tex} contains the basic tests for the
 %   \myenv*[no-index]{enumext} and \myenv*[no-index]{enumext*} environments and the nesting
 %   between them plus the use of the \mykey{label}, \mykey{labelwidth},
 %   \mykey{labelsep}, \mykey{ref}, \mykey{align} and \mykey{wrap-label} keys.
-%^^A   \IfFileExists{enumext-01.pdf}{Source file \textattachfile[color=red,print=false]{enumext-01.tex}{\faFile*[regular]}
-%^^A   and \emph{tagged} \texttt{PDF} \textattachfile[color=red,print=false]{enumext-01.pdf}{\faFilePdf[regular]}.}{}%
 %
 % \item The file \myfile{enumext-02.tex} contains the tests for the \myenv*[no-index]{enumext}
 %   and \myenv*[no-index]{enumext*} environments and the support for \myenv[no-index]{minipage}
 %   and \myenv[no-index]{multicols} environments using the keys \mykey{columns},
 %   \mykey{columns-sep}, \mykey{mini-env}, \mykey{mini-right} and
-%   |\miniright| command. \IfFileExists{enumext-02.pdf}{Source file \textattachfile[color=red,print=false]{enumext-02.tex}{\faFile*[regular]}
-%   and \emph{tagged} \texttt{PDF} \textattachfile[color=red,print=false]{enumext-02.pdf}{\faFilePdf[regular]}.}{}%
+%   |\miniright| command.
+%   \myattachfile{enumext-02}
 %
 % \item The file \myfile{enumext-03.tex} contains the tests for the \myenv*[no-index]{enumext}
 %   and \myenv*[no-index]{keyanspic} environments activated by the \mykey{save-ans}
 %   key together with the \mykey{save-sep} and \mykey{save-ref} keys and
 %   the |\printkeyans| command.
-%   \IfFileExists{enumext-03.pdf}{Source file \textattachfile[color=red,print=false]{enumext-03.tex}{\faFile*[regular]}
-%   and \emph{tagged} \texttt{PDF} \textattachfile[color=red,print=false]{enumext-03.pdf}{\faFilePdf[regular]}.}{}%
+%   \myattachfile{enumext-03}
 %
 % \item The file \myfile{enumext-04.tex} contains the tests for the |\anskey|
 %   command and the \myenv*[no-index]{anskey*} environment activated by the
 %   \mykey{save-ans} key along with the |\getkeyans| and |\printkeyans| commands.
-%   \IfFileExists{enumext-04.pdf}{Source file \textattachfile[color=red,print=false]{enumext-04.tex}{\faFile*[regular]}
-%   and \emph{tagged} \texttt{PDF} \textattachfile[color=red,print=false]{enumext-04.pdf}{\faFilePdf[regular]}.}{}%
+%   \myattachfile{enumext-04}
 %
 % \item The file \myfile{enumext-05.tex} contains the tests for the environments
 %   \myenv*[no-index]{keyans}, \myenv*[no-index]{keyans*} and \myenv*[no-index]{keyanspic} activated by the key
 %   \mykey{save-ans} together with the keys \mykey{no-store} and \mykey{show-ans}
 %   and the commands |\setenumext|, |\setenumextmeta|, |\printkeyans| and |\foreachkeyans|.
-%   \IfFileExists{enumext-05.pdf}{Source file \textattachfile[color=red,print=false]{enumext-05.tex}{\faFile*[regular]}
-%   and \emph{tagged} \texttt{PDF} \textattachfile[color=red,print=false]{enumext-05.pdf}{\faFilePdf[regular]}.}{}%
+%   \myattachfile{enumext-05}
 %
 % \item The file \myfile{enumext-06.tex} contains the tests for the environments
 %   \myenv*[no-index]{enumext} and \myenv*[no-index]{enumext*} for \emph{fake} \myenv[no-index]{itemize} and \myenv[no-index]{description}.
-%   \IfFileExists{enumext-06.pdf}{Source file \textattachfile[color=red,print=false]{enumext-06.tex}{\faFile*[regular]}
-%   and \emph{tagged} \texttt{PDF} \textattachfile[color=red,print=false]{enumext-06.pdf}{\faFilePdf[regular]}.}{}%
+%   \myattachfile{enumext-06}
 %
 % \item The file \myfile{enumext-07.tex} contains the tests for starting the
 %   environments with |\setenumext{resume}|, the |\resetenumext| command
 %   and the \mykey{series}, \mykey{resume}, \mykey{resume*} and \mykey{reset} keys.
-%   \IfFileExists{enumext-07.pdf}{Source file \textattachfile[color=red,print=false]{enumext-07.tex}{\faFile*[regular]}
-%   and \emph{tagged} \texttt{PDF} \textattachfile[color=red,print=false]{enumext-07.pdf}{\faFilePdf[regular]}.}{}%
+%   \myattachfile{enumext-07}
 % \end{itemize}
 %
 % \section{The way of non-enumerated lists}
@@ -5520,7 +4377,7 @@ Some text here
 % are common to the different levels of the environments are described
 % using a capital \enquote{\texttt{\textcolor{keyname}{X}}}.
 %
-% The temporary function \myhlc|\__@@_tmp:n| is used in
+% The temporary function \myhlc|\@@_tmp:n| is used in
 % different parts of the package code for variable creation or execution
 % of other functions that are grouped into this one.
 %
@@ -5558,7 +4415,7 @@ Some text here
 %    \end{macrocode}
 % Now declare the \mypkg*[no-index]{enumext} package.
 %    \begin{macrocode}
-\ProvidesExplPackage {enumext} {2026-10-03} {2.3} {Enumerate exercise sheets}
+\ProvidesExplPackage {enumext} {2026-10-23} {2.3} {Enumerate exercise sheets}
 %    \end{macrocode}
 % Finally, check if the \mypkg{multicol} package is loaded; if not, it is loaded.
 %    \begin{macrocode}
@@ -5691,12 +4548,12 @@ Some text here
 %
 % \begin{variable}[int]{\l_@@_leftmargin_tmp_X_bool, \l_@@_leftmargin_tmp_X_dim,
 %                       \l_@@_leftmargin_X_dim, \l_@@_itemindent_X_dim,}
-%   The boolean variable \myhlc|\l__@@_leftmargin_tmp_X_bool| and the
-%   dimensional variable \myhlc|\l__@@_leftmargin_tmp_X_dim|
+%   The boolean variable \myhlc|\l_@@_leftmargin_tmp_X_bool| and the
+%   dimensional variable \myhlc|\l_@@_leftmargin_tmp_X_dim|
 %   are used by the \mykey{list-indent} key (\S\ref{key:list-indent}).
-%   The variables \myhlc|\l__@@_leftmargin_X_dim| and
-%   \myhlc|\l__@@_itemindent_X_dim| are used and set by the function
-%   \myhlc|\__@@_calc_hspace:NNNNNNN| (\S\ref{subsubsec:leftmargin}).
+%   The variables \myhlc|\l_@@_leftmargin_X_dim| and
+%   \myhlc|\l_@@_itemindent_X_dim| are used and set by the function
+%   \myhlc|\@@_calc_hspace:NNNNNNN| (\S\ref{subsubsec:leftmargin}).
 %    \begin{macrocode}
 \cs_set_protected:Nn \@@_tmp:n
   {
@@ -5753,14 +4610,14 @@ Some text here
 %                       \l_@@_start_X_int, \l_@@_fake_item_indent_X_tl, \l_@@_label_fill_left_X_tl,
 %                       \l_@@_label_fill_right_X_tl, \l_@@_vspace_a_star_X_bool,
 %                       \l_@@_vspace_b_star_X_bool,}
-%   The bool vars \myhlc|\l__@@_wrap_label_X_bool| and
-%   \myhlc|\l__@@_wrap_label_opt_X_bool| are used by \mykey{wrap-label}
+%   The bool vars \myhlc|\l_@@_wrap_label_X_bool| and
+%   \myhlc|\l_@@_wrap_label_opt_X_bool| are used by \mykey{wrap-label}
 %   and \mykey{wrap-label*} keys (\S\ref{key:label}), the integer
-%   \myhlc|\l__@@_start_X_int| are used by the \mykey{start} and \mykey{start*} keys (\S\ref{key:start-widest}),
-%   the token list \myhlc|\l__@@_fake_item_indent_X_tl | is used by \mykey{itemindent} key (\S\ref{subsubsec:fake-indent}),
-%   the variables \myhlc|\l__@@_label_fill_left_X_tl| and \myhlc|\l__@@_label_fill_left_X_tl| are used by the
-%   \mykey{align} key (\S\ref{key:label}). The boolean vars \myhlc|\l__@@_vspace_a_star_X_bool|,
-%   \myhlc|\l__@@_vspace_b_star_X_bool| are used by \mykey{above},
+%   \myhlc|\l_@@_start_X_int| are used by the \mykey{start} and \mykey{start*} keys (\S\ref{key:start-widest}),
+%   the token list \myhlc|\l_@@_fake_item_indent_X_tl | is used by \mykey{itemindent} key (\S\ref{subsubsec:fake-indent}),
+%   the variables \myhlc|\l_@@_label_fill_left_X_tl| and \myhlc|\l_@@_label_fill_left_X_tl| are used by the
+%   \mykey{align} key (\S\ref{key:label}). The boolean vars \myhlc|\l_@@_vspace_a_star_X_bool|,
+%   \myhlc|\l_@@_vspace_b_star_X_bool| are used by \mykey{above},
 %   \mykey{above*}, \mykey{below} and \mykey{below*} keys (\S\ref{key:before}).
 %    \begin{macrocode}
 \cs_set_protected:Nn \@@_tmp:n
@@ -5957,7 +4814,7 @@ Some text here
 % \begin{variable}[int]{ \l_@@_newlabel_arg_one_tl, \l_@@_newlabel_arg_two_tl,
 %                        \l_@@_write_aux_file_tl, \l_@@_label_copy_X_tl, }
 %   Internal variables used by \mykey{save-ref} key (\S\ref{subsec:storage-system}).
-%   The variables \myhlc|\l__@@_label_copy_X_tl| correspond to temporary
+%   The variables \myhlc|\l_@@_label_copy_X_tl| correspond to temporary
 %   copies of the \mymeta{labels} defined by level on which operations will be performed.
 %
 %   The variables \myhlc|\l_@@_newlabel_arg_one_tl| and \myhlc|\l_@@_newlabel_arg_two_tl|
@@ -6023,7 +4880,7 @@ Some text here
 % \end{variable}
 %
 % \begin{variable}[int]{\c_@@_all_envs_clist,}
-%    An internal |clist-var| variable to run with \myhlc|\__@@_tmp:n|.
+%    An internal |clist-var| variable to run with \myhlc|\@@_tmp:n|.
 %    \begin{macrocode}
 \clist_const:Nn \c_@@_all_envs_clist
   {
@@ -6308,6 +5165,32 @@ Some text here
 %    \end{macrocode}
 % \end{macro}
 %
+% \subsubsection{Definition of error messages}
+%
+% \begin{macro}[int]{prop-seq-int-hook, item-answer-hook}
+% Messages written to the |.log| file by the internal hooks that show the values of the
+% global variables.
+%    \begin{macrocode}
+\msg_new:nnn { enumext } { prop-seq-int-hook }
+  {
+    *~Package~enumext:~Elements~in~
+    \c_backslash_str g_@@_#1_prop~=~#2.\\
+    *~Package~enumext:~Elements~in~
+    \c_backslash_str g_@@_#1_seq~=~#3.\\
+    *~Package~enumext:~Value~of~
+    \c_backslash_str g_@@_resume_#1_int~=~#4.
+  }
+\msg_new:nnn { enumext } { item-answer-hook }
+  {
+    *~Package~enumext:~Value~of~
+    \c_backslash_str g_@@_item_number_int~=~#1.\\
+    *~Package~enumext:~Value~of~
+    \c_backslash_str g_@@_item_anskey_int~=~#2.\\
+    *~Package~enumext:~Difference~item_number_int~-~item_anskey_int~=~#3.
+  }
+%    \end{macrocode}
+% \end{macro}
+%
 % \subsection{Copying \env{list} and \env{minipage} environments}\label{subsec:copy-envs}
 %
 % The \myenv[no-index]{list} environment provided by \hologo{LaTeX} has the
@@ -6563,7 +5446,7 @@ Some text here
 % \begin{macro}[int]{\@@_renew_footnote_standard:,\@@_print_footnote_standard:,
 %                    \@@_renew_footnote_starred:,\@@_print_footnote_starred:,}
 %   The redefinition of |\footnote| is encapsulated to pass it to the internal
-%   \myhlc|\__@@_mini_page| environment used by the \mykey[env]{mini-env}
+%   \myhlc|\@@_mini_page| environment used by the \mykey[env]{mini-env}
 %   key in the \myenv*[no-index]{enumext} and \myenv*[no-index]{keyans} environments. It is
 %   executed when \emph{tagged} \texttt{PDF} is active or when
 %   the \mypkg[no-index]{footnotehyper} package is not loaded.
@@ -6650,9 +5533,9 @@ Some text here
 %
 % \subsection{The internal \env{minipage} environment}\label{subsec:internal-minipage}
 %
-% \begin{macro}[int]{\@@_internal_mini_page:, \__@@_mini_page}
+% \begin{macro}[int]{\@@_internal_mini_page:, \@@_mini_page}
 %   The function \myhlc|\@@_internal_mini_page:| creates an internal
-%   \myhlc|\__@@_mini_page| environment (\emph{custom version} of
+%   \myhlc|\@@_mini_page| environment (\emph{custom version} of
 %   \myenv[no-index]{minipage}) setting the |\if@minipage| switch to \emph{\enquote{false}}
 %   to allow spaces at the \emph{\enquote{above}} of the environment,
 %   plus \myhlc|\skip_vertical:N \c_zero_skip| is added to maintain alignment
@@ -6712,7 +5595,7 @@ Some text here
 %   the package loading. The arguments taken by the function are:
 %
 % \begin{arguments}
-%    \item A token list \myhlc|\l__@@_counter_X_tl| for \emph{\enquote{store}} the counter's name.
+%    \item A token list \myhlc|\l_@@_counter_X_tl| for \emph{\enquote{store}} the counter's name.
 %    \item The counter's name.
 % \end{arguments}
 %
@@ -6773,7 +5656,7 @@ Some text here
 %    \begin{macrocode}
 \msg_new:nnn { enumext } { counters }
   {
-    The~counter~'#1'~is~already~defined~by~some~\\
+    The~counter~'#1'~is~already~defined~by~some\\
     package~or~macro,~it~cannot~be~continued.
   }
 %    \end{macrocode}
@@ -6914,7 +5797,7 @@ Some text here
 % \begin{macro}[int]{align}
 %   The \mykey[env]{align} key is implemented differently for \emph{\enquote{starred}}
 %   and \emph{\enquote{non starred}} environments. For compatibility with
-%   \emph{tagged} \texttt{PDF} it is necessary to set \myhlc|\l__@@_align_label_pos_X_str|.
+%   \emph{tagged} \texttt{PDF} it is necessary to set \myhlc|\l_@@_align_label_pos_X_str|.
 %    \begin{macrocode}
 \cs_set_protected:Nn \@@_tmp:nn
   {
@@ -6988,7 +5871,7 @@ Some text here
 %
 % The implementation of the keys \mykey{label} and \mykey{ref} are part
 % of the core of the package \mypkg*[no-index]{enumext}, here the default values
-% for \mymeta{label}, the value of the variables \myhlc|\l__@@_label_X_tl|,
+% for \mymeta{label}, the value of the variables \myhlc|\l_@@_label_X_tl|,
 % the default values for |\labelwidth| and the \emph{\enquote{label and ref}} system.
 %
 % \subsubsection{Define and set \texttt{label} and \texttt{ref} keys for \env{enumext} environment}
@@ -7027,8 +5910,8 @@ Some text here
 %   \emph{argument} \texttt{\textcolor{keyname}{ref}} to the variable
 %   \myhlc|\l_@@_ref_key_arg_tl| and analyze its state, if it is not \emph{empty}
 %   it will set a copy of of the \emph{current counter style} save in
-%   \myhlc|\l__@@_the_counter_X_tl| to \myhlc|\l_@@_ref_the_count_tl| and
-%   then set the variable \myhlc|\l__@@_renew_counter_X_tl| which will
+%   \myhlc|\l_@@_the_counter_X_tl| to \myhlc|\l_@@_ref_the_count_tl| and
+%   then set the variable \myhlc|\l_@@_renew_counter_X_tl| which will
 %   modify |\theenumX|.
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_standard_ref:nn
@@ -7226,7 +6109,7 @@ Some text here
 %    \begin{macrocode}
 \msg_new:nnn { enumext } { key-ref-empty }
   {
-    Key~'ref'~need~a~value~in~'#1'~ \msg_line_context:.
+    Key~'ref'~needs~a~value~in~'#1'~\msg_line_context:.
   }
 %    \end{macrocode}
 % \end{macro}
@@ -7238,8 +6121,8 @@ Some text here
 %    keys take three arguments:
 %
 % \begin{arguments}
-%    \item \myhlc|\l__@@_label_X_tl|
-%    \item \myhlc|\l__@@_start_X_int|
+%    \item \myhlc|\l_@@_label_X_tl|
+%    \item \myhlc|\l_@@_start_X_int|
 %    \item \meta{integer or string}
 % \end{arguments}
 %    The first argument of this function are the \emph{\enquote{counter style}} set by
@@ -7251,7 +6134,7 @@ Some text here
 % \begin{important}*
 %  In version 1.6 it is allowed to pass the \mykey[env]{resume} key \emph{without
 %  value} by means of the command |\setenumext|, for the correct operation
-%  of this, the boolean variable \myhlc|\l__@@_resume_count_bool|
+%  of this, the boolean variable \myhlc|\l_@@_resume_count_bool|
 %  set by the \mykey{resume} key \emph{without value} must be set to \emph{\enquote{false}} (\S\ref{key:series}).
 %  This is necessary to be able to \enquote{reset} the \emph{start value}
 %  by means of the \mykey{start} or \mykey{start*} keys.
@@ -7282,8 +6165,8 @@ Some text here
 %
 % \begin{arguments}
 %    \item The counter associated with the environment level
-%    \item \myhlc|\l__@@_label_X_tl|
-%    \item \myhlc|\l__@@_labelwidth_X_dim|
+%    \item \myhlc|\l_@@_label_X_tl|
+%    \item \myhlc|\l_@@_labelwidth_X_dim|
 %    \item \meta{integer or string}
 % \end{arguments}
 %
@@ -7649,7 +6532,7 @@ Some text here
 % \begin{macro}[int]{show-length}
 %    Define and set \mykey[env]{show-length} key for \myenv*[no-index]{enumext},
 %    \myenv*[no-index]{enumext*}, \myenv*[no-index]{keyans} and \myenv*[no-index]{keyans*} environments.
-%    The function sets the boolean variable \myhlc|\l__@@_show_length_X_bool|
+%    The function sets the boolean variable \myhlc|\l_@@_show_length_X_bool|
 %    used in the definition of all environments to \emph{\enquote{true}}
 %    and calls the function \myhlc|\@@_show_length:nnn| which prints all the
 %    values of the \emph{\enquote{vertical}} and \emph{\enquote{horizontal}}
@@ -7806,7 +6689,7 @@ Some text here
 %
 % \begin{macro}[int]{mini-env, mini-sep, columns-sep, columns, mini-right, mini-right*}
 %    The default value of the \mykey[env]{columns-sep} key is handled by
-%    the state of the boolean variable \myhlc|\l__@@_columns_sep_X_bool|
+%    the state of the boolean variable \myhlc|\l_@@_columns_sep_X_bool|
 %    which is handled in the internal definition of the \myenv*[no-index]{enumext}
 %    and \myenv*[no-index]{keyans} environments.
 %    Define and set \mykey[env]{mini-env}, \mykey[env]{mini-sep}, \mykey{columns-sep}
@@ -7923,7 +6806,7 @@ Some text here
 %    in \mymeta{horizontal mode}, then the settings for the
 %    \mymeta{vertical mode}, in which |\partopsep| comes into play, are made.
 %
-%    Set the values of \myhlc|\l__@@_multicols_above_X_skip| and \myhlc|\l__@@_multicols_below_X_skip|
+%    Set the values of \myhlc|\l_@@_multicols_above_X_skip| and \myhlc|\l_@@_multicols_below_X_skip|
 %    equal to the value of |\topsep| in the \emph{current level}.
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_multi_set_vskip:
@@ -7943,7 +6826,7 @@ Some text here
 %
 % \begin{macro}[int]{\@@_add_pre_parsep:}
 %    The function \myhlc|\@@_add_pre_parsep:| \emph{\enquote{adjusted}} the value
-%    of \myhlc|\l__@@_multicols_above_X_skip| detecting the value of
+%    of \myhlc|\l_@@_multicols_above_X_skip| detecting the value of
 %    |\parsep| from the previous level. This is necessary since
 %    |\parsep| from the previous level affects the \emph{vertical spaces}.
 %    \begin{macrocode}
@@ -8121,7 +7004,7 @@ Some text here
 % \begin{macro}[int]{\@@_minipage_set_skip:, \@@_minipage_add_space:}
 %    The function \myhlc|\@@_minipage_set_skip:| will take care of determining the
 %    \emph{\enquote{adjust}} spaces applied \emph{\enquote{above}} and
-%    \emph{\enquote{below}} the \myhlc|\__@@_mini_page| environment in
+%    \emph{\enquote{below}} the \myhlc|\@@_mini_page| environment in
 %    \myenv*[no-index]{enumext}.
 %
 %    First it sets the value of \myhlc|\l_@@_minipage_right_skip| equal to
@@ -8165,7 +7048,7 @@ Some text here
   }
 %    \end{macrocode}
 %   The function \myhlc|\@@_minipage_add_space:| will apply the spaces on the \emph{\enquote{left side}} using
-%   |\addvspace| \emph{\enquote{above}} the \myhlc|\__@@_mini_page|
+%   |\addvspace| \emph{\enquote{above}} the \myhlc|\@@_mini_page|
 %   environment, taking into account whether \hologo{TeX} is in
 %   \mymeta{horizontal mode} or \mymeta{vertical mode}. Here the plain \hologo{TeX} macro
 %   |\nointerlineskip| is used to prevent baseline \emph{\enquote{glue}} being
@@ -8349,7 +7232,7 @@ Some text here
 % \begin{macro}[int]{\@@_keyans_minipage_set_skip:, \@@_keyans_minipage_add_space:, \@@_keyans_pre_itemsep_skip:}
 %    The function \myhlc|\@@_keyans_mini_set_vskip:| will take care of determining the
 %    \enquote{adjusted} spaces applied \emph{\enquote{above}} and
-%    \emph{\enquote{below}} the \myhlc|\__@@_mini_page| environment in
+%    \emph{\enquote{below}} the \myhlc|\@@_mini_page| environment in
 %    \myenv*[no-index]{keyans}. The implementation of this function is the same
 %    as the one used in \myenv*[no-index]{enumext}.
 %    \begin{macrocode}
@@ -8441,7 +7324,7 @@ Some text here
 % \begin{macro}[int]{\@@_mini_set_vskip_vii:,\@@_mini_set_vskip_viii:}
 %    The functions \myhlc|\@@_mini_set_vskip_vii:| and \myhlc|\@@_mini_set_vskip_viii:| will take care of determining the
 %    \enquote{adjusted} spaces applied \emph{\enquote{above}} and
-%    \emph{\enquote{below}} the \myhlc|\__@@_mini_page| environment in
+%    \emph{\enquote{below}} the \myhlc|\@@_mini_page| environment in
 %    \myenv*[no-index]{enumext*} and \myenv*[no-index]{keyans*}.
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_mini_set_vskip_vii:
@@ -8507,7 +7390,7 @@ Some text here
 % \begin{macro}[int]{\@@_mini_addvspace_vii:,\@@_mini_addvspace_viii:}
 %   The functions \myhlc|\@@_mini_addvspace_vii:| and
 %   \myhlc|\@@_mini_addvspace_viii:| will apply the vertical space
-%   \emph{\enquote{only above}} the \myhlc|\__@@_mini_page| environment on
+%   \emph{\enquote{only above}} the \myhlc|\@@_mini_page| environment on
 %   the \emph{left side} when the \mykey[env]{mini-right} key is active in the
 %   \myenv*[no-index]{enumext*} and \myenv*[no-index]{keyans*} environments.
 %
@@ -8532,13 +7415,13 @@ Some text here
 %
 % \subsubsection{The command \cs{miniright}}\label{cmd:miniright}
 %
-% The command |\miniright| will close the \myhlc|\__@@_mini_page|
-% environment on the \emph{\enquote{left side}}, open the \myhlc|\__@@_mini_page|
+% The command |\miniright| will close the \myhlc|\@@_mini_page|
+% environment on the \emph{\enquote{left side}}, open the \myhlc|\@@_mini_page|
 % environment on the \emph{\enquote{right side}} adding the \emph{adjusted vertical space}.
 % By default |\centering| is added when starting the \emph{\enquote{right side}}
 % environment. The \emph{starred argument} ‘|*|’ inhibits the use of |\centering|
 % command i.e. the usual \hologo{LaTeX} justification is maintained in
-% the \myhlc|\__@@_mini_page| on the \emph{\enquote{right side}}.
+% the \myhlc|\@@_mini_page| on the \emph{\enquote{right side}}.
 %
 % \begin{macro}{\miniright}
 %   First, some checks prevent the command from being executed outside the
@@ -8580,13 +7463,13 @@ Some text here
 %    The function \myhlc|\@@_mini_right_cmd:n| takes as argument the \emph{starred} ‘|*|’
 %    of the |\miniright| command in the \myenv*[no-index]{enumext} environment.
 %    It checks if the \mykey[env]{mini-env} key is active via the variable
-%    \myhlc|\l__@@_minipage_right_X_dim|; if so, it closes the
-%    \myenv[no-index]{multicols} environment with the \myhlc|\__@@_mini_page|
+%    \myhlc|\l_@@_minipage_right_X_dim|; if so, it closes the
+%    \myenv[no-index]{multicols} environment with the \myhlc|\@@_mini_page|
 %    environment on the \emph{\enquote{left side}}, then opens the
-%    \myhlc|\__@@_mini_page| environment on the \emph{\enquote{right
+%    \myhlc|\@@_mini_page| environment on the \emph{\enquote{right
 %    side}}, applies the adjusted \emph{\enquote{vertical spaces}}, followed by
 %    adding the |\centering| command when the \emph{starred argument} ‘|*|’ is not
-%    present, and sets \myhlc|\g__@@_minipage_stat_int| to zero; otherwise it returns an error.
+%    present, and sets \myhlc|\g_@@_minipage_stat_int| to zero; otherwise it returns an error.
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_mini_right_cmd:n
   {
@@ -8653,6 +7536,34 @@ Some text here
       {
         \msg_error:nn { enumext } { many-miniright-used }
       }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \subsubsection{Definition of error messages}
+%
+% \begin{macro}[int]{wrong-miniright-place, wrong-miniright-use,
+%                    wrong-miniright-starred, many-miniright-used}
+% Messages used by |\miniright| command.
+%    \begin{macrocode}
+\msg_new:nnn { enumext } { wrong-miniright-place }
+  {
+    Wrong~place~for~'\c_backslash_str miniright'~\msg_line_context:.\\
+    Works~in~'enumext'~and~'keyans'~with~key~'mini-env'.
+  }
+\msg_new:nnn { enumext } { wrong-miniright-use }
+  {
+    Wrong~use~for~'\c_backslash_str miniright'~\msg_line_context:.\\
+    '\c_backslash_str miniright'~needs~a~key~'mini-env'.
+  }
+\msg_new:nnn { enumext } { wrong-miniright-starred }
+  {
+    Can't~use~\c_backslash_str miniright~in~starred~environments~
+    \msg_line_context:.
+  }
+\msg_new:nnn { enumext } { many-miniright-used }
+  {
+    Can't~use~\c_backslash_str miniright~more~than~once~\msg_line_context:.
   }
 %    \end{macrocode}
 % \end{macro}
@@ -8860,7 +7771,7 @@ Some text here
 %
 %   In version 1.6 it is allowed to pass the key \mykey{resume} \emph{without
 %   value} by means of the command |\setenumext|, for the correct operation
-%   of this, the boolean variable \myhlc|\l__@@_resume_count_bool|
+%   of this, the boolean variable \myhlc|\l_@@_resume_count_bool|
 %   set by the key \mykey{resume} \emph{without value} must be set to \enquote{true} to
 %   be later processed by the function \myhlc|\@@_parse_series:n| in the definition
 %   of the environments \myenv*[no-index]{enumext} and \myenv*[no-index]{enumext*}.
@@ -8915,13 +7826,13 @@ Some text here
 % \begin{macro}[int]{\@@_standard_save_counter:, \@@_standard_save_counter_aux:,
 %               \@@_starred_save_counter:, \@@_starred_save_counter_aux:}
 %   The \myhlc|\@@_standard_save_counter:| and \myhlc|\@@_starred_save_counter:|
-%   functions will save the last counter value to \myhlc|\g__@@_series_#1_int|
+%   functions will save the last counter value to \myhlc|\g_@@_series_#1_int|
 %   if the \mykey[env]{series}|=|\mymarg{series name} key has been passed, to
-%   \myhlc|\c@ @@_resume_#1_int| if it has passed the key \mykey[env]{resume}
+%   \myhlc|\c@ @@_resume_X_int| if it has passed the key \mykey[env]{resume}
 %   \emph{without value} and the key \mykey{series} is not active, in
-%   \myhlc|\g__@@_series_#1_X_int| if the key
+%   \myhlc|\g_@@_series_#1_X_int| if the key
 %   \mykey{resume}|=|\mymarg{series name} has been passed and in
-%   \myhlc|\g__@@_series_#1_X_int| if the key has
+%   \myhlc|\g_@@_series_#1_X_int| if the key has
 %   been passed \mykey[env]{save-ans}|=|\mymarg{store name}.
 %
 % \begin{important}*
@@ -9087,6 +7998,25 @@ Some text here
 %    \end{macrocode}
 % \end{macro}
 %
+% \subsubsection{Definition of error messages}
+%
+% \begin{macro}[int]{unknown-series-starred, unknown-series-standard}
+% Messages used by \mykey[env]{resume} key.
+%    \begin{macrocode}
+\msg_new:nnn { enumext } { unknown-series-starred }
+  {
+    The~series~'#1'~for~the~resume~key~does~not~exist~in~the~
+    enumext*~environment~\msg_line_context:.
+  }
+\msg_new:nnn { enumext } { unknown-series-standard }
+  {
+    The~series~'#1'~for~the~resume~key~does~not~exist~at~level~
+    \int_use:N \l_@@_level_int
+    \c_space_tl of~enumext~environment~\msg_line_context:.
+  }
+%    \end{macrocode}
+% \end{macro}
+%
 % \subsubsection{Internal functions for \texttt{series} key}
 %
 % \begin{macro}[int]{\@@_filter_series:n, \@@_filter_series_key:n, \@@_filter_series_pair:nn}
@@ -9140,14 +8070,14 @@ Some text here
 %   The function \myhlc|\@@_save_last_keys:n| will be in charge of saving the
 %   filtering \mymeta{keys} when the keys \mykey[env]{series}|=|\mymarg{series name}
 %   or \mykey[env]{resume}|=|\mymarg{series name} or \mykey{resume}|*| are NOT
-%   active and will save them in the variable \myhlc|\g__@@_resume_last_keys_X_tl| for the
-%   \myenv*[no-index]{enumext} environment and in the variable \myhlc|\g__@@_resume_last_keys_vii_tl|
+%   active and will save them in the variable \myhlc|\g_@@_resume_last_keys_X_tl| for the
+%   \myenv*[no-index]{enumext} environment and in the variable \myhlc|\g_@@_resume_last_keys_vii_tl|
 %   for the \myenv*[no-index]{enumext*} environment.
 %
 % \begin{important}*
-%   The boolean variable \myhlc|\l__@@_resume_series_X_bool|
+%   The boolean variable \myhlc|\l_@@_resume_series_X_bool|
 %   is set to \enquote{true} by the key \mykey{resume}|=|\mymarg{series name},
-%   the boolean variable \myhlc|\l__@@_resume_star_key_X_bool|
+%   the boolean variable \myhlc|\l_@@_resume_star_key_X_bool|
 %   is set to \enquote{true} by the key \mykey{resume}|*|, in this case
 %   both variables must be set to “\enquote{false}” so that
 %   they don’t override the default filtered \mymeta{keys}.
@@ -9216,8 +8146,8 @@ Some text here
 %   \mymeta{keys} that will be used by the \mykey[env]{resume*} key and then the
 %   \myhlc|\@@_resume_last_counter:| function used by the \mykey{resume} key
 %   \emph{without value} if it is active, otherwise \emph{store} the
-%   \emph{filtered} \mymeta{keys} in the global variable \myhlc|\g__@@_series_#1_X_tl|
-%   along with the creation of the integer variable \myhlc|\g__@@_series_#1_X_int|
+%   \emph{filtered} \mymeta{keys} in the global variable \myhlc|\g_@@_series_#1_X_tl|
+%   along with the creation of the integer variable \myhlc|\g_@@_series_#1_X_int|
 %   used by the \mykey{resume} key \emph{with value}.
 %
 % \begin{important}*
@@ -9278,9 +8208,9 @@ Some text here
 % \begin{macro}[int]{\@@_resume:n}
 %   The function \myhlc|\@@_resume:n| will handle the \emph{argument} \mymarg{series name}
 %   passed to the \mykey[env]{resume} key in \myenv*[no-index]{enumext} and \myenv*[no-index]{enumext*} environments.
-%   First it checks if the global variable \myhlc|\g__@@_series_#1_X_tl|
+%   First it checks if the global variable \myhlc|\g_@@_series_#1_X_tl|
 %   exists; if so, it calls the function \myhlc|\@@_resume_series:n| and passes the \mymeta{keys}
-%   stored in \myhlc|\g__@@_series_#1_X_tl| to the environments,
+%   stored in \myhlc|\g_@@_series_#1_X_tl| to the environments,
 %   otherwise it returns an error.
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_resume:n
@@ -9523,6 +8453,21 @@ Some text here
 % \end{macro}
 % \end{macro}
 %
+% \subsubsection{Definition of error messages for \cs[no-index]{resetenumext}}
+%
+% \begin{macro}[int]{out-of-range}
+% Message used by |\resetenumext| command.
+%    \begin{macrocode}
+\msg_new:nnnn { enumext } { out-of-range }
+  {
+    The~number~must~be~exactly~1,~2,~3~or~4.
+  }
+  {
+    Received:~'#1'.
+  }
+%    \end{macrocode}
+% \end{macro}
+%
 % \subsection{The \texttt{reset} and \texttt{reset*} keys}\label{key:reset}
 %
 % The |\resetenumext| command does not work, for example, after an
@@ -9558,7 +8503,7 @@ Some text here
 %
 % \begin{macro}[int]{\@@_standard_reset_key:, \@@_standard_reset_key_star:, \@@_starred_reset_key: }
 %   The function \myhlc|\@@_standard_reset_key:| will be handled by the
-%   \mykey[env]{reset} key and will \emph{\enquote{reset}} the counter \myhlc|\c@__@@_resume_X_int|
+%   \mykey[env]{reset} key and will \emph{\enquote{reset}} the counter \myhlc|\c@ @@_resume_X_int|
 %   to \emph{\enquote{zero}} according to the \emph{level} at
 %   which it is executed within the \myenv*[no-index]{enumext} environment.
 %    \begin{macrocode}
@@ -9576,7 +8521,7 @@ Some text here
   }
 %    \end{macrocode}
 %   The function \myhlc|\@@_standard_reset_key_star:| will be handled by the
-%   \mykey[env]{reset*} key and will \emph{\enquote{reset}} the counters \myhlc|\c@__@@_resume_X_int|
+%   \mykey[env]{reset*} key and will \emph{\enquote{reset}} the counters \myhlc|\c@ @@_resume_X_int|
 %   to \emph{\enquote{zero}} from the \emph{level} at which it
 %   is executed within the \myenv*[no-index]{enumext} environment to the \emph{lower levels}.
 %    \begin{macrocode}
@@ -9597,7 +8542,7 @@ Some text here
 %    \end{macrocode}
 %   The function \myhlc|\@@_starred_reset_key:| will be handled by
 %   \mykey{reset} keys and \mykey{reset*} will \emph{\enquote{reset}} the
-%   counter \myhlc|\c@__@@_resume_vii_int| to \emph{\enquote{zero}} when
+%   counter \myhlc|\c@ @@_resume_vii_int| to \emph{\enquote{zero}} when
 %   executed in the \myenv*[no-index]{enumext*} environment.
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_starred_reset_key:
@@ -9639,15 +8584,15 @@ Some text here
 %    \begin{macrocode}
 \msg_new:nnn { enumext } { save-ans-empty }
   {
-    Key~'save-ans'~need~a~value~in~'#1'~ \msg_line_context:.
+    Key~'save-ans'~needs~a~value~in~'#1'~\msg_line_context:.
   }
 \msg_new:nnn { enumext } { save-ans-log }
   {
-    *~Package~enumext:~Start~#1\c_space_tl with~save-ans=#2~\msg_line_context:.
+    *~Package~enumext:~Start~#1~with~save-ans=#2~\msg_line_context:.
   }
 \msg_new:nnn { enumext } { save-ans-log-hook }
   {
-    *~Package~enumext:~Stop~#1\c_space_tl with~save-ans=#2~\msg_line_context:.
+    *~Package~enumext:~Stop~#1~with~save-ans=#2~\msg_line_context:.
   }
 %    \end{macrocode}
 % \end{macro}
@@ -9659,22 +8604,22 @@ Some text here
 \msg_new:nnn { enumext } { items-same-answer }
   {
     ****************************************\\
-    *~Package~enumext:~Checking~answers~in~'#1' ~
+    *~Package~enumext:~Checking~answers~in~'#1'~
     for~\c_left_brace_str #2 \c_right_brace_str\\
-    *~started~#3~and~close~\msg_line_context: : ~
+    *~started~#3~and~close~\msg_line_context: :~
     'OK',~all~items~with~answer.\\
     ****************************************
   }
 \msg_new:nnn { enumext } { item-greater-answer }
   {
     Checking~answers~in~'#1'~for~\c_left_brace_str #2 \c_right_brace_str\\
-    started~#3~and~close~\msg_line_context: : ~'NOT~OK'\\
+    started~#3~and~close~\msg_line_context: :~'NOT~OK'\\
     Items~>~Answers.
   }
 \msg_new:nnn { enumext } { item-less-answer }
   {
     Checking~answers~in~'#1'~for~\c_left_brace_str #2 \c_right_brace_str\\
-    started~#3~and~close~\msg_line_context: : ~'NOT~OK'\\
+    started~#3~and~close~\msg_line_context: :~'NOT~OK'\\
     Items~<~Answers.
   }
 %    \end{macrocode}
@@ -9691,6 +8636,28 @@ Some text here
 \msg_new:nnn { enumext } { many-starred }
   {
     Many~'\c_backslash_str #1*'~#2.
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}[int]{store-prop, store-seq, store-int}
+% Messages written to the |.log| file when the \emph{prop list}, \emph{sequence} and
+% integer variables used by the \mykey[env]{save-ans} key are created.
+%    \begin{macrocode}
+\msg_new:nnn { enumext } { store-prop }
+  {
+    *~Package~enumext:~Creating~
+    \c_backslash_str g_@@_#1_prop~\msg_line_context:.
+  }
+\msg_new:nnn { enumext } { store-seq }
+  {
+    *~Package~enumext:~Creating~
+    \c_backslash_str g_@@_#1_seq~\msg_line_context:.
+  }
+\msg_new:nnn { enumext } { store-int }
+  {
+    *~Package~enumext:~Creating~
+    \c_backslash_str g_@@_resume_#1_int~\msg_line_context:.
   }
 %    \end{macrocode}
 % \end{macro}
@@ -9764,10 +8731,10 @@ Some text here
     \bool_set_true:N \l_@@_check_answers_bool
     \tl_gset:NV \g_@@_store_name_tl \l_@@_store_name_tl
 %    \end{macrocode}
-%   The \emph{prop list} \myhlc|\g__@@_series_#1_prop| and the \emph{sequence} \myhlc|\g__@@_series_#1_seq|
+%   The \emph{prop list} \myhlc|\g_@@_series_#1_prop| and the \emph{sequence} \myhlc|\g_@@_series_#1_seq|
 %   will be created globally to \emph{\enquote{store content}} in case
 %   they do not exist together with the integer variable
-%   \myhlc|\g__@@_series_#1_int| used by the keys
+%   \myhlc|\g_@@_series_#1_int| used by the keys
 %   \mykey[env]{resume} and \mykey[env]{resume*}.
 %    \begin{macrocode}
     \prop_if_exist:cF { g_@@_ \l_@@_store_name_tl _prop }
@@ -9822,8 +8789,8 @@ Some text here
 %
 %
 % The integer variable associated to the sum of each |\item| and |\item*|
-% in the environment \myhlc|\g__@@_item_number_int| must match the
-% integer variable \myhlc|\g__@@_item_anskey_int| associated
+% in the environment \myhlc|\g_@@_item_number_int| must match the
+% integer variable \myhlc|\g_@@_item_anskey_int| associated
 % to the execution of the command |\anskey|. The cases are analyzed below:
 %
 % \begin{enumerate}[label=\alph*),left=0pt,noitemsep, partopsep=0pt, topsep=5pt]
@@ -10322,7 +9289,7 @@ Some text here
 % \begin{macro}[int]{\@@_parse_save_key:n, \@@_parse_save_key_vii:n,}
 %   The functions \myhlc|\@@_parse_save_key:n| and \myhlc|\@@_parse_save_key_vii:n|
 %   will be responsible for \emph{\enquote{storing keys}} in the variable
-%   \myhlc|\l__@@_store_save_key_X_tl| for \myenv*[no-index]{enumext} and \myenv*[no-index]{enumext*}.
+%   \myhlc|\l_@@_store_save_key_X_tl| for \myenv*[no-index]{enumext} and \myenv*[no-index]{enumext*}.
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_parse_save_key:n
   {
@@ -10538,8 +9505,8 @@ Some text here
 %   arguments:
 %
 % \begin{arguments}
-%   \item \myhlc|\l__@@_labelwidth_X_dim|
-%   \item \myhlc|\l__@@_labelsep_X_dim|
+%   \item \myhlc|\l_@@_labelwidth_X_dim|
+%   \item \myhlc|\l_@@_labelsep_X_dim|
 % \end{arguments}
 %
 %    \begin{macrocode}
@@ -10841,6 +9808,26 @@ Some text here
 %    \end{macrocode}
 % \end{macro}
 %
+% \subsubsection{Definition of error messages}
+%
+% \begin{macro}[int]{anskey-unnumber-item, anskey-empty-arg, anskey-math-mode}
+% Messages used by |\anskey| and \myenv*[no-index]{anskey*}.
+%    \begin{macrocode}
+\msg_new:nnn { enumext } { anskey-unnumber-item }
+  {
+    Can't~store~with~an~unnumbered~\c_backslash_str item~\msg_line_context:.
+  }
+\msg_new:nnn { enumext } { anskey-empty-arg }
+  {
+    Can't~store~empty~content~\msg_line_context:.
+  }
+\msg_new:nnn { enumext } { anskey-math-mode }
+  {
+    #1~can't~work~in~math~mode~\msg_line_context:.
+  }
+%    \end{macrocode}
+% \end{macro}
+%
 % \subsection{The command \cs{anskey}}\label{cmd:anskey}
 %
 % Since \emph{\enquote{content}} is stored in a \myenv[no-index]{list} environment
@@ -10931,6 +9918,42 @@ Some text here
             }
         }
     \group_end:
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \subsubsection{Definition of error messages for \cs[no-index]{anskey}}
+%
+% \begin{macro}[int]{anskey-wrong-place, anskey-nested,
+%                    anskey-cmd-key-unknown, anskey-cmd-key-value-unknown}
+% Messages used by |\anskey| command.
+%    \begin{macrocode}
+\msg_new:nnn { enumext } { anskey-wrong-place }
+  {
+    Wrong~place~for~command~'\c_backslash_str #1'~\msg_line_context:.\\
+    '\c_backslash_str #1'~works~in~the~environment~'#2'.
+  }
+\msg_new:nnn { enumext } { anskey-nested }
+  {
+    The~command~\c_backslash_str anskey~can't~be~nested~\msg_line_context:.
+  }
+\msg_new:nnnn { enumext } { anskey-cmd-key-unknown }
+  {
+    The~key~'#1'~is~unknown~by~'\c_backslash_str anskey'~and~is~being~ignored~
+    \msg_line_context:.
+  }
+  {
+    The~command~'\c_backslash_str anskey'~does~not~have~a~key~called~'#1'.\\
+    Check~that~you~have~spelled~the~key~name~correctly.
+  }
+\msg_new:nnnn { enumext } { anskey-cmd-key-value-unknown }
+  {
+    The~key~'#1=#2'~is~unknown~by~'\c_backslash_str anskey'~and~is~being~
+    ignored~\msg_line_context:.
+  }
+  {
+    The~command~'\c_backslash_str anskey'~does~not~have~a~key~called~'#1'.\\
+    Check~that~you~have~spelled~the~key~name~correctly.
   }
 %    \end{macrocode}
 % \end{macro}
@@ -11145,12 +10168,54 @@ Some text here
 %    \begin{macrocode}
 \msg_new:nnnn { enumext } { anskey-env-error }
   {
-    The~environment~'#1'~is~reserved~by ~\\
+    The~environment~'#1'~is~reserved~by\\
     'enumext'~package,~It~is~already~defined.
   }
   {
-    The~environment~'#1'~is~defined~internally ~
+    The~environment~'#1'~is~defined~internally~
     for~the~'save-ans'~key~with~save-ans~key~active.~See~documentation.\\
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}[int]{anskey-env-wrong, anskey-env-key-unknown,
+%                    anskey-env-key-value-unknown, overwrite-file,
+%                    writing-file, not-writing}
+% Messages used by \myenv*[no-index]{anskey*} environment.
+%    \begin{macrocode}
+\msg_new:nnn { enumext } { anskey-env-wrong }
+  {
+    The~environment~anskey*~cannot~be~used~in~'#1'~\msg_line_context:.
+  }
+\msg_new:nnnn { enumext } { anskey-env-key-unknown }
+  {
+    The~key~'#1'~is~unknown~by~environment~
+    'anskey*'~and~is~being~ignored~\msg_line_context:.
+  }
+  {
+    The~environment~'anskey*'~does~not~have~a~key~called~'#1'.\\
+    Check~that~you~have~spelled~the~key~name~correctly.
+  }
+\msg_new:nnnn { enumext } { anskey-env-key-value-unknown }
+  {
+    The~key~'#1=#2'~is~unknown~by~environment~
+    'anskey*'~and~is~being~ignored~\msg_line_context:.
+  }
+  {
+    The~environment~'anskey*'~does~not~have~a~key~called~'#1'.\\
+    Check~that~you~have~spelled~the~key~name~correctly.
+  }
+\msg_new:nnn { enumext } { overwrite-file }
+  {
+    Overwriting~file~'#1'.
+  }
+\msg_new:nnn { enumext } { writing-file }
+  {
+    Writing~file~'#1'.
+  }
+\msg_new:nnn { enumext } { not-writing }
+  {
+    File~'#1'~already~exists.~Not~writing.
   }
 %    \end{macrocode}
 % \end{macro}
@@ -11593,7 +10658,7 @@ Some text here
 %    \end{macrocode}
 %   The function \myhlc|\@@_keyans_show_pos:| will print the \mymeta{position}
 %   of the stored content in \emph{prop list}. Need add |1| to
-%   \myhlc|\g__@@_#1_prop| for \myenv*[no-index]{keyans}
+%   \myhlc|\g_@@_#1_prop| for \myenv*[no-index]{keyans}
 %   environment.
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_keyans_show_pos:
@@ -11631,6 +10696,25 @@ Some text here
 %    \end{macrocode}
 % \end{macro}
 %
+% \subsubsection{Definition of error messages}
+%
+% \begin{macro}[int]{keyans-wrong-level, wrong-place}
+% Messages used by \myenv*[no-index]{keyans}, \myenv*[no-index]{keyans*} and
+% \myenv*[no-index]{keyanspic} environments.
+%    \begin{macrocode}
+\msg_new:nnn { enumext } { keyans-wrong-level }
+  {
+    Wrong~level~position~for~'keyans'~\msg_line_context:.\\
+    The~environment~'keyans'~can~only~be~in~the~first~level.
+  }
+\msg_new:nnn { enumext } { wrong-place }
+  {
+    Wrong~place~for~'#1'~environment~\msg_line_context:.\\
+    '#1'~is~only~found~with~'#2'~in~'enumext'.
+  }
+%    \end{macrocode}
+% \end{macro}
+%
 % \subsection{Redefining \cs{item} and \cs{makelabel} in \env{enumext}}\label{cmd:item-enumext}
 %
 % Redefining the |\item| command is not as simple as it seems. This
@@ -11653,9 +10737,9 @@ Some text here
 %   First it checks if the \emph{optional argument} is present; if it is NOT
 %   present, it checks the state of the variable \myhlc|\l_@@_check_answers_bool|
 %   set by the key \mykey[env]{no-store}, sets the boolean variable
-%   \myhlc|\l__@@_wrap_label_X_bool| to \enquote{true} for the key \mykey[env]{wrap-label}
+%   \myhlc|\l_@@_wrap_label_X_bool| to \enquote{true} for the key \mykey[env]{wrap-label}
 %   and executes \myhlc|\@@_item_std:w| and the key \mykey[env]{itemindent}; otherwise it checks the state
-%   of the boolean variable \myhlc|\l__@@_wrap_label_opt_X_bool| set
+%   of the boolean variable \myhlc|\l_@@_wrap_label_opt_X_bool| set
 %   by the key \mykey[env]{wrap-label*} and executes \myhlc|\@@_item_std:w| with
 %   the \emph{optional argument} and the key \mykey{itemindent}.
 %    \begin{macrocode}
@@ -11688,18 +10772,18 @@ Some text here
 %    it by the value the second \emph{optional argument} \mymeta{offset}.
 %
 % \begin{arguments}
-%   \item \myhlc|\l__@@_item_symbol_X_tl|
-%   \item \myhlc|\l__@@_item_symbol_sep_X_dim|
+%   \item \myhlc|\l_@@_item_symbol_X_tl|
+%   \item \myhlc|\l_@@_item_symbol_sep_X_dim|
 % \end{arguments}
 %
-%   First a copy of \myhlc|\l__@@_item_symbol_X_tl| is made, which is
+%   First a copy of \myhlc|\l_@@_item_symbol_X_tl| is made, which is
 %   set by the key \mykey[env,anskey,anskey*]{item-sym*} or passed as \emph{\enquote{first}} \emph{optional argument} in
 %   the global variable \myhlc|\g_@@_item_symbol_aux_tl|, followed by setting the
-%   variable \myhlc|\l__@@_item_symbol_sep_X_dim| set by the key
+%   variable \myhlc|\l_@@_item_symbol_sep_X_dim| set by the key
 %   \mykey[env,anskey,anskey*]{item-pos*} or by the \emph{\enquote{second}} \emph{optional argument},
 %   then the state of the variable \myhlc|\l_@@_check_answers_bool|
 %   set by the key \mykey[env]{no-store} is checked, the boolean variable
-%   \myhlc|\l__@@_wrap_label_X_bool| is set to \enquote{true} for the key \mykey[env]{wrap-label}
+%   \myhlc|\l_@@_wrap_label_X_bool| is set to \enquote{true} for the key \mykey[env]{wrap-label}
 %   and \myhlc|\@@_item_std:w| and the key \mykey[env]{itemindent} are executed.
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_item_starred_exec:nn
@@ -11751,7 +10835,7 @@ Some text here
 % \begin{macro}[int]{\@@_redefine_item:}
 %   The function \myhlc|\@@_redefine_item:| will redefine the |\item|
 %   command in the \myenv*[no-index]{enumext} environment adding |\item*|.
-%   This function is passed to \myhlc|\__@@_list_arg_two_X:| used
+%   This function is passed to \myhlc|\@@_list_arg_two_X:| used
 %   in the definition of the \myenv*[no-index]{enumext} environment (\S\ref{env:enumext}).
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_redefine_item:
@@ -11772,7 +10856,7 @@ Some text here
 %   The function \myhlc|\@@_make_label:| redefines |\makelabel| for the keys
 %   \mykey[env]{mode-box}, \mykey[env]{align}, \mykey[env]{font}, \mykey[env]{wrap-label},
 %   \mykey[env]{wrap-label*} and |\item*| for \myenv*[no-index]{enumext} environment.
-%   This function is passed to \myhlc|\__@@_list_arg_two_X:| used
+%   This function is passed to \myhlc|\@@_list_arg_two_X:| used
 %   in the definition of the \myenv*[no-index]{enumext} environment (\S\ref{env:enumext}).
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_make_label:
@@ -12011,21 +11095,21 @@ Some text here
 \msg_new:nnnn { enumext } { starred-unknown-key }
   {
     The~key~'#1'~is~unknown~by~environment~
-    '\l_@@_envir_name_tl'~and~is~being~ignored.
+    '\l_@@_envir_name_tl'~and~is~being~ignored~\msg_line_context:.
   }
   {
-    The~environment~'\l_@@_envir_name_tl'~does~not
-    ~have~a~key~called ~'#1'.\\
+    The~environment~'\l_@@_envir_name_tl'~does~not~
+    have~a~key~called~'#1'.\\
     Check~that~you~have~spelled~the~key~name~correctly.
   }
 \msg_new:nnnn { enumext } { starred-unknown-key-value }
   {
-    The~key~'#1=#2'~is~unknown~by~environment ~
-    '\l_@@_envir_name_tl'~and~is~being~ignored.
+    The~key~'#1=#2'~is~unknown~by~environment~
+    '\l_@@_envir_name_tl'~and~is~being~ignored~\msg_line_context:.
   }
   {
-    The~environment~'\l_@@_envir_name_tl'~does~not
-    ~have~a~key~called ~'#1'.\\
+    The~environment~'\l_@@_envir_name_tl'~does~not~
+    have~a~key~called~'#1'.\\
     Check~that~you~have~spelled~the~key~name~correctly.
   }
 %    \end{macrocode}
@@ -12037,22 +11121,51 @@ Some text here
 %    \begin{macrocode}
 \msg_new:nnnn { enumext } { standard-unknown-key }
   {
-    The~key~'#1'~is~unknown~by~environment~'\l_@@_envir_name_tl' \c_space_tl
-    ~on~level~\int_use:N \l_@@_level_int \c_space_tl and~is~being~ignored.
+    The~key~'#1'~is~unknown~by~environment~'\l_@@_envir_name_tl'~on~level~
+    \int_use:N \l_@@_level_int \c_space_tl and~is~being~ignored~
+    \msg_line_context:.
   }
   {
-    The~environment~'\l_@@_envir_name_tl'~does~not
-    ~have~a~key~called ~'#1'~on~level~\int_use:N \l_@@_level_int.\\
+    The~environment~'\l_@@_envir_name_tl'~does~not~
+    have~a~key~called~'#1'~on~level~\int_use:N \l_@@_level_int.\\
     Check~that~you~have~spelled~the~key~name~correctly.
   }
 \msg_new:nnnn { enumext } { standard-unknown-key-value }
   {
-    The~key~'#1=#2'~is~unknown~by~environment~'\l_@@_envir_name_tl' \c_space_tl
-    ~on~level~\int_use:N \l_@@_level_int \c_space_tl and~is~being~ignored.
+    The~key~'#1=#2'~is~unknown~by~environment~'\l_@@_envir_name_tl'~on~level~
+    \int_use:N \l_@@_level_int \c_space_tl and~is~being~ignored~
+    \msg_line_context:.
   }
   {
-    The~environment~'\l_@@_envir_name_tl'~does~not
-    ~have~a~key~called ~'#1'~on~level~\int_use:N \l_@@_level_int.\\
+    The~environment~'\l_@@_envir_name_tl'~does~not~
+    have~a~key~called~'#1'~on~level~\int_use:N \l_@@_level_int.\\
+    Check~that~you~have~spelled~the~key~name~correctly.
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}[int]{keyans-unknown-key, keyans-unknown-key-value}
+% Message used by unknown \mymeta{keys} in \myenv*[no-index]{keyans},
+% \myenv*[no-index]{keyans*} and \myenv*[no-index]{keyanspic} environments.
+%    \begin{macrocode}
+\msg_new:nnnn { enumext } { keyans-unknown-key }
+  {
+    The~key~'#1'~is~unknown~by~environment~
+    '\l_@@_envir_name_tl'~and~is~being~ignored~\msg_line_context:.
+  }
+  {
+    The~environment~'\l_@@_envir_name_tl'~does~not~
+    have~a~key~called~'#1'.\\
+    Check~that~you~have~spelled~the~key~name~correctly.
+  }
+\msg_new:nnnn { enumext } { keyans-unknown-key-value }
+  {
+    The~key~'#1=#2'~is~unknown~by~environment~
+    '\l_@@_envir_name_tl'~and~is~being~ignored~\msg_line_context:.
+  }
+  {
+    The~environment~'\l_@@_envir_name_tl'~does~not~
+    have~a~key~called~'#1'.\\
     Check~that~you~have~spelled~the~key~name~correctly.
   }
 %    \end{macrocode}
@@ -12125,7 +11238,7 @@ Some text here
 %   to true only when |\item*| is executed and, additionally, it is necessary to use
 %   \myhlc|\peek_remove_spaces:n| to avoid an unwanted space when using
 %   |\item*| together with the \mykey[env]{itemindent} key.
-%   This function is passed to \myhlc|\__@@_list_arg_two_v:| used
+%   This function is passed to \myhlc|\@@_list_arg_two_v:| used
 %   in the definition of the \myenv*[no-index]{keyans} environment (\S\ref{subsec:second-arg}).
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_keyans_redefine_item:
@@ -12156,7 +11269,7 @@ Some text here
 %   for the keys \mykey[env]{mode-box}, \mykey[env]{align}, \mykey[env]{font},
 %   \mykey[env]{wrap-label}, \mykey[env]{wrap-label*}, \mykey[env]{wrap-ans*} and |\item*|
 %   for \myenv*[no-index]{keyans} environment.
-%   This function is passed to \myhlc|\__@@_list_arg_two_v:| used
+%   This function is passed to \myhlc|\@@_list_arg_two_v:| used
 %   in the definition of the \myenv*[no-index]{keyans} environment (\S\ref{subsec:second-arg}).
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_keyans_make_label:
@@ -12244,7 +11357,7 @@ Some text here
 % \myenv*[no-index]{enumext} environment, the \myenv*[no-index]{keyans} environment and the
 % \myenv*[no-index]{enumext*} and \myenv*[no-index]{keyans*} environments.
 %
-% Here the \myhlc|\__@@_list_arg_two_X:| function is implemented,
+% Here the \myhlc|\@@_list_arg_two_X:| function is implemented,
 % which is responsible for setting all the list parameters, the
 % counter, the redefinition of |\item|, |\makelabel| along with the keys
 % \mykey{ref}, \mykey{itemindent} and \mykey{show-length}.
@@ -12352,7 +11465,7 @@ Some text here
   {
     \dim_compare:nNnT {#1} < { \c_zero_dim }
       {
-        \msg_warning:nnnV { enumext } { width-non-positive }{ labelwidth } #1
+        \msg_warning:nnnV { enumext } { width-negative }{ labelwidth } #1
         \dim_set:Nn #1 { \dim_abs:n {#1} }
       }
     \dim_compare:nNnT {#2} < { \c_zero_dim }
@@ -12362,7 +11475,7 @@ Some text here
       }
 %    \end{macrocode}
 %   If no value has been passed to the \mykey[env]{labelwidth} and \mykey[env]{labelsep} keys, the
-%   default values are set for \myhlc|\l__@@_leftmargin_tmp_X_dim|.
+%   default values are set for \myhlc|\l_@@_leftmargin_tmp_X_dim|.
 %    \begin{macrocode}
     \bool_if:NF #7 { \dim_set:Nn #4 { #1 + #2} }
 %    \end{macrocode}
@@ -12518,7 +11631,7 @@ Some text here
 \msg_new:nnn { enumext } { width-negative }
   {
     Ignoring~negative~value~'#1=#2'~\msg_line_context:.\\
-    The~key~'#1'~ accepts~values ~>=~0pt.
+    The~key~'#1'~accepts~values~>=~0pt.
   }
 %    \end{macrocode}
 % \end{macro}
@@ -12572,7 +11685,7 @@ Some text here
 %   The \myhlc|\@@_safe_exec:| function first calls the function \myhlc|\@@_is_not_nested:|
 %   which sets \myhlc|\g_@@_standard_bool| to \emph{\enquote{true}} if it
 %   is NOT nested within \myenv*[no-index]{enumext*}, then calls the function
-%   \myhlc|\@@_internal_mini_page:| to create the environment \myhlc|\__@@_mini_page|,
+%   \myhlc|\@@_internal_mini_page:| to create the environment \myhlc|\@@_mini_page|,
 %   increments \myhlc|\l_@@_level_int| to restrict nesting of the
 %   environment, sets \myhlc|\l_@@_standard_bool| to \emph{\enquote{true}} and
 %   finally calls the function \myhlc|\@@_is_on_first_level:| which sets
@@ -12776,11 +11889,11 @@ Some text here
     \@@_check_ans_active:
 %    \end{macrocode}
 %   When the \mykey[env]{mini-env} key is active it will set the value of the
-%   \myhlc|\l__@@_minipage_right_X_dim| to be the \emph{width} of the \myhlc|\__@@_mini_page|
+%   \myhlc|\l_@@_minipage_right_X_dim| to be the \emph{width} of the \myhlc|\@@_mini_page|
 %   environment on the \emph{\enquote{right side}}, using this value together with the value
-%   of the \myhlc|\l__@@_minipage_hsep_X_dim| set by the \mykey[env]{mini-sep} key,
-%   the value of \myhlc|\l__@@_minipage_left_X_dim| will be set, which will be
-%   the \emph{width} of \myhlc|\__@@_mini_page| environment on the
+%   of the \myhlc|\l_@@_minipage_hsep_X_dim| set by the \mykey[env]{mini-sep} key,
+%   the value of \myhlc|\l_@@_minipage_left_X_dim| will be set, which will be
+%   the \emph{width} of \myhlc|\@@_mini_page| environment on the
 %   \emph{\enquote{left side}}, always having a current |\linewidth|
 %   as \emph{maximum width} between them.
 %    \begin{macrocode}
@@ -12794,11 +11907,11 @@ Some text here
             - \dim_use:c { l_@@_minipage_hsep_ \@@_level: _dim }
           }
 %    \end{macrocode}
-%    The boolean variable \myhlc|\l__@@_minipage_active_X_bool| will be
+%    The boolean variable \myhlc|\l_@@_minipage_active_X_bool| will be
 %    activated and the integer variable \myhlc|\g_@@_minipage_stat_int|
 %    used by the |\miniright| command will be incremented, then
 %    the function \myhlc|\@@_minipage_add_space:| is called and the
-%    \myhlc|\__@@_mini_page| environment on the \emph{\enquote{left
+%    \myhlc|\@@_mini_page| environment on the \emph{\enquote{left
 %    side}} will be initialized followed by the \emph{\enquote{vertical spacing}}
 %    applied to preserve the \emph{\enquote{baseline}} between the \emph{left}
 %    and \emph{right} side environments.
@@ -12818,10 +11931,10 @@ Some text here
 %
 % \begin{macro}[int]{\@@_second_part:}
 %   The function \myhlc|\@@_second_part:| first checks the state of
-%   the boolean variable \myhlc|\l__@@_minipage_active_X_bool|; if it is
+%   the boolean variable \myhlc|\l_@@_minipage_active_X_bool|; if it is
 %   \enquote{true}, a small test is executed to check if the use of
-%   |\miniright| was omitted (the \myhlc|\__@@_mini_page|
-%   environment has not been closed), then it closes \myhlc|\__@@_mini_page|
+%   |\miniright| was omitted (the \myhlc|\@@_mini_page|
+%   environment has not been closed), then it closes \myhlc|\@@_mini_page|
 %   and adds the \emph{adjusted vertical space} \myhlc|\l_@@_minipage_after_skip|,
 %   otherwise it closes the \myenv[no-index]{multicols} environment.
 %    \begin{macrocode}
@@ -12925,8 +12038,8 @@ Some text here
 %    \begin{macrocode}
 \msg_new:nnn { enumext } { list-too-deep }
   {
-    Too~deep~nesting ~for~'enumext'~\msg_line_context:.~ \\
-    The~maximum ~level ~of ~nesting ~is~4.
+    Too~deep~nesting~for~'enumext'~\msg_line_context:.\\
+    The~maximum~level~of~nesting~is~4.
   }
 %    \end{macrocode}
 % \end{macro}
@@ -13102,6 +12215,18 @@ Some text here
   {
     \@@_check_starred_cmd:n { item }
     \@@_second_part_v:
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \subsubsection{Definition of error messages for \env{keyans}}
+%
+% \begin{macro}[int]{keyans-nested}
+% Message used by \myenv*[no-index]{keyans} environment.
+%    \begin{macrocode}
+\msg_new:nnn { enumext } { keyans-nested }
+  {
+    The~environment~'keyans'~can't~be~nested~\msg_line_context:.
   }
 %    \end{macrocode}
 % \end{macro}
@@ -13810,6 +12935,28 @@ Some text here
 %    \end{macrocode}
 % \end{macro}
 %
+% \subsubsection{Definition of error messages for \env{keyanspic}}
+%
+% \begin{macro}[int]{keyanspic-nested, keyanspic-wrong-level,
+%                    keyanspic-item-cmd}
+% Messages used by \myenv*[no-index]{keyanspic} environment.
+%    \begin{macrocode}
+\msg_new:nnn { enumext } { keyanspic-nested }
+  {
+    The~environment~'keyanspic'~can't~be~nested~\msg_line_context:.
+  }
+\msg_new:nnn { enumext } { keyanspic-wrong-level }
+  {
+    Wrong~level~position~for~'keyanspic'~\msg_line_context:.\\
+    The~environment~'keyanspic'~can~only~be~in~the~first~level.
+  }
+\msg_new:nnn { enumext } { keyanspic-item-cmd }
+  {
+    Can't~use~\c_backslash_str item~in~keyanspic~\msg_line_context:.
+  }
+%    \end{macrocode}
+% \end{macro}
+%
 % \subsection{The horizontal environments}\label{subsec:horizontal-envs}
 %
 % Generating \emph{horizontal list environments} is NOT as simple as standard
@@ -14052,7 +13199,7 @@ Some text here
 % \begin{macro}[int]{\@@_start_mini_vii:, \@@_stop_mini_vii:}
 %   The implementation of the \mykey[env]{mini-env} key support is almost
 %   identical to the one used in the \myenv*[no-index]{enumext} and \myenv*[no-index]{keyans}
-%   environments, the difference is that the \myhlc|\__@@_mini_page|
+%   environments, the difference is that the \myhlc|\@@_mini_page|
 %   environment on the \emph{\enquote{right side}} is executed
 %   \emph{\enquote{after}} closing the environment, so it is necessary to
 %   make a global copy of the variable \myhlc|\l_@@_minipage_right_vii_dim| in
@@ -14078,7 +13225,7 @@ Some text here
       }
   }
 %    \end{macrocode}
-%   The function \myhlc|\@@_stop_mini_vii:| closes the \myhlc|\__@@_mini_page|
+%   The function \myhlc|\@@_stop_mini_vii:| closes the \myhlc|\@@_mini_page|
 %   environment on the \emph{\enquote{left side}}, applies |\hfill| and
 %   sets the variable \myhlc|\g_@@_minipage_active_vii_bool| to \emph{\enquote{true}}
 %   which will be used in the function \myhlc|\@@_after_env:nn| to execute
@@ -14215,6 +13362,27 @@ Some text here
 %    \end{macrocode}
 % \end{macro}
 %
+% \subsubsection{Definition of error messages}
+%
+% \begin{macro}[int]{nested-horizontal, item-joined, item-joined-columns}
+% Messages used by \myenv*[no-index]{enumext*} and \myenv*[no-index]{keyans*} environments.
+%    \begin{macrocode}
+\msg_new:nnn { enumext } { nested-horizontal }
+  {
+    The~environment~\l_@@_envir_name_tl \c_space_tl can't~be~nested~in~'#1'~
+    \msg_line_context:.
+  }
+\msg_new:nnn { enumext } { item-joined }
+  {
+    Items~joined~(#1)~>~#2~columns~\msg_line_context:.
+  }
+\msg_new:nnn { enumext } { item-joined-columns }
+  {
+    Not~enough~space~to~join~items~(#1)~>~#2~\msg_line_context:.
+  }
+%    \end{macrocode}
+% \end{macro}
+%
 % \subsection{The environment \env{enumext*}}\label{env:starred}
 %
 % \begin{macro}{enumext*}
@@ -14268,7 +13436,7 @@ Some text here
 %   The function \myhlc|\@@_is_not_nested:| is called first, which sets
 %   \myhlc|\g_@@_starred_bool| to true if it is NOT nested within \myenv*[no-index]{enumext};
 %   then the function \myhlc|\@@_internal_mini_page:| is called to create the
-%   environment \myhlc|\__@@_mini_page|, \myhlc|\l_@@_level_h_int| is incremented
+%   environment \myhlc|\@@_mini_page|, \myhlc|\l_@@_level_h_int| is incremented
 %   to restrict nesting of the environment, \myhlc|\l_@@_starred_bool| is set
 %   to true, and finally the function \myhlc|\@@_is_on_first_level:| is called, which
 %   sets \myhlc|\l_@@_starred_first_bool| to
@@ -14485,7 +13653,7 @@ Some text here
 %   variable \myhlc|\l_@@_wrap_label_vii_bool| handled by the
 %   \mykey[env]{wrap-label} key to true and set the switch |\if@noitemarg| to
 %   true to execute the enumerated version of |\item| by means of the
-%   function \myhlc|\@@_start_item_vii:w| |[| \myhlc|\l__@@_label_vii_tl| |]|.
+%   function \myhlc|\@@_start_item_vii:w| |[| \myhlc|\l_@@_label_vii_tl| |]|.
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_standard_item_vii:w
   {
@@ -14952,7 +14120,7 @@ Some text here
 %   variable \myhlc|\l_@@_wrap_label_viii_bool| handled by the
 %   \mykey[env]{wrap-label} key to true and set the switch |\if@noitemarg| to
 %   true to execute the enumerated version of |\item| by means of the
-%   function \myhlc|\@@_start_item_viii:w| |[| \myhlc|\l__@@_label_viii_tl| |]|.
+%   function \myhlc|\@@_start_item_viii:w| |[| \myhlc|\l_@@_label_viii_tl| |]|.
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_standard_item_viii:w
   {
@@ -15189,6 +14357,22 @@ Some text here
 %
 % \subsection{The command \cs{getkeyans}}\label{cmd:getkeyans}
 %
+% \subsubsection{Definition of error messages for \cs[no-index]{getkeyans}}
+%
+% \begin{macro}[int]{missing-colon}
+% Message used by |\getkeyans| command.
+%    \begin{macrocode}
+\msg_new:nnnn { enumext } { missing-colon }
+  {
+    The~argument~'#1'~has~no~colon~\msg_line_context:.
+  }
+  {
+    The~argument~of~'\token_to_str:N \getkeyans'~must~have~the~form~
+    'store~name:position'.
+  }
+%    \end{macrocode}
+% \end{macro}
+%
 % \subsubsection{Internal functions for \cs[no-index]{getkeyans}}
 %
 % \begin{macro}[int]{\@@_getkeyans_aux:n, \@@_getkeyans:nn}
@@ -15251,7 +14435,7 @@ Some text here
 % First a set of \mymeta{filtered keys} is defined, with
 % which the options of the different nesting levels are controlled for
 % the environments \myenv*[no-index]{enumext} and \myenv*[no-index]{enumext*} by storing their
-% values in the list of tokens \myhlc|\l__@@_print_keyans_X_tl|.
+% values in the list of tokens \myhlc|\l_@@_print_keyans_X_tl|.
 %
 % The variable \myhlc|\l_@@_print_keyans_starred_tl| will have the default \mymeta{keys}
 % for \ics*{printkeyans*} and will be set by |\setenumext|\myoarg{print\textnormal{\textcolor{star}{\texttt{*}}}}
@@ -15350,8 +14534,8 @@ Some text here
 %    \begin{macrocode}
 \msg_new:nnn { enumext } { print-starred }
   {
-    \c_backslash_str printkeyans*:~ The~sequence~'#1'~already~contains ~
-    #2~environment~ \msg_line_context:.
+    \c_backslash_str printkeyans*:~The~sequence~'#1'~already~contains~
+    #2~environment~\msg_line_context:.
   }
 %    \end{macrocode}
 % \end{macro}
@@ -15622,11 +14806,11 @@ Some text here
 %    \begin{macrocode}
 \msg_new:nnn { enumext } { invalid-key }
   {
-    The~key~'#1'~is~not~know~the~level~#2.
+    The~key~'#1'~is~not~known~at~level~#2~\msg_line_context:.
   }
 \msg_new:nnn { enumext } { unknown-key-family }
   {
-    Unknown~key~family~`\l_keys_key_str'~for~enumext.
+    Unknown~key~family~'\l_keys_key_str'~for~enumext~\msg_line_context:.
   }
 %    \end{macrocode}
 % \end{macro}
@@ -15649,7 +14833,7 @@ Some text here
   }
 \msg_new:nnn { enumext } { prohibited-unknown }
   {
-    The~name~'unknown'~can't~be~chosen~ for~a~meta~key~\msg_line_context:.
+    The~name~'unknown'~can't~be~chosen~for~a~meta~key~\msg_line_context:.
   }
 %    \end{macrocode}
 % \end{macro}
@@ -15749,15 +14933,23 @@ Some text here
 % Message used by unknown \mymeta{keys} in |\foreachkeyans|.
 %    \begin{macrocode}
 \msg_new:nnnn { enumext } { for-key-unknown }
-  { The~key~'#1'~is~unknown~by~'\c_backslash_str foreachkeyans'~and~is~being~ignored.}
   {
-    The~command~'\c_backslash_str foreachkeyans'~does~not~have~a~key~called~'#1'.\\
+    The~key~'#1'~is~unknown~by~'\c_backslash_str foreachkeyans'~and~is~being~
+    ignored~\msg_line_context:.
+  }
+  {
+    The~command~'\c_backslash_str foreachkeyans'~does~not~have~a~key~called~
+    '#1'.\\
     Check~that~you~have~spelled~the~key~name~correctly.
   }
 \msg_new:nnnn { enumext } { for-key-value-unknown }
-  { The~key~'#1=#2'~is~unknown~by~'\c_backslash_str foreachkeyans'~and~is~being~ignored. }
   {
-    The~command~'\c_backslash_str foreachkeyans'~does~not~have~a~key~called~'#1'.\\
+    The~key~'#1=#2'~is~unknown~by~'\c_backslash_str foreachkeyans'~and~is~
+    being~ignored~\msg_line_context:.
+  }
+  {
+    The~command~'\c_backslash_str foreachkeyans'~does~not~have~a~key~called~
+    '#1'.\\
     Check~that~you~have~spelled~the~key~name~correctly.
   }
 %    \end{macrocode}
@@ -15866,6 +15058,9 @@ Some text here
 %
 % \subsection{General messages}\label{subsec:messages}
 %
+% Messages shared by several sections of the implementation; the messages used by only
+% one command, key or environment are defined in its own section.
+%
 % \begin{macro}[int]{package-load, package-not-load}
 % Message used by package-load for \mypkg[no-index]{multicol} and \mypkg[no-index]{hyperref}
 % packages.
@@ -15882,280 +15077,61 @@ Some text here
 % \end{macro}
 %
 % \begin{macro}[int]{unknown-choice}
-% Message used by \mykey[env]{align} and \mykey[env]{mark-pos} keys.
+% Message used by \mykey[env]{align}, \mykey[env]{mark-pos} and \mykey[env]{label-pos} keys.
 %    \begin{macrocode}
 \msg_new:nnn { enumext } { unknown-choice }
   {
-    The~value~'#3'~for~'#1'~key~is~invalid~use~('#2').
+    Invalid~value~'#3'~for~key~'#1';~use~one~of:~#2~\msg_line_context:.
   }
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}[int]{store-prop, store-seq, store-int, prop-seq-int-hook,
-%                    item-answer-hook}
-% Message used in the creation of \emph{prop list} by \mypkg*[no-index]{enumext}
-% package.
+% \begin{macro}[int]{command-wrong-place}
+% Message used by |\anskey| and |\anspic| commands when they are used
+% in the wrong place.
 %    \begin{macrocode}
-\msg_new:nnn { enumext } { store-prop }
-  {
-    *~Package~enumext:~Creating ~
-    \c_backslash_str g_@@_#1_prop~\msg_line_context:.
-  }
-\msg_new:nnn { enumext } { store-seq }
-  {
-    *~Package~enumext:~Creating ~
-    \c_backslash_str g_@@_#1_seq~\msg_line_context:.
-  }
-\msg_new:nnn { enumext } { store-int }
-  {
-    *~Package~enumext:~Creating ~
-    \c_backslash_str g_@@_resume_#1_int~\msg_line_context:.
-  }
-\msg_new:nnn { enumext } { prop-seq-int-hook }
-  {
-    *~Package~enumext:~Elements~in ~
-    \c_backslash_str g_@@_#1_prop~=~#2.\\
-    *~Package~enumext:~Elements~in ~
-    \c_backslash_str g_@@_#1_seq~=~#3.\\
-    *~Package~enumext:~Value~off ~
-    \c_backslash_str g_@@_resume_#1_int~=~#4.
-  }
-\msg_new:nnn { enumext } { item-answer-hook }
-  {
-    *~Package~enumext:~Value~off ~
-    \c_backslash_str g_@@_item_number_int~=~#1.\\
-    *~Package~enumext:~Value~off ~
-    \c_backslash_str g_@@_item_anskey_int~=~#2.\\
-    *~Package~enumext:~Difference~item_number_int~-~item_anskey_int~=~#3.
-  }
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}[int]{anskey-unnumber-item, anskey-empty-arg, anskey-wrong-place,
-%                    anskey-nested, anskey-math-mode, anskey-env-wrong,
-%                    command-wrong-place, anskey-env-key-unknown,
-%                    anskey-env-key-value-unknown, anskey-cmd-key-unknown,
-%                    anskey-cmd-key-value-unknown, overwrite-file, writing-file,
-%                    not-writing}
-% Messages used by |\anskey|, \myenv*[no-index]{anskey*} and |\anspic| commands.
-%    \begin{macrocode}
-\msg_new:nnn { enumext } { anskey-unnumber-item }
-  {
-    Can't~store~with~a~unnumbered~\c_backslash_str item~\msg_line_context:.
-  }
-\msg_new:nnn { enumext } { anskey-empty-arg }
-  {
-    Can't~store~empty~content~\msg_line_context:.
-  }
-\msg_new:nnn { enumext } { anskey-wrong-place }
-  {
-    Wrong~place~for~command~'\c_backslash_str #1'~\msg_line_context:.~ \\
-    '\c_backslash_str #1'~works~in~the~environment~'#2'.
-  }
-\msg_new:nnn { enumext } { anskey-nested }
-  {
-    The~command~\c_backslash_str anskey~ can't~be~nested~\msg_line_context:.
-  }
-\msg_new:nnn { enumext } { anskey-math-mode }
-  {
-    #1~can't~work~in~math~mode~\msg_line_context:.
-  }
-\msg_new:nnn { enumext } { anskey-env-wrong }
-  {
-    The~environment~anskey*~cannot~use~in~'#1'~\msg_line_context:.
-  }
 \msg_new:nnn { enumext } { command-wrong-place }
   {
-    Wrong~place~for~command~'\c_backslash_str #1'~\msg_line_context:.~ \\
+    Wrong~place~for~command~'\c_backslash_str #1'~\msg_line_context:.\\
     '\c_backslash_str #1'~works~outside~the~environment~'#2'.
   }
-\msg_new:nnnn { enumext } { anskey-env-key-unknown }
-  {
-    The~key~'#1'~is~unknown~by~environment~
-    'anskey*'~and~is~being~ignored.
-  }
-  {
-    The~environment~'anskey*'~does~not~have~a~key~called ~'#1'.\\
-    Check~that~you~have~spelled~the~key~name~correctly.
-  }
-\msg_new:nnnn { enumext } { anskey-env-key-value-unknown }
-  {
-    The~key~'#1=#2'~is~unknown~by~environment ~
-    'anskey*'~and~is~being~ignored.
-  }
-  {
-    The~environment~'anskey*'~does~not~have~a~key~called ~'#1'.\\
-    Check~that~you~have~spelled~the~key~name~correctly.
-  }
-\msg_new:nnnn { enumext } { anskey-cmd-key-unknown }
-  { The~key~'#1'~is~unknown~by~'\c_backslash_str anskey'~and~is~being~ignored.}
-  {
-    The~command ~'\c_backslash_str anskey'~does~not~have~a~key~called ~'#1'.\\
-    Check~that~you~have~spelled~the~key~name~correctly.
-  }
-\msg_new:nnnn { enumext } { anskey-cmd-key-value-unknown }
-  { The~key~'#1=#2'~is~unknown~by~'\c_backslash_str anskey'~and~is~being~ignored. }
-  {
-    The~command~'\c_backslash_str anskey'~does~not~have~a~key~called ~'#1'.\\
-    Check~that~you~have~spelled~the~key~name~correctly.
-  }
-\msg_new:nnn { enumext } { overwrite-file }
-  {
-    Overwriting~file~'#1'.
-  }
-\msg_new:nnn { enumext } { writing-file }
-  {
-    Writing~file~'#1'.
-  }
-\msg_new:nnn { enumext } { not-writing }
-  {
-    File~`#1'~already~exists.~Not~writing.
-  }
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}[int]{keyans-nested, keyans-wrong-level, wrong-place,
-%                    keyanspic-nested, keyanspic-wrong-level, keyanspic-item-cmd,
-%                    keyans-unknown-key, keyans-unknown-key-value}
-% Messages used by \myenv*[no-index]{keyans}, \myenv*[no-index]{keyans*} and \myenv*[no-index]{keyanspic}
-% environment.
-%    \begin{macrocode}
-\msg_new:nnn { enumext } { keyans-nested }
-  {
-    The~environment~'keyans'~can't~be ~nested ~\msg_line_context:.
-  }
-\msg_new:nnn { enumext } { keyans-wrong-level }
-  {
-    Wrong~level~position~for~'keyans'~\msg_line_context:.~ \\
-    The~environment~'keyans'~can~only~be~in~the~first~level.
-  }
-\msg_new:nnn { enumext } { wrong-place }
-  {
-    Wrong~place~for~'#1'~environment ~\msg_line_context:.~ \\
-    '#1'~is~only~found~with~'#2'~ in ~ 'enumext.
-  }
-\msg_new:nnn { enumext } { keyanspic-nested }
-  {
-    The~environment~'keyanspic'~can't~be ~nested~ \msg_line_context:.~.
-  }
-\msg_new:nnn { enumext } { keyanspic-wrong-level }
-  {
-    Wrong~level~position~for~'keyanspic'~\msg_line_context:.~ \\
-    The~environment~'keyans'~can~only~be~in~the~first~level.
-  }
-\msg_new:nnn { enumext } { keyanspic-item-cmd }
-  {
-    Can't~use ~\c_backslash_str item~in~keyanspic~\msg_line_context:.
-  }
-\msg_new:nnnn { enumext } { keyans-unknown-key }
-  {
-    The~key~'#1'~is~unknown~by~environment~
-    '\l_@@_envir_name_tl'~and~is~being~ignored.
-  }
-  {
-    The~environment~'\l_@@_envir_name_tl'~does~not
-    ~have~a~key~called ~'#1'.\\
-    Check~that~you~have~spelled~the~key~name~correctly.
-  }
-\msg_new:nnnn { enumext } { keyans-unknown-key-value }
-  {
-    The~key~'#1=#2'~is~unknown~by~environment ~
-    '\l_@@_envir_name_tl'~and~is~being~ignored.
-  }
-  {
-    The~environment~'\l_@@_envir_name_tl'~does~not
-    ~have~a~key~called ~'#1'.\\
-    Check~that~you~have~spelled~the~key~name~correctly.
-  }
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}[int]{undefined-storage-anskey, missing-colon}
-% Messages used by |\getkeyans| command.
+% \begin{macro}[int]{undefined-storage-anskey}
+% Message used by |\getkeyans|, |\printkeyans| and |\foreachkeyans| commands
+% when the storage is not defined.
 %    \begin{macrocode}
 \msg_new:nnn { enumext } { undefined-storage-anskey }
   {
     Storage~named~'#1'~is~not~defined~\msg_line_context:.
   }
-\msg_new:nnnn { enumext } { missing-colon }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}[int]{missing-miniright}
+% Message used by \myenv*[no-index]{enumext} and \myenv*[no-index]{keyans}
+% when the key \mykey[env]{mini-env} needs |\miniright|.
+%    \begin{macrocode}
+\msg_new:nnn { enumext } { missing-miniright }
   {
-    The~argument~'#1'~has~no~colon~\msg_line_context:.
-  }
-  {
-    The~argument~of~'\token_to_str:N \getkeyans'~must~have~the~form~
-    'store~name:position'.
+    Missing~'\c_backslash_str miniright'~\msg_line_context:.\\
+    The~key~'mini-env'~needs~'\c_backslash_str miniright'.
   }
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}[int]{missing-miniright, wrong-miniright-place, wrong-miniright-use,
-%                    wrong-miniright-starred, many-miniright-used}
-% Messages used by |\miniright| command.
-%    \begin{macrocode}
-\msg_new:nnn { enumext } { missing-miniright }
-  {
-    Missing~'\c_backslash_str miniright'~in~\msg_line_context:.\\
-    The~key~'mini-env'~need~'\c_backslash_str miniright'.
-  }
-\msg_new:nnn { enumext } { wrong-miniright-place }
-  {
-    Wrong~place~for~'\c_backslash_str miniright'~\msg_line_context:.~ \\
-    Works~in~'enumext'~and~'keyans'~with~key~'mini-env'.
-  }
-\msg_new:nnn { enumext } { wrong-miniright-use }
-  {
-    Wrong~use~for~'\c_backslash_str miniright'~\msg_line_context:.~ \\
-    '\c_backslash_str miniright'~need~a~key~'mini-env'.
-  }
-\msg_new:nnn { enumext } { wrong-miniright-starred }
-  {
-    Can't~use ~\c_backslash_str miniright~in~starred~environments~\msg_line_context:.
-  }
-\msg_new:nnn { enumext } { many-miniright-used }
-  {
-    Can't~use ~\c_backslash_str miniright~more~than~once~ \msg_line_context:.
-  }
-%    \end{macrocode}
-% \end{macro}
-% \begin{macro}[int]{nested, nested-horizontal, item-joined, item-joined-columns}
-% Messages used by \myenv*[no-index]{enumext*} and \myenv*[no-index]{keyans*} environments.
+% \begin{macro}[int]{nested}
+% Message used when an environment is nested in itself.
 %    \begin{macrocode}
 \msg_new:nnn { enumext } { nested }
   {
-    The~environment~\l_@@_envir_name_tl \c_space_tl can't~be~nested~\msg_line_context:.
-  }
-\msg_new:nnn { enumext } { nested-horizontal }
-  {
-    The~environment~\l_@@_envir_name_tl \c_space_tl can't~be~nested~in~'#1'~ \msg_line_context:.
-  }
-\msg_new:nnn { enumext } { item-joined }
-  {
-    Items~joined~(#1)~>~#2 ~columns ~\msg_line_context:.
-  }
-\msg_new:nnn { enumext } { item-joined-columns }
-  {
-    Not~space~to~join~items~(#1)~>~#2 ~\msg_line_context:.
+    The~environment~\l_@@_envir_name_tl \c_space_tl can't~be~nested~
+    \msg_line_context:.
   }
 %    \end{macrocode}
 % \end{macro}
-% \begin{macro}[int]{unknown-series-starred, unknown-series-standard, out-of-range}
-% Messages used by \mykey[env]{resume} key.
-%    \begin{macrocode}
-\msg_new:nnn { enumext } { unknown-series-starred }
-  {
-    The~series~'#1'~for~the~resume~key~does~not~exist~in~the~
-    ~enumext*~environment~ \msg_line_context:.
-  }
-\msg_new:nnn { enumext } { unknown-series-standard }
-  {
-    The~series~'#1'~for~the~resume~key~does~not~exist~at~level~\int_use:N \l_@@_level_int
-    \c_space_tl of~enumext~environment~ \msg_line_context:.
-  }
-\msg_new:nnnn { enumext } { out-of-range }
-  { The~number~must~be~exactly~1,~2,~3~or~4. }
-  { Received:~'#1'. }
-%    \end{macrocode}
-% \end{macro}
+%
 % \subsection{Finish package}\label{subsec:finish}
 %
 % Finish package implementation.

@@ -1,0 +1,51 @@
+% arara: lualatex: { branch: developer }
+% arara: clean: { extensions: [ aux, log] }
+\documentclass{article}
+\usepackage{siunitx,amssymb,enumext}
+\sisetup{output-decimal-marker={,}}
+\DeclareSIUnit{\angstrom}{\textup{\AA}}
+\pagestyle{empty}
+\begin{document}
+\setenumext[keyans]{label=\Alph*,labelsep=10pt,font=\small,nosep,itemsep=2pt,wrap-label={\fbox{\makebox[\height]{##1}}}}
+\begin{enumext}[mode-box,columns=2,columns-sep=1cm,save-ans=sabastiano]
+ \item La velocità di \qty{1,00e2}{m/s} espressa in \unit{km/h} è:
+   \begin{keyans}
+     \item \qty{36}{km/h}.
+     \item* \qty{360}{km/h}.
+     \item \qty{27,8}{km/h}.
+     \item \qty{3,60e8}{km/h}.
+   \end{keyans}
+
+ \item In fisica nucleare si usa l'angstrom (simbolo:
+ $\qty{1}{\angstrom} = \qty{1e-10}{m}$) e il fermi o femtometro
+ ($\qty{1}{fm} = \qty{1e-15}{m}$). Qual è la relazione tra queste due
+ unità di misura?
+   \begin{keyans}
+     \item* $\qty{1}{\angstrom}=\qty{1e5}{fm}$.
+     \item $\qty{1}{\angstrom}=\qty{1e-5}{fm}$.
+     \item $\qty{1}{\angstrom}=\qty{1e-15}{fm}$.
+     \item $\qty{1}{\angstrom}=\qty{1e3}{fm}$.
+   \end{keyans}
+
+ \item La velocità di \qty{1,00e2}{m/s} espressa in \unit{km/h} è:
+   \begin{keyans}
+     \item \qty{36}{km/h}.
+     \item* \qty{360}{km/h}.
+     \item \qty{27,8}{km/h}.
+     \item \qty{3,60e8}{km/h}.
+   \end{keyans}
+
+ \item In fisica nucleare si usa l'angstrom (simbolo:
+ $\qty{1}{\angstrom} = \qty{1e-10}{m}$) e il fermi o femtometro
+ ($\qty{1}{fm} = \qty{1e-15}{m}$). Qual è la relazione tra queste due
+ unità di misura?
+   \begin{keyans}
+     \item* $\qty{1}{\angstrom}=\qty{1e5}{fm}$.
+     \item $\qty{1}{\angstrom}=\qty{1e-5}{fm}$.
+     \item $\qty{1}{\angstrom}=\qty{1e-15}{fm}$.
+     \item $\qty{1}{\angstrom}=\qty{1e3}{fm}$.
+   \end{keyans}
+\end{enumext}
+
+\printkeyans[columns=4]{sabastiano}
+\end{document}

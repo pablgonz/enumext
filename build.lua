@@ -1,27 +1,36 @@
 --[[
    Configuration script for l3build from the enumext package.
    At the moment the possible targets that can be passed are:
-   * tag        : Update the version and date
+   * tag        : Update the version and date and regenerate the
+                  enumext.sty copy in sources/
    * doc        : Generate the documentation [-q]
    * unpack     : Unpacks the source files [-q]
    * install    : Install the package locally, you can use
                   it in conjunction with [--full] [--dry-run]
    * uninstall  : Uninstall the package locally
-   * clean      : Clean the directory tree and repo
-   * ctan       : Generate the compressed package (.zip)
+   * clean      : Clean the directory tree and the files ignored by git
+                  (only lists them with --dry-run; never removes files
+                  that git does not ignore)
+   * ctan       : Generate the compressed package (.zip); it first checks that
+                  the PDFs of /test-pkg and /samples are up to date
    * upload     : Upload the package to ctan, you must add
                   -F ctan.ann in conjunction with [--debug]
    * tagcheck   : Check version and date in files
-   * testpkg    : Compile all example files included in /test-pkg
-   * examples   : Compile all example files included in .dtx file
+   * testpkg    : Compile (two runs) and validate the files in /test-pkg,
+                  PDFs copied there (enumext-01 is skipped for now)
+   * example    : Compile (one run) the files in /samples, PDFs copied there
+   The targets testpkg and example accept file names (with or without .tex)
+   to run only those files: l3build example enumext-exa-2
    * release    : It performs the checks before generating a public
-                  release (on git and ctan).
+                  release (on git and ctan), commits the PDFs that
+                  example, testpkg and ctan regenerate and creates the
+                  git tag.
 --]]
 
 -- General package identification
 module     = "enumext"
 pkgversion = "2.3"
-pkgdate    = "2026-10-03"
+pkgdate    = "2026-10-23"
 ltxrelease = "2026-11-01"
 
 -- Configuration of files for build and installation
@@ -48,15 +57,26 @@ unpackexe   = "luatex"
 function docinit_hook()
   local errorlevel = (cp("*mylhmc.lua", sourcefiledir, typesetdir) + cp("*mylhmc.sty", sourcefiledir, typesetdir))
   if errorlevel ~= 0 then
-    error("** Error!!: Can't copy mylhmc.lua and mylhmc.lua files from "..sourcefiledir.." to "..typesetdir)
+    error("** Error!!: Can't copy mylhmc.lua and mylhmc.sty files from "..sourcefiledir.." to "..typesetdir)
     return errorlevel
+  end
+  -- Examples attached to the manual: what is in sources/test-pkg and in
+  -- sources/samples is copied as it is. Nothing is checked here
+  local testdir = sourcefiledir.."/test-pkg"
+  if direxists(testdir) then
+    cp("*.tex", testdir, typesetdir)
+    cp("*.pdf", testdir, typesetdir)
+  end
+  local smpdir = sourcefiledir.."/samples"
+  if direxists(smpdir) then
+    cp("*.tex", smpdir, typesetdir)
   end
   return 0
 end
 
 function typeset(file)
-  print("** Running: arara "..file..".dtx")
   local file = jobname(sourcefiledir.."/enumext.dtx")
+  print("** Running: arara "..file..".dtx")
   local errorlevel = runcmd("arara "..file..".dtx", typesetdir, {"TEXINPUTS","LUAINPUTS"})
   if errorlevel ~= 0 then
     error("Error!!: Typesetting "..file..".dtx")
@@ -77,12 +97,12 @@ uploadconfig = {
   uploader     = "Pablo González L",
   email        = "pablgonz@yahoo.com",
   pkg          = ctanpkg,
-  version      = pkgversion,
+  version      = pkgversion .. " " .. pkgdate,
   license      = "lppl1.3c",
   summary      = "Enumerate exercise sheets",
-  description  =[[This package provides enumerated list environments compatible with tagging PDF for creating
-                  “simple exercise sheets” along with “multiple choice questions”, storing the “answers” to these in memory using
-                   multicol package.]],
+  description  = "This package provides enumerated list environments compatible with tagging PDF for creating "
+    .. "“simple exercise sheets” along with “multiple choice questions”, storing the “answers” to these in memory "
+    .. "using multicol package.",
   topic        = { "exercise", "list-enum", "list", "tagged-pdf" },
   ctanPath     = "/macros/latex/contrib/" .. ctanpkg,
   repository   = "https://github.com/pablgonz/" .. module,
@@ -93,13 +113,12 @@ uploadconfig = {
   update       = true
 }
 
--- Clean files
-cleanfiles = {module..".pdf", ctanzip..".curlopt", ctanzip..".zip"}
+-- Clean files (enumext.pdf is versioned in git, so clean must not remove it)
+cleanfiles = {ctanzip..".curlopt", ctanzip..".zip"}
 
 -- Update package date and version
 tagfiles = {
   "sources/enumext.dtx",
-  "sources/enumext.sty",
   "sources/CTANREADME.md",
   "ctan.ann"
 }
@@ -237,18 +256,34 @@ local function check_all_tags()
   return ok_dtx and ok_sty and ok_readme
 end
 
--- Leave tag_hook empty so 'l3build tag' doesn't execute redundant checks after writing
+-- Regenerates the copy of enumext.sty in sources/ from the .dtx and the .ins,
+-- so that it carries what 'l3build tag' just wrote in the .dtx.
+local function unpack_copies()
+  local file = jobname(sourcefiledir .. "/enumext.ins")
+  local errorlevel = run(sourcefiledir, "luatex --interaction=batchmode " .. file .. ".ins > " .. os_null)
+  if errorlevel ~= 0 then
+    error("** Error!!: Failed to process " .. file .. ".ins with luatex")
+  end
+  rm(sourcefiledir, file .. ".log")
+  os_message("Regenerated the .sty copy from " .. file .. ".ins")
+end
+
+-- 'l3build tag' does not run redundant checks after writing; it only
+-- regenerates the .sty copy in sources/ (commit it afterwards)
 function tag_hook(tagname)
+  unpack_copies()
+  return 0
 end
 
 -- Standalone audit target: l3build tagcheck
-if options["target"] == "tagcheck" then
-  if check_all_tags() then
-    os.exit(0)
-  else
-    os.exit(1)
-  end
-end
+target_list.tagcheck = {
+  desc = "Check version and date in files",
+  help = "Reports every file whose version or date differs from build.lua.",
+  func = function()
+    if check_all_tags() then return 0 end
+    return 1
+  end,
+}
 
 -- Helper function to generate an isolated build environment --
 local function system_temp_dir()
@@ -310,98 +345,263 @@ local function make_tmp_dir()
   return 0
 end
 
--- Custom target: l3build testpkg
-if options["target"] == "testpkg" then
-  make_tmp_dir()
-
-  local errorlevel = cp("*.*", "sources/test-pkg", tmpdir)
-  if errorlevel ~= 0 then
-    error("** Error!!: Failed to copy test files from sources/test-pkg to " .. tmpdir)
-  else
-    os_message("Copied test files from sources/test-pkg to " .. tmpdir)
+-- Names (without extension) of the .tex files in srcdir. Only plain file
+-- names are accepted because they end up in shell commands.
+local function list_samples(srcdir, skip)
+  if not direxists(srcdir) then
+    error("** Error!!: Directory " .. srcdir .. " not found")
   end
-
-  os_message("Compiling test files with arara")
-  local samples = {"enumext-02", "enumext-03", "enumext-04", "enumext-05", "enumext-06", "enumext-07"}
-  for _, sample in ipairs(samples) do
-    errorlevel = run(tmpdir, "arara -v " .. sample .. ".tex")
-    if errorlevel ~= 0 then
-      local f = io.open(tmpdir .. "/" .. sample .. ".log", "r")
-      if f then
-        print(f:read("*all"))
-        f:close()
-      end
-      error("** Error!!: arara compilation failed for " .. sample .. ".tex")
+  local samples = {}
+  for file in lfs.dir(srcdir) do
+    local name = file:match("^([%w%-_]+)%.tex$")
+    if name then
+      table.insert(samples, name)
+    elseif file:match("%.tex$") then
+      print("** Warning: skipping " .. file .. " (unsafe file name)")
     end
   end
-
-  errorlevel = cp("enumext-*.pdf", tmpdir, maindir)
-  if errorlevel ~= 0 then
-    error("** Error!!: Failed to copy generated PDF files to main directory")
-  else
-    os_message("Copied generated PDF files to main directory")
+  table.sort(samples)
+  if #samples == 0 then
+    error("** Error!!: No .tex files found in " .. srcdir)
   end
-
-  cleandir(tmpdir)
-  lfs.rmdir(tmpdir)
-  os_message("Removed temporary directory " .. tmpdir)
-  os.exit(0)
+  -- Keeps only the names given on the command line (l3build example name ...);
+  -- with no names all the files are kept, except those in 'skip'. A name given
+  -- explicitly is always run. A name can be written with or without the .tex
+  -- extension.
+  local wanted = options["names"]
+  if not wanted or #wanted == 0 then
+    if not skip then return samples end
+    local kept = {}
+    for _, name in ipairs(samples) do
+      if skip[name] then
+        print("** Warning: skipping " .. name .. ".tex (temporarily excluded)")
+      else
+        table.insert(kept, name)
+      end
+    end
+    return kept
+  end
+  local exists = {}
+  for _, name in ipairs(samples) do exists[name] = true end
+  local selected = {}
+  for _, arg_name in ipairs(wanted) do
+    local name = (arg_name:gsub("%.tex$", ""))
+    if not exists[name] then
+      error("** Error!!: " .. name .. ".tex not found in " .. srcdir)
+    end
+    table.insert(selected, name)
+  end
+  return selected
 end
 
--- Custom target: l3build examples
-if options["target"] == "examples" then
-  make_tmp_dir()
+-- On errors the temporary directory is kept, so the logs can be inspected
+local function fail(msg)
+  print("** Temporary directory kept for inspection: " .. tmpdir)
+  error(msg)
+end
 
-  local errorlevel = (cp("*mylhmc.lua", sourcefiledir, tmpdir) + cp("*mylhmc.sty", sourcefiledir, tmpdir))
-  if errorlevel ~= 0 then
-    error("** Error!!: Can't copy mylhmc.lua and mylhmc.lua files from "..sourcefiledir.." to "..tmpdir)
+-- Helper to detect whether an executable is in the PATH (Windows and Linux)
+local function has_cmd(cmd)
+  local is_windows = package.config:sub(1, 1) == "\\"
+  local null_dev = os_null or (is_windows and "NUL" or "/dev/null")
+  local check = is_windows and ("where " .. cmd .. " > " .. null_dev .. " 2>&1")
+                           or ("command -v " .. cmd .. " > " .. null_dev .. " 2>&1")
+  local res = os.execute(check)
+  return (res == true or res == 0)
+end
+
+local function show_log(dir, name)
+  local f = io.open(dir .. "/" .. name .. ".log", "r")
+  if f then
+    print(f:read("*all"))
+    f:close()
   end
+end
 
-  local file = jobname("enumext.dtx")
-  os_message("Extracting examples from " .. file .. ".dtx")
+-- PDF validators (the ones that are installed)
+local run_rnv, run_verapdf
 
-  local errorlevel = run(tmpdir, "lualatex-dev " .. file .. ".dtx > " .. os_null)
-  if errorlevel ~= 0 then
-    error("** Error!!: Example extraction failed on " .. file .. ".dtx")
-  else
-    os_message("Extracted examples from " .. file .. ".dtx")
+local function announce_validators()
+  run_rnv = has_cmd("rnv-wrapp") and has_cmd("show-pdf-tags")
+  run_verapdf = has_cmd("verapdf")
+  if run_rnv and run_verapdf then
+    os_message("Validators detected: show-pdf-tags, rnv-wrapp & veraPDF")
+  elseif run_rnv then
+    os_message("Validators detected: show-pdf-tags & rnv-wrapp")
+  elseif run_verapdf then
+    os_message("Validator detected: veraPDF")
   end
+end
 
-  os_message("Compiling example files with arara")
-  local samples = {"enumext-exa-1", "enumext-exa-2", "enumext-exa-3", "enumext-exa-4", "enumext-exa-5", "enumext-exa-6"}
-  for _, sample in ipairs(samples) do
-    errorlevel = run(tmpdir, "arara " .. sample .. ".tex > " .. os_null)
-    if errorlevel ~= 0 then
-      local f = io.open(tmpdir .. "/" .. sample .. ".log", "r")
-      if f then
-        print(f:read("*all"))
-        f:close()
-      end
-      cp(sample .. ".tex", tmpdir, maindir)
-      cp(sample .. ".log", tmpdir, maindir)
-      error("** Error!!: arara compilation failed for " .. sample .. ".tex")
-    else
-      os_message("Compiled " .. sample .. ".tex")
+local function validate_pdf(dir, pdf_file)
+  if run_rnv then
+    local cmd_rnv = "show-pdf-tags --xml " .. pdf_file .. " | rnv-wrapp"
+    if run(dir, cmd_rnv .. " > " .. os_null) ~= 0 then
+      print("\n[RNC Validation Error Output]:")
+      run(dir, cmd_rnv)
+      fail("** Error!!: Tag structure validation (rnv-wrapp) failed for " .. pdf_file)
     end
   end
+  if run_verapdf then
+    local cmd_vera = "verapdf --flavour ua2 --format text " .. pdf_file
+    if run(dir, cmd_vera .. " > " .. os_null) ~= 0 then
+      print("\n[PDF/UA-2 Validation Error Output]:")
+      run(dir, cmd_vera)
+      fail("** Error!!: veraPDF (PDF/UA-2) validation failed for " .. pdf_file)
+    end
+  end
+  if run_rnv or run_verapdf then
+    print("PASS")
+  end
+end
 
-  errorlevel = cp("enumext-*.pdf", tmpdir, maindir)
-  if errorlevel ~= 0 then
-    error("** Error!!: Failed to copy generated PDF files to main directory")
-  else
-    os_message("Copied generated PDF files to main directory")
+-- Compile every .tex in srcdir with lualatex-dev inside the temporary
+-- directory and copy each PDF back to srcdir (they are versioned there).
+-- opts.passes : number of lualatex-dev runs per file
+-- opts.validate : validate the PDF after the last run
+-- opts.skip : table of names (without extension) that are not run
+local function compile_samples(srcdir, label, opts)
+  local samples = list_samples(srcdir, opts.skip)
+  make_tmp_dir()
+
+  if cp("*.*", srcdir, tmpdir) ~= 0 then
+    fail("** Error!!: Failed to copy " .. label .. " files from " .. srcdir .. " to " .. tmpdir)
+  end
+  os_message("Copied " .. label .. " files from " .. srcdir .. " to " .. tmpdir)
+
+  if opts.validate then
+    announce_validators()
   end
 
+  for _, sample in ipairs(samples) do
+    for pass = 1, opts.passes do
+      os_message("Compiling " .. sample .. ".tex (run " .. pass .. " of " .. opts.passes .. ")")
+      if run(tmpdir, "lualatex-dev -interaction=nonstopmode " .. sample .. ".tex > " .. os_null) ~= 0 then
+        show_log(tmpdir, sample)
+        fail("** Error!!: lualatex-dev compilation failed for " .. sample .. ".tex (run " .. pass .. ")")
+      end
+    end
+    if opts.validate then
+      validate_pdf(tmpdir, sample .. ".pdf")
+    end
+    if cp(sample .. ".pdf", tmpdir, srcdir) ~= 0 then
+      fail("** Error!!: Failed to copy " .. sample .. ".pdf to " .. srcdir)
+    end
+    os_message("OK: " .. sample .. ".tex, copied " .. sample .. ".pdf to " .. srcdir)
+  end
+
+  os_message("All " .. #samples .. " " .. label .. " files compiled")
   cleandir(tmpdir)
   lfs.rmdir(tmpdir)
   os_message("Removed temporary directory " .. tmpdir)
-  os.exit(0)
+end
+
+-- Files of sources/test-pkg that testpkg does not run (and whose PDFs are
+-- not checked by ctan). enumext-01 is excluded for now: it needs a patch first.
+local testpkg_skip = { ["enumext-01"] = true }
+
+-- Custom target: l3build testpkg
+-- Compiles twice and validates the files in sources/test-pkg; the PDFs are
+-- left there.
+target_list.testpkg = {
+  desc = "Compile (two runs) and validate the files in /test-pkg",
+  help = "Accepts file names, with or without .tex: l3build testpkg enumext-02",
+  func = function()
+    compile_samples(sourcefiledir .. "/test-pkg", "test", {
+      passes = 2,
+      validate = true,
+      skip = testpkg_skip,
+    })
+    return 0
+  end,
+}
+
+-- Custom target: l3build example
+-- Compiles once the files in sources/samples; the PDFs are left there
+target_list.example = {
+  desc = "Compile (one run) the files in /samples",
+  help = "Accepts file names, with or without .tex: l3build example enumext-exa-2",
+  func = function()
+    compile_samples(sourcefiledir .. "/samples", "example", { passes = 1, validate = false })
+    return 0
+  end,
+}
+
+-- The PDFs attached to the manual are the ones that 'l3build testpkg' and
+-- 'l3build example' leave in sources/test-pkg and sources/samples. Before
+-- packaging, check that all of them exist and are not older than their .tex
+-- (target ctan and release only; doc copies what is there without checking).
+local function check_example_pdfs()
+  local stale = {}
+  local dirs = {
+    { dir = sourcefiledir .. "/test-pkg", skip = testpkg_skip },
+    { dir = sourcefiledir .. "/samples" },
+  }
+  for _, entry in ipairs(dirs) do
+    for _, sample in ipairs(list_samples(entry.dir, entry.skip)) do
+      local tex = lfs.attributes(entry.dir .. "/" .. sample .. ".tex", "modification")
+      local pdf = sample .. ".pdf"
+      local mod = lfs.attributes(entry.dir .. "/" .. pdf, "modification")
+      if not mod then
+        table.insert(stale, entry.dir .. "/" .. pdf .. " (missing)")
+      elseif mod < tex then
+        table.insert(stale, entry.dir .. "/" .. pdf .. " (older than " .. sample .. ".tex)")
+      end
+    end
+  end
+  if #stale > 0 then
+    error("** Error!!: PDFs of the examples out of date, run 'l3build example' and 'l3build testpkg' first:\n   "
+      .. table.concat(stale, "\n   "))
+  end
+  os_message("Checking PDFs of sources/test-pkg and sources/samples")
+end
+
+if options["target"] == "ctan" then
+  check_example_pdfs()
 end
 
 -- Clean repo with Git
+-- 'git clean -X' removes only the files ignored by .gitignore (build/, logs,
+-- ...), so it needs no confirmation. Untracked files that are not ignored
+-- (new files not yet added) are never removed: they are only listed.
+-- With --dry-run it only lists. The lists come from 'git ls-files' (plain
+-- paths): the messages of 'git clean' are translated and show badly here.
 if options["target"] == "clean" then
-  os_message("Cleaning untracked repository files with Git")
-  os.execute("git clean -xdfq")
+  local function git_out(cmd)
+    local f = io.popen(cmd .. " 2>&1", "r")
+    if not f then return nil end
+    local out = f:read("*a") or ""
+    f:close()
+    return out
+  end
+
+  local inside = git_out("git rev-parse --is-inside-work-tree")
+  if not inside or not inside:match("^true") then
+    os_message("Not a Git work tree: skipping git clean")
+  else
+    local preview = git_out("git ls-files --others --ignored --exclude-standard --directory")
+    if not preview or preview:match("^%s*$") then
+      os_message("Nothing to clean with Git")
+    else
+      print("** Ignored files and directories removed by git clean:")
+      io.write(preview)
+      if options["dry-run"] then
+        os_message("Dry run: nothing removed")
+      else
+        os_message("Cleaning ignored repository files with Git")
+        local res = os.execute("git clean -Xdfq")
+        if res ~= 0 and res ~= true then
+          error("** Error!!: git clean failed")
+        end
+      end
+    end
+    local kept = git_out("git ls-files --others --exclude-standard --directory")
+    if kept and not kept:match("^%s*$") then
+      print("** Untracked files NOT removed (add them or delete them by hand):")
+      io.write(kept)
+    end
+  end
+  -- No os.exit() here so that l3build goes on cleaning the build/ directory
 end
 
 -- Capture shell output safely (e.g. for Git queries)
@@ -420,8 +620,25 @@ local function os_capture(cmd, raw)
   return s
 end
 
+-- Run another l3build target quietly; its failure stops the release
+local function run_l3build(tgt, extra)
+  os_message("Running 'l3build " .. tgt .. "'" .. (extra or ""))
+  local res = os.execute("l3build " .. tgt .. " > " .. os_null)
+  if res ~= 0 and res ~= true then
+    error("** Error!!: 'l3build " .. tgt .. "' failed (run it alone to see why); nothing was tagged or pushed")
+  end
+end
+
+-- Run a git command; its failure stops the release with the given message
+local function run_git(cmd, msg)
+  local res = os.execute(cmd)
+  if res ~= 0 and res ~= true then
+    error(msg)
+  end
+end
+
 -- Target "release": performs pre-release checks for Git and CTAN
-if options["target"] == "release" then
+local function release_target()
   -- 1. Verify working branch is 'main'
   local gitbranch = os_capture("git symbolic-ref --short HEAD")
   if gitbranch == "main" then
@@ -460,38 +677,66 @@ if options["target"] == "release" then
     os_message("Unpacking " .. file .. ".ins with luatex")
   end
 
-  -- 6. Tag commit in Git
+  -- 6. Build CTAN package archive if absent
+  if fileexists(ctanzip .. ".zip") then
+    os_message("Checking CTAN package " .. ctanzip .. ".zip")
+  else
+    -- The PDFs attached to the manual are regenerated first: the ctan
+    -- target refuses to run if they are missing or older than their .tex
+    run_l3build("example", " (PDFs of sources/samples)")
+    run_l3build("testpkg", " (PDFs of sources/test-pkg)")
+    run_l3build("ctan", " (" .. ctanzip .. ".zip)")
+  end
+
+  -- 7. Perform CTAN upload dry run. With --debug l3build posts the form to
+  -- httpbin.org and always exits with status 1, so the check looks at the
+  -- echoed form (package and version) instead of the exit status.
+  os_message("Running dry-run upload check")
+  local dryrun = os_capture("l3build upload -F ctan.ann --debug 2>&1", true)
+  local okpkg = string.find(dryrun, '"pkg": "' .. ctanpkg .. '"', 1, true)
+  local okver = string.find(dryrun, '"version": "' .. uploadconfig.version .. '"', 1, true)
+  if not (okpkg and okver) then
+    error("** Error!!: dry-run upload check failed; nothing was tagged or pushed")
+  end
+
+  -- 8. Commit what the steps above regenerated (enumext.pdf, enumext.sty and
+  -- the PDFs versioned in git), so that the tag points to the commit that
+  -- matches the zip. The working directory was clean in step 2: only
+  -- regenerated files can have changed.
+  local regenerated = os_capture("git status --porcelain --untracked-files=no")
+  if regenerated == "" then
+    os_message("No regenerated files to commit")
+  else
+    local commit_msg = "Release v" .. pkgversion .. " [" .. pkgdate .. "]"
+    run_git("git add -u", "** Error!!: 'git add -u' failed; nothing was tagged or pushed")
+    run_git('git commit --quiet -m "' .. commit_msg .. '"', "** Error!!: 'git commit' failed; nothing was tagged or pushed")
+    os_message("Committing regenerated files: " .. commit_msg)
+    run_git("git push --quiet", "** Error!!: 'git push' failed. The commit exists locally; push it manually.")
+    os_message("Pushing the commit to remote")
+  end
+
+  -- 9. Tag commit in Git (only after everything above succeeded)
   local tag_version = "v" .. pkgversion
   local tagongit = os_capture('git for-each-ref refs/tags --sort=-taggerdate --format="%(refname:short)" --count=1')
   os_message("Checking latest Git tag (latest: " .. (tagongit ~= "" and tagongit or "none") .. ")")
 
   local tag_cmd = string.format('git tag -a %s -m "Release %s %s"', tag_version, tag_version, pkgdate)
-  local res = os.execute(tag_cmd)
-  if res ~= 0 and res ~= true then
-    error("** Error!!: Could not create Git tag " .. tag_version .. ". Verify if it already exists.")
-  else
-    os_message("Creating Git tag " .. tag_version)
-  end
+  run_git(tag_cmd, "** Error!!: Could not create Git tag " .. tag_version .. ". Verify if it already exists.")
+  os_message("Creating Git tag " .. tag_version)
 
   os_message("Pushing Git tags to remote")
-  os.execute("git push --tags --quiet")
-
-  -- 7. Build CTAN package archive if absent
-  if fileexists(ctanzip .. ".zip") then
-    os_message("Checking CTAN package " .. ctanzip .. ".zip")
-  else
-    os_message("Building CTAN package " .. ctanzip .. ".zip")
-    os.execute("l3build ctan > " .. os_null)
-  end
-
-  -- 8. Perform CTAN upload dry run
-  os_message("Running dry-run upload check")
-  os.execute("l3build upload -F ctan.ann --debug > " .. os_null)
+  run_git("git push --tags --quiet", "** Error!!: 'git push --tags' failed. The tag " .. tag_version .. " exists locally; push it manually.")
 
   print("-----------------------------------------------------------------")
   print("** Pre-release checks completed successfully!")
   print("** Review '" .. ctanzip .. ".curlopt' and verify 'ctan.ann'")
   print("** To publish to CTAN, run manually: l3build upload")
   print("-----------------------------------------------------------------")
-  os.exit(0)
+  return 0
 end
+
+target_list.release = {
+  desc = "Checks before a public release (git and ctan), then tags and pushes",
+  help = "Runs the checks, creates the git tag and pushes it; then run l3build upload by hand.",
+  func = release_target,
+}

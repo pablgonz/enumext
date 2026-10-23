@@ -1,0 +1,67 @@
+% arara: lualatex: { branch: developer, draft: true }
+% arara: lualatex: { branch: developer, draft: true }
+% arara: lualatex: { branch: developer }
+% arara: clean: { extensions: [ aux, log, out] }
+% arara: move: { files: [ enumext-exa-5-luamml-mathml.html ], target: 'enumext-exa-5-mathml.html' }
+\DocumentMetadata{
+    lang=en-US,
+    pdfversion=2.0,
+    pdfstandard=ua-2,
+    tagging=on,
+  }
+\documentclass{article}
+\usepackage[top=2cm,bottom=2cm,left=2cm,right=2cm]{geometry}%
+\usepackage[osf]{libertinus}
+\usepackage{unicode-math,xcolor,graphicx,hyperref,enumext}
+\hypersetup
+  {
+    colorlinks = true,
+    pdftitle   = {Test tagged PDF for SAT style enumext package},
+  }
+\newsavebox{\satbox}
+\sbox\satbox{\small\textbf{67}}%
+\NewDocumentCommand \stylesat { m }
+  {%
+    \setlength{\fboxsep}{2pt}%
+    \raisebox{7\fboxsep}{%
+    \noindent\colorbox{black}{\textcolor{white}{\makebox[\dimeval{\labelwidth-2\fboxsep}][c]{\small\textbf{\vphantom{67}#1}}}}%
+    \colorbox{lightgray}{\phantom{\rule[-\dp\satbox]{\dimeval{\linewidth-2\fboxsep}}{\dimeval{\dp\satbox+\ht\satbox}}}}}%
+  }
+\begin{document}
+\setenumext[keyans]{label=\Alph*),nosep,below*={0.3cm}}
+\begin{enumext}[mode-box,label=\arabic*,labelwidth=20pt,labelsep=0pt,columns=2,columns-sep=30pt,save-ans=stylesat, wrap-label={\stylesat{#1}}]
+ \item Which choice best describes what happens in the passage?
+   \begin{keyans}
+    \item* One character argues with another character who intrudes on her home.
+    \item One character receives a surprising request from another character.
+    \item One character reminisces about choices she has made over the years.
+    \item One character criticizes another character for pursuing an unexpected course of action.
+   \end{keyans}
+
+ \item Which choice best describes what happens in the passage?
+   \begin{keyans}
+    \item One character argues with another character who intrudes on her home.
+    \item One character receives a surprising request from another character.
+    \item* One character reminisces about choices she has made over the years.
+    \item One character criticizes another character for pursuing an unexpected course of action.
+   \end{keyans}
+
+ \item Which choice best describes what happens in the passage?
+   \begin{keyans}
+    \item One character argues with another character who intrudes on her home.
+    \item* One character receives a surprising request from another character.
+    \item One character reminisces about choices she has made over the years.
+    \item One character criticizes another character for pursuing an unexpected course of action.
+   \end{keyans}
+
+ \item Which choice best describes what happens in the passage?
+   \begin{keyans}
+    \item One character argues with another character who intrudes on her home.
+    \item One character receives a surprising request from another character.
+    \item One character reminisces about choices she has made over the years.
+    \item* One character criticizes another character for pursuing an unexpected course of action.
+   \end{keyans}
+\end{enumext}
+
+\printkeyans[columns=4]{stylesat}
+\end{document}
