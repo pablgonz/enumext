@@ -21,7 +21,7 @@ jobs:
           - 2026
         command:
           - doc
-          - examples
+          - example
           - testpkg
     steps:
       - name: Checkout
