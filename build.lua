@@ -58,7 +58,6 @@ function docinit_hook()
   local errorlevel = (cp("*mylhmc.lua", sourcefiledir, typesetdir) + cp("*mylhmc.sty", sourcefiledir, typesetdir))
   if errorlevel ~= 0 then
     error("** Error!!: Can't copy mylhmc.lua and mylhmc.sty files from "..sourcefiledir.." to "..typesetdir)
-    return errorlevel
   end
   -- Examples attached to the manual: what is in sources/test-pkg and in
   -- sources/samples is copied as it is. Nothing is checked here
@@ -80,7 +79,6 @@ function typeset(file)
   local errorlevel = runcmd("arara "..file..".dtx", typesetdir, {"TEXINPUTS","LUAINPUTS"})
   if errorlevel ~= 0 then
     error("Error!!: Typesetting "..file..".dtx")
-    return errorlevel
   end
   return 0
 end
@@ -154,11 +152,6 @@ function update_tag(file, content, tagname, tagdate)
     local ltxr = string.match(content, "\\NeedsTeXFormat%s*{LaTeX2e}%s*%[(%d%d%d%d%-%d%d%-%d%d)%]")
     already_ok = (pkgv == tagname and pkgd == tagdate and ltxr == ltxrelease)
 
-  elseif string.match(file, "enumext%.sty$") then
-    local pkgd, pkgv = string.match(content, "\\ProvidesExplPackage%s*{enumext}%s*{(.-)}%s*{(.-)}")
-    local ltxr = string.match(content, "\\NeedsTeXFormat%s*{LaTeX2e}%s*%[(%d%d%d%d%-%d%d%-%d%d)%]")
-    already_ok = (pkgv == tagname and pkgd == tagdate and ltxr == ltxrelease)
-
   elseif string.match(file, "CTANREADME%.md$") then
     local m_readmev, m_readmed = string.match(content, "Release%s+(v%d+%.%d+%a*)%s+\\%[(%d%d%d%d%-%d%d%-%d%d)\\%]")
     already_ok = (m_readmev == "v" .. tagname and m_readmed == tagdate)
@@ -173,16 +166,8 @@ function update_tag(file, content, tagname, tagdate)
     return content
   end
 
-  local original_content = content
-
   -- Substitutions in enumext.dtx
   if string.match(file, "enumext%.dtx$") then
-    content = string.gsub(content, "(\\ProvidesExplPackage%s*{enumext}%s*){[^}]+}%s*{[^}]+}", "%1{" .. tagdate .. "} {" .. tagname .. "}")
-    content = string.gsub(content, "(\\NeedsTeXFormat{LaTeX2e})%[%d%d%d%d%-%d%d%-%d%d%]", "%1[" .. ltxrelease .. "]")
-  end
-
-  -- Substitutions in enumext.sty
-  if string.match(file, "enumext%.sty$") then
     content = string.gsub(content, "(\\ProvidesExplPackage%s*{enumext}%s*){[^}]+}%s*{[^}]+}", "%1{" .. tagdate .. "} {" .. tagname .. "}")
     content = string.gsub(content, "(\\NeedsTeXFormat{LaTeX2e})%[%d%d%d%d%-%d%d%-%d%d%]", "%1[" .. ltxrelease .. "]")
   end
@@ -244,7 +229,7 @@ local function check_readme_tags()
     print("** Warning: Mismatches found in sources/CTANREADME.md")
     return false
   end
-  os_message("Checking version and date in README.md")
+  os_message("Checking version and date in CTANREADME.md")
   return true
 end
 

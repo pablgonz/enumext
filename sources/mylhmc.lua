@@ -1,4 +1,4 @@
--- mylhmc.lua v0.99 2026-09-20 (node.direct + Loop/Memory Micro-Optimized)
+-- mylhmc.lua v0.99 2026-10-24 (node.direct + Loop/Memory Micro-Optimized)
 -- LuaLaTeX syntax highlighter for l3doc macrocode environments
 
 local require      = require
@@ -26,6 +26,10 @@ local d_copylist   = node.direct.copy_list
 local d_tonode     = node.direct.tonode
 local d_setlink    = node.direct.setlink
 local d_getnext    = node.direct.getnext
+local d_tail       = node.direct.tail or function(t)
+  while d_getnext(t) do t = d_getnext(t) end
+  return t
+end
 local d_setfield   = node.direct.setfield
 local n_write      = node.write
 
@@ -667,7 +671,7 @@ local function mylhmc_colorstack_pop() return d_copy(pop_template) end
 local function mylhmc_append(rh, rt, h, t)
   if not h then return rh, rt end
   if not t then
-    t = h; while d_getnext(t) do t = d_getnext(t) end
+    t = d_tail(h)
   end
   if rt then d_setlink(rt, h) else rh = h end
   return rh, t
@@ -681,23 +685,24 @@ local function mylhmc_str_to_nodes(str, fid, fallback_fn)
   if not str or str == '' then return nil, nil end
   fid = fid or f_current()
 
+  -- Caché anidada [fid][str]: evita construir una clave concatenada en
+  -- cada llamada.
   local cacheable = #str <= CACHE_MAX_LEN
-  local key
+  local fcache
   if cacheable then
-    -- Optimización: concatenación implícita de número en vez de tostring()
-    key = str .. '_' .. fid
-    local cached = raw_glyph_cache[key]
+    fcache = raw_glyph_cache[fid]
+    if not fcache then fcache = {}; raw_glyph_cache[fid] = fcache end
+    local cached = fcache[str]
     if cached then
       local h = d_copylist(cached)
-      local t = h
-      while d_getnext(t) do t = d_getnext(t) end
-      return h, t
+      return h, d_tail(h)
     end
   end
 
   fallback_fn = fallback_fn or mylhmc_get_lm_fid
   local head, tail, lm_fid, fallback_fid = nil, nil, nil, nil
-  local chars = f_getfont(fid) and f_getfont(fid).characters
+  local cur_font = f_getfont(fid)
+  local chars = cur_font and cur_font.characters
 
   for _, cp in u_codes(str) do
     local current_fid = fid
@@ -716,7 +721,7 @@ local function mylhmc_str_to_nodes(str, fid, fallback_fn)
   end
 
   if head and cacheable then
-    raw_glyph_cache[key] = d_copylist(head)
+    fcache[str] = d_copylist(head)
   end
   return head, tail
 end
@@ -798,38 +803,24 @@ local function mylhmc_colored_str_italic(str, color_name, fid)
 end
 
 local type_colors = {
-  [1] ='argument',   [2] ='privatevar', [3] ='bracket',
+  [1] ='argument',   [2] ='privatevar',
   [4] ='publicvar',  [5] ='privatefun', [6] ='publicfun',
-  [8] ='brace',      [9] ='comment',    [10]='scan',
-  [11]='quark',      [12]='number',     [13]='danger',
-  [14]='ltcmd',      [16]='keyfun',
-  [17]='escape',     [18]='escape',     [19]='constant',
+  [10]='scan',       [11]='quark',      [12]='number',
+  [13]='danger',     [15]='legacy_at',
+  [17]='backtick',   [18]='escape',     [19]='constant',
   [20]='constant',   [21]='math',       [22]='compare',
-  [23]='latex_cmd',  [24]='argument',   [25]='structure',
-  [26]='publicfun',  [28]='quote',      [29]='brace',
-  [30]='publicfun',  [31]='publicfun',  [33]='ltcmd_arg',
-  [34]='publicfun',  [35]='unit',       [36]='compare',
-  [37]='pkgstruct',  [38]='mathtag',    [39]='publicfun',  [40]='publicfun',
-  [41]='publicfun',  [42]='intent',     [44]='publicfun',
-  [46]='publicfun',
-  [47]='publicfun',  [48]='module_name', [49]='support',
-  [50]='operator',    [51]='star',
+  [23]='latex_cmd',  [25]='structure',
+  [28]='quote',      [29]='brace',
+  [35]='unit',       [36]='compare',
+  [37]='pkgstruct',  [38]='mathtag',    [42]='intent',
+  [49]='support',    [50]='operator',   [51]='star',
 }
 
 local csname_positions = {}
-local arg_counter = 0
 -- Profundidad de llaves y marcos de comandos exteriores con argumentos aún
 -- pendientes: una función dentro de un grupo {…} (p.ej. \int_use:N en el 1er
 -- argumento de \keys_set:nv) no debe borrar las posiciones c/v del exterior.
-local brace_depth, csname_frame_depth, csname_frames = 0, 0, {}
-local in_csname, csname_base_color, csname_depth = false, nil, 0
-local variant_braces_remaining, variant_depth = 0, 0
-local in_variant_group = false
-local ltcmd_brace_count, ltcmd_name_pending, ltcmd_in_args = 0, false, false
-local in_mathml_intent, in_mathml_arg = false, false
-local mathml_brace_count, mathml_after_dollar = 0, false
-local in_keys_context, keys_body_opened, keys_depth = false, false, 0
-local keys_in_choices = false
+local csname_frames = {}
 -- Pila para \keys_define:nn/\keys_set:nn anidados (p.ej. dentro de
 -- .choices:nn): guarda el contexto exterior al entrar a uno interior
 -- y lo restaura al cerrarlo, en vez de perderlo.
@@ -838,19 +829,8 @@ local keys_context_stack = {}
 -- .meta:nn (2 args: ruta módulo/clave + lista de claves) y .meta:n
 -- (1 arg: lista de claves). Reutiliza mylhmc_colorize_keys_path para la ruta
 -- y mylhmc_colorize_trimmed_keyname para la lista, igual que el resto de keys.
-local keys_meta_pending      = false
-local keys_meta_arity        = 0  -- 1 = .meta:n, 2 = .meta:nn
-local keys_meta_argnum       = 0  -- argumento actual (1 o 2)
-local keys_meta_brace_count  = 0
 
-local in_msgerror       = false
-local msgerror_argnum   = 0
-local msgerror_depth    = 0
-local msgerror_is_unknown = false
 
-local in_msg_simple    = false
-local msg_simple_depth = 0
-local msg_simple_done  = false
 
 -- Resto de la familia \keys_...:n... (set_known, set_groups,
 -- set_exclude_groups, precompile, if_exist, if_choice_exist, show, log):
@@ -858,16 +838,9 @@ local msg_simple_done  = false
 -- args 2..N (resto de las 'n' minúsculas de la firma) = nombre de
 -- clave/grupo/opción -> mylhmc_colorize_trimmed_keyname; lo que venga después
 -- (ramas T/F de un sufijo TF, argumentos N sin llaves, etc.) no se toca.
-local in_keys_module_arg     = false
-local keys_module_arg_depth  = 0
-local keys_module_arg_done   = false
-local keys_module_arg_argnum = 0
-local keys_module_arg_total_n = 0
 
 -- \ProvidesExplPackage {nombre} {...} {...} {...}: el PRIMER argumento
 -- (el nombre del paquete/módulo) va en negrita + color module_name.
-local provides_pkg_pending = false
-local provides_pkg_brace_count = 0
 
 -- Nombres de paquete/clase (\ProvidesPackage, \RequirePackage,
 -- \ProvidesClass, \LoadClass, \PassOptionsTo(Package|Class),
@@ -875,39 +848,22 @@ local provides_pkg_brace_count = 0
 -- pkgcls_target_arg indica en qué argumento {} está el nombre (1 o 2);
 -- [opciones] opcional no afecta el conteo porque [] no toca estas
 -- variables (solo {} las incrementa).
-local pkgcls_pending     = false
-local pkgcls_target_arg  = 0
-local pkgcls_argnum      = 0
-local pkgcls_brace_depth = 0
-local pkgcls_color       = nil
 
 -- \RequirePackage [opciones] {pkg} y \LoadClass [opciones] {cls}: los
 -- corchetes opcionales, si aparecen, contienen una lista de opciones
 -- (key=value, ...) -> mismo tratamiento keyname. Si en vez de '[' llega
 -- '{' directamente (sin opciones), pkgcls_bracket_pending se limpia sin
 -- activar nada.
-local pkgcls_bracket_pending = false
-local pkgcls_bracket_active  = false
-local pkgcls_bracket_depth   = 0
 
 -- Nombre de archivo: \file_..., \lua_load_module:n, \IfFileExists
 -- (activado desde el handler de tipo 37), \input/\include/
 -- \InputIfFileExists. Solo el primer argumento -> mylhmc_colorize_filename.
 -- \includeonly recibe una LISTA separada por comas -> file_arg_is_list.
-local in_file_arg     = false
-local file_arg_depth  = 0
-local file_arg_done   = false
-local file_arg_is_list = false
 
 -- \hook_gput_code:nnn/_with_args:nnn/\hook_gremove_code:nn (label en
 -- arg2) y \hook_gset_rule:nnnn (labels en arg2 Y arg4, con 'relation'
 -- en arg3 sin colorear). hook_label_positions guarda qué números de
 -- argumento deben colorearse como module_name.
-local in_hook_label        = false
-local hook_label_depth     = 0
-local hook_label_argnum    = 0
-local hook_label_total_n   = 0
-local hook_label_positions = nil
 
 -- \hypersetup{key=val,...}, \tagpdfsetup{...}, \tagtool{...},
 -- \tagmcbegin{...}, \tagstructbegin{...}, \ShowTagging{...}, y también
@@ -915,8 +871,6 @@ local hook_label_positions = nil
 -- único argumento tratado como lista de claves, mismo tratamiento
 -- visual que el cuerpo de \keys_define:nn/\keys_set:nn
 -- (mylhmc_colorize_trimmed_keyname).
-local in_single_keyval    = false
-local single_keyval_depth = 0
 
 -- \setmainfont{fuente}[features] y familia (fontspec/unicode-math): el
 -- ORDEN es inverso a \RequirePackage[opciones]{pkg} (llave primero,
@@ -927,29 +881,106 @@ local single_keyval_depth = 0
 -- limpia al final de cada línea (en process_line/inline) para no
 -- "contaminar" un [...] no relacionado en una línea posterior si el
 -- comando se usó sin features.
-local font_brace_pending   = false
-local font_brace_depth     = 0
-local font_bracket_pending = false
-local font_bracket_active  = false
-local font_bracket_depth   = 0
 
+-- Estado del analizador agrupado por función en tablas (una sola local por
+-- grupo: el chunk principal está en el límite de 200 locales de Lua).
+local cs = {  -- csname/variantes/llaves
+  arg_counter = 0,
+  brace_depth = 0,
+  csname_frame_depth = 0,
+  in_csname = false,
+  -- csname_base_color = nil
+  csname_depth = 0,
+  variant_braces_remaining = 0,
+  variant_depth = 0,
+  in_variant_group = false,
+}
+local lt = {  -- \NewDocumentCommand y similares
+  ltcmd_brace_count = 0,
+  ltcmd_name_pending = false,
+  ltcmd_in_args = false,
+}
+local ml = {  -- MathML (\MathMLintent/\MathMLarg)
+  in_mathml_intent = false,
+  in_mathml_arg = false,
+  mathml_brace_count = 0,
+  mathml_after_dollar = false,
+}
+local kv = {  -- claves (keys_*, .meta, single keyval)
+  in_keys_context = false,
+  keys_body_opened = false,
+  keys_depth = 0,
+  keys_in_choices = false,
+  keys_meta_pending = false,
+  keys_meta_arity = 0,  -- 1 = .meta:n, 2 = .meta:nn
+  keys_meta_argnum = 0,  -- argumento actual (1 o 2)
+  keys_meta_brace_count = 0,
+  in_keys_module_arg = false,
+  keys_module_arg_depth = 0,
+  keys_module_arg_done = false,
+  keys_module_arg_argnum = 0,
+  keys_module_arg_total_n = 0,
+  in_single_keyval = false,
+  single_keyval_depth = 0,
+}
+local ms = {  -- mensajes (msg_*)
+  in_msgerror = false,
+  msgerror_argnum = 0,
+  msgerror_depth = 0,
+  msgerror_is_unknown = false,
+  in_msg_simple = false,
+  msg_simple_depth = 0,
+  msg_simple_done = false,
+}
+local pk = {  -- paquetes/clases
+  provides_pkg_pending = false,
+  provides_pkg_brace_count = 0,
+  pkgcls_pending = false,
+  pkgcls_target_arg = 0,
+  pkgcls_argnum = 0,
+  pkgcls_brace_depth = 0,
+  -- pkgcls_color = nil
+  pkgcls_bracket_pending = false,
+  pkgcls_bracket_active = false,
+  pkgcls_bracket_depth = 0,
+}
+local fl = {  -- nombres de archivo
+  in_file_arg = false,
+  file_arg_depth = 0,
+  file_arg_done = false,
+  file_arg_is_list = false,
+}
+local hk = {  -- etiquetas de hooks
+  in_hook_label = false,
+  hook_label_depth = 0,
+  hook_label_argnum = 0,
+  hook_label_total_n = 0,
+  -- hook_label_positions = nil
+}
+local ft = {  -- fuentes (fontspec)
+  font_brace_pending = false,
+  font_brace_depth = 0,
+  font_bracket_pending = false,
+  font_bracket_active = false,
+  font_bracket_depth = 0,
+}
 local mylhmc_colorize_code
 
 local function mylhmc_reset_csname_state()
-  if brace_depth > csname_frame_depth then
+  if cs.brace_depth > cs.csname_frame_depth then
     local pending = false
     for k in pairs(csname_positions) do
-      if k > arg_counter then pending = true; break end
+      if k > cs.arg_counter then pending = true; break end
     end
     if pending then
       local saved = {}
       for k, v in pairs(csname_positions) do saved[k] = v end
-      csname_frames[#csname_frames + 1] = { saved, arg_counter, csname_frame_depth }
+      csname_frames[#csname_frames + 1] = { saved, cs.arg_counter, cs.csname_frame_depth }
     end
   end
   for k in pairs(csname_positions) do csname_positions[k] = nil end
-  arg_counter, in_csname, csname_base_color, csname_depth = 0, false, nil, 0
-  csname_frame_depth = brace_depth
+  cs.arg_counter, cs.in_csname, cs.csname_base_color, cs.csname_depth = 0, false, nil, 0
+  cs.csname_frame_depth = cs.brace_depth
 end
 
 local function mylhmc_module_aware_color(chunk, base_color)
@@ -1327,11 +1358,11 @@ local function mylhmc_colorize_mathml_intent(text, fid, rh, rt)
       -- sin guardarlo/restaurarlo, la llave de cierre del \MathMLintent
       -- exterior queda sin efecto y el modo mathml no se apaga nunca.
       local saved_intent, saved_arg, saved_bc, saved_dollar =
-        in_mathml_intent, in_mathml_arg, mathml_brace_count, mathml_after_dollar
-      in_mathml_intent, in_mathml_arg, mathml_brace_count, mathml_after_dollar =
+        ml.in_mathml_intent, ml.in_mathml_arg, ml.mathml_brace_count, ml.mathml_after_dollar
+      ml.in_mathml_intent, ml.in_mathml_arg, ml.mathml_brace_count, ml.mathml_after_dollar =
         false, false, 0, false
       local ch, ct = mylhmc_colorize_code(chunk, fid)
-      in_mathml_intent, in_mathml_arg, mathml_brace_count, mathml_after_dollar =
+      ml.in_mathml_intent, ml.in_mathml_arg, ml.mathml_brace_count, ml.mathml_after_dollar =
         saved_intent, saved_arg, saved_bc, saved_dollar
       rh, rt = mylhmc_append(rh, rt, ch, ct); i = j
     end
@@ -1451,14 +1482,14 @@ end
 
 local function mylhmc_colorize_plain_text(text, fid, rh, rt)
   local h, tl
-  if in_variant_group then h, tl = mylhmc_colored_str(text, 'sigargs', fid)
-  elseif in_csname then
-    csname_base_color = csname_base_color or mylhmc_csname_color_from_prefix(text)
-    rh, rt = mylhmc_emit_csname_text(text, csname_base_color, fid, rh, rt)
+  if cs.in_variant_group then h, tl = mylhmc_colored_str(text, 'sigargs', fid)
+  elseif cs.in_csname then
+    cs.csname_base_color = cs.csname_base_color or mylhmc_csname_color_from_prefix(text)
+    rh, rt = mylhmc_emit_csname_text(text, cs.csname_base_color, fid, rh, rt)
     h, tl = nil, nil
-  elseif in_mathml_intent then
-    if mathml_after_dollar then
-      mathml_after_dollar = false
+  elseif ml.in_mathml_intent then
+    if ml.mathml_after_dollar then
+      ml.mathml_after_dollar = false
       local ident = s_match(text, '^%s*([%a%d_]+)')
       if ident then
         h, tl = mylhmc_colored_str(ident, 'mathml_var', fid)
@@ -1473,70 +1504,70 @@ local function mylhmc_colorize_plain_text(text, fid, rh, rt)
     else
       rh, rt = mylhmc_colorize_mathml_intent(text, fid, rh, rt); h, tl = nil, nil
     end
-  elseif in_mathml_arg then h, tl = mylhmc_colored_str(text, 'mathml_var', fid)
-  elseif keys_meta_pending and keys_meta_brace_count == 1
-         and keys_meta_argnum == 1 and keys_meta_arity == 2 then
+  elseif ml.in_mathml_arg then h, tl = mylhmc_colored_str(text, 'mathml_var', fid)
+  elseif kv.keys_meta_pending and kv.keys_meta_brace_count == 1
+         and kv.keys_meta_argnum == 1 and kv.keys_meta_arity == 2 then
     -- .meta:nn primer argumento: ruta módulo/clave (spintent/spnum)
     rh, rt = mylhmc_colorize_keys_path(text, fid, rh, rt); h, tl = nil, nil
-  elseif keys_meta_pending and keys_meta_brace_count == 1 then
+  elseif kv.keys_meta_pending and kv.keys_meta_brace_count == 1 then
     -- .meta:n único argumento, o .meta:nn segundo argumento: lista de claves
     rh, rt = mylhmc_colorize_trimmed_keyname(text, fid, rh, rt); h, tl = nil, nil
-  elseif in_keys_context and keys_body_opened and keys_depth == 1 then
+  elseif kv.in_keys_context and kv.keys_body_opened and kv.keys_depth == 1 then
     rh, rt = mylhmc_colorize_trimmed_keyname(text, fid, rh, rt); h, tl = nil, nil
-  elseif in_keys_context and keys_body_opened and keys_in_choices and keys_depth == 2 then
+  elseif kv.in_keys_context and kv.keys_body_opened and kv.keys_in_choices and kv.keys_depth == 2 then
     rh, rt = mylhmc_colorize_trimmed_keyname(text, fid, rh, rt); h, tl = nil, nil
-  elseif in_msgerror and msgerror_depth == 1 and msgerror_argnum == 1 then
+  elseif ms.in_msgerror and ms.msgerror_depth == 1 and ms.msgerror_argnum == 1 then
     h, tl = mylhmc_colored_str(text, 'module_name', fid)
-  elseif in_msgerror and msgerror_depth == 1 and msgerror_argnum == 2 then
+  elseif ms.in_msgerror and ms.msgerror_depth == 1 and ms.msgerror_argnum == 2 then
     local trimmed = s_match(text, '^%s*(.-)%s*$')
-    msgerror_is_unknown = (trimmed == 'unknown-choice')
+    ms.msgerror_is_unknown = (trimmed == 'unknown-choice')
     h, tl = mylhmc_str_to_nodes(text, fid)
-  elseif in_msgerror and msgerror_depth == 1 and msgerror_is_unknown
-         and (msgerror_argnum == 3 or msgerror_argnum == 4) then
+  elseif ms.in_msgerror and ms.msgerror_depth == 1 and ms.msgerror_is_unknown
+         and (ms.msgerror_argnum == 3 or ms.msgerror_argnum == 4) then
     rh, rt = mylhmc_colorize_trimmed_keyname(text, fid, rh, rt); h, tl = nil, nil
-  elseif ltcmd_in_args then
-    if ltcmd_brace_count > 1 then h, tl = mylhmc_str_to_nodes(text, fid)
+  elseif lt.ltcmd_in_args then
+    if lt.ltcmd_brace_count > 1 then h, tl = mylhmc_str_to_nodes(text, fid)
     else rh, rt = mylhmc_colorize_ltcmd_args(text, fid, rh, rt); h, tl = nil, nil end
-  elseif ltcmd_name_pending and ltcmd_brace_count == 1 then
+  elseif lt.ltcmd_name_pending and lt.ltcmd_brace_count == 1 then
     rh, rt = mylhmc_emit_csname_text(text, mylhmc_ltcmd_name_color(text), fid, rh, rt)
     h, tl = nil, nil
-  elseif in_keys_context and not keys_body_opened then
+  elseif kv.in_keys_context and not kv.keys_body_opened then
     rh, rt = mylhmc_colorize_keys_path(text, fid, rh, rt); h, tl = nil, nil
-  elseif in_msg_simple and not msg_simple_done and msg_simple_depth == 1 then
+  elseif ms.in_msg_simple and not ms.msg_simple_done and ms.msg_simple_depth == 1 then
     rh, rt = mylhmc_colorize_keys_path(text, fid, rh, rt); h, tl = nil, nil
-  elseif in_keys_module_arg and not keys_module_arg_done
-         and keys_module_arg_depth == 1 then
-    if keys_module_arg_argnum == 1 then
+  elseif kv.in_keys_module_arg and not kv.keys_module_arg_done
+         and kv.keys_module_arg_depth == 1 then
+    if kv.keys_module_arg_argnum == 1 then
       rh, rt = mylhmc_colorize_keys_path(text, fid, rh, rt); h, tl = nil, nil
     else
       rh, rt = mylhmc_colorize_trimmed_keyname(text, fid, rh, rt); h, tl = nil, nil
     end
-  elseif provides_pkg_pending and provides_pkg_brace_count == 1 then
+  elseif pk.provides_pkg_pending and pk.provides_pkg_brace_count == 1 then
     h, tl = mylhmc_colored_str_bold(text, 'module_name', fid)
-  elseif pkgcls_pending and pkgcls_brace_depth == 1
-         and pkgcls_argnum == pkgcls_target_arg then
-    h, tl = mylhmc_colored_str_bold(text, pkgcls_color, fid)
-  elseif pkgcls_pending and pkgcls_brace_depth == 1
-         and pkgcls_target_arg == 2 and pkgcls_argnum == 1 then
+  elseif pk.pkgcls_pending and pk.pkgcls_brace_depth == 1
+         and pk.pkgcls_argnum == pk.pkgcls_target_arg then
+    h, tl = mylhmc_colored_str_bold(text, pk.pkgcls_color, fid)
+  elseif pk.pkgcls_pending and pk.pkgcls_brace_depth == 1
+         and pk.pkgcls_target_arg == 2 and pk.pkgcls_argnum == 1 then
     -- \PassOptionsToPackage/\PassOptionsToClass: primer argumento =
     -- lista de opciones (key=value, ...), mismo tratamiento que keyname.
     rh, rt = mylhmc_colorize_trimmed_keyname(text, fid, rh, rt); h, tl = nil, nil
-  elseif pkgcls_bracket_active and pkgcls_bracket_depth == 1 then
+  elseif pk.pkgcls_bracket_active and pk.pkgcls_bracket_depth == 1 then
     -- \RequirePackage/\LoadClass [opciones]: mismo tratamiento keyname.
     rh, rt = mylhmc_colorize_trimmed_keyname(text, fid, rh, rt); h, tl = nil, nil
-  elseif in_file_arg and not file_arg_done and file_arg_depth == 1 then
-    if file_arg_is_list then
+  elseif fl.in_file_arg and not fl.file_arg_done and fl.file_arg_depth == 1 then
+    if fl.file_arg_is_list then
       rh, rt = mylhmc_colorize_filename_list(text, fid, rh, rt)
     else
       rh, rt = mylhmc_colorize_filename(text, fid, rh, rt)
     end
     h, tl = nil, nil
-  elseif in_hook_label and hook_label_depth == 1
-         and hook_label_positions[hook_label_argnum] then
+  elseif hk.in_hook_label and hk.hook_label_depth == 1
+         and hk.hook_label_positions[hk.hook_label_argnum] then
     h, tl = mylhmc_colored_str(text, 'module_name', fid)
-  elseif in_single_keyval and single_keyval_depth == 1 then
+  elseif kv.in_single_keyval and kv.single_keyval_depth == 1 then
     rh, rt = mylhmc_colorize_trimmed_keyname(text, fid, rh, rt); h, tl = nil, nil
-  elseif font_bracket_active and font_bracket_depth == 1 then
+  elseif ft.font_bracket_active and ft.font_bracket_depth == 1 then
     rh, rt = mylhmc_colorize_trimmed_keyname(text, fid, rh, rt); h, tl = nil, nil
   else h, tl = mylhmc_str_to_nodes_ws_safe(text, fid) end
   return mylhmc_append(rh, rt, h, tl)
@@ -1561,77 +1592,77 @@ mylhmc_colorize_code = function(line, fid)
       if chunk == '{' then
         -- Solo los grupos de primer nivel del comando vigente cuentan como
         -- sus argumentos; los anidados no.
-        local top = (brace_depth == csname_frame_depth)
-        if top then arg_counter = arg_counter + 1 end
-        local is_csname = top and csname_positions[arg_counter]
-        brace_depth = brace_depth + 1
+        local top = (cs.brace_depth == cs.csname_frame_depth)
+        if top then cs.arg_counter = cs.arg_counter + 1 end
+        local is_csname = top and csname_positions[cs.arg_counter]
+        cs.brace_depth = cs.brace_depth + 1
         if is_csname then
-          in_csname, csname_base_color, csname_depth = true, nil, 0
-          in_variant_group, variant_braces_remaining, variant_depth = false, 0, 0
-        elseif in_csname then csname_depth = csname_depth + 1 end
-        if in_variant_group then variant_depth = variant_depth + 1
-        elseif variant_braces_remaining > 0 then in_variant_group = true end
-        if ltcmd_name_pending or ltcmd_in_args then
-          ltcmd_brace_count = ltcmd_brace_count + 1
+          cs.in_csname, cs.csname_base_color, cs.csname_depth = true, nil, 0
+          cs.in_variant_group, cs.variant_braces_remaining, cs.variant_depth = false, 0, 0
+        elseif cs.in_csname then cs.csname_depth = cs.csname_depth + 1 end
+        if cs.in_variant_group then cs.variant_depth = cs.variant_depth + 1
+        elseif cs.variant_braces_remaining > 0 then cs.in_variant_group = true end
+        if lt.ltcmd_name_pending or lt.ltcmd_in_args then
+          lt.ltcmd_brace_count = lt.ltcmd_brace_count + 1
         end
-        if in_mathml_intent or in_mathml_arg then
-          mathml_brace_count = mathml_brace_count + 1
+        if ml.in_mathml_intent or ml.in_mathml_arg then
+          ml.mathml_brace_count = ml.mathml_brace_count + 1
         end
-        if in_keys_context then
-          keys_depth = keys_depth + 1
+        if kv.in_keys_context then
+          kv.keys_depth = kv.keys_depth + 1
         end
-        if keys_meta_pending then
-          keys_meta_brace_count = keys_meta_brace_count + 1
-          if keys_meta_brace_count == 1 then
-            keys_meta_argnum = keys_meta_argnum + 1
+        if kv.keys_meta_pending then
+          kv.keys_meta_brace_count = kv.keys_meta_brace_count + 1
+          if kv.keys_meta_brace_count == 1 then
+            kv.keys_meta_argnum = kv.keys_meta_argnum + 1
           end
         end
-        if in_msgerror then
-          if msgerror_depth == 0 then
-            msgerror_argnum = msgerror_argnum + 1
+        if ms.in_msgerror then
+          if ms.msgerror_depth == 0 then
+            ms.msgerror_argnum = ms.msgerror_argnum + 1
           end
-          msgerror_depth = msgerror_depth + 1
+          ms.msgerror_depth = ms.msgerror_depth + 1
         end
-        if in_msg_simple and not msg_simple_done then
-          msg_simple_depth = msg_simple_depth + 1
+        if ms.in_msg_simple and not ms.msg_simple_done then
+          ms.msg_simple_depth = ms.msg_simple_depth + 1
         end
-        if in_keys_module_arg and not keys_module_arg_done then
-          keys_module_arg_depth = keys_module_arg_depth + 1
-          if keys_module_arg_depth == 1 then
-            keys_module_arg_argnum = keys_module_arg_argnum + 1
-          end
-        end
-        if provides_pkg_pending then
-          provides_pkg_brace_count = provides_pkg_brace_count + 1
-        end
-        if pkgcls_pending then
-          pkgcls_brace_depth = pkgcls_brace_depth + 1
-          if pkgcls_brace_depth == 1 then
-            pkgcls_argnum = pkgcls_argnum + 1
+        if kv.in_keys_module_arg and not kv.keys_module_arg_done then
+          kv.keys_module_arg_depth = kv.keys_module_arg_depth + 1
+          if kv.keys_module_arg_depth == 1 then
+            kv.keys_module_arg_argnum = kv.keys_module_arg_argnum + 1
           end
         end
-        pkgcls_bracket_pending = false
-        if in_file_arg and not file_arg_done then
-          file_arg_depth = file_arg_depth + 1
+        if pk.provides_pkg_pending then
+          pk.provides_pkg_brace_count = pk.provides_pkg_brace_count + 1
         end
-        if in_hook_label then
-          hook_label_depth = hook_label_depth + 1
-          if hook_label_depth == 1 then
-            hook_label_argnum = hook_label_argnum + 1
+        if pk.pkgcls_pending then
+          pk.pkgcls_brace_depth = pk.pkgcls_brace_depth + 1
+          if pk.pkgcls_brace_depth == 1 then
+            pk.pkgcls_argnum = pk.pkgcls_argnum + 1
           end
         end
-        if in_single_keyval then
-          single_keyval_depth = single_keyval_depth + 1
+        pk.pkgcls_bracket_pending = false
+        if fl.in_file_arg and not fl.file_arg_done then
+          fl.file_arg_depth = fl.file_arg_depth + 1
         end
-        if font_brace_pending then
-          font_brace_depth = font_brace_depth + 1
+        if hk.in_hook_label then
+          hk.hook_label_depth = hk.hook_label_depth + 1
+          if hk.hook_label_depth == 1 then
+            hk.hook_label_argnum = hk.hook_label_argnum + 1
+          end
+        end
+        if kv.in_single_keyval then
+          kv.single_keyval_depth = kv.single_keyval_depth + 1
+        end
+        if ft.font_brace_pending then
+          ft.font_brace_depth = ft.font_brace_depth + 1
         end
         -- Si esperábamos un '[' opcional y en cambio llega otra '{'
         -- (sin corchete de por medio), descartamos la espera.
-        font_bracket_pending = false
+        ft.font_bracket_pending = false
       elseif chunk == '}' then
-        brace_depth = brace_depth - 1
-        if brace_depth < csname_frame_depth then
+        cs.brace_depth = cs.brace_depth - 1
+        if cs.brace_depth < cs.csname_frame_depth then
           -- Se cerró el grupo que contenía al comando vigente: volvemos al
           -- marco del comando exterior (si lo hay).
           local fr = csname_frames[#csname_frames]
@@ -1639,151 +1670,151 @@ mylhmc_colorize_code = function(line, fid)
           if fr then
             csname_frames[#csname_frames] = nil
             for k, v in pairs(fr[1]) do csname_positions[k] = v end
-            arg_counter, csname_frame_depth = fr[2], fr[3]
+            cs.arg_counter, cs.csname_frame_depth = fr[2], fr[3]
           else
-            csname_frame_depth = brace_depth
+            cs.csname_frame_depth = cs.brace_depth
           end
         end
-        if in_csname then
-          if csname_depth > 0 then csname_depth = csname_depth - 1
-          else in_csname, csname_depth = false, 0 end
+        if cs.in_csname then
+          if cs.csname_depth > 0 then cs.csname_depth = cs.csname_depth - 1
+          else cs.in_csname, cs.csname_depth = false, 0 end
         end
-        if in_variant_group then
-          if variant_depth > 0 then variant_depth = variant_depth - 1
+        if cs.in_variant_group then
+          if cs.variant_depth > 0 then cs.variant_depth = cs.variant_depth - 1
           else
-            in_variant_group = false
-            variant_braces_remaining = variant_braces_remaining - 1
+            cs.in_variant_group = false
+            cs.variant_braces_remaining = cs.variant_braces_remaining - 1
           end
         end
-        if ltcmd_in_args and ltcmd_brace_count > 0 then
-          ltcmd_brace_count = ltcmd_brace_count - 1
-          if ltcmd_brace_count == 0 then ltcmd_in_args = false end
-        elseif ltcmd_name_pending and ltcmd_brace_count > 0 then
-          ltcmd_brace_count = ltcmd_brace_count - 1
-          if ltcmd_brace_count == 0 then
-            ltcmd_name_pending, ltcmd_in_args = false, true
+        if lt.ltcmd_in_args and lt.ltcmd_brace_count > 0 then
+          lt.ltcmd_brace_count = lt.ltcmd_brace_count - 1
+          if lt.ltcmd_brace_count == 0 then lt.ltcmd_in_args = false end
+        elseif lt.ltcmd_name_pending and lt.ltcmd_brace_count > 0 then
+          lt.ltcmd_brace_count = lt.ltcmd_brace_count - 1
+          if lt.ltcmd_brace_count == 0 then
+            lt.ltcmd_name_pending, lt.ltcmd_in_args = false, true
           end
         end
-        if mathml_brace_count > 0 then
-          mathml_brace_count = mathml_brace_count - 1
-          if mathml_brace_count == 0 then
-            in_mathml_intent, in_mathml_arg = false, false
+        if ml.mathml_brace_count > 0 then
+          ml.mathml_brace_count = ml.mathml_brace_count - 1
+          if ml.mathml_brace_count == 0 then
+            ml.in_mathml_intent, ml.in_mathml_arg = false, false
           end
         end
-        if in_keys_context and keys_depth > 0 then
-          keys_depth = keys_depth - 1
-          if keys_in_choices and keys_depth == 1 then
-            keys_in_choices = false
+        if kv.in_keys_context and kv.keys_depth > 0 then
+          kv.keys_depth = kv.keys_depth - 1
+          if kv.keys_in_choices and kv.keys_depth == 1 then
+            kv.keys_in_choices = false
           end
-          if keys_depth == 0 then
-            if not keys_body_opened then
-              keys_body_opened = true
+          if kv.keys_depth == 0 then
+            if not kv.keys_body_opened then
+              kv.keys_body_opened = true
             else
               -- Restaura el contexto exterior si este venía anidado.
               local saved = keys_context_stack[#keys_context_stack]
               if saved then
                 keys_context_stack[#keys_context_stack] = nil
-                keys_body_opened, keys_depth, keys_in_choices =
+                kv.keys_body_opened, kv.keys_depth, kv.keys_in_choices =
                   saved[1], saved[2], saved[3]
-                in_keys_context = true
+                kv.in_keys_context = true
               else
-                in_keys_context, keys_body_opened = false, false
+                kv.in_keys_context, kv.keys_body_opened = false, false
               end
             end
           end
         end
-        if keys_meta_pending and keys_meta_brace_count > 0 then
-          keys_meta_brace_count = keys_meta_brace_count - 1
-          if keys_meta_brace_count == 0 then
-            if keys_meta_arity == 1 or keys_meta_argnum >= 2 then
-              keys_meta_pending = false
+        if kv.keys_meta_pending and kv.keys_meta_brace_count > 0 then
+          kv.keys_meta_brace_count = kv.keys_meta_brace_count - 1
+          if kv.keys_meta_brace_count == 0 then
+            if kv.keys_meta_arity == 1 or kv.keys_meta_argnum >= 2 then
+              kv.keys_meta_pending = false
             end
           end
         end
-        if in_msgerror and msgerror_depth > 0 then
-          msgerror_depth = msgerror_depth - 1
-          if msgerror_depth == 0 and msgerror_argnum >= 5 then
-            in_msgerror, msgerror_argnum, msgerror_is_unknown = false, 0, false
+        if ms.in_msgerror and ms.msgerror_depth > 0 then
+          ms.msgerror_depth = ms.msgerror_depth - 1
+          if ms.msgerror_depth == 0 and ms.msgerror_argnum >= 5 then
+            ms.in_msgerror, ms.msgerror_argnum, ms.msgerror_is_unknown = false, 0, false
           end
         end
-        if in_msg_simple and not msg_simple_done and msg_simple_depth > 0 then
-          msg_simple_depth = msg_simple_depth - 1
-          if msg_simple_depth == 0 then
-            msg_simple_done, in_msg_simple = true, false
+        if ms.in_msg_simple and not ms.msg_simple_done and ms.msg_simple_depth > 0 then
+          ms.msg_simple_depth = ms.msg_simple_depth - 1
+          if ms.msg_simple_depth == 0 then
+            ms.msg_simple_done, ms.in_msg_simple = true, false
           end
         end
-        if in_keys_module_arg and not keys_module_arg_done
-           and keys_module_arg_depth > 0 then
-          keys_module_arg_depth = keys_module_arg_depth - 1
-          if keys_module_arg_depth == 0
-             and keys_module_arg_argnum >= keys_module_arg_total_n then
-            keys_module_arg_done, in_keys_module_arg = true, false
+        if kv.in_keys_module_arg and not kv.keys_module_arg_done
+           and kv.keys_module_arg_depth > 0 then
+          kv.keys_module_arg_depth = kv.keys_module_arg_depth - 1
+          if kv.keys_module_arg_depth == 0
+             and kv.keys_module_arg_argnum >= kv.keys_module_arg_total_n then
+            kv.keys_module_arg_done, kv.in_keys_module_arg = true, false
           end
         end
-        if provides_pkg_pending and provides_pkg_brace_count > 0 then
-          provides_pkg_brace_count = provides_pkg_brace_count - 1
-          if provides_pkg_brace_count == 0 then
-            provides_pkg_pending = false
+        if pk.provides_pkg_pending and pk.provides_pkg_brace_count > 0 then
+          pk.provides_pkg_brace_count = pk.provides_pkg_brace_count - 1
+          if pk.provides_pkg_brace_count == 0 then
+            pk.provides_pkg_pending = false
           end
         end
-        if pkgcls_pending and pkgcls_brace_depth > 0 then
-          pkgcls_brace_depth = pkgcls_brace_depth - 1
-          if pkgcls_brace_depth == 0 and pkgcls_argnum >= pkgcls_target_arg then
-            pkgcls_pending = false
+        if pk.pkgcls_pending and pk.pkgcls_brace_depth > 0 then
+          pk.pkgcls_brace_depth = pk.pkgcls_brace_depth - 1
+          if pk.pkgcls_brace_depth == 0 and pk.pkgcls_argnum >= pk.pkgcls_target_arg then
+            pk.pkgcls_pending = false
           end
         end
-        if in_file_arg and not file_arg_done and file_arg_depth > 0 then
-          file_arg_depth = file_arg_depth - 1
-          if file_arg_depth == 0 then
-            file_arg_done, in_file_arg = true, false
+        if fl.in_file_arg and not fl.file_arg_done and fl.file_arg_depth > 0 then
+          fl.file_arg_depth = fl.file_arg_depth - 1
+          if fl.file_arg_depth == 0 then
+            fl.file_arg_done, fl.in_file_arg = true, false
           end
         end
-        if in_hook_label and hook_label_depth > 0 then
-          hook_label_depth = hook_label_depth - 1
-          if hook_label_depth == 0 and hook_label_argnum >= hook_label_total_n then
-            in_hook_label = false
+        if hk.in_hook_label and hk.hook_label_depth > 0 then
+          hk.hook_label_depth = hk.hook_label_depth - 1
+          if hk.hook_label_depth == 0 and hk.hook_label_argnum >= hk.hook_label_total_n then
+            hk.in_hook_label = false
           end
         end
-        if in_single_keyval and single_keyval_depth > 0 then
-          single_keyval_depth = single_keyval_depth - 1
-          if single_keyval_depth == 0 then
-            in_single_keyval = false
+        if kv.in_single_keyval and kv.single_keyval_depth > 0 then
+          kv.single_keyval_depth = kv.single_keyval_depth - 1
+          if kv.single_keyval_depth == 0 then
+            kv.in_single_keyval = false
           end
         end
-        if font_brace_pending and font_brace_depth > 0 then
-          font_brace_depth = font_brace_depth - 1
-          if font_brace_depth == 0 then
-            font_brace_pending = false
-            font_bracket_pending = true
+        if ft.font_brace_pending and ft.font_brace_depth > 0 then
+          ft.font_brace_depth = ft.font_brace_depth - 1
+          if ft.font_brace_depth == 0 then
+            ft.font_brace_pending = false
+            ft.font_bracket_pending = true
           end
         end
       end
       h, tl = mylhmc_colored_str(chunk, 'brace', fid)
     elseif t == 3 then
       if chunk == '[' then
-        if pkgcls_bracket_pending then
-          pkgcls_bracket_active, pkgcls_bracket_depth, pkgcls_bracket_pending =
+        if pk.pkgcls_bracket_pending then
+          pk.pkgcls_bracket_active, pk.pkgcls_bracket_depth, pk.pkgcls_bracket_pending =
             true, 1, false
-        elseif pkgcls_bracket_active then
-          pkgcls_bracket_depth = pkgcls_bracket_depth + 1
+        elseif pk.pkgcls_bracket_active then
+          pk.pkgcls_bracket_depth = pk.pkgcls_bracket_depth + 1
         end
-        if font_bracket_pending then
-          font_bracket_active, font_bracket_depth, font_bracket_pending =
+        if ft.font_bracket_pending then
+          ft.font_bracket_active, ft.font_bracket_depth, ft.font_bracket_pending =
             true, 1, false
-        elseif font_bracket_active then
-          font_bracket_depth = font_bracket_depth + 1
+        elseif ft.font_bracket_active then
+          ft.font_bracket_depth = ft.font_bracket_depth + 1
         end
       elseif chunk == ']' then
-        if pkgcls_bracket_active and pkgcls_bracket_depth > 0 then
-          pkgcls_bracket_depth = pkgcls_bracket_depth - 1
-          if pkgcls_bracket_depth == 0 then
-            pkgcls_bracket_active = false
+        if pk.pkgcls_bracket_active and pk.pkgcls_bracket_depth > 0 then
+          pk.pkgcls_bracket_depth = pk.pkgcls_bracket_depth - 1
+          if pk.pkgcls_bracket_depth == 0 then
+            pk.pkgcls_bracket_active = false
           end
         end
-        if font_bracket_active and font_bracket_depth > 0 then
-          font_bracket_depth = font_bracket_depth - 1
-          if font_bracket_depth == 0 then
-            font_bracket_active = false
+        if ft.font_bracket_active and ft.font_bracket_depth > 0 then
+          ft.font_bracket_depth = ft.font_bracket_depth - 1
+          if ft.font_bracket_depth == 0 then
+            ft.font_bracket_active = false
           end
         end
       end
@@ -1794,16 +1825,16 @@ mylhmc_colorize_code = function(line, fid)
       h, tl = mylhmc_colored_str(hashes, 'argument', fid); rh, rt = mylhmc_append(rh, rt, h, tl)
       h, tl = mylhmc_colored_str(num, 'argnum', fid)
     elseif t == 26 then
-      arg_counter, variant_depth, in_variant_group = 0, 0, false
+      cs.variant_depth, cs.in_variant_group = 0, false
       if s_find(chunk, 'prg_generate_conditional_variant', 1, true) then
-        variant_braces_remaining = 2
-      else variant_braces_remaining = 1 end
+        cs.variant_braces_remaining = 2
+      else cs.variant_braces_remaining = 1 end
       h, tl = mylhmc_emit_with_signature(chunk, 'publicfun', fid)
     elseif t == 30 then
-      in_csname, csname_base_color, csname_depth = true, nil, 0
+      cs.in_csname, cs.csname_base_color, cs.csname_depth = true, nil, 0
       h, tl = mylhmc_colored_str(chunk, 'publicfun', fid)
     elseif t == 31 then
-      in_csname = false; h, tl = mylhmc_colored_str(chunk, 'publicfun', fid)
+      cs.in_csname = false; h, tl = mylhmc_colored_str(chunk, 'publicfun', fid)
     elseif t == 16 then
       local dot  = s_sub(chunk, 1, 1)
       local rest = s_sub(chunk, 2)
@@ -1811,19 +1842,19 @@ mylhmc_colorize_code = function(line, fid)
       h, tl = mylhmc_colored_str(dot, 'signature', fid); rh, rt = mylhmc_append(rh, rt, h, tl)
       if colon then
         local kname, kargs = s_sub(rest, 1, colon - 1), s_sub(rest, colon + 1)
-        if in_keys_context and keys_body_opened and keys_depth == 1 then
-          keys_in_choices = (kname == 'choices')
+        if kv.in_keys_context and kv.keys_body_opened and kv.keys_depth == 1 then
+          kv.keys_in_choices = (kname == 'choices')
         end
         -- .meta:nn/.meta:n es autocontenido (sus dos argumentos son ruta
         -- de módulo + lista de claves, sin depender de estar dentro de
         -- un \keys_define:nn real) -- se reconoce sin importar el
         -- contexto, para que \myhlc también lo coloree correctamente.
         if kname == 'meta' then
-          keys_meta_pending, keys_meta_argnum, keys_meta_brace_count =
+          kv.keys_meta_pending, kv.keys_meta_argnum, kv.keys_meta_brace_count =
             true, 0, 0
-          keys_meta_arity = (kargs == 'n') and 1 or 2
+          kv.keys_meta_arity = (kargs == 'n') and 1 or 2
         else
-          keys_meta_pending = false
+          kv.keys_meta_pending = false
         end
         mylhmc_reset_csname_state(); local cpos = 0
         for i = 1, #kargs do
@@ -1838,41 +1869,41 @@ mylhmc_colorize_code = function(line, fid)
         h, tl = mylhmc_colored_str(kargs, 'sigargs', fid)
       else h, tl = mylhmc_colored_str(rest, 'keyfun', fid) end
     elseif t == 9 then
-      h, tl = mylhmc_colored_str(s_sub(chunk, 1, 1), 'guard_angle', fid)
+      h, tl = mylhmc_colored_str(s_sub(chunk, 1, 1), 'percent', fid)
       rh, rt = mylhmc_append(rh, rt, h, tl)
       h, tl = mylhmc_colored_str_italic(s_sub(chunk, 2), 'comment', fid)
     elseif t == 14 then
-      arg_counter, ltcmd_brace_count, ltcmd_name_pending, ltcmd_in_args = 0, 0, true, false
+      lt.ltcmd_brace_count, lt.ltcmd_name_pending, lt.ltcmd_in_args = 0, true, false
       h, tl = mylhmc_emit_with_signature(chunk, 'ltcmd', fid)
     elseif t == 39 then
-      if in_keys_context then
+      if kv.in_keys_context then
         keys_context_stack[#keys_context_stack + 1] =
-          { keys_body_opened, keys_depth, keys_in_choices }
+          { kv.keys_body_opened, kv.keys_depth, kv.keys_in_choices }
       end
-      in_keys_context, keys_body_opened, keys_depth = true, false, 0
-      keys_in_choices = false
+      kv.in_keys_context, kv.keys_body_opened, kv.keys_depth = true, false, 0
+      kv.keys_in_choices = false
       h, tl = mylhmc_emit_with_signature(chunk, 'publicfun', fid)
     elseif t == 40 then
-      in_msgerror, msgerror_argnum, msgerror_depth, msgerror_is_unknown =
+      ms.in_msgerror, ms.msgerror_argnum, ms.msgerror_depth, ms.msgerror_is_unknown =
         true, 0, 0, false
       h, tl = mylhmc_emit_with_signature(chunk, 'publicfun', fid)
     elseif t == 41 then
-      in_msg_simple, msg_simple_depth, msg_simple_done = true, 0, false
+      ms.in_msg_simple, ms.msg_simple_depth, ms.msg_simple_done = true, 0, false
       h, tl = mylhmc_emit_with_signature(chunk, 'publicfun', fid)
     elseif t == 44 then
-      in_keys_module_arg, keys_module_arg_depth, keys_module_arg_done =
+      kv.in_keys_module_arg, kv.keys_module_arg_depth, kv.keys_module_arg_done =
         true, 0, false
-      keys_module_arg_argnum = 0
+      kv.keys_module_arg_argnum = 0
       local colon = s_find(chunk, ':', 1, true)
       local sig = colon and s_sub(chunk, colon + 1) or ''
       local n_count = 0
       for ch in s_gmatch(sig, '.') do
         if ch == 'n' then n_count = n_count + 1 end
       end
-      keys_module_arg_total_n = n_count
+      kv.keys_module_arg_total_n = n_count
       h, tl = mylhmc_emit_with_signature(chunk, 'publicfun', fid)
     elseif t == 46 then
-      in_file_arg, file_arg_depth, file_arg_done = true, 0, false
+      fl.in_file_arg, fl.file_arg_depth, fl.file_arg_done = true, 0, false
       -- Coincidencia de PREFIJO exacto justo tras el '\' (no substring en
       -- cualquier parte): evita que \file_input:n "contenga" 'input' y
       -- se confunda con el \input clásico.
@@ -1880,9 +1911,9 @@ mylhmc_colorize_code = function(line, fid)
       local function starts_with(prefix)
         return s_sub(name_start, 1, #prefix) == prefix
       end
-      file_arg_is_list = starts_with('includeonly')
+      fl.file_arg_is_list = starts_with('includeonly')
       local base
-      if file_arg_is_list
+      if fl.file_arg_is_list
          or starts_with('InputIfFileExists')
          or starts_with('include')
          or starts_with('input') then
@@ -1892,18 +1923,18 @@ mylhmc_colorize_code = function(line, fid)
       end
       h, tl = mylhmc_emit_with_signature(chunk, base, fid)
     elseif t == 47 then
-      in_hook_label, hook_label_depth, hook_label_argnum = true, 0, 0
+      hk.in_hook_label, hk.hook_label_depth, hk.hook_label_argnum = true, 0, 0
       local colon = s_find(chunk, ':', 1, true)
       local sig = colon and s_sub(chunk, colon + 1) or ''
       local n_count = 0
       for ch in s_gmatch(sig, '.') do
         if ch == 'n' then n_count = n_count + 1 end
       end
-      hook_label_total_n = n_count
+      hk.hook_label_total_n = n_count
       if s_find(chunk, 'hook_gset_rule', 1, true) then
-        hook_label_positions = { [2] = true, [4] = true }
+        hk.hook_label_positions = { [2] = true, [4] = true }
       else
-        hook_label_positions = { [2] = true }
+        hk.hook_label_positions = { [2] = true }
       end
       h, tl = mylhmc_emit_with_signature(chunk, mylhmc_module_aware_color(chunk, 'publicfun'), fid)
     elseif t == 48 then
@@ -1919,23 +1950,23 @@ mylhmc_colorize_code = function(line, fid)
       h, tl = mylhmc_emit_with_signature(chunk, 'publicfun', fid)
       csname_positions[1] = true
     elseif t == 33 then h, tl = mylhmc_emit_with_signature(chunk, 'ltcmd_arg', fid)
-    elseif ltcmd_name_pending and ltcmd_brace_count == 1 then
+    elseif lt.ltcmd_name_pending and lt.ltcmd_brace_count == 1 then
       rh, rt = mylhmc_emit_csname_text(chunk, mylhmc_ltcmd_name_color(chunk), fid, rh, rt)
       h, tl = nil, nil
-    elseif ltcmd_name_pending and ltcmd_brace_count == 0 and s_sub(chunk, 1, 1) == '\\' then
+    elseif lt.ltcmd_name_pending and lt.ltcmd_brace_count == 0 and s_sub(chunk, 1, 1) == '\\' then
       h, tl = mylhmc_colored_str(chunk, mylhmc_ltcmd_name_color(chunk), fid)
-      ltcmd_name_pending, ltcmd_in_args = false, true
-    elseif ltcmd_in_args then
-      if ltcmd_brace_count > 1 then h, tl = mylhmc_colored_str(chunk, type_colors[t], fid)
+      lt.ltcmd_name_pending, lt.ltcmd_in_args = false, true
+    elseif lt.ltcmd_in_args then
+      if lt.ltcmd_brace_count > 1 then h, tl = mylhmc_colored_str(chunk, type_colors[t], fid)
       else rh, rt = mylhmc_colorize_ltcmd_args(chunk, fid, rh, rt); h, tl = nil, nil end
-    elseif in_csname then
-      csname_base_color = csname_base_color or mylhmc_csname_color_from_prefix(chunk)
+    elseif cs.in_csname then
+      cs.csname_base_color = cs.csname_base_color or mylhmc_csname_color_from_prefix(chunk)
       if s_sub(chunk, 1, 1) == '\\' then
         h, tl = mylhmc_colored_str(chunk, type_colors[t], fid)
-      else rh, rt = mylhmc_emit_csname_text(chunk, csname_base_color, fid, rh, rt); h, tl = nil, nil end
+      else rh, rt = mylhmc_emit_csname_text(chunk, cs.csname_base_color, fid, rh, rt); h, tl = nil, nil end
     elseif t == 5 or t == 6 then
-      if ltcmd_in_args or ltcmd_name_pending then
-        ltcmd_in_args, ltcmd_name_pending, ltcmd_brace_count = false, false, 0
+      if lt.ltcmd_in_args or lt.ltcmd_name_pending then
+        lt.ltcmd_in_args, lt.ltcmd_name_pending, lt.ltcmd_brace_count = false, false, 0
       end
       local eff
       if t == 6 then
@@ -1945,40 +1976,39 @@ mylhmc_colorize_code = function(line, fid)
       end
       h, tl = mylhmc_emit_with_signature(chunk, eff, fid)
     elseif t == 25 then
-      arg_counter = 0
+      cs.arg_counter = 0
       if s_find(chunk, 'ProvidesExplPackage', 1, true) then
-        provides_pkg_pending, provides_pkg_brace_count = true, 0
+        pk.provides_pkg_pending, pk.provides_pkg_brace_count = true, 0
       end
       h, tl = mylhmc_colored_str_bold(chunk, 'structure', fid)
     elseif t == 37 then
-      arg_counter = 0
-      pkgcls_bracket_pending = false
+      pk.pkgcls_bracket_pending = false
       if s_find(chunk, 'ProvidesPackage', 1, true) then
-        pkgcls_pending, pkgcls_target_arg, pkgcls_color = true, 1, 'pkgname'
+        pk.pkgcls_pending, pk.pkgcls_target_arg, pk.pkgcls_color = true, 1, 'pkgname'
       elseif s_find(chunk, 'ProvidesClass', 1, true) then
-        pkgcls_pending, pkgcls_target_arg, pkgcls_color = true, 1, 'clsname'
+        pk.pkgcls_pending, pk.pkgcls_target_arg, pk.pkgcls_color = true, 1, 'clsname'
       elseif s_find(chunk, 'RequirePackageWithOptions', 1, true) then
-        pkgcls_pending, pkgcls_target_arg, pkgcls_color = true, 1, 'pkgname'
+        pk.pkgcls_pending, pk.pkgcls_target_arg, pk.pkgcls_color = true, 1, 'pkgname'
       elseif s_find(chunk, 'RequirePackage', 1, true) then
-        pkgcls_pending, pkgcls_target_arg, pkgcls_color = true, 1, 'pkgname'
-        pkgcls_bracket_pending = true
+        pk.pkgcls_pending, pk.pkgcls_target_arg, pk.pkgcls_color = true, 1, 'pkgname'
+        pk.pkgcls_bracket_pending = true
       elseif s_find(chunk, 'LoadClassWithOptions', 1, true) then
-        pkgcls_pending, pkgcls_target_arg, pkgcls_color = true, 1, 'clsname'
+        pk.pkgcls_pending, pk.pkgcls_target_arg, pk.pkgcls_color = true, 1, 'clsname'
       elseif s_find(chunk, 'LoadClass', 1, true) then
-        pkgcls_pending, pkgcls_target_arg, pkgcls_color = true, 1, 'clsname'
-        pkgcls_bracket_pending = true
+        pk.pkgcls_pending, pk.pkgcls_target_arg, pk.pkgcls_color = true, 1, 'clsname'
+        pk.pkgcls_bracket_pending = true
       elseif s_find(chunk, 'PassOptionsToPackage', 1, true) then
-        pkgcls_pending, pkgcls_target_arg, pkgcls_color = true, 2, 'pkgname'
+        pk.pkgcls_pending, pk.pkgcls_target_arg, pk.pkgcls_color = true, 2, 'pkgname'
       elseif s_find(chunk, 'PassOptionsToClass', 1, true) then
-        pkgcls_pending, pkgcls_target_arg, pkgcls_color = true, 2, 'clsname'
+        pk.pkgcls_pending, pk.pkgcls_target_arg, pk.pkgcls_color = true, 2, 'clsname'
       elseif s_find(chunk, 'IfPackageLoaded', 1, true) then
-        pkgcls_pending, pkgcls_target_arg, pkgcls_color = true, 1, 'pkgname'
+        pk.pkgcls_pending, pk.pkgcls_target_arg, pk.pkgcls_color = true, 1, 'pkgname'
       else
-        pkgcls_pending = false
+        pk.pkgcls_pending = false
       end
-      if pkgcls_pending then pkgcls_argnum, pkgcls_brace_depth = 0, 0 end
+      if pk.pkgcls_pending then pk.pkgcls_argnum, pk.pkgcls_brace_depth = 0, 0 end
       if s_find(chunk, 'IfFileExists', 1, true) then
-        in_file_arg, file_arg_depth, file_arg_done = true, 0, false
+        fl.in_file_arg, fl.file_arg_depth, fl.file_arg_done = true, 0, false
       end
       h, tl = mylhmc_emit_with_signature(chunk, 'pkgstruct', fid)
     elseif t == 49 then
@@ -1986,7 +2016,7 @@ mylhmc_colorize_code = function(line, fid)
          or s_find(chunk, 'unimathsetup', 1, true)
          or s_find(chunk, 'addfontfeature', 1, true)
          or s_find(chunk, 'defaultfontfeatures', 1, true) then
-        in_single_keyval, single_keyval_depth = true, 0
+        kv.in_single_keyval, kv.single_keyval_depth = true, 0
       elseif s_find(chunk, 'setmainfont', 1, true)
          or s_find(chunk, 'setsansfont', 1, true)
          or s_find(chunk, 'setmonofont', 1, true)
@@ -1996,16 +2026,16 @@ mylhmc_colorize_code = function(line, fid)
          or s_find(chunk, 'setmathtt', 1, true)
          or s_find(chunk, 'setmathfont', 1, true)
          or s_find(chunk, 'fontspec', 1, true) then
-        font_brace_pending, font_brace_depth = true, 0
+        ft.font_brace_pending, ft.font_brace_depth = true, 0
       end
       h, tl = mylhmc_emit_with_signature(chunk, 'support', fid)
     elseif t == 38 then
-      mathml_brace_count, mathml_after_dollar = 0, false
+      ml.mathml_brace_count, ml.mathml_after_dollar = 0, false
       if s_find(chunk, 'MathMLintent', 1, true) then
-        in_mathml_intent, in_mathml_arg = true, false
+        ml.in_mathml_intent, ml.in_mathml_arg = true, false
       elseif s_find(chunk, 'MathMLarg', 1, true) then
-        in_mathml_arg, in_mathml_intent = true, false
-      else in_mathml_intent, in_mathml_arg = false, false end
+        ml.in_mathml_arg, ml.in_mathml_intent = true, false
+      else ml.in_mathml_intent, ml.in_mathml_arg = false, false end
       if s_find(chunk, 'tagpdfsetup', 1, true)
          or s_find(chunk, 'tagtool', 1, true)
          or s_find(chunk, 'tagmcbegin', 1, true)
@@ -2016,7 +2046,7 @@ mylhmc_colorize_code = function(line, fid)
          or s_find(chunk, 'tag_mc_begin:n', 1, true)
          or s_find(chunk, 'tag_mc_begin_pop:n', 1, true)
          or s_find(chunk, 'tag_tool:n', 1, true) then
-        in_single_keyval, single_keyval_depth = true, 0
+        kv.in_single_keyval, kv.single_keyval_depth = true, 0
       end
       h, tl = mylhmc_emit_with_signature(chunk, 'mathtag', fid)
       -- \tag_suspend:n{label} etc.: si la etiqueta es del módulo, module_name.
@@ -2024,13 +2054,13 @@ mylhmc_colorize_code = function(line, fid)
         rh, rt = mylhmc_append(rh, rt, h, tl); h, tl = nil, nil
         rh, rt, e = mylhmc_module_brace_arg(line, e, fid, rh, rt)
       end
-    elseif in_mathml_intent and t ~= 8 then
-      if t == 21 then mathml_after_dollar = true; h, tl = mylhmc_colored_str(s_sub(chunk, 1, 1), 'math', fid)
-      elseif mathml_after_dollar then
-        mathml_after_dollar = false
+    elseif ml.in_mathml_intent then
+      if t == 21 then ml.mathml_after_dollar = true; h, tl = mylhmc_colored_str(s_sub(chunk, 1, 1), 'math', fid)
+      elseif ml.mathml_after_dollar then
+        ml.mathml_after_dollar = false
         rh, rt = mylhmc_colorize_mathml_intent(chunk, fid, rh, rt); h, tl = nil, nil
       else rh, rt = mylhmc_colorize_mathml_intent(chunk, fid, rh, rt); h, tl = nil, nil end
-    elseif in_mathml_arg and t ~= 8 then
+    elseif ml.in_mathml_arg then
       if t == 4 then
         h, tl = mylhmc_colorize_name_with_argnum(chunk, fid, mylhmc_module_aware_color(chunk, 'publicvar'))
       elseif t == 2 then
@@ -2075,10 +2105,7 @@ mylhmc_colorize_code = function(line, fid)
         if b == 64 or b == 33 or b == 38 or b == 94 or b == 42 then
           local part = (cur == 2 and '\\' or '') .. s_sub(chunk, cur, i - 1)
           if #part > 0 then
-            local pcolor = mylhmc_module_aware_color(part, 'latex_cmd')
-            if s_find(part, 'nuevo', 1, true) then
-              texio.write_nl('[[CALL-DEBUG]] part=[' .. part .. '] pcolor=[' .. pcolor .. '] color_data_module_name=' .. tostring(color_data['module_name'] ~= nil))
-            end
+            local pcolor = mylhmc_module_aware_color(part, 'legacy_at')
             h, tl = mylhmc_colored_str(part, pcolor, fid)
             rh, rt = mylhmc_append(rh, rt, h, tl)
           end
@@ -2089,7 +2116,7 @@ mylhmc_colorize_code = function(line, fid)
       end
       if cur <= len then
         local trailing = (cur == 2 and '\\' or '') .. s_sub(chunk, cur)
-        h, tl = mylhmc_colored_str(trailing, mylhmc_module_aware_color(trailing, 'latex_cmd'), fid)
+        h, tl = mylhmc_colored_str(trailing, mylhmc_module_aware_color(trailing, 'legacy_at'), fid)
       else h, tl = nil, nil end
     elseif t == 52 then
       local name = s_sub(chunk, 4)
@@ -2206,7 +2233,7 @@ local function mylhmc_render_guard(line, fid)
   local rest = s_gsub(line, '^%s*', '')
   local close = s_find(rest, '>', 2)
   if not close then
-    local h, t = mylhmc_colored_str('%', 'guard_angle', fid)
+    local h, t = mylhmc_colored_str('%', 'percent', fid)
     if h then n_write(d_tonode(h)) end
     h, t = mylhmc_colored_str_italic(line, 'comment', fid)
     if h then n_write(d_tonode(h)) end
@@ -2240,7 +2267,7 @@ local function mylhmc_render_guard(line, fid)
   if rh then n_write(d_tonode(rh)) end
   if after and after ~= '' then
     after = mylhmc_apply_at_at(after)
-    local ah, at = mylhmc_colorize_code(after, fid); if ah then n_write(d_tonode(ah)) end
+    local ah = mylhmc_colorize_code(after, fid); if ah then n_write(d_tonode(ah)) end
   end
 end
 
@@ -2287,9 +2314,9 @@ register_tex_cmd('luafun_inline', function()
   -- si el argumento completo tiene la forma de un nombre de variable;
   -- texto mixto ("ver l_foo_tl aqui") cae al dispatch normal.
   if bare_varname_full:match(text) then
-    local h, t = mylhmc_render_bare_varname(text, fid)
+    local h = mylhmc_render_bare_varname(text, fid)
     if h then n_write(d_tonode(h)) end
-    font_bracket_pending = false
+    ft.font_bracket_pending = false
     return
   end
   -- Expresión de intent suelta (\myhlc|nombre:prefix($a)|): se colorea
@@ -2302,13 +2329,13 @@ register_tex_cmd('luafun_inline', function()
                kw == 'date' or kw == 'infix') then
       local rh, rt = mylhmc_colorize_mathml_intent(text, fid, nil, nil)
       if rh then n_write(d_tonode(rh)) end
-      font_bracket_pending = false
+      ft.font_bracket_pending = false
       return
     end
   end
   local rh, rt = mylhmc_colorize_code(text, fid)
   if rh then n_write(d_tonode(rh)) end
-  font_bracket_pending = false
+  ft.font_bracket_pending = false
 end, {})
 
 register_tex_cmd('luafun_process_line', function()
@@ -2325,13 +2352,13 @@ register_tex_cmd('luafun_process_line', function()
     local trimmed = s_match(rest, '^%s*(.*)')
     if s_sub(trimmed, 1, 1) == '<' then
       mylhmc_render_guard(rest, fid)
-      font_bracket_pending = false
+      ft.font_bracket_pending = false
       return
     else
       -- comentario normal (no guarda): el shorthand @@ en comentarios
       -- explicativos sí debe sustituirse.
       line = mylhmc_apply_at_at(line)
-      local h, t = mylhmc_colored_str(s_sub(line, 1, 1), 'guard_angle', fid)
+      local h, t = mylhmc_colored_str(s_sub(line, 1, 1), 'percent', fid)
       if h then n_write(d_tonode(h)) end
       h, t = mylhmc_colored_str_italic(s_sub(line, 2), 'comment', fid)
       if h then n_write(d_tonode(h)) end
@@ -2349,5 +2376,5 @@ register_tex_cmd('luafun_process_line', function()
     rh, rt = mylhmc_append(rh, rt, ch, ct)
     if rh then n_write(d_tonode(rh)) end
   end
-  font_bracket_pending = false
+  ft.font_bracket_pending = false
 end, {})
