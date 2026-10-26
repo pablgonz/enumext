@@ -178,5 +178,90 @@
     \end{enumext*}
   }
 
+\TYPE{=== F. item-break (items de fila completa) ===}
+
+% \SPLITTEST compone el codigo en una caja, la parte con \vsplit a 40pt y
+% muestra las dos piezas: con item-break el item de fila completa debe poder
+% partirse; sin la clave el item es una caja y pasa entero a la pieza inferior.
+\newcommand\SPLITTEST[2]
+  {%
+    \TEST{#1}
+      {%
+        \setbox0=\vbox{\hsize=250pt \parindent=0pt #2}%
+        \setbox2=\vsplit0 to 40pt
+        \TYPE{--- pieza superior ---}%
+        \showbox2
+        \TYPE{--- pieza inferior ---}%
+        \showbox0
+      }%
+  }
+
+% 14. Sin la clave: el item de fila completa no se parte.
+\SPLITTEST{[14] item de fila completa sin item-break}
+  {
+    \begin{enumext*}[columns=2]
+      \item Uno
+      \item Dos
+      \item(2) Fila completa con bastante texto para ocupar varias lineas de la
+        caja: esta frase se repite para que el item no quepa en la pieza
+        superior. Esta frase se repite para que el item no quepa en la pieza
+        superior.
+      \item Cuatro
+    \end{enumext*}
+  }
+
+% 15. Con la clave: el mismo item se parte entre las dos piezas.
+\SPLITTEST{[15] item de fila completa con item-break}
+  {
+    \begin{enumext*}[columns=2,item-break=true]
+      \item Uno
+      \item Dos
+      \item(2) Fila completa con bastante texto para ocupar varias lineas de la
+        caja: esta frase se repite para que el item no quepa en la pieza
+        superior. Esta frase se repite para que el item no quepa en la pieza
+        superior.
+      \item Cuatro
+    \end{enumext*}
+  }
+
+% 16. Con la clave, los items que no ocupan toda la fila siguen en caja.
+\BOXTEST{[16] item-break sin items de fila completa}
+  {
+    \begin{enumext*}[columns=2,item-break=true]
+      \item Uno
+      \item Dos
+      \item Tres
+    \end{enumext*}
+  }
+
+% 17. Con la clave y columns=1 todos los items ocupan toda la fila.
+\BOXTEST{[17] item-break con columns=1}
+  {
+    \begin{enumext*}[columns=1,label=\alph*),item-break=true]
+      \item Uno
+      \item Dos
+    \end{enumext*}
+  }
+
+% 18. Item de fila completa con etiqueta propia, con item* y con dos parrafos.
+\BOXTEST{[18] item-break con etiqueta propia, item* y dos parrafos}
+  {
+    \begin{enumext*}[columns=2,item-break=true]
+      \item(2)[X] Etiqueta propia.
+      \item(2)* Item con simbolo.
+
+        Segundo parrafo del item.
+      \item Normal
+    \end{enumext*}
+  }
+
+% 19. item-break como valor por defecto y como valor explicito.
+\BOXTEST{[19] item-break=false}
+  {
+    \begin{enumext*}[columns=2,item-break=false]
+      \item(2) Fila completa en caja.
+    \end{enumext*}
+  }
+
 \OMIT
 \end{document}

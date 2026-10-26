@@ -160,6 +160,21 @@ The answer to question \ref{one:2} is \getkeyans{one:2}.
 
 \printkeyans{seven}
 
+% Estructura: keyans* con item-break; lo guardado vuelve a abrir enumext*.
+11b. Stored answers with \texttt{item-break} in \texttt{keyans*}.
+
+\begin{enumext}[save-ans=eight]
+  \item Question A.
+    \begin{keyans*}[columns=2,item-break=true]
+      \item First
+      \item Second
+      \item(2)* Third (correct), on the whole row.
+      \item Fourth
+    \end{keyans*}
+\end{enumext}
+
+\printkeyans*{eight}
+
 \section*{E. Defaults of the printed answers}
 
 % Estructura: \setenumext cambia las listas del documento, no lo impreso.

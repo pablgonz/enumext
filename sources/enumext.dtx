@@ -678,7 +678,7 @@
                     store-env, print-env, write-out, force-eol, write-env, overwrite, unknown, base-fix,%
                     midsep, wrapper, label-pos, label-sep, layout-sty, layout-sep, layout-top, lang, tagging,%
                     pdfversion, pdfstandard, testphase, alt, mark-sep, wrap-ans*, mark-ans, beginpenalty,%
-                    midpenalty, endpenalty, reset, resume, resume*, reset*},%
+                    midpenalty, endpenalty, reset, resume, resume*, reset*, item-break},%
 % Reserved words 9 (values)
     keywordstyle  = [9]{\color{ltcmd_arg}},%
     keywords      = [9]{m, s, M, VIII, viii, v, E, t, l, A, XXIII, true, false, test, sample, above, below, ua-2,%
@@ -1563,7 +1563,9 @@
 % \item Each \emph{\enquote{item content}} in the environment is placed
 %   within a \myenv[no-index]{minipage} environment whose \emph{width} is stored
 %   in the dimension \idimen[no-index]{itemwidth} does NOT include \mykey{labelwidth} and
-%   \mykey{labelsep}, only the \emph{width of the content}.
+%   \mykey{labelsep}, only the \emph{width of the content}. The only exception
+%   is an item that occupies the whole row when the key \mykey[env]{item-break}
+%   is active (\S\ref{subsubsec:item-break}).
 %
 % \item You cannot have floating environments like \myenv[no-index]{figure} or
 %   \myenv[no-index]{table} or |\marginpar| but |\footnote| with \mypkg[no-index]{hyperref}
@@ -1673,6 +1675,61 @@
 %  \item(2)[X] The eighth item is way too long for this and needs two columns (\the\itemwidth)
 %  \item The ninth
 %  \item[Z] The tenth (\the\itemwidth)
+% \end{enumext*}
+%
+% \subsubsection{Items on the whole row: the \texttt{item-break} key}\label{subsubsec:item-break}
+%
+% \keyexampcmd{item-break}{true \textnormal{\textcolor{lightgray}{\textbar}} false}{false}[env]
+% By default the \emph{\enquote{item content}} is typeset in a
+% \myenv[no-index]{minipage}, so an item cannot be broken between two pages: if
+% it does not fit in the rest of the page it moves entirely to the next one.
+% When this key is \texttt{true} and an item occupies the \emph{whole row}, the
+% content is typeset directly in the paragraph, without
+% the \myenv[no-index]{minipage}, and it can continue on the next page.
+%
+% An item occupies the whole row when it is |\item|\myparg{columns} with
+% \mymeta{columns} equal to the value of the \mykey{columns} key and it is the
+% first item of a row, or when \mykey{columns}|=1|, where every item occupies
+% the whole row. If \mymeta{columns} is greater than the columns left in
+% the row it is reduced (see the \emph{warnings} for joined items), so the item
+% does NOT occupy the whole row and remains in a \myenv[no-index]{minipage}.
+%
+% The \mymeta{label} is placed as always in the box set by \mykey{labelwidth}
+% and \mykey{labelsep}, and the following lines of the item are indented by
+% the same amount. The keys \mykey{listparindent} and \mykey{parsep} apply to the
+% paragraphs of the item. The other items of the environment are not modified.
+% The key works in \myenv*[no-index]{enumext*} and \myenv*[no-index]{keyans*},
+% locally and with |\setenumext| (\S\ref{sec:setenumext}).
+%
+% \begin{important}*
+% The vertical space around an item typeset without
+% \myenv[no-index]{minipage} can differ slightly from that of an item typeset
+% in a box, because the item takes part in the paragraph and page breaking.
+% \end{important}
+%
+% In the following example the third item occupies the whole row; if it were
+% near the end of a page its text could continue on the next one:
+%
+% \iffalse
+%<*example>
+% \fi
+\begin{examplecode}[frame=single]
+\begin{enumext*}[columns=2,item-break=true]
+  \item One
+  \item Two
+  \item(2) This item occupies the whole row and can be broken between pages.
+  \item Four
+\end{enumext*}
+\end{examplecode}
+% \iffalse
+%</example>
+% \fi
+%
+% \begin{enumext*}[columns=2,item-break=true]
+%   \item One
+%   \item Two
+%   \item(2) This item occupies the whole row and can be broken between pages.
+%   \item Four
 % \end{enumext*}
 %
 % \section{The command \cs{setenumext}}\label{sec:setenumext}
@@ -3122,7 +3179,7 @@
 %     \draw[color=white] (7.0,6.10) rectangle (17.5,6.5) node[pos=.5,text=black]%
 %       { \textcolor{lightgray}{\texttt{number of drawings or tabular upper}} };
 %     \draw[color=white] (7.0,4.5) rectangle (17.5,4.9) node[pos=.5,text=black]%
-%       { \textcolor{keyname}{\texttt{layout-sep}} }; %%%[+itemsep]
+%       { \mykey{layout-sep} }; %%%[+itemsep]
 %     \draw[color=white] (7.0,2.9) rectangle (17.5,3.3) node[pos=.5,text=black]%
 %       { \textcolor{lightgray}{\texttt{number of drawings or tabular lower}} };
 %     \draw[<->,color=gray] (2.0,7.0) --node[above,text=keyname]{\vphantom{p}\texttt{labelwidth}} (5.0,7.0);
@@ -3522,6 +3579,8 @@ all the worksheets are as follows:
 %
 % \printkeyans[columns=1]{sampleXX}
 %
+% \newpage
+%
 % \section{Full examples}
 %
 % Some adapted questions taken from \href{https://tex.stackexchange.com}{TeX-SX} are included as an example.
@@ -3531,7 +3590,7 @@ all the worksheets are as follows:
 % \subsubsection*{Example 1}
 %
 % Adapted from the response given by Enrico Gregorio in \href{https://tex.stackexchange.com/q/461730/7832}{Squares for answer choice options and perfect alignment to mathematical answers}.
-%   \myattachfile*{enumext-exa-1}
+% \myattachfile*{enumext-exa-1}
 %
 % \setenumext[keyans]{label=\Alph*,font=\small,nosep,wrap-label={\fbox{\makebox[\height]{##1}}}}
 % \begin{enumext}[columns=2,save-ans=sabastiano,itemsep=2pt, topsep=5pt,below*={8pt}]
@@ -4268,17 +4327,14 @@ all the worksheets are as follows:
 %    \begin{itemize}
 %      \item Fixed bad interaction between |\setenumext| and |\printkeyans|: the
 %        values set for the environments no longer modify the printed content.
-%      \item Fixed spurious errors in |\miniright|, in \env{keyans} used outside
-%        \mykey[env]{save-ans}, and the \TeX{} error \texttt{You can't use
-%        \textbackslash unskip in vertical mode} with \mykey[env]{mini-env}.
-%      \item The error messages follow a common layout: a short text with the
-%        line context and, for errors, an explanation in the extended text.
-%      \item Added regression tests (\texttt{l3build check}); the target
-%        \texttt{testSE} replaces \texttt{testpkg}.
-%      \item Internal: the implementation is reorganized by command and its
-%        variables are documented in groups.
-%      \item Adjustments in the documentation: the examples are attached to the
-%        manual and the bibliography follows the order of appearance.
+%      \item Fixed spurious errors in |\miniright| and in \myenv*[no-index]{keyans}
+%        used outside \mykey{save-ans}, and the \TeX{} error \texttt{You can't
+%        use \textbackslash unskip in vertical mode} with \mykey{mini-env}.
+%      \item New key \mykey{item-break} for \myenv*[no-index]{enumext*} and
+%        \myenv*[no-index]{keyans*}: an item that occupies the whole row is
+%        typeset without \env{minipage} and can be broken between pages.
+%      \item Error messages with a common layout.
+%      \item Added regression tests (\texttt{l3build check}).
 %    \end{itemize}
 %  \item [v2.3 (ctan), 2026-10-23]
 %    \begin{itemize}
@@ -4291,12 +4347,12 @@ all the worksheets are as follows:
 %  \item [v2.2 (ctan), 2026-06-01]
 %    \begin{itemize}
 %      \item Update requirement to \hologo{LaTeX} release 2026-06-01.
-%      \item Move |\setcounter| to |\begin{list}|\mymarg{arg one}|{|\mymeta{arg two}|\setcounter}| for |enumext*|.
+%      \item Move |\setcounter| to |\begin{list}|\mymarg{arg one}|{|\mymeta{arg two}|\setcounter}| for \myenv*[no-index]{enumext*}.
 %      \item Adjustments in the documentation.
 %    \end{itemize}
 %  \item [v2.1 (ctan), 2026-01-15]
 %    \begin{itemize}
-%      \item Fixed bad interaction between |\setenumext| and the \texttt{\textcolor{keyname}{ref}} key.
+%      \item Fixed bad interaction between |\setenumext| and the \mykey{ref} key.
 %    \end{itemize}
 %  \item [v2.0 (ctan), 2025-12-02]
 %    \begin{itemize}
@@ -4316,35 +4372,35 @@ all the worksheets are as follows:
 %    \end{itemize}
 %  \item [v1.7 (ctan), 2025-07-10]
 %    \begin{itemize}
-%      \item Fixed |\setenumext{enumext*}{|\texttt{\textcolor{keyname}{resume}}|}|.
-%      \item Fixed bad interaction between |\setenumext| and the \texttt{\textcolor{keyname}{resume}} key.
-%      \item The behavior of the key \texttt{\textcolor{keyname}{resume}}|*| has been updated and documented.
+%      \item Fixed |\setenumext{|\myenv*[no-index]{enumext*}|}{|\mykey{resume}|}|.
+%      \item Fixed bad interaction between |\setenumext| and the \mykey{resume} key.
+%      \item The behavior of the key \mykey{resume*} has been updated and documented.
 %    \end{itemize}
 %  \item [v1.6 (ctan), 2025-07-04]
 %    \begin{itemize}
 %      \item Syntax simplification for |\setenumextmeta|.
-%      \item Environments can be started with the key \texttt{\textcolor{keyname}{resume}} \emph{without value}.
-%      \item Add |\resetenumext|, \texttt{\textcolor{keyname}{reset}} and \texttt{\textcolor{keyname}{reset}}|*| keys.
-%      \item The \texttt{\textcolor{keyname}{resume}}, \texttt{\textcolor{keyname}{resume}}|*| and \texttt{\textcolor{keyname}{series}}
+%      \item Environments can be started with the key \mykey{resume} \emph{without value}.
+%      \item Add |\resetenumext|, \mykey{reset} and \mykey{reset*} keys.
+%      \item The \mykey{resume}, \mykey{resume*} and \mykey{series}
 %            keys can now be set per level.
-%      \item Fixed bad interaction between |\printkeyans| and the \texttt{\textcolor{keyname}{resume}}, \texttt{\textcolor{keyname}{resume}}|*| keys.
+%      \item Fixed bad interaction between |\printkeyans| and the \mykey{resume}, \mykey{resume*} keys.
 %    \end{itemize}
 %  \item [v1.5 (ctan), 2025-06-11]
 %    \begin{itemize}
 %      \item Replacing |\regex_match:| (deprecated) with |\regex_if_match:|.
-%      \item Add keys |beginpenalty|, |midpenalty| and |endpenalty|.
+%      \item Add keys \mykey{beginpenalty}, \mykey{midpenalty} and \mykey{endpenalty}.
 %    \end{itemize}
 %  \item [v1.4 (ctan), 2025-06-09]
 %    \begin{itemize}
-%      \item Improved implementation of the \texttt{\textcolor{keyname}{start}} key for \emph{tagged} \texttt{PDF}.
-%      \item Improved implementation of the \texttt{\textcolor{keyname}{ref}} key.
-%      \item Fixed the behavior of the |save-sep| key.
-%      \item Fixed the behavior of the \texttt{\textcolor{keyname}{resume}}|*| key.
+%      \item Improved implementation of the \mykey{start} key for \emph{tagged} \texttt{PDF}.
+%      \item Improved implementation of the \mykey{ref} key.
+%      \item Fixed the behavior of the \mykey{save-sep} key.
+%      \item Fixed the behavior of the \mykey{resume*} key.
 %    \end{itemize}
 %  \item [v1.3 (ctan), 2025-06-01]
 %    \begin{itemize}
 %      \item Removed dependency on the \mypkg{scontents} package.
-%      \item The |anskey*| environment has been rewritten using the new
+%      \item The \myenv*[no-index]{anskey*} environment has been rewritten using the new
 %            \texttt{c-type} argument.
 %    \end{itemize}
 %  \item [v1.2 (ctan), 2025-03-28]
@@ -4354,7 +4410,7 @@ all the worksheets are as follows:
 %    \end{itemize}
 %  \item [v1.1 (ctan), 2024-11-14]
 %    \begin{itemize}
-%      \item Fixed implementation for |font| and |base-fix| keys.
+%      \item Fixed implementation for \mykey{font} and \mykey{base-fix} keys.
 %      \item Added new keys for symbol marks.
 %      \item Update and improvements in the internal code.
 %      \item Adjustments in the documentation.
@@ -4676,6 +4732,7 @@ all the worksheets are as follows:
 %
 % \begin{variable}[int]{
 %   \l_@@_item_starred_X_bool,
+%   \l_@@_item_break_X_bool,
 %   \l_@@_item_column_pos_X_int,
 %   \g_@@_item_count_all_X_int,
 %   \l_@@_item_text_X_box,
@@ -4686,10 +4743,13 @@ all the worksheets are as follows:
 %   \g_@@_minipage_right_X_dim,
 % }
 %   Internal variables used by \myenv*[no-index]{enumext*} and \myenv*[no-index]{keyans*} environments.
+%   The boolean \myhlc|\l_@@_item_break_X_bool| is set by the key
+%   \mykey[env]{item-break} (\S\ref{subsec:set-item-break}).
 %    \begin{macrocode}
 \cs_set_protected:Nn \@@_tmp:n
   {
     \bool_new:c { l_@@_item_starred_ #1 _bool    }
+    \bool_new:c { l_@@_item_break_ #1 _bool      }
     \int_new:c  { l_@@_item_column_pos_ #1 _int  }
     \int_new:c  { g_@@_item_count_all_ #1 _int   }
     \box_new:c  { l_@@_item_text_ #1 _box        }
@@ -4868,9 +4928,9 @@ all the worksheets are as follows:
 \msg_new:nnn { enumext } { item-answer-hook }
   {
     *~Package~enumext:~Value~of~
-    \c_backslash_str g_@@_item_number_int~=~#1.\\
+    \token_to_str:N \g_@@_item_number_int \c_space_tl =~#1.\\
     *~Package~enumext:~Value~of~
-    \c_backslash_str g_@@_item_anskey_int~=~#2.\\
+    \token_to_str:N \g_@@_item_anskey_int \c_space_tl =~#2.\\
     *~Package~enumext:~Difference~item_number_int~-~item_anskey_int~=~#3.
   }
 %    \end{macrocode}
@@ -6002,7 +6062,7 @@ all the worksheets are as follows:
 %
 % \begin{macro}[int]{\@@_standard_ref:nn, \@@_standard_ref:}
 %   The \myhlc|\@@_standard_ref:nn| function will first pass the key
-%   \emph{argument} \texttt{\textcolor{keyname}{ref}} to the variable
+%   \emph{argument} \mykey{ref} to the variable
 %   \myhlc|\l_@@_ref_key_arg_tl| and analyze its state, if it is not \emph{empty}
 %   it will set a copy of of the \emph{current counter style} save in
 %   \myhlc|\l_@@_the_counter_X_tl| to \myhlc|\l_@@_ref_the_count_tl| and
@@ -6632,6 +6692,27 @@ all the worksheets are as follows:
       }
   }
 \clist_map_inline:Nn \c_@@_all_envs_clist { \@@_tmp:nn #1 }
+%    \end{macrocode}
+% \end{macro}
+%
+% \subsection{Setting \texttt{item-break} key}\label{subsec:set-item-break}
+%
+% \begin{macro}[int]{item-break}
+%    Define and set \mykey[env]{item-break} key for \myenv*[no-index]{enumext*} and
+%    \myenv*[no-index]{keyans*} environments. The key sets the boolean variable
+%    \myhlc|\l_@@_item_break_X_bool|, which is |false| by default, and is
+%    used when each \myhlc|\item| starts (\S\ref{env:starred}).
+%    \begin{macrocode}
+\cs_set_protected:Nn \@@_tmp:nn
+  {
+    \keys_define:nn { enumext / #1 }
+      {
+        item-break .bool_set:c = { l_@@_item_break_ #2 _bool },
+        item-break .initial:n  = false,
+        item-break .value_required:n = true,
+      }
+  }
+\clist_map_inline:nn { {enumext*}{vii}, {keyans*}{viii} } { \@@_tmp:nn #1 }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -11778,7 +11859,7 @@ all the worksheets are as follows:
 %     \draw[<->,color=gray] (1.25,5.35) --node[below,text=blue!75]%
 %       {\begin{tabular}{c}
 %          \texttt{\textbackslash{}leftmargin + \textbackslash{}itemindent} \\
-%          \textcolor{keyname}{\texttt{list-indent}}
+%          \mykey{list-indent}
 %        \end{tabular}} (9.5,5.35);
 %   \end{tikzpicture}
 %   \caption{Representation of standard horizontal lengths in \myenv[no-index]{list} environment.}
@@ -11808,7 +11889,7 @@ all the worksheets are as follows:
 %     \draw[<->,color=gray] (4.5,5.35) --node[below,text=blue!75]%
 %       {\begin{tabular}{c}
 %          \texttt{\textbackslash{}leftmargin + \textbackslash{}itemindent} \\
-%          \textcolor{keyname}{\texttt{list-indent}}
+%          \mykey{list-indent}
 %        \end{tabular}} (9.5,5.35);
 %   \end{tikzpicture}
 %   \caption{Representation of horizontal lengths concept in list in \mypkg*[no-index]{enumext}.}
@@ -11832,7 +11913,7 @@ all the worksheets are as follows:
 %     \draw[<->,color=gray] (2.0,5.35) --node[below,text=blue!75]%
 %       {\begin{tabular}{c}
 %          \texttt{\textbackslash{}leftmargin + \textbackslash{}itemindent} \\
-%          \textcolor{keyname}{\texttt{list-indent}}
+%          \mykey{list-indent}
 %        \end{tabular}}
 %     (7.0,5.35);
 %   \end{tikzpicture}
@@ -12761,13 +12842,13 @@ all the worksheets are as follows:
 %   \begin{tikzpicture}[line cap=round,line join=round,x=0.8cm,y=0.8cm,every node/.style={font=\footnotesize}]
 %     % space above
 %     \draw[color=white] (7.0,6.10) rectangle (17.5,6.5) node[pos=.5,text=black]%
-%       { \textcolor{keyname}{\texttt{layout-top}} };
+%       { \mykey{layout-top} };
 %     % space between
 %     \draw[color=white] (7.0,4.5) rectangle (17.5,4.9) node[pos=.5,text=black]%
-%       { \textcolor{keyname}{\texttt{layout-sep}} };
+%       { \mykey{layout-sep} };
 %     % space below
 %     \draw[color=white] (7.0,2.9) rectangle (17.5,3.3) node[pos=.5,text=black]%
-%       { \textcolor{keyname}{\texttt{layout-top}} };
+%       { \mykey{layout-top} };
 %     % labelwidth
 %     \draw[<->,color=gray] (2.0,7.0) --node[above,text=keyname]{\vphantom{p}\texttt{labelwidth}} (5.0,7.0);
 %     \draw[<->,color=gray] (5.0,7.0) --node[above,text=keyname]{\texttt{labelsep}} (7.0,7.0);
@@ -14232,13 +14313,32 @@ all the worksheets are as follows:
 % the implementation in \mypkg[no-index]{shortlst}, an extra group is NOT used
 % and the plain form of the \myenv[no-index]{lrbox} environment.
 %
-% \begin{macro}[int]{\@@_start_item_vii:w, \@@_stop_item_vii:}
-%   First the value of \myhlc|\@@_stop_item_tmp_vii:| is set equal to
+% \begin{macro}[int]{\@@_start_item_vii:w, \@@_start_item_box_vii:w, \@@_stop_item_vii:}
+%   The function \myhlc|\@@_start_item_vii:w| chooses how the item is built:
+%   if the key \mykey[env]{item-break} is active and the item occupies the
+%   whole row (the number of joined columns is equal to the value of
+%   \mykey[env]{columns}, after the adjustments of
+%   \myhlc|\@@_starred_joined_item_vii:n|) it calls
+%   \myhlc|\@@_start_item_break_vii:n| (\S\ref{subsec:item-break-impl}),
+%   otherwise it calls \myhlc|\@@_start_item_box_vii:w|, described next.
+%
+%   In \myhlc|\@@_start_item_box_vii:w| first the value of \myhlc|\@@_stop_item_tmp_vii:| is set equal to
 %   \myhlc|\@@_stop_item_vii:|, which is defined later; after that it
 %   starts capturing |\item| and \emph{\enquote{item content}} in a \emph{horizontal box}
 %   where the width will be |\itemwidth| plus |\labelwidth| plus |\labelsep|.
 %    \begin{macrocode}
 \cs_new_protected_nopar:Npn \@@_start_item_vii:w [#1]
+  {
+    \bool_lazy_and:nnTF
+      { \l_@@_item_break_vii_bool }
+      {
+        \int_compare_p:nNn
+          { \l_@@_joined_item_vii_int } = { \l_@@_columns_vii_int }
+      }
+      { \@@_start_item_break_vii:n {#1} }
+      { \@@_start_item_box_vii:w [#1] }
+  }
+\cs_new_protected_nopar:Npn \@@_start_item_box_vii:w [#1]
   {
     \cs_set_eq:NN \@@_stop_item_tmp_vii: \@@_stop_item_vii:
     \hbox_set_to_wd:Nnw \l_@@_item_text_vii_box
@@ -14314,6 +14414,57 @@ all the worksheets are as follows:
       {
         \skip_horizontal:N \l_@@_columns_sep_vii_dim
       }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \subsubsection{Items without \env{minipage}: the \mykey{item-break} key}\label{subsec:item-break-impl}
+%
+% \begin{macro}[int]{\@@_start_item_break_vii:n, \@@_stop_item_break_vii:}
+%   When the key \mykey[env]{item-break} is active and the item occupies the
+%   whole row, the \mymeta{content} is NOT captured in a \emph{horizontal box}:
+%   it flows as the text of the list, so it can be broken between pages. The
+%   functions are the equivalent of \myhlc|\@@_start_item_box_vii:w| and
+%   \myhlc|\@@_stop_item_vii:| for this case.
+%
+%   The \emph{label} is placed at the left of the row with a negative skip and
+%   the lines of the \mymeta{content} are indented by the width of the
+%   \mykey{labelwidth} plus the \mykey{labelsep} adding it to |\leftskip|. All the
+%   assignments (|\leftskip|, |\parindent| and |\parskip|) are local to the
+%   group that is opened here and closed in \myhlc|\@@_stop_item_break_vii:|
+%   after the |\par| that ends the item. The \emph{sockets} for \emph{tagging}
+%   \texttt{PDF} are the same ones used by the items with box, but since there is
+%   no \myenv[no-index]{minipage} to start the paragraph the marked content of
+%   the text is opened and closed by hand.
+%    \begin{macrocode}
+\cs_new_protected_nopar:Nn \@@_start_item_break_vii:n
+  {
+    \cs_set_eq:NN \@@_stop_item_tmp_vii: \@@_stop_item_break_vii:
+    \group_begin:
+      \skip_set:Nn \tex_leftskip:D
+        {
+          \tex_leftskip:D
+          + \l_@@_labelwidth_vii_dim + \l_@@_labelsep_vii_dim
+        }
+      \skip_horizontal:n
+        { -\l_@@_labelwidth_vii_dim - \l_@@_labelsep_vii_dim }
+      \@@_start_list_tag:n {enumext*}
+      \@@_fake_make_label_vii:n {#1}
+      \@@_stop_start_list_tag:
+      \IfDocumentMetadataT { \tag_mc_begin:n { tag = text-block } }
+      \dim_set_eq:NN \parindent \l_@@_listparindent_vii_dim
+      \skip_set_eq:NN \parskip \l_@@_parsep_vii_skip
+      \tl_use:N \l_@@_fake_item_indent_vii_tl
+      \tl_use:N \l_@@_after_list_args_vii_tl
+  }
+\cs_new_protected_nopar:Nn \@@_stop_item_break_vii:
+  {
+      \IfDocumentMetadataT { \tag_mc_end: }
+      \@@_stop_list_tag:n {enumext*}
+      \par
+    \group_end:
+    \int_zero:N \l_@@_item_column_pos_vii_int
+    \noindent
   }
 %    \end{macrocode}
 % \end{macro}
@@ -14727,11 +14878,25 @@ all the worksheets are as follows:
 %
 % \subsubsection{Real definition of \cs{item} in \env{keyans*}}
 %
-% \begin{macro}[int]{\@@_start_item_viii:w, \@@_stop_item_viii:}
+% \begin{macro}[int]{\@@_start_item_viii:w, \@@_start_item_box_viii:w, \@@_stop_item_viii:}
 %    The implementation at this point is very similar to that of the
-%    \myenv*[no-index]{enumext*} environment.
+%    \myenv*[no-index]{enumext*} environment; the function
+%    \myhlc|\@@_start_item_viii:w| chooses between
+%    \myhlc|\@@_start_item_break_viii:n| and \myhlc|\@@_start_item_box_viii:w|
+%    in the same way.
 %    \begin{macrocode}
 \cs_new_protected_nopar:Npn \@@_start_item_viii:w [#1]
+  {
+    \bool_lazy_and:nnTF
+      { \l_@@_item_break_viii_bool }
+      {
+        \int_compare_p:nNn
+          { \l_@@_joined_item_viii_int } = { \l_@@_columns_viii_int }
+      }
+      { \@@_start_item_break_viii:n {#1} }
+      { \@@_start_item_box_viii:w [#1] }
+  }
+\cs_new_protected_nopar:Npn \@@_start_item_box_viii:w [#1]
   {
     \cs_set_eq:NN \@@_stop_item_tmp_viii: \@@_stop_item_viii:
     \hbox_set_to_wd:Nnw \l_@@_item_text_viii_box
@@ -14773,6 +14938,44 @@ all the worksheets are as follows:
       {
         \skip_horizontal:N \l_@@_columns_sep_viii_dim
       }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}[int]{\@@_start_item_break_viii:n, \@@_stop_item_break_viii:}
+%   Same implementation for the \myenv*[no-index]{keyans*} environment; the
+%   item option shown by |\item*| is placed at the beginning of the \mymeta{content}.
+%    \begin{macrocode}
+\cs_new_protected_nopar:Nn \@@_start_item_break_viii:n
+  {
+    \cs_set_eq:NN \@@_stop_item_tmp_viii: \@@_stop_item_break_viii:
+    \group_begin:
+      \skip_set:Nn \tex_leftskip:D
+        {
+          \tex_leftskip:D
+          + \l_@@_labelwidth_viii_dim + \l_@@_labelsep_viii_dim
+        }
+      \skip_horizontal:n
+        { -\l_@@_labelwidth_viii_dim - \l_@@_labelsep_viii_dim }
+      \@@_start_list_tag:n {keyans*}
+      \@@_fake_make_label_viii:n {#1}
+      \@@_stop_start_list_tag:
+      \IfDocumentMetadataT { \tag_mc_begin:n { tag = text-block } }
+      \dim_set_eq:NN \parindent \l_@@_listparindent_viii_dim
+      \skip_set_eq:NN \parskip \l_@@_parsep_viii_skip
+      \tl_use:N \l_@@_fake_item_indent_viii_tl
+      \bool_if:NT \l_@@_item_starred_viii_bool
+        { \@@_keyans_show_item_opt_viii: }
+      \tl_use:N \l_@@_after_list_args_viii_tl
+  }
+\cs_new_protected_nopar:Nn \@@_stop_item_break_viii:
+  {
+      \IfDocumentMetadataT { \tag_mc_end: }
+      \@@_stop_list_tag:n {keyans*}
+      \par
+    \group_end:
+    \int_zero:N \l_@@_item_column_pos_viii_int
+    \noindent
   }
 %    \end{macrocode}
 % \end{macro}
@@ -14904,7 +15107,7 @@ all the worksheets are as follows:
     {itemsep}{skip}, {columns}{int}, {start}{int}, {beginparpenalty}{int},
     {itempenalty}{int}, {endparpenalty}{int}, {label_fill_left}{tl},
     {label_fill_right}{tl}, {align_label_pos}{str}, {label_font_style}{tl},
-    {after_list_args}{tl}, {wrap_label_opt}{bool}
+    {after_list_args}{tl}, {wrap_label_opt}{bool}, {item_break}{bool}
   }
 %    \end{macrocode}
 % \end{variable}
@@ -15235,13 +15438,12 @@ all the worksheets are as follows:
 %
 % \subsubsection{Definition of error messages for \cs[no-index]{setenumext}}
 %
-% \begin{macro}[int]{invalid-key, unknown-key-family}
-% Message used by \myoarg{key \textnormal{\textcolor{gray}{=}} val}
-% system and |\setenumext| command.
+% \begin{macro}[int]{invalid-level, unknown-key-family}
+% Messages used by the |\setenumext| command.
 %    \begin{macrocode}
-\msg_new:nnnn { enumext } { invalid-key }
+\msg_new:nnnn { enumext } { invalid-level }
   {
-    The~key~'#1'~is~not~known~at~level~#2~\msg_line_context:.
+    The~level~'#1'~is~not~valid~\msg_line_context:.
   }
   {
     The~optional~argument~must~be~a~family~followed~by~the~levels~
@@ -15365,7 +15567,7 @@ all the worksheets are as follows:
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}[int]{\@@_set_parse:n, \@@_set_error:nn}
+% \begin{macro}[int]{\@@_set_parse:n, \@@_set_error:n}
 %   Internal functions used by the |\setenumext| command.
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_set_parse:n
@@ -15378,10 +15580,10 @@ all the worksheets are as follows:
         \seq_put_right:Ne \l_@@_setkey_tmpa_seq
           { \tl_trim_spaces:n {#1} }
       }
-      { \@@_set_error:nn {#1} { } }
+      { \@@_set_error:n {#1} }
   }
-\cs_new_protected:Nn \@@_set_error:nn
-  { \msg_error:nnnn { enumext } { invalid-key } {#1} {#2} }
+\cs_new_protected:Nn \@@_set_error:n
+  { \msg_error:nnn { enumext } { invalid-level } {#1} }
 %    \end{macrocode}
 % \end{macro}
 %

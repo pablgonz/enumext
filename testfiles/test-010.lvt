@@ -289,6 +289,68 @@ Text between the lists.
   \item One again
 \end{enumext}
 
+\section*{F. Items without minipage}
+
+\ExplSyntaxOn
+\NewDocumentCommand \FILLER { m }
+  { \prg_replicate:nn {#1} { This~sentence~repeats~to~fill~lines.~ } }
+\ExplSyntaxOff
+
+% Estructura: el item de fila completa es un LI normal.
+22. Full row item.
+
+\begin{enumext*}[columns=2,item-break=true]
+  \item One
+  \item Two
+  \item(2) Three, on the whole row.
+  \item Four
+\end{enumext*}
+
+% Estructura: dos parrafos dentro del mismo LBody.
+23. Full row item with two paragraphs.
+
+\begin{enumext*}[columns=2,item-break=true]
+  \item One
+  \item Two
+  \item(2) First paragraph.
+
+    Second paragraph of the same item.
+  \item Three
+\end{enumext*}
+
+% Estructura: el item de fila completa es el ultimo del entorno.
+24. Full row item as the last one.
+
+\begin{enumext*}[columns=2,item-break=true]
+  \item One
+  \item Two
+  \item(2) Last item, on the whole row.
+\end{enumext*}
+
+Text after the environment.
+
+% Estructura: todos los items de fila completa (columns=1).
+25. One column.
+
+\begin{enumext*}[columns=1,label=\alph*),item-break=true]
+  \item One
+  \item Two
+  \item Three
+\end{enumext*}
+
+% Estructura: un solo LI cuyo texto queda en dos paginas.
+26. Full row item across a page break.
+
+\newpage
+\vspace*{0.75\textheight}
+
+\begin{enumext*}[columns=2,item-break=true]
+  \item One
+  \item Two
+  \item(2) \FILLER{40}
+  \item Four
+\end{enumext*}
+
 \START
 
 \SHOWPDFTAGS

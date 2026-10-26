@@ -21,7 +21,7 @@
 \hfuzz=\maxdimen \vfuzz=\maxdimen \hbadness=10000 \vbadness=10000
 \begin{document}
 
-\newcommand\CASE[2]{\TYPE{[#1]}{#2}\par}
+\newcommand\CASE[1]{\par\TYPE{[#1]}}
 \START
 
 \TYPE{=== A. Claves de enumext y enumext* ===}
@@ -516,6 +516,11 @@
 \CASE{G6}
   {
     \foreachkeyans[clavefalsa=1]{d4}{x}
+  }
+
+\CASE{G7}
+  {
+    \setenumext[enumext,x]{}
   }
 
 \TYPE{=== I. Avisos de columnas ===}

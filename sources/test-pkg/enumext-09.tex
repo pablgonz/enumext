@@ -378,6 +378,50 @@ Stored answers in \texttt{enumext*}.
 
 \printkeyans{seven}
 
+\section{Items without minipage}
+
+\ExplSyntaxOn
+\NewDocumentCommand \FILLER { m }
+  { \prg_replicate:nn {#1} { This~sentence~repeats~to~fill~lines.~ } }
+\ExplSyntaxOff
+
+Full row items with \texttt{item-break}.
+
+\begin{enumext*}[columns=2,item-break=true]
+  \item One
+  \item Two
+  \item(2) Three, on the whole row.
+
+    Second paragraph of the same item.
+  \item Four
+\end{enumext*}
+
+Full row item across a page break.
+
+\newpage
+\vspace*{0.7\textheight}
+
+\begin{enumext*}[columns=2,item-break=true]
+  \item One
+  \item Two
+  \item(2) \FILLER{40}
+  \item Four
+\end{enumext*}
+
+Stored answers.
+
+\begin{enumext}[save-ans=eight]
+  \item Question A.
+    \begin{keyans*}[columns=2,item-break=true]
+      \item First
+      \item Second
+      \item(2)* Third (correct), on the whole row.
+      \item Fourth
+    \end{keyans*}
+\end{enumext}
+
+\printkeyans*{eight}
+
 \section{Defaults of the printed answers}
 
 \texttt{\textbackslash setenumext} and \texttt{\textbackslash printkeyans}.

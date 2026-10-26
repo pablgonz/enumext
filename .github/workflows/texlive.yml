@@ -5,7 +5,6 @@ on:
     branches:
       - "*"
   schedule:
-    # A las 12:00 UTC los viernes
     - cron: "0 12 * * 5"
   workflow_dispatch:
   pull_request:
@@ -13,7 +12,7 @@ on:
 jobs:
   check:
     runs-on: ubuntu-latest
-    name: Check and Build
+    name: Build (${{ matrix.command }})
     strategy:
       fail-fast: false
       matrix:
@@ -22,29 +21,52 @@ jobs:
         command:
           - "check -q -H"
           - doc
-          - example
           - testSE
+          - example
+
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Setup TeX Live ${{ matrix.version }}
-        # caché automáticamente
         uses: zauguin/install-texlive@v4
         with:
           package_file: .github/tl_packages
-          texlive_version: ${{ matrix.version }} # TL version
+          texlive_version: ${{ matrix.version }}
+
+      - name: Install show-pdf-tags RNC schemas
+        run: tlmgr install --with-doc show-pdf-tags
+
+      - name: Cache RNV
+        id: cache-rnv
+        uses: actions/cache@v6
+        with:
+          path: |
+            ~/.local/bin/rnv
+            ~/.local/bin/rnv-wrapp
+          key: rnv-${{ runner.os }}-v1
+
+      - name: Install rnv-wrapp
+        if: steps.cache-rnv.outputs.cache-hit != 'true'
+        run: |
+          curl -sSL https://raw.githubusercontent.com/pablgonz/rnv-vera-pdf-cli/main/install-rnv.sh | bash -s -- --unattended
+
+      - name: Install veraPDF CLI
+        run: |
+          curl -sSL https://raw.githubusercontent.com/pablgonz/rnv-vera-pdf-cli/main/install-verapdf.sh | bash -s -- --unattended
+
+      - name: Add ~/.local/bin to PATH
+        run: echo "$HOME/.local/bin" >> $GITHUB_PATH
 
       - name: Install enumext package
         run: l3build install
 
-      - name: Run "l3build ${{ matrix.command }}" (TeX Live ${{ matrix.version }})
+      - name: Run "l3build ${{ matrix.command }}"
         run: l3build ${{ matrix.command }}
 
       - name: Archive failed test output
-        # if: ${{ failure() }} es mejor que always() para capturar solo errores
         if: ${{ failure() }}
         uses: zauguin/l3build-failure-artifacts@v1
         with:
-          name: testfiles-fillwith
+          name: testfiles-enumext
           retention-days: 3

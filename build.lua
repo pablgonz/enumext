@@ -16,6 +16,10 @@
    * upload     : Upload the package to ctan, you must add
                   -F ctan.ann in conjunction with [--debug]
    * tagcheck   : Check version and date in files
+   * check      : Run the regression tests in /testfiles (LuaTeX, latex-dev,
+                  two runs); l3build check test-001 runs only that test
+   * save       : Save the reference (.tlg) of a test after reviewing its
+                  output: l3build save test-001
    * testSE     : Compile (two runs) and validate the files in /test-pkg,
                   PDFs copied there
    * example    : Compile (one run) the files in /samples, PDFs copied there
