@@ -1,0 +1,4304 @@
+This is a generated file for the l3build validation system.
+Don't change this file in any respect.
+=== A. Referencia: lo que imprime \printkeyans===
+============================================================
+TEST 1: [A0] enumext
+============================================================
+> \box...=
+\vbox(22.94+0.0)x345.0, direction TLT
+.\penalty 10000
+.\glue 0.0
+.\glue 0.0
+.\hbox(21.0+1.94)x345.0, glue set 2.77824fil, direction TLT
+..\vbox(21.0+0.0)x169.72176, glue set - 0.4482, direction TLT
+...\glue 0.0 plus -2.0
+...\glue(\splittopskip) 4.006 plus 2.0
+...\hbox(5.994+0.099)x158.60878, glue set 149.35677fil, shifted 11.11298, direction TLT
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(5.994+0.0)x0.0, direction TLT
+.....\glue 0.0
+.....\glue -7.78
+.....\glue -3.33298
+.....\hbox(5.994+0.0)x7.78, glue set 0.57999fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 1
+......\TU/lmr/m/n/9 .
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+....\penalty 0
+....\TU/lmr/m/n/9 a
+....\TU/lmr/m/n/9 1
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\penalty -51
+...\glue 0.0
+...\glue 0.0
+...\glue 0.0
+...\glue(\parskip) 0.0
+...\glue(\parskip) 0.0
+...\glue(\baselineskip) 4.151
+...\hbox(6.75+2.241)x139.1658, glue set 129.40079fil, shifted 30.55595, direction TLT
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(6.75+2.241)x0.0, direction TLT
+.....\glue -19.44298
+.....\glue 0.0
+.....\glue -7.78
+.....\glue -3.33298
+.....\hbox(5.994+0.0)x7.78, glue set 0.57999fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 2
+......\TU/lmr/m/n/9 .
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+.....\glue 19.44298
+.....\glue 0.0
+.....\glue -16.11
+.....\glue -3.33298
+.....\hbox(6.75+2.241)x16.11, glue set 4.28398fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 (
+......\TU/lmr/m/n/9 a
+......\TU/lmr/m/n/9 )
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+....\penalty 0
+....\TU/lmr/m/n/9 b
+....\TU/lmr/m/n/9 1
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\glue 0.0 plus 0.0001fil minus 5.0
+..\glue 0.0 plus 1.0fil minus 1.0fil
+..\rule(*+*)x0.0
+..\glue 0.0 plus 1.0fil minus 1.0fil
+..\vbox(21.0+0.0)x169.72176, glue set 8.75807fil, direction TLT
+...\glue 0.0 plus -2.0
+...\glue(\splittopskip) 3.25 plus 2.0
+...\hbox(6.75+2.241)x119.43283, glue set 110.69382fil, shifted 50.28893, direction TLT
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(6.75+2.241)x0.0, direction TLT
+.....\glue -19.73297
+.....\glue 0.0
+.....\glue -16.11
+.....\glue -3.33298
+.....\hbox(6.75+2.241)x16.11, glue set 3.77098fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 (
+......\TU/lmr/m/n/9 b
+......\TU/lmr/m/n/9 )
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+.....\glue 19.73297
+.....\glue 0.0
+.....\glue -16.4
+.....\glue -3.33298
+.....\hbox(5.913+0.0)x16.4, glue set 11.25198fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 i
+......\TU/lmr/m/n/9 .
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+....\penalty 0
+....\TU/lmr/m/n/9 c
+....\TU/lmr/m/n/9 1
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\penalty -51
+...\glue 0.0 plus 1.0fil
+...\glue 0.0 plus 0.0001fil minus 5.0
+..\hbox(4.42+1.94)x0.0, glue set - 5.56fil, direction TLT
+...\hbox(4.42+1.94)x5.56, direction TLT
+...\glue 0.0 plus 1.0fil minus 1.0fil
+.\glue 0.0
+! OK.
+<argument> \PRINTBOX {1}{lk}\showbox 1 
+l. ......{[A0] enumext}{\PRINTBOX{1}{lk}\showbox1 }
+============================================================
+============================================================
+TEST 2: [A1] keyans
+============================================================
+> \box...=
+\vbox(11.94+0.0)x345.0, direction TLT
+.\penalty 10000
+.\glue 0.0
+.\glue 0.0
+.\hbox(10.0+1.94)x345.0, glue set 2.77824fil, direction TLT
+..\vbox(10.0+0.0)x169.72176, glue set - 0.4482, direction TLT
+...\glue 0.0 plus -2.0
+...\glue(\splittopskip) 3.25 plus 2.0
+...\hbox(6.75+2.241)x158.60878, glue set 148.06978fil, shifted 11.11298, direction TLT
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(5.994+0.0)x0.0, direction TLT
+.....\glue 0.0
+.....\glue -7.78
+.....\glue -3.33298
+.....\hbox(5.994+0.0)x7.78, glue set 0.57999fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 1
+......\TU/lmr/m/n/9 .
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+....\penalty 0
+....\TU/lmr/m/n/9 A
+....\TU/lmr/m/n/9 )
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\penalty -51
+...\glue 0.0 plus 0.0001fil minus 5.0
+..\glue 0.0 plus 1.0fil minus 1.0fil
+..\rule(*+*)x0.0
+..\glue 0.0 plus 1.0fil minus 1.0fil
+..\vbox(10.0+0.0)x169.72176, glue set >20000.0fil, direction TLT
+...\glue 0.0 plus -2.0
+...\glue 0.0 plus 0.0001fil minus 5.0
+..\hbox(4.42+1.94)x0.0, glue set - 5.56fil, direction TLT
+...\hbox(4.42+1.94)x5.56, direction TLT
+...\glue 0.0 plus 1.0fil minus 1.0fil
+.\glue 0.0
+! OK.
+<argument> \PRINTBOX {1}{lkk}\showbox 1 
+l. ......{[A1] keyans}{\PRINTBOX{1}{lkk}\showbox1 }
+============================================================
+============================================================
+TEST 3: [A2] enumext*
+============================================================
+> \box...=
+\vbox(6.345+0.0)x345.0, direction TLT
+.\penalty -51
+.\glue 0.0 plus 1.0
+.\glue 0.0
+.\glue(\parskip) 0.0
+.\glue(\parskip) 0.0
+.\hbox(6.246+0.099)x345.0, direction TLT
+..\localpar
+...\localinterlinepenalty=0
+...\localbrokenpenalty=0
+...\localleftbox=null
+...\localrightbox=null
+..\hbox(0.0+0.0)x11.11298, direction TLT
+...\glue 11.11298
+...\glue -7.78
+...\glue -3.33298
+...\hbox(0.0+0.0)x7.78, glue set 7.78fil, direction TLT
+....\glue 0.0 plus 1.0fil
+...\glue 3.33298
+..\penalty 0
+..\glue -11.11298
+..\hbox(5.994+0.099)x169.72176, direction TLT
+...\hbox(5.994+0.0)x7.78, glue set 0.57999fil, direction TLT
+....\TU/lmr/m/n/9 1
+....\TU/lmr/m/n/9 .
+....\glue 0.0 plus 1.0fil minus 1.0fil
+...\glue 3.33298
+...\vbox(5.994+0.099)x158.60878, direction TLT
+....\hbox(5.994+0.099)x158.60878, glue set 149.35677fil, direction TLT
+.....\localpar
+......\localinterlinepenalty=0
+......\localbrokenpenalty=0
+......\localleftbox=null
+......\localrightbox=null
+.....\hbox(0.0+0.0)x0.0, direction TLT
+.....\glue 0.0
+.....\TU/lmr/m/n/9 a
+.....\TU/lmr/m/n/9 2
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0
+..\glue 5.55649
+..\hbox(6.246+0.099)x169.72176, direction TLT
+...\hbox(5.994+0.0)x7.78, glue set 0.57999fil, direction TLT
+....\TU/lmr/m/n/9 2
+....\TU/lmr/m/n/9 .
+....\glue 0.0 plus 1.0fil minus 1.0fil
+...\glue 3.33298
+...\vbox(6.246+0.099)x158.60878, direction TLT
+....\hbox(6.246+0.099)x158.60878, glue set 148.84377fil, direction TLT
+.....\localpar
+......\localinterlinepenalty=0
+......\localbrokenpenalty=0
+......\localleftbox=null
+......\localrightbox=null
+.....\hbox(0.0+0.0)x0.0, direction TLT
+.....\glue 0.0
+.....\TU/lmr/m/n/9 b
+.....\TU/lmr/m/n/9 2
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0
+..\penalty 10000
+..\glue(\parfillskip) 0.0 plus 1.0fil
+..\glue(\rightskip) 0.0
+.\glue(\parskip) 0.0
+.\glue(\parskip) 0.0
+.\glue 0.0
+.\glue 0.0
+.\penalty -51
+.\glue 0.0
+! OK.
+<argument> \PRINTBOXSTAR {1}{lks}\showbox 1 
+l. ......enumext*}{\PRINTBOXSTAR{1}{lks}\showbox1 }
+============================================================
+=== B. \setenumextno cambia \printkeyans===
+[B1] enumext: igual
+[B1] keyans: igual
+[B1] enumext*: igual
+> \box...=
+\vbox(22.94+0.0)x345.0, direction TLT
+.\penalty 10000
+.\glue 0.0
+.\glue 0.0
+.\hbox(21.0+1.94)x345.0, glue set 2.77824fil, direction TLT
+..\vbox(21.0+0.0)x169.72176, glue set - 0.4482, direction TLT
+...\glue 0.0 plus -2.0
+...\glue(\splittopskip) 4.006 plus 2.0
+...\hbox(5.994+0.099)x158.60878, glue set 149.35677fil, shifted 11.11298, direction TLT
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(5.994+0.0)x0.0, direction TLT
+.....\glue 0.0
+.....\glue -7.78
+.....\glue -3.33298
+.....\hbox(5.994+0.0)x7.78, glue set 0.57999fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 1
+......\TU/lmr/m/n/9 .
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+....\penalty 0
+....\TU/lmr/m/n/9 a
+....\TU/lmr/m/n/9 1
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\penalty -51
+...\glue 0.0
+...\glue 0.0
+...\glue 0.0
+...\glue(\parskip) 0.0
+...\glue(\parskip) 0.0
+...\glue(\baselineskip) 4.151
+...\hbox(6.75+2.241)x139.1658, glue set 129.40079fil, shifted 30.55595, direction TLT
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(6.75+2.241)x0.0, direction TLT
+.....\glue -19.44298
+.....\glue 0.0
+.....\glue -7.78
+.....\glue -3.33298
+.....\hbox(5.994+0.0)x7.78, glue set 0.57999fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 2
+......\TU/lmr/m/n/9 .
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+.....\glue 19.44298
+.....\glue 0.0
+.....\glue -16.11
+.....\glue -3.33298
+.....\hbox(6.75+2.241)x16.11, glue set 4.28398fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 (
+......\TU/lmr/m/n/9 a
+......\TU/lmr/m/n/9 )
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+....\penalty 0
+....\TU/lmr/m/n/9 b
+....\TU/lmr/m/n/9 1
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\glue 0.0 plus 0.0001fil minus 5.0
+..\glue 0.0 plus 1.0fil minus 1.0fil
+..\rule(*+*)x0.0
+..\glue 0.0 plus 1.0fil minus 1.0fil
+..\vbox(21.0+0.0)x169.72176, glue set 8.75807fil, direction TLT
+...\glue 0.0 plus -2.0
+...\glue(\splittopskip) 3.25 plus 2.0
+...\hbox(6.75+2.241)x119.43283, glue set 110.69382fil, shifted 50.28893, direction TLT
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(6.75+2.241)x0.0, direction TLT
+.....\glue -19.73297
+.....\glue 0.0
+.....\glue -16.11
+.....\glue -3.33298
+.....\hbox(6.75+2.241)x16.11, glue set 3.77098fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 (
+......\TU/lmr/m/n/9 b
+......\TU/lmr/m/n/9 )
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+.....\glue 19.73297
+.....\glue 0.0
+.....\glue -16.4
+.....\glue -3.33298
+.....\hbox(5.913+0.0)x16.4, glue set 11.25198fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 i
+......\TU/lmr/m/n/9 .
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+....\penalty 0
+....\TU/lmr/m/n/9 c
+....\TU/lmr/m/n/9 1
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\penalty -51
+...\glue 0.0 plus 1.0fil
+...\glue 0.0 plus 0.0001fil minus 5.0
+..\hbox(4.42+1.94)x0.0, glue set - 5.56fil, direction TLT
+...\hbox(4.42+1.94)x5.56, direction TLT
+...\glue 0.0 plus 1.0fil minus 1.0fil
+.\glue 0.0
+! OK.
+\LEAK ...ISTINTO\fi \else DISTINTO\fi }\showbox 2 
+                                                  \showbox 4 \showbox 6 \end...
+l. ......1}{\setenumext[enumext,1]{labelwidth=3cm}}
+> \box...=
+\vbox(11.94+0.0)x345.0, direction TLT
+.\penalty 10000
+.\glue 0.0
+.\glue 0.0
+.\hbox(10.0+1.94)x345.0, glue set 2.77824fil, direction TLT
+..\vbox(10.0+0.0)x169.72176, glue set - 0.4482, direction TLT
+...\glue 0.0 plus -2.0
+...\glue(\splittopskip) 3.25 plus 2.0
+...\hbox(6.75+2.241)x158.60878, glue set 148.06978fil, shifted 11.11298, direction TLT
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(5.994+0.0)x0.0, direction TLT
+.....\glue 0.0
+.....\glue -7.78
+.....\glue -3.33298
+.....\hbox(5.994+0.0)x7.78, glue set 0.57999fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 1
+......\TU/lmr/m/n/9 .
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+....\penalty 0
+....\TU/lmr/m/n/9 A
+....\TU/lmr/m/n/9 )
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\penalty -51
+...\glue 0.0 plus 0.0001fil minus 5.0
+..\glue 0.0 plus 1.0fil minus 1.0fil
+..\rule(*+*)x0.0
+..\glue 0.0 plus 1.0fil minus 1.0fil
+..\vbox(10.0+0.0)x169.72176, glue set >20000.0fil, direction TLT
+...\glue 0.0 plus -2.0
+...\glue 0.0 plus 0.0001fil minus 5.0
+..\hbox(4.42+1.94)x0.0, glue set - 5.56fil, direction TLT
+...\hbox(4.42+1.94)x5.56, direction TLT
+...\glue 0.0 plus 1.0fil minus 1.0fil
+.\glue 0.0
+! OK.
+\LEAK ...\else DISTINTO\fi }\showbox 2 \showbox 4 
+                                                  \showbox 6 \endgroup 
+l. ......1}{\setenumext[enumext,1]{labelwidth=3cm}}
+> \box...=
+\vbox(6.345+0.0)x345.0, direction TLT
+.\penalty -51
+.\glue 0.0 plus 1.0
+.\glue 0.0
+.\glue(\parskip) 0.0
+.\glue(\parskip) 0.0
+.\hbox(6.246+0.099)x345.0, direction TLT
+..\localpar
+...\localinterlinepenalty=0
+...\localbrokenpenalty=0
+...\localleftbox=null
+...\localrightbox=null
+..\hbox(0.0+0.0)x11.11298, direction TLT
+...\glue 11.11298
+...\glue -7.78
+...\glue -3.33298
+...\hbox(0.0+0.0)x7.78, glue set 7.78fil, direction TLT
+....\glue 0.0 plus 1.0fil
+...\glue 3.33298
+..\penalty 0
+..\glue -11.11298
+..\hbox(5.994+0.099)x169.72176, direction TLT
+...\hbox(5.994+0.0)x7.78, glue set 0.57999fil, direction TLT
+....\TU/lmr/m/n/9 1
+....\TU/lmr/m/n/9 .
+....\glue 0.0 plus 1.0fil minus 1.0fil
+...\glue 3.33298
+...\vbox(5.994+0.099)x158.60878, direction TLT
+....\hbox(5.994+0.099)x158.60878, glue set 149.35677fil, direction TLT
+.....\localpar
+......\localinterlinepenalty=0
+......\localbrokenpenalty=0
+......\localleftbox=null
+......\localrightbox=null
+.....\hbox(0.0+0.0)x0.0, direction TLT
+.....\glue 0.0
+.....\TU/lmr/m/n/9 a
+.....\TU/lmr/m/n/9 2
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0
+..\glue 5.55649
+..\hbox(6.246+0.099)x169.72176, direction TLT
+...\hbox(5.994+0.0)x7.78, glue set 0.57999fil, direction TLT
+....\TU/lmr/m/n/9 2
+....\TU/lmr/m/n/9 .
+....\glue 0.0 plus 1.0fil minus 1.0fil
+...\glue 3.33298
+...\vbox(6.246+0.099)x158.60878, direction TLT
+....\hbox(6.246+0.099)x158.60878, glue set 148.84377fil, direction TLT
+.....\localpar
+......\localinterlinepenalty=0
+......\localbrokenpenalty=0
+......\localleftbox=null
+......\localrightbox=null
+.....\hbox(0.0+0.0)x0.0, direction TLT
+.....\glue 0.0
+.....\TU/lmr/m/n/9 b
+.....\TU/lmr/m/n/9 2
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0
+..\penalty 10000
+..\glue(\parfillskip) 0.0 plus 1.0fil
+..\glue(\rightskip) 0.0
+.\glue(\parskip) 0.0
+.\glue(\parskip) 0.0
+.\glue 0.0
+.\glue 0.0
+.\penalty -51
+.\glue 0.0
+! OK.
+\LEAK ...NTO\fi }\showbox 2 \showbox 4 \showbox 6 
+                                                  \endgroup 
+l. ......1}{\setenumext[enumext,1]{labelwidth=3cm}}
+[B2] enumext: igual
+[B2] keyans: igual
+[B2] enumext*: igual
+> \box...=
+\vbox(22.94+0.0)x345.0, direction TLT
+.\penalty 10000
+.\glue 0.0
+.\glue 0.0
+.\hbox(21.0+1.94)x345.0, glue set 2.77824fil, direction TLT
+..\vbox(21.0+0.0)x169.72176, glue set - 0.4482, direction TLT
+...\glue 0.0 plus -2.0
+...\glue(\splittopskip) 4.006 plus 2.0
+...\hbox(5.994+0.099)x158.60878, glue set 149.35677fil, shifted 11.11298, direction TLT
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(5.994+0.0)x0.0, direction TLT
+.....\glue 0.0
+.....\glue -7.78
+.....\glue -3.33298
+.....\hbox(5.994+0.0)x7.78, glue set 0.57999fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 1
+......\TU/lmr/m/n/9 .
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+....\penalty 0
+....\TU/lmr/m/n/9 a
+....\TU/lmr/m/n/9 1
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\penalty -51
+...\glue 0.0
+...\glue 0.0
+...\glue 0.0
+...\glue(\parskip) 0.0
+...\glue(\parskip) 0.0
+...\glue(\baselineskip) 4.151
+...\hbox(6.75+2.241)x139.1658, glue set 129.40079fil, shifted 30.55595, direction TLT
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(6.75+2.241)x0.0, direction TLT
+.....\glue -19.44298
+.....\glue 0.0
+.....\glue -7.78
+.....\glue -3.33298
+.....\hbox(5.994+0.0)x7.78, glue set 0.57999fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 2
+......\TU/lmr/m/n/9 .
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+.....\glue 19.44298
+.....\glue 0.0
+.....\glue -16.11
+.....\glue -3.33298
+.....\hbox(6.75+2.241)x16.11, glue set 4.28398fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 (
+......\TU/lmr/m/n/9 a
+......\TU/lmr/m/n/9 )
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+....\penalty 0
+....\TU/lmr/m/n/9 b
+....\TU/lmr/m/n/9 1
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\glue 0.0 plus 0.0001fil minus 5.0
+..\glue 0.0 plus 1.0fil minus 1.0fil
+..\rule(*+*)x0.0
+..\glue 0.0 plus 1.0fil minus 1.0fil
+..\vbox(21.0+0.0)x169.72176, glue set 8.75807fil, direction TLT
+...\glue 0.0 plus -2.0
+...\glue(\splittopskip) 3.25 plus 2.0
+...\hbox(6.75+2.241)x119.43283, glue set 110.69382fil, shifted 50.28893, direction TLT
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(6.75+2.241)x0.0, direction TLT
+.....\glue -19.73297
+.....\glue 0.0
+.....\glue -16.11
+.....\glue -3.33298
+.....\hbox(6.75+2.241)x16.11, glue set 3.77098fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 (
+......\TU/lmr/m/n/9 b
+......\TU/lmr/m/n/9 )
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+.....\glue 19.73297
+.....\glue 0.0
+.....\glue -16.4
+.....\glue -3.33298
+.....\hbox(5.913+0.0)x16.4, glue set 11.25198fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 i
+......\TU/lmr/m/n/9 .
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+....\penalty 0
+....\TU/lmr/m/n/9 c
+....\TU/lmr/m/n/9 1
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\penalty -51
+...\glue 0.0 plus 1.0fil
+...\glue 0.0 plus 0.0001fil minus 5.0
+..\hbox(4.42+1.94)x0.0, glue set - 5.56fil, direction TLT
+...\hbox(4.42+1.94)x5.56, direction TLT
+...\glue 0.0 plus 1.0fil minus 1.0fil
+.\glue 0.0
+! OK.
+\LEAK ...ISTINTO\fi \else DISTINTO\fi }\showbox 2 
+                                                  \showbox 4 \showbox 6 \end...
+l. ......{B2}{\setenumext[enumext,1]{labelsep=1cm}}
+> \box...=
+\vbox(11.94+0.0)x345.0, direction TLT
+.\penalty 10000
+.\glue 0.0
+.\glue 0.0
+.\hbox(10.0+1.94)x345.0, glue set 2.77824fil, direction TLT
+..\vbox(10.0+0.0)x169.72176, glue set - 0.4482, direction TLT
+...\glue 0.0 plus -2.0
+...\glue(\splittopskip) 3.25 plus 2.0
+...\hbox(6.75+2.241)x158.60878, glue set 148.06978fil, shifted 11.11298, direction TLT
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(5.994+0.0)x0.0, direction TLT
+.....\glue 0.0
+.....\glue -7.78
+.....\glue -3.33298
+.....\hbox(5.994+0.0)x7.78, glue set 0.57999fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 1
+......\TU/lmr/m/n/9 .
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+....\penalty 0
+....\TU/lmr/m/n/9 A
+....\TU/lmr/m/n/9 )
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\penalty -51
+...\glue 0.0 plus 0.0001fil minus 5.0
+..\glue 0.0 plus 1.0fil minus 1.0fil
+..\rule(*+*)x0.0
+..\glue 0.0 plus 1.0fil minus 1.0fil
+..\vbox(10.0+0.0)x169.72176, glue set >20000.0fil, direction TLT
+...\glue 0.0 plus -2.0
+...\glue 0.0 plus 0.0001fil minus 5.0
+..\hbox(4.42+1.94)x0.0, glue set - 5.56fil, direction TLT
+...\hbox(4.42+1.94)x5.56, direction TLT
+...\glue 0.0 plus 1.0fil minus 1.0fil
+.\glue 0.0
+! OK.
+\LEAK ...\else DISTINTO\fi }\showbox 2 \showbox 4 
+                                                  \showbox 6 \endgroup 
+l. ......{B2}{\setenumext[enumext,1]{labelsep=1cm}}
+> \box...=
+\vbox(6.345+0.0)x345.0, direction TLT
+.\penalty -51
+.\glue 0.0 plus 1.0
+.\glue 0.0
+.\glue(\parskip) 0.0
+.\glue(\parskip) 0.0
+.\hbox(6.246+0.099)x345.0, direction TLT
+..\localpar
+...\localinterlinepenalty=0
+...\localbrokenpenalty=0
+...\localleftbox=null
+...\localrightbox=null
+..\hbox(0.0+0.0)x11.11298, direction TLT
+...\glue 11.11298
+...\glue -7.78
+...\glue -3.33298
+...\hbox(0.0+0.0)x7.78, glue set 7.78fil, direction TLT
+....\glue 0.0 plus 1.0fil
+...\glue 3.33298
+..\penalty 0
+..\glue -11.11298
+..\hbox(5.994+0.099)x169.72176, direction TLT
+...\hbox(5.994+0.0)x7.78, glue set 0.57999fil, direction TLT
+....\TU/lmr/m/n/9 1
+....\TU/lmr/m/n/9 .
+....\glue 0.0 plus 1.0fil minus 1.0fil
+...\glue 3.33298
+...\vbox(5.994+0.099)x158.60878, direction TLT
+....\hbox(5.994+0.099)x158.60878, glue set 149.35677fil, direction TLT
+.....\localpar
+......\localinterlinepenalty=0
+......\localbrokenpenalty=0
+......\localleftbox=null
+......\localrightbox=null
+.....\hbox(0.0+0.0)x0.0, direction TLT
+.....\glue 0.0
+.....\TU/lmr/m/n/9 a
+.....\TU/lmr/m/n/9 2
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0
+..\glue 5.55649
+..\hbox(6.246+0.099)x169.72176, direction TLT
+...\hbox(5.994+0.0)x7.78, glue set 0.57999fil, direction TLT
+....\TU/lmr/m/n/9 2
+....\TU/lmr/m/n/9 .
+....\glue 0.0 plus 1.0fil minus 1.0fil
+...\glue 3.33298
+...\vbox(6.246+0.099)x158.60878, direction TLT
+....\hbox(6.246+0.099)x158.60878, glue set 148.84377fil, direction TLT
+.....\localpar
+......\localinterlinepenalty=0
+......\localbrokenpenalty=0
+......\localleftbox=null
+......\localrightbox=null
+.....\hbox(0.0+0.0)x0.0, direction TLT
+.....\glue 0.0
+.....\TU/lmr/m/n/9 b
+.....\TU/lmr/m/n/9 2
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0
+..\penalty 10000
+..\glue(\parfillskip) 0.0 plus 1.0fil
+..\glue(\rightskip) 0.0
+.\glue(\parskip) 0.0
+.\glue(\parskip) 0.0
+.\glue 0.0
+.\glue 0.0
+.\penalty -51
+.\glue 0.0
+! OK.
+\LEAK ...NTO\fi }\showbox 2 \showbox 4 \showbox 6 
+                                                  \endgroup 
+l. ......{B2}{\setenumext[enumext,1]{labelsep=1cm}}
+[B3] enumext: igual
+[B3] keyans: igual
+[B3] enumext*: igual
+> \box...=
+\vbox(22.94+0.0)x345.0, direction TLT
+.\penalty 10000
+.\glue 0.0
+.\glue 0.0
+.\hbox(21.0+1.94)x345.0, glue set 2.77824fil, direction TLT
+..\vbox(21.0+0.0)x169.72176, glue set - 0.4482, direction TLT
+...\glue 0.0 plus -2.0
+...\glue(\splittopskip) 4.006 plus 2.0
+...\hbox(5.994+0.099)x158.60878, glue set 149.35677fil, shifted 11.11298, direction TLT
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(5.994+0.0)x0.0, direction TLT
+.....\glue 0.0
+.....\glue -7.78
+.....\glue -3.33298
+.....\hbox(5.994+0.0)x7.78, glue set 0.57999fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 1
+......\TU/lmr/m/n/9 .
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+....\penalty 0
+....\TU/lmr/m/n/9 a
+....\TU/lmr/m/n/9 1
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\penalty -51
+...\glue 0.0
+...\glue 0.0
+...\glue 0.0
+...\glue(\parskip) 0.0
+...\glue(\parskip) 0.0
+...\glue(\baselineskip) 4.151
+...\hbox(6.75+2.241)x139.1658, glue set 129.40079fil, shifted 30.55595, direction TLT
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(6.75+2.241)x0.0, direction TLT
+.....\glue -19.44298
+.....\glue 0.0
+.....\glue -7.78
+.....\glue -3.33298
+.....\hbox(5.994+0.0)x7.78, glue set 0.57999fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 2
+......\TU/lmr/m/n/9 .
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+.....\glue 19.44298
+.....\glue 0.0
+.....\glue -16.11
+.....\glue -3.33298
+.....\hbox(6.75+2.241)x16.11, glue set 4.28398fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 (
+......\TU/lmr/m/n/9 a
+......\TU/lmr/m/n/9 )
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+....\penalty 0
+....\TU/lmr/m/n/9 b
+....\TU/lmr/m/n/9 1
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\glue 0.0 plus 0.0001fil minus 5.0
+..\glue 0.0 plus 1.0fil minus 1.0fil
+..\rule(*+*)x0.0
+..\glue 0.0 plus 1.0fil minus 1.0fil
+..\vbox(21.0+0.0)x169.72176, glue set 8.75807fil, direction TLT
+...\glue 0.0 plus -2.0
+...\glue(\splittopskip) 3.25 plus 2.0
+...\hbox(6.75+2.241)x119.43283, glue set 110.69382fil, shifted 50.28893, direction TLT
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(6.75+2.241)x0.0, direction TLT
+.....\glue -19.73297
+.....\glue 0.0
+.....\glue -16.11
+.....\glue -3.33298
+.....\hbox(6.75+2.241)x16.11, glue set 3.77098fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 (
+......\TU/lmr/m/n/9 b
+......\TU/lmr/m/n/9 )
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+.....\glue 19.73297
+.....\glue 0.0
+.....\glue -16.4
+.....\glue -3.33298
+.....\hbox(5.913+0.0)x16.4, glue set 11.25198fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 i
+......\TU/lmr/m/n/9 .
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+....\penalty 0
+....\TU/lmr/m/n/9 c
+....\TU/lmr/m/n/9 1
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\penalty -51
+...\glue 0.0 plus 1.0fil
+...\glue 0.0 plus 0.0001fil minus 5.0
+..\hbox(4.42+1.94)x0.0, glue set - 5.56fil, direction TLT
+...\hbox(4.42+1.94)x5.56, direction TLT
+...\glue 0.0 plus 1.0fil minus 1.0fil
+.\glue 0.0
+! OK.
+\LEAK ...ISTINTO\fi \else DISTINTO\fi }\showbox 2 
+                                                  \showbox 4 \showbox 6 \end...
+l. ......3}{\setenumext[enumext,1]{itemindent=1cm}}
+> \box...=
+\vbox(11.94+0.0)x345.0, direction TLT
+.\penalty 10000
+.\glue 0.0
+.\glue 0.0
+.\hbox(10.0+1.94)x345.0, glue set 2.77824fil, direction TLT
+..\vbox(10.0+0.0)x169.72176, glue set - 0.4482, direction TLT
+...\glue 0.0 plus -2.0
+...\glue(\splittopskip) 3.25 plus 2.0
+...\hbox(6.75+2.241)x158.60878, glue set 148.06978fil, shifted 11.11298, direction TLT
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(5.994+0.0)x0.0, direction TLT
+.....\glue 0.0
+.....\glue -7.78
+.....\glue -3.33298
+.....\hbox(5.994+0.0)x7.78, glue set 0.57999fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 1
+......\TU/lmr/m/n/9 .
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+....\penalty 0
+....\TU/lmr/m/n/9 A
+....\TU/lmr/m/n/9 )
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\penalty -51
+...\glue 0.0 plus 0.0001fil minus 5.0
+..\glue 0.0 plus 1.0fil minus 1.0fil
+..\rule(*+*)x0.0
+..\glue 0.0 plus 1.0fil minus 1.0fil
+..\vbox(10.0+0.0)x169.72176, glue set >20000.0fil, direction TLT
+...\glue 0.0 plus -2.0
+...\glue 0.0 plus 0.0001fil minus 5.0
+..\hbox(4.42+1.94)x0.0, glue set - 5.56fil, direction TLT
+...\hbox(4.42+1.94)x5.56, direction TLT
+...\glue 0.0 plus 1.0fil minus 1.0fil
+.\glue 0.0
+! OK.
+\LEAK ...\else DISTINTO\fi }\showbox 2 \showbox 4 
+                                                  \showbox 6 \endgroup 
+l. ......3}{\setenumext[enumext,1]{itemindent=1cm}}
+> \box...=
+\vbox(6.345+0.0)x345.0, direction TLT
+.\penalty -51
+.\glue 0.0 plus 1.0
+.\glue 0.0
+.\glue(\parskip) 0.0
+.\glue(\parskip) 0.0
+.\hbox(6.246+0.099)x345.0, direction TLT
+..\localpar
+...\localinterlinepenalty=0
+...\localbrokenpenalty=0
+...\localleftbox=null
+...\localrightbox=null
+..\hbox(0.0+0.0)x11.11298, direction TLT
+...\glue 11.11298
+...\glue -7.78
+...\glue -3.33298
+...\hbox(0.0+0.0)x7.78, glue set 7.78fil, direction TLT
+....\glue 0.0 plus 1.0fil
+...\glue 3.33298
+..\penalty 0
+..\glue -11.11298
+..\hbox(5.994+0.099)x169.72176, direction TLT
+...\hbox(5.994+0.0)x7.78, glue set 0.57999fil, direction TLT
+....\TU/lmr/m/n/9 1
+....\TU/lmr/m/n/9 .
+....\glue 0.0 plus 1.0fil minus 1.0fil
+...\glue 3.33298
+...\vbox(5.994+0.099)x158.60878, direction TLT
+....\hbox(5.994+0.099)x158.60878, glue set 149.35677fil, direction TLT
+.....\localpar
+......\localinterlinepenalty=0
+......\localbrokenpenalty=0
+......\localleftbox=null
+......\localrightbox=null
+.....\hbox(0.0+0.0)x0.0, direction TLT
+.....\glue 0.0
+.....\TU/lmr/m/n/9 a
+.....\TU/lmr/m/n/9 2
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0
+..\glue 5.55649
+..\hbox(6.246+0.099)x169.72176, direction TLT
+...\hbox(5.994+0.0)x7.78, glue set 0.57999fil, direction TLT
+....\TU/lmr/m/n/9 2
+....\TU/lmr/m/n/9 .
+....\glue 0.0 plus 1.0fil minus 1.0fil
+...\glue 3.33298
+...\vbox(6.246+0.099)x158.60878, direction TLT
+....\hbox(6.246+0.099)x158.60878, glue set 148.84377fil, direction TLT
+.....\localpar
+......\localinterlinepenalty=0
+......\localbrokenpenalty=0
+......\localleftbox=null
+......\localrightbox=null
+.....\hbox(0.0+0.0)x0.0, direction TLT
+.....\glue 0.0
+.....\TU/lmr/m/n/9 b
+.....\TU/lmr/m/n/9 2
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0
+..\penalty 10000
+..\glue(\parfillskip) 0.0 plus 1.0fil
+..\glue(\rightskip) 0.0
+.\glue(\parskip) 0.0
+.\glue(\parskip) 0.0
+.\glue 0.0
+.\glue 0.0
+.\penalty -51
+.\glue 0.0
+! OK.
+\LEAK ...NTO\fi }\showbox 2 \showbox 4 \showbox 6 
+                                                  \endgroup 
+l. ......3}{\setenumext[enumext,1]{itemindent=1cm}}
+[B4] enumext: igual
+[B4] keyans: igual
+[B4] enumext*: igual
+> \box...=
+\vbox(22.94+0.0)x345.0, direction TLT
+.\penalty 10000
+.\glue 0.0
+.\glue 0.0
+.\hbox(21.0+1.94)x345.0, glue set 2.77824fil, direction TLT
+..\vbox(21.0+0.0)x169.72176, glue set - 0.4482, direction TLT
+...\glue 0.0 plus -2.0
+...\glue(\splittopskip) 4.006 plus 2.0
+...\hbox(5.994+0.099)x158.60878, glue set 149.35677fil, shifted 11.11298, direction TLT
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(5.994+0.0)x0.0, direction TLT
+.....\glue 0.0
+.....\glue -7.78
+.....\glue -3.33298
+.....\hbox(5.994+0.0)x7.78, glue set 0.57999fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 1
+......\TU/lmr/m/n/9 .
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+....\penalty 0
+....\TU/lmr/m/n/9 a
+....\TU/lmr/m/n/9 1
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\penalty -51
+...\glue 0.0
+...\glue 0.0
+...\glue 0.0
+...\glue(\parskip) 0.0
+...\glue(\parskip) 0.0
+...\glue(\baselineskip) 4.151
+...\hbox(6.75+2.241)x139.1658, glue set 129.40079fil, shifted 30.55595, direction TLT
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(6.75+2.241)x0.0, direction TLT
+.....\glue -19.44298
+.....\glue 0.0
+.....\glue -7.78
+.....\glue -3.33298
+.....\hbox(5.994+0.0)x7.78, glue set 0.57999fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 2
+......\TU/lmr/m/n/9 .
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+.....\glue 19.44298
+.....\glue 0.0
+.....\glue -16.11
+.....\glue -3.33298
+.....\hbox(6.75+2.241)x16.11, glue set 4.28398fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 (
+......\TU/lmr/m/n/9 a
+......\TU/lmr/m/n/9 )
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+....\penalty 0
+....\TU/lmr/m/n/9 b
+....\TU/lmr/m/n/9 1
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\glue 0.0 plus 0.0001fil minus 5.0
+..\glue 0.0 plus 1.0fil minus 1.0fil
+..\rule(*+*)x0.0
+..\glue 0.0 plus 1.0fil minus 1.0fil
+..\vbox(21.0+0.0)x169.72176, glue set 8.75807fil, direction TLT
+...\glue 0.0 plus -2.0
+...\glue(\splittopskip) 3.25 plus 2.0
+...\hbox(6.75+2.241)x119.43283, glue set 110.69382fil, shifted 50.28893, direction TLT
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(6.75+2.241)x0.0, direction TLT
+.....\glue -19.73297
+.....\glue 0.0
+.....\glue -16.11
+.....\glue -3.33298
+.....\hbox(6.75+2.241)x16.11, glue set 3.77098fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 (
+......\TU/lmr/m/n/9 b
+......\TU/lmr/m/n/9 )
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+.....\glue 19.73297
+.....\glue 0.0
+.....\glue -16.4
+.....\glue -3.33298
+.....\hbox(5.913+0.0)x16.4, glue set 11.25198fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 i
+......\TU/lmr/m/n/9 .
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+....\penalty 0
+....\TU/lmr/m/n/9 c
+....\TU/lmr/m/n/9 1
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\penalty -51
+...\glue 0.0 plus 1.0fil
+...\glue 0.0 plus 0.0001fil minus 5.0
+..\hbox(4.42+1.94)x0.0, glue set - 5.56fil, direction TLT
+...\hbox(4.42+1.94)x5.56, direction TLT
+...\glue 0.0 plus 1.0fil minus 1.0fil
+.\glue 0.0
+! OK.
+\LEAK ...ISTINTO\fi \else DISTINTO\fi }\showbox 2 
+                                                  \showbox 4 \showbox 6 \end...
+l. ......}{\setenumext[enumext,1]{list-offset=1cm}}
+> \box...=
+\vbox(11.94+0.0)x345.0, direction TLT
+.\penalty 10000
+.\glue 0.0
+.\glue 0.0
+.\hbox(10.0+1.94)x345.0, glue set 2.77824fil, direction TLT
+..\vbox(10.0+0.0)x169.72176, glue set - 0.4482, direction TLT
+...\glue 0.0 plus -2.0
+...\glue(\splittopskip) 3.25 plus 2.0
+...\hbox(6.75+2.241)x158.60878, glue set 148.06978fil, shifted 11.11298, direction TLT
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(5.994+0.0)x0.0, direction TLT
+.....\glue 0.0
+.....\glue -7.78
+.....\glue -3.33298
+.....\hbox(5.994+0.0)x7.78, glue set 0.57999fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 1
+......\TU/lmr/m/n/9 .
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+....\penalty 0
+....\TU/lmr/m/n/9 A
+....\TU/lmr/m/n/9 )
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\penalty -51
+...\glue 0.0 plus 0.0001fil minus 5.0
+..\glue 0.0 plus 1.0fil minus 1.0fil
+..\rule(*+*)x0.0
+..\glue 0.0 plus 1.0fil minus 1.0fil
+..\vbox(10.0+0.0)x169.72176, glue set >20000.0fil, direction TLT
+...\glue 0.0 plus -2.0
+...\glue 0.0 plus 0.0001fil minus 5.0
+..\hbox(4.42+1.94)x0.0, glue set - 5.56fil, direction TLT
+...\hbox(4.42+1.94)x5.56, direction TLT
+...\glue 0.0 plus 1.0fil minus 1.0fil
+.\glue 0.0
+! OK.
+\LEAK ...\else DISTINTO\fi }\showbox 2 \showbox 4 
+                                                  \showbox 6 \endgroup 
+l. ......}{\setenumext[enumext,1]{list-offset=1cm}}
+> \box...=
+\vbox(6.345+0.0)x345.0, direction TLT
+.\penalty -51
+.\glue 0.0 plus 1.0
+.\glue 0.0
+.\glue(\parskip) 0.0
+.\glue(\parskip) 0.0
+.\hbox(6.246+0.099)x345.0, direction TLT
+..\localpar
+...\localinterlinepenalty=0
+...\localbrokenpenalty=0
+...\localleftbox=null
+...\localrightbox=null
+..\hbox(0.0+0.0)x11.11298, direction TLT
+...\glue 11.11298
+...\glue -7.78
+...\glue -3.33298
+...\hbox(0.0+0.0)x7.78, glue set 7.78fil, direction TLT
+....\glue 0.0 plus 1.0fil
+...\glue 3.33298
+..\penalty 0
+..\glue -11.11298
+..\hbox(5.994+0.099)x169.72176, direction TLT
+...\hbox(5.994+0.0)x7.78, glue set 0.57999fil, direction TLT
+....\TU/lmr/m/n/9 1
+....\TU/lmr/m/n/9 .
+....\glue 0.0 plus 1.0fil minus 1.0fil
+...\glue 3.33298
+...\vbox(5.994+0.099)x158.60878, direction TLT
+....\hbox(5.994+0.099)x158.60878, glue set 149.35677fil, direction TLT
+.....\localpar
+......\localinterlinepenalty=0
+......\localbrokenpenalty=0
+......\localleftbox=null
+......\localrightbox=null
+.....\hbox(0.0+0.0)x0.0, direction TLT
+.....\glue 0.0
+.....\TU/lmr/m/n/9 a
+.....\TU/lmr/m/n/9 2
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0
+..\glue 5.55649
+..\hbox(6.246+0.099)x169.72176, direction TLT
+...\hbox(5.994+0.0)x7.78, glue set 0.57999fil, direction TLT
+....\TU/lmr/m/n/9 2
+....\TU/lmr/m/n/9 .
+....\glue 0.0 plus 1.0fil minus 1.0fil
+...\glue 3.33298
+...\vbox(6.246+0.099)x158.60878, direction TLT
+....\hbox(6.246+0.099)x158.60878, glue set 148.84377fil, direction TLT
+.....\localpar
+......\localinterlinepenalty=0
+......\localbrokenpenalty=0
+......\localleftbox=null
+......\localrightbox=null
+.....\hbox(0.0+0.0)x0.0, direction TLT
+.....\glue 0.0
+.....\TU/lmr/m/n/9 b
+.....\TU/lmr/m/n/9 2
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0
+..\penalty 10000
+..\glue(\parfillskip) 0.0 plus 1.0fil
+..\glue(\rightskip) 0.0
+.\glue(\parskip) 0.0
+.\glue(\parskip) 0.0
+.\glue 0.0
+.\glue 0.0
+.\penalty -51
+.\glue 0.0
+! OK.
+\LEAK ...NTO\fi }\showbox 2 \showbox 4 \showbox 6 
+                                                  \endgroup 
+l. ......}{\setenumext[enumext,1]{list-offset=1cm}}
+[B5] enumext: igual
+[B5] keyans: igual
+[B5] enumext*: igual
+> \box...=
+\vbox(22.94+0.0)x345.0, direction TLT
+.\penalty 10000
+.\glue 0.0
+.\glue 0.0
+.\hbox(21.0+1.94)x345.0, glue set 2.77824fil, direction TLT
+..\vbox(21.0+0.0)x169.72176, glue set - 0.4482, direction TLT
+...\glue 0.0 plus -2.0
+...\glue(\splittopskip) 4.006 plus 2.0
+...\hbox(5.994+0.099)x158.60878, glue set 149.35677fil, shifted 11.11298, direction TLT
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(5.994+0.0)x0.0, direction TLT
+.....\glue 0.0
+.....\glue -7.78
+.....\glue -3.33298
+.....\hbox(5.994+0.0)x7.78, glue set 0.57999fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 1
+......\TU/lmr/m/n/9 .
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+....\penalty 0
+....\TU/lmr/m/n/9 a
+....\TU/lmr/m/n/9 1
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\penalty -51
+...\glue 0.0
+...\glue 0.0
+...\glue 0.0
+...\glue(\parskip) 0.0
+...\glue(\parskip) 0.0
+...\glue(\baselineskip) 4.151
+...\hbox(6.75+2.241)x139.1658, glue set 129.40079fil, shifted 30.55595, direction TLT
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(6.75+2.241)x0.0, direction TLT
+.....\glue -19.44298
+.....\glue 0.0
+.....\glue -7.78
+.....\glue -3.33298
+.....\hbox(5.994+0.0)x7.78, glue set 0.57999fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 2
+......\TU/lmr/m/n/9 .
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+.....\glue 19.44298
+.....\glue 0.0
+.....\glue -16.11
+.....\glue -3.33298
+.....\hbox(6.75+2.241)x16.11, glue set 4.28398fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 (
+......\TU/lmr/m/n/9 a
+......\TU/lmr/m/n/9 )
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+....\penalty 0
+....\TU/lmr/m/n/9 b
+....\TU/lmr/m/n/9 1
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\glue 0.0 plus 0.0001fil minus 5.0
+..\glue 0.0 plus 1.0fil minus 1.0fil
+..\rule(*+*)x0.0
+..\glue 0.0 plus 1.0fil minus 1.0fil
+..\vbox(21.0+0.0)x169.72176, glue set 8.75807fil, direction TLT
+...\glue 0.0 plus -2.0
+...\glue(\splittopskip) 3.25 plus 2.0
+...\hbox(6.75+2.241)x119.43283, glue set 110.69382fil, shifted 50.28893, direction TLT
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(6.75+2.241)x0.0, direction TLT
+.....\glue -19.73297
+.....\glue 0.0
+.....\glue -16.11
+.....\glue -3.33298
+.....\hbox(6.75+2.241)x16.11, glue set 3.77098fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 (
+......\TU/lmr/m/n/9 b
+......\TU/lmr/m/n/9 )
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+.....\glue 19.73297
+.....\glue 0.0
+.....\glue -16.4
+.....\glue -3.33298
+.....\hbox(5.913+0.0)x16.4, glue set 11.25198fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 i
+......\TU/lmr/m/n/9 .
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+....\penalty 0
+....\TU/lmr/m/n/9 c
+....\TU/lmr/m/n/9 1
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\penalty -51
+...\glue 0.0 plus 1.0fil
+...\glue 0.0 plus 0.0001fil minus 5.0
+..\hbox(4.42+1.94)x0.0, glue set - 5.56fil, direction TLT
+...\hbox(4.42+1.94)x5.56, direction TLT
+...\glue 0.0 plus 1.0fil minus 1.0fil
+.\glue 0.0
+! OK.
+\LEAK ...ISTINTO\fi \else DISTINTO\fi }\showbox 2 
+                                                  \showbox 4 \showbox 6 \end...
+l. ......}{\setenumext[enumext,1]{rightmargin=1cm}}
+> \box...=
+\vbox(11.94+0.0)x345.0, direction TLT
+.\penalty 10000
+.\glue 0.0
+.\glue 0.0
+.\hbox(10.0+1.94)x345.0, glue set 2.77824fil, direction TLT
+..\vbox(10.0+0.0)x169.72176, glue set - 0.4482, direction TLT
+...\glue 0.0 plus -2.0
+...\glue(\splittopskip) 3.25 plus 2.0
+...\hbox(6.75+2.241)x158.60878, glue set 148.06978fil, shifted 11.11298, direction TLT
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(5.994+0.0)x0.0, direction TLT
+.....\glue 0.0
+.....\glue -7.78
+.....\glue -3.33298
+.....\hbox(5.994+0.0)x7.78, glue set 0.57999fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 1
+......\TU/lmr/m/n/9 .
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+....\penalty 0
+....\TU/lmr/m/n/9 A
+....\TU/lmr/m/n/9 )
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\penalty -51
+...\glue 0.0 plus 0.0001fil minus 5.0
+..\glue 0.0 plus 1.0fil minus 1.0fil
+..\rule(*+*)x0.0
+..\glue 0.0 plus 1.0fil minus 1.0fil
+..\vbox(10.0+0.0)x169.72176, glue set >20000.0fil, direction TLT
+...\glue 0.0 plus -2.0
+...\glue 0.0 plus 0.0001fil minus 5.0
+..\hbox(4.42+1.94)x0.0, glue set - 5.56fil, direction TLT
+...\hbox(4.42+1.94)x5.56, direction TLT
+...\glue 0.0 plus 1.0fil minus 1.0fil
+.\glue 0.0
+! OK.
+\LEAK ...\else DISTINTO\fi }\showbox 2 \showbox 4 
+                                                  \showbox 6 \endgroup 
+l. ......}{\setenumext[enumext,1]{rightmargin=1cm}}
+> \box...=
+\vbox(6.345+0.0)x345.0, direction TLT
+.\penalty -51
+.\glue 0.0 plus 1.0
+.\glue 0.0
+.\glue(\parskip) 0.0
+.\glue(\parskip) 0.0
+.\hbox(6.246+0.099)x345.0, direction TLT
+..\localpar
+...\localinterlinepenalty=0
+...\localbrokenpenalty=0
+...\localleftbox=null
+...\localrightbox=null
+..\hbox(0.0+0.0)x11.11298, direction TLT
+...\glue 11.11298
+...\glue -7.78
+...\glue -3.33298
+...\hbox(0.0+0.0)x7.78, glue set 7.78fil, direction TLT
+....\glue 0.0 plus 1.0fil
+...\glue 3.33298
+..\penalty 0
+..\glue -11.11298
+..\hbox(5.994+0.099)x169.72176, direction TLT
+...\hbox(5.994+0.0)x7.78, glue set 0.57999fil, direction TLT
+....\TU/lmr/m/n/9 1
+....\TU/lmr/m/n/9 .
+....\glue 0.0 plus 1.0fil minus 1.0fil
+...\glue 3.33298
+...\vbox(5.994+0.099)x158.60878, direction TLT
+....\hbox(5.994+0.099)x158.60878, glue set 149.35677fil, direction TLT
+.....\localpar
+......\localinterlinepenalty=0
+......\localbrokenpenalty=0
+......\localleftbox=null
+......\localrightbox=null
+.....\hbox(0.0+0.0)x0.0, direction TLT
+.....\glue 0.0
+.....\TU/lmr/m/n/9 a
+.....\TU/lmr/m/n/9 2
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0
+..\glue 5.55649
+..\hbox(6.246+0.099)x169.72176, direction TLT
+...\hbox(5.994+0.0)x7.78, glue set 0.57999fil, direction TLT
+....\TU/lmr/m/n/9 2
+....\TU/lmr/m/n/9 .
+....\glue 0.0 plus 1.0fil minus 1.0fil
+...\glue 3.33298
+...\vbox(6.246+0.099)x158.60878, direction TLT
+....\hbox(6.246+0.099)x158.60878, glue set 148.84377fil, direction TLT
+.....\localpar
+......\localinterlinepenalty=0
+......\localbrokenpenalty=0
+......\localleftbox=null
+......\localrightbox=null
+.....\hbox(0.0+0.0)x0.0, direction TLT
+.....\glue 0.0
+.....\TU/lmr/m/n/9 b
+.....\TU/lmr/m/n/9 2
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0
+..\penalty 10000
+..\glue(\parfillskip) 0.0 plus 1.0fil
+..\glue(\rightskip) 0.0
+.\glue(\parskip) 0.0
+.\glue(\parskip) 0.0
+.\glue 0.0
+.\glue 0.0
+.\penalty -51
+.\glue 0.0
+! OK.
+\LEAK ...NTO\fi }\showbox 2 \showbox 4 \showbox 6 
+                                                  \endgroup 
+l. ......}{\setenumext[enumext,1]{rightmargin=1cm}}
+[B6] enumext: igual
+[B6] keyans: igual
+[B6] enumext*: igual
+> \box...=
+\vbox(22.94+0.0)x345.0, direction TLT
+.\penalty 10000
+.\glue 0.0
+.\glue 0.0
+.\hbox(21.0+1.94)x345.0, glue set 2.77824fil, direction TLT
+..\vbox(21.0+0.0)x169.72176, glue set - 0.4482, direction TLT
+...\glue 0.0 plus -2.0
+...\glue(\splittopskip) 4.006 plus 2.0
+...\hbox(5.994+0.099)x158.60878, glue set 149.35677fil, shifted 11.11298, direction TLT
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(5.994+0.0)x0.0, direction TLT
+.....\glue 0.0
+.....\glue -7.78
+.....\glue -3.33298
+.....\hbox(5.994+0.0)x7.78, glue set 0.57999fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 1
+......\TU/lmr/m/n/9 .
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+....\penalty 0
+....\TU/lmr/m/n/9 a
+....\TU/lmr/m/n/9 1
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\penalty -51
+...\glue 0.0
+...\glue 0.0
+...\glue 0.0
+...\glue(\parskip) 0.0
+...\glue(\parskip) 0.0
+...\glue(\baselineskip) 4.151
+...\hbox(6.75+2.241)x139.1658, glue set 129.40079fil, shifted 30.55595, direction TLT
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(6.75+2.241)x0.0, direction TLT
+.....\glue -19.44298
+.....\glue 0.0
+.....\glue -7.78
+.....\glue -3.33298
+.....\hbox(5.994+0.0)x7.78, glue set 0.57999fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 2
+......\TU/lmr/m/n/9 .
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+.....\glue 19.44298
+.....\glue 0.0
+.....\glue -16.11
+.....\glue -3.33298
+.....\hbox(6.75+2.241)x16.11, glue set 4.28398fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 (
+......\TU/lmr/m/n/9 a
+......\TU/lmr/m/n/9 )
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+....\penalty 0
+....\TU/lmr/m/n/9 b
+....\TU/lmr/m/n/9 1
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\glue 0.0 plus 0.0001fil minus 5.0
+..\glue 0.0 plus 1.0fil minus 1.0fil
+..\rule(*+*)x0.0
+..\glue 0.0 plus 1.0fil minus 1.0fil
+..\vbox(21.0+0.0)x169.72176, glue set 8.75807fil, direction TLT
+...\glue 0.0 plus -2.0
+...\glue(\splittopskip) 3.25 plus 2.0
+...\hbox(6.75+2.241)x119.43283, glue set 110.69382fil, shifted 50.28893, direction TLT
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(6.75+2.241)x0.0, direction TLT
+.....\glue -19.73297
+.....\glue 0.0
+.....\glue -16.11
+.....\glue -3.33298
+.....\hbox(6.75+2.241)x16.11, glue set 3.77098fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 (
+......\TU/lmr/m/n/9 b
+......\TU/lmr/m/n/9 )
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+.....\glue 19.73297
+.....\glue 0.0
+.....\glue -16.4
+.....\glue -3.33298
+.....\hbox(5.913+0.0)x16.4, glue set 11.25198fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 i
+......\TU/lmr/m/n/9 .
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+....\penalty 0
+....\TU/lmr/m/n/9 c
+....\TU/lmr/m/n/9 1
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\penalty -51
+...\glue 0.0 plus 1.0fil
+...\glue 0.0 plus 0.0001fil minus 5.0
+..\hbox(4.42+1.94)x0.0, glue set - 5.56fil, direction TLT
+...\hbox(4.42+1.94)x5.56, direction TLT
+...\glue 0.0 plus 1.0fil minus 1.0fil
+.\glue 0.0
+! OK.
+\LEAK ...ISTINTO\fi \else DISTINTO\fi }\showbox 2 
+                                                  \showbox 4 \showbox 6 \end...
+l. ......\setenumext[enumext,1]{listparindent=1cm}}
+> \box...=
+\vbox(11.94+0.0)x345.0, direction TLT
+.\penalty 10000
+.\glue 0.0
+.\glue 0.0
+.\hbox(10.0+1.94)x345.0, glue set 2.77824fil, direction TLT
+..\vbox(10.0+0.0)x169.72176, glue set - 0.4482, direction TLT
+...\glue 0.0 plus -2.0
+...\glue(\splittopskip) 3.25 plus 2.0
+...\hbox(6.75+2.241)x158.60878, glue set 148.06978fil, shifted 11.11298, direction TLT
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(5.994+0.0)x0.0, direction TLT
+.....\glue 0.0
+.....\glue -7.78
+.....\glue -3.33298
+.....\hbox(5.994+0.0)x7.78, glue set 0.57999fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 1
+......\TU/lmr/m/n/9 .
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+....\penalty 0
+....\TU/lmr/m/n/9 A
+....\TU/lmr/m/n/9 )
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\penalty -51
+...\glue 0.0 plus 0.0001fil minus 5.0
+..\glue 0.0 plus 1.0fil minus 1.0fil
+..\rule(*+*)x0.0
+..\glue 0.0 plus 1.0fil minus 1.0fil
+..\vbox(10.0+0.0)x169.72176, glue set >20000.0fil, direction TLT
+...\glue 0.0 plus -2.0
+...\glue 0.0 plus 0.0001fil minus 5.0
+..\hbox(4.42+1.94)x0.0, glue set - 5.56fil, direction TLT
+...\hbox(4.42+1.94)x5.56, direction TLT
+...\glue 0.0 plus 1.0fil minus 1.0fil
+.\glue 0.0
+! OK.
+\LEAK ...\else DISTINTO\fi }\showbox 2 \showbox 4 
+                                                  \showbox 6 \endgroup 
+l. ......\setenumext[enumext,1]{listparindent=1cm}}
+> \box...=
+\vbox(6.345+0.0)x345.0, direction TLT
+.\penalty -51
+.\glue 0.0 plus 1.0
+.\glue 0.0
+.\glue(\parskip) 0.0
+.\glue(\parskip) 0.0
+.\hbox(6.246+0.099)x345.0, direction TLT
+..\localpar
+...\localinterlinepenalty=0
+...\localbrokenpenalty=0
+...\localleftbox=null
+...\localrightbox=null
+..\hbox(0.0+0.0)x11.11298, direction TLT
+...\glue 11.11298
+...\glue -7.78
+...\glue -3.33298
+...\hbox(0.0+0.0)x7.78, glue set 7.78fil, direction TLT
+....\glue 0.0 plus 1.0fil
+...\glue 3.33298
+..\penalty 0
+..\glue -11.11298
+..\hbox(5.994+0.099)x169.72176, direction TLT
+...\hbox(5.994+0.0)x7.78, glue set 0.57999fil, direction TLT
+....\TU/lmr/m/n/9 1
+....\TU/lmr/m/n/9 .
+....\glue 0.0 plus 1.0fil minus 1.0fil
+...\glue 3.33298
+...\vbox(5.994+0.099)x158.60878, direction TLT
+....\hbox(5.994+0.099)x158.60878, glue set 149.35677fil, direction TLT
+.....\localpar
+......\localinterlinepenalty=0
+......\localbrokenpenalty=0
+......\localleftbox=null
+......\localrightbox=null
+.....\hbox(0.0+0.0)x0.0, direction TLT
+.....\glue 0.0
+.....\TU/lmr/m/n/9 a
+.....\TU/lmr/m/n/9 2
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0
+..\glue 5.55649
+..\hbox(6.246+0.099)x169.72176, direction TLT
+...\hbox(5.994+0.0)x7.78, glue set 0.57999fil, direction TLT
+....\TU/lmr/m/n/9 2
+....\TU/lmr/m/n/9 .
+....\glue 0.0 plus 1.0fil minus 1.0fil
+...\glue 3.33298
+...\vbox(6.246+0.099)x158.60878, direction TLT
+....\hbox(6.246+0.099)x158.60878, glue set 148.84377fil, direction TLT
+.....\localpar
+......\localinterlinepenalty=0
+......\localbrokenpenalty=0
+......\localleftbox=null
+......\localrightbox=null
+.....\hbox(0.0+0.0)x0.0, direction TLT
+.....\glue 0.0
+.....\TU/lmr/m/n/9 b
+.....\TU/lmr/m/n/9 2
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0
+..\penalty 10000
+..\glue(\parfillskip) 0.0 plus 1.0fil
+..\glue(\rightskip) 0.0
+.\glue(\parskip) 0.0
+.\glue(\parskip) 0.0
+.\glue 0.0
+.\glue 0.0
+.\penalty -51
+.\glue 0.0
+! OK.
+\LEAK ...NTO\fi }\showbox 2 \showbox 4 \showbox 6 
+                                                  \endgroup 
+l. ......\setenumext[enumext,1]{listparindent=1cm}}
+[B7] enumext: igual
+[B7] keyans: igual
+[B7] enumext*: igual
+> \box...=
+\vbox(22.94+0.0)x345.0, direction TLT
+.\penalty 10000
+.\glue 0.0
+.\glue 0.0
+.\hbox(21.0+1.94)x345.0, glue set 2.77824fil, direction TLT
+..\vbox(21.0+0.0)x169.72176, glue set - 0.4482, direction TLT
+...\glue 0.0 plus -2.0
+...\glue(\splittopskip) 4.006 plus 2.0
+...\hbox(5.994+0.099)x158.60878, glue set 149.35677fil, shifted 11.11298, direction TLT
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(5.994+0.0)x0.0, direction TLT
+.....\glue 0.0
+.....\glue -7.78
+.....\glue -3.33298
+.....\hbox(5.994+0.0)x7.78, glue set 0.57999fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 1
+......\TU/lmr/m/n/9 .
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+....\penalty 0
+....\TU/lmr/m/n/9 a
+....\TU/lmr/m/n/9 1
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\penalty -51
+...\glue 0.0
+...\glue 0.0
+...\glue 0.0
+...\glue(\parskip) 0.0
+...\glue(\parskip) 0.0
+...\glue(\baselineskip) 4.151
+...\hbox(6.75+2.241)x139.1658, glue set 129.40079fil, shifted 30.55595, direction TLT
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(6.75+2.241)x0.0, direction TLT
+.....\glue -19.44298
+.....\glue 0.0
+.....\glue -7.78
+.....\glue -3.33298
+.....\hbox(5.994+0.0)x7.78, glue set 0.57999fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 2
+......\TU/lmr/m/n/9 .
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+.....\glue 19.44298
+.....\glue 0.0
+.....\glue -16.11
+.....\glue -3.33298
+.....\hbox(6.75+2.241)x16.11, glue set 4.28398fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 (
+......\TU/lmr/m/n/9 a
+......\TU/lmr/m/n/9 )
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+....\penalty 0
+....\TU/lmr/m/n/9 b
+....\TU/lmr/m/n/9 1
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\glue 0.0 plus 0.0001fil minus 5.0
+..\glue 0.0 plus 1.0fil minus 1.0fil
+..\rule(*+*)x0.0
+..\glue 0.0 plus 1.0fil minus 1.0fil
+..\vbox(21.0+0.0)x169.72176, glue set 8.75807fil, direction TLT
+...\glue 0.0 plus -2.0
+...\glue(\splittopskip) 3.25 plus 2.0
+...\hbox(6.75+2.241)x119.43283, glue set 110.69382fil, shifted 50.28893, direction TLT
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(6.75+2.241)x0.0, direction TLT
+.....\glue -19.73297
+.....\glue 0.0
+.....\glue -16.11
+.....\glue -3.33298
+.....\hbox(6.75+2.241)x16.11, glue set 3.77098fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 (
+......\TU/lmr/m/n/9 b
+......\TU/lmr/m/n/9 )
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+.....\glue 19.73297
+.....\glue 0.0
+.....\glue -16.4
+.....\glue -3.33298
+.....\hbox(5.913+0.0)x16.4, glue set 11.25198fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 i
+......\TU/lmr/m/n/9 .
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+....\penalty 0
+....\TU/lmr/m/n/9 c
+....\TU/lmr/m/n/9 1
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\penalty -51
+...\glue 0.0 plus 1.0fil
+...\glue 0.0 plus 0.0001fil minus 5.0
+..\hbox(4.42+1.94)x0.0, glue set - 5.56fil, direction TLT
+...\hbox(4.42+1.94)x5.56, direction TLT
+...\glue 0.0 plus 1.0fil minus 1.0fil
+.\glue 0.0
+! OK.
+\LEAK ...ISTINTO\fi \else DISTINTO\fi }\showbox 2 
+                                                  \showbox 4 \showbox 6 \end...
+l. ......7}{\setenumext[enumext,1]{label=\roman*.}}
+> \box...=
+\vbox(11.94+0.0)x345.0, direction TLT
+.\penalty 10000
+.\glue 0.0
+.\glue 0.0
+.\hbox(10.0+1.94)x345.0, glue set 2.77824fil, direction TLT
+..\vbox(10.0+0.0)x169.72176, glue set - 0.4482, direction TLT
+...\glue 0.0 plus -2.0
+...\glue(\splittopskip) 3.25 plus 2.0
+...\hbox(6.75+2.241)x158.60878, glue set 148.06978fil, shifted 11.11298, direction TLT
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(5.994+0.0)x0.0, direction TLT
+.....\glue 0.0
+.....\glue -7.78
+.....\glue -3.33298
+.....\hbox(5.994+0.0)x7.78, glue set 0.57999fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 1
+......\TU/lmr/m/n/9 .
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+....\penalty 0
+....\TU/lmr/m/n/9 A
+....\TU/lmr/m/n/9 )
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\penalty -51
+...\glue 0.0 plus 0.0001fil minus 5.0
+..\glue 0.0 plus 1.0fil minus 1.0fil
+..\rule(*+*)x0.0
+..\glue 0.0 plus 1.0fil minus 1.0fil
+..\vbox(10.0+0.0)x169.72176, glue set >20000.0fil, direction TLT
+...\glue 0.0 plus -2.0
+...\glue 0.0 plus 0.0001fil minus 5.0
+..\hbox(4.42+1.94)x0.0, glue set - 5.56fil, direction TLT
+...\hbox(4.42+1.94)x5.56, direction TLT
+...\glue 0.0 plus 1.0fil minus 1.0fil
+.\glue 0.0
+! OK.
+\LEAK ...\else DISTINTO\fi }\showbox 2 \showbox 4 
+                                                  \showbox 6 \endgroup 
+l. ......7}{\setenumext[enumext,1]{label=\roman*.}}
+> \box...=
+\vbox(6.345+0.0)x345.0, direction TLT
+.\penalty -51
+.\glue 0.0 plus 1.0
+.\glue 0.0
+.\glue(\parskip) 0.0
+.\glue(\parskip) 0.0
+.\hbox(6.246+0.099)x345.0, direction TLT
+..\localpar
+...\localinterlinepenalty=0
+...\localbrokenpenalty=0
+...\localleftbox=null
+...\localrightbox=null
+..\hbox(0.0+0.0)x11.11298, direction TLT
+...\glue 11.11298
+...\glue -7.78
+...\glue -3.33298
+...\hbox(0.0+0.0)x7.78, glue set 7.78fil, direction TLT
+....\glue 0.0 plus 1.0fil
+...\glue 3.33298
+..\penalty 0
+..\glue -11.11298
+..\hbox(5.994+0.099)x169.72176, direction TLT
+...\hbox(5.994+0.0)x7.78, glue set 0.57999fil, direction TLT
+....\TU/lmr/m/n/9 1
+....\TU/lmr/m/n/9 .
+....\glue 0.0 plus 1.0fil minus 1.0fil
+...\glue 3.33298
+...\vbox(5.994+0.099)x158.60878, direction TLT
+....\hbox(5.994+0.099)x158.60878, glue set 149.35677fil, direction TLT
+.....\localpar
+......\localinterlinepenalty=0
+......\localbrokenpenalty=0
+......\localleftbox=null
+......\localrightbox=null
+.....\hbox(0.0+0.0)x0.0, direction TLT
+.....\glue 0.0
+.....\TU/lmr/m/n/9 a
+.....\TU/lmr/m/n/9 2
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0
+..\glue 5.55649
+..\hbox(6.246+0.099)x169.72176, direction TLT
+...\hbox(5.994+0.0)x7.78, glue set 0.57999fil, direction TLT
+....\TU/lmr/m/n/9 2
+....\TU/lmr/m/n/9 .
+....\glue 0.0 plus 1.0fil minus 1.0fil
+...\glue 3.33298
+...\vbox(6.246+0.099)x158.60878, direction TLT
+....\hbox(6.246+0.099)x158.60878, glue set 148.84377fil, direction TLT
+.....\localpar
+......\localinterlinepenalty=0
+......\localbrokenpenalty=0
+......\localleftbox=null
+......\localrightbox=null
+.....\hbox(0.0+0.0)x0.0, direction TLT
+.....\glue 0.0
+.....\TU/lmr/m/n/9 b
+.....\TU/lmr/m/n/9 2
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0
+..\penalty 10000
+..\glue(\parfillskip) 0.0 plus 1.0fil
+..\glue(\rightskip) 0.0
+.\glue(\parskip) 0.0
+.\glue(\parskip) 0.0
+.\glue 0.0
+.\glue 0.0
+.\penalty -51
+.\glue 0.0
+! OK.
+\LEAK ...NTO\fi }\showbox 2 \showbox 4 \showbox 6 
+                                                  \endgroup 
+l. ......7}{\setenumext[enumext,1]{label=\roman*.}}
+[B8] enumext: igual
+[B8] keyans: igual
+[B8] enumext*: igual
+> \box...=
+\vbox(22.94+0.0)x345.0, direction TLT
+.\penalty 10000
+.\glue 0.0
+.\glue 0.0
+.\hbox(21.0+1.94)x345.0, glue set 2.77824fil, direction TLT
+..\vbox(21.0+0.0)x169.72176, glue set - 0.4482, direction TLT
+...\glue 0.0 plus -2.0
+...\glue(\splittopskip) 4.006 plus 2.0
+...\hbox(5.994+0.099)x158.60878, glue set 149.35677fil, shifted 11.11298, direction TLT
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(5.994+0.0)x0.0, direction TLT
+.....\glue 0.0
+.....\glue -7.78
+.....\glue -3.33298
+.....\hbox(5.994+0.0)x7.78, glue set 0.57999fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 1
+......\TU/lmr/m/n/9 .
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+....\penalty 0
+....\TU/lmr/m/n/9 a
+....\TU/lmr/m/n/9 1
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\penalty -51
+...\glue 0.0
+...\glue 0.0
+...\glue 0.0
+...\glue(\parskip) 0.0
+...\glue(\parskip) 0.0
+...\glue(\baselineskip) 4.151
+...\hbox(6.75+2.241)x139.1658, glue set 129.40079fil, shifted 30.55595, direction TLT
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(6.75+2.241)x0.0, direction TLT
+.....\glue -19.44298
+.....\glue 0.0
+.....\glue -7.78
+.....\glue -3.33298
+.....\hbox(5.994+0.0)x7.78, glue set 0.57999fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 2
+......\TU/lmr/m/n/9 .
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+.....\glue 19.44298
+.....\glue 0.0
+.....\glue -16.11
+.....\glue -3.33298
+.....\hbox(6.75+2.241)x16.11, glue set 4.28398fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 (
+......\TU/lmr/m/n/9 a
+......\TU/lmr/m/n/9 )
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+....\penalty 0
+....\TU/lmr/m/n/9 b
+....\TU/lmr/m/n/9 1
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\glue 0.0 plus 0.0001fil minus 5.0
+..\glue 0.0 plus 1.0fil minus 1.0fil
+..\rule(*+*)x0.0
+..\glue 0.0 plus 1.0fil minus 1.0fil
+..\vbox(21.0+0.0)x169.72176, glue set 8.75807fil, direction TLT
+...\glue 0.0 plus -2.0
+...\glue(\splittopskip) 3.25 plus 2.0
+...\hbox(6.75+2.241)x119.43283, glue set 110.69382fil, shifted 50.28893, direction TLT
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(6.75+2.241)x0.0, direction TLT
+.....\glue -19.73297
+.....\glue 0.0
+.....\glue -16.11
+.....\glue -3.33298
+.....\hbox(6.75+2.241)x16.11, glue set 3.77098fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 (
+......\TU/lmr/m/n/9 b
+......\TU/lmr/m/n/9 )
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+.....\glue 19.73297
+.....\glue 0.0
+.....\glue -16.4
+.....\glue -3.33298
+.....\hbox(5.913+0.0)x16.4, glue set 11.25198fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 i
+......\TU/lmr/m/n/9 .
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+....\penalty 0
+....\TU/lmr/m/n/9 c
+....\TU/lmr/m/n/9 1
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\penalty -51
+...\glue 0.0 plus 1.0fil
+...\glue 0.0 plus 0.0001fil minus 5.0
+..\hbox(4.42+1.94)x0.0, glue set - 5.56fil, direction TLT
+...\hbox(4.42+1.94)x5.56, direction TLT
+...\glue 0.0 plus 1.0fil minus 1.0fil
+.\glue 0.0
+! OK.
+\LEAK ...ISTINTO\fi \else DISTINTO\fi }\showbox 2 
+                                                  \showbox 4 \showbox 6 \end...
+l. ......t,1]{topsep=1cm, itemsep=1cm, parsep=1cm}}
+> \box...=
+\vbox(11.94+0.0)x345.0, direction TLT
+.\penalty 10000
+.\glue 0.0
+.\glue 0.0
+.\hbox(10.0+1.94)x345.0, glue set 2.77824fil, direction TLT
+..\vbox(10.0+0.0)x169.72176, glue set - 0.4482, direction TLT
+...\glue 0.0 plus -2.0
+...\glue(\splittopskip) 3.25 plus 2.0
+...\hbox(6.75+2.241)x158.60878, glue set 148.06978fil, shifted 11.11298, direction TLT
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(5.994+0.0)x0.0, direction TLT
+.....\glue 0.0
+.....\glue -7.78
+.....\glue -3.33298
+.....\hbox(5.994+0.0)x7.78, glue set 0.57999fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 1
+......\TU/lmr/m/n/9 .
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+....\penalty 0
+....\TU/lmr/m/n/9 A
+....\TU/lmr/m/n/9 )
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\penalty -51
+...\glue 0.0 plus 0.0001fil minus 5.0
+..\glue 0.0 plus 1.0fil minus 1.0fil
+..\rule(*+*)x0.0
+..\glue 0.0 plus 1.0fil minus 1.0fil
+..\vbox(10.0+0.0)x169.72176, glue set >20000.0fil, direction TLT
+...\glue 0.0 plus -2.0
+...\glue 0.0 plus 0.0001fil minus 5.0
+..\hbox(4.42+1.94)x0.0, glue set - 5.56fil, direction TLT
+...\hbox(4.42+1.94)x5.56, direction TLT
+...\glue 0.0 plus 1.0fil minus 1.0fil
+.\glue 0.0
+! OK.
+\LEAK ...\else DISTINTO\fi }\showbox 2 \showbox 4 
+                                                  \showbox 6 \endgroup 
+l. ......t,1]{topsep=1cm, itemsep=1cm, parsep=1cm}}
+> \box...=
+\vbox(6.345+0.0)x345.0, direction TLT
+.\penalty -51
+.\glue 0.0 plus 1.0
+.\glue 0.0
+.\glue(\parskip) 0.0
+.\glue(\parskip) 0.0
+.\hbox(6.246+0.099)x345.0, direction TLT
+..\localpar
+...\localinterlinepenalty=0
+...\localbrokenpenalty=0
+...\localleftbox=null
+...\localrightbox=null
+..\hbox(0.0+0.0)x11.11298, direction TLT
+...\glue 11.11298
+...\glue -7.78
+...\glue -3.33298
+...\hbox(0.0+0.0)x7.78, glue set 7.78fil, direction TLT
+....\glue 0.0 plus 1.0fil
+...\glue 3.33298
+..\penalty 0
+..\glue -11.11298
+..\hbox(5.994+0.099)x169.72176, direction TLT
+...\hbox(5.994+0.0)x7.78, glue set 0.57999fil, direction TLT
+....\TU/lmr/m/n/9 1
+....\TU/lmr/m/n/9 .
+....\glue 0.0 plus 1.0fil minus 1.0fil
+...\glue 3.33298
+...\vbox(5.994+0.099)x158.60878, direction TLT
+....\hbox(5.994+0.099)x158.60878, glue set 149.35677fil, direction TLT
+.....\localpar
+......\localinterlinepenalty=0
+......\localbrokenpenalty=0
+......\localleftbox=null
+......\localrightbox=null
+.....\hbox(0.0+0.0)x0.0, direction TLT
+.....\glue 0.0
+.....\TU/lmr/m/n/9 a
+.....\TU/lmr/m/n/9 2
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0
+..\glue 5.55649
+..\hbox(6.246+0.099)x169.72176, direction TLT
+...\hbox(5.994+0.0)x7.78, glue set 0.57999fil, direction TLT
+....\TU/lmr/m/n/9 2
+....\TU/lmr/m/n/9 .
+....\glue 0.0 plus 1.0fil minus 1.0fil
+...\glue 3.33298
+...\vbox(6.246+0.099)x158.60878, direction TLT
+....\hbox(6.246+0.099)x158.60878, glue set 148.84377fil, direction TLT
+.....\localpar
+......\localinterlinepenalty=0
+......\localbrokenpenalty=0
+......\localleftbox=null
+......\localrightbox=null
+.....\hbox(0.0+0.0)x0.0, direction TLT
+.....\glue 0.0
+.....\TU/lmr/m/n/9 b
+.....\TU/lmr/m/n/9 2
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0
+..\penalty 10000
+..\glue(\parfillskip) 0.0 plus 1.0fil
+..\glue(\rightskip) 0.0
+.\glue(\parskip) 0.0
+.\glue(\parskip) 0.0
+.\glue 0.0
+.\glue 0.0
+.\penalty -51
+.\glue 0.0
+! OK.
+\LEAK ...NTO\fi }\showbox 2 \showbox 4 \showbox 6 
+                                                  \endgroup 
+l. ......t,1]{topsep=1cm, itemsep=1cm, parsep=1cm}}
+[B9] enumext: igual
+[B9] keyans: igual
+[B9] enumext*: igual
+> \box...=
+\vbox(22.94+0.0)x345.0, direction TLT
+.\penalty 10000
+.\glue 0.0
+.\glue 0.0
+.\hbox(21.0+1.94)x345.0, glue set 2.77824fil, direction TLT
+..\vbox(21.0+0.0)x169.72176, glue set - 0.4482, direction TLT
+...\glue 0.0 plus -2.0
+...\glue(\splittopskip) 4.006 plus 2.0
+...\hbox(5.994+0.099)x158.60878, glue set 149.35677fil, shifted 11.11298, direction TLT
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(5.994+0.0)x0.0, direction TLT
+.....\glue 0.0
+.....\glue -7.78
+.....\glue -3.33298
+.....\hbox(5.994+0.0)x7.78, glue set 0.57999fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 1
+......\TU/lmr/m/n/9 .
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+....\penalty 0
+....\TU/lmr/m/n/9 a
+....\TU/lmr/m/n/9 1
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\penalty -51
+...\glue 0.0
+...\glue 0.0
+...\glue 0.0
+...\glue(\parskip) 0.0
+...\glue(\parskip) 0.0
+...\glue(\baselineskip) 4.151
+...\hbox(6.75+2.241)x139.1658, glue set 129.40079fil, shifted 30.55595, direction TLT
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(6.75+2.241)x0.0, direction TLT
+.....\glue -19.44298
+.....\glue 0.0
+.....\glue -7.78
+.....\glue -3.33298
+.....\hbox(5.994+0.0)x7.78, glue set 0.57999fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 2
+......\TU/lmr/m/n/9 .
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+.....\glue 19.44298
+.....\glue 0.0
+.....\glue -16.11
+.....\glue -3.33298
+.....\hbox(6.75+2.241)x16.11, glue set 4.28398fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 (
+......\TU/lmr/m/n/9 a
+......\TU/lmr/m/n/9 )
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+....\penalty 0
+....\TU/lmr/m/n/9 b
+....\TU/lmr/m/n/9 1
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\glue 0.0 plus 0.0001fil minus 5.0
+..\glue 0.0 plus 1.0fil minus 1.0fil
+..\rule(*+*)x0.0
+..\glue 0.0 plus 1.0fil minus 1.0fil
+..\vbox(21.0+0.0)x169.72176, glue set 8.75807fil, direction TLT
+...\glue 0.0 plus -2.0
+...\glue(\splittopskip) 3.25 plus 2.0
+...\hbox(6.75+2.241)x119.43283, glue set 110.69382fil, shifted 50.28893, direction TLT
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(6.75+2.241)x0.0, direction TLT
+.....\glue -19.73297
+.....\glue 0.0
+.....\glue -16.11
+.....\glue -3.33298
+.....\hbox(6.75+2.241)x16.11, glue set 3.77098fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 (
+......\TU/lmr/m/n/9 b
+......\TU/lmr/m/n/9 )
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+.....\glue 19.73297
+.....\glue 0.0
+.....\glue -16.4
+.....\glue -3.33298
+.....\hbox(5.913+0.0)x16.4, glue set 11.25198fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 i
+......\TU/lmr/m/n/9 .
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+....\penalty 0
+....\TU/lmr/m/n/9 c
+....\TU/lmr/m/n/9 1
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\penalty -51
+...\glue 0.0 plus 1.0fil
+...\glue 0.0 plus 0.0001fil minus 5.0
+..\hbox(4.42+1.94)x0.0, glue set - 5.56fil, direction TLT
+...\hbox(4.42+1.94)x5.56, direction TLT
+...\glue 0.0 plus 1.0fil minus 1.0fil
+.\glue 0.0
+! OK.
+\LEAK ...ISTINTO\fi \else DISTINTO\fi }\showbox 2 
+                                                  \showbox 4 \showbox 6 \end...
+l. ...\LEAK{B9}{\setenumext[enumext,1]{columns=3}}
+> \box...=
+\vbox(11.94+0.0)x345.0, direction TLT
+.\penalty 10000
+.\glue 0.0
+.\glue 0.0
+.\hbox(10.0+1.94)x345.0, glue set 2.77824fil, direction TLT
+..\vbox(10.0+0.0)x169.72176, glue set - 0.4482, direction TLT
+...\glue 0.0 plus -2.0
+...\glue(\splittopskip) 3.25 plus 2.0
+...\hbox(6.75+2.241)x158.60878, glue set 148.06978fil, shifted 11.11298, direction TLT
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(5.994+0.0)x0.0, direction TLT
+.....\glue 0.0
+.....\glue -7.78
+.....\glue -3.33298
+.....\hbox(5.994+0.0)x7.78, glue set 0.57999fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 1
+......\TU/lmr/m/n/9 .
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+....\penalty 0
+....\TU/lmr/m/n/9 A
+....\TU/lmr/m/n/9 )
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\penalty -51
+...\glue 0.0 plus 0.0001fil minus 5.0
+..\glue 0.0 plus 1.0fil minus 1.0fil
+..\rule(*+*)x0.0
+..\glue 0.0 plus 1.0fil minus 1.0fil
+..\vbox(10.0+0.0)x169.72176, glue set >20000.0fil, direction TLT
+...\glue 0.0 plus -2.0
+...\glue 0.0 plus 0.0001fil minus 5.0
+..\hbox(4.42+1.94)x0.0, glue set - 5.56fil, direction TLT
+...\hbox(4.42+1.94)x5.56, direction TLT
+...\glue 0.0 plus 1.0fil minus 1.0fil
+.\glue 0.0
+! OK.
+\LEAK ...\else DISTINTO\fi }\showbox 2 \showbox 4 
+                                                  \showbox 6 \endgroup 
+l. ...\LEAK{B9}{\setenumext[enumext,1]{columns=3}}
+> \box...=
+\vbox(6.345+0.0)x345.0, direction TLT
+.\penalty -51
+.\glue 0.0 plus 1.0
+.\glue 0.0
+.\glue(\parskip) 0.0
+.\glue(\parskip) 0.0
+.\hbox(6.246+0.099)x345.0, direction TLT
+..\localpar
+...\localinterlinepenalty=0
+...\localbrokenpenalty=0
+...\localleftbox=null
+...\localrightbox=null
+..\hbox(0.0+0.0)x11.11298, direction TLT
+...\glue 11.11298
+...\glue -7.78
+...\glue -3.33298
+...\hbox(0.0+0.0)x7.78, glue set 7.78fil, direction TLT
+....\glue 0.0 plus 1.0fil
+...\glue 3.33298
+..\penalty 0
+..\glue -11.11298
+..\hbox(5.994+0.099)x169.72176, direction TLT
+...\hbox(5.994+0.0)x7.78, glue set 0.57999fil, direction TLT
+....\TU/lmr/m/n/9 1
+....\TU/lmr/m/n/9 .
+....\glue 0.0 plus 1.0fil minus 1.0fil
+...\glue 3.33298
+...\vbox(5.994+0.099)x158.60878, direction TLT
+....\hbox(5.994+0.099)x158.60878, glue set 149.35677fil, direction TLT
+.....\localpar
+......\localinterlinepenalty=0
+......\localbrokenpenalty=0
+......\localleftbox=null
+......\localrightbox=null
+.....\hbox(0.0+0.0)x0.0, direction TLT
+.....\glue 0.0
+.....\TU/lmr/m/n/9 a
+.....\TU/lmr/m/n/9 2
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0
+..\glue 5.55649
+..\hbox(6.246+0.099)x169.72176, direction TLT
+...\hbox(5.994+0.0)x7.78, glue set 0.57999fil, direction TLT
+....\TU/lmr/m/n/9 2
+....\TU/lmr/m/n/9 .
+....\glue 0.0 plus 1.0fil minus 1.0fil
+...\glue 3.33298
+...\vbox(6.246+0.099)x158.60878, direction TLT
+....\hbox(6.246+0.099)x158.60878, glue set 148.84377fil, direction TLT
+.....\localpar
+......\localinterlinepenalty=0
+......\localbrokenpenalty=0
+......\localleftbox=null
+......\localrightbox=null
+.....\hbox(0.0+0.0)x0.0, direction TLT
+.....\glue 0.0
+.....\TU/lmr/m/n/9 b
+.....\TU/lmr/m/n/9 2
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0
+..\penalty 10000
+..\glue(\parfillskip) 0.0 plus 1.0fil
+..\glue(\rightskip) 0.0
+.\glue(\parskip) 0.0
+.\glue(\parskip) 0.0
+.\glue 0.0
+.\glue 0.0
+.\penalty -51
+.\glue 0.0
+! OK.
+\LEAK ...NTO\fi }\showbox 2 \showbox 4 \showbox 6 
+                                                  \endgroup 
+l. ...\LEAK{B9}{\setenumext[enumext,1]{columns=3}}
+[B10] enumext: igual
+[B10] keyans: igual
+[B10] enumext*: igual
+> \box...=
+\vbox(22.94+0.0)x345.0, direction TLT
+.\penalty 10000
+.\glue 0.0
+.\glue 0.0
+.\hbox(21.0+1.94)x345.0, glue set 2.77824fil, direction TLT
+..\vbox(21.0+0.0)x169.72176, glue set - 0.4482, direction TLT
+...\glue 0.0 plus -2.0
+...\glue(\splittopskip) 4.006 plus 2.0
+...\hbox(5.994+0.099)x158.60878, glue set 149.35677fil, shifted 11.11298, direction TLT
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(5.994+0.0)x0.0, direction TLT
+.....\glue 0.0
+.....\glue -7.78
+.....\glue -3.33298
+.....\hbox(5.994+0.0)x7.78, glue set 0.57999fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 1
+......\TU/lmr/m/n/9 .
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+....\penalty 0
+....\TU/lmr/m/n/9 a
+....\TU/lmr/m/n/9 1
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\penalty -51
+...\glue 0.0
+...\glue 0.0
+...\glue 0.0
+...\glue(\parskip) 0.0
+...\glue(\parskip) 0.0
+...\glue(\baselineskip) 4.151
+...\hbox(6.75+2.241)x139.1658, glue set 129.40079fil, shifted 30.55595, direction TLT
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(6.75+2.241)x0.0, direction TLT
+.....\glue -19.44298
+.....\glue 0.0
+.....\glue -7.78
+.....\glue -3.33298
+.....\hbox(5.994+0.0)x7.78, glue set 0.57999fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 2
+......\TU/lmr/m/n/9 .
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+.....\glue 19.44298
+.....\glue 0.0
+.....\glue -16.11
+.....\glue -3.33298
+.....\hbox(6.75+2.241)x16.11, glue set 4.28398fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 (
+......\TU/lmr/m/n/9 a
+......\TU/lmr/m/n/9 )
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+....\penalty 0
+....\TU/lmr/m/n/9 b
+....\TU/lmr/m/n/9 1
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\glue 0.0 plus 0.0001fil minus 5.0
+..\glue 0.0 plus 1.0fil minus 1.0fil
+..\rule(*+*)x0.0
+..\glue 0.0 plus 1.0fil minus 1.0fil
+..\vbox(21.0+0.0)x169.72176, glue set 8.75807fil, direction TLT
+...\glue 0.0 plus -2.0
+...\glue(\splittopskip) 3.25 plus 2.0
+...\hbox(6.75+2.241)x119.43283, glue set 110.69382fil, shifted 50.28893, direction TLT
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(6.75+2.241)x0.0, direction TLT
+.....\glue -19.73297
+.....\glue 0.0
+.....\glue -16.11
+.....\glue -3.33298
+.....\hbox(6.75+2.241)x16.11, glue set 3.77098fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 (
+......\TU/lmr/m/n/9 b
+......\TU/lmr/m/n/9 )
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+.....\glue 19.73297
+.....\glue 0.0
+.....\glue -16.4
+.....\glue -3.33298
+.....\hbox(5.913+0.0)x16.4, glue set 11.25198fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 i
+......\TU/lmr/m/n/9 .
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+....\penalty 0
+....\TU/lmr/m/n/9 c
+....\TU/lmr/m/n/9 1
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\penalty -51
+...\glue 0.0 plus 1.0fil
+...\glue 0.0 plus 0.0001fil minus 5.0
+..\hbox(4.42+1.94)x0.0, glue set - 5.56fil, direction TLT
+...\hbox(4.42+1.94)x5.56, direction TLT
+...\glue 0.0 plus 1.0fil minus 1.0fil
+.\glue 0.0
+! OK.
+\LEAK ...ISTINTO\fi \else DISTINTO\fi }\showbox 2 
+                                                  \showbox 4 \showbox 6 \end...
+l. ......t,1]{align=right, wrap-label=\textbf{#1}}}
+> \box...=
+\vbox(11.94+0.0)x345.0, direction TLT
+.\penalty 10000
+.\glue 0.0
+.\glue 0.0
+.\hbox(10.0+1.94)x345.0, glue set 2.77824fil, direction TLT
+..\vbox(10.0+0.0)x169.72176, glue set - 0.4482, direction TLT
+...\glue 0.0 plus -2.0
+...\glue(\splittopskip) 3.25 plus 2.0
+...\hbox(6.75+2.241)x158.60878, glue set 148.06978fil, shifted 11.11298, direction TLT
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(5.994+0.0)x0.0, direction TLT
+.....\glue 0.0
+.....\glue -7.78
+.....\glue -3.33298
+.....\hbox(5.994+0.0)x7.78, glue set 0.57999fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 1
+......\TU/lmr/m/n/9 .
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+....\penalty 0
+....\TU/lmr/m/n/9 A
+....\TU/lmr/m/n/9 )
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\penalty -51
+...\glue 0.0 plus 0.0001fil minus 5.0
+..\glue 0.0 plus 1.0fil minus 1.0fil
+..\rule(*+*)x0.0
+..\glue 0.0 plus 1.0fil minus 1.0fil
+..\vbox(10.0+0.0)x169.72176, glue set >20000.0fil, direction TLT
+...\glue 0.0 plus -2.0
+...\glue 0.0 plus 0.0001fil minus 5.0
+..\hbox(4.42+1.94)x0.0, glue set - 5.56fil, direction TLT
+...\hbox(4.42+1.94)x5.56, direction TLT
+...\glue 0.0 plus 1.0fil minus 1.0fil
+.\glue 0.0
+! OK.
+\LEAK ...\else DISTINTO\fi }\showbox 2 \showbox 4 
+                                                  \showbox 6 \endgroup 
+l. ......t,1]{align=right, wrap-label=\textbf{#1}}}
+> \box...=
+\vbox(6.345+0.0)x345.0, direction TLT
+.\penalty -51
+.\glue 0.0 plus 1.0
+.\glue 0.0
+.\glue(\parskip) 0.0
+.\glue(\parskip) 0.0
+.\hbox(6.246+0.099)x345.0, direction TLT
+..\localpar
+...\localinterlinepenalty=0
+...\localbrokenpenalty=0
+...\localleftbox=null
+...\localrightbox=null
+..\hbox(0.0+0.0)x11.11298, direction TLT
+...\glue 11.11298
+...\glue -7.78
+...\glue -3.33298
+...\hbox(0.0+0.0)x7.78, glue set 7.78fil, direction TLT
+....\glue 0.0 plus 1.0fil
+...\glue 3.33298
+..\penalty 0
+..\glue -11.11298
+..\hbox(5.994+0.099)x169.72176, direction TLT
+...\hbox(5.994+0.0)x7.78, glue set 0.57999fil, direction TLT
+....\TU/lmr/m/n/9 1
+....\TU/lmr/m/n/9 .
+....\glue 0.0 plus 1.0fil minus 1.0fil
+...\glue 3.33298
+...\vbox(5.994+0.099)x158.60878, direction TLT
+....\hbox(5.994+0.099)x158.60878, glue set 149.35677fil, direction TLT
+.....\localpar
+......\localinterlinepenalty=0
+......\localbrokenpenalty=0
+......\localleftbox=null
+......\localrightbox=null
+.....\hbox(0.0+0.0)x0.0, direction TLT
+.....\glue 0.0
+.....\TU/lmr/m/n/9 a
+.....\TU/lmr/m/n/9 2
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0
+..\glue 5.55649
+..\hbox(6.246+0.099)x169.72176, direction TLT
+...\hbox(5.994+0.0)x7.78, glue set 0.57999fil, direction TLT
+....\TU/lmr/m/n/9 2
+....\TU/lmr/m/n/9 .
+....\glue 0.0 plus 1.0fil minus 1.0fil
+...\glue 3.33298
+...\vbox(6.246+0.099)x158.60878, direction TLT
+....\hbox(6.246+0.099)x158.60878, glue set 148.84377fil, direction TLT
+.....\localpar
+......\localinterlinepenalty=0
+......\localbrokenpenalty=0
+......\localleftbox=null
+......\localrightbox=null
+.....\hbox(0.0+0.0)x0.0, direction TLT
+.....\glue 0.0
+.....\TU/lmr/m/n/9 b
+.....\TU/lmr/m/n/9 2
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0
+..\penalty 10000
+..\glue(\parfillskip) 0.0 plus 1.0fil
+..\glue(\rightskip) 0.0
+.\glue(\parskip) 0.0
+.\glue(\parskip) 0.0
+.\glue 0.0
+.\glue 0.0
+.\penalty -51
+.\glue 0.0
+! OK.
+\LEAK ...NTO\fi }\showbox 2 \showbox 4 \showbox 6 
+                                                  \endgroup 
+l. ......t,1]{align=right, wrap-label=\textbf{#1}}}
+[B11] enumext: igual
+[B11] keyans: igual
+[B11] enumext*: igual
+> \box...=
+\vbox(22.94+0.0)x345.0, direction TLT
+.\penalty 10000
+.\glue 0.0
+.\glue 0.0
+.\hbox(21.0+1.94)x345.0, glue set 2.77824fil, direction TLT
+..\vbox(21.0+0.0)x169.72176, glue set - 0.4482, direction TLT
+...\glue 0.0 plus -2.0
+...\glue(\splittopskip) 4.006 plus 2.0
+...\hbox(5.994+0.099)x158.60878, glue set 149.35677fil, shifted 11.11298, direction TLT
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(5.994+0.0)x0.0, direction TLT
+.....\glue 0.0
+.....\glue -7.78
+.....\glue -3.33298
+.....\hbox(5.994+0.0)x7.78, glue set 0.57999fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 1
+......\TU/lmr/m/n/9 .
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+....\penalty 0
+....\TU/lmr/m/n/9 a
+....\TU/lmr/m/n/9 1
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\penalty -51
+...\glue 0.0
+...\glue 0.0
+...\glue 0.0
+...\glue(\parskip) 0.0
+...\glue(\parskip) 0.0
+...\glue(\baselineskip) 4.151
+...\hbox(6.75+2.241)x139.1658, glue set 129.40079fil, shifted 30.55595, direction TLT
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(6.75+2.241)x0.0, direction TLT
+.....\glue -19.44298
+.....\glue 0.0
+.....\glue -7.78
+.....\glue -3.33298
+.....\hbox(5.994+0.0)x7.78, glue set 0.57999fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 2
+......\TU/lmr/m/n/9 .
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+.....\glue 19.44298
+.....\glue 0.0
+.....\glue -16.11
+.....\glue -3.33298
+.....\hbox(6.75+2.241)x16.11, glue set 4.28398fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 (
+......\TU/lmr/m/n/9 a
+......\TU/lmr/m/n/9 )
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+....\penalty 0
+....\TU/lmr/m/n/9 b
+....\TU/lmr/m/n/9 1
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\glue 0.0 plus 0.0001fil minus 5.0
+..\glue 0.0 plus 1.0fil minus 1.0fil
+..\rule(*+*)x0.0
+..\glue 0.0 plus 1.0fil minus 1.0fil
+..\vbox(21.0+0.0)x169.72176, glue set 8.75807fil, direction TLT
+...\glue 0.0 plus -2.0
+...\glue(\splittopskip) 3.25 plus 2.0
+...\hbox(6.75+2.241)x119.43283, glue set 110.69382fil, shifted 50.28893, direction TLT
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(6.75+2.241)x0.0, direction TLT
+.....\glue -19.73297
+.....\glue 0.0
+.....\glue -16.11
+.....\glue -3.33298
+.....\hbox(6.75+2.241)x16.11, glue set 3.77098fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 (
+......\TU/lmr/m/n/9 b
+......\TU/lmr/m/n/9 )
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+.....\glue 19.73297
+.....\glue 0.0
+.....\glue -16.4
+.....\glue -3.33298
+.....\hbox(5.913+0.0)x16.4, glue set 11.25198fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 i
+......\TU/lmr/m/n/9 .
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+....\penalty 0
+....\TU/lmr/m/n/9 c
+....\TU/lmr/m/n/9 1
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\penalty -51
+...\glue 0.0 plus 1.0fil
+...\glue 0.0 plus 0.0001fil minus 5.0
+..\hbox(4.42+1.94)x0.0, glue set - 5.56fil, direction TLT
+...\hbox(4.42+1.94)x5.56, direction TLT
+...\glue 0.0 plus 1.0fil minus 1.0fil
+.\glue 0.0
+! OK.
+\LEAK ...ISTINTO\fi \else DISTINTO\fi }\showbox 2 
+                                                  \showbox 4 \showbox 6 \end...
+l. ......enumext,2]{labelwidth=3cm, label=\Alph*)}}
+> \box...=
+\vbox(11.94+0.0)x345.0, direction TLT
+.\penalty 10000
+.\glue 0.0
+.\glue 0.0
+.\hbox(10.0+1.94)x345.0, glue set 2.77824fil, direction TLT
+..\vbox(10.0+0.0)x169.72176, glue set - 0.4482, direction TLT
+...\glue 0.0 plus -2.0
+...\glue(\splittopskip) 3.25 plus 2.0
+...\hbox(6.75+2.241)x158.60878, glue set 148.06978fil, shifted 11.11298, direction TLT
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(5.994+0.0)x0.0, direction TLT
+.....\glue 0.0
+.....\glue -7.78
+.....\glue -3.33298
+.....\hbox(5.994+0.0)x7.78, glue set 0.57999fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 1
+......\TU/lmr/m/n/9 .
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+....\penalty 0
+....\TU/lmr/m/n/9 A
+....\TU/lmr/m/n/9 )
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\penalty -51
+...\glue 0.0 plus 0.0001fil minus 5.0
+..\glue 0.0 plus 1.0fil minus 1.0fil
+..\rule(*+*)x0.0
+..\glue 0.0 plus 1.0fil minus 1.0fil
+..\vbox(10.0+0.0)x169.72176, glue set >20000.0fil, direction TLT
+...\glue 0.0 plus -2.0
+...\glue 0.0 plus 0.0001fil minus 5.0
+..\hbox(4.42+1.94)x0.0, glue set - 5.56fil, direction TLT
+...\hbox(4.42+1.94)x5.56, direction TLT
+...\glue 0.0 plus 1.0fil minus 1.0fil
+.\glue 0.0
+! OK.
+\LEAK ...\else DISTINTO\fi }\showbox 2 \showbox 4 
+                                                  \showbox 6 \endgroup 
+l. ......enumext,2]{labelwidth=3cm, label=\Alph*)}}
+> \box...=
+\vbox(6.345+0.0)x345.0, direction TLT
+.\penalty -51
+.\glue 0.0 plus 1.0
+.\glue 0.0
+.\glue(\parskip) 0.0
+.\glue(\parskip) 0.0
+.\hbox(6.246+0.099)x345.0, direction TLT
+..\localpar
+...\localinterlinepenalty=0
+...\localbrokenpenalty=0
+...\localleftbox=null
+...\localrightbox=null
+..\hbox(0.0+0.0)x11.11298, direction TLT
+...\glue 11.11298
+...\glue -7.78
+...\glue -3.33298
+...\hbox(0.0+0.0)x7.78, glue set 7.78fil, direction TLT
+....\glue 0.0 plus 1.0fil
+...\glue 3.33298
+..\penalty 0
+..\glue -11.11298
+..\hbox(5.994+0.099)x169.72176, direction TLT
+...\hbox(5.994+0.0)x7.78, glue set 0.57999fil, direction TLT
+....\TU/lmr/m/n/9 1
+....\TU/lmr/m/n/9 .
+....\glue 0.0 plus 1.0fil minus 1.0fil
+...\glue 3.33298
+...\vbox(5.994+0.099)x158.60878, direction TLT
+....\hbox(5.994+0.099)x158.60878, glue set 149.35677fil, direction TLT
+.....\localpar
+......\localinterlinepenalty=0
+......\localbrokenpenalty=0
+......\localleftbox=null
+......\localrightbox=null
+.....\hbox(0.0+0.0)x0.0, direction TLT
+.....\glue 0.0
+.....\TU/lmr/m/n/9 a
+.....\TU/lmr/m/n/9 2
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0
+..\glue 5.55649
+..\hbox(6.246+0.099)x169.72176, direction TLT
+...\hbox(5.994+0.0)x7.78, glue set 0.57999fil, direction TLT
+....\TU/lmr/m/n/9 2
+....\TU/lmr/m/n/9 .
+....\glue 0.0 plus 1.0fil minus 1.0fil
+...\glue 3.33298
+...\vbox(6.246+0.099)x158.60878, direction TLT
+....\hbox(6.246+0.099)x158.60878, glue set 148.84377fil, direction TLT
+.....\localpar
+......\localinterlinepenalty=0
+......\localbrokenpenalty=0
+......\localleftbox=null
+......\localrightbox=null
+.....\hbox(0.0+0.0)x0.0, direction TLT
+.....\glue 0.0
+.....\TU/lmr/m/n/9 b
+.....\TU/lmr/m/n/9 2
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0
+..\penalty 10000
+..\glue(\parfillskip) 0.0 plus 1.0fil
+..\glue(\rightskip) 0.0
+.\glue(\parskip) 0.0
+.\glue(\parskip) 0.0
+.\glue 0.0
+.\glue 0.0
+.\penalty -51
+.\glue 0.0
+! OK.
+\LEAK ...NTO\fi }\showbox 2 \showbox 4 \showbox 6 
+                                                  \endgroup 
+l. ......enumext,2]{labelwidth=3cm, label=\Alph*)}}
+[B12] enumext: igual
+[B12] keyans: igual
+[B12] enumext*: igual
+> \box...=
+\vbox(22.94+0.0)x345.0, direction TLT
+.\penalty 10000
+.\glue 0.0
+.\glue 0.0
+.\hbox(21.0+1.94)x345.0, glue set 2.77824fil, direction TLT
+..\vbox(21.0+0.0)x169.72176, glue set - 0.4482, direction TLT
+...\glue 0.0 plus -2.0
+...\glue(\splittopskip) 4.006 plus 2.0
+...\hbox(5.994+0.099)x158.60878, glue set 149.35677fil, shifted 11.11298, direction TLT
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(5.994+0.0)x0.0, direction TLT
+.....\glue 0.0
+.....\glue -7.78
+.....\glue -3.33298
+.....\hbox(5.994+0.0)x7.78, glue set 0.57999fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 1
+......\TU/lmr/m/n/9 .
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+....\penalty 0
+....\TU/lmr/m/n/9 a
+....\TU/lmr/m/n/9 1
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\penalty -51
+...\glue 0.0
+...\glue 0.0
+...\glue 0.0
+...\glue(\parskip) 0.0
+...\glue(\parskip) 0.0
+...\glue(\baselineskip) 4.151
+...\hbox(6.75+2.241)x139.1658, glue set 129.40079fil, shifted 30.55595, direction TLT
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(6.75+2.241)x0.0, direction TLT
+.....\glue -19.44298
+.....\glue 0.0
+.....\glue -7.78
+.....\glue -3.33298
+.....\hbox(5.994+0.0)x7.78, glue set 0.57999fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 2
+......\TU/lmr/m/n/9 .
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+.....\glue 19.44298
+.....\glue 0.0
+.....\glue -16.11
+.....\glue -3.33298
+.....\hbox(6.75+2.241)x16.11, glue set 4.28398fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 (
+......\TU/lmr/m/n/9 a
+......\TU/lmr/m/n/9 )
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+....\penalty 0
+....\TU/lmr/m/n/9 b
+....\TU/lmr/m/n/9 1
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\glue 0.0 plus 0.0001fil minus 5.0
+..\glue 0.0 plus 1.0fil minus 1.0fil
+..\rule(*+*)x0.0
+..\glue 0.0 plus 1.0fil minus 1.0fil
+..\vbox(21.0+0.0)x169.72176, glue set 8.75807fil, direction TLT
+...\glue 0.0 plus -2.0
+...\glue(\splittopskip) 3.25 plus 2.0
+...\hbox(6.75+2.241)x119.43283, glue set 110.69382fil, shifted 50.28893, direction TLT
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(6.75+2.241)x0.0, direction TLT
+.....\glue -19.73297
+.....\glue 0.0
+.....\glue -16.11
+.....\glue -3.33298
+.....\hbox(6.75+2.241)x16.11, glue set 3.77098fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 (
+......\TU/lmr/m/n/9 b
+......\TU/lmr/m/n/9 )
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+.....\glue 19.73297
+.....\glue 0.0
+.....\glue -16.4
+.....\glue -3.33298
+.....\hbox(5.913+0.0)x16.4, glue set 11.25198fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 i
+......\TU/lmr/m/n/9 .
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+....\penalty 0
+....\TU/lmr/m/n/9 c
+....\TU/lmr/m/n/9 1
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\penalty -51
+...\glue 0.0 plus 1.0fil
+...\glue 0.0 plus 0.0001fil minus 5.0
+..\hbox(4.42+1.94)x0.0, glue set - 5.56fil, direction TLT
+...\hbox(4.42+1.94)x5.56, direction TLT
+...\glue 0.0 plus 1.0fil minus 1.0fil
+.\glue 0.0
+! OK.
+\LEAK ...ISTINTO\fi \else DISTINTO\fi }\showbox 2 
+                                                  \showbox 4 \showbox 6 \end...
+l. ......numext,3]{labelwidth=3cm, label=\Roman*)}}
+> \box...=
+\vbox(11.94+0.0)x345.0, direction TLT
+.\penalty 10000
+.\glue 0.0
+.\glue 0.0
+.\hbox(10.0+1.94)x345.0, glue set 2.77824fil, direction TLT
+..\vbox(10.0+0.0)x169.72176, glue set - 0.4482, direction TLT
+...\glue 0.0 plus -2.0
+...\glue(\splittopskip) 3.25 plus 2.0
+...\hbox(6.75+2.241)x158.60878, glue set 148.06978fil, shifted 11.11298, direction TLT
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(5.994+0.0)x0.0, direction TLT
+.....\glue 0.0
+.....\glue -7.78
+.....\glue -3.33298
+.....\hbox(5.994+0.0)x7.78, glue set 0.57999fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 1
+......\TU/lmr/m/n/9 .
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+....\penalty 0
+....\TU/lmr/m/n/9 A
+....\TU/lmr/m/n/9 )
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\penalty -51
+...\glue 0.0 plus 0.0001fil minus 5.0
+..\glue 0.0 plus 1.0fil minus 1.0fil
+..\rule(*+*)x0.0
+..\glue 0.0 plus 1.0fil minus 1.0fil
+..\vbox(10.0+0.0)x169.72176, glue set >20000.0fil, direction TLT
+...\glue 0.0 plus -2.0
+...\glue 0.0 plus 0.0001fil minus 5.0
+..\hbox(4.42+1.94)x0.0, glue set - 5.56fil, direction TLT
+...\hbox(4.42+1.94)x5.56, direction TLT
+...\glue 0.0 plus 1.0fil minus 1.0fil
+.\glue 0.0
+! OK.
+\LEAK ...\else DISTINTO\fi }\showbox 2 \showbox 4 
+                                                  \showbox 6 \endgroup 
+l. ......numext,3]{labelwidth=3cm, label=\Roman*)}}
+> \box...=
+\vbox(6.345+0.0)x345.0, direction TLT
+.\penalty -51
+.\glue 0.0 plus 1.0
+.\glue 0.0
+.\glue(\parskip) 0.0
+.\glue(\parskip) 0.0
+.\hbox(6.246+0.099)x345.0, direction TLT
+..\localpar
+...\localinterlinepenalty=0
+...\localbrokenpenalty=0
+...\localleftbox=null
+...\localrightbox=null
+..\hbox(0.0+0.0)x11.11298, direction TLT
+...\glue 11.11298
+...\glue -7.78
+...\glue -3.33298
+...\hbox(0.0+0.0)x7.78, glue set 7.78fil, direction TLT
+....\glue 0.0 plus 1.0fil
+...\glue 3.33298
+..\penalty 0
+..\glue -11.11298
+..\hbox(5.994+0.099)x169.72176, direction TLT
+...\hbox(5.994+0.0)x7.78, glue set 0.57999fil, direction TLT
+....\TU/lmr/m/n/9 1
+....\TU/lmr/m/n/9 .
+....\glue 0.0 plus 1.0fil minus 1.0fil
+...\glue 3.33298
+...\vbox(5.994+0.099)x158.60878, direction TLT
+....\hbox(5.994+0.099)x158.60878, glue set 149.35677fil, direction TLT
+.....\localpar
+......\localinterlinepenalty=0
+......\localbrokenpenalty=0
+......\localleftbox=null
+......\localrightbox=null
+.....\hbox(0.0+0.0)x0.0, direction TLT
+.....\glue 0.0
+.....\TU/lmr/m/n/9 a
+.....\TU/lmr/m/n/9 2
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0
+..\glue 5.55649
+..\hbox(6.246+0.099)x169.72176, direction TLT
+...\hbox(5.994+0.0)x7.78, glue set 0.57999fil, direction TLT
+....\TU/lmr/m/n/9 2
+....\TU/lmr/m/n/9 .
+....\glue 0.0 plus 1.0fil minus 1.0fil
+...\glue 3.33298
+...\vbox(6.246+0.099)x158.60878, direction TLT
+....\hbox(6.246+0.099)x158.60878, glue set 148.84377fil, direction TLT
+.....\localpar
+......\localinterlinepenalty=0
+......\localbrokenpenalty=0
+......\localleftbox=null
+......\localrightbox=null
+.....\hbox(0.0+0.0)x0.0, direction TLT
+.....\glue 0.0
+.....\TU/lmr/m/n/9 b
+.....\TU/lmr/m/n/9 2
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0
+..\penalty 10000
+..\glue(\parfillskip) 0.0 plus 1.0fil
+..\glue(\rightskip) 0.0
+.\glue(\parskip) 0.0
+.\glue(\parskip) 0.0
+.\glue 0.0
+.\glue 0.0
+.\penalty -51
+.\glue 0.0
+! OK.
+\LEAK ...NTO\fi }\showbox 2 \showbox 4 \showbox 6 
+                                                  \endgroup 
+l. ......numext,3]{labelwidth=3cm, label=\Roman*)}}
+[B13] enumext: igual
+[B13] keyans: igual
+[B13] enumext*: igual
+> \box...=
+\vbox(22.94+0.0)x345.0, direction TLT
+.\penalty 10000
+.\glue 0.0
+.\glue 0.0
+.\hbox(21.0+1.94)x345.0, glue set 2.77824fil, direction TLT
+..\vbox(21.0+0.0)x169.72176, glue set - 0.4482, direction TLT
+...\glue 0.0 plus -2.0
+...\glue(\splittopskip) 4.006 plus 2.0
+...\hbox(5.994+0.099)x158.60878, glue set 149.35677fil, shifted 11.11298, direction TLT
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(5.994+0.0)x0.0, direction TLT
+.....\glue 0.0
+.....\glue -7.78
+.....\glue -3.33298
+.....\hbox(5.994+0.0)x7.78, glue set 0.57999fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 1
+......\TU/lmr/m/n/9 .
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+....\penalty 0
+....\TU/lmr/m/n/9 a
+....\TU/lmr/m/n/9 1
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\penalty -51
+...\glue 0.0
+...\glue 0.0
+...\glue 0.0
+...\glue(\parskip) 0.0
+...\glue(\parskip) 0.0
+...\glue(\baselineskip) 4.151
+...\hbox(6.75+2.241)x139.1658, glue set 129.40079fil, shifted 30.55595, direction TLT
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(6.75+2.241)x0.0, direction TLT
+.....\glue -19.44298
+.....\glue 0.0
+.....\glue -7.78
+.....\glue -3.33298
+.....\hbox(5.994+0.0)x7.78, glue set 0.57999fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 2
+......\TU/lmr/m/n/9 .
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+.....\glue 19.44298
+.....\glue 0.0
+.....\glue -16.11
+.....\glue -3.33298
+.....\hbox(6.75+2.241)x16.11, glue set 4.28398fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 (
+......\TU/lmr/m/n/9 a
+......\TU/lmr/m/n/9 )
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+....\penalty 0
+....\TU/lmr/m/n/9 b
+....\TU/lmr/m/n/9 1
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\glue 0.0 plus 0.0001fil minus 5.0
+..\glue 0.0 plus 1.0fil minus 1.0fil
+..\rule(*+*)x0.0
+..\glue 0.0 plus 1.0fil minus 1.0fil
+..\vbox(21.0+0.0)x169.72176, glue set 8.75807fil, direction TLT
+...\glue 0.0 plus -2.0
+...\glue(\splittopskip) 3.25 plus 2.0
+...\hbox(6.75+2.241)x119.43283, glue set 110.69382fil, shifted 50.28893, direction TLT
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(6.75+2.241)x0.0, direction TLT
+.....\glue -19.73297
+.....\glue 0.0
+.....\glue -16.11
+.....\glue -3.33298
+.....\hbox(6.75+2.241)x16.11, glue set 3.77098fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 (
+......\TU/lmr/m/n/9 b
+......\TU/lmr/m/n/9 )
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+.....\glue 19.73297
+.....\glue 0.0
+.....\glue -16.4
+.....\glue -3.33298
+.....\hbox(5.913+0.0)x16.4, glue set 11.25198fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 i
+......\TU/lmr/m/n/9 .
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+....\penalty 0
+....\TU/lmr/m/n/9 c
+....\TU/lmr/m/n/9 1
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\penalty -51
+...\glue 0.0 plus 1.0fil
+...\glue 0.0 plus 0.0001fil minus 5.0
+..\hbox(4.42+1.94)x0.0, glue set - 5.56fil, direction TLT
+...\hbox(4.42+1.94)x5.56, direction TLT
+...\glue 0.0 plus 1.0fil minus 1.0fil
+.\glue 0.0
+! OK.
+\LEAK ...ISTINTO\fi \else DISTINTO\fi }\showbox 2 
+                                                  \showbox 4 \showbox 6 \end...
+l. ......[enumext*]{labelwidth=3cm, label=\alph*)}}
+> \box...=
+\vbox(11.94+0.0)x345.0, direction TLT
+.\penalty 10000
+.\glue 0.0
+.\glue 0.0
+.\hbox(10.0+1.94)x345.0, glue set 2.77824fil, direction TLT
+..\vbox(10.0+0.0)x169.72176, glue set - 0.4482, direction TLT
+...\glue 0.0 plus -2.0
+...\glue(\splittopskip) 3.25 plus 2.0
+...\hbox(6.75+2.241)x158.60878, glue set 148.06978fil, shifted 11.11298, direction TLT
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(5.994+0.0)x0.0, direction TLT
+.....\glue 0.0
+.....\glue -7.78
+.....\glue -3.33298
+.....\hbox(5.994+0.0)x7.78, glue set 0.57999fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 1
+......\TU/lmr/m/n/9 .
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+....\penalty 0
+....\TU/lmr/m/n/9 A
+....\TU/lmr/m/n/9 )
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\penalty -51
+...\glue 0.0 plus 0.0001fil minus 5.0
+..\glue 0.0 plus 1.0fil minus 1.0fil
+..\rule(*+*)x0.0
+..\glue 0.0 plus 1.0fil minus 1.0fil
+..\vbox(10.0+0.0)x169.72176, glue set >20000.0fil, direction TLT
+...\glue 0.0 plus -2.0
+...\glue 0.0 plus 0.0001fil minus 5.0
+..\hbox(4.42+1.94)x0.0, glue set - 5.56fil, direction TLT
+...\hbox(4.42+1.94)x5.56, direction TLT
+...\glue 0.0 plus 1.0fil minus 1.0fil
+.\glue 0.0
+! OK.
+\LEAK ...\else DISTINTO\fi }\showbox 2 \showbox 4 
+                                                  \showbox 6 \endgroup 
+l. ......[enumext*]{labelwidth=3cm, label=\alph*)}}
+> \box...=
+\vbox(6.345+0.0)x345.0, direction TLT
+.\penalty -51
+.\glue 0.0 plus 1.0
+.\glue 0.0
+.\glue(\parskip) 0.0
+.\glue(\parskip) 0.0
+.\hbox(6.246+0.099)x345.0, direction TLT
+..\localpar
+...\localinterlinepenalty=0
+...\localbrokenpenalty=0
+...\localleftbox=null
+...\localrightbox=null
+..\hbox(0.0+0.0)x11.11298, direction TLT
+...\glue 11.11298
+...\glue -7.78
+...\glue -3.33298
+...\hbox(0.0+0.0)x7.78, glue set 7.78fil, direction TLT
+....\glue 0.0 plus 1.0fil
+...\glue 3.33298
+..\penalty 0
+..\glue -11.11298
+..\hbox(5.994+0.099)x169.72176, direction TLT
+...\hbox(5.994+0.0)x7.78, glue set 0.57999fil, direction TLT
+....\TU/lmr/m/n/9 1
+....\TU/lmr/m/n/9 .
+....\glue 0.0 plus 1.0fil minus 1.0fil
+...\glue 3.33298
+...\vbox(5.994+0.099)x158.60878, direction TLT
+....\hbox(5.994+0.099)x158.60878, glue set 149.35677fil, direction TLT
+.....\localpar
+......\localinterlinepenalty=0
+......\localbrokenpenalty=0
+......\localleftbox=null
+......\localrightbox=null
+.....\hbox(0.0+0.0)x0.0, direction TLT
+.....\glue 0.0
+.....\TU/lmr/m/n/9 a
+.....\TU/lmr/m/n/9 2
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0
+..\glue 5.55649
+..\hbox(6.246+0.099)x169.72176, direction TLT
+...\hbox(5.994+0.0)x7.78, glue set 0.57999fil, direction TLT
+....\TU/lmr/m/n/9 2
+....\TU/lmr/m/n/9 .
+....\glue 0.0 plus 1.0fil minus 1.0fil
+...\glue 3.33298
+...\vbox(6.246+0.099)x158.60878, direction TLT
+....\hbox(6.246+0.099)x158.60878, glue set 148.84377fil, direction TLT
+.....\localpar
+......\localinterlinepenalty=0
+......\localbrokenpenalty=0
+......\localleftbox=null
+......\localrightbox=null
+.....\hbox(0.0+0.0)x0.0, direction TLT
+.....\glue 0.0
+.....\TU/lmr/m/n/9 b
+.....\TU/lmr/m/n/9 2
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0
+..\penalty 10000
+..\glue(\parfillskip) 0.0 plus 1.0fil
+..\glue(\rightskip) 0.0
+.\glue(\parskip) 0.0
+.\glue(\parskip) 0.0
+.\glue 0.0
+.\glue 0.0
+.\penalty -51
+.\glue 0.0
+! OK.
+\LEAK ...NTO\fi }\showbox 2 \showbox 4 \showbox 6 
+                                                  \endgroup 
+l. ......[enumext*]{labelwidth=3cm, label=\alph*)}}
+[B14] enumext: igual
+[B14] keyans: igual
+[B14] enumext*: igual
+> \box...=
+\vbox(22.94+0.0)x345.0, direction TLT
+.\penalty 10000
+.\glue 0.0
+.\glue 0.0
+.\hbox(21.0+1.94)x345.0, glue set 2.77824fil, direction TLT
+..\vbox(21.0+0.0)x169.72176, glue set - 0.4482, direction TLT
+...\glue 0.0 plus -2.0
+...\glue(\splittopskip) 4.006 plus 2.0
+...\hbox(5.994+0.099)x158.60878, glue set 149.35677fil, shifted 11.11298, direction TLT
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(5.994+0.0)x0.0, direction TLT
+.....\glue 0.0
+.....\glue -7.78
+.....\glue -3.33298
+.....\hbox(5.994+0.0)x7.78, glue set 0.57999fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 1
+......\TU/lmr/m/n/9 .
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+....\penalty 0
+....\TU/lmr/m/n/9 a
+....\TU/lmr/m/n/9 1
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\penalty -51
+...\glue 0.0
+...\glue 0.0
+...\glue 0.0
+...\glue(\parskip) 0.0
+...\glue(\parskip) 0.0
+...\glue(\baselineskip) 4.151
+...\hbox(6.75+2.241)x139.1658, glue set 129.40079fil, shifted 30.55595, direction TLT
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(6.75+2.241)x0.0, direction TLT
+.....\glue -19.44298
+.....\glue 0.0
+.....\glue -7.78
+.....\glue -3.33298
+.....\hbox(5.994+0.0)x7.78, glue set 0.57999fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 2
+......\TU/lmr/m/n/9 .
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+.....\glue 19.44298
+.....\glue 0.0
+.....\glue -16.11
+.....\glue -3.33298
+.....\hbox(6.75+2.241)x16.11, glue set 4.28398fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 (
+......\TU/lmr/m/n/9 a
+......\TU/lmr/m/n/9 )
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+....\penalty 0
+....\TU/lmr/m/n/9 b
+....\TU/lmr/m/n/9 1
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\glue 0.0 plus 0.0001fil minus 5.0
+..\glue 0.0 plus 1.0fil minus 1.0fil
+..\rule(*+*)x0.0
+..\glue 0.0 plus 1.0fil minus 1.0fil
+..\vbox(21.0+0.0)x169.72176, glue set 8.75807fil, direction TLT
+...\glue 0.0 plus -2.0
+...\glue(\splittopskip) 3.25 plus 2.0
+...\hbox(6.75+2.241)x119.43283, glue set 110.69382fil, shifted 50.28893, direction TLT
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(6.75+2.241)x0.0, direction TLT
+.....\glue -19.73297
+.....\glue 0.0
+.....\glue -16.11
+.....\glue -3.33298
+.....\hbox(6.75+2.241)x16.11, glue set 3.77098fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 (
+......\TU/lmr/m/n/9 b
+......\TU/lmr/m/n/9 )
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+.....\glue 19.73297
+.....\glue 0.0
+.....\glue -16.4
+.....\glue -3.33298
+.....\hbox(5.913+0.0)x16.4, glue set 11.25198fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 i
+......\TU/lmr/m/n/9 .
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+....\penalty 0
+....\TU/lmr/m/n/9 c
+....\TU/lmr/m/n/9 1
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\penalty -51
+...\glue 0.0 plus 1.0fil
+...\glue 0.0 plus 0.0001fil minus 5.0
+..\hbox(4.42+1.94)x0.0, glue set - 5.56fil, direction TLT
+...\hbox(4.42+1.94)x5.56, direction TLT
+...\glue 0.0 plus 1.0fil minus 1.0fil
+.\glue 0.0
+! OK.
+\LEAK ...ISTINTO\fi \else DISTINTO\fi }\showbox 2 
+                                                  \showbox 4 \showbox 6 \end...
+l. ......xt[keyans]{labelwidth=3cm, label=\Alph*)}}
+> \box...=
+\vbox(11.94+0.0)x345.0, direction TLT
+.\penalty 10000
+.\glue 0.0
+.\glue 0.0
+.\hbox(10.0+1.94)x345.0, glue set 2.77824fil, direction TLT
+..\vbox(10.0+0.0)x169.72176, glue set - 0.4482, direction TLT
+...\glue 0.0 plus -2.0
+...\glue(\splittopskip) 3.25 plus 2.0
+...\hbox(6.75+2.241)x158.60878, glue set 148.06978fil, shifted 11.11298, direction TLT
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(5.994+0.0)x0.0, direction TLT
+.....\glue 0.0
+.....\glue -7.78
+.....\glue -3.33298
+.....\hbox(5.994+0.0)x7.78, glue set 0.57999fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 1
+......\TU/lmr/m/n/9 .
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+....\penalty 0
+....\TU/lmr/m/n/9 A
+....\TU/lmr/m/n/9 )
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\penalty -51
+...\glue 0.0 plus 0.0001fil minus 5.0
+..\glue 0.0 plus 1.0fil minus 1.0fil
+..\rule(*+*)x0.0
+..\glue 0.0 plus 1.0fil minus 1.0fil
+..\vbox(10.0+0.0)x169.72176, glue set >20000.0fil, direction TLT
+...\glue 0.0 plus -2.0
+...\glue 0.0 plus 0.0001fil minus 5.0
+..\hbox(4.42+1.94)x0.0, glue set - 5.56fil, direction TLT
+...\hbox(4.42+1.94)x5.56, direction TLT
+...\glue 0.0 plus 1.0fil minus 1.0fil
+.\glue 0.0
+! OK.
+\LEAK ...\else DISTINTO\fi }\showbox 2 \showbox 4 
+                                                  \showbox 6 \endgroup 
+l. ......xt[keyans]{labelwidth=3cm, label=\Alph*)}}
+> \box...=
+\vbox(6.345+0.0)x345.0, direction TLT
+.\penalty -51
+.\glue 0.0 plus 1.0
+.\glue 0.0
+.\glue(\parskip) 0.0
+.\glue(\parskip) 0.0
+.\hbox(6.246+0.099)x345.0, direction TLT
+..\localpar
+...\localinterlinepenalty=0
+...\localbrokenpenalty=0
+...\localleftbox=null
+...\localrightbox=null
+..\hbox(0.0+0.0)x11.11298, direction TLT
+...\glue 11.11298
+...\glue -7.78
+...\glue -3.33298
+...\hbox(0.0+0.0)x7.78, glue set 7.78fil, direction TLT
+....\glue 0.0 plus 1.0fil
+...\glue 3.33298
+..\penalty 0
+..\glue -11.11298
+..\hbox(5.994+0.099)x169.72176, direction TLT
+...\hbox(5.994+0.0)x7.78, glue set 0.57999fil, direction TLT
+....\TU/lmr/m/n/9 1
+....\TU/lmr/m/n/9 .
+....\glue 0.0 plus 1.0fil minus 1.0fil
+...\glue 3.33298
+...\vbox(5.994+0.099)x158.60878, direction TLT
+....\hbox(5.994+0.099)x158.60878, glue set 149.35677fil, direction TLT
+.....\localpar
+......\localinterlinepenalty=0
+......\localbrokenpenalty=0
+......\localleftbox=null
+......\localrightbox=null
+.....\hbox(0.0+0.0)x0.0, direction TLT
+.....\glue 0.0
+.....\TU/lmr/m/n/9 a
+.....\TU/lmr/m/n/9 2
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0
+..\glue 5.55649
+..\hbox(6.246+0.099)x169.72176, direction TLT
+...\hbox(5.994+0.0)x7.78, glue set 0.57999fil, direction TLT
+....\TU/lmr/m/n/9 2
+....\TU/lmr/m/n/9 .
+....\glue 0.0 plus 1.0fil minus 1.0fil
+...\glue 3.33298
+...\vbox(6.246+0.099)x158.60878, direction TLT
+....\hbox(6.246+0.099)x158.60878, glue set 148.84377fil, direction TLT
+.....\localpar
+......\localinterlinepenalty=0
+......\localbrokenpenalty=0
+......\localleftbox=null
+......\localrightbox=null
+.....\hbox(0.0+0.0)x0.0, direction TLT
+.....\glue 0.0
+.....\TU/lmr/m/n/9 b
+.....\TU/lmr/m/n/9 2
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0
+..\penalty 10000
+..\glue(\parfillskip) 0.0 plus 1.0fil
+..\glue(\rightskip) 0.0
+.\glue(\parskip) 0.0
+.\glue(\parskip) 0.0
+.\glue 0.0
+.\glue 0.0
+.\penalty -51
+.\glue 0.0
+! OK.
+\LEAK ...NTO\fi }\showbox 2 \showbox 4 \showbox 6 
+                                                  \endgroup 
+l. ......xt[keyans]{labelwidth=3cm, label=\Alph*)}}
+[B15] enumext: igual
+[B15] keyans: igual
+[B15] enumext*: igual
+> \box...=
+\vbox(22.94+0.0)x345.0, direction TLT
+.\penalty 10000
+.\glue 0.0
+.\glue 0.0
+.\hbox(21.0+1.94)x345.0, glue set 2.77824fil, direction TLT
+..\vbox(21.0+0.0)x169.72176, glue set - 0.4482, direction TLT
+...\glue 0.0 plus -2.0
+...\glue(\splittopskip) 4.006 plus 2.0
+...\hbox(5.994+0.099)x158.60878, glue set 149.35677fil, shifted 11.11298, direction TLT
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(5.994+0.0)x0.0, direction TLT
+.....\glue 0.0
+.....\glue -7.78
+.....\glue -3.33298
+.....\hbox(5.994+0.0)x7.78, glue set 0.57999fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 1
+......\TU/lmr/m/n/9 .
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+....\penalty 0
+....\TU/lmr/m/n/9 a
+....\TU/lmr/m/n/9 1
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\penalty -51
+...\glue 0.0
+...\glue 0.0
+...\glue 0.0
+...\glue(\parskip) 0.0
+...\glue(\parskip) 0.0
+...\glue(\baselineskip) 4.151
+...\hbox(6.75+2.241)x139.1658, glue set 129.40079fil, shifted 30.55595, direction TLT
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(6.75+2.241)x0.0, direction TLT
+.....\glue -19.44298
+.....\glue 0.0
+.....\glue -7.78
+.....\glue -3.33298
+.....\hbox(5.994+0.0)x7.78, glue set 0.57999fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 2
+......\TU/lmr/m/n/9 .
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+.....\glue 19.44298
+.....\glue 0.0
+.....\glue -16.11
+.....\glue -3.33298
+.....\hbox(6.75+2.241)x16.11, glue set 4.28398fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 (
+......\TU/lmr/m/n/9 a
+......\TU/lmr/m/n/9 )
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+....\penalty 0
+....\TU/lmr/m/n/9 b
+....\TU/lmr/m/n/9 1
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\glue 0.0 plus 0.0001fil minus 5.0
+..\glue 0.0 plus 1.0fil minus 1.0fil
+..\rule(*+*)x0.0
+..\glue 0.0 plus 1.0fil minus 1.0fil
+..\vbox(21.0+0.0)x169.72176, glue set 8.75807fil, direction TLT
+...\glue 0.0 plus -2.0
+...\glue(\splittopskip) 3.25 plus 2.0
+...\hbox(6.75+2.241)x119.43283, glue set 110.69382fil, shifted 50.28893, direction TLT
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(6.75+2.241)x0.0, direction TLT
+.....\glue -19.73297
+.....\glue 0.0
+.....\glue -16.11
+.....\glue -3.33298
+.....\hbox(6.75+2.241)x16.11, glue set 3.77098fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 (
+......\TU/lmr/m/n/9 b
+......\TU/lmr/m/n/9 )
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+.....\glue 19.73297
+.....\glue 0.0
+.....\glue -16.4
+.....\glue -3.33298
+.....\hbox(5.913+0.0)x16.4, glue set 11.25198fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 i
+......\TU/lmr/m/n/9 .
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+....\penalty 0
+....\TU/lmr/m/n/9 c
+....\TU/lmr/m/n/9 1
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\penalty -51
+...\glue 0.0 plus 1.0fil
+...\glue 0.0 plus 0.0001fil minus 5.0
+..\hbox(4.42+1.94)x0.0, glue set - 5.56fil, direction TLT
+...\hbox(4.42+1.94)x5.56, direction TLT
+...\glue 0.0 plus 1.0fil minus 1.0fil
+.\glue 0.0
+! OK.
+\LEAK ...ISTINTO\fi \else DISTINTO\fi }\showbox 2 
+                                                  \showbox 4 \showbox 6 \end...
+l. ......t[keyans*]{labelwidth=3cm, label=\Alph*)}}
+> \box...=
+\vbox(11.94+0.0)x345.0, direction TLT
+.\penalty 10000
+.\glue 0.0
+.\glue 0.0
+.\hbox(10.0+1.94)x345.0, glue set 2.77824fil, direction TLT
+..\vbox(10.0+0.0)x169.72176, glue set - 0.4482, direction TLT
+...\glue 0.0 plus -2.0
+...\glue(\splittopskip) 3.25 plus 2.0
+...\hbox(6.75+2.241)x158.60878, glue set 148.06978fil, shifted 11.11298, direction TLT
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(5.994+0.0)x0.0, direction TLT
+.....\glue 0.0
+.....\glue -7.78
+.....\glue -3.33298
+.....\hbox(5.994+0.0)x7.78, glue set 0.57999fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 1
+......\TU/lmr/m/n/9 .
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+....\penalty 0
+....\TU/lmr/m/n/9 A
+....\TU/lmr/m/n/9 )
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\penalty -51
+...\glue 0.0 plus 0.0001fil minus 5.0
+..\glue 0.0 plus 1.0fil minus 1.0fil
+..\rule(*+*)x0.0
+..\glue 0.0 plus 1.0fil minus 1.0fil
+..\vbox(10.0+0.0)x169.72176, glue set >20000.0fil, direction TLT
+...\glue 0.0 plus -2.0
+...\glue 0.0 plus 0.0001fil minus 5.0
+..\hbox(4.42+1.94)x0.0, glue set - 5.56fil, direction TLT
+...\hbox(4.42+1.94)x5.56, direction TLT
+...\glue 0.0 plus 1.0fil minus 1.0fil
+.\glue 0.0
+! OK.
+\LEAK ...\else DISTINTO\fi }\showbox 2 \showbox 4 
+                                                  \showbox 6 \endgroup 
+l. ......t[keyans*]{labelwidth=3cm, label=\Alph*)}}
+> \box...=
+\vbox(6.345+0.0)x345.0, direction TLT
+.\penalty -51
+.\glue 0.0 plus 1.0
+.\glue 0.0
+.\glue(\parskip) 0.0
+.\glue(\parskip) 0.0
+.\hbox(6.246+0.099)x345.0, direction TLT
+..\localpar
+...\localinterlinepenalty=0
+...\localbrokenpenalty=0
+...\localleftbox=null
+...\localrightbox=null
+..\hbox(0.0+0.0)x11.11298, direction TLT
+...\glue 11.11298
+...\glue -7.78
+...\glue -3.33298
+...\hbox(0.0+0.0)x7.78, glue set 7.78fil, direction TLT
+....\glue 0.0 plus 1.0fil
+...\glue 3.33298
+..\penalty 0
+..\glue -11.11298
+..\hbox(5.994+0.099)x169.72176, direction TLT
+...\hbox(5.994+0.0)x7.78, glue set 0.57999fil, direction TLT
+....\TU/lmr/m/n/9 1
+....\TU/lmr/m/n/9 .
+....\glue 0.0 plus 1.0fil minus 1.0fil
+...\glue 3.33298
+...\vbox(5.994+0.099)x158.60878, direction TLT
+....\hbox(5.994+0.099)x158.60878, glue set 149.35677fil, direction TLT
+.....\localpar
+......\localinterlinepenalty=0
+......\localbrokenpenalty=0
+......\localleftbox=null
+......\localrightbox=null
+.....\hbox(0.0+0.0)x0.0, direction TLT
+.....\glue 0.0
+.....\TU/lmr/m/n/9 a
+.....\TU/lmr/m/n/9 2
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0
+..\glue 5.55649
+..\hbox(6.246+0.099)x169.72176, direction TLT
+...\hbox(5.994+0.0)x7.78, glue set 0.57999fil, direction TLT
+....\TU/lmr/m/n/9 2
+....\TU/lmr/m/n/9 .
+....\glue 0.0 plus 1.0fil minus 1.0fil
+...\glue 3.33298
+...\vbox(6.246+0.099)x158.60878, direction TLT
+....\hbox(6.246+0.099)x158.60878, glue set 148.84377fil, direction TLT
+.....\localpar
+......\localinterlinepenalty=0
+......\localbrokenpenalty=0
+......\localleftbox=null
+......\localrightbox=null
+.....\hbox(0.0+0.0)x0.0, direction TLT
+.....\glue 0.0
+.....\TU/lmr/m/n/9 b
+.....\TU/lmr/m/n/9 2
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0
+..\penalty 10000
+..\glue(\parfillskip) 0.0 plus 1.0fil
+..\glue(\rightskip) 0.0
+.\glue(\parskip) 0.0
+.\glue(\parskip) 0.0
+.\glue 0.0
+.\glue 0.0
+.\penalty -51
+.\glue 0.0
+! OK.
+\LEAK ...NTO\fi }\showbox 2 \showbox 4 \showbox 6 
+                                                  \endgroup 
+l. ......t[keyans*]{labelwidth=3cm, label=\Alph*)}}
+=== C. Control: \setenumextsi cambia un enumext normal ===
+============================================================
+TEST 4: [C0] sin y con setenumext
+============================================================
+[C0] control: cambia
+============================================================

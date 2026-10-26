@@ -1,0 +1,182 @@
+% test-001.lvt -- listas y numeracion de enumext (sin etiquetado)
+%
+% Regresion:  l3build save test-001
+%             l3build check test-001
+%
+% Test de regresion del entorno enumext y de enumext*: la estructura de las
+% cajas (TEST), los contadores, las etiquetas y las referencias. El
+% documento no usa \DocumentMetadata: aqui se comprueba que el paquete
+% funciona sin etiquetado (el caso con etiquetado esta en test-010).
+\input{regression-test}
+
+\documentclass{article}
+\ExplSyntaxOn
+\debug_on:n { all }
+\ExplSyntaxOff
+\usepackage{enumext}
+\begin{document}
+
+% \BOXTEST compone el codigo en una caja y la muestra en el log: asi el
+% .tlg guarda la estructura de la lista (glue, etiquetas, sangrias).
+\newcommand\BOXTEST[2]
+  {%
+    \TEST{#1}
+      {%
+        \setbox0=\vbox{\hsize=250pt \parindent=0pt #2}%
+        \showbox0
+      }%
+  }
+
+\START
+
+\TYPE{=== A. Etiquetas y numeracion ===}
+
+% 1. Lista por defecto: tres items.
+\BOXTEST{[1] lista por defecto}
+  {
+    \begin{enumext}
+      \item Uno
+      \item Dos
+      \item Tres
+    \end{enumext}
+  }
+
+% 2. Etiqueta con letras.
+\BOXTEST{[2] label=\string\alph*)}
+  {
+    \begin{enumext}[label=\alph*)]
+      \item Uno
+      \item Dos
+    \end{enumext}
+  }
+
+% 3. Etiqueta en romanos con envoltorio.
+\BOXTEST{[3] label romano y wrap-label}
+  {
+    \begin{enumext}[label=\roman*., wrap-label=\textbf{#1}]
+      \item Uno
+      \item Dos
+    \end{enumext}
+  }
+
+% 4. Primer numero.
+\BOXTEST{[4] start=5}
+  {
+    \begin{enumext}[start=5]
+      \item Uno
+      \item Dos
+    \end{enumext}
+  }
+
+% 5. Item con etiqueta propia y item sin etiqueta.
+\BOXTEST{[5] \string\item[X] y \string\item*}
+  {
+    \begin{enumext}
+      \item Uno
+      \item[X] Dos
+      \item* Tres
+      \item Cuatro
+    \end{enumext}
+  }
+
+\TYPE{=== B. Separaciones ===}
+
+% 6. Ancho y separacion de la etiqueta.
+\BOXTEST{[6] labelwidth y labelsep}
+  {
+    \begin{enumext}[labelwidth=1cm, labelsep=0.25cm, align=left]
+      \item Uno
+      \item Dos
+    \end{enumext}
+  }
+
+% 7. Sin separacion entre items.
+\BOXTEST{[7] nosep}
+  {
+    \begin{enumext}[nosep]
+      \item Uno
+      \item Dos
+    \end{enumext}
+  }
+
+% 8. Espacio arriba y abajo.
+\BOXTEST{[8] above y below}
+  {
+    \begin{enumext}[above=10pt, below=20pt]
+      \item Uno
+      \item Dos
+    \end{enumext}
+  }
+
+\TYPE{=== C. Niveles ===}
+
+% 9. Dos niveles anidados.
+\BOXTEST{[9] dos niveles}
+  {
+    \begin{enumext}
+      \item Uno
+        \begin{enumext}
+          \item Uno-uno
+          \item Uno-dos
+        \end{enumext}
+      \item Dos
+    \end{enumext}
+  }
+
+% 10. Tres niveles anidados.
+\BOXTEST{[10] tres niveles}
+  {
+    \begin{enumext}
+      \item Uno
+        \begin{enumext}
+          \item Uno-uno
+            \begin{enumext}
+              \item Uno-uno-uno
+            \end{enumext}
+        \end{enumext}
+    \end{enumext}
+  }
+
+\TYPE{=== D. Contadores y referencias ===}
+
+% 11. Contadores al terminar una lista y despues de otra.
+\BOXTEST{[11] contadores}
+  {
+    \begin{enumext}
+      \item Uno
+      \item Dos
+    \end{enumext}
+    \TYPE{enumi=\the\value{enumi}}
+    \begin{enumext}
+      \item Uno
+    \end{enumext}
+    \TYPE{enumi=\the\value{enumi}}
+  }
+
+% 12. Series: continuar la numeracion.
+\BOXTEST{[12] series y resume}
+  {
+    \begin{enumext}[series=uno]
+      \item Uno
+      \item Dos
+    \end{enumext}
+    Texto entre listas.
+    \begin{enumext}[resume=uno]
+      \item Tres
+    \end{enumext}
+  }
+
+\TYPE{=== E. enumext* ===}
+
+% 13. Version con asterisco: lista corta.
+\BOXTEST{[13] enumext*}
+  {
+    \begin{enumext*}[label=\alph*)]
+      \item Uno
+      \item Dos
+      \item Tres
+    \end{enumext*}
+  }
+
+\OMIT
+\end{document}

@@ -1,0 +1,553 @@
+% test-100.lvt -- mensajes de error y de aviso de enumext
+%
+% Regresion:  l3build save test-100
+%             l3build check test-100
+%
+% Cada caso provoca un mensaje del paquete y va precedido de \TYPE{[id]};
+% asi el .tlg dice a que caso pertenece cada mensaje. Cada caso se compone en
+% su propio grupo y parrafo (\CASE), para que un error o un cambio de estado
+% no arrastre a los demas y no se llegue al limite de 100 errores seguidos de
+% TeX. Un caso nuevo se anade al final de su seccion y el [id] no se reutiliza.
+% La seccion H va al final: el anidamiento incorrecto deja grupos sin cerrar.
+\input{regression-test}
+
+\documentclass{article}
+\ExplSyntaxOn
+\debug_on:n { all }
+\ExplSyntaxOff
+\usepackage{enumext}
+\setlength{\textheight}{16000pt}
+% Los casos con errores pueden dejar cajas anchas: no se vuelcan al log.
+\hfuzz=\maxdimen \vfuzz=\maxdimen \hbadness=10000 \vbadness=10000
+\begin{document}
+
+\newcommand\CASE[2]{\TYPE{[#1]}{#2}\par}
+\START
+
+\TYPE{=== A. Claves de enumext y enumext* ===}
+
+\CASE{A1}
+  {
+    \begin{enumext}[align=nada]
+      \item Uno
+    \end{enumext}
+  }
+
+\CASE{A2}
+  {
+    \begin{enumext}[ref=]
+      \item Uno
+    \end{enumext}
+  }
+
+\CASE{A3}
+  {
+    \begin{enumext}[clavefalsa]
+      \item Uno
+    \end{enumext}
+  }
+
+\CASE{A4}
+  {
+    \begin{enumext}[clavefalsa=valor]
+      \item Uno
+    \end{enumext}
+  }
+
+\CASE{A5}
+  {
+    \begin{enumext*}[clavefalsa]
+      \item Uno
+    \end{enumext*}
+  }
+
+\CASE{A6}
+  {
+    \begin{enumext*}[clavefalsa=valor]
+      \item Uno
+    \end{enumext*}
+  }
+
+\CASE{A7}
+  {
+    \begin{enumext}[labelwidth=-1cm, labelsep=-1cm]
+      \item Uno
+    \end{enumext}
+  }
+
+\CASE{A8}
+  {
+    \begin{enumext*}[mark-pos*=nada]
+      \item Uno
+    \end{enumext*}
+  }
+
+\CASE{A9}
+  {
+    \begin{enumext}[show-length]
+      \item Uno
+    \end{enumext}
+  }
+
+\CASE{A10}
+  {
+    \begin{enumext*}[show-length]
+      \item Uno
+    \end{enumext*}
+  }
+
+\TYPE{=== B. miniright ===}
+
+\CASE{B1}
+  {
+    \miniright
+  }
+
+\CASE{B2}
+  {
+    \begin{enumext}
+      \item Uno
+      \miniright
+        Texto
+    \end{enumext}
+  }
+
+\CASE{B3}
+  {
+    \begin{enumext*}
+      \item Uno
+      \miniright
+    \end{enumext*}
+  }
+
+\CASE{B4}
+  {
+    \begin{enumext}[mini-env=0.4\linewidth]
+      \item Uno
+      \miniright
+        Texto
+      \miniright
+        Otro
+    \end{enumext}
+  }
+
+\CASE{B5}
+  {
+    \begin{enumext}[mini-env=0.4\linewidth]
+      \item Uno
+    \end{enumext}
+  }
+
+\TYPE{=== C. Series y reset ===}
+
+\CASE{C1}
+  {
+    \begin{enumext}[resume=inexistente]
+      \item Uno
+    \end{enumext}
+  }
+
+\CASE{C2}
+  {
+    \begin{enumext*}[resume=inexistente]
+      \item Uno
+    \end{enumext*}
+  }
+
+\CASE{C3}
+  {
+    \resetenumext[7]{enumi}
+  }
+
+\TYPE{=== D. Respuestas guardadas ===}
+
+\CASE{D1}
+  {
+    \begin{enumext}[save-ans=]
+      \item Uno
+    \end{enumext}
+  }
+
+\CASE{D2}
+  {
+    \begin{enumext}[save-ans=d2, check-ans=true]
+      \item Uno \anskey{a}
+      \item Dos
+    \end{enumext}
+  }
+
+\CASE{D3}
+  {
+    \begin{enumext}[save-ans=d3, check-ans=true]
+      \item Uno \anskey{a}\anskey{b}
+    \end{enumext}
+  }
+
+\CASE{D4}
+  {
+    \begin{enumext}[save-ans=d4, check-ans=true]
+      \item Uno \anskey{a}
+      \item Dos \anskey{b}
+    \end{enumext}
+  }
+
+\CASE{D5}
+  {
+    \getkeyans{sinpuntos}
+  }
+
+\CASE{D6}
+  {
+    \getkeyans{noexiste:1}
+  }
+
+\CASE{D7}
+  {
+    \printkeyans{noexiste}
+  }
+
+\CASE{D8}
+  {
+    \printkeyans*{d4}
+  }
+
+\TYPE{=== E. anskey y anskey* ===}
+
+\CASE{E1}
+  {
+    \anskey{x}
+  }
+
+\CASE{E2}
+  {
+    \begin{enumext}[save-ans=e2]
+      \item Uno \anskey{}
+    \end{enumext}
+  }
+
+\CASE{E3}
+  {
+    \begin{enumext}[save-ans=e3]
+      \item Uno \anskey[clavefalsa]{x}
+    \end{enumext}
+  }
+
+\CASE{E4}
+  {
+    \begin{enumext}[save-ans=e4]
+      \item Uno $\anskey{x}$
+    \end{enumext}
+  }
+
+\CASE{E5}
+  {
+    \begin{enumext}[save-ans=e5]
+      \item* Uno \anskey{x}
+    \end{enumext}
+  }
+
+\CASE{E6}
+  {
+    \begin{enumext}[save-ans=e6]
+      \item Uno \anskey{\anskey{x}}
+    \end{enumext}
+  }
+
+\CASE{E7}
+  {
+    \begin{anskey*}
+      x
+    \end{anskey*}
+  }
+
+\CASE{E8}
+  {
+    \begin{enumext}[save-ans=e8]
+      \item Uno
+        \begin{anskey*}[clavefalsa]
+          x
+        \end{anskey*}
+    \end{enumext}
+  }
+
+\CASE{E9}
+  {
+    \begin{enumext}[save-ans=e9]
+      \item Uno \anskey[clavefalsa=valor]{x}
+    \end{enumext}
+  }
+
+\CASE{E10}
+  {
+    \begin{enumext}[save-ans=e10]
+      \item[X] Uno \anskey{x}
+    \end{enumext}
+  }
+
+\CASE{E11}
+  {
+    \begin{enumext}[save-ans=e11]
+      \item[X] Uno
+        \begin{anskey*}
+          x
+        \end{anskey*}
+    \end{enumext}
+  }
+
+\CASE{E12}
+  {
+    \begin{enumext}[save-ans=e12]
+      \item Uno
+        \begin{anskey*}[clavefalsa=valor]
+          x
+        \end{anskey*}
+    \end{enumext}
+  }
+
+\CASE{E13}
+  {
+    % With two runs the file must be removed (luatex) so that the message of
+    % the first use is the same in both.
+    \directlua{os.remove("test-100-e13.txt")}
+    \begin{enumext}[save-ans=e13]
+      \item Uno
+        \begin{anskey*}[write-env=test-100-e13.txt]
+          x
+        \end{anskey*}
+    \end{enumext}
+  }
+
+\CASE{E14}
+  {
+    \begin{enumext}[save-ans=e14]
+      \item Uno
+        \begin{anskey*}[write-env=test-100-e13.txt]
+          x
+        \end{anskey*}
+    \end{enumext}
+  }
+
+\CASE{E15}
+  {
+    \begin{enumext}[save-ans=e15]
+      \item Uno
+        \begin{anskey*}[write-env=test-100-e13.txt, overwrite]
+          x
+        \end{anskey*}
+    \end{enumext}
+  }
+
+\CASE{E16}
+  {
+    \begin{enumext}[save-ans=e16]
+      \item Uno
+        \begin{keyans}
+          \item* A \anskey{x}
+        \end{keyans}
+    \end{enumext}
+  }
+
+\CASE{E17}
+  {
+    \begin{enumext}[save-ans=e17]
+      \item Uno
+        \begin{keyans}
+          \item* A
+          \begin{anskey*}
+            x
+          \end{anskey*}
+        \end{keyans}
+    \end{enumext}
+  }
+
+\TYPE{=== F. keyans, keyans* y keyanspic ===}
+
+\CASE{F1}
+  {
+    \begin{keyans}
+      \item* Uno
+    \end{keyans}
+  }
+
+\CASE{F2}
+  {
+    \begin{enumext}[save-ans=f2]
+      \item Uno
+        \begin{keyans}[clavefalsa]
+          \item* A
+        \end{keyans}
+    \end{enumext}
+  }
+
+\CASE{F3}
+  {
+    \begin{enumext}[save-ans=f3]
+      \item Uno
+        \begin{keyans}
+          \item* A
+            \begin{keyans}
+              \item* B
+            \end{keyans}
+        \end{keyans}
+    \end{enumext}
+  }
+
+\CASE{F4}
+  {
+    \begin{enumext}[save-ans=f4]
+      \item Uno
+        \begin{keyans*}[clavefalsa]
+          \item* A
+        \end{keyans*}
+    \end{enumext}
+  }
+
+\CASE{F5}
+  {
+    \begin{keyanspic}
+      \anspic*{A}
+    \end{keyanspic}
+  }
+
+\CASE{F6}
+  {
+    \anspic{A}
+  }
+
+\CASE{F7}
+  {
+    \begin{enumext}[save-ans=f7]
+      \item Uno
+        \begin{enumext}
+          \item A
+            \begin{keyans}
+              \item* B
+            \end{keyans}
+        \end{enumext}
+    \end{enumext}
+  }
+
+\CASE{F8}
+  {
+    \begin{enumext}[save-ans=f8]
+      \item Uno
+        \begin{keyanspic}
+          \anspic*{A}
+          \begin{keyanspic}
+            \anspic*{B}
+          \end{keyanspic}
+        \end{keyanspic}
+    \end{enumext}
+  }
+
+\CASE{F9}
+  {
+    \begin{enumext}[save-ans=f9]
+      \item Uno
+        \begin{keyanspic}
+          \item A
+          \anspic*{B}
+        \end{keyanspic}
+    \end{enumext}
+  }
+
+\CASE{F10}
+  {
+    \begin{enumext}[save-ans=f10]
+      \item Uno
+        \begin{enumext}
+          \item A
+            \begin{keyanspic}
+              \anspic*{B}
+            \end{keyanspic}
+        \end{enumext}
+    \end{enumext}
+  }
+
+\CASE{F11}
+  {
+    \begin{enumext}[save-ans=f11]
+      \item Uno
+        \begin{keyans}
+          \item* A
+          \anspic{B}
+        \end{keyans}
+    \end{enumext}
+  }
+
+\CASE{F12}
+  {
+    \begin{enumext}[save-ans=f12]
+      \item Uno
+        \begin{keyanspic}
+          \anspic*{A}
+          \miniright
+        \end{keyanspic}
+    \end{enumext}
+  }
+
+\TYPE{=== G. setenumext y comandos de claves ===}
+
+\CASE{G1}
+  {
+    \setenumext[enumext,1]{clavefalsa=1}
+  }
+
+\CASE{G2}
+  {
+    \setenumext[familia,1]{label=x}
+  }
+
+\CASE{G3}
+  {
+    \setenumextmeta[enumext,1]{label}{start=2}
+  }
+
+\CASE{G4}
+  {
+    \setenumextmeta[enumext,1]{unknown}{start=2}
+  }
+
+\CASE{G5}
+  {
+    \foreachkeyans[clavefalsa]{d4}{x}
+  }
+
+\CASE{G6}
+  {
+    \foreachkeyans[clavefalsa=1]{d4}{x}
+  }
+
+\TYPE{=== I. Avisos de columnas ===}
+
+\CASE{I1}
+  {
+    \begin{enumext*}[columns=3]
+      \item Uno
+      \item(5) Dos
+    \end{enumext*}
+  }
+
+\CASE{I2}
+  {
+    \begin{enumext*}[columns=3]
+      \item Uno
+      \item Dos
+      \item(2) Tres
+    \end{enumext*}
+  }
+
+\TYPE{=== H. Anidamiento ===}
+
+\CASE{H1}
+  {
+    \begin{enumext*}
+      \item Uno
+        \begin{enumext*}
+          \item A
+        \end{enumext*}
+    \end{enumext*}
+  }
+
+\OMIT
+\end{document}

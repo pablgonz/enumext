@@ -18,6 +18,51 @@
     colorlinks = true,
     pdftitle   = {Test tagged PDF for enumext package},
   }
+% Temporary workaround for tagging-project issue #1337, "\footnotetext after
+% list gives tagging error" (https://github.com/latex3/tagging-project/issues/1337),
+% patch proposed by Ulrike Fischer. Remove it when the issue is fixed in LaTeX.
+\ExplSyntaxOn
+\makeatletter
+\cs_set_protected:Npn \fnote_footnotetext:n #1
+  {
+    \__fnote_debug_footnotetext:
+    \hook_use:n { fntext/before }
+    \tag_socket_use:n { fntext/begin }
+    \socket_use:nn { fntext/process }
+      {
+        \hook_use:n { fntext }
+        \reset@font
+        \footnotesize
+        \interlinepenalty \interfootnotelinepenalty
+        \splittopskip \footnotesep
+        \splitmaxdepth \dp \strutbox
+        \floatingpenalty \@MM
+        \hsize \columnwidth
+        \@parboxrestore
+        \UseTaggingSocket { para/restore }
+        \parindent 1em
+        \def \@currentcounter { footnote }
+        \protected@edef \@currentlabel { \p@footnote \@thefnmark }
+        \hook_use:n { fntext/para }
+        \color@begingroup
+          \socket_use:nn { fntext/make }
+            {
+              \socket_use:n { fntext/begin }
+              \hook_use:n { fntext/begin }
+              \ignorespaces
+              #1
+              \hook_use:n { fntext/end }
+              \socket_use:n { fntext/end }
+            }
+          \par
+          \@endpefalse
+        \color@endgroup
+      }
+    \tag_socket_use:n { fntext/end }
+    \hook_use:n { fntext/after }
+  }
+\makeatother
+\ExplSyntaxOff
 \begin{document}
 \section{only enumext}
 Some text here

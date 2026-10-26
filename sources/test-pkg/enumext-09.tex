@@ -1,0 +1,391 @@
+% arara: lualatex: { branch: developer, draft: true }
+% arara: lualatex: { branch: developer, draft: true }
+% arara: lualatex: { branch: developer }
+% arara: clean: { extensions: [ aux, log, out] }
+% arara: move: { files: [ enumext-09-luamml-mathml.html ], target: 'enumext-09-mathml.html' }
+\DocumentMetadata
+  {
+    lang=en-US,
+    pdfversion=2.0,
+    pdfstandard=ua-2,
+    tagging=on,
+  }
+\documentclass{article}
+\usepackage[top=2cm,bottom=2cm,left=1cm,right=1cm]{geometry}
+\usepackage{unicode-math,graphicx,hyperref,enumext}
+\hypersetup
+  {
+    colorlinks = true,
+    pdftitle   = {Test tagged PDF for enumext package},
+  }
+\begin{document}
+\section{The environment \texttt{enumext}}
+
+Default list.
+
+\begin{enumext}
+  \item One
+  \item Two
+  \item Three
+\end{enumext}
+
+Letters in the label.
+
+\begin{enumext}[label=\alph*)]
+  \item One
+  \item Two
+\end{enumext}
+
+Four nested levels.
+
+\begin{enumext}
+  \item First level
+    \begin{enumext}
+      \item Second level
+        \begin{enumext}
+          \item Third level
+            \begin{enumext}
+              \item Fourth level
+            \end{enumext}
+        \end{enumext}
+    \end{enumext}
+  \item First level
+\end{enumext}
+
+Items with their own label and without label.
+
+\begin{enumext}
+  \item One
+  \item[X] Two
+  \item* Three
+  \item Four
+\end{enumext}
+
+Start of the numbering.
+
+\begin{enumext}[start=5]
+  \item One
+  \item Two
+\end{enumext}
+
+List without separation and text between items.
+
+\begin{enumext}[nosep]
+  \item One
+    Text on the first item.
+  \item Two
+\end{enumext}
+
+\section{The environment \texttt{enumext*}}
+
+Horizontal list.
+
+\begin{enumext*}
+  \item One
+  \item Two
+  \item Three
+  \item Four
+\end{enumext*}
+
+Letters in the label of the horizontal list.
+
+\begin{enumext*}[label=\alph*)]
+  \item One
+  \item Two
+  \item Three
+\end{enumext*}
+
+Horizontal list with three columns.
+
+\begin{enumext*}[columns=3]
+  \item One
+  \item Two
+  \item Three
+  \item Four
+  \item Five
+\end{enumext*}
+
+Joined items.
+
+\begin{enumext*}[columns=3]
+  \item One
+  \item(2) Two and three
+  \item Four
+\end{enumext*}
+
+Horizontal list inside a list.
+
+\begin{enumext}
+  \item First level
+    \begin{enumext*}
+      \item One
+      \item Two
+    \end{enumext*}
+  \item First level
+\end{enumext}
+
+\section{Columns and minipage}
+
+Two columns.
+
+\begin{enumext}[columns=2]
+  \item One
+  \item Two
+  \item Three
+  \item Four
+\end{enumext}
+
+Minipage on the right.
+
+\begin{enumext}[mini-env=0.4\linewidth]
+  \item One
+  \item Two
+  \miniright
+    Text in the minipage.
+\end{enumext}
+
+Columns and minipage.
+
+\begin{enumext}[columns=2, mini-env=0.4\linewidth]
+  \item One
+  \item Two
+  \item Three
+  \item Four
+  \miniright
+    Text in the minipage.
+\end{enumext}
+
+Horizontal list and minipage.
+
+\begin{enumext*}[columns=2, mini-env=0.4\linewidth,
+                 mini-right={Text in the minipage.}]
+  \item One
+  \item Two
+  \item Three
+  \item Four
+\end{enumext*}
+
+\section{Fake \texttt{itemize} and \texttt{description}}
+
+Fake itemize.
+
+\begin{enumext}[nosep, label=\textbullet]
+  \item First level item
+    \begin{enumext}[nosep, label=\textendash]
+      \item Second level item
+        \begin{enumext}[nosep, label=\textasteriskcentered]
+          \item Third level item
+            \begin{enumext}[nosep, label=\textperiodcentered]
+              \item Fourth level item
+            \end{enumext}
+        \end{enumext}
+    \end{enumext}
+  \item First level item
+\end{enumext}
+
+\newlength{\descitemwd}
+\settowidth{\descitemwd}{\textbf{Something long}}
+
+Fake description.
+
+\begin{enumext}[label={}, labelwidth=\descitemwd, font=\bfseries,
+                noitemsep, topsep=3pt]
+  \item[Some] A short description.
+  \item[] An entry without a label.
+  \item[Something long] A longer description text may take more than one
+    line or more than one paragraph.
+
+    Another paragraph of the same item.
+\end{enumext}
+
+Fake description in a horizontal list.
+
+\begin{enumext*}[label={}, labelwidth=\descitemwd, font=\bfseries,
+                 noitemsep, topsep=3pt]
+  \item[Some] A short description.
+  \item[Something long] A longer description text.
+\end{enumext*}
+
+\section{Series, resume and reset}
+
+Series at the first level.
+
+\begin{enumext}[series=one]
+  \item One
+  \item Two
+\end{enumext}
+
+Text between the lists.
+
+\begin{enumext}[resume=one]
+  \item Three
+  \item Four
+\end{enumext}
+
+Series at inner levels.
+
+\begin{enumext}
+  \item First level
+    \begin{enumext}[series=foo]
+      \item Second level
+      \item Second level
+    \end{enumext}
+    Text on the first level.
+    \begin{enumext}[resume=foo]
+      \item Second level
+    \end{enumext}
+  \item First level
+    \begin{enumext*}[series=baz]
+      \item Second level starred
+    \end{enumext*}
+    Text on the first level.
+    \begin{enumext*}[resume=baz]
+      \item Second level starred
+    \end{enumext*}
+\end{enumext}
+
+Resume without name and reset.
+
+\begin{enumext}
+  \item One
+  \item Two
+\end{enumext}
+
+\begin{enumext}[resume*]
+  \item Three
+\end{enumext}
+
+\begin{enumext}[reset]
+  \item One again
+\end{enumext}
+
+\section{Answers with \texttt{anskey}}
+
+Answers stored with \texttt{anskey}.
+
+\begin{enumext}[save-ans=one, save-sep={ }, save-ref=true]
+  \item Question A. \anskey{Answer A}
+  \item Question B. \anskey{Answer B}
+  \item Question C. \anskey[item-star]{Answer C}
+\end{enumext}
+
+Answer retrieved with \texttt{\textbackslash getkeyans}.
+
+The answer to question \ref{one:2} is \getkeyans{one:2}.
+
+Printed answers.
+
+\printkeyans{one}
+
+Printed answers in a horizontal list.
+
+\printkeyans*{one}
+
+Answers with \texttt{\textbackslash foreachkeyans}.
+
+\foreachkeyans[sep={\par}]{one}
+
+\section{Answers in environments}
+
+Environment \texttt{anskey*}.
+
+\begin{enumext}[save-ans=two]
+  \item Question A.
+    \begin{anskey*}
+      Long answer with \verb+code+ and more text.
+    \end{anskey*}
+  \item Question B. \anskey{Answer B}
+\end{enumext}
+
+\printkeyans{two}
+
+Environment \texttt{keyans}.
+
+\begin{enumext}[save-ans=three]
+  \item Question A.
+    \begin{keyans}
+      \item First
+      \item* Second (correct)
+      \item Third
+    \end{keyans}
+  \item Question B.
+    \begin{keyans}
+      \item*[some note] First (correct)
+      \item Second
+    \end{keyans}
+\end{enumext}
+
+\printkeyans{three}
+
+Environment \texttt{keyans*}.
+
+\begin{enumext}[save-ans=four]
+  \item Question A.
+    \begin{keyans*}
+      \item First
+      \item* Second (correct)
+      \item Third
+    \end{keyans*}
+\end{enumext}
+
+\printkeyans*{four}
+
+Environment \texttt{keyans} with columns and minipage.
+
+\begin{enumext}[save-ans=five]
+  \item Question A.
+    \begin{keyans}[mini-env=0.5\linewidth, columns=1]
+      \item First
+      \item* Second (correct)
+      \item Third
+      \miniright
+        Text in the minipage.
+    \end{keyans}
+\end{enumext}
+
+\section{Answers with images}
+
+Environment \texttt{keyanspic}.
+
+\begin{enumext}[save-ans=six, save-ref=true]
+  \item Question with images.
+    \begin{keyanspic}[layout-sty={3,2}]
+      \anspic{\includegraphics[scale=0.15, alt={An uppercase letter A}]{example-image-a}}
+      \anspic*{\includegraphics[scale=0.15, alt={An uppercase letter B}]{example-image-b}}
+      \anspic{\includegraphics[scale=0.15, alt={An uppercase letter C}]{example-image-c}}
+    \end{keyanspic}
+  \item Question with images and label above.
+    \begin{keyanspic}[label-pos=above]
+      \anspic*[The letter A]{\includegraphics[scale=0.15, alt={An uppercase letter A}]{example-image-a}}
+      \anspic{\includegraphics[scale=0.15, alt={An uppercase letter B}]{example-image-b}}
+    \end{keyanspic}
+\end{enumext}
+
+\printkeyans*{six}
+
+\section{Answers in horizontal lists}
+
+Stored answers in \texttt{enumext*}.
+
+\begin{enumext*}[save-ans=seven, save-sep={ }]
+  \item Question A. \anskey{Answer A}
+  \item Question B. \anskey{Answer B}
+  \item Question C.
+    \begin{anskey*}
+      Answer C.
+    \end{anskey*}
+\end{enumext*}
+
+\printkeyans{seven}
+
+\section{Defaults of the printed answers}
+
+\texttt{\textbackslash setenumext} and \texttt{\textbackslash printkeyans}.
+
+\setenumext[print,1]{columns=2, columns-sep=1cm, font=\bfseries}
+\setenumext[print*]{columns=2, columns-sep=1cm, first=\bfseries}
+
+\printkeyans{one}
+
+\printkeyans*{one}
+\end{document}

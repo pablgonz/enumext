@@ -16,14 +16,14 @@
    * upload     : Upload the package to ctan, you must add
                   -F ctan.ann in conjunction with [--debug]
    * tagcheck   : Check version and date in files
-   * testpkg    : Compile (two runs) and validate the files in /test-pkg,
-                  PDFs copied there (enumext-01 is skipped for now)
+   * testSE     : Compile (two runs) and validate the files in /test-pkg,
+                  PDFs copied there
    * example    : Compile (one run) the files in /samples, PDFs copied there
-   The targets testpkg and example accept file names (with or without .tex)
+   The targets testSE and example accept file names (with or without .tex)
    to run only those files: l3build example enumext-exa-2
    * release    : It performs the checks before generating a public
                   release (on git and ctan), commits the PDFs that
-                  example, testpkg and ctan regenerate and creates the
+                  example, testSE and ctan regenerate and creates the
                   git tag.
 --]]
 
@@ -51,6 +51,30 @@ tdslocations  = {
 unpackfiles = { "enumext.ins" }
 unpackopts  = "--interaction=batchmode"
 unpackexe   = "luatex"
+
+-- Regression tests (l3build check / save): the .lvt files in ./testfiles.
+-- ltxrelease needs the development format, so the tests run with latex-dev.
+-- Tests without tagging (test-001...) compare the boxes written to the log;
+-- tests with tagging (test-010...) compare the tag tree (\SHOWPDFTAGS).
+testfiledir  = "./testfiles"
+checkengines = { "luatex" }
+stdengine    = "luatex"
+checkformat  = "latex-dev"
+
+-- test-100 writes a file with anskey* (key write-env); it is removed before
+-- each run so that the messages (writing / not writing / overwriting) repeat.
+dynamicfiles = { "test-100-*.txt" }
+
+-- Two runs per test: the references (\ref, \getkeyans) are resolved in the
+-- second one, as in the documents of l3build testSE.
+checkruns = 2
+
+-- The structure elements of the tagged tests carry sequential ids
+-- (ID.00012, ...): one node more or less would shift all the following ones
+-- and flood the diff, so the ids are not compared.
+function normalize_log_hook(line)
+  return (string.gsub(line, 'id="ID%.%d+"', 'id="ID.NN"'))
+end
 
 -- Typesetting enumext documentation step by step :)
 
@@ -481,21 +505,16 @@ local function compile_samples(srcdir, label, opts)
   os_message("Removed temporary directory " .. tmpdir)
 end
 
--- Files of sources/test-pkg that testpkg does not run (and whose PDFs are
--- not checked by ctan). enumext-01 is excluded for now: it needs a patch first.
-local testpkg_skip = { ["enumext-01"] = true }
-
--- Custom target: l3build testpkg
+-- Custom target: l3build testSE
 -- Compiles twice and validates the files in sources/test-pkg; the PDFs are
 -- left there.
-target_list.testpkg = {
+target_list.testSE = {
   desc = "Compile (two runs) and validate the files in /test-pkg",
-  help = "Accepts file names, with or without .tex: l3build testpkg enumext-02",
+  help = "Accepts file names, with or without .tex: l3build testSE enumext-02",
   func = function()
     compile_samples(sourcefiledir .. "/test-pkg", "test", {
       passes = 2,
       validate = true,
-      skip = testpkg_skip,
     })
     return 0
   end,
@@ -512,14 +531,14 @@ target_list.example = {
   end,
 }
 
--- The PDFs attached to the manual are the ones that 'l3build testpkg' and
+-- The PDFs attached to the manual are the ones that 'l3build testSE' and
 -- 'l3build example' leave in sources/test-pkg and sources/samples. Before
 -- packaging, check that all of them exist and are not older than their .tex
 -- (target ctan and release only; doc copies what is there without checking).
 local function check_example_pdfs()
   local stale = {}
   local dirs = {
-    { dir = sourcefiledir .. "/test-pkg", skip = testpkg_skip },
+    { dir = sourcefiledir .. "/test-pkg" },
     { dir = sourcefiledir .. "/samples" },
   }
   for _, entry in ipairs(dirs) do
@@ -535,7 +554,7 @@ local function check_example_pdfs()
     end
   end
   if #stale > 0 then
-    error("** Error!!: PDFs of the examples out of date, run 'l3build example' and 'l3build testpkg' first:\n   "
+    error("** Error!!: PDFs of the examples out of date, run 'l3build example' and 'l3build testSE' first:\n   "
       .. table.concat(stale, "\n   "))
   end
   os_message("Checking PDFs of sources/test-pkg and sources/samples")
@@ -669,7 +688,7 @@ local function release_target()
     -- The PDFs attached to the manual are regenerated first: the ctan
     -- target refuses to run if they are missing or older than their .tex
     run_l3build("example", " (PDFs of sources/samples)")
-    run_l3build("testpkg", " (PDFs of sources/test-pkg)")
+    run_l3build("testSE", " (PDFs of sources/test-pkg)")
     run_l3build("ctan", " (" .. ctanzip .. ".zip)")
   end
 

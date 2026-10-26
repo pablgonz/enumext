@@ -1,0 +1,298 @@
+% test-010.lvt -- estructura etiquetada de las listas de enumext
+%
+% Regresion:  l3build save test-010
+%             l3build check test-010
+%
+% Test de regresion del etiquetado (tagged PDF) de los entornos enumext y
+% enumext*: el log guarda el arbol de etiquetas (\SHOWPDFTAGS) de cada caso.
+% Los casos sin etiquetado estan en test-001 y las respuestas en test-011.
+\input{regression-test}
+
+\DocumentMetadata
+  {
+    lang=en-US,
+    pdfversion=2.0,
+    pdfstandard=ua-2,
+    tagging=on,
+  }
+\documentclass{article}
+\ExplSyntaxOn
+\debug_on:n { all }
+\ExplSyntaxOff
+\usepackage{enumext}
+\usepackage{hyperref}
+\hypersetup
+  {
+    pdfdisplaydoctitle = true,
+    pdftitle           = {test-010: tagged lists of enumext},
+  }
+\begin{document}
+
+\section*{A. The environment \texttt{enumext}}
+
+% Estructura: L > LI > (Lbl, LBody) por cada item.
+1. Default list.
+
+\begin{enumext}
+  \item One
+  \item Two
+  \item Three
+\end{enumext}
+
+% Estructura: etiquetas con letras.
+2. Letters in the label.
+
+\begin{enumext}[label=\alph*)]
+  \item One
+  \item Two
+\end{enumext}
+
+% Estructura: lista dentro de lista, cuatro niveles.
+3. Four nested levels.
+
+\begin{enumext}
+  \item First level
+    \begin{enumext}
+      \item Second level
+        \begin{enumext}
+          \item Third level
+            \begin{enumext}
+              \item Fourth level
+            \end{enumext}
+        \end{enumext}
+    \end{enumext}
+  \item First level
+\end{enumext}
+
+% Estructura: item con etiqueta propia y item sin etiqueta.
+4. Items with their own label and without label.
+
+\begin{enumext}
+  \item One
+  \item[X] Two
+  \item* Three
+  \item Four
+\end{enumext}
+
+% Estructura: numeracion que empieza en 5.
+5. Start of the numbering.
+
+\begin{enumext}[start=5]
+  \item One
+  \item Two
+\end{enumext}
+
+% Estructura: lista sin separacion y con texto en medio.
+6. List without separation and text between items.
+
+\begin{enumext}[nosep]
+  \item One
+    Text on the first item.
+  \item Two
+\end{enumext}
+
+\section*{B. The environment \texttt{enumext*}}
+
+% Estructura: lista horizontal, un LI por item.
+7. Horizontal list.
+
+\begin{enumext*}
+  \item One
+  \item Two
+  \item Three
+  \item Four
+\end{enumext*}
+
+% Estructura: etiqueta con letras.
+8. Letters in the label of the horizontal list.
+
+\begin{enumext*}[label=\alph*)]
+  \item One
+  \item Two
+  \item Three
+\end{enumext*}
+
+% Estructura: tres columnas.
+9. Horizontal list with three columns.
+
+\begin{enumext*}[columns=3]
+  \item One
+  \item Two
+  \item Three
+  \item Four
+  \item Five
+\end{enumext*}
+
+% Estructura: un item ocupa dos columnas.
+10. Joined items.
+
+\begin{enumext*}[columns=3]
+  \item One
+  \item(2) Two and three
+  \item Four
+\end{enumext*}
+
+% Estructura: enumext* dentro de enumext.
+11. Horizontal list inside a list.
+
+\begin{enumext}
+  \item First level
+    \begin{enumext*}
+      \item One
+      \item Two
+    \end{enumext*}
+  \item First level
+\end{enumext}
+
+\section*{C. Columns and minipage}
+
+% Estructura: lista en dos columnas.
+12. Two columns.
+
+\begin{enumext}[columns=2]
+  \item One
+  \item Two
+  \item Three
+  \item Four
+\end{enumext}
+
+% Estructura: lista y contenido a la derecha.
+13. Minipage on the right.
+
+\begin{enumext}[mini-env=0.4\linewidth]
+  \item One
+  \item Two
+  \miniright
+    Text in the minipage.
+\end{enumext}
+
+% Estructura: columnas y contenido a la derecha.
+14. Columns and minipage.
+
+\begin{enumext}[columns=2, mini-env=0.4\linewidth]
+  \item One
+  \item Two
+  \item Three
+  \item Four
+  \miniright
+    Text in the minipage.
+\end{enumext}
+
+% Estructura: lista horizontal con contenido a la derecha.
+15. Horizontal list and minipage.
+
+\begin{enumext*}[columns=2, mini-env=0.4\linewidth,
+                 mini-right={Text in the minipage.}]
+  \item One
+  \item Two
+  \item Three
+  \item Four
+\end{enumext*}
+
+\section*{D. Fake \texttt{itemize} and \texttt{description}}
+
+% Estructura: vinetas en cuatro niveles.
+16. Fake itemize.
+
+\begin{enumext}[nosep, label=\textbullet]
+  \item First level item
+    \begin{enumext}[nosep, label=\textendash]
+      \item Second level item
+        \begin{enumext}[nosep, label=\textasteriskcentered]
+          \item Third level item
+            \begin{enumext}[nosep, label=\textperiodcentered]
+              \item Fourth level item
+            \end{enumext}
+        \end{enumext}
+    \end{enumext}
+  \item First level item
+\end{enumext}
+
+\newlength{\descitemwd}
+\settowidth{\descitemwd}{\textbf{Something long}}
+
+% Estructura: etiquetas propias sin numeracion.
+17. Fake description.
+
+\begin{enumext}[label={}, labelwidth=\descitemwd, font=\bfseries,
+                noitemsep, topsep=3pt]
+  \item[Some] A short description.
+  \item[] An entry without a label.
+  \item[Something long] A longer description text may take more than one
+    line or more than one paragraph.
+
+    Another paragraph of the same item.
+\end{enumext}
+
+% Estructura: la misma descripcion en lista horizontal.
+18. Fake description in a horizontal list.
+
+\begin{enumext*}[label={}, labelwidth=\descitemwd, font=\bfseries,
+                 noitemsep, topsep=3pt]
+  \item[Some] A short description.
+  \item[Something long] A longer description text.
+\end{enumext*}
+
+\section*{E. Series, resume and reset}
+
+% Estructura: segunda lista sigue la numeracion de la primera.
+19. Series at the first level.
+
+\begin{enumext}[series=one]
+  \item One
+  \item Two
+\end{enumext}
+
+Text between the lists.
+
+\begin{enumext}[resume=one]
+  \item Three
+  \item Four
+\end{enumext}
+
+% Estructura: series en un nivel interior, estandar y horizontal.
+20. Series at inner levels.
+
+\begin{enumext}
+  \item First level
+    \begin{enumext}[series=foo]
+      \item Second level
+      \item Second level
+    \end{enumext}
+    Text on the first level.
+    \begin{enumext}[resume=foo]
+      \item Second level
+    \end{enumext}
+  \item First level
+    \begin{enumext*}[series=baz]
+      \item Second level starred
+    \end{enumext*}
+    Text on the first level.
+    \begin{enumext*}[resume=baz]
+      \item Second level starred
+    \end{enumext*}
+\end{enumext}
+
+% Estructura: continuar sin nombre y reiniciar.
+21. Resume without name and reset.
+
+\begin{enumext}
+  \item One
+  \item Two
+\end{enumext}
+
+\begin{enumext}[resume*]
+  \item Three
+\end{enumext}
+
+\begin{enumext}[reset]
+  \item One again
+\end{enumext}
+
+\START
+
+\SHOWPDFTAGS
+
+\OMIT
+
+\end{document}

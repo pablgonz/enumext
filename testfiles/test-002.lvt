@@ -1,0 +1,112 @@
+% test-002.lvt -- \setenumext no modifica lo que imprime \printkeyans
+%
+% Regresion:  l3build save test-002
+%             l3build check test-002
+%
+% \printkeyans debe imprimir con los valores propios del paquete, sin
+% depender de lo que \setenumext fije para los entornos enumext, enumext*,
+% keyans y keyans*. Cada caso compone \printkeyans en una caja antes de
+% \setenumext y otra despues, y escribe en el log si miden lo mismo; el
+% caso [control] comprueba que el mismo \setenumext si cambia un enumext
+% normal, para que la prueba no sea trivial. El documento no usa
+% \DocumentMetadata (los casos con etiquetado estan en test-010 y siguientes).
+\input{regression-test}
+
+\documentclass{article}
+\ExplSyntaxOn
+\debug_on:n { all }
+\ExplSyntaxOff
+\usepackage{enumext}
+\begin{document}
+
+% Respuestas guardadas: tres niveles de enumext, un enumext* y un keyans.
+\begin{enumext}[save-ans=lk]
+  \item Uno \anskey{a1}
+    \begin{enumext}
+      \item Dos \anskey{b1}
+        \begin{enumext}
+          \item Tres \anskey{c1}
+        \end{enumext}
+    \end{enumext}
+\end{enumext}
+
+\begin{enumext*}[save-ans=lks]
+  \item Uno \anskey{a2}
+  \item Dos \anskey{b2}
+\end{enumext*}
+
+\begin{enumext}[save-ans=lkk]
+  \item Uno
+    \begin{keyans}
+      \item* Si
+      \item No
+    \end{keyans}
+\end{enumext}
+
+% \PRINTBOX{numero}{nombre} compone \printkeyans{nombre} en la caja numero.
+\newcommand\PRINTBOX[2]
+  {%
+    \setbox#1=\vbox{\hsize=250pt \parindent=0pt \printkeyans{#2}}%
+  }
+\newcommand\PRINTBOXSTAR[2]
+  {%
+    \setbox#1=\vbox{\hsize=250pt \parindent=0pt \printkeyans*{#2}}%
+  }
+
+% \LEAK{id}{codigo}: caja de referencia, codigo, segunda caja y comparacion.
+\newcommand\LEAK[2]
+  {%
+    \PRINTBOX{1}{lk}\PRINTBOX{3}{lkk}\PRINTBOXSTAR{5}{lks}%
+    \begingroup
+      #2
+      \PRINTBOX{2}{lk}\PRINTBOX{4}{lkk}\PRINTBOXSTAR{6}{lks}%
+      \TYPE{[#1] enumext: \ifdim\wd1=\wd2 \ifdim\ht1=\ht2 \ifdim\dp1=\dp2
+        igual\else DISTINTO\fi\else DISTINTO\fi\else DISTINTO\fi}%
+      \TYPE{[#1] keyans: \ifdim\wd3=\wd4 \ifdim\ht3=\ht4 \ifdim\dp3=\dp4
+        igual\else DISTINTO\fi\else DISTINTO\fi\else DISTINTO\fi}%
+      \TYPE{[#1] enumext*: \ifdim\wd5=\wd6 \ifdim\ht5=\ht6 \ifdim\dp5=\dp6
+        igual\else DISTINTO\fi\else DISTINTO\fi\else DISTINTO\fi}%
+      \showbox2 \showbox4 \showbox6
+    \endgroup
+  }
+
+\START
+
+\TYPE{=== A. Referencia: lo que imprime \string\printkeyans ===}
+
+\TEST{[A0] enumext}{\PRINTBOX{1}{lk}\showbox1 }
+\TEST{[A1] keyans}{\PRINTBOX{1}{lkk}\showbox1 }
+\TEST{[A2] enumext*}{\PRINTBOXSTAR{1}{lks}\showbox1 }
+
+\TYPE{=== B. \string\setenumext no cambia \string\printkeyans ===}
+
+\LEAK{B1}{\setenumext[enumext,1]{labelwidth=3cm}}
+\LEAK{B2}{\setenumext[enumext,1]{labelsep=1cm}}
+\LEAK{B3}{\setenumext[enumext,1]{itemindent=1cm}}
+\LEAK{B4}{\setenumext[enumext,1]{list-offset=1cm}}
+\LEAK{B5}{\setenumext[enumext,1]{rightmargin=1cm}}
+\LEAK{B6}{\setenumext[enumext,1]{listparindent=1cm}}
+\LEAK{B7}{\setenumext[enumext,1]{label=\roman*.}}
+\LEAK{B8}{\setenumext[enumext,1]{topsep=1cm, itemsep=1cm, parsep=1cm}}
+\LEAK{B9}{\setenumext[enumext,1]{columns=3}}
+\LEAK{B10}{\setenumext[enumext,1]{align=right, wrap-label=\textbf{#1}}}
+\LEAK{B11}{\setenumext[enumext,2]{labelwidth=3cm, label=\Alph*)}}
+\LEAK{B12}{\setenumext[enumext,3]{labelwidth=3cm, label=\Roman*)}}
+\LEAK{B13}{\setenumext[enumext*]{labelwidth=3cm, label=\alph*)}}
+\LEAK{B14}{\setenumext[keyans]{labelwidth=3cm, label=\Alph*)}}
+\LEAK{B15}{\setenumext[keyans*]{labelwidth=3cm, label=\Alph*)}}
+
+\TYPE{=== C. Control: \string\setenumext si cambia un enumext normal ===}
+
+\TEST{[C0] sin y con setenumext}
+  {%
+    \setbox1=\vbox{\hsize=250pt \parindent=0pt
+      \begin{enumext}\item Uno \end{enumext}}%
+    \setbox2=\vbox{\hsize=250pt \parindent=0pt
+      \setenumext[enumext,1]{topsep=1cm}%
+      \begin{enumext}\item Uno \end{enumext}}%
+    \TYPE{[C0] control: \ifdim\ht1=\ht2 igual\else cambia\fi}%
+  }
+
+\OMIT
+\end{document}

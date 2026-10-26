@@ -3838,6 +3838,7 @@ all the worksheets are as follows:
 %   \myenv*[no-index]{enumext} and \myenv*[no-index]{enumext*} environments and the nesting
 %   between them plus the use of the \mykey{label}, \mykey{labelwidth},
 %   \mykey{labelsep}, \mykey{ref}, \mykey{align} and \mykey{wrap-label} keys.
+%   \myattachfile{enumext-01}
 %
 % \item The file \myfile{enumext-02.tex} contains the tests for the \myenv*[no-index]{enumext}
 %   and \myenv*[no-index]{enumext*} environments and the support for \myenv[no-index]{minipage}
@@ -4140,6 +4141,32 @@ all the worksheets are as follows:
 % \mypkg*[no-index]{enumext} serves this purpose and inspires more users and
 % authors to follow this path.
 %
+% \subsubsection*{Regression tests}
+%
+% The source repository includes a set of regression tests for \texttt{l3build},
+% kept in the \texttt{testfiles} directory. They are run with the
+% \hologo{LuaTeX} engine and the development format (\texttt{latex-dev}), and
+% each test is compiled twice so that references and labels are resolved before
+% the log is compared:
+%
+% \begin{itemize}
+%   \item \texttt{test-001} and \texttt{test-002}: lists without tagging
+%     (labels, spacing, nesting, counters, series and \env{enumext*}, and the
+%     independence between \cs{setenumext} and \cs{printkeyans});
+%   \item \texttt{test-010} and \texttt{test-011}: the same lists and the
+%     storage system with \texttt{tagging=on}, including the structure tree;
+%   \item \texttt{test-100}: the error and warning messages of the package.
+% \end{itemize}
+%
+% From the root of the repository, |l3build check| runs all the tests and
+% |l3build check test-001| runs a single one. After a deliberate change in the
+% package, |l3build save test-001| regenerates the reference file
+% \texttt{test-001.tlg}, which must be reviewed before committing it.
+% The target |l3build testSE| compiles twice the documents in
+% \texttt{sources/test-pkg}, validates the tagged structure and copies the
+% \texttt{PDF} files that are attached to this manual; it is also run by
+% |l3build release|.
+%
 % \let\stdsection\section
 % \def\section*#1{\stdsection{#1}}
 % \expandafter\let\expandafter\thebibliography\csname HDorg@thebibliography\endcsname
@@ -4239,21 +4266,27 @@ all the worksheets are as follows:
 % \begin{description}[font=\small\sffamily,wide=0pt,style=multiline,leftmargin=1.1\descrwidth,nosep,noitemsep]
 %  \item [\fileversion{} (ctan), \filedate]
 %    \begin{itemize}
-%      \item Update requirement to \hologo{LaTeX} release 2026-11-01.
-%      \item Update code for \emph{tagged} \texttt{PDF}.
 %      \item Fixed bad interaction between |\setenumext| and |\printkeyans|: the
 %        values set for the environments no longer modify the printed content.
+%      \item Fixed spurious errors in |\miniright|, in \env{keyans} used outside
+%        \mykey[env]{save-ans}, and the \TeX{} error \texttt{You can't use
+%        \textbackslash unskip in vertical mode} with \mykey[env]{mini-env}.
 %      \item The error messages follow a common layout: a short text with the
 %        line context and, for errors, an explanation in the extended text.
+%      \item Added regression tests (\texttt{l3build check}); the target
+%        \texttt{testSE} replaces \texttt{testpkg}.
+%      \item Internal: the implementation is reorganized by command and its
+%        variables are documented in groups.
 %      \item Adjustments in the documentation: the examples are attached to the
-%        manual, the bibliography follows the order of appearance and the
-%        \enquote{References} section is numbered in the bookmarks.
-%      \item Internal: cleanup warnings and details returned by |expltools|.
-%      \item Internal: replace |\exp_after:wN| by |\exp_after:w|.
-%      \item Internal: the implementation is organized by command, with the
-%        variables, the messages, the keys and the internal functions first and
-%        the public command at the end, and all function bodies follow the same
-%        layout.
+%        manual and the bibliography follows the order of appearance.
+%    \end{itemize}
+%  \item [v2.3 (ctan), 2026-10-23]
+%    \begin{itemize}
+%      \item Update requirement to \hologo{LaTeX} release 2026-11-01.
+%      \item Cleanup warnings and details returned by |expltools|.
+%      \item Replace |\exp_after:wN| by |\exp_after:w|.
+%      \item Update code for \emph{tagged} \texttt{PDF}.
+%      \item Adjustments in the documentation.
 %    \end{itemize}
 %  \item [v2.2 (ctan), 2026-06-01]
 %    \begin{itemize}
@@ -4448,26 +4481,29 @@ all the worksheets are as follows:
 %
 % \subsection{Definition of variables}\label{subsec:variables}
 %
-% Variables that do not appear in this section are created by means of
-% \myhlc|\keys_define:nn| or some function described below.
+% This section describes the variables shared by several commands, keys or
+% environments, in groups and by purpose. The variables that belong to a single
+% command, key or environment are defined in the subsection where they are used,
+% in the part \emph{\enquote{Definition of variables}}. The variables that do not
+% appear in either place are created by means of \myhlc|\keys_define:nn| or some
+% function described below.
+%
+% \subsubsection{Nesting levels and state of the environments}
 %
 % \begin{variable}[int]{
 %   \l_@@_level_int,
 %   \l_@@_level_h_int,
-%   \l_@@_anskey_level_int,
 %   \l_@@_keyans_level_int,
 %   \l_@@_keyans_level_h_int,
 %   \l_@@_keyans_pic_level_int,
 % }
-%   Integer variables will control the nesting levels of the environments,
-%   \myenv*{anskey*} environment and |\anskey| command.
+%   Integer variables will control the nesting levels of the environments.
 %    \begin{macrocode}
-\int_new:N  \l_@@_level_int
-\int_new:N  \l_@@_level_h_int
-\int_new:N  \l_@@_anskey_level_int
-\int_new:N  \l_@@_keyans_level_int
-\int_new:N  \l_@@_keyans_level_h_int
-\int_new:N  \l_@@_keyans_pic_level_int
+\int_new:N \l_@@_level_int
+\int_new:N \l_@@_level_h_int
+\int_new:N \l_@@_keyans_level_int
+\int_new:N \l_@@_keyans_level_h_int
+\int_new:N \l_@@_keyans_pic_level_int
 %    \end{macrocode}
 % \end{variable}
 %
@@ -4499,111 +4535,93 @@ all the worksheets are as follows:
 %    \end{macrocode}
 % \end{variable}
 %
-% \begin{variable}[int]{
-%   \l_@@_counter_i_tl,
-%   \l_@@_counter_ii_tl,
-%   \l_@@_counter_iii_tl,
-%   \l_@@_counter_iv_tl,
-%   \l_@@_counter_v_tl,
-%   \l_@@_counter_vi_tl,
-%   \l_@@_counter_vii_tl,
-%   \l_@@_counter_viii_tl,
-% }
+% \subsubsection{Counters, labels and numbering}
 %
-%   Variables to store the \emph{\enquote{name of the counters}}
-%   \icounter{enumXi}, \icounter{enumXii}, \icounter{enumXiii} and
-%   \icounter{enumXiv} for \myenv*[no-index]{enumext}  environment,
-%   \icounter{enumXv} for \myenv*[no-index]{keyans} environment and
-%   \icounter{enumXvi} for the \myenv*[no-index]{keyanspic} environment.
-%   The counters \icounter{enumXvii} and \icounter{enumXviii} are used
-%   by \myenv*[no-index]{enumext*} and \myenv*[no-index]{keyans*} environments.
-%
-%   The initial values of these variables are set by the function
-%   \myhlc|\@@_define_counter:Nn| (\S\ref{subsec:counters}) and then modified by the function
-%   \myhlc|\@@_label_style:Nnn| used by \mykey{label} key (\S\ref{key:label-ref}).
+% \begin{variable}[int]{\l_@@_current_widest_dim}
+%   The dimension \myhlc|\l_@@_current_widest_dim| stores the current
+%   label width. It is used by \mykey{widest} (\S\ref{key:start-widest}) and
+%   \mykey{label} (\S\ref{key:label}) keys.
 %    \begin{macrocode}
-\cs_set_protected:Nn \@@_tmp:n
-  {
-    \tl_new:c { l_@@_counter_ #1 _tl }
-  }
-\clist_map_inline:nn { i, ii, iii, iv, v, vi, vii, viii } { \@@_tmp:n {#1} }
+\dim_new:N \l_@@_current_widest_dim
 %    \end{macrocode}
 % \end{variable}
 %
 % \begin{variable}[int]{
-%   \l_@@_ref_key_arg_tl,
-%   \l_@@_ref_the_count_tl,
-%   \l_@@_renew_counter_X_tl,
-%   \l_@@_the_counter_X_tl,
-% }
-%   Internal variables used by \mykey{ref} key (\S\ref{key:label-ref}).
-%    \begin{macrocode}
-\tl_new:N \l_@@_ref_key_arg_tl
-\tl_new:N \l_@@_ref_the_count_tl
-\cs_set_protected:Nn \@@_tmp:n
-  {
-    \tl_new:c  { l_@@_renew_counter_ #1 _tl }
-    \tl_new:c  { l_@@_the_counter_ #1 _tl   }
-    \tl_set:ce { l_@@_the_counter_ #1 _tl   } { \exp_not:c { theenumX #1 } }
-  }
-\clist_map_inline:nn { i, ii, iii, iv, v, vi, vii, viii } { \@@_tmp:n {#1} }
-%    \end{macrocode}
-% \end{variable}
-%
-% \begin{variable}[int]{
-%   \l_@@_series_name_tl,
 %   \l_@@_resume_count_bool,
 %   \l_@@_resume_count_X_bool,
-%   \l_@@_resume_series_X_bool,
-%   \l_@@_resume_star_key_X_bool,
-%   \g_@@_resume_last_keys_X_tl,
 % }
-%   Internal variables used by \mykey{resume}, \mykey{resume*} and
-%   \mykey{series} keys (\S\ref{key:series}).
+%   Internal variables shared by the \mykey{start} and \mykey{start*} keys
+%   (\S\ref{key:start-widest}), the \mykey{resume}, \mykey{resume*} and
+%   \mykey{series} keys (\S\ref{key:series}) and the environments.
 %    \begin{macrocode}
-\tl_new:N   \l_@@_series_name_tl
 \bool_new:N \l_@@_resume_count_bool
 \cs_set_protected:Nn \@@_tmp:n
   {
-    \bool_new:c { l_@@_resume_count_ #1 _bool    }
-    \bool_new:c { l_@@_resume_series_ #1 _bool   }
-    \bool_new:c { l_@@_resume_star_key_ #1 _bool }
-    \tl_new:c   { g_@@_resume_last_keys_ #1 _tl  }
+    \bool_new:c { l_@@_resume_count_ #1 _bool }
   }
 \clist_map_inline:nn { i, ii, iii, iv, vii } { \@@_tmp:n {#1} }
 %    \end{macrocode}
 % \end{variable}
 %
 % \begin{variable}[int]{
-%   \l_@@_current_widest_dim,
-%   \g_@@_counter_styles_tl,
-%   \g_@@_widest_label_tl,
-%   \l_@@_label_width_by_box,
+%   \l_@@_start_X_int,
+%   \l_@@_fake_item_indent_X_tl,
 % }
-%   The variable \myhlc|\l_@@_current_widest_dim| stores the current
-%   label width, the variable \myhlc|\g_@@_counter_styles_tl| stores
-%   the default \mymeta{label style} and the variable
-%   \myhlc|\g_@@_widest_label_tl| the label width. These variables are
-%   used by \mykey{widest} (\S\ref{key:start-widest}) and \mykey{label} (\S\ref{key:label}) keys.
+%   The integer \myhlc|\l_@@_start_X_int| is used by the \mykey{start} and
+%   \mykey{start*} keys (\S\ref{key:start-widest}) and the token list
+%   \myhlc|\l_@@_fake_item_indent_X_tl| is used by \mykey{itemindent} key
+%   (\S\ref{subsubsec:fake-indent}).
 %    \begin{macrocode}
-\dim_new:N \l_@@_current_widest_dim
-\tl_new:N  \g_@@_counter_styles_tl
-\tl_new:N  \g_@@_widest_label_tl
-\box_new:N \l_@@_label_width_by_box
+\cs_set_protected:Nn \@@_tmp:n
+  {
+    \int_new:c { l_@@_start_ #1 _int           }
+    \tl_new:c  { l_@@_fake_item_indent_ #1 _tl }
+  }
+\clist_map_inline:nn { i, ii, iii, iv, v, vii, viii } { \@@_tmp:n {#1} }
 %    \end{macrocode}
 % \end{variable}
+%
+% \begin{variable}[int]{
+%   \l_@@_wrap_label_X_bool,
+%   \l_@@_wrap_label_opt_X_bool,
+%   \l_@@_label_fill_left_X_tl,
+%   \l_@@_label_fill_right_X_tl,
+%   \l_@@_align_label_pos_X_str,
+% }
+%   The bool vars \myhlc|\l_@@_wrap_label_X_bool| and
+%   \myhlc|\l_@@_wrap_label_opt_X_bool| are used by \mykey{wrap-label}
+%   and \mykey{wrap-label*} keys (\S\ref{key:label}). The variables
+%   \myhlc|\l_@@_label_fill_left_X_tl|, \myhlc|\l_@@_label_fill_right_X_tl| and
+%   \myhlc|\l_@@_align_label_pos_X_str| are used by the \mykey{align} key
+%   (\S\ref{key:label}).
+%    \begin{macrocode}
+\cs_set_protected:Nn \@@_tmp:n
+  {
+    \bool_new:c { l_@@_wrap_label_ #1 _bool     }
+    \bool_new:c { l_@@_wrap_label_opt_ #1 _bool }
+    \tl_new:c   { l_@@_label_fill_left_ #1 _tl  }
+    \tl_new:c   { l_@@_label_fill_right_ #1 _tl }
+  }
+\clist_map_inline:nn { i, ii, iii, iv, v, vii, viii } { \@@_tmp:n {#1} }
+\cs_set_protected:Nn \@@_tmp:n
+  {
+    \str_new:c { l_@@_align_label_pos_ #1 _str }
+  }
+\clist_map_inline:nn { i, ii, iii, iv, v } { \@@_tmp:n {#1} }
+%    \end{macrocode}
+% \end{variable}
+%
+% \subsubsection{Horizontal and vertical spaces}
 %
 % \begin{variable}[int]{
 %   \l_@@_leftmargin_tmp_X_bool,
 %   \l_@@_leftmargin_tmp_X_dim,
 %   \l_@@_leftmargin_X_dim,
-%   \l_@@_itemindent_X_dim,
 % }
 %   The boolean variable \myhlc|\l_@@_leftmargin_tmp_X_bool| and the
 %   dimensional variable \myhlc|\l_@@_leftmargin_tmp_X_dim|
 %   are used by the \mykey{list-indent} key (\S\ref{key:list-indent}).
-%   The variables \myhlc|\l_@@_leftmargin_X_dim| and
-%   \myhlc|\l_@@_itemindent_X_dim| are used and set by the function
+%   The variable \myhlc|\l_@@_leftmargin_X_dim| is used and set by the function
 %   \myhlc|\@@_calc_hspace:NNNNNNN| (\S\ref{subsubsec:leftmargin}).
 %    \begin{macrocode}
 \cs_set_protected:Nn \@@_tmp:n
@@ -4611,7 +4629,6 @@ all the worksheets are as follows:
     \bool_new:c { l_@@_leftmargin_tmp_ #1 _bool }
     \dim_new:c  { l_@@_leftmargin_tmp_ #1 _dim  }
     \dim_new:c  { l_@@_leftmargin_ #1 _dim      }
-    \dim_new:c  { l_@@_itemindent_ #1 _dim      }
   }
 \clist_map_inline:nn { i, ii, iii, iv, v, vi, vii, viii } { \@@_tmp:n {#1} }
 %    \end{macrocode}
@@ -4620,16 +4637,13 @@ all the worksheets are as follows:
 % \begin{variable}[int]{
 %   \l_@@_multicols_above_X_skip,
 %   \l_@@_multicols_below_X_skip,
-%   \l_@@_align_label_pos_X_str,
 % }
-%   Internal variables used by \mykey{columns} key (\S\ref{subsec:vspace-multicols})
-%   and \mykey{align} key (\S\ref{key:label}).
+%   Internal variables used by \mykey{columns} key (\S\ref{subsec:vspace-multicols}).
 %    \begin{macrocode}
 \cs_set_protected:Nn \@@_tmp:n
   {
-    \skip_new:c  { l_@@_multicols_above_ #1 _skip }
-    \skip_new:c  { l_@@_multicols_below_ #1 _skip }
-    \str_new:c   { l_@@_align_label_pos_ #1 _str  }
+    \skip_new:c { l_@@_multicols_above_ #1 _skip }
+    \skip_new:c { l_@@_multicols_below_ #1 _skip }
   }
 \clist_map_inline:nn { i, ii, iii, iv, v } { \@@_tmp:n {#1} }
 %    \end{macrocode}
@@ -4637,9 +4651,6 @@ all the worksheets are as follows:
 %
 % \begin{variable}[int]{
 %   \g_@@_minipage_stat_int,
-%   \l_@@_minipage_temp_skip,
-%   \l_@@_minipage_left_skip,
-%   \l_@@_minipage_right_skip,
 %   \l_@@_minipage_after_skip,
 %   \g_@@_minipage_right_skip,
 %   \g_@@_minipage_after_skip,
@@ -4651,9 +4662,6 @@ all the worksheets are as follows:
 %   and \mykey{mini-sep} (\S\ref{key:mini-multi},~\S\ref{subsec:vspace-minipage}).
 %    \begin{macrocode}
 \int_new:N  \g_@@_minipage_stat_int
-\skip_new:N \l_@@_minipage_temp_skip
-\skip_new:N \l_@@_minipage_left_skip
-\skip_new:N \l_@@_minipage_right_skip
 \skip_new:N \l_@@_minipage_after_skip
 \skip_new:N \g_@@_minipage_right_skip
 \skip_new:N \g_@@_minipage_after_skip
@@ -4667,39 +4675,35 @@ all the worksheets are as follows:
 % \end{variable}
 %
 % \begin{variable}[int]{
-%   \l_@@_wrap_label_X_bool,
-%   \l_@@_wrap_label_opt_X_bool,
-%   \l_@@_start_X_int,
-%   \l_@@_fake_item_indent_X_tl,
-%   \l_@@_label_fill_left_X_tl,
-%   \l_@@_label_fill_right_X_tl,
-%   \l_@@_vspace_a_star_X_bool,
-%   \l_@@_vspace_b_star_X_bool,
+%   \l_@@_item_starred_X_bool,
+%   \l_@@_item_column_pos_X_int,
+%   \g_@@_item_count_all_X_int,
+%   \l_@@_item_text_X_box,
+%   \l_@@_joined_width_X_dim,
+%   \g_@@_item_symbol_aux_X_tl,
+%   \l_@@_align_label_X_str,
+%   \g_@@_minipage_center_X_bool,
+%   \g_@@_minipage_right_X_dim,
 % }
-%   The bool vars \myhlc|\l_@@_wrap_label_X_bool| and
-%   \myhlc|\l_@@_wrap_label_opt_X_bool| are used by \mykey{wrap-label}
-%   and \mykey{wrap-label*} keys (\S\ref{key:label}), the integer
-%   \myhlc|\l_@@_start_X_int| are used by the \mykey{start} and \mykey{start*} keys (\S\ref{key:start-widest}),
-%   the token list \myhlc|\l_@@_fake_item_indent_X_tl | is used by \mykey{itemindent} key (\S\ref{subsubsec:fake-indent}),
-%   the variables \myhlc|\l_@@_label_fill_left_X_tl| and \myhlc|\l_@@_label_fill_left_X_tl| are used by the
-%   \mykey{align} key (\S\ref{key:label}). The boolean vars \myhlc|\l_@@_vspace_a_star_X_bool|,
-%   \myhlc|\l_@@_vspace_b_star_X_bool| are used by \mykey{above},
-%   \mykey{above*}, \mykey{below} and \mykey{below*} keys (\S\ref{key:before}).
+%   Internal variables used by \myenv*[no-index]{enumext*} and \myenv*[no-index]{keyans*} environments.
 %    \begin{macrocode}
 \cs_set_protected:Nn \@@_tmp:n
   {
-    \bool_new:c { l_@@_wrap_label_ #1 _bool     }
-    \bool_new:c { l_@@_wrap_label_opt_ #1 _bool }
-    \int_new:c  { l_@@_start_ #1 _int           }
-    \tl_new:c   { l_@@_fake_item_indent_ #1 _tl }
-    \tl_new:c   { l_@@_label_fill_left_ #1 _tl  }
-    \tl_new:c   { l_@@_label_fill_right_ #1 _tl }
-    \bool_new:c { l_@@_vspace_a_star_ #1 _bool  }
-    \bool_new:c { l_@@_vspace_b_star_ #1 _bool  }
+    \bool_new:c { l_@@_item_starred_ #1 _bool    }
+    \int_new:c  { l_@@_item_column_pos_ #1 _int  }
+    \int_new:c  { g_@@_item_count_all_ #1 _int   }
+    \box_new:c  { l_@@_item_text_ #1 _box        }
+    \dim_new:c  { l_@@_joined_width_ #1 _dim     }
+    \tl_new:c   { g_@@_item_symbol_aux_ #1 _tl   }
+    \str_new:c  { l_@@_align_label_ #1 _str      }
+    \bool_new:c { g_@@_minipage_center_ #1 _bool }
+    \dim_new:c  { g_@@_minipage_right_ #1 _dim   }
   }
-\clist_map_inline:nn { i, ii, iii, iv, v, vii, viii } { \@@_tmp:n {#1} }
+\clist_map_inline:nn { vii, viii } { \@@_tmp:n {#1} }
 %    \end{macrocode}
 % \end{variable}
+%
+% \subsubsection{Storing answers, checking and printing}
 %
 % \begin{variable}[int]{
 %   \l_@@_store_active_bool,
@@ -4734,147 +4738,6 @@ all the worksheets are as follows:
 % \end{variable}
 %
 % \begin{variable}[int]{
-%   \l_@@_store_anskey_arg_tl,
-%   \l_@@_store_anskey_env_tl,
-%   \l_@@_write_anskey_env_bool,
-%   \l_@@_write_anskey_env_file_name_tl,
-%   \l_@@_write_anskey_env_file_iow,
-% }
-%   The variable \myhlc|\l_@@_store_anskey_arg_tl| save the \emph{argument}
-%   of |\anskey| (\S\ref{cmd:anskey}) and the variables
-%   \myhlc|\l_@@_store_anskey_env_tl| save the \mymeta{body}
-%   of the environment \myenv*[no-index]{anskey*} (\S\ref{env:anskey}).
-%
-%   The variables \myhlc|\l_@@_write_anskey_env_bool|, \myhlc|\l_@@_write_anskey_env_file_name_tl|
-%   and \myhlc|\l_@@_write_anskey_env_file_iow| they are used by the \mykey{write-env}
-%   and \mykey{overwrite} keys in the \myenv*[no-index]{anskey*} environment implementation.
-%    \begin{macrocode}
-\tl_new:N   \l_@@_store_anskey_arg_tl
-\tl_new:N   \l_@@_store_anskey_env_tl
-\bool_new:N \l_@@_write_anskey_env_bool
-\tl_new:N   \l_@@_write_anskey_env_file_name_tl
-\iow_new:N  \l_@@_write_anskey_env_file_iow
-%    \end{macrocode}
-% \end{variable}
-%
-% \begin{variable}[int]{\c_@@_anskey_env_hidden_space_str}
-%   The \myhlc|\c_@@_anskey_env_hidden_space_str| is a constant \emph{string}
-%   to used to hide the \mymeta{forced space} added by \hologo{TeX} when
-%   recording content in a macro. This \emph{string} contains the \emph{reserved phrase}
-%   `|%^^Aenumextheol%|' which is added to the end of the argument stored
-%   in \emph{sequence} and \emph{prop list} when the key |force-eol| is false.
-%    \begin{macrocode}
-\str_const:Ne \c_@@_anskey_env_hidden_space_str
-  { \c_percent_str \c_circumflex_str \c_circumflex_str A enumextheol
-    \c_percent_str }
-%    \end{macrocode}
-% \end{variable}
-%
-% \begin{variable}[int]{
-%   \l_@@_setkey_tmpa_tl,
-%   \l_@@_setkey_tmpb_tl,
-%   \l_@@_setkey_tmpa_int,
-%   \l_@@_setkey_tmpa_seq,
-%   \l_@@_setkey_tmpb_seq,
-% }
-%   Internal variables used by the command |\setenumext| (\S\ref{cmd:setenumext}).
-%    \begin{macrocode}
-\tl_new:N  \l_@@_setkey_tmpa_tl
-\tl_new:N  \l_@@_setkey_tmpb_tl
-\int_new:N \l_@@_setkey_tmpa_int
-\seq_new:N \l_@@_setkey_tmpa_seq
-\seq_new:N \l_@@_setkey_tmpb_seq
-%    \end{macrocode}
-% \end{variable}
-%
-% \begin{variable}[int]{
-%   \l_@@_meta_path_str,
-%   \l_@@_foreach_print_seq,
-%   \l_@@_foreach_name_prop_tl,
-%   \l_@@_foreach_default_keys_tl,
-% }
-%   Internal variables used by the |\setenumextmeta| command (\S\ref{cmd:setenumextmeta})
-%   and |\foreachkeyans| command (\S\ref{cmd:foreachkeyans}).
-%    \begin{macrocode}
-\str_new:N \l_@@_meta_path_str
-\seq_new:N \l_@@_foreach_print_seq
-\tl_new:N  \l_@@_foreach_name_prop_tl
-\tl_new:N  \l_@@_foreach_default_keys_tl
-%    \end{macrocode}
-% \end{variable}
-%
-%
-% \begin{variable}[int]{
-%   \l_@@_print_keyans_starred_tl,
-%   \l_@@_print_keyans_star_bool,
-%   \l_@@_print_keyans_cmd_bool,
-%   \l_@@_mark_position_str,
-%   \l_@@_mark_position_v_str,
-%   \l_@@_mark_position_viii_str,
-%   \l_@@_mark_sep_tmpa_dim,
-%   \l_@@_mark_sep_tmpb_dim,
-%   \l_@@_show_pos_tmp_int,
-%   \g_@@_item_symbol_aux_tl,
-%   \l_@@_print_keyans_X_tl,
-%   \l_@@_store_save_key_X_tl,
-%   \l_@@_store_save_key_X_bool,
-%   \l_@@_store_upper_level_X_bool,
-% }
-%   Internal variables used by command \ics*{printkeyans}
-%   (\S\ref{cmd:printkeyans}), \mykey{show-pos}, \mykey{show-ans}, \mykey{mark-pos}, \mykey{mark-sep} keys (\S\ref{subsec:storage-system}),
-%   \mykey{item-sym*} key (\S\ref{key:item-starred}), \mykey{save-key} key
-%   (\S\ref{key:save-key}) and \emph{\enquote{storing structure}}.
-%    \begin{macrocode}
-\tl_new:N   \l_@@_print_keyans_starred_tl
-\bool_new:N \l_@@_print_keyans_star_bool
-\bool_new:N \l_@@_print_keyans_cmd_bool
-\str_new:N  \l_@@_mark_position_str
-\str_new:N  \l_@@_mark_position_v_str
-\str_new:N  \l_@@_mark_position_viii_str
-\dim_new:N  \l_@@_mark_sep_tmpa_dim
-\dim_new:N  \l_@@_mark_sep_tmpb_dim
-\int_new:N  \l_@@_show_pos_tmp_int
-\tl_new:N   \g_@@_item_symbol_aux_tl
-\cs_set_protected:Nn \@@_tmp:n
-  {
-    \tl_new:c   { l_@@_print_keyans_ #1 _tl        }
-    \tl_new:c   { l_@@_store_save_key_ #1 _tl      }
-    \bool_new:c { l_@@_store_save_key_ #1 _bool    }
-    \bool_new:c { l_@@_store_upper_level_ #1 _bool }
-  }
-\clist_map_inline:nn { i, ii, iii, iv, vii } { \@@_tmp:n {#1} }
-%    \end{macrocode}
-% \end{variable}
-%
-% \begin{variable}[int]{
-%   \l_@@_anspic_args_seq,
-%   \l_@@_anspic_mini_width_dim,
-%   \l_@@_anspic_above_int,
-%   \l_@@_anspic_below_int,
-%   \l_@@_anspic_label_above_bool,
-%   \l_@@_anspic_mini_pos_str,
-%   \l_@@_anspic_label_box,
-%   \l_@@_anspic_body_box,
-%   \l_@@_anspic_label_htdp_dim,
-%   \l_@@_anspic_body_htdp_dim,
-% }
-%    Internal variables used by \myenv*[no-index]{keyanspic} environment and
-%   \ics*{anspic} command (\S\ref{env:keyanspic}).
-%    \begin{macrocode}
-\seq_new:N  \l_@@_anspic_args_seq
-\dim_new:N  \l_@@_anspic_mini_width_dim
-\int_new:N  \l_@@_anspic_above_int
-\int_new:N  \l_@@_anspic_below_int
-\bool_new:N \l_@@_anspic_label_above_bool
-\str_new:N  \l_@@_anspic_mini_pos_str
-\box_new:N  \l_@@_anspic_label_box
-\box_new:N  \l_@@_anspic_body_box
-\dim_new:N  \l_@@_anspic_label_htdp_dim
-\dim_new:N  \l_@@_anspic_body_htdp_dim
-%    \end{macrocode}
-% \end{variable}
-%
-% \begin{variable}[int]{
 %   \l_@@_check_answers_bool,
 %   \g_@@_check_ans_key_bool,
 %   \l_@@_check_start_line_env_tl,
@@ -4902,6 +4765,38 @@ all the worksheets are as follows:
 \int_new:N  \g_@@_item_answer_diff_int
 %    \end{macrocode}
 % \end{variable}
+%
+% \begin{variable}[int]{
+%   \l_@@_print_keyans_star_bool,
+%   \l_@@_print_keyans_cmd_bool,
+%   \l_@@_print_keyans_X_tl,
+%   \l_@@_mark_position_str,
+%   \l_@@_mark_position_v_str,
+%   \l_@@_mark_position_viii_str,
+% }
+%   The boolean \myhlc|\l_@@_print_keyans_cmd_bool| is true while the command
+%   \ics*{printkeyans} (\S\ref{cmd:printkeyans}) is running and the environments
+%   consult it, the boolean \myhlc|\l_@@_print_keyans_star_bool| is true when
+%   the command receives the \emph{starred} argument and the token lists
+%   \myhlc|\l_@@_print_keyans_X_tl| store the keys passed to each environment.
+%   The strings \myhlc|\l_@@_mark_position_str|, \myhlc|\l_@@_mark_position_v_str|
+%   and \myhlc|\l_@@_mark_position_viii_str| store the position of the marks
+%   set by the \mykey{mark-pos} key (\S\ref{subsec:storage-system}).
+%    \begin{macrocode}
+\bool_new:N \l_@@_print_keyans_star_bool
+\bool_new:N \l_@@_print_keyans_cmd_bool
+\str_new:N  \l_@@_mark_position_str
+\str_new:N  \l_@@_mark_position_v_str
+\str_new:N  \l_@@_mark_position_viii_str
+\cs_set_protected:Nn \@@_tmp:n
+  {
+    \tl_new:c { l_@@_print_keyans_ #1 _tl }
+  }
+\clist_map_inline:nn { i, ii, iii, iv, vii } { \@@_tmp:n {#1} }
+%    \end{macrocode}
+% \end{variable}
+%
+% \subsubsection{\texttt{hyperref}, labels and references}
 %
 % \begin{variable}[int]{\l_@@_hyperref_bool, \l_@@_footnotes_key_bool}
 %   The boolean variable \myhlc|\l_@@_hyperref_bool| will determine if the
@@ -4940,65 +4835,7 @@ all the worksheets are as follows:
 %    \end{macrocode}
 % \end{variable}
 %
-% \begin{variable}[int]{
-%   \g_@@_footnote_standard_int,
-%   \g_@@_footnote_starred_int,
-%   \g_@@_footnote_standard_arg_seq,
-%   \g_@@_footnote_starred_arg_seq,
-%   \g_@@_footnote_standard_int_seq,
-%   \g_@@_footnote_starred_int_seq,
-% }
-%   Internal variables used for redefinition of |\footnote| (\S\ref{subsec:footnote}).
-%    \begin{macrocode}
-\int_new:N \g_@@_footnote_standard_int
-\int_new:N \g_@@_footnote_starred_int
-\seq_new:N \g_@@_footnote_standard_arg_seq
-\seq_new:N \g_@@_footnote_starred_arg_seq
-\seq_new:N \g_@@_footnote_standard_int_seq
-\seq_new:N \g_@@_footnote_starred_int_seq
-%    \end{macrocode}
-% \end{variable}
-%
-% \begin{variable}[int]{
-%   \l_@@_item_starred_X_bool,
-%   l_@@_item_column_pos_X_int,
-%   \g_@@_item_count_all_X_int,
-%   \l_@@_joined_item_X_int,
-%   \l_@@_joined_item_aux_X_int,
-%   \l_@@_tmpa_X_int,
-%   \l_@@_item_text_X_box,
-%   \l_@@_joined_width_X_dim,
-%   \l_@@_item_width_X_dim,
-%   \g_@@_item_symbol_aux_X_tl,
-%   \l_@@_align_label_X_str,
-%   \g_@@_minipage_active_X_bool,
-%   \l_@@_miniright_code_X_box,
-%   \g_@@_minipage_center_X_bool,
-%   \g_@@_minipage_right_X_dim,
-% }
-%    Internal variables used by \myenv*[no-index]{enumext*} and \myenv*[no-index]{keyans*} environments.
-%    \begin{macrocode}
-\cs_set_protected:Nn \@@_tmp:n
-  {
-    \bool_new:c { l_@@_item_starred_ #1 _bool    }
-    \int_new:c  { l_@@_item_column_pos_ #1 _int  }
-    \int_new:c  { g_@@_item_count_all_ #1 _int   }
-    \int_new:c  { l_@@_joined_item_ #1 _int      }
-    \int_new:c  { l_@@_joined_item_aux_ #1 _int  }
-    \int_new:c  { l_@@_tmpa_ #1 _int             }
-    \box_new:c  { l_@@_item_text_ #1 _box        }
-    \dim_new:c  { l_@@_joined_width_ #1 _dim     }
-    \dim_new:c  { l_@@_item_width_ #1 _dim       }
-    \tl_new:c   { g_@@_item_symbol_aux_ #1 _tl   }
-    \str_new:c  { l_@@_align_label_ #1 _str      }
-    \bool_new:c { g_@@_minipage_active_ #1 _bool }
-    \box_new:c  { l_@@_miniright_code_ #1 _box   }
-    \bool_new:c { g_@@_minipage_center_ #1 _bool }
-    \dim_new:c  { g_@@_minipage_right_ #1 _dim   }
-  }
-\clist_map_inline:nn { vii, viii } { \@@_tmp:n {#1} }
-%    \end{macrocode}
-% \end{variable}
+% \subsubsection{Constants}
 %
 % \begin{variable}[int]{\c_@@_all_envs_clist}
 %    An internal |clist-var| variable to run with \myhlc|\@@_tmp:n|.
@@ -5119,14 +4956,35 @@ all the worksheets are as follows:
 %   The function \myhlc|\@@_unskip_unkern:| will remove the last \mymeta{skip}
 %   or \mymeta{kern} at execution time using the values \mydim{11} and
 %   \mydim{12} of |\lastnodetype| to apply |\unskip| or |\unkern| depending
-%   on the case.
+%   on the case. In the \emph{outer} vertical mode \TeX{} can't take things
+%   from the current page (|\unskip| and |\unkern| are errors there), so a
+%   negative |\vskip| or |\kern| is used instead, as \hologo{LaTeX} does in
+%   |\removelastskip|.
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_unskip_unkern:
   {
     \int_case:nnT { \lastnodetype }
       {
-        { 11 }{ \unskip }
-        { 12 }{ \unkern }
+        { 11 }
+          {
+            \mode_if_vertical:TF
+              {
+                \mode_if_inner:TF
+                  { \unskip }
+                  { \skip_vertical:n { -\tex_lastskip:D } }
+              }
+              { \unskip }
+          }
+        { 12 }
+          {
+            \mode_if_vertical:TF
+              {
+                \mode_if_inner:TF
+                  { \unkern }
+                  { \tex_kern:D -\tex_lastkern:D \scan_stop: }
+              }
+              { \unkern }
+          }
       }
   }
 %    \end{macrocode}
@@ -5487,6 +5345,25 @@ all the worksheets are as follows:
 % This implementation is adapted from the answer given by Clea F. Rees (\texttt{@cfr})
 % in \href{https://tex.stackexchange.com/a/700092}{footnotes in boxes compatible with hyperref}.
 %
+% \begin{variable}[int]{
+%   \g_@@_footnote_standard_int,
+%   \g_@@_footnote_starred_int,
+%   \g_@@_footnote_standard_arg_seq,
+%   \g_@@_footnote_starred_arg_seq,
+%   \g_@@_footnote_standard_int_seq,
+%   \g_@@_footnote_starred_int_seq,
+% }
+%   Internal variables used for redefinition of |\footnote| (\S\ref{subsec:footnote}).
+%    \begin{macrocode}
+\int_new:N \g_@@_footnote_standard_int
+\int_new:N \g_@@_footnote_starred_int
+\seq_new:N \g_@@_footnote_standard_arg_seq
+\seq_new:N \g_@@_footnote_starred_arg_seq
+\seq_new:N \g_@@_footnote_standard_int_seq
+\seq_new:N \g_@@_footnote_starred_int_seq
+%    \end{macrocode}
+% \end{variable}
+%
 % \begin{macro}[int]{\@@_footnotetext:nn, \@@_renew_footnote:,
 %                    \@@_print_footnote:, \@@_renew_footnote_mini:,
 %                    \@@_print_footnote_mini:}
@@ -5710,15 +5587,52 @@ all the worksheets are as follows:
 %
 % \subsection{Definition of counters}\label{subsec:counters}
 %
+% \subsubsection{Definition of variables}
+%
+% \begin{variable}[int]{
+%   \l_@@_counter_i_tl,
+%   \l_@@_counter_ii_tl,
+%   \l_@@_counter_iii_tl,
+%   \l_@@_counter_iv_tl,
+%   \l_@@_counter_v_tl,
+%   \l_@@_counter_vi_tl,
+%   \l_@@_counter_vii_tl,
+%   \l_@@_counter_viii_tl,
+% }
+%
+%   Variables to store the \emph{\enquote{name of the counters}}
+%   \icounter{enumXi}, \icounter{enumXii}, \icounter{enumXiii} and
+%   \icounter{enumXiv} for \myenv*[no-index]{enumext}  environment,
+%   \icounter{enumXv} for \myenv*[no-index]{keyans} environment and
+%   \icounter{enumXvi} for the \myenv*[no-index]{keyanspic} environment.
+%   The counters \icounter{enumXvii} and \icounter{enumXviii} are used
+%   by \myenv*[no-index]{enumext*} and \myenv*[no-index]{keyans*} environments.
+%
+%   The initial values of these variables are set by the function
+%   \myhlc|\@@_define_counter:Nn| (\S\ref{subsec:counters}) and then modified by the function
+%   \myhlc|\@@_label_style:Nnn| used by \mykey{label} key (\S\ref{key:label-ref}).
+%    \begin{macrocode}
+\cs_set_protected:Nn \@@_tmp:n
+  {
+    \tl_new:c { l_@@_counter_ #1 _tl }
+  }
+\clist_map_inline:nn { i, ii, iii, iv, v, vi, vii, viii } { \@@_tmp:n {#1} }
+%    \end{macrocode}
+% \end{variable}
+%
 % \subsubsection{Definition of error messages}
 %
 % \begin{macro}[int]{counters}
 % Message used in the creation of counters by \mypkg*[no-index]{enumext} package.
 %    \begin{macrocode}
-\msg_new:nnn { enumext } { counters }
+\msg_new:nnnn { enumext } { counters }
   {
     The~counter~'#1'~is~already~defined~by~some~package~or~macro,~
     it~cannot~be~continued.
+  }
+  {
+    Another~package~or~macro~already~defines~the~counter~'#1'.~
+    Check~for~a~conflict~with~'enumext'.
   }
 %    \end{macrocode}
 % \end{macro}
@@ -5800,6 +5714,24 @@ all the worksheets are as follows:
 %  so as not to hinder the internal \emph{\enquote{label and ref}} system.
 % \end{important}
 %
+%
+% \begin{variable}[int]{
+%   \g_@@_counter_styles_tl,
+%   \g_@@_widest_label_tl,
+%   \l_@@_label_width_by_box,
+% }
+%   The variable \myhlc|\g_@@_counter_styles_tl| stores the default
+%   \mymeta{label style} and the variable \myhlc|\g_@@_widest_label_tl| the
+%   label width. The box \myhlc|\l_@@_label_width_by_box| is used by the function
+%   \myhlc|\@@_label_width_by_box:Nn| to measure the width of a label.
+%   These variables are used by \mykey{widest} (\S\ref{key:start-widest}) and
+%   \mykey{label} (\S\ref{key:label}) keys.
+%    \begin{macrocode}
+\tl_new:N  \g_@@_counter_styles_tl
+\tl_new:N  \g_@@_widest_label_tl
+\box_new:N \l_@@_label_width_by_box
+%    \end{macrocode}
+% \end{variable}
 %
 % \begin{macro}[int]{\@@_register_default_label_wd:Nn}
 %   These \mymeta{counters} will be used as default \mymeta{labels} if
@@ -5999,14 +5931,39 @@ all the worksheets are as follows:
 % for \mymeta{label}, the value of the variables \myhlc|\l_@@_label_X_tl|,
 % the default values for |\labelwidth| and the \emph{\enquote{label and ref}} system.
 %
+% \subsubsection{Definition of variables}
+%
+% \begin{variable}[int]{
+%   \l_@@_ref_key_arg_tl,
+%   \l_@@_ref_the_count_tl,
+%   \l_@@_renew_counter_X_tl,
+%   \l_@@_the_counter_X_tl,
+% }
+%   Internal variables used by \mykey{ref} key (\S\ref{key:label-ref}).
+%    \begin{macrocode}
+\tl_new:N \l_@@_ref_key_arg_tl
+\tl_new:N \l_@@_ref_the_count_tl
+\cs_set_protected:Nn \@@_tmp:n
+  {
+    \tl_new:c  { l_@@_renew_counter_ #1 _tl }
+    \tl_new:c  { l_@@_the_counter_ #1 _tl   }
+    \tl_set:ce { l_@@_the_counter_ #1 _tl   } { \exp_not:c { theenumX #1 } }
+  }
+\clist_map_inline:nn { i, ii, iii, iv, v, vi, vii, viii } { \@@_tmp:n {#1} }
+%    \end{macrocode}
+% \end{variable}
+%
 % \subsubsection{Definition of error messages}
 %
 % \begin{macro}[int]{key-ref-empty}
 % Messages used by \mykey[env]{ref} key.
 %    \begin{macrocode}
-\msg_new:nnn { enumext } { key-ref-empty }
+\msg_new:nnnn { enumext } { key-ref-empty }
   {
     Key~'ref'~needs~a~value~in~'#1'~\msg_line_context:.
+  }
+  {
+    Give~a~value~to~the~key~'ref'~or~remove~it.
   }
 %    \end{macrocode}
 % \end{macro}
@@ -7130,6 +7087,22 @@ all the worksheets are as follows:
 % |\showboxdepth| absolutely failed.
 % \end{important}
 %
+% \subsubsection{Definition of variables}
+%
+% \begin{variable}[int]{
+%   \l_@@_minipage_temp_skip,
+%   \l_@@_minipage_left_skip,
+%   \l_@@_minipage_right_skip,
+% }
+%   Internal variables used by the keys \mykey{mini-env} and \mykey{mini-sep}
+%   (\S\ref{subsec:vspace-minipage}).
+%    \begin{macrocode}
+\skip_new:N \l_@@_minipage_temp_skip
+\skip_new:N \l_@@_minipage_left_skip
+\skip_new:N \l_@@_minipage_right_skip
+%    \end{macrocode}
+% \end{variable}
+%
 % \subsubsection{Definition of error messages}
 %
 % \begin{macro}[int]{wrong-miniright-place, wrong-miniright-use,
@@ -7150,15 +7123,23 @@ all the worksheets are as follows:
   {
     '\token_to_str:N \miniright'~needs~a~key~'mini-env'.
   }
-\msg_new:nnn { enumext } { wrong-miniright-starred }
+\msg_new:nnnn { enumext } { wrong-miniright-starred }
   {
     Can't~use~'\token_to_str:N \miniright'~in~starred~environments~
     \msg_line_context:.
   }
-\msg_new:nnn { enumext } { many-miniright-used }
+  {
+    In~'enumext*'~and~'keyans*'~use~the~keys~'mini-right'~or~
+    'mini-right*'~instead.
+  }
+\msg_new:nnnn { enumext } { many-miniright-used }
   {
     Can't~use~'\token_to_str:N \miniright'~more~than~once~
     \msg_line_context:.
+  }
+  {
+    '\token_to_str:N \miniright'~can~be~used~only~once~in~each~
+    environment.
   }
 %    \end{macrocode}
 % \end{macro}
@@ -7592,36 +7573,41 @@ all the worksheets are as follows:
 %
 % \begin{macro}{\miniright}
 %   First, some checks prevent the command from being executed outside the
-%   \myenv*[no-index]{enumext} environment or somewhere inappropriate; then the
+%   \myenv*[no-index]{enumext} environment or somewhere inappropriate (only the
+%   first error found is reported and the command does nothing else); then the
 %   internal functions are called to execute it in the \myenv*[no-index]{enumext} and
 %   \myenv*[no-index]{keyans} environments.
 %    \begin{macrocode}
 \NewDocumentCommand \miniright { s }
   {
-    \int_compare:nNnT { \l_@@_keyans_pic_level_int } = { 1 }
-      {
-        \msg_error:nnn { enumext } { wrong-miniright-place }
-      }
     % outside
-    \bool_lazy_and:nnT
-      { \int_compare_p:nNn { \l_@@_level_int } = { 0 } }
-      { \int_compare_p:nNn { \l_@@_level_h_int } = { 0 } }
+    \bool_lazy_or:nnTF
+      { \int_compare_p:nNn { \l_@@_keyans_pic_level_int } = { 1 } }
       {
-        \msg_error:nnn { enumext } { wrong-miniright-place }
+        \bool_lazy_and_p:nn
+          { \int_compare_p:nNn { \l_@@_level_int } = { 0 } }
+          { \int_compare_p:nNn { \l_@@_level_h_int } = { 0 } }
       }
-    % starred env
-    \bool_lazy_and:nnT
-      { \bool_if_p:N \g_@@_starred_bool }
-      { \bool_not_p:n { \l_@@_standard_bool } }
       {
-        \msg_error:nnn { enumext } { wrong-miniright-starred }
+        \msg_error:nn { enumext } { wrong-miniright-place }
       }
-    % exec
-    \int_compare:nNnTF { \l_@@_keyans_level_int } = { 1 }
       {
-        \@@_keyans_mini_right_cmd:n {#1}
+        % starred env
+        \bool_lazy_and:nnTF
+          { \bool_if_p:N \g_@@_starred_bool }
+          { \bool_not_p:n { \l_@@_standard_bool } }
+          {
+            \msg_error:nn { enumext } { wrong-miniright-starred }
+          }
+          {
+            % exec
+            \int_compare:nNnTF { \l_@@_keyans_level_int } = { 1 }
+              {
+                \@@_keyans_mini_right_cmd:n {#1}
+              }
+              { \@@_mini_right_cmd:n {#1} }
+          }
       }
-      { \@@_mini_right_cmd:n {#1} }
   }
 %    \end{macrocode}
 % \end{macro}
@@ -7660,7 +7646,7 @@ all the worksheets are as follows:
             }
           \int_gzero:N \g_@@_minipage_stat_int
       }
-      { \msg_error:nnn { enumext } { wrong-miniright-use } }
+      { \msg_error:nn { enumext } { wrong-miniright-use } }
     % paranoia
     \RenewDocumentCommand \miniright { s }
       {
@@ -7697,7 +7683,7 @@ all the worksheets are as follows:
             }
           \int_gzero:N \g_@@_minipage_stat_int
       }
-      { \msg_error:nnn { enumext } { wrong-miniright-use } }
+      { \msg_error:nn { enumext } { wrong-miniright-use } }
     % paranoia
     \RenewDocumentCommand \miniright { s }
       {
@@ -7718,6 +7704,23 @@ all the worksheets are as follows:
 % corrected completely, the best option is to provide a couple of
 % \mymeta{keys} dedicated to this purpose, in this case it is best to use
 % |\vspace| or |\vspace*| when convenient.
+%
+% \begin{variable}[int]{
+%   \l_@@_vspace_a_star_X_bool,
+%   \l_@@_vspace_b_star_X_bool,
+% }
+%   The boolean vars \myhlc|\l_@@_vspace_a_star_X_bool| and
+%   \myhlc|\l_@@_vspace_b_star_X_bool| are used by \mykey{above},
+%   \mykey{above*}, \mykey{below} and \mykey{below*} keys.
+%    \begin{macrocode}
+\cs_set_protected:Nn \@@_tmp:n
+  {
+    \bool_new:c { l_@@_vspace_a_star_ #1 _bool }
+    \bool_new:c { l_@@_vspace_b_star_ #1 _bool }
+  }
+\clist_map_inline:nn { i, ii, iii, iv, v, vii, viii } { \@@_tmp:n {#1} }
+%    \end{macrocode}
+% \end{variable}
 %
 % \begin{macro}[int]{above, above*, below, below*}
 %     Define \mykey[env]{above}, \mykey[env]{above*}, \mykey[env]{below} and \mykey[env]{below*} keys for
@@ -7900,21 +7903,51 @@ all the worksheets are as follows:
 % of the environments \myenv*[no-index]{enumext} and \myenv*[no-index]{enumext*}, but, discarding
 % some specific \mymeta{keys}.
 %
+% \subsubsection{Definition of variables}
+%
+% \begin{variable}[int]{
+%   \l_@@_series_name_tl,
+%   \l_@@_resume_series_X_bool,
+%   \l_@@_resume_star_key_X_bool,
+%   \g_@@_resume_last_keys_X_tl,
+% }
+%   Internal variables used by \mykey{resume}, \mykey{resume*} and
+%   \mykey{series} keys (\S\ref{key:series}).
+%    \begin{macrocode}
+\tl_new:N \l_@@_series_name_tl
+\cs_set_protected:Nn \@@_tmp:n
+  {
+    \bool_new:c { l_@@_resume_series_ #1 _bool   }
+    \bool_new:c { l_@@_resume_star_key_ #1 _bool }
+    \tl_new:c   { g_@@_resume_last_keys_ #1 _tl  }
+  }
+\clist_map_inline:nn { i, ii, iii, iv, vii } { \@@_tmp:n {#1} }
+%    \end{macrocode}
+% \end{variable}
+%
 % \subsubsection{Definition of error messages}
 %
 % \begin{macro}[int]{unknown-series-starred, unknown-series-standard}
 % Messages used by \mykey[env]{resume} key.
 %    \begin{macrocode}
-\msg_new:nnn { enumext } { unknown-series-starred }
+\msg_new:nnnn { enumext } { unknown-series-starred }
   {
     The~series~'#1'~for~the~resume~key~does~not~exist~in~the~
     enumext*~environment~\msg_line_context:.
   }
-\msg_new:nnn { enumext } { unknown-series-standard }
+  {
+    Define~the~series~with~the~key~'series'~in~a~previous~
+    'enumext*'~environment~and~check~the~name.
+  }
+\msg_new:nnnn { enumext } { unknown-series-standard }
   {
     The~series~'#1'~for~the~resume~key~does~not~exist~at~level~
     \int_use:N \l_@@_level_int
     \c_space_tl of~enumext~environment~\msg_line_context:.
+  }
+  {
+    Define~the~series~with~the~key~'series'~at~that~level~in~
+    a~previous~'enumext'~environment~and~check~the~name.
   }
 %    \end{macrocode}
 % \end{macro}
@@ -8706,9 +8739,12 @@ all the worksheets are as follows:
 % \begin{macro}[int]{save-ans-empty, save-ans-log, save-ans-log-hook}
 % Messages used by \mykey[env]{save-ans} key.
 %    \begin{macrocode}
-\msg_new:nnn { enumext } { save-ans-empty }
+\msg_new:nnnn { enumext } { save-ans-empty }
   {
     Key~'save-ans'~needs~a~value~in~'#1'~\msg_line_context:.
+  }
+  {
+    Give~a~name~to~the~storage,~for~example~'save-ans=name'.
   }
 \msg_new:nnn { enumext } { save-ans-log }
   {
@@ -9205,6 +9241,24 @@ all the worksheets are as follows:
 %
 % \subsection{Keys and functions associated with storage}\label{subsec:storage-system}
 %
+% \subsubsection{Definition of variables}
+%
+% \begin{variable}[int]{
+%   \l_@@_store_save_key_X_tl,
+%   \l_@@_store_save_key_X_bool,
+% }
+%   Internal variables used by \mykey{save-key} key (\S\ref{key:save-key}) and
+%   the \emph{\enquote{storing structure}}.
+%    \begin{macrocode}
+\cs_set_protected:Nn \@@_tmp:n
+  {
+    \tl_new:c   { l_@@_store_save_key_ #1 _tl   }
+    \bool_new:c { l_@@_store_save_key_ #1 _bool }
+  }
+\clist_map_inline:nn { i, ii, iii, iv, vii } { \@@_tmp:n {#1} }
+%    \end{macrocode}
+% \end{variable}
+%
 % \subsubsection{Keys for \texttt{marks}, \texttt{wrap} and \texttt{show}}
 %
 % The \mypkg*[no-index]{enumext} package provides a set of \mymeta{keys} for
@@ -9526,14 +9580,21 @@ all the worksheets are as follows:
 %   function is used by |\anskey| in \myenv*[no-index]{enumext} and \myenv*[no-index]{enumext*}
 %   environments, |\item*| in \myenv*[no-index]{keyans} and \myenv*[no-index]{keyans*}
 %   environments and |\anspic*| in \myenv*[no-index]{keyanspic} environment.
+%   If there is no \emph{store name} (it was used outside the
+%   \mykey[env]{save-ans} key and the error has already been reported) it does
+%   nothing.
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_store_addto_prop:n
   {
-    \prop_gput_if_not_in:cen { g_@@_ \l_@@_store_name_tl _prop }
+    \tl_if_empty:NF \l_@@_store_name_tl
       {
-        \int_eval:n { \prop_count:c { g_@@_ \l_@@_store_name_tl _prop } + 1 }
+        \prop_gput_if_not_in:cen { g_@@_ \l_@@_store_name_tl _prop }
+          {
+            \int_eval:n
+              { \prop_count:c { g_@@_ \l_@@_store_name_tl _prop } + 1 }
+          }
+          {#1}
       }
-      {#1}
   }
 \cs_generate_variant:Nn \@@_store_addto_prop:n { V }
 %    \end{macrocode}
@@ -9552,11 +9613,15 @@ all the worksheets are as follows:
 %   the \emph{\enquote{same structure}} in which the command was executed.
 %
 %   The \emph{\enquote{stored content}} is retrieved by means of the
-%   |\printkeyans| command.
+%   |\printkeyans| command. As in the previous function, it does nothing
+%   when there is no \emph{store name}.
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_store_addto_seq:n
   {
-    \seq_gput_right:cn { g_@@_ \l_@@_store_name_tl _seq } {#1}
+    \tl_if_empty:NF \l_@@_store_name_tl
+      {
+        \seq_gput_right:cn { g_@@_ \l_@@_store_name_tl _seq } {#1}
+      }
   }
 \cs_generate_variant:Nn \@@_store_addto_seq:n { v, V }
 %    \end{macrocode}
@@ -9788,22 +9853,41 @@ all the worksheets are as follows:
 %
 % \subsection{Common functions for \cs{anskey} and \texttt{anskey*} environment}\label{subsec:common-anskey}
 %
+% \subsubsection{Definition of variables}
+%
+% \begin{variable}[int]{\l_@@_store_anskey_arg_tl}
+%   The variable \myhlc|\l_@@_store_anskey_arg_tl| save the \emph{argument}
+%   of |\anskey| (\S\ref{cmd:anskey}).
+%    \begin{macrocode}
+\tl_new:N \l_@@_store_anskey_arg_tl
+%    \end{macrocode}
+% \end{variable}
+%
 % \subsubsection{Definition of error messages}
 %
 % \begin{macro}[int]{anskey-unnumber-item, anskey-empty-arg, anskey-math-mode}
 % Messages used by |\anskey| and \myenv*[no-index]{anskey*}.
 %    \begin{macrocode}
-\msg_new:nnn { enumext } { anskey-unnumber-item }
+\msg_new:nnnn { enumext } { anskey-unnumber-item }
   {
     Can't~store~with~an~unnumbered~'\token_to_str:N \item'~\msg_line_context:.
   }
-\msg_new:nnn { enumext } { anskey-empty-arg }
+  {
+    Store~the~content~with~a~numbered~'\token_to_str:N \item'.
+  }
+\msg_new:nnnn { enumext } { anskey-empty-arg }
   {
     Can't~store~empty~content~\msg_line_context:.
   }
-\msg_new:nnn { enumext } { anskey-math-mode }
+  {
+    Give~some~content~to~'\token_to_str:N \anskey'~or~remove~the~command.
+  }
+\msg_new:nnnn { enumext } { anskey-math-mode }
   {
     '#1'~can't~work~in~math~mode~\msg_line_context:.
+  }
+  {
+    Leave~math~mode~before~using~'#1'.
   }
 %    \end{macrocode}
 % \end{macro}
@@ -9988,6 +10072,16 @@ all the worksheets are as follows:
 % behaviour to that of |\item| in the \myenv*[no-index]{enumext} and \myenv*[no-index]{enumext*}
 % environments executed as follows |\anskey|\myoarg{key \textnormal{\textcolor{gray}{=}} val}\mymarg{content}.
 %
+% \subsubsection{Definition of variables for \cs[no-index]{anskey}}
+%
+% \begin{variable}[int]{\l_@@_anskey_level_int}
+%   The integer variable \myhlc|\l_@@_anskey_level_int| will control the
+%   nesting level of the |\anskey| command.
+%    \begin{macrocode}
+\int_new:N \l_@@_anskey_level_int
+%    \end{macrocode}
+% \end{variable}
+%
 % \subsubsection{Definition of error messages for \cs[no-index]{anskey}}
 %
 % \begin{macro}[int]{anskey-wrong-place, anskey-nested,
@@ -10001,10 +10095,13 @@ all the worksheets are as follows:
   {
     '\c_backslash_str #1'~works~in~the~environment~'#2'.
   }
-\msg_new:nnn { enumext } { anskey-nested }
+\msg_new:nnnn { enumext } { anskey-nested }
   {
     The~command~'\token_to_str:N \anskey'~can't~be~nested~
     \msg_line_context:.
+  }
+  {
+    Close~the~first~'\token_to_str:N \anskey'~before~using~another~one.
   }
 \msg_new:nnnn { enumext } { anskey-cmd-key-unknown }
   {
@@ -10177,6 +10274,41 @@ all the worksheets are as follows:
 % provided by \hologo{LaTeX}3 release 2025-07-08 does the work as the
 % original implementation.
 %
+% \subsubsection{Definition of variables for \env{anskey*}}
+%
+% \begin{variable}[int]{
+%   \l_@@_store_anskey_env_tl,
+%   \l_@@_write_anskey_env_bool,
+%   \l_@@_write_anskey_env_file_name_tl,
+%   \l_@@_write_anskey_env_file_iow,
+% }
+%   The variable \myhlc|\l_@@_store_anskey_env_tl| save the \mymeta{body}
+%   of the environment \myenv*[no-index]{anskey*} (\S\ref{env:anskey}).
+%
+%   The variables \myhlc|\l_@@_write_anskey_env_bool|, \myhlc|\l_@@_write_anskey_env_file_name_tl|
+%   and \myhlc|\l_@@_write_anskey_env_file_iow| they are used by the \mykey{write-env}
+%   and \mykey{overwrite} keys in the \myenv*[no-index]{anskey*} environment implementation.
+%    \begin{macrocode}
+\tl_new:N   \l_@@_store_anskey_env_tl
+\bool_new:N \l_@@_write_anskey_env_bool
+\tl_new:N   \l_@@_write_anskey_env_file_name_tl
+\iow_new:N  \l_@@_write_anskey_env_file_iow
+%    \end{macrocode}
+% \end{variable}
+%
+% \begin{variable}[int]{\c_@@_anskey_env_hidden_space_str}
+%   The \myhlc|\c_@@_anskey_env_hidden_space_str| is a constant \emph{string}
+%   to used to hide the \mymeta{forced space} added by \hologo{TeX} when
+%   recording content in a macro. This \emph{string} contains the \emph{reserved phrase}
+%   `|%^^Aenumextheol%|' which is added to the end of the argument stored
+%   in \emph{sequence} and \emph{prop list} when the key |force-eol| is false.
+%    \begin{macrocode}
+\str_const:Ne \c_@@_anskey_env_hidden_space_str
+  { \c_percent_str \c_circumflex_str \c_circumflex_str A enumextheol
+    \c_percent_str }
+%    \end{macrocode}
+% \end{variable}
+%
 % \subsubsection{Definition of error messages for \env{anskey*}}
 %
 % \begin{macro}[int]{anskey-env-error}
@@ -10200,9 +10332,13 @@ all the worksheets are as follows:
 %                    writing-file, not-writing}
 % Messages used by \myenv*[no-index]{anskey*} environment.
 %    \begin{macrocode}
-\msg_new:nnn { enumext } { anskey-env-wrong }
+\msg_new:nnnn { enumext } { anskey-env-wrong }
   {
     The~environment~anskey*~cannot~be~used~in~'#1'~\msg_line_context:.
+  }
+  {
+    'anskey*'~can~only~be~used~with~the~key~'save-ans'~in~
+    'enumext'~or~'enumext*'.
   }
 \msg_new:nnnn { enumext } { anskey-env-key-unknown }
   {
@@ -10509,6 +10645,22 @@ all the worksheets are as follows:
 % \end{macro}
 %
 % \subsection{Common functions for \env{keyans}, \env{keyans*} and \env{keyanspic}}\label{subsec:common-keyans}
+%
+% \subsubsection{Definition of variables}
+%
+% \begin{variable}[int]{
+%   \l_@@_mark_sep_tmpa_dim,
+%   \l_@@_mark_sep_tmpb_dim,
+%   \l_@@_show_pos_tmp_int,
+% }
+%   Internal variables used by \mykey{mark-sep}, \mykey{show-ans} and
+%   \mykey{show-pos} keys (\S\ref{subsec:storage-system}).
+%    \begin{macrocode}
+\dim_new:N \l_@@_mark_sep_tmpa_dim
+\dim_new:N \l_@@_mark_sep_tmpb_dim
+\int_new:N \l_@@_show_pos_tmp_int
+%    \end{macrocode}
+% \end{variable}
 %
 % \subsubsection{Definition of error messages}
 %
@@ -10894,6 +11046,13 @@ all the worksheets are as follows:
 % The \ics*{item} and |\item|\myoarg{custom} commands work in the
 % usual way on \myenv*[no-index]{enumext}, and |\item*|, |\item*|\myoarg{symbol} and
 % |\item*|\myoarg{symbol}\myoarg{offset} are added.
+%
+% \begin{variable}[int]{\g_@@_item_symbol_aux_tl}
+%   Internal variable used by \mykey{item-sym*} key (\S\ref{key:item-starred}).
+%    \begin{macrocode}
+\tl_new:N \g_@@_item_symbol_aux_tl
+%    \end{macrocode}
+% \end{variable}
 %
 % \begin{macro}[int]{\@@_default_item:n}
 %   First it checks if the \emph{optional argument} is present; if it is NOT
@@ -11527,6 +11686,20 @@ all the worksheets are as follows:
 % counter, the redefinition of |\item|, |\makelabel| along with the keys
 % \mykey{ref}, \mykey{itemindent} and \mykey{show-length}.
 %
+% \subsubsection{Definition of variables}
+%
+% \begin{variable}[int]{\l_@@_itemindent_X_dim}
+%   The dimension \myhlc|\l_@@_itemindent_X_dim| is set by the function
+%   \myhlc|\@@_calc_hspace:NNNNNNN| (\S\ref{subsubsec:leftmargin}).
+%    \begin{macrocode}
+\cs_set_protected:Nn \@@_tmp:n
+  {
+    \dim_new:c { l_@@_itemindent_ #1 _dim }
+  }
+\clist_map_inline:nn { i, ii, iii, iv, v, vi, vii, viii } { \@@_tmp:n {#1} }
+%    \end{macrocode}
+% \end{variable}
+%
 % \subsubsection{Definition of error messages}
 %
 % \begin{macro}[int]{width-negative}
@@ -11846,6 +12019,20 @@ all the worksheets are as follows:
 % \end{macro}
 %
 % \subsection{The environment \env{enumext}}\label{env:enumext}
+%
+% \subsubsection{Definition of variables for \env{enumext}}
+%
+% \begin{variable}[int]{\l_@@_store_upper_level_X_bool}
+%   Internal variables used by the \emph{\enquote{storing structure}} of
+%   the \myenv*[no-index]{enumext} environment when it is nested.
+%    \begin{macrocode}
+\cs_set_protected:Nn \@@_tmp:n
+  {
+    \bool_new:c { l_@@_store_upper_level_ #1 _bool }
+  }
+\clist_map_inline:nn { i, ii, iii, iv, vii } { \@@_tmp:n {#1} }
+%    \end{macrocode}
+% \end{variable}
 %
 % \subsubsection{Definition of error messages for \env{enumext}}
 %
@@ -12226,9 +12413,13 @@ all the worksheets are as follows:
 % \begin{macro}[int]{keyans-nested}
 % Message used by \myenv*[no-index]{keyans} environment.
 %    \begin{macrocode}
-\msg_new:nnn { enumext } { keyans-nested }
+\msg_new:nnnn { enumext } { keyans-nested }
   {
     The~environment~'keyans'~can't~be~nested~\msg_line_context:.
+  }
+  {
+    Close~the~first~'keyans'~environment~before~starting~
+    another~one.
   }
 %    \end{macrocode}
 % \end{macro}
@@ -12643,15 +12834,49 @@ all the worksheets are as follows:
 % implementation is adapted from the answer given by Enrico Gregorio
 % (\texttt{@egreg}) in \href{https://tex.stackexchange.com/a/577705/7832}{How to process the body of an environment and divide it by a \textbackslash macro?}.
 %
+% \subsubsection{Definition of variables for \env{keyanspic} and \cs[no-index]{anspic}}
+%
+% \begin{variable}[int]{
+%   \l_@@_anspic_args_seq,
+%   \l_@@_anspic_mini_width_dim,
+%   \l_@@_anspic_above_int,
+%   \l_@@_anspic_below_int,
+%   \l_@@_anspic_label_above_bool,
+%   \l_@@_anspic_mini_pos_str,
+%   \l_@@_anspic_label_box,
+%   \l_@@_anspic_body_box,
+%   \l_@@_anspic_label_htdp_dim,
+%   \l_@@_anspic_body_htdp_dim,
+% }
+%    Internal variables used by \myenv*[no-index]{keyanspic} environment and
+%   \ics*{anspic} command (\S\ref{env:keyanspic}).
+%    \begin{macrocode}
+\seq_new:N  \l_@@_anspic_args_seq
+\dim_new:N  \l_@@_anspic_mini_width_dim
+\int_new:N  \l_@@_anspic_above_int
+\int_new:N  \l_@@_anspic_below_int
+\bool_new:N \l_@@_anspic_label_above_bool
+\str_new:N  \l_@@_anspic_mini_pos_str
+\box_new:N  \l_@@_anspic_label_box
+\box_new:N  \l_@@_anspic_body_box
+\dim_new:N  \l_@@_anspic_label_htdp_dim
+\dim_new:N  \l_@@_anspic_body_htdp_dim
+%    \end{macrocode}
+% \end{variable}
+%
 % \subsubsection{Definition of error messages for \env{keyanspic}}
 %
 % \begin{macro}[int]{keyanspic-nested, keyanspic-wrong-level,
 %                    keyanspic-item-cmd}
 % Messages used by \myenv*[no-index]{keyanspic} environment.
 %    \begin{macrocode}
-\msg_new:nnn { enumext } { keyanspic-nested }
+\msg_new:nnnn { enumext } { keyanspic-nested }
   {
     The~environment~'keyanspic'~can't~be~nested~\msg_line_context:.
+  }
+  {
+    Close~the~first~'keyanspic'~environment~before~starting~
+    another~one.
   }
 \msg_new:nnnn { enumext } { keyanspic-wrong-level }
   {
@@ -12660,9 +12885,12 @@ all the worksheets are as follows:
   {
     The~environment~'keyanspic'~can~only~be~in~the~first~level.
   }
-\msg_new:nnn { enumext } { keyanspic-item-cmd }
+\msg_new:nnnn { enumext } { keyanspic-item-cmd }
   {
     Can't~use~'\token_to_str:N \item'~in~'keyanspic'~\msg_line_context:.
+  }
+  {
+    Remove~'\token_to_str:N \item'~from~the~'keyanspic'~environment.
   }
 %    \end{macrocode}
 % \end{macro}
@@ -13178,15 +13406,51 @@ all the worksheets are as follows:
 %   according to the presence or not of the \mykey{mini-env} key.
 % \end{important}
 %
+% \subsubsection{Definition of variables}
+%
+% \begin{variable}[int]{
+%   \l_@@_joined_item_X_int,
+%   \l_@@_joined_item_aux_X_int,
+%   \l_@@_tmpa_X_int,
+%   \l_@@_item_width_X_dim,
+%   \g_@@_minipage_active_X_bool,
+%   \l_@@_miniright_code_X_box,
+% }
+%   Internal variables used by \myenv*[no-index]{enumext*} and \myenv*[no-index]{keyans*}
+%   environments. The integers \myhlc|\l_@@_joined_item_X_int|,
+%   \myhlc|\l_@@_joined_item_aux_X_int| and \myhlc|\l_@@_tmpa_X_int| and the dimension
+%   \myhlc|\l_@@_item_width_X_dim| are used by the functions that calculate the
+%   item box width and join the item columns. The variables
+%   \myhlc|\g_@@_minipage_active_X_bool| and \myhlc|\l_@@_miniright_code_X_box|
+%   are used by the \mykey{mini-env}, \mykey{mini-right} and \mykey{mini-right*} keys
+%   (\S\ref{subsubsec:mini-env}).
+%    \begin{macrocode}
+\cs_set_protected:Nn \@@_tmp:n
+  {
+    \int_new:c  { l_@@_joined_item_ #1 _int      }
+    \int_new:c  { l_@@_joined_item_aux_ #1 _int  }
+    \int_new:c  { l_@@_tmpa_ #1 _int             }
+    \dim_new:c  { l_@@_item_width_ #1 _dim       }
+    \bool_new:c { g_@@_minipage_active_ #1 _bool }
+    \box_new:c  { l_@@_miniright_code_ #1 _box   }
+  }
+\clist_map_inline:nn { vii, viii } { \@@_tmp:n {#1} }
+%    \end{macrocode}
+% \end{variable}
+%
 % \subsubsection{Definition of error messages}
 %
 % \begin{macro}[int]{nested-horizontal, item-joined, item-joined-columns}
 % Messages used by \myenv*[no-index]{enumext*} and \myenv*[no-index]{keyans*} environments.
 %    \begin{macrocode}
-\msg_new:nnn { enumext } { nested-horizontal }
+\msg_new:nnnn { enumext } { nested-horizontal }
   {
     The~environment~\l_@@_envir_name_tl \c_space_tl can't~be~nested~in~'#1'~
     \msg_line_context:.
+  }
+  {
+    'enumext*'~and~'keyans*'~are~horizontal~lists~and~can't~be~
+    inside~each~other.
   }
 \msg_new:nnn { enumext } { item-joined }
   {
@@ -14645,15 +14909,27 @@ all the worksheets are as follows:
 %    \end{macrocode}
 % \end{variable}
 %
+% \begin{variable}[int]{\l_@@_print_keyans_starred_tl}
+%   The token list \myhlc|\l_@@_print_keyans_starred_tl| is used by the
+%   command \ics*{printkeyans} (\S\ref{cmd:printkeyans}).
+%    \begin{macrocode}
+\tl_new:N \l_@@_print_keyans_starred_tl
+%    \end{macrocode}
+% \end{variable}
+%
 % \subsubsection{Definition of error messages for \cs[no-index]{printkeyans}}
 %
 % \begin{macro}[int]{print-starred}
 %  Messages used by |\printkeyans*| command.
 %    \begin{macrocode}
-\msg_new:nnn { enumext } { print-starred }
+\msg_new:nnnn { enumext } { print-starred }
   {
     '\token_to_str:N \printkeyans*':~The~sequence~'#1'~already~contains~
     #2~environment~\msg_line_context:.
+  }
+  {
+    '\token_to_str:N \printkeyans*'~opens~'enumext*';~use~
+    '\token_to_str:N \printkeyans'~without~the~star.
   }
 %    \end{macrocode}
 % \end{macro}
@@ -14940,19 +15216,44 @@ all the worksheets are as follows:
 %    \end{macrocode}
 % \end{variable}
 %
+% \begin{variable}[int]{
+%   \l_@@_setkey_tmpa_tl,
+%   \l_@@_setkey_tmpb_tl,
+%   \l_@@_setkey_tmpa_int,
+%   \l_@@_setkey_tmpa_seq,
+%   \l_@@_setkey_tmpb_seq,
+% }
+%   Internal variables used by the command |\setenumext| (\S\ref{cmd:setenumext}).
+%    \begin{macrocode}
+\tl_new:N  \l_@@_setkey_tmpa_tl
+\tl_new:N  \l_@@_setkey_tmpb_tl
+\int_new:N \l_@@_setkey_tmpa_int
+\seq_new:N \l_@@_setkey_tmpa_seq
+\seq_new:N \l_@@_setkey_tmpb_seq
+%    \end{macrocode}
+% \end{variable}
+%
 % \subsubsection{Definition of error messages for \cs[no-index]{setenumext}}
 %
 % \begin{macro}[int]{invalid-key, unknown-key-family}
 % Message used by \myoarg{key \textnormal{\textcolor{gray}{=}} val}
 % system and |\setenumext| command.
 %    \begin{macrocode}
-\msg_new:nnn { enumext } { invalid-key }
+\msg_new:nnnn { enumext } { invalid-key }
   {
     The~key~'#1'~is~not~known~at~level~#2~\msg_line_context:.
   }
-\msg_new:nnn { enumext } { unknown-key-family }
+  {
+    The~optional~argument~must~be~a~family~followed~by~the~levels~
+    1,~2,~3,~4~or~'*',~for~example~'print,1'.
+  }
+\msg_new:nnnn { enumext } { unknown-key-family }
   {
     Unknown~key~family~'\l_keys_key_str'~for~enumext~\msg_line_context:.
+  }
+  {
+    The~first~element~of~the~optional~argument~must~be~
+    'enumext',~'enumext*',~'keyans',~'keyans*'~or~'print'.
   }
 %    \end{macrocode}
 % \end{macro}
@@ -15124,18 +15425,34 @@ all the worksheets are as follows:
 % The implementation code was given by Jonathan P. Spratte (\texttt{@Skillmon})
 % answer in \href{https://tex.stackexchange.com/a/747159}{Simplify syntax for command that adds \texttt{.meta} key to existing keys (l3keys)}.
 %
+% \subsubsection{Definition of variables for \cs[no-index]{setenumextmeta}}
+%
+% \begin{variable}[int]{\l_@@_meta_path_str}
+%   The string \myhlc|\l_@@_meta_path_str| is used by the |\setenumextmeta|
+%   command (\S\ref{cmd:setenumextmeta}).
+%    \begin{macrocode}
+\str_new:N \l_@@_meta_path_str
+%    \end{macrocode}
+% \end{variable}
+%
 % \subsubsection{Definition of error messages for \cs[no-index]{setenumextmeta}}
 %
 % \begin{macro}[int]{already-defined, prohibited-unknown}
 % Messages used by |\setenumextmeta| command.
 %    \begin{macrocode}
-\msg_new:nnn { enumext } { already-defined }
+\msg_new:nnnn { enumext } { already-defined }
   {
     The~key~'#1'~is~already~defined~\msg_line_context:.
   }
-\msg_new:nnn { enumext } { prohibited-unknown }
+  {
+    Choose~another~name~for~the~meta~key.
+  }
+\msg_new:nnnn { enumext } { prohibited-unknown }
   {
     The~name~'unknown'~can't~be~chosen~for~a~meta~key~\msg_line_context:.
+  }
+  {
+    'unknown'~is~reserved~by~the~package;~choose~another~name.
   }
 %    \end{macrocode}
 % \end{macro}
@@ -15234,6 +15551,21 @@ all the worksheets are as follows:
 % The command \ics*{foreachkeyans} will execute a \emph{loop} over the \emph{prop list} and return its contents.
 % The implementation code is adapted from the answer provided by Enrico Gregorio (\texttt{@egreg}) in
 % \href{https://tex.stackexchange.com/a/721130}{Expand a \texttt{.cs} defined by key inside the function}.
+%
+% \subsubsection{Definition of variables for \cs[no-index]{foreachkeyans}}
+%
+% \begin{variable}[int]{
+%   \l_@@_foreach_print_seq,
+%   \l_@@_foreach_name_prop_tl,
+%   \l_@@_foreach_default_keys_tl,
+% }
+%   Internal variables used by the |\foreachkeyans| command (\S\ref{cmd:foreachkeyans}).
+%    \begin{macrocode}
+\seq_new:N \l_@@_foreach_print_seq
+\tl_new:N  \l_@@_foreach_name_prop_tl
+\tl_new:N  \l_@@_foreach_default_keys_tl
+%    \end{macrocode}
+% \end{variable}
 %
 % \subsubsection{Definition of error messages for \cs[no-index]{foreachkeyans}}
 %
@@ -15391,9 +15723,12 @@ all the worksheets are as follows:
 % \begin{macro}[int]{unknown-choice}
 % Message used by \mykey[env]{align}, \mykey[env]{mark-pos} and \mykey[env]{label-pos} keys.
 %    \begin{macrocode}
-\msg_new:nnn { enumext } { unknown-choice }
+\msg_new:nnnn { enumext } { unknown-choice }
   {
     Invalid~value~'#3'~for~key~'#1';~use~one~of:~#2~\msg_line_context:.
+  }
+  {
+    Use~one~of~the~listed~values.
   }
 %    \end{macrocode}
 % \end{macro}
@@ -15416,9 +15751,12 @@ all the worksheets are as follows:
 % Message used by |\getkeyans|, |\printkeyans| and |\foreachkeyans| commands
 % when the storage is not defined.
 %    \begin{macrocode}
-\msg_new:nnn { enumext } { undefined-storage-anskey }
+\msg_new:nnnn { enumext } { undefined-storage-anskey }
   {
     Storage~named~'#1'~is~not~defined~\msg_line_context:.
+  }
+  {
+    Store~content~first~with~the~key~'save-ans=#1'.
   }
 %    \end{macrocode}
 % \end{macro}
@@ -15438,10 +15776,13 @@ all the worksheets are as follows:
 % \begin{macro}[int]{nested}
 % Message used when an environment is nested in itself.
 %    \begin{macrocode}
-\msg_new:nnn { enumext } { nested }
+\msg_new:nnnn { enumext } { nested }
   {
     The~environment~\l_@@_envir_name_tl \c_space_tl can't~be~nested~
     \msg_line_context:.
+  }
+  {
+    Starred~environments~are~horizontal~lists~and~can't~be~nested.
   }
 %    \end{macrocode}
 % \end{macro}

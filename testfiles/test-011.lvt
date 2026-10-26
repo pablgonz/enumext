@@ -1,0 +1,181 @@
+% test-011.lvt -- estructura etiquetada de las respuestas de enumext
+%
+% Regresion:  l3build save test-011
+%             l3build check test-011
+%
+% Test de regresion del etiquetado (tagged PDF) de las respuestas: anskey,
+% anskey*, keyans, keyans*, keyanspic, \printkeyans, \getkeyans y
+% \foreachkeyans. El log guarda el arbol de etiquetas (\SHOWPDFTAGS). Las
+% listas simples estan en test-010.
+\input{regression-test}
+
+\DocumentMetadata
+  {
+    lang=en-US,
+    pdfversion=2.0,
+    pdfstandard=ua-2,
+    tagging=on,
+  }
+\documentclass{article}
+\ExplSyntaxOn
+\debug_on:n { all }
+\ExplSyntaxOff
+\usepackage{graphicx}
+\usepackage{enumext}
+\usepackage{hyperref}
+\hypersetup
+  {
+    pdfdisplaydoctitle = true,
+    pdftitle           = {test-011: tagged answers of enumext},
+  }
+\begin{document}
+
+\section*{A. Answers with \texttt{anskey}}
+
+% Estructura: lista normal; las respuestas no se imprimen.
+1. Answers stored with \texttt{anskey}.
+
+\begin{enumext}[save-ans=one, save-sep={ }, save-ref=true]
+  \item Question A. \anskey{Answer A}
+  \item Question B. \anskey{Answer B}
+  \item Question C. \anskey[item-star]{Answer C}
+\end{enumext}
+
+% Estructura: texto con la respuesta recuperada y la referencia.
+2. Answer retrieved with \texttt{\textbackslash getkeyans}.
+
+The answer to question \ref{one:2} is \getkeyans{one:2}.
+
+% Estructura: lista de respuestas, un LI por item.
+3. Printed answers.
+
+\printkeyans{one}
+
+% Estructura: lista horizontal de respuestas.
+4. Printed answers in a horizontal list.
+
+\printkeyans*{one}
+
+% Estructura: texto con las respuestas separadas por parrafos.
+5. Answers with \texttt{\textbackslash foreachkeyans}.
+
+\foreachkeyans[sep={\par}]{one}
+
+\section*{B. Answers in environments}
+
+% Estructura: respuesta larga dentro de la lista.
+6. Environment \texttt{anskey*}.
+
+\begin{enumext}[save-ans=two]
+  \item Question A.
+    \begin{anskey*}
+      Long answer with several words and more text.
+    \end{anskey*}
+  \item Question B. \anskey{Answer B}
+\end{enumext}
+
+\printkeyans{two}
+
+% Estructura: lista de opciones dentro del item.
+7. Environment \texttt{keyans}.
+
+\begin{enumext}[save-ans=three]
+  \item Question A.
+    \begin{keyans}
+      \item First
+      \item* Second (correct)
+      \item Third
+    \end{keyans}
+  \item Question B.
+    \begin{keyans}
+      \item*[some note] First (correct)
+      \item Second
+    \end{keyans}
+\end{enumext}
+
+\printkeyans{three}
+
+% Estructura: opciones en lista horizontal.
+8. Environment \texttt{keyans*}.
+
+\begin{enumext}[save-ans=four]
+  \item Question A.
+    \begin{keyans*}
+      \item First
+      \item* Second (correct)
+      \item Third
+    \end{keyans*}
+\end{enumext}
+
+\printkeyans*{four}
+
+% Estructura: opciones en dos columnas y contenido a la derecha.
+9. Environment \texttt{keyans} with columns and minipage.
+
+\begin{enumext}[save-ans=five]
+  \item Question A.
+    \begin{keyans}[mini-env=0.5\linewidth, columns=1]
+      \item First
+      \item* Second (correct)
+      \item Third
+      \miniright
+        Text in the minipage.
+    \end{keyans}
+\end{enumext}
+
+\section*{C. Answers with images}
+
+% Estructura: opciones con imagen (cada imagen lleva texto alternativo).
+10. Environment \texttt{keyanspic}.
+
+\begin{enumext}[save-ans=six, save-ref=true]
+  \item Question with images.
+    \begin{keyanspic}[layout-sty={3,2}]
+      \anspic{\includegraphics[scale=0.15, alt={An uppercase letter A}]{example-image-a}}
+      \anspic*{\includegraphics[scale=0.15, alt={An uppercase letter B}]{example-image-b}}
+      \anspic{\includegraphics[scale=0.15, alt={An uppercase letter C}]{example-image-c}}
+    \end{keyanspic}
+  \item Question with images and label above.
+    \begin{keyanspic}[label-pos=above]
+      \anspic*[The letter A]{\includegraphics[scale=0.15, alt={An uppercase letter A}]{example-image-a}}
+      \anspic{\includegraphics[scale=0.15, alt={An uppercase letter B}]{example-image-b}}
+    \end{keyanspic}
+\end{enumext}
+
+\printkeyans*{six}
+
+\section*{D. Answers in horizontal lists}
+
+% Estructura: lista horizontal con respuestas guardadas.
+11. Stored answers in \texttt{enumext*}.
+
+\begin{enumext*}[save-ans=seven, save-sep={ }]
+  \item Question A. \anskey{Answer A}
+  \item Question B. \anskey{Answer B}
+  \item Question C.
+    \begin{anskey*}
+      Answer C.
+    \end{anskey*}
+\end{enumext*}
+
+\printkeyans{seven}
+
+\section*{E. Defaults of the printed answers}
+
+% Estructura: \setenumext cambia las listas del documento, no lo impreso.
+12. \texttt{\textbackslash setenumext} and \texttt{\textbackslash printkeyans}.
+
+\setenumext[print,1]{columns=2, columns-sep=1cm, font=\bfseries}
+\setenumext[print*]{columns=2, columns-sep=1cm, first=\bfseries}
+
+\printkeyans{one}
+
+\printkeyans*{one}
+
+\START
+
+\SHOWPDFTAGS
+
+\OMIT
+
+\end{document}
