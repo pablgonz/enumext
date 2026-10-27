@@ -1,0 +1,377 @@
+% test-003.lvt -- espacios, penalizaciones y codigo de las listas de enumext
+%
+% Hecho con cariño por Pablo González L. <pablgonz@educarchile.cl>
+% para que enumext siga funcionando igual de bien después de cada cambio.
+%
+% Regresion:  l3build save test-003
+%             l3build check test-003
+%
+% Test de regresion de las llaves de espacios verticales y horizontales, de
+% penalizaciones, de simbolo de \item*, de codigo (before, first, after) y de
+% minipage de enumext y enumext*. Cada caso compone la lista en una caja y la
+% muestra en el log (\BOXTEST), como en test-001; el documento no usa
+% \DocumentMetadata. Los casos se agregan siempre al final de su seccion y el
+% [id] no se reutiliza.
+\input{regression-test}
+
+\documentclass{article}
+\ExplSyntaxOn
+\debug_on:n { all }
+\ExplSyntaxOff
+\usepackage{enumext}
+\begin{document}
+
+\newcommand\BOXTEST[2]
+  {%
+    \TEST{#1}
+      {%
+        \setbox0=\vbox{\hsize=250pt \parindent=0pt #2}%
+        \showbox0
+      }%
+  }
+
+\START
+
+\TYPE{=== A. Espacios verticales ===}
+
+\BOXTEST{[1] topsep}
+  {
+    \begin{enumext}[topsep=12pt]
+      \item Uno
+      \item Dos
+    \end{enumext}
+  }
+
+\BOXTEST{[2] itemsep}
+  {
+    \begin{enumext}[itemsep=10pt]
+      \item Uno
+      \item Dos
+      \item Tres
+    \end{enumext}
+  }
+
+\BOXTEST{[3] parsep con dos parrafos}
+  {
+    \begin{enumext}[parsep=6pt]
+      \item Primer parrafo.
+
+        Segundo parrafo del mismo item.
+      \item Dos
+    \end{enumext}
+  }
+
+\BOXTEST{[4] partopsep tras una linea en blanco}
+  {
+    Texto antes de la lista.
+
+    \begin{enumext}[partopsep=10pt]
+      \item Uno
+      \item Dos
+    \end{enumext}
+  }
+
+\BOXTEST{[5] partopsep sin linea en blanco}
+  {
+    Texto antes de la lista.
+    \begin{enumext}[partopsep=10pt]
+      \item Uno
+      \item Dos
+    \end{enumext}
+  }
+
+\BOXTEST{[6] noitemsep}
+  {
+    \begin{enumext}[noitemsep]
+      \item Uno
+      \item Dos
+    \end{enumext}
+  }
+
+\BOXTEST{[7] nosep}
+  {
+    \begin{enumext}[nosep]
+      \item Uno
+        \begin{enumext}[nosep]
+          \item Uno-uno
+        \end{enumext}
+      \item Dos
+    \end{enumext}
+  }
+
+\BOXTEST{[8] itemsep en enumext* (separacion entre filas)}
+  {
+    \begin{enumext*}[columns=2,itemsep=14pt]
+      \item Uno
+      \item Dos
+      \item Tres
+      \item Cuatro
+    \end{enumext*}
+  }
+
+\BOXTEST{[9] parsep en enumext* (parskip dentro del item)}
+  {
+    \begin{enumext*}[columns=2,parsep=8pt]
+      \item Primer parrafo.
+
+        Segundo parrafo del item.
+      \item Dos
+    \end{enumext*}
+  }
+
+\BOXTEST{[10] above* y below*}
+  {
+    \begin{enumext}[above*=10pt, below*=20pt]
+      \item Uno
+      \item Dos
+    \end{enumext}
+  }
+
+\BOXTEST{[11] parsep y itemsep con valores elasticos}
+  {
+    \begin{enumext}[itemsep=7pt plus 3pt minus 2pt, parsep=2pt plus 1pt]
+      \item Uno
+      \item Dos
+    \end{enumext}
+  }
+
+\TYPE{=== B. Penalizaciones ===}
+
+\BOXTEST{[12] beginpenalty, midpenalty y endpenalty}
+  {
+    \begin{enumext}[beginpenalty=500, midpenalty=-200, endpenalty=300]
+      \item Uno
+      \item Dos
+      \item Tres
+    \end{enumext}
+  }
+
+\BOXTEST{[13] penalizaciones prohibitivas}
+  {
+    \begin{enumext}[beginpenalty=10000, midpenalty=10000, endpenalty=10000]
+      \item Uno
+      \item Dos
+    \end{enumext}
+  }
+
+\BOXTEST{[14] penalizaciones en enumext*}
+  {
+    \begin{enumext*}[columns=2, midpenalty=250]
+      \item Uno
+      \item Dos
+      \item Tres
+      \item Cuatro
+    \end{enumext*}
+  }
+
+\TYPE{=== C. Espacios horizontales ===}
+
+\BOXTEST{[15] list-indent}
+  {
+    \begin{enumext}[list-indent=30pt]
+      \item Uno
+      \item Dos
+    \end{enumext}
+  }
+
+\BOXTEST{[16] list-indent=0pt: la etiqueta forma parte del texto}
+  {
+    \begin{enumext}[list-indent=0pt]
+      \item Uno con un texto lo bastante largo para ocupar mas de una linea de
+        la caja: esta frase se repite. Esta frase se repite para llenar.
+      \item Dos
+    \end{enumext}
+  }
+
+\BOXTEST{[17] list-offset negativo}
+  {
+    \begin{enumext}[list-offset=-10pt]
+      \item Uno
+      \item Dos
+    \end{enumext}
+  }
+
+\BOXTEST{[18] itemindent en enumext}
+  {
+    \begin{enumext}[itemindent=15pt]
+      \item Uno con un texto lo bastante largo para ocupar mas de una linea de
+        la caja: esta frase se repite. Esta frase se repite para llenar.
+      \item Dos
+    \end{enumext}
+  }
+
+\BOXTEST{[19] rightmargin en enumext}
+  {
+    \begin{enumext}[rightmargin=20pt]
+      \item Uno con un texto lo bastante largo para ocupar mas de una linea de
+        la caja: esta frase se repite. Esta frase se repite para llenar.
+      \item Dos
+    \end{enumext}
+  }
+
+\BOXTEST{[20] listparindent en enumext}
+  {
+    \begin{enumext}[listparindent=12pt]
+      \item Primer parrafo.
+
+        Segundo parrafo con sangria.
+      \item Dos
+    \end{enumext}
+  }
+
+\BOXTEST{[21] listparindent en enumext*}
+  {
+    \begin{enumext*}[columns=2,listparindent=12pt]
+      \item Primer parrafo.
+
+        Segundo parrafo con sangria.
+      \item Dos
+    \end{enumext*}
+  }
+
+\BOXTEST{[22] widest con entero}
+  {
+    \begin{enumext}[label=\roman*., widest=23]
+      \item Uno
+      \item Dos
+    \end{enumext}
+  }
+
+\BOXTEST{[23] widest con cadena}
+  {
+    \begin{enumext}[label=\roman*., widest=xxiii]
+      \item Uno
+      \item Dos
+    \end{enumext}
+  }
+
+\BOXTEST{[24] align=center y align=right}
+  {
+    \begin{enumext}[labelwidth=1.5cm, align=center]
+      \item Uno
+      \item Dos
+    \end{enumext}
+    \begin{enumext}[labelwidth=1.5cm, align=right]
+      \item Uno
+      \item Dos
+    \end{enumext}
+  }
+
+\BOXTEST{[25] mode-box}
+  {
+    \begin{enumext}[mode-box, labelwidth=1cm, wrap-label=\textbf{#1}]
+      \item Uno
+      \item Dos
+    \end{enumext}
+  }
+
+\BOXTEST{[26] base-fix en enumext dentro de enumext*}
+  {
+    \begin{enumext*}[columns=1]
+      \item \begin{enumext}[base-fix]
+              \item Interior uno
+              \item Interior dos
+            \end{enumext}
+    \end{enumext*}
+  }
+
+\BOXTEST{[27] \string\item* con item-sym* e item-pos*}
+  {
+    \begin{enumext}[item-sym*={$\star$}, item-pos*=5pt]
+      \item Uno
+      \item* Dos
+      \item Tres
+    \end{enumext}
+  }
+
+\BOXTEST{[28] \string\item* con item-sym* en enumext*}
+  {
+    \begin{enumext*}[columns=2, item-sym*={$\bullet$}]
+      \item Uno
+      \item* Dos
+      \item Tres
+    \end{enumext*}
+  }
+
+\TYPE{=== D. Codigo: before*, before, first y after ===}
+
+% Cada llave escribe su nombre en el log: el .tlg guarda el orden en que se
+% ejecutan, y la caja muestra que no agregan material.
+\BOXTEST{[29] before*, before, first y after (enumext)}
+  {
+    \begin{enumext}[before*={\TYPE{before*}}, before={\TYPE{before}},
+                    first={\TYPE{first}}, after={\TYPE{after}}]
+      \item Uno
+      \item Dos
+    \end{enumext}
+  }
+
+\BOXTEST{[30] before*, before, first y after (enumext*)}
+  {
+    \begin{enumext*}[columns=2, before*={\TYPE{before*}}, before={\TYPE{before}},
+                     first={\TYPE{first}}, after={\TYPE{after}}]
+      \item Uno
+      \item Dos
+    \end{enumext*}
+  }
+
+\BOXTEST{[31] first modifica el cuerpo de la lista}
+  {
+    \begin{enumext}[first={\itshape}]
+      \item Uno
+      \item Dos
+    \end{enumext}
+  }
+
+\BOXTEST{[32] first con niveles interiores}
+  {
+    \begin{enumext}[first={\bfseries}]
+      \item Uno
+        \begin{enumext}[first={\upshape}]
+          \item Uno-uno
+        \end{enumext}
+    \end{enumext}
+  }
+
+\TYPE{=== E. Minipage a la derecha ===}
+
+\BOXTEST{[33] mini-env y mini-sep}
+  {
+    \begin{enumext}[mini-env=0.4\linewidth, mini-sep=1cm]
+      \item Uno
+      \item Dos
+      \miniright
+        Texto a la derecha.
+    \end{enumext}
+  }
+
+\BOXTEST{[34] miniright* conserva la justificacion}
+  {
+    \begin{enumext}[mini-env=0.4\linewidth]
+      \item Uno
+      \item Dos
+      \miniright*
+        Texto a la derecha sin centrar.
+    \end{enumext}
+  }
+
+\BOXTEST{[35] mini-right en enumext*}
+  {
+    \begin{enumext*}[columns=2, mini-env=0.4\linewidth,
+                     mini-right={Contenido centrado.}]
+      \item Uno
+      \item Dos
+    \end{enumext*}
+  }
+
+\BOXTEST{[36] mini-right* y mini-sep en enumext*}
+  {
+    \begin{enumext*}[columns=2, mini-env=0.4\linewidth, mini-sep=1cm,
+                     mini-right*={Contenido sin centrar.}]
+      \item Uno
+      \item Dos
+    \end{enumext*}
+  }
+
+\OMIT
+\end{document}

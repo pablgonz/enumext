@@ -1,0 +1,301 @@
+% test-005.lvt -- opciones de respuesta: keyans, keyans* y keyanspic
+%
+% Hecho con cariño por Pablo González L. <pablgonz@educarchile.cl>
+% para que enumext siga funcionando igual de bien después de cada cambio.
+%
+% Regresion:  l3build save test-005
+%             l3build check test-005
+%
+% Test de regresion de los entornos keyans, keyans* y keyanspic y de sus
+% llaves: save-sep, mark-ans*, mark-pos*, mark-sep*, wrap-ans*, wrap-opt,
+% show-ans, show-pos, label-pos, label-sep, layout-sty, layout-sep y
+% layout-top. Cada caso compone el codigo en una caja y la muestra en el log
+% (\BOXTEST). Los nombres de almacenamiento no se reutilizan. Los casos con
+% etiquetado estan en test-011.
+\input{regression-test}
+
+\documentclass{article}
+\ExplSyntaxOn
+\debug_on:n { all }
+\ExplSyntaxOff
+\usepackage{graphicx}
+\usepackage{enumext}
+\begin{document}
+
+\newcommand\BOXTEST[2]
+  {%
+    \TEST{#1}
+      {%
+        \setbox0=\vbox{\hsize=250pt \parindent=0pt #2}%
+        \showbox0
+      }%
+  }
+
+\newcommand\PICA{\includegraphics[scale=0.08]{example-image-a}}
+\newcommand\PICB{\includegraphics[scale=0.08]{example-image-b}}
+\newcommand\PICC{\includegraphics[scale=0.08]{example-image-c}}
+
+\START
+
+\TYPE{=== A. keyans ===}
+
+\BOXTEST{[1] keyans con una respuesta correcta}
+  {
+    \begin{enumext}[save-ans=kaa]
+      \item Pregunta.
+        \begin{keyans}
+          \item Primera
+          \item* Segunda (correcta)
+          \item Tercera
+        \end{keyans}
+    \end{enumext}
+    \printkeyans{kaa}
+  }
+
+\BOXTEST{[2] keyans con etiqueta y nota en \string\item*}
+  {
+    \begin{enumext}[save-ans=kab]
+      \item Pregunta.
+        \begin{keyans}[label=\roman*.]
+          \item Primera
+          \item*[nota] Segunda (correcta)
+          \item Tercera
+        \end{keyans}
+    \end{enumext}
+    \printkeyans{kab}
+  }
+
+\BOXTEST{[3] save-sep}
+  {
+    \begin{enumext}[save-ans=kac, save-sep={; }]
+      \item Pregunta.
+        \begin{keyans}
+          \item Primera
+          \item*[nota] Segunda (correcta)
+        \end{keyans}
+    \end{enumext}
+    \printkeyans{kac}
+  }
+
+\BOXTEST{[4] columnas y minipage en keyans}
+  {
+    \begin{enumext}[save-ans=kad]
+      \item Pregunta.
+        \begin{keyans}[columns=2]
+          \item Primera
+          \item* Segunda (correcta)
+          \item Tercera
+          \item Cuarta
+        \end{keyans}
+    \end{enumext}
+  }
+
+\TYPE{=== B. keyans*: opciones en una fila ===}
+
+\BOXTEST{[5] keyans*}
+  {
+    \begin{enumext}[save-ans=kae]
+      \item Pregunta.
+        \begin{keyans*}[columns=3]
+          \item Primera
+          \item* Segunda (correcta)
+          \item Tercera
+        \end{keyans*}
+    \end{enumext}
+    \printkeyans*{kae}
+  }
+
+\BOXTEST{[6] keyans* con columnas}
+  {
+    \begin{enumext}[save-ans=kaf]
+      \item Pregunta.
+        \begin{keyans*}[columns=2]
+          \item Primera
+          \item* Segunda (correcta)
+          \item Tercera
+          \item Cuarta
+        \end{keyans*}
+    \end{enumext}
+  }
+
+\TYPE{=== C. Mostrar la correcta: show-ans, mark-ans*, wrap-ans*, wrap-opt ===}
+
+\BOXTEST{[7] show-ans con el simbolo por defecto}
+  {
+    \begin{enumext}[save-ans=kag, show-ans=true]
+      \item Pregunta.
+        \begin{keyans}
+          \item Primera
+          \item* Segunda (correcta)
+          \item Tercera
+        \end{keyans}
+    \end{enumext}
+  }
+
+\BOXTEST{[8] mark-ans*, mark-pos* y mark-sep*}
+  {
+    \begin{enumext}[save-ans=kah, show-ans=true, mark-ans*={$\star$},
+                    mark-pos*=right, mark-sep*=6pt]
+      \item Pregunta.
+        \begin{keyans}
+          \item Primera
+          \item* Segunda (correcta)
+          \item Tercera
+        \end{keyans}
+    \end{enumext}
+  }
+
+\BOXTEST{[9] wrap-ans*}
+  {
+    \begin{enumext}[save-ans=kai, show-ans=true, wrap-ans*={\textbf{#1}}]
+      \item Pregunta.
+        \begin{keyans}
+          \item Primera
+          \item* Segunda (correcta)
+        \end{keyans}
+    \end{enumext}
+  }
+
+\BOXTEST{[10] wrap-opt con la nota del item}
+  {
+    \begin{enumext}[save-ans=kaj, show-ans=true, wrap-opt={\emph{(#1)}}]
+      \item Pregunta.
+        \begin{keyans}
+          \item Primera
+          \item*[nota] Segunda (correcta)
+        \end{keyans}
+    \end{enumext}
+  }
+
+\BOXTEST{[11] show-pos en keyans}
+  {
+    \begin{enumext}[save-ans=kak, show-pos=true]
+      \item Pregunta.
+        \begin{keyans}
+          \item Primera
+          \item* Segunda (correcta)
+        \end{keyans}
+    \end{enumext}
+  }
+
+\BOXTEST{[12] show-ans en keyans*}
+  {
+    \begin{enumext}[save-ans=kal, show-ans=true, mark-ans*={$\star$}]
+      \item Pregunta.
+        \begin{keyans*}[columns=2]
+          \item Primera
+          \item* Segunda (correcta)
+          \item Tercera
+          \item Cuarta
+        \end{keyans*}
+    \end{enumext}
+  }
+
+\TYPE{=== D. keyanspic ===}
+
+\BOXTEST{[13] keyanspic con las imagenes en una fila}
+  {
+    \begin{enumext}[save-ans=kam]
+      \item Pregunta con imagenes.
+        \begin{keyanspic}
+          \anspic{\PICA}
+          \anspic*{\PICB}
+          \anspic{\PICC}
+        \end{keyanspic}
+    \end{enumext}
+    \printkeyans*{kam}
+  }
+
+\BOXTEST{[14] layout-sty con dos filas}
+  {
+    \begin{enumext}[save-ans=kan]
+      \item Pregunta con imagenes.
+        \begin{keyanspic}[layout-sty={2,1}]
+          \anspic{\PICA}
+          \anspic*{\PICB}
+          \anspic{\PICC}
+        \end{keyanspic}
+    \end{enumext}
+  }
+
+\BOXTEST{[15] label-pos=above}
+  {
+    \begin{enumext}[save-ans=kao]
+      \item Pregunta con imagenes.
+        \begin{keyanspic}[label-pos=above]
+          \anspic{\PICA}
+          \anspic*{\PICB}
+        \end{keyanspic}
+    \end{enumext}
+  }
+
+\BOXTEST{[16] label-pos=below y label-sep}
+  {
+    \begin{enumext}[save-ans=kap]
+      \item Pregunta con imagenes.
+        \begin{keyanspic}[label-pos=below, label-sep=6pt]
+          \anspic{\PICA}
+          \anspic*{\PICB}
+        \end{keyanspic}
+    \end{enumext}
+  }
+
+\BOXTEST{[17] layout-sep y layout-top}
+  {
+    \begin{enumext}[save-ans=kaq]
+      \item Pregunta con imagenes.
+        \begin{keyanspic}[layout-sty={2,1}, layout-sep=10pt, layout-top=8pt]
+          \anspic{\PICA}
+          \anspic*{\PICB}
+          \anspic{\PICC}
+        \end{keyanspic}
+    \end{enumext}
+  }
+
+\BOXTEST{[18] nota en \string\anspic* y show-ans}
+  {
+    \begin{enumext}[save-ans=kar, show-ans=true, mark-ans*={$\star$}]
+      \item Pregunta con imagenes.
+        \begin{keyanspic}
+          \anspic{\PICA}
+          \anspic*[nota]{\PICB}
+        \end{keyanspic}
+    \end{enumext}
+  }
+
+\BOXTEST{[19] save-sep y show-pos en keyanspic}
+  {
+    \begin{enumext}[save-ans=kas, save-sep={; }, show-pos=true]
+      \item Pregunta con imagenes.
+        \begin{keyanspic}
+          \anspic{\PICA}
+          \anspic*[nota]{\PICB}
+        \end{keyanspic}
+    \end{enumext}
+    \printkeyans*{kas}
+  }
+
+\BOXTEST{[20] mark-pos*=left}
+  {
+    \begin{enumext}[save-ans=kat, show-ans=true, mark-pos*=left]
+      \item Pregunta.
+        \begin{keyans}
+          \item Primera
+          \item* Segunda (correcta)
+        \end{keyans}
+    \end{enumext}
+  }
+
+\BOXTEST{[21] mark-pos*=center}
+  {
+    \begin{enumext}[save-ans=kau, show-ans=true, mark-pos*=center]
+      \item Pregunta.
+        \begin{keyans}
+          \item Primera
+          \item* Segunda (correcta)
+        \end{keyans}
+    \end{enumext}
+  }
+
+\OMIT
+\end{document}

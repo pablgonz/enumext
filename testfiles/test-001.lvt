@@ -1,5 +1,8 @@
 % test-001.lvt -- listas y numeracion de enumext (sin etiquetado)
 %
+% Hecho con cariño por Pablo González L. <pablgonz@educarchile.cl>
+% para que enumext siga funcionando igual de bien después de cada cambio.
+%
 % Regresion:  l3build save test-001
 %             l3build check test-001
 %
@@ -260,6 +263,107 @@
   {
     \begin{enumext*}[columns=2,item-break=false]
       \item(2) Fila completa en caja.
+    \end{enumext*}
+  }
+
+\TYPE{=== G. item-break y claves de espacios horizontales ===}
+
+% Cada clave se prueba por pares sobre la misma lista: primero con item-break
+% (el item de fila completa no lleva minipage) y despues sin la clave (el item
+% va en caja). En el .tlg las lineas del item de fila completa deben quedar con
+% el mismo desplazamiento y el mismo ancho en las dos cajas: con item-break el
+% desplazamiento viene de \parshape y el ancho del texto, de \linewidth.
+\newcommand\KROWS
+  {%
+    \item Uno
+    \item Dos
+    \item(2) Fila completa con texto suficiente para ocupar dos lineas de la
+      caja: esta frase se repite. Esta frase se repite para llenar la linea.
+
+      Segundo parrafo del item de fila completa.
+    \item Cuatro
+  }
+\newcommand\KEYPAIR[3]
+  {%
+    \BOXTEST{[#1] #2 con #3 (item-break)}
+      {%
+        \begin{#2}[columns=2,item-break=true,#3]
+          \KROWS
+        \end{#2}%
+      }%
+    \BOXTEST{[#1] #2 con #3 (caja)}
+      {%
+        \begin{#2}[columns=2,#3]
+          \KROWS
+        \end{#2}%
+      }%
+  }
+
+\KEYPAIR{20}{enumext*}{list-offset=10pt}
+\KEYPAIR{21}{enumext*}{list-offset=-10pt}
+\KEYPAIR{22}{enumext*}{labelwidth=30pt,labelsep=10pt}
+\KEYPAIR{23}{enumext*}{itemindent=15pt}
+\KEYPAIR{24}{enumext*}{rightmargin=20pt}
+\KEYPAIR{25}{enumext*}{listparindent=12pt}
+\KEYPAIR{26}{enumext*}{align=right,labelwidth=25pt}
+\KEYPAIR{27}{enumext*}
+  {list-offset=10pt,labelwidth=30pt,labelsep=8pt,rightmargin=20pt,itemindent=15pt}
+
+% keyans* solo existe dentro de enumext con save-ans, y necesita un item*.
+\newcommand\KEYPAIRK[3]
+  {%
+    \BOXTEST{[#1] keyans* con #3 (item-break)}
+      {%
+        \begin{enumext}[save-ans=#2a]
+          \item Pregunta.
+            \begin{keyans*}[columns=2,item-break=true,#3]
+              \item Uno
+              \item Dos
+              \item(2)* Fila completa con texto suficiente para ocupar dos
+                lineas de la caja: esta frase se repite. Esta frase se repite
+                para llenar la linea.
+
+                Segundo parrafo del item de fila completa.
+              \item Cuatro
+            \end{keyans*}
+        \end{enumext}%
+      }%
+    \BOXTEST{[#1] keyans* con #3 (caja)}
+      {%
+        \begin{enumext}[save-ans=#2b]
+          \item Pregunta.
+            \begin{keyans*}[columns=2,#3]
+              \item Uno
+              \item Dos
+              \item(2)* Fila completa con texto suficiente para ocupar dos
+                lineas de la caja: esta frase se repite. Esta frase se repite
+                para llenar la linea.
+
+                Segundo parrafo del item de fila completa.
+              \item Cuatro
+            \end{keyans*}
+        \end{enumext}%
+      }%
+  }
+\KEYPAIRK{28}{claveuno}
+  {list-offset=10pt,labelwidth=30pt,labelsep=8pt,rightmargin=20pt,itemindent=15pt}
+
+% 29. Alineaciones dentro del item de fila completa: \centering y
+% \raggedright ponen \leftskip a cero, la sangria no debe perderse.
+\BOXTEST{[29] \string\centering\space y \string\raggedright\space (item-break)}
+  {
+    \begin{enumext*}[columns=2,item-break=true,labelwidth=30pt,labelsep=10pt]
+      \item(2) {\centering Texto centrado de la primera linea.\par}
+
+        {\raggedright Texto alineado a la izquierda del segundo parrafo.\par}
+    \end{enumext*}
+  }
+\BOXTEST{[29] \string\centering\space y \string\raggedright\space (caja)}
+  {
+    \begin{enumext*}[columns=2,labelwidth=30pt,labelsep=10pt]
+      \item(2) {\centering Texto centrado de la primera linea.\par}
+
+        {\raggedright Texto alineado a la izquierda del segundo parrafo.\par}
     \end{enumext*}
   }
 

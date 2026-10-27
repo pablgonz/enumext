@@ -1,4 +1,4 @@
--- mylhmc.lua v0.99 2026-10-24 (node.direct + Loop/Memory Micro-Optimized)
+-- mylhmc.lua v0.99 2026-10-24
 -- LuaLaTeX syntax highlighter for l3doc macrocode environments
 
 local require      = require
@@ -227,14 +227,14 @@ local mathtag_names =
   P'tag_stop:n' + P'tag_stop:' +
   P'tag_suspend:n' + P'tag_resume:n' +
   P'tag_get:n' +
-  P'tag_if_active_p:' + P'tag_if_active:' +
-  P'tag_if_box_tagged:N' +
-  P'tag_if_in:n' +
+  P'tag_if_active_p:' + P'tag_if_active:' * (P'TF' + P'T' + P'F') ^ -1 +
+  P'tag_if_box_tagged:N' * (P'TF' + P'T' + P'F') ^ -1 +
+  P'tag_if_in:n' * (P'TF' + P'T' + P'F') ^ -1 +
   P'tag_mc_add_missing_to_stream:Nn' +
   P'tag_mc_artifact_group_begin:n' + P'tag_mc_artifact_group_end:' +
   P'tag_mc_begin_pop:n' + P'tag_mc_begin:n' +
   P'tag_mc_end_push:' + P'tag_mc_end:' +
-  P'tag_mc_if_in:' +
+  P'tag_mc_if_in:' * (P'TF' + P'T' + P'F') ^ -1 +
   P'tag_mc_new_stream:n' +
   P'tag_mc_reset_box:N' +
   P'tag_mc_use:n' +
@@ -385,6 +385,9 @@ local dim_unit = P'pt' + P'pc' + P'in' + P'cm' + P'mm' + P'bp' +
                  P'dd' + P'cc' + P'sp' + P'em' + P'ex' + P'px' + P'mu'
 local fill_kw  = P'filll' + P'fill' + P'fil'
 local skip_kw  = P'minus' + P'plus'
+-- fil/fill/plus/minus solo como palabra suelta: no dentro de un nombre
+-- (label_fill_right, a_plus_b).
+local glue_kw  = -lpeg_base.B(alpha + S'_@') * (fill_kw + skip_kw) * -(alpha + P'_')
 local num_part = digit ^ 1 * (P'.' * digit ^ 1) ^ -1
 
 code_rules = {
@@ -444,7 +447,7 @@ code_rules = {
   {23, P'\\\\'},
   {23, P'\\' * S',:;!>~|/*+-={}#$_&%\x5e'},
   {35, num_part * dim_unit},
-  {36, (fill_kw + skip_kw) * -alpha},
+  {36, glue_kw},
   {12, digit ^ 1},
   {6,  P'\\' * alpha * name_chars_no_at ^ 0 * P':' * sig_chars ^ 0},
   {23, P'\\' * alpha * name_chars_no_at ^ 0},
@@ -522,7 +525,6 @@ local function mylhmc_get_med_bold_fid(fid)
   local best_id, best_score, best_path = nil, 0, nil
   local override_lower = bold_weight_override ~= '' and s_lower(bold_weight_override) or nil
 
-  -- Optimización: cacheamos f_max() para el for
   local max_f = f_max()
   for i = 1, max_f do
     local bf = f_getfont(i)
@@ -597,7 +599,6 @@ local function mylhmc_get_lm_fid(fid)
   local cf = f_getfont(fid)
   if not cf or not cf.size then lm_cache[fid] = fid; return fid end
 
-  -- Optimización: cacheamos f_max() para el for
   local max_f = f_max()
   for i = 1, max_f do
     local f = f_getfont(i)
@@ -828,61 +829,13 @@ local csname_frames = {}
 -- y lo restaura al cerrarlo, en vez de perderlo.
 local keys_context_stack = {}
 
--- .meta:nn (2 args: ruta módulo/clave + lista de claves) y .meta:n
--- (1 arg: lista de claves). Reutiliza mylhmc_colorize_keys_path para la ruta
--- y mylhmc_colorize_trimmed_keyname para la lista, igual que el resto de keys.
-
-
-
--- Resto de la familia \keys_...:n... (set_known, set_groups,
--- set_exclude_groups, precompile, if_exist, if_choice_exist, show, log):
--- arg1 (primer 'n' de la firma) = ruta módulo/path -> mylhmc_colorize_keys_path;
--- args 2..N (resto de las 'n' minúsculas de la firma) = nombre de
--- clave/grupo/opción -> mylhmc_colorize_trimmed_keyname; lo que venga después
--- (ramas T/F de un sufijo TF, argumentos N sin llaves, etc.) no se toca.
-
--- \ProvidesExplPackage {nombre} {...} {...} {...}: el PRIMER argumento
--- (el nombre del paquete/módulo) va en negrita + color module_name.
-
--- Nombres de paquete/clase (\ProvidesPackage, \RequirePackage,
--- \ProvidesClass, \LoadClass, \PassOptionsTo(Package|Class),
--- \IfPackageLoaded...) -> negrita + color package_name/class_name.
--- pkgcls_target_arg indica en qué argumento {} está el nombre (1 o 2);
--- [opciones] opcional no afecta el conteo porque [] no toca estas
--- variables (solo {} las incrementa).
-
--- \RequirePackage [opciones] {pkg} y \LoadClass [opciones] {cls}: los
--- corchetes opcionales, si aparecen, contienen una lista de opciones
--- (key=value, ...) -> mismo tratamiento keyname. Si en vez de '[' llega
--- '{' directamente (sin opciones), pkgcls_bracket_pending se limpia sin
--- activar nada.
-
--- Nombre de archivo: \file_..., \lua_load_module:n, \IfFileExists
--- (activado desde el handler de tipo 37), \input/\include/
--- \InputIfFileExists. Solo el primer argumento -> mylhmc_colorize_filename.
--- \includeonly recibe una LISTA separada por comas -> file_arg_is_list.
-
--- \hook_gput_code:nnn/_with_args:nnn/\hook_gremove_code:nn (label en
--- arg2) y \hook_gset_rule:nnnn (labels en arg2 Y arg4, con 'relation'
--- en arg3 sin colorear). hook_label_positions guarda qué números de
--- argumento deben colorearse como module_name.
-
--- \hypersetup{key=val,...}, \tagpdfsetup{...}, \tagtool{...},
--- \tagmcbegin{...}, \tagstructbegin{...}, \ShowTagging{...}, y también
--- \unimathsetup{...}/\addfontfeature{...}/\defaultfontfeatures{...}:
--- único argumento tratado como lista de claves, mismo tratamiento
--- visual que el cuerpo de \keys_define:nn/\keys_set:nn
--- (mylhmc_colorize_trimmed_keyname).
-
--- \setmainfont{fuente}[features] y familia (fontspec/unicode-math): el
--- ORDEN es inverso a \RequirePackage[opciones]{pkg} (llave primero,
--- corchete opcional después) -- mecanismo independiente de
--- pkgcls_bracket_*. font_brace_pending/depth trackea la primera llave
--- (nombre de fuente, SIN color especial); al cerrarse, se activa
--- font_bracket_pending esperando un '[' opcional. Salvaguarda: se
--- limpia al final de cada línea (en process_line/inline) para no
--- "contaminar" un [...] no relacionado en una línea posterior si el
--- comando se usó sin features.
+-- Notas sobre el estado (cada grupo vive en su tabla, más abajo):
+--  * font_*: \setmainfont{fuente}[features] lleva la llave ANTES del
+--    corchete (al revés que \RequirePackage[opts]{pkg}); font_bracket_pending
+--    se limpia al final de cada línea para no contaminar un [...] posterior.
+--  * pkgcls_target_arg = argumento {} que contiene el nombre (1 o 2); los
+--    [] opcionales no cuentan porque solo '{' incrementa esos contadores.
+--  * \includeonly recibe una lista separada por comas (file_arg_is_list).
 
 -- Estado del analizador agrupado por función en tablas (una sola local por
 -- grupo: el chunk principal está en el límite de 200 locales de Lua).
@@ -1172,7 +1125,7 @@ local function mylhmc_render_bare_varname(text, fid)
 end
 
 -- Nombres de contador: los primeros n grupos {…} tras \newcounter, \setcounter,
--- \value, \counterwithin… (n = valor). Se colorean como los \c@nombre: un
+-- \value, \usecounter, \counterwithin… (n = valor). Se colorean como los \c@nombre: un
 -- nombre privado (__mod_…) según su módulo, uno público como latex_cmd o
 -- module_name si es del módulo; cada #N aparte. Una sola local (el chunk
 -- principal está al límite de 200 locales): la función cuelga de la tabla.
@@ -1180,7 +1133,7 @@ local counter_cmds = {
   ['\\newcounter'] = 1, ['\\setcounter'] = 1, ['\\addtocounter'] = 1,
   ['\\stepcounter'] = 1, ['\\refstepcounter'] = 1, ['\\value'] = 1,
   ['\\arabic'] = 1, ['\\roman'] = 1, ['\\Roman'] = 1, ['\\alph'] = 1,
-  ['\\Alph'] = 1, ['\\fnsymbol'] = 1,
+  ['\\Alph'] = 1, ['\\fnsymbol'] = 1, ['\\usecounter'] = 1,
   ['\\counterwithin'] = 2, ['\\counterwithout'] = 2,
 }
 
@@ -1270,7 +1223,7 @@ local function mylhmc_colorize_ltcmd_args(text, fid, rh, rt)
 end
 
 local function mylhmc_csname_color_from_prefix(text)
-  text = s_match(text, '^%s*(.-)%s*$') or text
+  text = s_gsub(text, '%s+', '')   -- en expl3 los espacios no cuentan
   local p2, p3 = s_sub(text, 1, 2), s_sub(text, 1, 3)
   local base, rest
   -- Contador c@<nombre>: si el nombre es privado (__módulo_...), el color
@@ -1542,7 +1495,7 @@ local function mylhmc_name_group_color(line, b)
   -- nada o por l/g/c (como en l__mod_…) y seguido de '_' o espacio/fin.
   local body = s_match(line, '^{([%w_#%-%s]*)}', b)
   if not body then return nil end
-  body = s_match(body, '^%s*(.-)%s*$')
+  body = s_gsub(body, '%s+', '')   -- en expl3 los espacios no cuentan
   local m = '__' .. current_module_name
   local p = s_find(body, m, 1, true)
   if not p then return nil end
@@ -1641,7 +1594,12 @@ local function mylhmc_colorize_plain_text(text, fid, rh, rt)
   elseif cs.name_depth > 0 and cs.name_depth == cs.brace_depth then
     -- Grupo '{ nombre }' (ver mylhmc_name_group_color): solo se llega aquí
     -- si ningún estado especial (keys, msg, hook, ...) reclamó el texto.
-    rh, rt = mylhmc_colorize_trimmed_keyname(text, fid, rh, rt, cs.name_color); h, tl = nil, nil
+    if cs.name_color == 'module_name' then
+      rh, rt = mylhmc_colorize_trimmed_keyname(text, fid, rh, rt, cs.name_color); h, tl = nil, nil
+    else
+      -- nombre con espacios internos (expl3): color continuo, como en csnames
+      h, tl = mylhmc_colored_str(text, cs.name_color, fid)
+    end
   elseif kv.in_single_keyval and kv.single_keyval_depth == 1 then
     rh, rt = mylhmc_colorize_trimmed_keyname(text, fid, rh, rt); h, tl = nil, nil
   elseif ft.font_bracket_active and ft.font_bracket_depth == 1 then
@@ -2275,8 +2233,7 @@ local function mylhmc_guard_symbol_color(b)
   elseif b == 124 then return 'guard_pipe'  -- |
   elseif b == 33 then return 'guard_bang'   -- !
   end
-  return 'guard_star' -- fallback (inalcanzable: los 6 casos cubren todos
-                       -- los bytes que mylhmc_colorize_guard_expr le pasa a esta función)
+  return 'guard_star' -- inalcanzable: cubre todos los bytes que recibe
 end
 
 local function mylhmc_colorize_guard_expr(expr, fid)

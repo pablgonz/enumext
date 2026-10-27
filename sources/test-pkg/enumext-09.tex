@@ -396,10 +396,26 @@ Full row items with \texttt{item-break}.
   \item Four
 \end{enumext*}
 
-Full row item across a page break.
+\newpage
+
+Without \texttt{item-break} a full row item stays in a \texttt{minipage}: it
+cannot be split, so it moves as a whole to the next page and leaves a gap.
+
+\vspace{0.8\textheight}
+
+\begin{enumext*}[columns=2]
+  \item One
+  \item Two
+  \item(2) \FILLER{40}
+  \item Four
+\end{enumext*}
 
 \newpage
-\vspace*{0.7\textheight}
+
+With \texttt{item-break=true} the same item starts on this page and continues
+on the next one.
+
+\vspace{0.8\textheight}
 
 \begin{enumext*}[columns=2,item-break=true]
   \item One
@@ -421,6 +437,84 @@ Stored answers.
 \end{enumext}
 
 \printkeyans*{eight}
+
+\section{Items without minipage and horizontal keys}
+
+Each pair shows the same list with \texttt{item-break=true} and without it:
+the lines of the full row item must start and end at the same places in both
+lists, whatever the horizontal keys are.
+
+\newcommand\KROWS
+  {%
+    \item One
+    \item Two
+    \item(2) Full row item with enough text to use two lines of the page: this
+      sentence repeats. This sentence repeats to fill the line.
+
+      Second paragraph of the full row item.
+    \item Four
+  }
+\newcommand\KEYPAIR[2]
+  {%
+    \par\medskip\noindent\texttt{#2}, \texttt{item-break=true}:\par\nobreak
+    \begin{#1}[columns=2,item-break=true,#2]
+      \KROWS
+    \end{#1}
+    \par\medskip\noindent\texttt{#2}, without \texttt{item-break}:\par\nobreak
+    \begin{#1}[columns=2,#2]
+      \KROWS
+    \end{#1}
+  }
+
+\KEYPAIR{enumext*}{list-offset=1cm}
+\KEYPAIR{enumext*}{list-offset=-1cm}
+\KEYPAIR{enumext*}{labelwidth=2cm,labelsep=5mm}
+\KEYPAIR{enumext*}{itemindent=1cm}
+\KEYPAIR{enumext*}{rightmargin=2cm}
+\KEYPAIR{enumext*}{listparindent=1cm}
+\KEYPAIR{enumext*}{align=right,labelwidth=1.5cm}
+\KEYPAIR{enumext*}
+  {list-offset=1cm,labelwidth=2cm,labelsep=5mm,rightmargin=1cm,itemindent=5mm}
+% keyans* only exists inside enumext with save-ans, and needs an item*.
+\newcommand\KEYPAIRK[1]
+  {%
+    \par\medskip\noindent\texttt{#1}, \texttt{item-break=true}:\par\nobreak
+    \begin{enumext}[save-ans=keyx]
+      \item Question.
+        \begin{keyans*}[columns=2,item-break=true,#1]
+          \item First
+          \item Second
+          \item(2)* Third (correct), on the whole row with enough text to use
+            two lines of the page: this sentence repeats.
+
+            Second paragraph of the full row item.
+          \item Fourth
+        \end{keyans*}
+    \end{enumext}
+    \par\medskip\noindent\texttt{#1}, without \texttt{item-break}:\par\nobreak
+    \begin{enumext}[save-ans=keyy]
+      \item Question.
+        \begin{keyans*}[columns=2,#1]
+          \item First
+          \item Second
+          \item(2)* Third (correct), on the whole row with enough text to use
+            two lines of the page: this sentence repeats.
+
+            Second paragraph of the full row item.
+          \item Fourth
+        \end{keyans*}
+    \end{enumext}
+  }
+\KEYPAIRK
+  {list-offset=1cm,labelwidth=2cm,labelsep=5mm,rightmargin=1cm,itemindent=5mm}
+
+\par\medskip\noindent Alignment commands inside the full row item:
+
+\begin{enumext*}[columns=2,item-break=true,labelwidth=2cm,labelsep=5mm]
+  \item(2) {\centering Centered text, the indentation must be kept.\par}
+
+    {\raggedright Text aligned to the left in the second paragraph.\par}
+\end{enumext*}
 
 \section{Defaults of the printed answers}
 

@@ -1,0 +1,4868 @@
+This is a generated file for the l3build validation system.
+Don't change this file in any respect.
+=== A. keyans ===
+============================================================
+TEST 1: [1] keyans con una respuesta correcta
+============================================================
+* Package enumext: Start enumext with save-ans=kaa on line ....
+* Package enumext: Creating \g__enumext_kaa_prop on line ....
+Defining \g__enumext_kaa_prop on line ...
+* Package enumext: Creating \g__enumext_kaa_seq on line ....
+Defining \g__enumext_kaa_seq on line ...
+* Package enumext: Creating \g__enumext_resume_kaa_int on line ....
+Defining \g__enumext_resume_kaa_int on line ...
+\g__enumext_resume_kaa_int=\count...
+* Package enumext: Stop enumext with save-ans=kaa on line ....
+* Package enumext: Elements in \g__enumext_kaa_prop = 1.
+* Package enumext: Elements in \g__enumext_kaa_seq = 1.
+* Package enumext: Value of \g__enumext_resume_kaa_int = 1.
+* Package enumext: Value of \g__enumext_item_number_int = 1.
+* Package enumext: Value of \g__enumext_item_anskey_int = 1.
+* Package enumext: Difference item_number_int - item_anskey_int = 0.
+****************************************
+* Package enumext: Checking answers in 'kaa' for {enumext}
+* started on line ... and close on line ...: 'OK', all items with answer.
+****************************************
+> \box...=
+\vbox(92.77+0.0)x345.0, direction TLT
+.\penalty -51
+.\glue 10.0 plus 4.0 minus 5.0
+.\glue -10.0 plus -4.0 minus -5.0
+.\glue 6.0 plus 2.0 minus 4.0
+.\glue(\parskip) 4.0 plus 2.0 minus 1.0
+.\glue(\parskip) 0.0
+.\hbox(6.83+2.06)x333.88702, glue set 291.20703fil, shifted 11.11298, direction TLT
+..\localpar
+...\localinterlinepenalty=0
+...\localbrokenpenalty=0
+...\localleftbox=null
+...\localrightbox=null
+..\hbox(6.66+0.0)x0.0, direction TLT
+...\glue 0.0
+...\glue -7.78
+...\glue -3.33298
+...\hbox(6.66+0.0)x7.78, direction TLT
+....\glue 0.0
+....\hbox(0.0+0.0)x0.0, direction TLT
+.....\glue 0.0 plus 1.0fil minus 1.0fil
+....\glue 0.0
+....\TU/lmr/m/n/10 1
+....\TU/lmr/m/n/10 .
+....\glue 0.0 plus 1.0fill
+...\glue 3.33298
+..\penalty 0
+..\TU/lmr/m/n/10 P
+..\TU/lmr/m/n/10 r
+..\TU/lmr/m/n/10 e
+..\discretionary (penalty 50)
+...< \TU/lmr/m/n/10 -
+..\TU/lmr/m/n/10 g
+..\TU/lmr/m/n/10 u
+..\TU/lmr/m/n/10 n
+..\kern-0.28 (font)
+..\TU/lmr/m/n/10 t
+..\TU/lmr/m/n/10 a
+..\TU/lmr/m/n/10 .
+..\penalty 10000
+..\glue(\parfillskip) 0.0 plus 1.0fil
+..\glue(\rightskip) 0.0
+.\penalty -51
+.\glue 8.0 plus 4.0 minus 2.0
+.\glue -8.0 plus -4.0 minus -2.0
+.\glue 6.0 plus 3.0 minus 1.0
+.\glue(\parskip) 2.0 plus 1.0 minus 1.0
+.\glue(\parskip) 0.0
+.\glue(\baselineskip) 2.44
+.\hbox(7.5+2.5)x317.49405, glue set 282.29407fil, shifted 27.50595, direction TLT
+..\localpar
+...\localinterlinepenalty=0
+...\localbrokenpenalty=0
+...\localleftbox=null
+...\localrightbox=null
+..\hbox(7.5+2.5)x0.0, direction TLT
+...\glue 0.0
+...\glue -13.06
+...\glue -3.33298
+...\hbox(7.5+2.5)x13.06, glue set 1.67fill, direction TLT
+....\TU/lmr/m/n/10 A
+....\TU/lmr/m/n/10 )
+....\glue 0.0 plus 1.0fill
+...\glue 3.33298
+..\penalty 0
+..\TU/lmr/m/n/10 P
+..\TU/lmr/m/n/10 r
+..\TU/lmr/m/n/10 i
+..\TU/lmr/m/n/10 m
+..\TU/lmr/m/n/10 e
+..\TU/lmr/m/n/10 r
+..\TU/lmr/m/n/10 a
+..\penalty 10000
+..\glue(\parfillskip) 0.0 plus 1.0fil
+..\glue(\rightskip) 0.0
+.\penalty -51
+.\glue 2.0 plus 1.0 minus 1.0
+.\glue(\parskip) 2.0 plus 1.0 minus 1.0
+.\glue(\parskip) 0.0
+.\glue(\baselineskip) 2.0
+.\hbox(7.5+2.5)x317.49405, glue set 234.65405fil, shifted 27.50595, direction TLT
+..\localpar
+...\localinterlinepenalty=0
+...\localbrokenpenalty=0
+...\localleftbox=null
+...\localrightbox=null
+..\hbox(7.5+2.5)x0.0, direction TLT
+...\glue 0.0
+...\glue -13.06
+...\glue -3.33298
+...\hbox(7.5+2.5)x13.06, glue set 2.09fill, direction TLT
+....\TU/lmr/m/n/10 B
+....\TU/lmr/m/n/10 )
+....\glue 0.0 plus 1.0fill
+...\glue 3.33298
+..\penalty 0
+..\TU/lmr/m/n/10 S
+..\TU/lmr/m/n/10 e
+..\discretionary (penalty 50)
+...< \TU/lmr/m/n/10 -
+..\TU/lmr/m/n/10 g
+..\TU/lmr/m/n/10 u
+..\TU/lmr/m/n/10 n
+..\TU/lmr/m/n/10 d
+..\TU/lmr/m/n/10 a
+..\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+..\TU/lmr/m/n/10 (
+..\TU/lmr/m/n/10 c
+..\TU/lmr/m/n/10 o
+..\TU/lmr/m/n/10 r
+..\discretionary (penalty 50)
+...< \TU/lmr/m/n/10 -
+..\TU/lmr/m/n/10 r
+..\TU/lmr/m/n/10 e
+..\TU/lmr/m/n/10 c
+..\TU/lmr/m/n/10 t
+..\TU/lmr/m/n/10 a
+..\TU/lmr/m/n/10 )
+..\penalty 10000
+..\glue(\parfillskip) 0.0 plus 1.0fil
+..\glue(\rightskip) 0.0
+.\penalty -51
+.\glue 2.0 plus 1.0 minus 1.0
+.\glue(\parskip) 2.0 plus 1.0 minus 1.0
+.\glue(\parskip) 0.0
+.\glue(\baselineskip) 2.0
+.\hbox(7.5+2.5)x317.49405, glue set 284.94403fil, shifted 27.50595, direction TLT
+..\localpar
+...\localinterlinepenalty=0
+...\localbrokenpenalty=0
+...\localleftbox=null
+...\localrightbox=null
+..\hbox(7.5+2.5)x0.0, direction TLT
+...\glue 0.0
+...\glue -13.06
+...\glue -3.33298
+...\hbox(7.5+2.5)x13.06, glue set 1.95fill, direction TLT
+....\TU/lmr/m/n/10 C
+....\TU/lmr/m/n/10 )
+....\glue 0.0 plus 1.0fill
+...\glue 3.33298
+..\penalty 0
+..\TU/lmr/m/n/10 T
+..\kern-0.83 (font)
+..\TU/lmr/m/n/10 e
+..\TU/lmr/m/n/10 r
+..\discretionary (penalty 50)
+...< \TU/lmr/m/n/10 -
+..\TU/lmr/m/n/10 c
+..\TU/lmr/m/n/10 e
+..\TU/lmr/m/n/10 r
+..\TU/lmr/m/n/10 a
+..\penalty 10000
+..\glue(\parfillskip) 0.0 plus 1.0fil
+..\glue(\rightskip) 0.0
+.\penalty -51
+.\glue 4.0 plus 2.0 minus 1.0
+.\glue -4.0 plus -2.0 minus -1.0
+.\glue 8.0 plus 3.0 minus 2.0
+.\glue -10.5 plus -3.0 minus -2.0
+.\penalty -51
+.\glue 2.5
+.\glue 8.0 plus 3.0 minus 2.0
+.\glue -8.0 plus -3.0 minus -2.0
+.\glue 10.0 plus 3.0 minus 5.0
+.\penalty 10000
+.\glue 0.0
+.\glue 0.0
+.\kern-0.5
+.\hbox(10.0+1.94)x345.0, glue set 2.77824fil, direction TLT
+..\vbox(10.0+0.0)x169.72176, glue set - 0.4482, direction TLT
+...\glue 0.0 plus -2.0
+...\glue(\splittopskip) 3.25 plus 2.0
+...\hbox(6.75+2.241)x158.60878, glue set 148.45677fil, shifted 11.11298, direction TLT
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(5.994+0.0)x0.0, direction TLT
+.....\glue 0.0
+.....\glue -7.78
+.....\glue -3.33298
+.....\hbox(5.994+0.0)x7.78, glue set 0.57999fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 1
+......\TU/lmr/m/n/9 .
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+....\penalty 0
+....\TU/lmr/m/n/9 B
+....\TU/lmr/m/n/9 )
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\penalty -51
+...\glue 0.0 plus 0.0001fil minus 5.0
+..\glue 0.0 plus 1.0fil minus 1.0fil
+..\rule(*+*)x0.0
+..\glue 0.0 plus 1.0fil minus 1.0fil
+..\vbox(10.0+0.0)x169.72176, glue set >20000.0fil, direction TLT
+...\glue 0.0 plus -2.0
+...\glue 0.0 plus 0.0001fil minus 5.0
+..\hbox(4.42+1.94)x0.0, glue set - 5.56fil, direction TLT
+...\hbox(4.42+1.94)x5.56, direction TLT
+...\glue 0.0 plus 1.0fil minus 1.0fil
+.\glue 0.0
+! OK.
+<argument> ...ext} \printkeyans {kaa} }\showbox 0 
+l. ...  }
+============================================================
+============================================================
+TEST 2: [2] keyans con etiqueta y nota en \string \item *
+============================================================
+* Package enumext: Start enumext with save-ans=kab on line ....
+* Package enumext: Creating \g__enumext_kab_prop on line ....
+Defining \g__enumext_kab_prop on line ...
+* Package enumext: Creating \g__enumext_kab_seq on line ....
+Defining \g__enumext_kab_seq on line ...
+* Package enumext: Creating \g__enumext_resume_kab_int on line ....
+Defining \g__enumext_resume_kab_int on line ...
+\g__enumext_resume_kab_int=\count...
+* Package enumext: Stop enumext with save-ans=kab on line ....
+* Package enumext: Elements in \g__enumext_kab_prop = 1.
+* Package enumext: Elements in \g__enumext_kab_seq = 1.
+* Package enumext: Value of \g__enumext_resume_kab_int = 1.
+* Package enumext: Value of \g__enumext_item_number_int = 1.
+* Package enumext: Value of \g__enumext_item_anskey_int = 1.
+* Package enumext: Difference item_number_int - item_anskey_int = 0.
+****************************************
+* Package enumext: Checking answers in 'kab' for {enumext}
+* started on line ... and close on line ...: 'OK', all items with answer.
+****************************************
+> \box...=
+\vbox(92.77+0.0)x345.0, direction TLT
+.\penalty -51
+.\glue 10.0 plus 4.0 minus 5.0
+.\glue -10.0 plus -4.0 minus -5.0
+.\glue 6.0 plus 2.0 minus 4.0
+.\glue(\parskip) 4.0 plus 2.0 minus 1.0
+.\glue(\parskip) 0.0
+.\hbox(6.83+2.06)x333.88702, glue set 291.20703fil, shifted 11.11298, direction TLT
+..\localpar
+...\localinterlinepenalty=0
+...\localbrokenpenalty=0
+...\localleftbox=null
+...\localrightbox=null
+..\hbox(6.66+0.0)x0.0, direction TLT
+...\glue 0.0
+...\glue -7.78
+...\glue -3.33298
+...\hbox(6.66+0.0)x7.78, direction TLT
+....\glue 0.0
+....\hbox(0.0+0.0)x0.0, direction TLT
+.....\glue 0.0 plus 1.0fil minus 1.0fil
+....\glue 0.0
+....\TU/lmr/m/n/10 1
+....\TU/lmr/m/n/10 .
+....\glue 0.0 plus 1.0fill
+...\glue 3.33298
+..\penalty 0
+..\TU/lmr/m/n/10 P
+..\TU/lmr/m/n/10 r
+..\TU/lmr/m/n/10 e
+..\discretionary (penalty 50)
+...< \TU/lmr/m/n/10 -
+..\TU/lmr/m/n/10 g
+..\TU/lmr/m/n/10 u
+..\TU/lmr/m/n/10 n
+..\kern-0.28 (font)
+..\TU/lmr/m/n/10 t
+..\TU/lmr/m/n/10 a
+..\TU/lmr/m/n/10 .
+..\penalty 10000
+..\glue(\parfillskip) 0.0 plus 1.0fil
+..\glue(\rightskip) 0.0
+.\penalty -51
+.\glue 8.0 plus 4.0 minus 2.0
+.\glue -8.0 plus -4.0 minus -2.0
+.\glue 6.0 plus 3.0 minus 1.0
+.\glue(\parskip) 2.0 plus 1.0 minus 1.0
+.\glue(\parskip) 0.0
+.\glue(\baselineskip) 3.11
+.\hbox(6.83+0.11)x314.15405, glue set 278.95404fil, shifted 30.84595, direction TLT
+..\localpar
+...\localinterlinepenalty=0
+...\localbrokenpenalty=0
+...\localleftbox=null
+...\localrightbox=null
+..\hbox(6.57+0.0)x0.0, direction TLT
+...\glue 0.0
+...\glue -16.4
+...\glue -3.33298
+...\hbox(6.57+0.0)x16.4, glue set 10.84fill, direction TLT
+....\TU/lmr/m/n/10 i
+....\TU/lmr/m/n/10 .
+....\glue 0.0 plus 1.0fill
+...\glue 3.33298
+..\penalty 0
+..\TU/lmr/m/n/10 P
+..\TU/lmr/m/n/10 r
+..\TU/lmr/m/n/10 i
+..\TU/lmr/m/n/10 m
+..\TU/lmr/m/n/10 e
+..\TU/lmr/m/n/10 r
+..\TU/lmr/m/n/10 a
+..\penalty 10000
+..\glue(\parfillskip) 0.0 plus 1.0fil
+..\glue(\rightskip) 0.0
+.\penalty -51
+.\glue 2.0 plus 1.0 minus 1.0
+.\glue(\parskip) 2.0 plus 1.0 minus 1.0
+.\glue(\parskip) 0.0
+.\glue(\baselineskip) 4.39
+.\hbox(7.5+2.5)x314.15405, glue set 231.31406fil, shifted 30.84595, direction TLT
+..\localpar
+...\localinterlinepenalty=0
+...\localbrokenpenalty=0
+...\localleftbox=null
+...\localrightbox=null
+..\hbox(6.57+0.0)x0.0, direction TLT
+...\glue 0.0
+...\glue -16.4
+...\glue -3.33298
+...\hbox(6.57+0.0)x16.4, glue set 8.06fill, direction TLT
+....\TU/lmr/m/n/10 i
+....\TU/lmr/m/n/10 i
+....\TU/lmr/m/n/10 .
+....\glue 0.0 plus 1.0fill
+...\glue 3.33298
+..\penalty 0
+..\TU/lmr/m/n/10 S
+..\TU/lmr/m/n/10 e
+..\discretionary (penalty 50)
+...< \TU/lmr/m/n/10 -
+..\TU/lmr/m/n/10 g
+..\TU/lmr/m/n/10 u
+..\TU/lmr/m/n/10 n
+..\TU/lmr/m/n/10 d
+..\TU/lmr/m/n/10 a
+..\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+..\TU/lmr/m/n/10 (
+..\TU/lmr/m/n/10 c
+..\TU/lmr/m/n/10 o
+..\TU/lmr/m/n/10 r
+..\discretionary (penalty 50)
+...< \TU/lmr/m/n/10 -
+..\TU/lmr/m/n/10 r
+..\TU/lmr/m/n/10 e
+..\TU/lmr/m/n/10 c
+..\TU/lmr/m/n/10 t
+..\TU/lmr/m/n/10 a
+..\TU/lmr/m/n/10 )
+..\penalty 10000
+..\glue(\parfillskip) 0.0 plus 1.0fil
+..\glue(\rightskip) 0.0
+.\penalty -51
+.\glue 2.0 plus 1.0 minus 1.0
+.\glue(\parskip) 2.0 plus 1.0 minus 1.0
+.\glue(\parskip) 0.0
+.\glue(\baselineskip) 2.73
+.\hbox(6.77+0.11)x314.15405, glue set 281.60406fil, shifted 30.84595, direction TLT
+..\localpar
+...\localinterlinepenalty=0
+...\localbrokenpenalty=0
+...\localleftbox=null
+...\localrightbox=null
+..\hbox(6.57+0.0)x0.0, direction TLT
+...\glue 0.0
+...\glue -16.4
+...\glue -3.33298
+...\hbox(6.57+0.0)x16.4, glue set 5.28fill, direction TLT
+....\TU/lmr/m/n/10 i
+....\TU/lmr/m/n/10 i
+....\TU/lmr/m/n/10 i
+....\TU/lmr/m/n/10 .
+....\glue 0.0 plus 1.0fill
+...\glue 3.33298
+..\penalty 0
+..\TU/lmr/m/n/10 T
+..\kern-0.83 (font)
+..\TU/lmr/m/n/10 e
+..\TU/lmr/m/n/10 r
+..\discretionary (penalty 50)
+...< \TU/lmr/m/n/10 -
+..\TU/lmr/m/n/10 c
+..\TU/lmr/m/n/10 e
+..\TU/lmr/m/n/10 r
+..\TU/lmr/m/n/10 a
+..\penalty 10000
+..\glue(\parfillskip) 0.0 plus 1.0fil
+..\glue(\rightskip) 0.0
+.\penalty -51
+.\glue 4.0 plus 2.0 minus 1.0
+.\glue -4.0 plus -2.0 minus -1.0
+.\glue 8.0 plus 3.0 minus 2.0
+.\glue -8.11 plus -3.0 minus -2.0
+.\penalty -51
+.\glue 0.11
+.\glue 8.0 plus 3.0 minus 2.0
+.\glue -8.0 plus -3.0 minus -2.0
+.\glue 10.0 plus 3.0 minus 5.0
+.\penalty 10000
+.\glue 0.0
+.\glue 0.0
+.\kern1.89
+.\hbox(10.0+1.94)x345.0, glue set 2.77824fil, direction TLT
+..\vbox(10.0+0.0)x169.72176, glue set - 0.3474, direction TLT
+...\glue 0.0 plus -2.0
+...\glue(\splittopskip) 4.006 plus 2.0
+...\hbox(5.994+1.737)x158.60878, glue set 127.23473fil, shifted 11.11298, direction TLT
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(5.994+0.0)x0.0, direction TLT
+.....\glue 0.0
+.....\glue -7.78
+.....\glue -3.33298
+.....\hbox(5.994+0.0)x7.78, glue set 0.57999fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 1
+......\TU/lmr/m/n/9 .
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+....\penalty 0
+....\TU/lmr/m/n/9 i
+....\TU/lmr/m/n/9 i
+....\TU/lmr/m/n/9 .
+....\TU/lmr/m/n/9 ,
+....\glue(\spaceskip) 3.087 plus 1.92937 minus 0.8232
+....\TU/lmr/m/n/9 n
+....\TU/lmr/m/n/9 o
+....\TU/lmr/m/n/9 t
+....\TU/lmr/m/n/9 a
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\penalty -51
+...\glue 0.0 plus 0.0001fil minus 5.0
+..\glue 0.0 plus 1.0fil minus 1.0fil
+..\rule(*+*)x0.0
+..\glue 0.0 plus 1.0fil minus 1.0fil
+..\vbox(10.0+0.0)x169.72176, glue set >20000.0fil, direction TLT
+...\glue 0.0 plus -2.0
+...\glue 0.0 plus 0.0001fil minus 5.0
+..\hbox(4.42+1.94)x0.0, glue set - 5.56fil, direction TLT
+...\hbox(4.42+1.94)x5.56, direction TLT
+...\glue 0.0 plus 1.0fil minus 1.0fil
+.\glue 0.0
+! OK.
+<argument> ...ext} \printkeyans {kab} }\showbox 0 
+l. ...  }
+============================================================
+============================================================
+TEST 3: [3] save-sep
+============================================================
+* Package enumext: Start enumext with save-ans=kac on line ....
+* Package enumext: Creating \g__enumext_kac_prop on line ....
+Defining \g__enumext_kac_prop on line ...
+* Package enumext: Creating \g__enumext_kac_seq on line ....
+Defining \g__enumext_kac_seq on line ...
+* Package enumext: Creating \g__enumext_resume_kac_int on line ....
+Defining \g__enumext_resume_kac_int on line ...
+\g__enumext_resume_kac_int=\count...
+* Package enumext: Stop enumext with save-ans=kac on line ....
+* Package enumext: Elements in \g__enumext_kac_prop = 1.
+* Package enumext: Elements in \g__enumext_kac_seq = 1.
+* Package enumext: Value of \g__enumext_resume_kac_int = 1.
+* Package enumext: Value of \g__enumext_item_number_int = 1.
+* Package enumext: Value of \g__enumext_item_anskey_int = 1.
+* Package enumext: Difference item_number_int - item_anskey_int = 0.
+****************************************
+* Package enumext: Checking answers in 'kac' for {enumext}
+* started on line ... and close on line ...: 'OK', all items with answer.
+****************************************
+> \box...=
+\vbox(76.77+0.0)x345.0, direction TLT
+.\penalty -51
+.\glue 10.0 plus 4.0 minus 5.0
+.\glue -10.0 plus -4.0 minus -5.0
+.\glue 6.0 plus 2.0 minus 4.0
+.\glue(\parskip) 4.0 plus 2.0 minus 1.0
+.\glue(\parskip) 0.0
+.\hbox(6.83+2.06)x333.88702, glue set 291.20703fil, shifted 11.11298, direction TLT
+..\localpar
+...\localinterlinepenalty=0
+...\localbrokenpenalty=0
+...\localleftbox=null
+...\localrightbox=null
+..\hbox(6.66+0.0)x0.0, direction TLT
+...\glue 0.0
+...\glue -7.78
+...\glue -3.33298
+...\hbox(6.66+0.0)x7.78, direction TLT
+....\glue 0.0
+....\hbox(0.0+0.0)x0.0, direction TLT
+.....\glue 0.0 plus 1.0fil minus 1.0fil
+....\glue 0.0
+....\TU/lmr/m/n/10 1
+....\TU/lmr/m/n/10 .
+....\glue 0.0 plus 1.0fill
+...\glue 3.33298
+..\penalty 0
+..\TU/lmr/m/n/10 P
+..\TU/lmr/m/n/10 r
+..\TU/lmr/m/n/10 e
+..\discretionary (penalty 50)
+...< \TU/lmr/m/n/10 -
+..\TU/lmr/m/n/10 g
+..\TU/lmr/m/n/10 u
+..\TU/lmr/m/n/10 n
+..\kern-0.28 (font)
+..\TU/lmr/m/n/10 t
+..\TU/lmr/m/n/10 a
+..\TU/lmr/m/n/10 .
+..\penalty 10000
+..\glue(\parfillskip) 0.0 plus 1.0fil
+..\glue(\rightskip) 0.0
+.\penalty -51
+.\glue 8.0 plus 4.0 minus 2.0
+.\glue -8.0 plus -4.0 minus -2.0
+.\glue 6.0 plus 3.0 minus 1.0
+.\glue(\parskip) 2.0 plus 1.0 minus 1.0
+.\glue(\parskip) 0.0
+.\glue(\baselineskip) 2.44
+.\hbox(7.5+2.5)x317.49405, glue set 282.29407fil, shifted 27.50595, direction TLT
+..\localpar
+...\localinterlinepenalty=0
+...\localbrokenpenalty=0
+...\localleftbox=null
+...\localrightbox=null
+..\hbox(7.5+2.5)x0.0, direction TLT
+...\glue 0.0
+...\glue -13.06
+...\glue -3.33298
+...\hbox(7.5+2.5)x13.06, glue set 1.67fill, direction TLT
+....\TU/lmr/m/n/10 A
+....\TU/lmr/m/n/10 )
+....\glue 0.0 plus 1.0fill
+...\glue 3.33298
+..\penalty 0
+..\TU/lmr/m/n/10 P
+..\TU/lmr/m/n/10 r
+..\TU/lmr/m/n/10 i
+..\TU/lmr/m/n/10 m
+..\TU/lmr/m/n/10 e
+..\TU/lmr/m/n/10 r
+..\TU/lmr/m/n/10 a
+..\penalty 10000
+..\glue(\parfillskip) 0.0 plus 1.0fil
+..\glue(\rightskip) 0.0
+.\penalty -51
+.\glue 2.0 plus 1.0 minus 1.0
+.\glue(\parskip) 2.0 plus 1.0 minus 1.0
+.\glue(\parskip) 0.0
+.\glue(\baselineskip) 2.0
+.\hbox(7.5+2.5)x317.49405, glue set 234.65405fil, shifted 27.50595, direction TLT
+..\localpar
+...\localinterlinepenalty=0
+...\localbrokenpenalty=0
+...\localleftbox=null
+...\localrightbox=null
+..\hbox(7.5+2.5)x0.0, direction TLT
+...\glue 0.0
+...\glue -13.06
+...\glue -3.33298
+...\hbox(7.5+2.5)x13.06, glue set 2.09fill, direction TLT
+....\TU/lmr/m/n/10 B
+....\TU/lmr/m/n/10 )
+....\glue 0.0 plus 1.0fill
+...\glue 3.33298
+..\penalty 0
+..\TU/lmr/m/n/10 S
+..\TU/lmr/m/n/10 e
+..\discretionary (penalty 50)
+...< \TU/lmr/m/n/10 -
+..\TU/lmr/m/n/10 g
+..\TU/lmr/m/n/10 u
+..\TU/lmr/m/n/10 n
+..\TU/lmr/m/n/10 d
+..\TU/lmr/m/n/10 a
+..\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+..\TU/lmr/m/n/10 (
+..\TU/lmr/m/n/10 c
+..\TU/lmr/m/n/10 o
+..\TU/lmr/m/n/10 r
+..\discretionary (penalty 50)
+...< \TU/lmr/m/n/10 -
+..\TU/lmr/m/n/10 r
+..\TU/lmr/m/n/10 e
+..\TU/lmr/m/n/10 c
+..\TU/lmr/m/n/10 t
+..\TU/lmr/m/n/10 a
+..\TU/lmr/m/n/10 )
+..\penalty 10000
+..\glue(\parfillskip) 0.0 plus 1.0fil
+..\glue(\rightskip) 0.0
+.\penalty -51
+.\glue 4.0 plus 2.0 minus 1.0
+.\glue -4.0 plus -2.0 minus -1.0
+.\glue 8.0 plus 3.0 minus 2.0
+.\glue -10.5 plus -3.0 minus -2.0
+.\penalty -51
+.\glue 2.5
+.\glue 8.0 plus 3.0 minus 2.0
+.\glue -8.0 plus -3.0 minus -2.0
+.\glue 10.0 plus 3.0 minus 5.0
+.\penalty 10000
+.\glue 0.0
+.\glue 0.0
+.\kern-0.5
+.\hbox(10.0+1.94)x345.0, glue set 2.77824fil, direction TLT
+..\vbox(10.0+0.0)x169.72176, glue set - 0.4482, direction TLT
+...\glue 0.0 plus -2.0
+...\glue(\splittopskip) 3.25 plus 2.0
+...\hbox(6.75+2.241)x158.60878, glue set 124.80473fil, shifted 11.11298, direction TLT
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(5.994+0.0)x0.0, direction TLT
+.....\glue 0.0
+.....\glue -7.78
+.....\glue -3.33298
+.....\hbox(5.994+0.0)x7.78, glue set 0.57999fill, direction TLT
+......\glue 0.0
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+......\glue 0.0
+......\TU/lmr/m/n/9 1
+......\TU/lmr/m/n/9 .
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+....\penalty 0
+....\TU/lmr/m/n/9 B
+....\TU/lmr/m/n/9 )
+....\TU/lmr/m/n/9 ;
+....\glue(\spaceskip) 3.087 plus 1.5435 minus 1.029
+....\TU/lmr/m/n/9 n
+....\TU/lmr/m/n/9 o
+....\TU/lmr/m/n/9 t
+....\TU/lmr/m/n/9 a
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\penalty -51
+...\glue 0.0 plus 0.0001fil minus 5.0
+..\glue 0.0 plus 1.0fil minus 1.0fil
+..\rule(*+*)x0.0
+..\glue 0.0 plus 1.0fil minus 1.0fil
+..\vbox(10.0+0.0)x169.72176, glue set >20000.0fil, direction TLT
+...\glue 0.0 plus -2.0
+...\glue 0.0 plus 0.0001fil minus 5.0
+..\hbox(4.42+1.94)x0.0, glue set - 5.56fil, direction TLT
+...\hbox(4.42+1.94)x5.56, direction TLT
+...\glue 0.0 plus 1.0fil minus 1.0fil
+.\glue 0.0
+! OK.
+<argument> ...ext} \printkeyans {kac} }\showbox 0 
+l. ...  }
+============================================================
+============================================================
+TEST 4: [4] columnas y minipage en keyans
+============================================================
+* Package enumext: Start enumext with save-ans=kad on line ....
+* Package enumext: Creating \g__enumext_kad_prop on line ....
+Defining \g__enumext_kad_prop on line ...
+* Package enumext: Creating \g__enumext_kad_seq on line ....
+Defining \g__enumext_kad_seq on line ...
+* Package enumext: Creating \g__enumext_resume_kad_int on line ....
+Defining \g__enumext_resume_kad_int on line ...
+\g__enumext_resume_kad_int=\count...
+* Package enumext: Stop enumext with save-ans=kad on line ....
+* Package enumext: Elements in \g__enumext_kad_prop = 1.
+* Package enumext: Elements in \g__enumext_kad_seq = 1.
+* Package enumext: Value of \g__enumext_resume_kad_int = 1.
+* Package enumext: Value of \g__enumext_item_number_int = 1.
+* Package enumext: Value of \g__enumext_item_anskey_int = 1.
+* Package enumext: Difference item_number_int - item_anskey_int = 0.
+****************************************
+* Package enumext: Checking answers in 'kad' for {enumext}
+* started on line ... and close on line ...: 'OK', all items with answer.
+****************************************
+> \box...=
+\vbox(60.77+0.0)x345.0, direction TLT
+.\penalty -51
+.\glue 10.0 plus 4.0 minus 5.0
+.\glue -10.0 plus -4.0 minus -5.0
+.\glue 6.0 plus 2.0 minus 4.0
+.\glue(\parskip) 4.0 plus 2.0 minus 1.0
+.\glue(\parskip) 0.0
+.\hbox(6.83+2.06)x333.88702, glue set 291.20703fil, shifted 11.11298, direction TLT
+..\localpar
+...\localinterlinepenalty=0
+...\localbrokenpenalty=0
+...\localleftbox=null
+...\localrightbox=null
+..\hbox(6.66+0.0)x0.0, direction TLT
+...\glue 0.0
+...\glue -7.78
+...\glue -3.33298
+...\hbox(6.66+0.0)x7.78, direction TLT
+....\glue 0.0
+....\hbox(0.0+0.0)x0.0, direction TLT
+.....\glue 0.0 plus 1.0fil minus 1.0fil
+....\glue 0.0
+....\TU/lmr/m/n/10 1
+....\TU/lmr/m/n/10 .
+....\glue 0.0 plus 1.0fill
+...\glue 3.33298
+..\penalty 0
+..\TU/lmr/m/n/10 P
+..\TU/lmr/m/n/10 r
+..\TU/lmr/m/n/10 e
+..\discretionary (penalty 50)
+...< \TU/lmr/m/n/10 -
+..\TU/lmr/m/n/10 g
+..\TU/lmr/m/n/10 u
+..\TU/lmr/m/n/10 n
+..\kern-0.28 (font)
+..\TU/lmr/m/n/10 t
+..\TU/lmr/m/n/10 a
+..\TU/lmr/m/n/10 .
+..\penalty 10000
+..\glue(\parfillskip) 0.0 plus 1.0fil
+..\glue(\rightskip) 0.0
+.\penalty 10000
+.\glue 4.0 plus 2.0 minus 1.0
+.\kern-0.06
+.\hbox(26.0+1.94)x333.88702, glue set 4.09825fil, shifted 11.11298, direction TLT
+..\vbox(26.0+0.0)x162.84526, glue set - 0.35715, direction TLT
+...\glue 0.0 plus -2.0
+...\glue(\splittopskip) 2.5 plus 2.0
+...\hbox(7.5+2.5)x146.45229, glue set 111.25229fil, shifted 16.39297, direction TLT
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(7.5+2.5)x0.0, direction TLT
+.....\glue 0.0
+.....\glue -13.06
+.....\glue -3.33298
+.....\hbox(7.5+2.5)x13.06, glue set 1.67fill, direction TLT
+......\TU/lmr/m/n/10 A
+......\TU/lmr/m/n/10 )
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+....\penalty 0
+....\TU/lmr/m/n/10 P
+....\TU/lmr/m/n/10 r
+....\TU/lmr/m/n/10 i
+....\TU/lmr/m/n/10 m
+....\TU/lmr/m/n/10 e
+....\TU/lmr/m/n/10 r
+....\TU/lmr/m/n/10 a
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\penalty -51
+...\glue 2.0 plus 1.0 minus 1.0
+...\glue(\parskip) 2.0 plus 1.0 minus 1.0
+...\glue(\parskip) 0.0
+...\glue(\baselineskip) 2.0
+...\hbox(7.5+2.5)x146.45229, glue set 63.61229fil, shifted 16.39297, direction TLT
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(7.5+2.5)x0.0, direction TLT
+.....\glue 0.0
+.....\glue -13.06
+.....\glue -3.33298
+.....\hbox(7.5+2.5)x13.06, glue set 2.09fill, direction TLT
+......\TU/lmr/m/n/10 B
+......\TU/lmr/m/n/10 )
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+....\penalty 0
+....\TU/lmr/m/n/10 S
+....\TU/lmr/m/n/10 e
+....\discretionary (penalty 50)
+.....< \TU/lmr/m/n/10 -
+....\TU/lmr/m/n/10 g
+....\TU/lmr/m/n/10 u
+....\TU/lmr/m/n/10 n
+....\TU/lmr/m/n/10 d
+....\TU/lmr/m/n/10 a
+....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+....\TU/lmr/m/n/10 (
+....\TU/lmr/m/n/10 c
+....\TU/lmr/m/n/10 o
+....\TU/lmr/m/n/10 r
+....\discretionary (penalty 50)
+.....< \TU/lmr/m/n/10 -
+....\TU/lmr/m/n/10 r
+....\TU/lmr/m/n/10 e
+....\TU/lmr/m/n/10 c
+....\TU/lmr/m/n/10 t
+....\TU/lmr/m/n/10 a
+....\TU/lmr/m/n/10 )
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\glue 0.0 plus 0.0001fil minus 5.0
+..\glue 0.0 plus 1.0fil minus 1.0fil
+..\rule(*+*)x0.0
+..\glue 0.0 plus 1.0fil minus 1.0fil
+..\vbox(26.0+0.0)x162.84526, glue set - 0.35715, direction TLT
+...\glue 0.0 plus -2.0
+...\glue(\splittopskip) 2.5 plus 2.0
+...\hbox(7.5+2.5)x146.45229, glue set 113.90228fil, shifted 16.39297, direction TLT
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(7.5+2.5)x0.0, direction TLT
+.....\glue 0.0
+.....\glue -13.06
+.....\glue -3.33298
+.....\hbox(7.5+2.5)x13.06, glue set 1.95fill, direction TLT
+......\TU/lmr/m/n/10 C
+......\TU/lmr/m/n/10 )
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+....\penalty 0
+....\TU/lmr/m/n/10 T
+....\kern-0.83 (font)
+....\TU/lmr/m/n/10 e
+....\TU/lmr/m/n/10 r
+....\discretionary (penalty 50)
+.....< \TU/lmr/m/n/10 -
+....\TU/lmr/m/n/10 c
+....\TU/lmr/m/n/10 e
+....\TU/lmr/m/n/10 r
+....\TU/lmr/m/n/10 a
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\penalty -51
+...\glue 2.0 plus 1.0 minus 1.0
+...\glue(\parskip) 2.0 plus 1.0 minus 1.0
+...\glue(\parskip) 0.0
+...\glue(\baselineskip) 2.0
+...\hbox(7.5+2.5)x146.45229, glue set 115.86229fil, shifted 16.39297, direction TLT
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(7.5+2.5)x0.0, direction TLT
+.....\glue 0.0
+.....\glue -13.06
+.....\glue -3.33298
+.....\hbox(7.5+2.5)x13.06, glue set 1.53fill, direction TLT
+......\TU/lmr/m/n/10 D
+......\TU/lmr/m/n/10 )
+......\glue 0.0 plus 1.0fill
+.....\glue 3.33298
+....\penalty 0
+....\TU/lmr/m/n/10 C
+....\TU/lmr/m/n/10 u
+....\TU/lmr/m/n/10 a
+....\TU/lmr/m/n/10 r
+....\TU/lmr/m/n/10 t
+....\TU/lmr/m/n/10 a
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\glue 0.0 plus 0.0001fil minus 5.0
+..\hbox(4.42+1.94)x0.0, glue set - 5.56fil, direction TLT
+...\hbox(4.42+1.94)x5.56, direction TLT
+...\glue 0.0 plus 1.0fil minus 1.0fil
+.\glue 4.0 plus 2.0 minus 1.0
+.\glue -4.0 plus -2.0 minus -1.0
+.\glue 8.0 plus 3.0 minus 2.0
+.\glue -8.0 plus -3.0 minus -2.0
+.\penalty -51
+.\glue 8.0 plus 3.0 minus 2.0
+.\glue -8.0 plus -3.0 minus -2.0
+.\glue 10.0 plus 3.0 minus 5.0
+! OK.
+<argument> ...{keyans} \end {enumext} }\showbox 0 
+l. ...  }
+============================================================
+=== B. keyans*: opciones en una fila ===
+============================================================
+TEST 5: [5] keyans*
+============================================================
+* Package enumext: Start enumext with save-ans=kae on line ....
+* Package enumext: Creating \g__enumext_kae_prop on line ....
+Defining \g__enumext_kae_prop on line ...
+* Package enumext: Creating \g__enumext_kae_seq on line ....
+Defining \g__enumext_kae_seq on line ...
+* Package enumext: Creating \g__enumext_resume_kae_int on line ....
+Defining \g__enumext_resume_kae_int on line ...
+\g__enumext_resume_kae_int=\count...
+* Package enumext: Stop enumext with save-ans=kae on line ....
+* Package enumext: Elements in \g__enumext_kae_prop = 1.
+* Package enumext: Elements in \g__enumext_kae_seq = 1.
+* Package enumext: Value of \g__enumext_resume_kae_int = 1.
+* Package enumext: Value of \g__enumext_item_number_int = 1.
+* Package enumext: Value of \g__enumext_item_anskey_int = 1.
+* Package enumext: Difference item_number_int - item_anskey_int = 0.
+****************************************
+* Package enumext: Checking answers in 'kae' for {enumext}
+* started on line ... and close on line ...: 'OK', all items with answer.
+****************************************
+> \box...=
+\vbox(61.071+0.0)x345.0, direction TLT
+.\penalty -51
+.\glue 10.0 plus 4.0 minus 5.0
+.\glue -10.0 plus -4.0 minus -5.0
+.\glue 6.0 plus 2.0 minus 4.0
+.\glue(\parskip) 4.0 plus 2.0 minus 1.0
+.\glue(\parskip) 0.0
+.\hbox(6.83+2.06)x333.88702, glue set 291.20703fil, shifted 11.11298, direction TLT
+..\localpar
+...\localinterlinepenalty=0
+...\localbrokenpenalty=0
+...\localleftbox=null
+...\localrightbox=null
+..\hbox(6.66+0.0)x0.0, direction TLT
+...\glue 0.0
+...\glue -7.78
+...\glue -3.33298
+...\hbox(6.66+0.0)x7.78, direction TLT
+....\glue 0.0
+....\hbox(0.0+0.0)x0.0, direction TLT
+.....\glue 0.0 plus 1.0fil minus 1.0fil
+....\glue 0.0
+....\TU/lmr/m/n/10 1
+....\TU/lmr/m/n/10 .
+....\glue 0.0 plus 1.0fill
+...\glue 3.33298
+..\penalty 0
+..\TU/lmr/m/n/10 P
+..\TU/lmr/m/n/10 r
+..\TU/lmr/m/n/10 e
+..\discretionary (penalty 50)
+...< \TU/lmr/m/n/10 -
+..\TU/lmr/m/n/10 g
+..\TU/lmr/m/n/10 u
+..\TU/lmr/m/n/10 n
+..\kern-0.28 (font)
+..\TU/lmr/m/n/10 t
+..\TU/lmr/m/n/10 a
+..\TU/lmr/m/n/10 .
+..\penalty 10000
+..\glue(\parfillskip) 0.0 plus 1.0fil
+..\glue(\rightskip) 0.0
+.\penalty -51
+.\glue 8.0 plus 4.0 minus 2.0
+.\glue -8.0 plus -4.0 minus -2.0
+.\glue 6.0 plus 3.0 minus 1.0
+.\glue(\parskip) 2.0 plus 1.0 minus 1.0
+.\glue(\parskip) 0.0
+.\glue(\baselineskip) 2.44
+.\hbox(7.5+2.5)x333.88702, glue set 0.00002fil, shifted 11.11298, direction TLT
+..\localpar
+...\localinterlinepenalty=0
+...\localbrokenpenalty=0
+...\localleftbox=null
+...\localrightbox=null
+..\hbox(0.0+0.0)x16.39297, direction TLT
+...\glue 16.39297
+...\glue -13.06
+...\glue -3.33298
+...\hbox(0.0+0.0)x13.06, glue set 13.06fil, direction TLT
+....\glue 0.0 plus 1.0fil
+...\glue 3.33298
+..\penalty 0
+..\glue -16.39297
+..\hbox(7.5+2.5)x107.65279, direction TLT
+...\hbox(7.5+2.5)x13.06, glue set 1.67fil, direction TLT
+....\TU/lmr/m/n/10 A
+....\TU/lmr/m/n/10 )
+....\glue 0.0 plus 1.0fil minus 1.0fil
+...\glue 3.33298
+...\vbox(6.83+0.11)x91.25981, direction TLT
+....\hbox(6.83+0.11)x91.25981, glue set 56.05981fil, direction TLT
+.....\localpar
+......\localinterlinepenalty=0
+......\localbrokenpenalty=0
+......\localleftbox=null
+......\localrightbox=null
+.....\hbox(0.0+0.0)x0.0, direction TLT
+.....\glue 0.0
+.....\TU/lmr/m/n/10 P
+.....\TU/lmr/m/n/10 r
+.....\TU/lmr/m/n/10 i
+.....\TU/lmr/m/n/10 m
+.....\TU/lmr/m/n/10 e
+.....\TU/lmr/m/n/10 r
+.....\TU/lmr/m/n/10 a
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0
+..\glue 5.46432
+..\hbox(7.5+2.5)x107.65279, direction TLT
+...\hbox(7.5+2.5)x13.06, glue set 2.09fil, direction TLT
+....\TU/lmr/m/n/10 B
+....\TU/lmr/m/n/10 )
+....\glue 0.0 plus 1.0fil minus 1.0fil
+...\glue 3.33298
+...\vbox(7.5+2.5)x91.25981, direction TLT
+....\hbox(7.5+2.5)x91.25981, glue set 8.41982fil, direction TLT
+.....\localpar
+......\localinterlinepenalty=0
+......\localbrokenpenalty=0
+......\localleftbox=null
+......\localrightbox=null
+.....\hbox(0.0+0.0)x0.0, direction TLT
+.....\glue 0.0
+.....\TU/lmr/m/n/10 S
+.....\TU/lmr/m/n/10 e
+.....\discretionary (penalty 50)
+......< \TU/lmr/m/n/10 -
+.....\TU/lmr/m/n/10 g
+.....\TU/lmr/m/n/10 u
+.....\TU/lmr/m/n/10 n
+.....\TU/lmr/m/n/10 d
+.....\TU/lmr/m/n/10 a
+.....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+.....\TU/lmr/m/n/10 (
+.....\TU/lmr/m/n/10 c
+.....\TU/lmr/m/n/10 o
+.....\TU/lmr/m/n/10 r
+.....\discretionary (penalty 50)
+......< \TU/lmr/m/n/10 -
+.....\TU/lmr/m/n/10 r
+.....\TU/lmr/m/n/10 e
+.....\TU/lmr/m/n/10 c
+.....\TU/lmr/m/n/10 t
+.....\TU/lmr/m/n/10 a
+.....\TU/lmr/m/n/10 )
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0
+..\glue 5.46432
+..\hbox(7.5+2.5)x107.65279, direction TLT
+...\hbox(7.5+2.5)x13.06, glue set 1.95fil, direction TLT
+....\TU/lmr/m/n/10 C
+....\TU/lmr/m/n/10 )
+....\glue 0.0 plus 1.0fil minus 1.0fil
+...\glue 3.33298
+...\vbox(6.77+0.11)x91.25981, direction TLT
+....\hbox(6.77+0.11)x91.25981, glue set 58.70981fil, direction TLT
+.....\localpar
+......\localinterlinepenalty=0
+......\localbrokenpenalty=0
+......\localleftbox=null
+......\localrightbox=null
+.....\hbox(0.0+0.0)x0.0, direction TLT
+.....\glue 0.0
+.....\TU/lmr/m/n/10 T
+.....\kern-0.83 (font)
+.....\TU/lmr/m/n/10 e
+.....\TU/lmr/m/n/10 r
+.....\discretionary (penalty 50)
+......< \TU/lmr/m/n/10 -
+.....\TU/lmr/m/n/10 c
+.....\TU/lmr/m/n/10 e
+.....\TU/lmr/m/n/10 r
+.....\TU/lmr/m/n/10 a
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0
+..\penalty 10000
+..\glue(\parfillskip) 0.0 plus 1.0fil
+..\glue(\rightskip) 0.0
+.\glue(\parskip) 2.0 plus 1.0 minus 1.0
+.\glue(\parskip) 0.0
+.\glue -2.0 plus -1.0 minus -1.0
+.\glue 0.0
+.\penalty -51
+.\glue 4.0 plus 2.0 minus 1.0
+.\glue -4.0 plus -2.0 minus -1.0
+.\glue 8.0 plus 3.0 minus 2.0
+.\glue -10.5 plus -3.0 minus -2.0
+.\penalty -51
+.\glue 2.5
+.\glue 8.0 plus 3.0 minus 2.0
+.\glue -8.0 plus -3.0 minus -2.0
+.\glue 10.0 plus 3.0 minus 5.0
+.\glue -12.5 plus -3.0 minus -5.0
+.\penalty -51
+.\glue 2.5
+.\glue 10.0 plus 3.0 minus 5.0
+.\glue(\parskip) 0.0
+.\glue(\parskip) 0.0
+.\glue(\baselineskip) 2.75
+.\hbox(6.75+2.241)x345.0, glue set 175.27824fil, direction TLT
+..\localpar
+...\localinterlinepenalty=0
+...\localbrokenpenalty=0
+...\localleftbox=null
+...\localrightbox=null
+..\hbox(0.0+0.0)x11.11298, direction TLT
+...\glue 11.11298
+...\glue -7.78
+...\glue -3.33298
+...\hbox(0.0+0.0)x7.78, glue set 7.78fil, direction TLT
+....\glue 0.0 plus 1.0fil
+...\glue 3.33298
+..\penalty 0
+..\glue -11.11298
+..\hbox(6.75+2.241)x169.72176, direction TLT
+...\hbox(5.994+0.0)x7.78, glue set 0.57999fil, direction TLT
+....\TU/lmr/m/n/9 1
+....\TU/lmr/m/n/9 .
+....\glue 0.0 plus 1.0fil minus 1.0fil
+...\glue 3.33298
+...\vbox(6.75+2.241)x158.60878, direction TLT
+....\hbox(6.75+2.241)x158.60878, glue set 148.45677fil, direction TLT
+.....\localpar
+......\localinterlinepenalty=0
+......\localbrokenpenalty=0
+......\localleftbox=null
+......\localrightbox=null
+.....\hbox(0.0+0.0)x0.0, direction TLT
+.....\glue 0.0
+.....\TU/lmr/m/n/9 B
+.....\TU/lmr/m/n/9 )
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0
+..\penalty 10000
+..\glue(\parfillskip) 0.0 plus 1.0fil
+..\glue(\rightskip) 0.0
+.\penalty -51
+.\glue 0.0
+! OK.
+<argument> ...xt} \printkeyans *{kae} }\showbox 0 
+l. ...  }
+============================================================
+============================================================
+TEST 6: [6] keyans* con columnas
+============================================================
+* Package enumext: Start enumext with save-ans=kaf on line ....
+* Package enumext: Creating \g__enumext_kaf_prop on line ....
+Defining \g__enumext_kaf_prop on line ...
+* Package enumext: Creating \g__enumext_kaf_seq on line ....
+Defining \g__enumext_kaf_seq on line ...
+* Package enumext: Creating \g__enumext_resume_kaf_int on line ....
+Defining \g__enumext_resume_kaf_int on line ...
+\g__enumext_resume_kaf_int=\count...
+* Package enumext: Stop enumext with save-ans=kaf on line ....
+* Package enumext: Elements in \g__enumext_kaf_prop = 1.
+* Package enumext: Elements in \g__enumext_kaf_seq = 1.
+* Package enumext: Value of \g__enumext_resume_kaf_int = 1.
+* Package enumext: Value of \g__enumext_item_number_int = 1.
+* Package enumext: Value of \g__enumext_item_anskey_int = 1.
+* Package enumext: Difference item_number_int - item_anskey_int = 0.
+****************************************
+* Package enumext: Checking answers in 'kaf' for {enumext}
+* started on line ... and close on line ...: 'OK', all items with answer.
+****************************************
+> \box...=
+\vbox(63.33+0.0)x345.0, direction TLT
+.\penalty -51
+.\glue 10.0 plus 4.0 minus 5.0
+.\glue -10.0 plus -4.0 minus -5.0
+.\glue 6.0 plus 2.0 minus 4.0
+.\glue(\parskip) 4.0 plus 2.0 minus 1.0
+.\glue(\parskip) 0.0
+.\hbox(6.83+2.06)x333.88702, glue set 291.20703fil, shifted 11.11298, direction TLT
+..\localpar
+...\localinterlinepenalty=0
+...\localbrokenpenalty=0
+...\localleftbox=null
+...\localrightbox=null
+..\hbox(6.66+0.0)x0.0, direction TLT
+...\glue 0.0
+...\glue -7.78
+...\glue -3.33298
+...\hbox(6.66+0.0)x7.78, direction TLT
+....\glue 0.0
+....\hbox(0.0+0.0)x0.0, direction TLT
+.....\glue 0.0 plus 1.0fil minus 1.0fil
+....\glue 0.0
+....\TU/lmr/m/n/10 1
+....\TU/lmr/m/n/10 .
+....\glue 0.0 plus 1.0fill
+...\glue 3.33298
+..\penalty 0
+..\TU/lmr/m/n/10 P
+..\TU/lmr/m/n/10 r
+..\TU/lmr/m/n/10 e
+..\discretionary (penalty 50)
+...< \TU/lmr/m/n/10 -
+..\TU/lmr/m/n/10 g
+..\TU/lmr/m/n/10 u
+..\TU/lmr/m/n/10 n
+..\kern-0.28 (font)
+..\TU/lmr/m/n/10 t
+..\TU/lmr/m/n/10 a
+..\TU/lmr/m/n/10 .
+..\penalty 10000
+..\glue(\parfillskip) 0.0 plus 1.0fil
+..\glue(\rightskip) 0.0
+.\penalty -51
+.\glue 8.0 plus 4.0 minus 2.0
+.\glue -8.0 plus -4.0 minus -2.0
+.\glue 6.0 plus 3.0 minus 1.0
+.\glue(\parskip) 2.0 plus 1.0 minus 1.0
+.\glue(\parskip) 0.0
+.\glue(\baselineskip) 2.44
+.\hbox(7.5+2.5)x333.88702, shifted 11.11298, direction TLT
+..\localpar
+...\localinterlinepenalty=0
+...\localbrokenpenalty=0
+...\localleftbox=null
+...\localrightbox=null
+..\hbox(0.0+0.0)x16.39297, direction TLT
+...\glue 16.39297
+...\glue -13.06
+...\glue -3.33298
+...\hbox(0.0+0.0)x13.06, glue set 13.06fil, direction TLT
+....\glue 0.0 plus 1.0fil
+...\glue 3.33298
+..\penalty 0
+..\glue -16.39297
+..\hbox(7.5+2.5)x162.84528, direction TLT
+...\hbox(7.5+2.5)x13.06, glue set 1.67fil, direction TLT
+....\TU/lmr/m/n/10 A
+....\TU/lmr/m/n/10 )
+....\glue 0.0 plus 1.0fil minus 1.0fil
+...\glue 3.33298
+...\vbox(6.83+0.11)x146.4523, direction TLT
+....\hbox(6.83+0.11)x146.4523, glue set 111.2523fil, direction TLT
+.....\localpar
+......\localinterlinepenalty=0
+......\localbrokenpenalty=0
+......\localleftbox=null
+......\localrightbox=null
+.....\hbox(0.0+0.0)x0.0, direction TLT
+.....\glue 0.0
+.....\TU/lmr/m/n/10 P
+.....\TU/lmr/m/n/10 r
+.....\TU/lmr/m/n/10 i
+.....\TU/lmr/m/n/10 m
+.....\TU/lmr/m/n/10 e
+.....\TU/lmr/m/n/10 r
+.....\TU/lmr/m/n/10 a
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0
+..\glue 8.19649
+..\hbox(7.5+2.5)x162.84528, direction TLT
+...\hbox(7.5+2.5)x13.06, glue set 2.09fil, direction TLT
+....\TU/lmr/m/n/10 B
+....\TU/lmr/m/n/10 )
+....\glue 0.0 plus 1.0fil minus 1.0fil
+...\glue 3.33298
+...\vbox(7.5+2.5)x146.4523, direction TLT
+....\hbox(7.5+2.5)x146.4523, glue set 63.6123fil, direction TLT
+.....\localpar
+......\localinterlinepenalty=0
+......\localbrokenpenalty=0
+......\localleftbox=null
+......\localrightbox=null
+.....\hbox(0.0+0.0)x0.0, direction TLT
+.....\glue 0.0
+.....\TU/lmr/m/n/10 S
+.....\TU/lmr/m/n/10 e
+.....\discretionary (penalty 50)
+......< \TU/lmr/m/n/10 -
+.....\TU/lmr/m/n/10 g
+.....\TU/lmr/m/n/10 u
+.....\TU/lmr/m/n/10 n
+.....\TU/lmr/m/n/10 d
+.....\TU/lmr/m/n/10 a
+.....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+.....\TU/lmr/m/n/10 (
+.....\TU/lmr/m/n/10 c
+.....\TU/lmr/m/n/10 o
+.....\TU/lmr/m/n/10 r
+.....\discretionary (penalty 50)
+......< \TU/lmr/m/n/10 -
+.....\TU/lmr/m/n/10 r
+.....\TU/lmr/m/n/10 e
+.....\TU/lmr/m/n/10 c
+.....\TU/lmr/m/n/10 t
+.....\TU/lmr/m/n/10 a
+.....\TU/lmr/m/n/10 )
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0
+..\penalty 10000
+..\glue(\parfillskip) 0.0 plus 1.0fil
+..\glue(\rightskip) 0.0
+.\glue(\parskip) 2.0 plus 1.0 minus 1.0
+.\glue(\parskip) 0.0
+.\glue(\baselineskip) 2.0
+.\hbox(7.5+2.5)x333.88702, shifted 11.11298, direction TLT
+..\localpar
+...\localinterlinepenalty=0
+...\localbrokenpenalty=0
+...\localleftbox=null
+...\localrightbox=null
+..\hbox(7.5+2.5)x162.84528, direction TLT
+...\hbox(7.5+2.5)x13.06, glue set 1.95fil, direction TLT
+....\TU/lmr/m/n/10 C
+....\TU/lmr/m/n/10 )
+....\glue 0.0 plus 1.0fil minus 1.0fil
+...\glue 3.33298
+...\vbox(6.77+0.11)x146.4523, direction TLT
+....\hbox(6.77+0.11)x146.4523, glue set 113.9023fil, direction TLT
+.....\localpar
+......\localinterlinepenalty=0
+......\localbrokenpenalty=0
+......\localleftbox=null
+......\localrightbox=null
+.....\hbox(0.0+0.0)x0.0, direction TLT
+.....\glue 0.0
+.....\TU/lmr/m/n/10 T
+.....\kern-0.83 (font)
+.....\TU/lmr/m/n/10 e
+.....\TU/lmr/m/n/10 r
+.....\discretionary (penalty 50)
+......< \TU/lmr/m/n/10 -
+.....\TU/lmr/m/n/10 c
+.....\TU/lmr/m/n/10 e
+.....\TU/lmr/m/n/10 r
+.....\TU/lmr/m/n/10 a
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0
+..\glue 8.19649
+..\hbox(7.5+2.5)x162.84528, direction TLT
+...\hbox(7.5+2.5)x13.06, glue set 1.53fil, direction TLT
+....\TU/lmr/m/n/10 D
+....\TU/lmr/m/n/10 )
+....\glue 0.0 plus 1.0fil minus 1.0fil
+...\glue 3.33298
+...\vbox(7.05+0.22)x146.4523, direction TLT
+....\hbox(7.05+0.22)x146.4523, glue set 115.8623fil, direction TLT
+.....\localpar
+......\localinterlinepenalty=0
+......\localbrokenpenalty=0
+......\localleftbox=null
+......\localrightbox=null
+.....\hbox(0.0+0.0)x0.0, direction TLT
+.....\glue 0.0
+.....\TU/lmr/m/n/10 C
+.....\TU/lmr/m/n/10 u
+.....\TU/lmr/m/n/10 a
+.....\TU/lmr/m/n/10 r
+.....\TU/lmr/m/n/10 t
+.....\TU/lmr/m/n/10 a
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0
+..\penalty 10000
+..\glue(\parfillskip) 0.0 plus 1.0fil
+..\glue(\rightskip) 0.0
+.\glue(\parskip) 2.0 plus 1.0 minus 1.0
+.\glue(\parskip) 0.0
+.\glue -2.0 plus -1.0 minus -1.0
+.\glue 0.0
+.\penalty -51
+.\glue 4.0 plus 2.0 minus 1.0
+.\glue -4.0 plus -2.0 minus -1.0
+.\glue 8.0 plus 3.0 minus 2.0
+.\glue -10.5 plus -3.0 minus -2.0
+.\penalty -51
+.\glue 2.5
+.\glue 8.0 plus 3.0 minus 2.0
+.\glue -8.0 plus -3.0 minus -2.0
+.\glue 10.0 plus 3.0 minus 5.0
+! OK.
+<argument> ...keyans*} \end {enumext} }\showbox 0 
+l. ...  }
+============================================================
+=== C. Mostrar la correcta: show-ans, mark-ans*, wrap-ans*, wrap-opt ===
+============================================================
+TEST 7: [7] show-ans con el simbolo por defecto
+============================================================
+* Package enumext: Start enumext with save-ans=kag on line ....
+* Package enumext: Creating \g__enumext_kag_prop on line ....
+Defining \g__enumext_kag_prop on line ...
+* Package enumext: Creating \g__enumext_kag_seq on line ....
+Defining \g__enumext_kag_seq on line ...
+* Package enumext: Creating \g__enumext_resume_kag_int on line ....
+Defining \g__enumext_resume_kag_int on line ...
+\g__enumext_resume_kag_int=\count...
+* Package enumext: Stop enumext with save-ans=kag on line ....
+* Package enumext: Elements in \g__enumext_kag_prop = 1.
+* Package enumext: Elements in \g__enumext_kag_seq = 1.
+* Package enumext: Value of \g__enumext_resume_kag_int = 1.
+* Package enumext: Value of \g__enumext_item_number_int = 1.
+* Package enumext: Value of \g__enumext_item_anskey_int = 1.
+* Package enumext: Difference item_number_int - item_anskey_int = 0.
+****************************************
+* Package enumext: Checking answers in 'kag' for {enumext}
+* started on line ... and close on line ...: 'OK', all items with answer.
+****************************************
+> \box...=
+\vbox(81.33+0.0)x345.0, direction TLT
+.\penalty -51
+.\glue 10.0 plus 4.0 minus 5.0
+.\glue -10.0 plus -4.0 minus -5.0
+.\glue 6.0 plus 2.0 minus 4.0
+.\glue(\parskip) 4.0 plus 2.0 minus 1.0
+.\glue(\parskip) 0.0
+.\hbox(6.83+2.06)x333.88702, glue set 291.20703fil, shifted 11.11298, direction TLT
+..\localpar
+...\localinterlinepenalty=0
+...\localbrokenpenalty=0
+...\localleftbox=null
+...\localrightbox=null
+..\hbox(6.66+0.0)x0.0, direction TLT
+...\glue 0.0
+...\glue -7.78
+...\glue -3.33298
+...\hbox(6.66+0.0)x7.78, direction TLT
+....\glue 0.0
+....\hbox(0.0+0.0)x0.0, direction TLT
+.....\glue 0.0 plus 1.0fil minus 1.0fil
+....\glue 0.0
+....\TU/lmr/m/n/10 1
+....\TU/lmr/m/n/10 .
+....\glue 0.0 plus 1.0fill
+...\glue 3.33298
+..\penalty 0
+..\TU/lmr/m/n/10 P
+..\TU/lmr/m/n/10 r
+..\TU/lmr/m/n/10 e
+..\discretionary (penalty 50)
+...< \TU/lmr/m/n/10 -
+..\TU/lmr/m/n/10 g
+..\TU/lmr/m/n/10 u
+..\TU/lmr/m/n/10 n
+..\kern-0.28 (font)
+..\TU/lmr/m/n/10 t
+..\TU/lmr/m/n/10 a
+..\TU/lmr/m/n/10 .
+..\penalty 10000
+..\glue(\parfillskip) 0.0 plus 1.0fil
+..\glue(\rightskip) 0.0
+.\penalty -51
+.\glue 8.0 plus 4.0 minus 2.0
+.\glue -8.0 plus -4.0 minus -2.0
+.\glue 6.0 plus 3.0 minus 1.0
+.\glue(\parskip) 2.0 plus 1.0 minus 1.0
+.\glue(\parskip) 0.0
+.\glue(\baselineskip) 2.44
+.\hbox(7.5+2.5)x317.49405, glue set 282.29407fil, shifted 27.50595, direction TLT
+..\localpar
+...\localinterlinepenalty=0
+...\localbrokenpenalty=0
+...\localleftbox=null
+...\localrightbox=null
+..\hbox(7.5+2.5)x0.0, direction TLT
+...\glue 0.0
+...\glue -13.06
+...\glue -3.33298
+...\hbox(7.5+2.5)x13.06, glue set 1.67fill, direction TLT
+....\TU/lmr/m/n/10 A
+....\TU/lmr/m/n/10 )
+....\glue 0.0 plus 1.0fill
+...\glue 3.33298
+..\penalty 0
+..\TU/lmr/m/n/10 P
+..\TU/lmr/m/n/10 r
+..\TU/lmr/m/n/10 i
+..\TU/lmr/m/n/10 m
+..\TU/lmr/m/n/10 e
+..\TU/lmr/m/n/10 r
+..\TU/lmr/m/n/10 a
+..\penalty 10000
+..\glue(\parfillskip) 0.0 plus 1.0fil
+..\glue(\rightskip) 0.0
+.\penalty -51
+.\glue 2.0 plus 1.0 minus 1.0
+.\glue(\parskip) 2.0 plus 1.0 minus 1.0
+.\glue(\parskip) 0.0
+.\glue(\baselineskip) 2.0
+.\hbox(7.5+2.5)x317.49405, glue set 234.65405fil, shifted 27.50595, direction TLT
+..\localpar
+...\localinterlinepenalty=0
+...\localbrokenpenalty=0
+...\localleftbox=null
+...\localrightbox=null
+..\hbox(7.5+2.5)x0.0, direction TLT
+...\glue 0.0
+...\glue -13.06
+...\glue -3.33298
+...\hbox(7.5+2.5)x13.06, glue set 2.09fill, direction TLT
+....\glue -3.33298
+....\hbox(4.66+0.0)x0.0, glue set - 13.06fil, direction TLT
+.....\glue 0.0 plus 1.0fil minus 1.0fil
+.....\hbox(4.66+0.0)x13.06, glue set 8.06fil, direction TLT
+......\glue 0.0 plus 1.0fil minus 1.0fil
+......\TU/lmr/m/n/10 ∗
+....\glue 3.33298
+....\TU/lmr/m/n/10 B
+....\TU/lmr/m/n/10 )
+....\glue 0.0 plus 1.0fill
+...\glue 3.33298
+..\penalty 0
+..\TU/lmr/m/n/10 S
+..\TU/lmr/m/n/10 e
+..\discretionary (penalty 50)
+...< \TU/lmr/m/n/10 -
+..\TU/lmr/m/n/10 g
+..\TU/lmr/m/n/10 u
+..\TU/lmr/m/n/10 n
+..\TU/lmr/m/n/10 d
+..\TU/lmr/m/n/10 a
+..\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+..\TU/lmr/m/n/10 (
+..\TU/lmr/m/n/10 c
+..\TU/lmr/m/n/10 o
+..\TU/lmr/m/n/10 r
+..\discretionary (penalty 50)
+...< \TU/lmr/m/n/10 -
+..\TU/lmr/m/n/10 r
+..\TU/lmr/m/n/10 e
+..\TU/lmr/m/n/10 c
+..\TU/lmr/m/n/10 t
+..\TU/lmr/m/n/10 a
+..\TU/lmr/m/n/10 )
+..\penalty 10000
+..\glue(\parfillskip) 0.0 plus 1.0fil
+..\glue(\rightskip) 0.0
+.\penalty -51
+.\glue 2.0 plus 1.0 minus 1.0
+.\glue(\parskip) 2.0 plus 1.0 minus 1.0
+.\glue(\parskip) 0.0
+.\glue(\baselineskip) 2.0
+.\hbox(7.5+2.5)x317.49405, glue set 284.94403fil, shifted 27.50595, direction TLT
+..\localpar
+...\localinterlinepenalty=0
+...\localbrokenpenalty=0
+...\localleftbox=null
+...\localrightbox=null
+..\hbox(7.5+2.5)x0.0, direction TLT
+...\glue 0.0
+...\glue -13.06
+...\glue -3.33298
+...\hbox(7.5+2.5)x13.06, glue set 1.95fill, direction TLT
+....\TU/lmr/m/n/10 C
+....\TU/lmr/m/n/10 )
+....\glue 0.0 plus 1.0fill
+...\glue 3.33298
+..\penalty 0
+..\TU/lmr/m/n/10 T
+..\kern-0.83 (font)
+..\TU/lmr/m/n/10 e
+..\TU/lmr/m/n/10 r
+..\discretionary (penalty 50)
+...< \TU/lmr/m/n/10 -
+..\TU/lmr/m/n/10 c
+..\TU/lmr/m/n/10 e
+..\TU/lmr/m/n/10 r
+..\TU/lmr/m/n/10 a
+..\penalty 10000
+..\glue(\parfillskip) 0.0 plus 1.0fil
+..\glue(\rightskip) 0.0
+.\penalty -51
+.\glue 4.0 plus 2.0 minus 1.0
+.\glue -4.0 plus -2.0 minus -1.0
+.\glue 8.0 plus 3.0 minus 2.0
+.\glue -10.5 plus -3.0 minus -2.0
+.\penalty -51
+.\glue 2.5
+.\glue 8.0 plus 3.0 minus 2.0
+.\glue -8.0 plus -3.0 minus -2.0
+.\glue 10.0 plus 3.0 minus 5.0
+! OK.
+<argument> ...{keyans} \end {enumext} }\showbox 0 
+l. ...  }
+============================================================
+============================================================
+TEST 8: [8] mark-ans*, mark-pos* y mark-sep*
+============================================================
+* Package enumext: Start enumext with save-ans=kah on line ....
+* Package enumext: Creating \g__enumext_kah_prop on line ....
+Defining \g__enumext_kah_prop on line ...
+* Package enumext: Creating \g__enumext_kah_seq on line ....
+Defining \g__enumext_kah_seq on line ...
+* Package enumext: Creating \g__enumext_resume_kah_int on line ....
+Defining \g__enumext_resume_kah_int on line ...
+\g__enumext_resume_kah_int=\count...
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line ....
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line ....
+* Package enumext: Stop enumext with save-ans=kah on line ....
+* Package enumext: Elements in \g__enumext_kah_prop = 1.
+* Package enumext: Elements in \g__enumext_kah_seq = 1.
+* Package enumext: Value of \g__enumext_resume_kah_int = 1.
+* Package enumext: Value of \g__enumext_item_number_int = 1.
+* Package enumext: Value of \g__enumext_item_anskey_int = 1.
+* Package enumext: Difference item_number_int - item_anskey_int = 0.
+****************************************
+* Package enumext: Checking answers in 'kah' for {enumext}
+* started on line ... and close on line ...: 'OK', all items with answer.
+****************************************
+> \box...=
+\vbox(81.33+0.0)x345.0, direction TLT
+.\penalty -51
+.\glue 10.0 plus 4.0 minus 5.0
+.\glue -10.0 plus -4.0 minus -5.0
+.\glue 6.0 plus 2.0 minus 4.0
+.\glue(\parskip) 4.0 plus 2.0 minus 1.0
+.\glue(\parskip) 0.0
+.\hbox(6.83+2.06)x333.88702, glue set 291.20703fil, shifted 11.11298, direction TLT
+..\localpar
+...\localinterlinepenalty=0
+...\localbrokenpenalty=0
+...\localleftbox=null
+...\localrightbox=null
+..\hbox(6.66+0.0)x0.0, direction TLT
+...\glue 0.0
+...\glue -7.78
+...\glue -3.33298
+...\hbox(6.66+0.0)x7.78, direction TLT
+....\glue 0.0
+....\hbox(0.0+0.0)x0.0, direction TLT
+.....\glue 0.0 plus 1.0fil minus 1.0fil
+....\glue 0.0
+....\TU/lmr/m/n/10 1
+....\TU/lmr/m/n/10 .
+....\glue 0.0 plus 1.0fill
+...\glue 3.33298
+..\penalty 0
+..\TU/lmr/m/n/10 P
+..\TU/lmr/m/n/10 r
+..\TU/lmr/m/n/10 e
+..\discretionary (penalty 50)
+...< \TU/lmr/m/n/10 -
+..\TU/lmr/m/n/10 g
+..\TU/lmr/m/n/10 u
+..\TU/lmr/m/n/10 n
+..\kern-0.28 (font)
+..\TU/lmr/m/n/10 t
+..\TU/lmr/m/n/10 a
+..\TU/lmr/m/n/10 .
+..\penalty 10000
+..\glue(\parfillskip) 0.0 plus 1.0fil
+..\glue(\rightskip) 0.0
+.\penalty -51
+.\glue 8.0 plus 4.0 minus 2.0
+.\glue -8.0 plus -4.0 minus -2.0
+.\glue 6.0 plus 3.0 minus 1.0
+.\glue(\parskip) 2.0 plus 1.0 minus 1.0
+.\glue(\parskip) 0.0
+.\glue(\baselineskip) 2.44
+.\hbox(7.5+2.5)x317.49405, glue set 282.29407fil, shifted 27.50595, direction TLT
+..\localpar
+...\localinterlinepenalty=0
+...\localbrokenpenalty=0
+...\localleftbox=null
+...\localrightbox=null
+..\hbox(7.5+2.5)x0.0, direction TLT
+...\glue 0.0
+...\glue -13.06
+...\glue -3.33298
+...\hbox(7.5+2.5)x13.06, glue set 1.67fill, direction TLT
+....\TU/lmr/m/n/10 A
+....\TU/lmr/m/n/10 )
+....\glue 0.0 plus 1.0fill
+...\glue 3.33298
+..\penalty 0
+..\TU/lmr/m/n/10 P
+..\TU/lmr/m/n/10 r
+..\TU/lmr/m/n/10 i
+..\TU/lmr/m/n/10 m
+..\TU/lmr/m/n/10 e
+..\TU/lmr/m/n/10 r
+..\TU/lmr/m/n/10 a
+..\penalty 10000
+..\glue(\parfillskip) 0.0 plus 1.0fil
+..\glue(\rightskip) 0.0
+.\penalty -51
+.\glue 2.0 plus 1.0 minus 1.0
+.\glue(\parskip) 2.0 plus 1.0 minus 1.0
+.\glue(\parskip) 0.0
+.\glue(\baselineskip) 2.0
+.\hbox(7.5+2.5)x317.49405, glue set 234.65405fil, shifted 27.50595, direction TLT
+..\localpar
+...\localinterlinepenalty=0
+...\localbrokenpenalty=0
+...\localleftbox=null
+...\localrightbox=null
+..\hbox(7.5+2.5)x0.0, direction TLT
+...\glue 0.0
+...\glue -13.06
+...\glue -3.33298
+...\hbox(7.5+2.5)x13.06, glue set 2.09fill, direction TLT
+....\glue -6.0
+....\hbox(4.65279+0.0)x0.0, glue set - 13.06fil, direction TLT
+.....\glue 0.0 plus 1.0fil minus 1.0fil
+.....\hbox(4.65279+0.0)x13.06, glue set 8.05998fil, direction TLT
+......\glue 0.0 plus 1.0fil minus 1.0fil
+......\mathon
+......\OML/cmm/m/it/10 ?
+......\mathoff
+....\glue 6.0
+....\TU/lmr/m/n/10 B
+....\TU/lmr/m/n/10 )
+....\glue 0.0 plus 1.0fill
+...\glue 3.33298
+..\penalty 0
+..\TU/lmr/m/n/10 S
+..\TU/lmr/m/n/10 e
+..\discretionary (penalty 50)
+...< \TU/lmr/m/n/10 -
+..\TU/lmr/m/n/10 g
+..\TU/lmr/m/n/10 u
+..\TU/lmr/m/n/10 n
+..\TU/lmr/m/n/10 d
+..\TU/lmr/m/n/10 a
+..\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+..\TU/lmr/m/n/10 (
+..\TU/lmr/m/n/10 c
+..\TU/lmr/m/n/10 o
+..\TU/lmr/m/n/10 r
+..\discretionary (penalty 50)
+...< \TU/lmr/m/n/10 -
+..\TU/lmr/m/n/10 r
+..\TU/lmr/m/n/10 e
+..\TU/lmr/m/n/10 c
+..\TU/lmr/m/n/10 t
+..\TU/lmr/m/n/10 a
+..\TU/lmr/m/n/10 )
+..\penalty 10000
+..\glue(\parfillskip) 0.0 plus 1.0fil
+..\glue(\rightskip) 0.0
+.\penalty -51
+.\glue 2.0 plus 1.0 minus 1.0
+.\glue(\parskip) 2.0 plus 1.0 minus 1.0
+.\glue(\parskip) 0.0
+.\glue(\baselineskip) 2.0
+.\hbox(7.5+2.5)x317.49405, glue set 284.94403fil, shifted 27.50595, direction TLT
+..\localpar
+...\localinterlinepenalty=0
+...\localbrokenpenalty=0
+...\localleftbox=null
+...\localrightbox=null
+..\hbox(7.5+2.5)x0.0, direction TLT
+...\glue 0.0
+...\glue -13.06
+...\glue -3.33298
+...\hbox(7.5+2.5)x13.06, glue set 1.95fill, direction TLT
+....\TU/lmr/m/n/10 C
+....\TU/lmr/m/n/10 )
+....\glue 0.0 plus 1.0fill
+...\glue 3.33298
+..\penalty 0
+..\TU/lmr/m/n/10 T
+..\kern-0.83 (font)
+..\TU/lmr/m/n/10 e
+..\TU/lmr/m/n/10 r
+..\discretionary (penalty 50)
+...< \TU/lmr/m/n/10 -
+..\TU/lmr/m/n/10 c
+..\TU/lmr/m/n/10 e
+..\TU/lmr/m/n/10 r
+..\TU/lmr/m/n/10 a
+..\penalty 10000
+..\glue(\parfillskip) 0.0 plus 1.0fil
+..\glue(\rightskip) 0.0
+.\penalty -51
+.\glue 4.0 plus 2.0 minus 1.0
+.\glue -4.0 plus -2.0 minus -1.0
+.\glue 8.0 plus 3.0 minus 2.0
+.\glue -10.5 plus -3.0 minus -2.0
+.\penalty -51
+.\glue 2.5
+.\glue 8.0 plus 3.0 minus 2.0
+.\glue -8.0 plus -3.0 minus -2.0
+.\glue 10.0 plus 3.0 minus 5.0
+! OK.
+<argument> ...{keyans} \end {enumext} }\showbox 0 
+l. ...  }
+============================================================
+============================================================
+TEST 9: [9] wrap-ans*
+============================================================
+* Package enumext: Start enumext with save-ans=kai on line ....
+* Package enumext: Creating \g__enumext_kai_prop on line ....
+Defining \g__enumext_kai_prop on line ...
+* Package enumext: Creating \g__enumext_kai_seq on line ....
+Defining \g__enumext_kai_seq on line ...
+* Package enumext: Creating \g__enumext_resume_kai_int on line ....
+Defining \g__enumext_resume_kai_int on line ...
+\g__enumext_resume_kai_int=\count...
+* Package enumext: Stop enumext with save-ans=kai on line ....
+* Package enumext: Elements in \g__enumext_kai_prop = 1.
+* Package enumext: Elements in \g__enumext_kai_seq = 1.
+* Package enumext: Value of \g__enumext_resume_kai_int = 1.
+* Package enumext: Value of \g__enumext_item_number_int = 1.
+* Package enumext: Value of \g__enumext_item_anskey_int = 1.
+* Package enumext: Difference item_number_int - item_anskey_int = 0.
+****************************************
+* Package enumext: Checking answers in 'kai' for {enumext}
+* started on line ... and close on line ...: 'OK', all items with answer.
+****************************************
+> \box...=
+\vbox(65.33+0.0)x345.0, direction TLT
+.\penalty -51
+.\glue 10.0 plus 4.0 minus 5.0
+.\glue -10.0 plus -4.0 minus -5.0
+.\glue 6.0 plus 2.0 minus 4.0
+.\glue(\parskip) 4.0 plus 2.0 minus 1.0
+.\glue(\parskip) 0.0
+.\hbox(6.83+2.06)x333.88702, glue set 291.20703fil, shifted 11.11298, direction TLT
+..\localpar
+...\localinterlinepenalty=0
+...\localbrokenpenalty=0
+...\localleftbox=null
+...\localrightbox=null
+..\hbox(6.66+0.0)x0.0, direction TLT
+...\glue 0.0
+...\glue -7.78
+...\glue -3.33298
+...\hbox(6.66+0.0)x7.78, direction TLT
+....\glue 0.0
+....\hbox(0.0+0.0)x0.0, direction TLT
+.....\glue 0.0 plus 1.0fil minus 1.0fil
+....\glue 0.0
+....\TU/lmr/m/n/10 1
+....\TU/lmr/m/n/10 .
+....\glue 0.0 plus 1.0fill
+...\glue 3.33298
+..\penalty 0
+..\TU/lmr/m/n/10 P
+..\TU/lmr/m/n/10 r
+..\TU/lmr/m/n/10 e
+..\discretionary (penalty 50)
+...< \TU/lmr/m/n/10 -
+..\TU/lmr/m/n/10 g
+..\TU/lmr/m/n/10 u
+..\TU/lmr/m/n/10 n
+..\kern-0.28 (font)
+..\TU/lmr/m/n/10 t
+..\TU/lmr/m/n/10 a
+..\TU/lmr/m/n/10 .
+..\penalty 10000
+..\glue(\parfillskip) 0.0 plus 1.0fil
+..\glue(\rightskip) 0.0
+.\penalty -51
+.\glue 8.0 plus 4.0 minus 2.0
+.\glue -8.0 plus -4.0 minus -2.0
+.\glue 6.0 plus 3.0 minus 1.0
+.\glue(\parskip) 2.0 plus 1.0 minus 1.0
+.\glue(\parskip) 0.0
+.\glue(\baselineskip) 2.44
+.\hbox(7.5+2.5)x317.49405, glue set 282.29407fil, shifted 27.50595, direction TLT
+..\localpar
+...\localinterlinepenalty=0
+...\localbrokenpenalty=0
+...\localleftbox=null
+...\localrightbox=null
+..\hbox(7.5+2.5)x0.0, direction TLT
+...\glue 0.0
+...\glue -13.06
+...\glue -3.33298
+...\hbox(7.5+2.5)x13.06, glue set 1.67fill, direction TLT
+....\TU/lmr/m/n/10 A
+....\TU/lmr/m/n/10 )
+....\glue 0.0 plus 1.0fill
+...\glue 3.33298
+..\penalty 0
+..\TU/lmr/m/n/10 P
+..\TU/lmr/m/n/10 r
+..\TU/lmr/m/n/10 i
+..\TU/lmr/m/n/10 m
+..\TU/lmr/m/n/10 e
+..\TU/lmr/m/n/10 r
+..\TU/lmr/m/n/10 a
+..\penalty 10000
+..\glue(\parfillskip) 0.0 plus 1.0fil
+..\glue(\rightskip) 0.0
+.\penalty -51
+.\glue 2.0 plus 1.0 minus 1.0
+.\glue(\parskip) 2.0 plus 1.0 minus 1.0
+.\glue(\parskip) 0.0
+.\glue(\baselineskip) 2.0
+.\hbox(7.5+2.5)x317.49405, glue set 234.65405fil, shifted 27.50595, direction TLT
+..\localpar
+...\localinterlinepenalty=0
+...\localbrokenpenalty=0
+...\localleftbox=null
+...\localrightbox=null
+..\hbox(7.5+2.49)x0.0, direction TLT
+...\glue 0.0
+...\glue -13.06
+...\glue -3.33298
+...\hbox(7.5+2.49)x13.06, glue set 0.41fill, direction TLT
+....\glue -3.33298
+....\hbox(4.66+0.0)x0.0, glue set - 13.06fil, direction TLT
+.....\glue 0.0 plus 1.0fil minus 1.0fil
+.....\hbox(4.66+0.0)x13.06, glue set 8.06fil, direction TLT
+......\glue 0.0 plus 1.0fil minus 1.0fil
+......\TU/lmr/m/n/10 ∗
+....\glue 3.33298
+....\TU/lmr/bx/n/10 B
+....\TU/lmr/bx/n/10 )
+....\kern0.0 (italic)
+....\glue 0.0 plus 1.0fill
+...\glue 3.33298
+..\penalty 0
+..\TU/lmr/m/n/10 S
+..\TU/lmr/m/n/10 e
+..\discretionary (penalty 50)
+...< \TU/lmr/m/n/10 -
+..\TU/lmr/m/n/10 g
+..\TU/lmr/m/n/10 u
+..\TU/lmr/m/n/10 n
+..\TU/lmr/m/n/10 d
+..\TU/lmr/m/n/10 a
+..\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+..\TU/lmr/m/n/10 (
+..\TU/lmr/m/n/10 c
+..\TU/lmr/m/n/10 o
+..\TU/lmr/m/n/10 r
+..\discretionary (penalty 50)
+...< \TU/lmr/m/n/10 -
+..\TU/lmr/m/n/10 r
+..\TU/lmr/m/n/10 e
+..\TU/lmr/m/n/10 c
+..\TU/lmr/m/n/10 t
+..\TU/lmr/m/n/10 a
+..\TU/lmr/m/n/10 )
+..\penalty 10000
+..\glue(\parfillskip) 0.0 plus 1.0fil
+..\glue(\rightskip) 0.0
+.\penalty -51
+.\glue 4.0 plus 2.0 minus 1.0
+.\glue -4.0 plus -2.0 minus -1.0
+.\glue 8.0 plus 3.0 minus 2.0
+.\glue -10.5 plus -3.0 minus -2.0
+.\penalty -51
+.\glue 2.5
+.\glue 8.0 plus 3.0 minus 2.0
+.\glue -8.0 plus -3.0 minus -2.0
+.\glue 10.0 plus 3.0 minus 5.0
+! OK.
+<argument> ...{keyans} \end {enumext} }\showbox 0 
+l. ...  }
+============================================================
+============================================================
+TEST 10: [10] wrap-opt con la nota del item
+============================================================
+* Package enumext: Start enumext with save-ans=kaj on line ....
+* Package enumext: Creating \g__enumext_kaj_prop on line ....
+Defining \g__enumext_kaj_prop on line ...
+* Package enumext: Creating \g__enumext_kaj_seq on line ....
+Defining \g__enumext_kaj_seq on line ...
+* Package enumext: Creating \g__enumext_resume_kaj_int on line ....
+Defining \g__enumext_resume_kaj_int on line ...
+\g__enumext_resume_kaj_int=\count...
+* Package enumext: Stop enumext with save-ans=kaj on line ....
+* Package enumext: Elements in \g__enumext_kaj_prop = 1.
+* Package enumext: Elements in \g__enumext_kaj_seq = 1.
+* Package enumext: Value of \g__enumext_resume_kaj_int = 1.
+* Package enumext: Value of \g__enumext_item_number_int = 1.
+* Package enumext: Value of \g__enumext_item_anskey_int = 1.
+* Package enumext: Difference item_number_int - item_anskey_int = 0.
+****************************************
+* Package enumext: Checking answers in 'kaj' for {enumext}
+* started on line ... and close on line ...: 'OK', all items with answer.
+****************************************
+> \box...=
+\vbox(65.33+0.0)x345.0, direction TLT
+.\penalty -51
+.\glue 10.0 plus 4.0 minus 5.0
+.\glue -10.0 plus -4.0 minus -5.0
+.\glue 6.0 plus 2.0 minus 4.0
+.\glue(\parskip) 4.0 plus 2.0 minus 1.0
+.\glue(\parskip) 0.0
+.\hbox(6.83+2.06)x333.88702, glue set 291.20703fil, shifted 11.11298, direction TLT
+..\localpar
+...\localinterlinepenalty=0
+...\localbrokenpenalty=0
+...\localleftbox=null
+...\localrightbox=null
+..\hbox(6.66+0.0)x0.0, direction TLT
+...\glue 0.0
+...\glue -7.78
+...\glue -3.33298
+...\hbox(6.66+0.0)x7.78, direction TLT
+....\glue 0.0
+....\hbox(0.0+0.0)x0.0, direction TLT
+.....\glue 0.0 plus 1.0fil minus 1.0fil
+....\glue 0.0
+....\TU/lmr/m/n/10 1
+....\TU/lmr/m/n/10 .
+....\glue 0.0 plus 1.0fill
+...\glue 3.33298
+..\penalty 0
+..\TU/lmr/m/n/10 P
+..\TU/lmr/m/n/10 r
+..\TU/lmr/m/n/10 e
+..\discretionary (penalty 50)
+...< \TU/lmr/m/n/10 -
+..\TU/lmr/m/n/10 g
+..\TU/lmr/m/n/10 u
+..\TU/lmr/m/n/10 n
+..\kern-0.28 (font)
+..\TU/lmr/m/n/10 t
+..\TU/lmr/m/n/10 a
+..\TU/lmr/m/n/10 .
+..\penalty 10000
+..\glue(\parfillskip) 0.0 plus 1.0fil
+..\glue(\rightskip) 0.0
+.\penalty -51
+.\glue 8.0 plus 4.0 minus 2.0
+.\glue -8.0 plus -4.0 minus -2.0
+.\glue 6.0 plus 3.0 minus 1.0
+.\glue(\parskip) 2.0 plus 1.0 minus 1.0
+.\glue(\parskip) 0.0
+.\glue(\baselineskip) 2.44
+.\hbox(7.5+2.5)x317.49405, glue set 282.29407fil, shifted 27.50595, direction TLT
+..\localpar
+...\localinterlinepenalty=0
+...\localbrokenpenalty=0
+...\localleftbox=null
+...\localrightbox=null
+..\hbox(7.5+2.5)x0.0, direction TLT
+...\glue 0.0
+...\glue -13.06
+...\glue -3.33298
+...\hbox(7.5+2.5)x13.06, glue set 1.67fill, direction TLT
+....\TU/lmr/m/n/10 A
+....\TU/lmr/m/n/10 )
+....\glue 0.0 plus 1.0fill
+...\glue 3.33298
+..\penalty 0
+..\TU/lmr/m/n/10 P
+..\TU/lmr/m/n/10 r
+..\TU/lmr/m/n/10 i
+..\TU/lmr/m/n/10 m
+..\TU/lmr/m/n/10 e
+..\TU/lmr/m/n/10 r
+..\TU/lmr/m/n/10 a
+..\penalty 10000
+..\glue(\parfillskip) 0.0 plus 1.0fil
+..\glue(\rightskip) 0.0
+.\penalty -51
+.\glue 2.0 plus 1.0 minus 1.0
+.\glue(\parskip) 2.0 plus 1.0 minus 1.0
+.\glue(\parskip) 0.0
+.\glue(\baselineskip) 2.0
+.\hbox(7.5+2.5)x317.49405, glue set 203.98405fil, shifted 27.50595, direction TLT
+..\localpar
+...\localinterlinepenalty=0
+...\localbrokenpenalty=0
+...\localleftbox=null
+...\localrightbox=null
+..\hbox(7.5+2.5)x0.0, direction TLT
+...\glue 0.0
+...\glue -13.06
+...\glue -3.33298
+...\hbox(7.5+2.5)x13.06, glue set 2.09fill, direction TLT
+....\glue -3.33298
+....\hbox(4.66+0.0)x0.0, glue set - 13.06fil, direction TLT
+.....\glue 0.0 plus 1.0fil minus 1.0fil
+.....\hbox(4.66+0.0)x13.06, glue set 8.06fil, direction TLT
+......\glue 0.0 plus 1.0fil minus 1.0fil
+......\TU/lmr/m/n/10 ∗
+....\glue 3.33298
+....\TU/lmr/m/n/10 B
+....\TU/lmr/m/n/10 )
+....\glue 0.0 plus 1.0fill
+...\glue 3.33298
+..\penalty 0
+..\TU/lmr/m/it/10 (
+..\TU/lmr/m/it/10 n
+..\TU/lmr/m/it/10 o
+..\TU/lmr/m/it/10 t
+..\TU/lmr/m/it/10 a
+..\TU/lmr/m/it/10 )
+..\kern0.0 (italic)
+..\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+..\TU/lmr/m/n/10 S
+..\TU/lmr/m/n/10 e
+..\discretionary (penalty 50)
+...< \TU/lmr/m/n/10 -
+..\TU/lmr/m/n/10 g
+..\TU/lmr/m/n/10 u
+..\TU/lmr/m/n/10 n
+..\TU/lmr/m/n/10 d
+..\TU/lmr/m/n/10 a
+..\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+..\TU/lmr/m/n/10 (
+..\TU/lmr/m/n/10 c
+..\TU/lmr/m/n/10 o
+..\TU/lmr/m/n/10 r
+..\discretionary (penalty 50)
+...< \TU/lmr/m/n/10 -
+..\TU/lmr/m/n/10 r
+..\TU/lmr/m/n/10 e
+..\TU/lmr/m/n/10 c
+..\TU/lmr/m/n/10 t
+..\TU/lmr/m/n/10 a
+..\TU/lmr/m/n/10 )
+..\penalty 10000
+..\glue(\parfillskip) 0.0 plus 1.0fil
+..\glue(\rightskip) 0.0
+.\penalty -51
+.\glue 4.0 plus 2.0 minus 1.0
+.\glue -4.0 plus -2.0 minus -1.0
+.\glue 8.0 plus 3.0 minus 2.0
+.\glue -10.5 plus -3.0 minus -2.0
+.\penalty -51
+.\glue 2.5
+.\glue 8.0 plus 3.0 minus 2.0
+.\glue -8.0 plus -3.0 minus -2.0
+.\glue 10.0 plus 3.0 minus 5.0
+! OK.
+<argument> ...{keyans} \end {enumext} }\showbox 0 
+l. ...  }
+============================================================
+============================================================
+TEST 11: [11] show-pos en keyans
+============================================================
+* Package enumext: Start enumext with save-ans=kak on line ....
+* Package enumext: Creating \g__enumext_kak_prop on line ....
+Defining \g__enumext_kak_prop on line ...
+* Package enumext: Creating \g__enumext_kak_seq on line ....
+Defining \g__enumext_kak_seq on line ...
+* Package enumext: Creating \g__enumext_resume_kak_int on line ....
+Defining \g__enumext_resume_kak_int on line ...
+\g__enumext_resume_kak_int=\count...
+* Package enumext: Stop enumext with save-ans=kak on line ....
+* Package enumext: Elements in \g__enumext_kak_prop = 1.
+* Package enumext: Elements in \g__enumext_kak_seq = 1.
+* Package enumext: Value of \g__enumext_resume_kak_int = 1.
+* Package enumext: Value of \g__enumext_item_number_int = 1.
+* Package enumext: Value of \g__enumext_item_anskey_int = 1.
+* Package enumext: Difference item_number_int - item_anskey_int = 0.
+****************************************
+* Package enumext: Checking answers in 'kak' for {enumext}
+* started on line ... and close on line ...: 'OK', all items with answer.
+****************************************
+> \box...=
+\vbox(65.33+0.0)x345.0, direction TLT
+.\penalty -51
+.\glue 10.0 plus 4.0 minus 5.0
+.\glue -10.0 plus -4.0 minus -5.0
+.\glue 6.0 plus 2.0 minus 4.0
+.\glue(\parskip) 4.0 plus 2.0 minus 1.0
+.\glue(\parskip) 0.0
+.\hbox(6.83+2.06)x333.88702, glue set 291.20703fil, shifted 11.11298, direction TLT
+..\localpar
+...\localinterlinepenalty=0
+...\localbrokenpenalty=0
+...\localleftbox=null
+...\localrightbox=null
+..\hbox(6.66+0.0)x0.0, direction TLT
+...\glue 0.0
+...\glue -7.78
+...\glue -3.33298
+...\hbox(6.66+0.0)x7.78, direction TLT
+....\glue 0.0
+....\hbox(0.0+0.0)x0.0, direction TLT
+.....\glue 0.0 plus 1.0fil minus 1.0fil
+....\glue 0.0
+....\TU/lmr/m/n/10 1
+....\TU/lmr/m/n/10 .
+....\glue 0.0 plus 1.0fill
+...\glue 3.33298
+..\penalty 0
+..\TU/lmr/m/n/10 P
+..\TU/lmr/m/n/10 r
+..\TU/lmr/m/n/10 e
+..\discretionary (penalty 50)
+...< \TU/lmr/m/n/10 -
+..\TU/lmr/m/n/10 g
+..\TU/lmr/m/n/10 u
+..\TU/lmr/m/n/10 n
+..\kern-0.28 (font)
+..\TU/lmr/m/n/10 t
+..\TU/lmr/m/n/10 a
+..\TU/lmr/m/n/10 .
+..\penalty 10000
+..\glue(\parfillskip) 0.0 plus 1.0fil
+..\glue(\rightskip) 0.0
+.\penalty -51
+.\glue 8.0 plus 4.0 minus 2.0
+.\glue -8.0 plus -4.0 minus -2.0
+.\glue 6.0 plus 3.0 minus 1.0
+.\glue(\parskip) 2.0 plus 1.0 minus 1.0
+.\glue(\parskip) 0.0
+.\glue(\baselineskip) 2.44
+.\hbox(7.5+2.5)x317.49405, glue set 282.29407fil, shifted 27.50595, direction TLT
+..\localpar
+...\localinterlinepenalty=0
+...\localbrokenpenalty=0
+...\localleftbox=null
+...\localrightbox=null
+..\hbox(7.5+2.5)x0.0, direction TLT
+...\glue 0.0
+...\glue -13.06
+...\glue -3.33298
+...\hbox(7.5+2.5)x13.06, glue set 1.67fill, direction TLT
+....\TU/lmr/m/n/10 A
+....\TU/lmr/m/n/10 )
+....\glue 0.0 plus 1.0fill
+...\glue 3.33298
+..\penalty 0
+..\TU/lmr/m/n/10 P
+..\TU/lmr/m/n/10 r
+..\TU/lmr/m/n/10 i
+..\TU/lmr/m/n/10 m
+..\TU/lmr/m/n/10 e
+..\TU/lmr/m/n/10 r
+..\TU/lmr/m/n/10 a
+..\penalty 10000
+..\glue(\parfillskip) 0.0 plus 1.0fil
+..\glue(\rightskip) 0.0
+.\penalty -51
+.\glue 2.0 plus 1.0 minus 1.0
+.\glue(\parskip) 2.0 plus 1.0 minus 1.0
+.\glue(\parskip) 0.0
+.\glue(\baselineskip) 2.0
+.\hbox(7.5+2.5)x317.49405, glue set 234.65405fil, shifted 27.50595, direction TLT
+..\localpar
+...\localinterlinepenalty=0
+...\localbrokenpenalty=0
+...\localleftbox=null
+...\localrightbox=null
+..\hbox(7.5+2.5)x0.0, direction TLT
+...\glue 0.0
+...\glue -13.06
+...\glue -3.33298
+...\hbox(7.5+2.5)x13.06, glue set 2.09fill, direction TLT
+....\glue -3.33298
+....\hbox(6.0+2.0)x0.0, glue set - 13.06fil, direction TLT
+.....\glue 0.0 plus 1.0fil minus 1.0fil
+.....\hbox(6.0+2.0)x13.06, glue set 4.092fil, direction TLT
+......\glue 0.0 plus 1.0fil minus 1.0fil
+......\TU/lmr/m/n/8 [
+......\TU/lmr/m/n/8 1
+......\TU/lmr/m/n/8 ]
+....\glue 3.33298
+....\TU/lmr/m/n/10 B
+....\TU/lmr/m/n/10 )
+....\glue 0.0 plus 1.0fill
+...\glue 3.33298
+..\penalty 0
+..\TU/lmr/m/n/10 S
+..\TU/lmr/m/n/10 e
+..\discretionary (penalty 50)
+...< \TU/lmr/m/n/10 -
+..\TU/lmr/m/n/10 g
+..\TU/lmr/m/n/10 u
+..\TU/lmr/m/n/10 n
+..\TU/lmr/m/n/10 d
+..\TU/lmr/m/n/10 a
+..\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+..\TU/lmr/m/n/10 (
+..\TU/lmr/m/n/10 c
+..\TU/lmr/m/n/10 o
+..\TU/lmr/m/n/10 r
+..\discretionary (penalty 50)
+...< \TU/lmr/m/n/10 -
+..\TU/lmr/m/n/10 r
+..\TU/lmr/m/n/10 e
+..\TU/lmr/m/n/10 c
+..\TU/lmr/m/n/10 t
+..\TU/lmr/m/n/10 a
+..\TU/lmr/m/n/10 )
+..\penalty 10000
+..\glue(\parfillskip) 0.0 plus 1.0fil
+..\glue(\rightskip) 0.0
+.\penalty -51
+.\glue 4.0 plus 2.0 minus 1.0
+.\glue -4.0 plus -2.0 minus -1.0
+.\glue 8.0 plus 3.0 minus 2.0
+.\glue -10.5 plus -3.0 minus -2.0
+.\penalty -51
+.\glue 2.5
+.\glue 8.0 plus 3.0 minus 2.0
+.\glue -8.0 plus -3.0 minus -2.0
+.\glue 10.0 plus 3.0 minus 5.0
+! OK.
+<argument> ...{keyans} \end {enumext} }\showbox 0 
+l. ...  }
+============================================================
+============================================================
+TEST 12: [12] show-ans en keyans*
+============================================================
+* Package enumext: Start enumext with save-ans=kal on line ....
+* Package enumext: Creating \g__enumext_kal_prop on line ....
+Defining \g__enumext_kal_prop on line ...
+* Package enumext: Creating \g__enumext_kal_seq on line ....
+Defining \g__enumext_kal_seq on line ...
+* Package enumext: Creating \g__enumext_resume_kal_int on line ....
+Defining \g__enumext_resume_kal_int on line ...
+\g__enumext_resume_kal_int=\count...
+* Package enumext: Stop enumext with save-ans=kal on line ....
+* Package enumext: Elements in \g__enumext_kal_prop = 1.
+* Package enumext: Elements in \g__enumext_kal_seq = 1.
+* Package enumext: Value of \g__enumext_resume_kal_int = 1.
+* Package enumext: Value of \g__enumext_item_number_int = 1.
+* Package enumext: Value of \g__enumext_item_anskey_int = 1.
+* Package enumext: Difference item_number_int - item_anskey_int = 0.
+****************************************
+* Package enumext: Checking answers in 'kal' for {enumext}
+* started on line ... and close on line ...: 'OK', all items with answer.
+****************************************
+> \box...=
+\vbox(63.33+0.0)x345.0, direction TLT
+.\penalty -51
+.\glue 10.0 plus 4.0 minus 5.0
+.\glue -10.0 plus -4.0 minus -5.0
+.\glue 6.0 plus 2.0 minus 4.0
+.\glue(\parskip) 4.0 plus 2.0 minus 1.0
+.\glue(\parskip) 0.0
+.\hbox(6.83+2.06)x333.88702, glue set 291.20703fil, shifted 11.11298, direction TLT
+..\localpar
+...\localinterlinepenalty=0
+...\localbrokenpenalty=0
+...\localleftbox=null
+...\localrightbox=null
+..\hbox(6.66+0.0)x0.0, direction TLT
+...\glue 0.0
+...\glue -7.78
+...\glue -3.33298
+...\hbox(6.66+0.0)x7.78, direction TLT
+....\glue 0.0
+....\hbox(0.0+0.0)x0.0, direction TLT
+.....\glue 0.0 plus 1.0fil minus 1.0fil
+....\glue 0.0
+....\TU/lmr/m/n/10 1
+....\TU/lmr/m/n/10 .
+....\glue 0.0 plus 1.0fill
+...\glue 3.33298
+..\penalty 0
+..\TU/lmr/m/n/10 P
+..\TU/lmr/m/n/10 r
+..\TU/lmr/m/n/10 e
+..\discretionary (penalty 50)
+...< \TU/lmr/m/n/10 -
+..\TU/lmr/m/n/10 g
+..\TU/lmr/m/n/10 u
+..\TU/lmr/m/n/10 n
+..\kern-0.28 (font)
+..\TU/lmr/m/n/10 t
+..\TU/lmr/m/n/10 a
+..\TU/lmr/m/n/10 .
+..\penalty 10000
+..\glue(\parfillskip) 0.0 plus 1.0fil
+..\glue(\rightskip) 0.0
+.\penalty -51
+.\glue 8.0 plus 4.0 minus 2.0
+.\glue -8.0 plus -4.0 minus -2.0
+.\glue 6.0 plus 3.0 minus 1.0
+.\glue(\parskip) 2.0 plus 1.0 minus 1.0
+.\glue(\parskip) 0.0
+.\glue(\baselineskip) 2.44
+.\hbox(7.5+2.5)x333.88702, shifted 11.11298, direction TLT
+..\localpar
+...\localinterlinepenalty=0
+...\localbrokenpenalty=0
+...\localleftbox=null
+...\localrightbox=null
+..\hbox(0.0+0.0)x16.39297, direction TLT
+...\glue 16.39297
+...\glue -13.06
+...\glue -3.33298
+...\hbox(0.0+0.0)x13.06, glue set 13.06fil, direction TLT
+....\glue 0.0 plus 1.0fil
+...\glue 3.33298
+..\penalty 0
+..\glue -16.39297
+..\hbox(7.5+2.5)x162.84528, direction TLT
+...\hbox(7.5+2.5)x13.06, glue set 1.67fil, direction TLT
+....\TU/lmr/m/n/10 A
+....\TU/lmr/m/n/10 )
+....\glue 0.0 plus 1.0fil minus 1.0fil
+...\glue 3.33298
+...\vbox(6.83+0.11)x146.4523, direction TLT
+....\hbox(6.83+0.11)x146.4523, glue set 111.2523fil, direction TLT
+.....\localpar
+......\localinterlinepenalty=0
+......\localbrokenpenalty=0
+......\localleftbox=null
+......\localrightbox=null
+.....\hbox(0.0+0.0)x0.0, direction TLT
+.....\glue 0.0
+.....\TU/lmr/m/n/10 P
+.....\TU/lmr/m/n/10 r
+.....\TU/lmr/m/n/10 i
+.....\TU/lmr/m/n/10 m
+.....\TU/lmr/m/n/10 e
+.....\TU/lmr/m/n/10 r
+.....\TU/lmr/m/n/10 a
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0
+..\glue 8.19649
+..\hbox(7.5+2.5)x162.84528, direction TLT
+...\glue -3.33298
+...\hbox(4.65279+0.0)x0.0, glue set - 13.06fil, direction TLT
+....\glue 0.0 plus 1.0fil minus 1.0fil
+....\hbox(4.65279+0.0)x13.06, glue set 8.05998fil, direction TLT
+.....\glue 0.0 plus 1.0fil minus 1.0fil
+.....\mathon
+.....\OML/cmm/m/it/10 ?
+.....\mathoff
+...\glue 3.33298
+...\hbox(7.5+2.5)x13.06, glue set 2.09fil, direction TLT
+....\TU/lmr/m/n/10 B
+....\TU/lmr/m/n/10 )
+....\glue 0.0 plus 1.0fil minus 1.0fil
+...\glue 3.33298
+...\vbox(7.5+2.5)x146.4523, direction TLT
+....\hbox(7.5+2.5)x146.4523, glue set 63.6123fil, direction TLT
+.....\localpar
+......\localinterlinepenalty=0
+......\localbrokenpenalty=0
+......\localleftbox=null
+......\localrightbox=null
+.....\hbox(0.0+0.0)x0.0, direction TLT
+.....\glue 0.0
+.....\TU/lmr/m/n/10 S
+.....\TU/lmr/m/n/10 e
+.....\discretionary (penalty 50)
+......< \TU/lmr/m/n/10 -
+.....\TU/lmr/m/n/10 g
+.....\TU/lmr/m/n/10 u
+.....\TU/lmr/m/n/10 n
+.....\TU/lmr/m/n/10 d
+.....\TU/lmr/m/n/10 a
+.....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+.....\TU/lmr/m/n/10 (
+.....\TU/lmr/m/n/10 c
+.....\TU/lmr/m/n/10 o
+.....\TU/lmr/m/n/10 r
+.....\discretionary (penalty 50)
+......< \TU/lmr/m/n/10 -
+.....\TU/lmr/m/n/10 r
+.....\TU/lmr/m/n/10 e
+.....\TU/lmr/m/n/10 c
+.....\TU/lmr/m/n/10 t
+.....\TU/lmr/m/n/10 a
+.....\TU/lmr/m/n/10 )
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0
+..\penalty 10000
+..\glue(\parfillskip) 0.0 plus 1.0fil
+..\glue(\rightskip) 0.0
+.\glue(\parskip) 2.0 plus 1.0 minus 1.0
+.\glue(\parskip) 0.0
+.\glue(\baselineskip) 2.0
+.\hbox(7.5+2.5)x333.88702, shifted 11.11298, direction TLT
+..\localpar
+...\localinterlinepenalty=0
+...\localbrokenpenalty=0
+...\localleftbox=null
+...\localrightbox=null
+..\hbox(7.5+2.5)x162.84528, direction TLT
+...\hbox(7.5+2.5)x13.06, glue set 1.95fil, direction TLT
+....\TU/lmr/m/n/10 C
+....\TU/lmr/m/n/10 )
+....\glue 0.0 plus 1.0fil minus 1.0fil
+...\glue 3.33298
+...\vbox(6.77+0.11)x146.4523, direction TLT
+....\hbox(6.77+0.11)x146.4523, glue set 113.9023fil, direction TLT
+.....\localpar
+......\localinterlinepenalty=0
+......\localbrokenpenalty=0
+......\localleftbox=null
+......\localrightbox=null
+.....\hbox(0.0+0.0)x0.0, direction TLT
+.....\glue 0.0
+.....\TU/lmr/m/n/10 T
+.....\kern-0.83 (font)
+.....\TU/lmr/m/n/10 e
+.....\TU/lmr/m/n/10 r
+.....\discretionary (penalty 50)
+......< \TU/lmr/m/n/10 -
+.....\TU/lmr/m/n/10 c
+.....\TU/lmr/m/n/10 e
+.....\TU/lmr/m/n/10 r
+.....\TU/lmr/m/n/10 a
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0
+..\glue 8.19649
+..\hbox(7.5+2.5)x162.84528, direction TLT
+...\hbox(7.5+2.5)x13.06, glue set 1.53fil, direction TLT
+....\TU/lmr/m/n/10 D
+....\TU/lmr/m/n/10 )
+....\glue 0.0 plus 1.0fil minus 1.0fil
+...\glue 3.33298
+...\vbox(7.05+0.22)x146.4523, direction TLT
+....\hbox(7.05+0.22)x146.4523, glue set 115.8623fil, direction TLT
+.....\localpar
+......\localinterlinepenalty=0
+......\localbrokenpenalty=0
+......\localleftbox=null
+......\localrightbox=null
+.....\hbox(0.0+0.0)x0.0, direction TLT
+.....\glue 0.0
+.....\TU/lmr/m/n/10 C
+.....\TU/lmr/m/n/10 u
+.....\TU/lmr/m/n/10 a
+.....\TU/lmr/m/n/10 r
+.....\TU/lmr/m/n/10 t
+.....\TU/lmr/m/n/10 a
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0
+..\penalty 10000
+..\glue(\parfillskip) 0.0 plus 1.0fil
+..\glue(\rightskip) 0.0
+.\glue(\parskip) 2.0 plus 1.0 minus 1.0
+.\glue(\parskip) 0.0
+.\glue -2.0 plus -1.0 minus -1.0
+.\glue 0.0
+.\penalty -51
+.\glue 4.0 plus 2.0 minus 1.0
+.\glue -4.0 plus -2.0 minus -1.0
+.\glue 8.0 plus 3.0 minus 2.0
+.\glue -10.5 plus -3.0 minus -2.0
+.\penalty -51
+.\glue 2.5
+.\glue 8.0 plus 3.0 minus 2.0
+.\glue -8.0 plus -3.0 minus -2.0
+.\glue 10.0 plus 3.0 minus 5.0
+! OK.
+<argument> ...keyans*} \end {enumext} }\showbox 0 
+l. ...  }
+============================================================
+=== D. keyanspic ===
+============================================================
+TEST 13: [13] keyanspic con las imagenes en una fila
+============================================================
+* Package enumext: Start enumext with save-ans=kam on line ....
+* Package enumext: Creating \g__enumext_kam_prop on line ....
+Defining \g__enumext_kam_prop on line ...
+* Package enumext: Creating \g__enumext_kam_seq on line ....
+Defining \g__enumext_kam_seq on line ...
+* Package enumext: Creating \g__enumext_resume_kam_int on line ....
+Defining \g__enumext_resume_kam_int on line ...
+\g__enumext_resume_kam_int=\count...
+<example-image-a.pdf, id=1, 321.2pt x 240.9pt>
+File: example-image-a.pdf Graphic file (type pdf)
+<use example-image-a.pdf>
+Package luatex.def Info: example-image-a.pdf  used on input line ....
+(luatex.def)             Requested size: 25.69652pt x 19.27238pt.
+File: example-image-a.pdf Graphic file (type pdf)
+<use example-image-a.pdf>
+Package luatex.def Info: example-image-a.pdf  used on input line ....
+(luatex.def)             Requested size: 25.69652pt x 19.27238pt.
+<example-image-b.pdf, id=2, 321.2pt x 240.9pt>
+File: example-image-b.pdf Graphic file (type pdf)
+<use example-image-b.pdf>
+Package luatex.def Info: example-image-b.pdf  used on input line ....
+(luatex.def)             Requested size: 25.69652pt x 19.27238pt.
+File: example-image-b.pdf Graphic file (type pdf)
+<use example-image-b.pdf>
+Package luatex.def Info: example-image-b.pdf  used on input line ....
+(luatex.def)             Requested size: 25.69652pt x 19.27238pt.
+<example-image-c.pdf, id=3, 321.2pt x 240.9pt>
+File: example-image-c.pdf Graphic file (type pdf)
+<use example-image-c.pdf>
+Package luatex.def Info: example-image-c.pdf  used on input line ....
+(luatex.def)             Requested size: 25.69652pt x 19.27238pt.
+File: example-image-c.pdf Graphic file (type pdf)
+<use example-image-c.pdf>
+Package luatex.def Info: example-image-c.pdf  used on input line ....
+(luatex.def)             Requested size: 25.69652pt x 19.27238pt.
+* Package enumext: Stop enumext with save-ans=kam on line ....
+* Package enumext: Elements in \g__enumext_kam_prop = 1.
+* Package enumext: Elements in \g__enumext_kam_seq = 1.
+* Package enumext: Value of \g__enumext_resume_kam_int = 1.
+* Package enumext: Value of \g__enumext_item_number_int = 1.
+* Package enumext: Value of \g__enumext_item_anskey_int = 1.
+* Package enumext: Difference item_number_int - item_anskey_int = 0.
+****************************************
+* Package enumext: Checking answers in 'kam' for {enumext}
+* started on line ... and close on line ...: 'OK', all items with answer.
+****************************************
+> \box...=
+\vbox(84.2034+0.0)x345.0, direction TLT
+.\penalty -51
+.\glue 10.0 plus 4.0 minus 5.0
+.\glue -10.0 plus -4.0 minus -5.0
+.\glue 6.0 plus 2.0 minus 4.0
+.\glue(\parskip) 4.0 plus 2.0 minus 1.0
+.\glue(\parskip) 0.0
+.\hbox(6.83+2.06)x333.88702, glue set 230.05702fil, shifted 11.11298, direction TLT
+..\localpar
+...\localinterlinepenalty=0
+...\localbrokenpenalty=0
+...\localleftbox=null
+...\localrightbox=null
+..\hbox(6.66+0.0)x0.0, direction TLT
+...\glue 0.0
+...\glue -7.78
+...\glue -3.33298
+...\hbox(6.66+0.0)x7.78, direction TLT
+....\glue 0.0
+....\hbox(0.0+0.0)x0.0, direction TLT
+.....\glue 0.0 plus 1.0fil minus 1.0fil
+....\glue 0.0
+....\TU/lmr/m/n/10 1
+....\TU/lmr/m/n/10 .
+....\glue 0.0 plus 1.0fill
+...\glue 3.33298
+..\penalty 0
+..\TU/lmr/m/n/10 P
+..\TU/lmr/m/n/10 r
+..\TU/lmr/m/n/10 e
+..\discretionary (penalty 50)
+...< \TU/lmr/m/n/10 -
+..\TU/lmr/m/n/10 g
+..\TU/lmr/m/n/10 u
+..\TU/lmr/m/n/10 n
+..\kern-0.28 (font)
+..\TU/lmr/m/n/10 t
+..\TU/lmr/m/n/10 a
+..\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+..\TU/lmr/m/n/10 c
+..\TU/lmr/m/n/10 o
+..\TU/lmr/m/n/10 n
+..\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+..\TU/lmr/m/n/10 i
+..\TU/lmr/m/n/10 m
+..\discretionary (penalty 50)
+...< \TU/lmr/m/n/10 -
+..\TU/lmr/m/n/10 a
+..\discretionary (penalty 50)
+...< \TU/lmr/m/n/10 -
+..\TU/lmr/m/n/10 g
+..\TU/lmr/m/n/10 e
+..\TU/lmr/m/n/10 n
+..\TU/lmr/m/n/10 e
+..\TU/lmr/m/n/10 s
+..\TU/lmr/m/n/10 .
+..\penalty 10000
+..\glue(\parfillskip) 0.0 plus 1.0fil
+..\glue(\rightskip) 0.0
+.\penalty -51
+.\glue 9.80002 plus 4.0 minus 2.0
+.\glue -9.80002 plus -4.0 minus -2.0
+.\glue -5.80002 plus 3.0 minus 1.0
+.\glue(\parskip) 15.60004 plus 1.0 minus 1.0
+.\glue(\parskip) 0.0
+.\glue(\lineskip) 1.0
+.\hbox(20.27238+0.0)x333.88702, glue set 0.00002fil, shifted 11.11298, direction TLT
+..\localpar
+...\localinterlinepenalty=0
+...\localbrokenpenalty=0
+...\localleftbox=null
+...\localrightbox=null
+..\hbox(0.0+0.0)x0.0, direction TLT
+...\glue 0.0
+...\glue -13.06
+...\glue -3.33298
+...\hbox(0.0+0.0)x13.06, glue set 13.06fill, direction TLT
+....\glue 0.0 plus 1.0fill
+...\glue 3.33298
+..\penalty 0
+..\vbox(20.27238+0.0)x111.29567, direction TLT
+...\hbox(0.0+0.0)x111.29567, direction TLT
+....\glue(\leftskip) 0.0 plus 1.0fil
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(0.0+0.0)x0.0, direction TLT
+....\hbox(0.0+0.0)x111.29567, direction TLT
+.....\hbox(7.5+2.5)x111.29567, shifted 32.87242, direction TLT
+......\hbox(7.5+2.5)x111.29567, glue set 49.95284fil, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+.......\TU/lmr/m/n/10 A
+.......\TU/lmr/m/n/10 )
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+....\penalty 10000
+....\glue(\parfillskip) 0.0
+....\glue(\rightskip) 0.0 plus 1.0fil
+...\glue 0.0
+...\glue(\parskip) 0.0
+...\glue(\parskip) 0.0
+...\glue(\lineskip) 1.0
+...\hbox(19.27238+0.0)x111.29567, glue set 42.79958fil, direction TLT
+....\glue(\leftskip) 0.0 plus 1.0fil
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(0.0+0.0)x0.0, direction TLT
+....\hbox(19.27238+0.0)x25.69652, direction TLT
+.....\hbox(19.27238+0.0)x25.69652, direction TLT
+......\hbox(19.27243+0.0)x25.69658, direction TLT
+.......\hbox(19.27243+0.0)x25.69658, direction TLT
+........\hbox(19.27243+0.0)x0.0, direction TLT
+.........\pdfsave
+.........\pdfsetmatrix{.08 0 0 .08}
+.........\hbox(240.9+0.0)x0.0, glue set - 321.20001fil, direction TLT
+..........\hbox(240.9+0.0)x321.2, direction TLT
+...........\image(240.9+0.0)x321.2
+..........\glue 0.0 plus 1.0fil minus 1.0fil
+.........\pdfrestore
+........\kern25.69658
+........\glue 0.0 plus 1.0fil minus 1.0fil
+....\penalty 10000
+....\glue(\parfillskip) 0.0
+....\glue(\rightskip) 0.0 plus 1.0fil
+..\vbox(20.27238+0.0)x111.29567, direction TLT
+...\hbox(0.0+0.0)x111.29567, direction TLT
+....\glue(\leftskip) 0.0 plus 1.0fil
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(0.0+0.0)x0.0, direction TLT
+....\hbox(0.0+0.0)x111.29567, direction TLT
+.....\hbox(7.5+2.5)x111.29567, shifted 32.87242, direction TLT
+......\hbox(7.5+2.5)x111.29567, glue set 47.45135fil, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+.......\hbox(7.5+2.5)x13.06, glue set 1.045fil, direction TLT
+........\glue 0.0 plus 1.0fil minus 1.0fil
+........\TU/lmr/m/n/10 B
+........\TU/lmr/m/n/10 )
+........\glue 0.0 plus 1.0fil minus 1.0fil
+.......\glue 3.33298
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+....\penalty 10000
+....\glue(\parfillskip) 0.0
+....\glue(\rightskip) 0.0 plus 1.0fil
+...\glue 0.0
+...\glue(\parskip) 0.0
+...\glue(\parskip) 0.0
+...\glue(\lineskip) 1.0
+...\hbox(19.27238+0.0)x111.29567, glue set 42.79958fil, direction TLT
+....\glue(\leftskip) 0.0 plus 1.0fil
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(0.0+0.0)x0.0, direction TLT
+....\hbox(19.27238+0.0)x25.69652, direction TLT
+.....\hbox(19.27238+0.0)x25.69652, direction TLT
+......\hbox(19.27243+0.0)x25.69658, direction TLT
+.......\hbox(19.27243+0.0)x25.69658, direction TLT
+........\hbox(19.27243+0.0)x0.0, direction TLT
+.........\pdfsave
+.........\pdfsetmatrix{.08 0 0 .08}
+.........\hbox(240.9+0.0)x0.0, glue set - 321.20001fil, direction TLT
+..........\hbox(240.9+0.0)x321.2, direction TLT
+...........\image(240.9+0.0)x321.2
+..........\glue 0.0 plus 1.0fil minus 1.0fil
+.........\pdfrestore
+........\kern25.69658
+........\glue 0.0 plus 1.0fil minus 1.0fil
+....\penalty 10000
+....\glue(\parfillskip) 0.0
+....\glue(\rightskip) 0.0 plus 1.0fil
+..\vbox(20.27238+0.0)x111.29567, direction TLT
+...\hbox(0.0+0.0)x111.29567, direction TLT
+....\glue(\leftskip) 0.0 plus 1.0fil
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(0.0+0.0)x0.0, direction TLT
+....\hbox(0.0+0.0)x111.29567, direction TLT
+.....\hbox(7.5+2.5)x111.29567, shifted 32.87242, direction TLT
+......\hbox(7.5+2.5)x111.29567, glue set 50.09283fil, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+.......\TU/lmr/m/n/10 C
+.......\TU/lmr/m/n/10 )
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+....\penalty 10000
+....\glue(\parfillskip) 0.0
+....\glue(\rightskip) 0.0 plus 1.0fil
+...\glue 0.0
+...\glue(\parskip) 0.0
+...\glue(\parskip) 0.0
+...\glue(\lineskip) 1.0
+...\hbox(19.27238+0.0)x111.29567, glue set 42.79958fil, direction TLT
+....\glue(\leftskip) 0.0 plus 1.0fil
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(0.0+0.0)x0.0, direction TLT
+....\hbox(19.27238+0.0)x25.69652, direction TLT
+.....\hbox(19.27238+0.0)x25.69652, direction TLT
+......\hbox(19.27243+0.0)x25.69658, direction TLT
+.......\hbox(19.27243+0.0)x25.69658, direction TLT
+........\hbox(19.27243+0.0)x0.0, direction TLT
+.........\pdfsave
+.........\pdfsetmatrix{.08 0 0 .08}
+.........\hbox(240.9+0.0)x0.0, glue set - 321.20001fil, direction TLT
+..........\hbox(240.9+0.0)x321.2, direction TLT
+...........\image(240.9+0.0)x321.2
+..........\glue 0.0 plus 1.0fil minus 1.0fil
+.........\pdfrestore
+........\kern25.69658
+........\glue 0.0 plus 1.0fil minus 1.0fil
+....\penalty 10000
+....\glue(\parfillskip) 0.0
+....\glue(\rightskip) 0.0 plus 1.0fil
+..\penalty 10000
+..\glue(\parfillskip) 0.0 plus 1.0fil
+..\glue(\rightskip) 0.0
+.\penalty -51
+.\glue 5.80002 plus 2.0 minus 1.0
+.\glue -5.80002 plus -2.0 minus -1.0
+.\glue 16.0
+.\glue -16.0
+.\glue 20.0 plus 1.0 minus 1.0
+.\glue -20.0 plus -1.0 minus -1.0
+.\penalty -51
+.\glue 20.0 plus 1.0 minus 1.0
+.\glue -20.0 plus -1.0 minus -1.0
+.\penalty -51
+.\glue 20.0 plus 1.0 minus 1.0
+.\glue(\parskip) 0.0
+.\glue(\parskip) 0.0
+.\glue(\baselineskip) 5.25
+.\hbox(6.75+2.241)x345.0, glue set 175.27824fil, direction TLT
+..\localpar
+...\localinterlinepenalty=0
+...\localbrokenpenalty=0
+...\localleftbox=null
+...\localrightbox=null
+..\hbox(0.0+0.0)x11.11298, direction TLT
+...\glue 11.11298
+...\glue -7.78
+...\glue -3.33298
+...\hbox(0.0+0.0)x7.78, glue set 7.78fil, direction TLT
+....\glue 0.0 plus 1.0fil
+...\glue 3.33298
+..\penalty 0
+..\glue -11.11298
+..\hbox(6.75+2.241)x169.72176, direction TLT
+...\hbox(5.994+0.0)x7.78, glue set 0.57999fil, direction TLT
+....\TU/lmr/m/n/9 1
+....\TU/lmr/m/n/9 .
+....\glue 0.0 plus 1.0fil minus 1.0fil
+...\glue 3.33298
+...\vbox(6.75+2.241)x158.60878, direction TLT
+....\hbox(6.75+2.241)x158.60878, glue set 148.45677fil, direction TLT
+.....\localpar
+......\localinterlinepenalty=0
+......\localbrokenpenalty=0
+......\localleftbox=null
+......\localrightbox=null
+.....\hbox(0.0+0.0)x0.0, direction TLT
+.....\glue 0.0
+.....\TU/lmr/m/n/9 B
+.....\TU/lmr/m/n/9 )
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0
+..\penalty 10000
+..\glue(\parfillskip) 0.0 plus 1.0fil
+..\glue(\rightskip) 0.0
+.\glue 0.0
+.\glue 0.0
+.\penalty -51
+.\glue 0.0
+! OK.
+<argument> ...xt} \printkeyans *{kam} }\showbox 0 
+l. ...  }
+============================================================
+============================================================
+TEST 14: [14] layout-sty con dos filas
+============================================================
+* Package enumext: Start enumext with save-ans=kan on line ....
+* Package enumext: Creating \g__enumext_kan_prop on line ....
+Defining \g__enumext_kan_prop on line ...
+* Package enumext: Creating \g__enumext_kan_seq on line ....
+Defining \g__enumext_kan_seq on line ...
+* Package enumext: Creating \g__enumext_resume_kan_int on line ....
+Defining \g__enumext_resume_kan_int on line ...
+\g__enumext_resume_kan_int=\count...
+File: example-image-a.pdf Graphic file (type pdf)
+<use example-image-a.pdf>
+Package luatex.def Info: example-image-a.pdf  used on input line ....
+(luatex.def)             Requested size: 25.69652pt x 19.27238pt.
+File: example-image-a.pdf Graphic file (type pdf)
+<use example-image-a.pdf>
+Package luatex.def Info: example-image-a.pdf  used on input line ....
+(luatex.def)             Requested size: 25.69652pt x 19.27238pt.
+File: example-image-b.pdf Graphic file (type pdf)
+<use example-image-b.pdf>
+Package luatex.def Info: example-image-b.pdf  used on input line ....
+(luatex.def)             Requested size: 25.69652pt x 19.27238pt.
+File: example-image-b.pdf Graphic file (type pdf)
+<use example-image-b.pdf>
+Package luatex.def Info: example-image-b.pdf  used on input line ....
+(luatex.def)             Requested size: 25.69652pt x 19.27238pt.
+File: example-image-c.pdf Graphic file (type pdf)
+<use example-image-c.pdf>
+Package luatex.def Info: example-image-c.pdf  used on input line ....
+(luatex.def)             Requested size: 25.69652pt x 19.27238pt.
+File: example-image-c.pdf Graphic file (type pdf)
+<use example-image-c.pdf>
+Package luatex.def Info: example-image-c.pdf  used on input line ....
+(luatex.def)             Requested size: 25.69652pt x 19.27238pt.
+* Package enumext: Stop enumext with save-ans=kan on line ....
+* Package enumext: Elements in \g__enumext_kan_prop = 1.
+* Package enumext: Elements in \g__enumext_kan_seq = 1.
+* Package enumext: Value of \g__enumext_resume_kan_int = 1.
+* Package enumext: Value of \g__enumext_item_number_int = 1.
+* Package enumext: Value of \g__enumext_item_anskey_int = 1.
+* Package enumext: Difference item_number_int - item_anskey_int = 0.
+****************************************
+* Package enumext: Checking answers in 'kan' for {enumext}
+* started on line ... and close on line ...: 'OK', all items with answer.
+****************************************
+> \box...=
+\vbox(106.83482+0.0)x345.0, direction TLT
+.\penalty -51
+.\glue 10.0 plus 4.0 minus 5.0
+.\glue -10.0 plus -4.0 minus -5.0
+.\glue 6.0 plus 2.0 minus 4.0
+.\glue(\parskip) 4.0 plus 2.0 minus 1.0
+.\glue(\parskip) 0.0
+.\hbox(6.83+2.06)x333.88702, glue set 230.05702fil, shifted 11.11298, direction TLT
+..\localpar
+...\localinterlinepenalty=0
+...\localbrokenpenalty=0
+...\localleftbox=null
+...\localrightbox=null
+..\hbox(6.66+0.0)x0.0, direction TLT
+...\glue 0.0
+...\glue -7.78
+...\glue -3.33298
+...\hbox(6.66+0.0)x7.78, direction TLT
+....\glue 0.0
+....\hbox(0.0+0.0)x0.0, direction TLT
+.....\glue 0.0 plus 1.0fil minus 1.0fil
+....\glue 0.0
+....\TU/lmr/m/n/10 1
+....\TU/lmr/m/n/10 .
+....\glue 0.0 plus 1.0fill
+...\glue 3.33298
+..\penalty 0
+..\TU/lmr/m/n/10 P
+..\TU/lmr/m/n/10 r
+..\TU/lmr/m/n/10 e
+..\discretionary (penalty 50)
+...< \TU/lmr/m/n/10 -
+..\TU/lmr/m/n/10 g
+..\TU/lmr/m/n/10 u
+..\TU/lmr/m/n/10 n
+..\kern-0.28 (font)
+..\TU/lmr/m/n/10 t
+..\TU/lmr/m/n/10 a
+..\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+..\TU/lmr/m/n/10 c
+..\TU/lmr/m/n/10 o
+..\TU/lmr/m/n/10 n
+..\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+..\TU/lmr/m/n/10 i
+..\TU/lmr/m/n/10 m
+..\discretionary (penalty 50)
+...< \TU/lmr/m/n/10 -
+..\TU/lmr/m/n/10 a
+..\discretionary (penalty 50)
+...< \TU/lmr/m/n/10 -
+..\TU/lmr/m/n/10 g
+..\TU/lmr/m/n/10 e
+..\TU/lmr/m/n/10 n
+..\TU/lmr/m/n/10 e
+..\TU/lmr/m/n/10 s
+..\TU/lmr/m/n/10 .
+..\penalty 10000
+..\glue(\parfillskip) 0.0 plus 1.0fil
+..\glue(\rightskip) 0.0
+.\penalty -51
+.\glue 9.80002 plus 4.0 minus 2.0
+.\glue -9.80002 plus -4.0 minus -2.0
+.\glue -5.80002 plus 3.0 minus 1.0
+.\glue(\parskip) 15.60004 plus 1.0 minus 1.0
+.\glue(\parskip) 0.0
+.\glue(\lineskip) 1.0
+.\hbox(20.27238+0.0)x333.88702, shifted 11.11298, direction TLT
+..\localpar
+...\localinterlinepenalty=0
+...\localbrokenpenalty=0
+...\localleftbox=null
+...\localrightbox=null
+..\hbox(0.0+0.0)x0.0, direction TLT
+...\glue 0.0
+...\glue -13.06
+...\glue -3.33298
+...\hbox(0.0+0.0)x13.06, glue set 13.06fill, direction TLT
+....\glue 0.0 plus 1.0fill
+...\glue 3.33298
+..\penalty 0
+..\vbox(20.27238+0.0)x166.94351, direction TLT
+...\hbox(0.0+0.0)x166.94351, direction TLT
+....\glue(\leftskip) 0.0 plus 1.0fil
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(0.0+0.0)x0.0, direction TLT
+....\hbox(0.0+0.0)x166.94351, direction TLT
+.....\hbox(7.5+2.5)x166.94351, shifted 32.87242, direction TLT
+......\hbox(7.5+2.5)x166.94351, glue set 77.77676fil, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+.......\TU/lmr/m/n/10 A
+.......\TU/lmr/m/n/10 )
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+....\penalty 10000
+....\glue(\parfillskip) 0.0
+....\glue(\rightskip) 0.0 plus 1.0fil
+...\glue 0.0
+...\glue(\parskip) 0.0
+...\glue(\parskip) 0.0
+...\glue(\lineskip) 1.0
+...\hbox(19.27238+0.0)x166.94351, glue set 70.6235fil, direction TLT
+....\glue(\leftskip) 0.0 plus 1.0fil
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(0.0+0.0)x0.0, direction TLT
+....\hbox(19.27238+0.0)x25.69652, direction TLT
+.....\hbox(19.27238+0.0)x25.69652, direction TLT
+......\hbox(19.27243+0.0)x25.69658, direction TLT
+.......\hbox(19.27243+0.0)x25.69658, direction TLT
+........\hbox(19.27243+0.0)x0.0, direction TLT
+.........\pdfsave
+.........\pdfsetmatrix{.08 0 0 .08}
+.........\hbox(240.9+0.0)x0.0, glue set - 321.20001fil, direction TLT
+..........\hbox(240.9+0.0)x321.2, direction TLT
+...........\image(240.9+0.0)x321.2
+..........\glue 0.0 plus 1.0fil minus 1.0fil
+.........\pdfrestore
+........\kern25.69658
+........\glue 0.0 plus 1.0fil minus 1.0fil
+....\penalty 10000
+....\glue(\parfillskip) 0.0
+....\glue(\rightskip) 0.0 plus 1.0fil
+..\vbox(20.27238+0.0)x166.94351, direction TLT
+...\hbox(0.0+0.0)x166.94351, direction TLT
+....\glue(\leftskip) 0.0 plus 1.0fil
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(0.0+0.0)x0.0, direction TLT
+....\hbox(0.0+0.0)x166.94351, direction TLT
+.....\hbox(7.5+2.5)x166.94351, shifted 32.87242, direction TLT
+......\hbox(7.5+2.5)x166.94351, glue set 75.27527fil, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+.......\hbox(7.5+2.5)x13.06, glue set 1.045fil, direction TLT
+........\glue 0.0 plus 1.0fil minus 1.0fil
+........\TU/lmr/m/n/10 B
+........\TU/lmr/m/n/10 )
+........\glue 0.0 plus 1.0fil minus 1.0fil
+.......\glue 3.33298
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+....\penalty 10000
+....\glue(\parfillskip) 0.0
+....\glue(\rightskip) 0.0 plus 1.0fil
+...\glue 0.0
+...\glue(\parskip) 0.0
+...\glue(\parskip) 0.0
+...\glue(\lineskip) 1.0
+...\hbox(19.27238+0.0)x166.94351, glue set 70.6235fil, direction TLT
+....\glue(\leftskip) 0.0 plus 1.0fil
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(0.0+0.0)x0.0, direction TLT
+....\hbox(19.27238+0.0)x25.69652, direction TLT
+.....\hbox(19.27238+0.0)x25.69652, direction TLT
+......\hbox(19.27243+0.0)x25.69658, direction TLT
+.......\hbox(19.27243+0.0)x25.69658, direction TLT
+........\hbox(19.27243+0.0)x0.0, direction TLT
+.........\pdfsave
+.........\pdfsetmatrix{.08 0 0 .08}
+.........\hbox(240.9+0.0)x0.0, glue set - 321.20001fil, direction TLT
+..........\hbox(240.9+0.0)x321.2, direction TLT
+...........\image(240.9+0.0)x321.2
+..........\glue 0.0 plus 1.0fil minus 1.0fil
+.........\pdfrestore
+........\kern25.69658
+........\glue 0.0 plus 1.0fil minus 1.0fil
+....\penalty 10000
+....\glue(\parfillskip) 0.0
+....\glue(\rightskip) 0.0 plus 1.0fil
+..\penalty 10000
+..\glue(\parfillskip) 0.0 plus 1.0fil
+..\glue(\rightskip) 0.0
+.\glue(\parskip) 15.60004 plus 1.0 minus 1.0
+.\glue(\parskip) 0.0
+.\glue(\lineskip) 1.0
+.\hbox(20.27238+0.0)x333.88702, shifted 11.11298, direction TLT
+..\localpar
+...\localinterlinepenalty=0
+...\localbrokenpenalty=0
+...\localleftbox=null
+...\localrightbox=null
+..\hbox(0.0+0.0)x0.0, direction TLT
+..\vbox(20.27238+0.0)x333.88702, direction TLT
+...\hbox(0.0+0.0)x333.88702, direction TLT
+....\glue(\leftskip) 0.0 plus 1.0fil
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(0.0+0.0)x0.0, direction TLT
+....\hbox(0.0+0.0)x333.88702, direction TLT
+.....\hbox(7.5+2.5)x333.88702, shifted 32.87242, direction TLT
+......\hbox(7.5+2.5)x333.88702, glue set 161.38852fil, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+.......\TU/lmr/m/n/10 C
+.......\TU/lmr/m/n/10 )
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+....\penalty 10000
+....\glue(\parfillskip) 0.0
+....\glue(\rightskip) 0.0 plus 1.0fil
+...\glue 0.0
+...\glue(\parskip) 0.0
+...\glue(\parskip) 0.0
+...\glue(\lineskip) 1.0
+...\hbox(19.27238+0.0)x333.88702, glue set 154.09525fil, direction TLT
+....\glue(\leftskip) 0.0 plus 1.0fil
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(0.0+0.0)x0.0, direction TLT
+....\hbox(19.27238+0.0)x25.69652, direction TLT
+.....\hbox(19.27238+0.0)x25.69652, direction TLT
+......\hbox(19.27243+0.0)x25.69658, direction TLT
+.......\hbox(19.27243+0.0)x25.69658, direction TLT
+........\hbox(19.27243+0.0)x0.0, direction TLT
+.........\pdfsave
+.........\pdfsetmatrix{.08 0 0 .08}
+.........\hbox(240.9+0.0)x0.0, glue set - 321.20001fil, direction TLT
+..........\hbox(240.9+0.0)x321.2, direction TLT
+...........\image(240.9+0.0)x321.2
+..........\glue 0.0 plus 1.0fil minus 1.0fil
+.........\pdfrestore
+........\kern25.69658
+........\glue 0.0 plus 1.0fil minus 1.0fil
+....\penalty 10000
+....\glue(\parfillskip) 0.0
+....\glue(\rightskip) 0.0 plus 1.0fil
+..\penalty 10000
+..\glue(\parfillskip) 0.0 plus 1.0fil
+..\glue(\rightskip) 0.0
+.\penalty -51
+.\glue 5.80002 plus 2.0 minus 1.0
+.\glue -5.80002 plus -2.0 minus -1.0
+.\glue 16.0
+.\glue -16.0
+.\glue 20.0 plus 1.0 minus 1.0
+.\glue -20.0 plus -1.0 minus -1.0
+.\penalty -51
+.\glue 20.0 plus 1.0 minus 1.0
+! OK.
+<argument> ...yanspic} \end {enumext} }\showbox 0 
+l. ...  }
+============================================================
+============================================================
+TEST 15: [15] label-pos=above
+============================================================
+* Package enumext: Start enumext with save-ans=kao on line ....
+* Package enumext: Creating \g__enumext_kao_prop on line ....
+Defining \g__enumext_kao_prop on line ...
+* Package enumext: Creating \g__enumext_kao_seq on line ....
+Defining \g__enumext_kao_seq on line ...
+* Package enumext: Creating \g__enumext_resume_kao_int on line ....
+Defining \g__enumext_resume_kao_int on line ...
+\g__enumext_resume_kao_int=\count...
+File: example-image-a.pdf Graphic file (type pdf)
+<use example-image-a.pdf>
+Package luatex.def Info: example-image-a.pdf  used on input line ....
+(luatex.def)             Requested size: 25.69652pt x 19.27238pt.
+File: example-image-b.pdf Graphic file (type pdf)
+<use example-image-b.pdf>
+Package luatex.def Info: example-image-b.pdf  used on input line ....
+(luatex.def)             Requested size: 25.69652pt x 19.27238pt.
+* Package enumext: Stop enumext with save-ans=kao on line ....
+* Package enumext: Elements in \g__enumext_kao_prop = 1.
+* Package enumext: Elements in \g__enumext_kao_seq = 1.
+* Package enumext: Value of \g__enumext_resume_kao_int = 1.
+* Package enumext: Value of \g__enumext_item_number_int = 1.
+* Package enumext: Value of \g__enumext_item_anskey_int = 1.
+* Package enumext: Difference item_number_int - item_anskey_int = 0.
+****************************************
+* Package enumext: Checking answers in 'kao' for {enumext}
+* started on line ... and close on line ...: 'OK', all items with answer.
+****************************************
+> \box...=
+\vbox(71.4024+0.0)x345.0, direction TLT
+.\penalty -51
+.\glue 10.0 plus 4.0 minus 5.0
+.\glue -10.0 plus -4.0 minus -5.0
+.\glue 6.0 plus 2.0 minus 4.0
+.\glue(\parskip) 4.0 plus 2.0 minus 1.0
+.\glue(\parskip) 0.0
+.\hbox(6.83+2.06)x333.88702, glue set 230.05702fil, shifted 11.11298, direction TLT
+..\localpar
+...\localinterlinepenalty=0
+...\localbrokenpenalty=0
+...\localleftbox=null
+...\localrightbox=null
+..\hbox(6.66+0.0)x0.0, direction TLT
+...\glue 0.0
+...\glue -7.78
+...\glue -3.33298
+...\hbox(6.66+0.0)x7.78, direction TLT
+....\glue 0.0
+....\hbox(0.0+0.0)x0.0, direction TLT
+.....\glue 0.0 plus 1.0fil minus 1.0fil
+....\glue 0.0
+....\TU/lmr/m/n/10 1
+....\TU/lmr/m/n/10 .
+....\glue 0.0 plus 1.0fill
+...\glue 3.33298
+..\penalty 0
+..\TU/lmr/m/n/10 P
+..\TU/lmr/m/n/10 r
+..\TU/lmr/m/n/10 e
+..\discretionary (penalty 50)
+...< \TU/lmr/m/n/10 -
+..\TU/lmr/m/n/10 g
+..\TU/lmr/m/n/10 u
+..\TU/lmr/m/n/10 n
+..\kern-0.28 (font)
+..\TU/lmr/m/n/10 t
+..\TU/lmr/m/n/10 a
+..\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+..\TU/lmr/m/n/10 c
+..\TU/lmr/m/n/10 o
+..\TU/lmr/m/n/10 n
+..\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+..\TU/lmr/m/n/10 i
+..\TU/lmr/m/n/10 m
+..\discretionary (penalty 50)
+...< \TU/lmr/m/n/10 -
+..\TU/lmr/m/n/10 a
+..\discretionary (penalty 50)
+...< \TU/lmr/m/n/10 -
+..\TU/lmr/m/n/10 g
+..\TU/lmr/m/n/10 e
+..\TU/lmr/m/n/10 n
+..\TU/lmr/m/n/10 e
+..\TU/lmr/m/n/10 s
+..\TU/lmr/m/n/10 .
+..\penalty 10000
+..\glue(\parfillskip) 0.0 plus 1.0fil
+..\glue(\rightskip) 0.0
+.\penalty -51
+.\glue 9.80002 plus 4.0 minus 2.0
+.\glue -9.80002 plus -4.0 minus -2.0
+.\glue 7.80002 plus 3.0 minus 1.0
+.\glue(\parskip) 2.0 plus 1.0 minus 1.0
+.\glue(\parskip) 0.0
+.\glue(\baselineskip) 2.44
+.\hbox(7.5+22.77238)x333.88702, shifted 11.11298, direction TLT
+..\localpar
+...\localinterlinepenalty=0
+...\localbrokenpenalty=0
+...\localleftbox=null
+...\localrightbox=null
+..\hbox(0.0+0.0)x0.0, direction TLT
+...\glue 0.0
+...\glue -13.06
+...\glue -3.33298
+...\hbox(0.0+0.0)x13.06, glue set 13.06fill, direction TLT
+....\glue 0.0 plus 1.0fill
+...\glue 3.33298
+..\penalty 0
+..\vbox(7.5+22.77238)x166.94351, direction TLT
+...\hbox(7.5+2.5)x166.94351, direction TLT
+....\glue(\leftskip) 0.0 plus 1.0fil
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(0.0+0.0)x0.0, direction TLT
+....\hbox(7.5+2.5)x166.94351, glue set 77.77676fil, direction TLT
+.....\glue 0.0 plus 1.0fil minus 1.0fil
+.....\TU/lmr/m/n/10 A
+.....\TU/lmr/m/n/10 )
+.....\glue 0.0 plus 1.0fil minus 1.0fil
+....\penalty 10000
+....\glue(\parfillskip) 0.0
+....\glue(\rightskip) 0.0 plus 1.0fil
+...\glue 0.0
+...\glue 0.0
+...\glue(\parskip) 0.0
+...\glue(\parskip) 0.0
+...\glue(\lineskip) 1.0
+...\hbox(19.27238+0.0)x166.94351, glue set 70.6235fil, direction TLT
+....\glue(\leftskip) 0.0 plus 1.0fil
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(0.0+0.0)x0.0, direction TLT
+....\hbox(19.27238+0.0)x25.69652, direction TLT
+.....\hbox(19.27238+0.0)x25.69652, direction TLT
+......\hbox(19.27243+0.0)x25.69658, direction TLT
+.......\hbox(19.27243+0.0)x25.69658, direction TLT
+........\hbox(19.27243+0.0)x0.0, direction TLT
+.........\pdfsave
+.........\pdfsetmatrix{.08 0 0 .08}
+.........\hbox(240.9+0.0)x0.0, glue set - 321.20001fil, direction TLT
+..........\hbox(240.9+0.0)x321.2, direction TLT
+...........\image(240.9+0.0)x321.2
+..........\glue 0.0 plus 1.0fil minus 1.0fil
+.........\pdfrestore
+........\kern25.69658
+........\glue 0.0 plus 1.0fil minus 1.0fil
+....\penalty 10000
+....\glue(\parfillskip) 0.0
+....\glue(\rightskip) 0.0 plus 1.0fil
+..\vbox(7.5+22.77238)x166.94351, direction TLT
+...\hbox(7.5+2.5)x166.94351, direction TLT
+....\glue(\leftskip) 0.0 plus 1.0fil
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(0.0+0.0)x0.0, direction TLT
+....\hbox(7.5+2.5)x166.94351, glue set 75.27527fil, direction TLT
+.....\glue 0.0 plus 1.0fil minus 1.0fil
+.....\hbox(7.5+2.5)x13.06, glue set 1.045fil, direction TLT
+......\glue 0.0 plus 1.0fil minus 1.0fil
+......\TU/lmr/m/n/10 B
+......\TU/lmr/m/n/10 )
+......\glue 0.0 plus 1.0fil minus 1.0fil
+.....\glue 3.33298
+.....\glue 0.0 plus 1.0fil minus 1.0fil
+....\penalty 10000
+....\glue(\parfillskip) 0.0
+....\glue(\rightskip) 0.0 plus 1.0fil
+...\glue 0.0
+...\glue 0.0
+...\glue(\parskip) 0.0
+...\glue(\parskip) 0.0
+...\glue(\lineskip) 1.0
+...\hbox(19.27238+0.0)x166.94351, glue set 70.6235fil, direction TLT
+....\glue(\leftskip) 0.0 plus 1.0fil
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(0.0+0.0)x0.0, direction TLT
+....\hbox(19.27238+0.0)x25.69652, direction TLT
+.....\hbox(19.27238+0.0)x25.69652, direction TLT
+......\hbox(19.27243+0.0)x25.69658, direction TLT
+.......\hbox(19.27243+0.0)x25.69658, direction TLT
+........\hbox(19.27243+0.0)x0.0, direction TLT
+.........\pdfsave
+.........\pdfsetmatrix{.08 0 0 .08}
+.........\hbox(240.9+0.0)x0.0, glue set - 321.20001fil, direction TLT
+..........\hbox(240.9+0.0)x321.2, direction TLT
+...........\image(240.9+0.0)x321.2
+..........\glue 0.0 plus 1.0fil minus 1.0fil
+.........\pdfrestore
+........\kern25.69658
+........\glue 0.0 plus 1.0fil minus 1.0fil
+....\penalty 10000
+....\glue(\parfillskip) 0.0
+....\glue(\rightskip) 0.0 plus 1.0fil
+..\penalty 10000
+..\glue(\parfillskip) 0.0 plus 1.0fil
+..\glue(\rightskip) 0.0
+.\penalty -51
+.\glue 5.80002 plus 2.0 minus 1.0
+.\glue -5.80002 plus -2.0 minus -1.0
+.\glue 9.80002 plus 3.0 minus 2.0
+.\glue -14.80002 plus -3.0 minus -2.0
+.\penalty -51
+.\glue 5.0
+.\glue 9.80002 plus 3.0 minus 2.0
+.\glue -9.80002 plus -3.0 minus -2.0
+.\glue 10.0 plus 3.0 minus 5.0
+! OK.
+<argument> ...yanspic} \end {enumext} }\showbox 0 
+l. ...  }
+============================================================
+============================================================
+TEST 16: [16] label-pos=below y label-sep
+============================================================
+* Package enumext: Start enumext with save-ans=kap on line ....
+* Package enumext: Creating \g__enumext_kap_prop on line ....
+Defining \g__enumext_kap_prop on line ...
+* Package enumext: Creating \g__enumext_kap_seq on line ....
+Defining \g__enumext_kap_seq on line ...
+* Package enumext: Creating \g__enumext_resume_kap_int on line ....
+Defining \g__enumext_resume_kap_int on line ...
+\g__enumext_resume_kap_int=\count...
+File: example-image-a.pdf Graphic file (type pdf)
+<use example-image-a.pdf>
+Package luatex.def Info: example-image-a.pdf  used on input line ....
+(luatex.def)             Requested size: 25.69652pt x 19.27238pt.
+File: example-image-a.pdf Graphic file (type pdf)
+<use example-image-a.pdf>
+Package luatex.def Info: example-image-a.pdf  used on input line ....
+(luatex.def)             Requested size: 25.69652pt x 19.27238pt.
+File: example-image-b.pdf Graphic file (type pdf)
+<use example-image-b.pdf>
+Package luatex.def Info: example-image-b.pdf  used on input line ....
+(luatex.def)             Requested size: 25.69652pt x 19.27238pt.
+File: example-image-b.pdf Graphic file (type pdf)
+<use example-image-b.pdf>
+Package luatex.def Info: example-image-b.pdf  used on input line ....
+(luatex.def)             Requested size: 25.69652pt x 19.27238pt.
+* Package enumext: Stop enumext with save-ans=kap on line ....
+* Package enumext: Elements in \g__enumext_kap_prop = 1.
+* Package enumext: Elements in \g__enumext_kap_seq = 1.
+* Package enumext: Value of \g__enumext_resume_kap_int = 1.
+* Package enumext: Value of \g__enumext_item_number_int = 1.
+* Package enumext: Value of \g__enumext_item_anskey_int = 1.
+* Package enumext: Difference item_number_int - item_anskey_int = 0.
+****************************************
+* Package enumext: Checking answers in 'kap' for {enumext}
+* started on line ... and close on line ...: 'OK', all items with answer.
+****************************************
+> \box...=
+\vbox(75.9624+0.0)x345.0, direction TLT
+.\penalty -51
+.\glue 10.0 plus 4.0 minus 5.0
+.\glue -10.0 plus -4.0 minus -5.0
+.\glue 6.0 plus 2.0 minus 4.0
+.\glue(\parskip) 4.0 plus 2.0 minus 1.0
+.\glue(\parskip) 0.0
+.\hbox(6.83+2.06)x333.88702, glue set 230.05702fil, shifted 11.11298, direction TLT
+..\localpar
+...\localinterlinepenalty=0
+...\localbrokenpenalty=0
+...\localleftbox=null
+...\localrightbox=null
+..\hbox(6.66+0.0)x0.0, direction TLT
+...\glue 0.0
+...\glue -7.78
+...\glue -3.33298
+...\hbox(6.66+0.0)x7.78, direction TLT
+....\glue 0.0
+....\hbox(0.0+0.0)x0.0, direction TLT
+.....\glue 0.0 plus 1.0fil minus 1.0fil
+....\glue 0.0
+....\TU/lmr/m/n/10 1
+....\TU/lmr/m/n/10 .
+....\glue 0.0 plus 1.0fill
+...\glue 3.33298
+..\penalty 0
+..\TU/lmr/m/n/10 P
+..\TU/lmr/m/n/10 r
+..\TU/lmr/m/n/10 e
+..\discretionary (penalty 50)
+...< \TU/lmr/m/n/10 -
+..\TU/lmr/m/n/10 g
+..\TU/lmr/m/n/10 u
+..\TU/lmr/m/n/10 n
+..\kern-0.28 (font)
+..\TU/lmr/m/n/10 t
+..\TU/lmr/m/n/10 a
+..\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+..\TU/lmr/m/n/10 c
+..\TU/lmr/m/n/10 o
+..\TU/lmr/m/n/10 n
+..\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+..\TU/lmr/m/n/10 i
+..\TU/lmr/m/n/10 m
+..\discretionary (penalty 50)
+...< \TU/lmr/m/n/10 -
+..\TU/lmr/m/n/10 a
+..\discretionary (penalty 50)
+...< \TU/lmr/m/n/10 -
+..\TU/lmr/m/n/10 g
+..\TU/lmr/m/n/10 e
+..\TU/lmr/m/n/10 n
+..\TU/lmr/m/n/10 e
+..\TU/lmr/m/n/10 s
+..\TU/lmr/m/n/10 .
+..\penalty 10000
+..\glue(\parfillskip) 0.0 plus 1.0fil
+..\glue(\rightskip) 0.0
+.\penalty -51
+.\glue 9.80002 plus 4.0 minus 2.0
+.\glue -9.80002 plus -4.0 minus -2.0
+.\glue -11.80002 plus 3.0 minus 1.0
+.\glue(\parskip) 21.60004 plus 1.0 minus 1.0
+.\glue(\parskip) 0.0
+.\glue(\lineskip) 1.0
+.\hbox(20.27238+0.0)x333.88702, shifted 11.11298, direction TLT
+..\localpar
+...\localinterlinepenalty=0
+...\localbrokenpenalty=0
+...\localleftbox=null
+...\localrightbox=null
+..\hbox(0.0+0.0)x0.0, direction TLT
+...\glue 0.0
+...\glue -13.06
+...\glue -3.33298
+...\hbox(0.0+0.0)x13.06, glue set 13.06fill, direction TLT
+....\glue 0.0 plus 1.0fill
+...\glue 3.33298
+..\penalty 0
+..\vbox(20.27238+0.0)x166.94351, direction TLT
+...\hbox(0.0+0.0)x166.94351, direction TLT
+....\glue(\leftskip) 0.0 plus 1.0fil
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(0.0+0.0)x0.0, direction TLT
+....\hbox(0.0+0.0)x166.94351, direction TLT
+.....\hbox(7.5+2.5)x166.94351, shifted 38.87242, direction TLT
+......\hbox(7.5+2.5)x166.94351, glue set 77.77676fil, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+.......\TU/lmr/m/n/10 A
+.......\TU/lmr/m/n/10 )
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+....\penalty 10000
+....\glue(\parfillskip) 0.0
+....\glue(\rightskip) 0.0 plus 1.0fil
+...\glue 0.0
+...\glue(\parskip) 0.0
+...\glue(\parskip) 0.0
+...\glue(\lineskip) 1.0
+...\hbox(19.27238+0.0)x166.94351, glue set 70.6235fil, direction TLT
+....\glue(\leftskip) 0.0 plus 1.0fil
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(0.0+0.0)x0.0, direction TLT
+....\hbox(19.27238+0.0)x25.69652, direction TLT
+.....\hbox(19.27238+0.0)x25.69652, direction TLT
+......\hbox(19.27243+0.0)x25.69658, direction TLT
+.......\hbox(19.27243+0.0)x25.69658, direction TLT
+........\hbox(19.27243+0.0)x0.0, direction TLT
+.........\pdfsave
+.........\pdfsetmatrix{.08 0 0 .08}
+.........\hbox(240.9+0.0)x0.0, glue set - 321.20001fil, direction TLT
+..........\hbox(240.9+0.0)x321.2, direction TLT
+...........\image(240.9+0.0)x321.2
+..........\glue 0.0 plus 1.0fil minus 1.0fil
+.........\pdfrestore
+........\kern25.69658
+........\glue 0.0 plus 1.0fil minus 1.0fil
+....\penalty 10000
+....\glue(\parfillskip) 0.0
+....\glue(\rightskip) 0.0 plus 1.0fil
+..\vbox(20.27238+0.0)x166.94351, direction TLT
+...\hbox(0.0+0.0)x166.94351, direction TLT
+....\glue(\leftskip) 0.0 plus 1.0fil
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(0.0+0.0)x0.0, direction TLT
+....\hbox(0.0+0.0)x166.94351, direction TLT
+.....\hbox(7.5+2.5)x166.94351, shifted 38.87242, direction TLT
+......\hbox(7.5+2.5)x166.94351, glue set 75.27527fil, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+.......\hbox(7.5+2.5)x13.06, glue set 1.045fil, direction TLT
+........\glue 0.0 plus 1.0fil minus 1.0fil
+........\TU/lmr/m/n/10 B
+........\TU/lmr/m/n/10 )
+........\glue 0.0 plus 1.0fil minus 1.0fil
+.......\glue 3.33298
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+....\penalty 10000
+....\glue(\parfillskip) 0.0
+....\glue(\rightskip) 0.0 plus 1.0fil
+...\glue 0.0
+...\glue(\parskip) 0.0
+...\glue(\parskip) 0.0
+...\glue(\lineskip) 1.0
+...\hbox(19.27238+0.0)x166.94351, glue set 70.6235fil, direction TLT
+....\glue(\leftskip) 0.0 plus 1.0fil
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(0.0+0.0)x0.0, direction TLT
+....\hbox(19.27238+0.0)x25.69652, direction TLT
+.....\hbox(19.27238+0.0)x25.69652, direction TLT
+......\hbox(19.27243+0.0)x25.69658, direction TLT
+.......\hbox(19.27243+0.0)x25.69658, direction TLT
+........\hbox(19.27243+0.0)x0.0, direction TLT
+.........\pdfsave
+.........\pdfsetmatrix{.08 0 0 .08}
+.........\hbox(240.9+0.0)x0.0, glue set - 321.20001fil, direction TLT
+..........\hbox(240.9+0.0)x321.2, direction TLT
+...........\image(240.9+0.0)x321.2
+..........\glue 0.0 plus 1.0fil minus 1.0fil
+.........\pdfrestore
+........\kern25.69658
+........\glue 0.0 plus 1.0fil minus 1.0fil
+....\penalty 10000
+....\glue(\parfillskip) 0.0
+....\glue(\rightskip) 0.0 plus 1.0fil
+..\penalty 10000
+..\glue(\parfillskip) 0.0 plus 1.0fil
+..\glue(\rightskip) 0.0
+.\penalty -51
+.\glue 5.80002 plus 2.0 minus 1.0
+.\glue -5.80002 plus -2.0 minus -1.0
+.\glue 22.0
+.\glue -22.0
+.\glue 26.0 plus 1.0 minus 1.0
+.\glue -26.0 plus -1.0 minus -1.0
+.\penalty -51
+.\glue 26.0 plus 1.0 minus 1.0
+! OK.
+<argument> ...yanspic} \end {enumext} }\showbox 0 
+l. ...  }
+============================================================
+============================================================
+TEST 17: [17] layout-sep y layout-top
+============================================================
+* Package enumext: Start enumext with save-ans=kaq on line ....
+* Package enumext: Creating \g__enumext_kaq_prop on line ....
+Defining \g__enumext_kaq_prop on line ...
+* Package enumext: Creating \g__enumext_kaq_seq on line ....
+Defining \g__enumext_kaq_seq on line ...
+* Package enumext: Creating \g__enumext_resume_kaq_int on line ....
+Defining \g__enumext_resume_kaq_int on line ...
+\g__enumext_resume_kaq_int=\count...
+File: example-image-a.pdf Graphic file (type pdf)
+<use example-image-a.pdf>
+Package luatex.def Info: example-image-a.pdf  used on input line ....
+(luatex.def)             Requested size: 25.69652pt x 19.27238pt.
+File: example-image-a.pdf Graphic file (type pdf)
+<use example-image-a.pdf>
+Package luatex.def Info: example-image-a.pdf  used on input line ....
+(luatex.def)             Requested size: 25.69652pt x 19.27238pt.
+File: example-image-b.pdf Graphic file (type pdf)
+<use example-image-b.pdf>
+Package luatex.def Info: example-image-b.pdf  used on input line ....
+(luatex.def)             Requested size: 25.69652pt x 19.27238pt.
+File: example-image-b.pdf Graphic file (type pdf)
+<use example-image-b.pdf>
+Package luatex.def Info: example-image-b.pdf  used on input line ....
+(luatex.def)             Requested size: 25.69652pt x 19.27238pt.
+File: example-image-c.pdf Graphic file (type pdf)
+<use example-image-c.pdf>
+Package luatex.def Info: example-image-c.pdf  used on input line ....
+(luatex.def)             Requested size: 25.69652pt x 19.27238pt.
+File: example-image-c.pdf Graphic file (type pdf)
+<use example-image-c.pdf>
+Package luatex.def Info: example-image-c.pdf  used on input line ....
+(luatex.def)             Requested size: 25.69652pt x 19.27238pt.
+* Package enumext: Stop enumext with save-ans=kaq on line ....
+* Package enumext: Elements in \g__enumext_kaq_prop = 1.
+* Package enumext: Elements in \g__enumext_kaq_seq = 1.
+* Package enumext: Value of \g__enumext_resume_kaq_int = 1.
+* Package enumext: Value of \g__enumext_item_number_int = 1.
+* Package enumext: Value of \g__enumext_item_anskey_int = 1.
+* Package enumext: Difference item_number_int - item_anskey_int = 0.
+****************************************
+* Package enumext: Checking answers in 'kaq' for {enumext}
+* started on line ... and close on line ...: 'OK', all items with answer.
+****************************************
+> \box...=
+\vbox(122.83482+0.0)x345.0, direction TLT
+.\penalty -51
+.\glue 10.0 plus 4.0 minus 5.0
+.\glue -10.0 plus -4.0 minus -5.0
+.\glue 6.0 plus 2.0 minus 4.0
+.\glue(\parskip) 4.0 plus 2.0 minus 1.0
+.\glue(\parskip) 0.0
+.\hbox(6.83+2.06)x333.88702, glue set 230.05702fil, shifted 11.11298, direction TLT
+..\localpar
+...\localinterlinepenalty=0
+...\localbrokenpenalty=0
+...\localleftbox=null
+...\localrightbox=null
+..\hbox(6.66+0.0)x0.0, direction TLT
+...\glue 0.0
+...\glue -7.78
+...\glue -3.33298
+...\hbox(6.66+0.0)x7.78, direction TLT
+....\glue 0.0
+....\hbox(0.0+0.0)x0.0, direction TLT
+.....\glue 0.0 plus 1.0fil minus 1.0fil
+....\glue 0.0
+....\TU/lmr/m/n/10 1
+....\TU/lmr/m/n/10 .
+....\glue 0.0 plus 1.0fill
+...\glue 3.33298
+..\penalty 0
+..\TU/lmr/m/n/10 P
+..\TU/lmr/m/n/10 r
+..\TU/lmr/m/n/10 e
+..\discretionary (penalty 50)
+...< \TU/lmr/m/n/10 -
+..\TU/lmr/m/n/10 g
+..\TU/lmr/m/n/10 u
+..\TU/lmr/m/n/10 n
+..\kern-0.28 (font)
+..\TU/lmr/m/n/10 t
+..\TU/lmr/m/n/10 a
+..\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+..\TU/lmr/m/n/10 c
+..\TU/lmr/m/n/10 o
+..\TU/lmr/m/n/10 n
+..\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+..\TU/lmr/m/n/10 i
+..\TU/lmr/m/n/10 m
+..\discretionary (penalty 50)
+...< \TU/lmr/m/n/10 -
+..\TU/lmr/m/n/10 a
+..\discretionary (penalty 50)
+...< \TU/lmr/m/n/10 -
+..\TU/lmr/m/n/10 g
+..\TU/lmr/m/n/10 e
+..\TU/lmr/m/n/10 n
+..\TU/lmr/m/n/10 e
+..\TU/lmr/m/n/10 s
+..\TU/lmr/m/n/10 .
+..\penalty 10000
+..\glue(\parfillskip) 0.0 plus 1.0fil
+..\glue(\rightskip) 0.0
+.\penalty -51
+.\glue 13.80002 plus 2.0 minus 1.0
+.\glue -13.80002 plus -2.0 minus -1.0
+.\glue -9.80002 plus 2.0 minus 1.0
+.\glue(\parskip) 23.60004
+.\glue(\parskip) 0.0
+.\glue(\lineskip) 1.0
+.\hbox(20.27238+0.0)x333.88702, shifted 11.11298, direction TLT
+..\localpar
+...\localinterlinepenalty=0
+...\localbrokenpenalty=0
+...\localleftbox=null
+...\localrightbox=null
+..\hbox(0.0+0.0)x0.0, direction TLT
+...\glue 0.0
+...\glue -13.06
+...\glue -3.33298
+...\hbox(0.0+0.0)x13.06, glue set 13.06fill, direction TLT
+....\glue 0.0 plus 1.0fill
+...\glue 3.33298
+..\penalty 0
+..\vbox(20.27238+0.0)x166.94351, direction TLT
+...\hbox(0.0+0.0)x166.94351, direction TLT
+....\glue(\leftskip) 0.0 plus 1.0fil
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(0.0+0.0)x0.0, direction TLT
+....\hbox(0.0+0.0)x166.94351, direction TLT
+.....\hbox(7.5+2.5)x166.94351, shifted 32.87242, direction TLT
+......\hbox(7.5+2.5)x166.94351, glue set 77.77676fil, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+.......\TU/lmr/m/n/10 A
+.......\TU/lmr/m/n/10 )
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+....\penalty 10000
+....\glue(\parfillskip) 0.0
+....\glue(\rightskip) 0.0 plus 1.0fil
+...\glue 0.0
+...\glue(\parskip) 0.0
+...\glue(\parskip) 0.0
+...\glue(\lineskip) 1.0
+...\hbox(19.27238+0.0)x166.94351, glue set 70.6235fil, direction TLT
+....\glue(\leftskip) 0.0 plus 1.0fil
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(0.0+0.0)x0.0, direction TLT
+....\hbox(19.27238+0.0)x25.69652, direction TLT
+.....\hbox(19.27238+0.0)x25.69652, direction TLT
+......\hbox(19.27243+0.0)x25.69658, direction TLT
+.......\hbox(19.27243+0.0)x25.69658, direction TLT
+........\hbox(19.27243+0.0)x0.0, direction TLT
+.........\pdfsave
+.........\pdfsetmatrix{.08 0 0 .08}
+.........\hbox(240.9+0.0)x0.0, glue set - 321.20001fil, direction TLT
+..........\hbox(240.9+0.0)x321.2, direction TLT
+...........\image(240.9+0.0)x321.2
+..........\glue 0.0 plus 1.0fil minus 1.0fil
+.........\pdfrestore
+........\kern25.69658
+........\glue 0.0 plus 1.0fil minus 1.0fil
+....\penalty 10000
+....\glue(\parfillskip) 0.0
+....\glue(\rightskip) 0.0 plus 1.0fil
+..\vbox(20.27238+0.0)x166.94351, direction TLT
+...\hbox(0.0+0.0)x166.94351, direction TLT
+....\glue(\leftskip) 0.0 plus 1.0fil
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(0.0+0.0)x0.0, direction TLT
+....\hbox(0.0+0.0)x166.94351, direction TLT
+.....\hbox(7.5+2.5)x166.94351, shifted 32.87242, direction TLT
+......\hbox(7.5+2.5)x166.94351, glue set 75.27527fil, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+.......\hbox(7.5+2.5)x13.06, glue set 1.045fil, direction TLT
+........\glue 0.0 plus 1.0fil minus 1.0fil
+........\TU/lmr/m/n/10 B
+........\TU/lmr/m/n/10 )
+........\glue 0.0 plus 1.0fil minus 1.0fil
+.......\glue 3.33298
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+....\penalty 10000
+....\glue(\parfillskip) 0.0
+....\glue(\rightskip) 0.0 plus 1.0fil
+...\glue 0.0
+...\glue(\parskip) 0.0
+...\glue(\parskip) 0.0
+...\glue(\lineskip) 1.0
+...\hbox(19.27238+0.0)x166.94351, glue set 70.6235fil, direction TLT
+....\glue(\leftskip) 0.0 plus 1.0fil
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(0.0+0.0)x0.0, direction TLT
+....\hbox(19.27238+0.0)x25.69652, direction TLT
+.....\hbox(19.27238+0.0)x25.69652, direction TLT
+......\hbox(19.27243+0.0)x25.69658, direction TLT
+.......\hbox(19.27243+0.0)x25.69658, direction TLT
+........\hbox(19.27243+0.0)x0.0, direction TLT
+.........\pdfsave
+.........\pdfsetmatrix{.08 0 0 .08}
+.........\hbox(240.9+0.0)x0.0, glue set - 321.20001fil, direction TLT
+..........\hbox(240.9+0.0)x321.2, direction TLT
+...........\image(240.9+0.0)x321.2
+..........\glue 0.0 plus 1.0fil minus 1.0fil
+.........\pdfrestore
+........\kern25.69658
+........\glue 0.0 plus 1.0fil minus 1.0fil
+....\penalty 10000
+....\glue(\parfillskip) 0.0
+....\glue(\rightskip) 0.0 plus 1.0fil
+..\penalty 10000
+..\glue(\parfillskip) 0.0 plus 1.0fil
+..\glue(\rightskip) 0.0
+.\glue(\parskip) 23.60004
+.\glue(\parskip) 0.0
+.\glue(\lineskip) 1.0
+.\hbox(20.27238+0.0)x333.88702, shifted 11.11298, direction TLT
+..\localpar
+...\localinterlinepenalty=0
+...\localbrokenpenalty=0
+...\localleftbox=null
+...\localrightbox=null
+..\hbox(0.0+0.0)x0.0, direction TLT
+..\vbox(20.27238+0.0)x333.88702, direction TLT
+...\hbox(0.0+0.0)x333.88702, direction TLT
+....\glue(\leftskip) 0.0 plus 1.0fil
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(0.0+0.0)x0.0, direction TLT
+....\hbox(0.0+0.0)x333.88702, direction TLT
+.....\hbox(7.5+2.5)x333.88702, shifted 32.87242, direction TLT
+......\hbox(7.5+2.5)x333.88702, glue set 161.38852fil, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+.......\TU/lmr/m/n/10 C
+.......\TU/lmr/m/n/10 )
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+....\penalty 10000
+....\glue(\parfillskip) 0.0
+....\glue(\rightskip) 0.0 plus 1.0fil
+...\glue 0.0
+...\glue(\parskip) 0.0
+...\glue(\parskip) 0.0
+...\glue(\lineskip) 1.0
+...\hbox(19.27238+0.0)x333.88702, glue set 154.09525fil, direction TLT
+....\glue(\leftskip) 0.0 plus 1.0fil
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(0.0+0.0)x0.0, direction TLT
+....\hbox(19.27238+0.0)x25.69652, direction TLT
+.....\hbox(19.27238+0.0)x25.69652, direction TLT
+......\hbox(19.27243+0.0)x25.69658, direction TLT
+.......\hbox(19.27243+0.0)x25.69658, direction TLT
+........\hbox(19.27243+0.0)x0.0, direction TLT
+.........\pdfsave
+.........\pdfsetmatrix{.08 0 0 .08}
+.........\hbox(240.9+0.0)x0.0, glue set - 321.20001fil, direction TLT
+..........\hbox(240.9+0.0)x321.2, direction TLT
+...........\image(240.9+0.0)x321.2
+..........\glue 0.0 plus 1.0fil minus 1.0fil
+.........\pdfrestore
+........\kern25.69658
+........\glue 0.0 plus 1.0fil minus 1.0fil
+....\penalty 10000
+....\glue(\parfillskip) 0.0
+....\glue(\rightskip) 0.0 plus 1.0fil
+..\penalty 10000
+..\glue(\parfillskip) 0.0 plus 1.0fil
+..\glue(\rightskip) 0.0
+.\penalty -51
+.\glue 9.80002
+.\glue -9.80002
+.\glue 20.0
+.\glue -20.0
+.\glue 24.0 plus 1.0 minus 1.0
+.\glue -24.0 plus -1.0 minus -1.0
+.\penalty -51
+.\glue 24.0 plus 1.0 minus 1.0
+! OK.
+<argument> ...yanspic} \end {enumext} }\showbox 0 
+l. ...  }
+============================================================
+============================================================
+TEST 18: [18] nota en \string \anspic * y show-ans
+============================================================
+* Package enumext: Start enumext with save-ans=kar on line ....
+* Package enumext: Creating \g__enumext_kar_prop on line ....
+Defining \g__enumext_kar_prop on line ...
+* Package enumext: Creating \g__enumext_kar_seq on line ....
+Defining \g__enumext_kar_seq on line ...
+* Package enumext: Creating \g__enumext_resume_kar_int on line ....
+Defining \g__enumext_resume_kar_int on line ...
+\g__enumext_resume_kar_int=\count...
+File: example-image-a.pdf Graphic file (type pdf)
+<use example-image-a.pdf>
+Package luatex.def Info: example-image-a.pdf  used on input line ....
+(luatex.def)             Requested size: 25.69652pt x 19.27238pt.
+File: example-image-a.pdf Graphic file (type pdf)
+<use example-image-a.pdf>
+Package luatex.def Info: example-image-a.pdf  used on input line ....
+(luatex.def)             Requested size: 25.69652pt x 19.27238pt.
+File: example-image-b.pdf Graphic file (type pdf)
+<use example-image-b.pdf>
+Package luatex.def Info: example-image-b.pdf  used on input line ....
+(luatex.def)             Requested size: 25.69652pt x 19.27238pt.
+File: example-image-b.pdf Graphic file (type pdf)
+<use example-image-b.pdf>
+Package luatex.def Info: example-image-b.pdf  used on input line ....
+(luatex.def)             Requested size: 25.69652pt x 19.27238pt.
+* Package enumext: Stop enumext with save-ans=kar on line ....
+* Package enumext: Elements in \g__enumext_kar_prop = 1.
+* Package enumext: Elements in \g__enumext_kar_seq = 1.
+* Package enumext: Value of \g__enumext_resume_kar_int = 1.
+* Package enumext: Value of \g__enumext_item_number_int = 1.
+* Package enumext: Value of \g__enumext_item_anskey_int = 1.
+* Package enumext: Difference item_number_int - item_anskey_int = 0.
+****************************************
+* Package enumext: Checking answers in 'kar' for {enumext}
+* started on line ... and close on line ...: 'OK', all items with answer.
+****************************************
+> \box...=
+\vbox(69.9624+0.0)x345.0, direction TLT
+.\penalty -51
+.\glue 10.0 plus 4.0 minus 5.0
+.\glue -10.0 plus -4.0 minus -5.0
+.\glue 6.0 plus 2.0 minus 4.0
+.\glue(\parskip) 4.0 plus 2.0 minus 1.0
+.\glue(\parskip) 0.0
+.\hbox(6.83+2.06)x333.88702, glue set 230.05702fil, shifted 11.11298, direction TLT
+..\localpar
+...\localinterlinepenalty=0
+...\localbrokenpenalty=0
+...\localleftbox=null
+...\localrightbox=null
+..\hbox(6.66+0.0)x0.0, direction TLT
+...\glue 0.0
+...\glue -7.78
+...\glue -3.33298
+...\hbox(6.66+0.0)x7.78, direction TLT
+....\glue 0.0
+....\hbox(0.0+0.0)x0.0, direction TLT
+.....\glue 0.0 plus 1.0fil minus 1.0fil
+....\glue 0.0
+....\TU/lmr/m/n/10 1
+....\TU/lmr/m/n/10 .
+....\glue 0.0 plus 1.0fill
+...\glue 3.33298
+..\penalty 0
+..\TU/lmr/m/n/10 P
+..\TU/lmr/m/n/10 r
+..\TU/lmr/m/n/10 e
+..\discretionary (penalty 50)
+...< \TU/lmr/m/n/10 -
+..\TU/lmr/m/n/10 g
+..\TU/lmr/m/n/10 u
+..\TU/lmr/m/n/10 n
+..\kern-0.28 (font)
+..\TU/lmr/m/n/10 t
+..\TU/lmr/m/n/10 a
+..\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+..\TU/lmr/m/n/10 c
+..\TU/lmr/m/n/10 o
+..\TU/lmr/m/n/10 n
+..\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+..\TU/lmr/m/n/10 i
+..\TU/lmr/m/n/10 m
+..\discretionary (penalty 50)
+...< \TU/lmr/m/n/10 -
+..\TU/lmr/m/n/10 a
+..\discretionary (penalty 50)
+...< \TU/lmr/m/n/10 -
+..\TU/lmr/m/n/10 g
+..\TU/lmr/m/n/10 e
+..\TU/lmr/m/n/10 n
+..\TU/lmr/m/n/10 e
+..\TU/lmr/m/n/10 s
+..\TU/lmr/m/n/10 .
+..\penalty 10000
+..\glue(\parfillskip) 0.0 plus 1.0fil
+..\glue(\rightskip) 0.0
+.\penalty -51
+.\glue 9.80002 plus 4.0 minus 2.0
+.\glue -9.80002 plus -4.0 minus -2.0
+.\glue -5.80002 plus 3.0 minus 1.0
+.\glue(\parskip) 15.60004 plus 1.0 minus 1.0
+.\glue(\parskip) 0.0
+.\glue(\lineskip) 1.0
+.\hbox(20.27238+0.0)x333.88702, shifted 11.11298, direction TLT
+..\localpar
+...\localinterlinepenalty=0
+...\localbrokenpenalty=0
+...\localleftbox=null
+...\localrightbox=null
+..\hbox(0.0+0.0)x0.0, direction TLT
+...\glue 0.0
+...\glue -13.06
+...\glue -3.33298
+...\hbox(0.0+0.0)x13.06, glue set 13.06fill, direction TLT
+....\glue 0.0 plus 1.0fill
+...\glue 3.33298
+..\penalty 0
+..\vbox(20.27238+0.0)x166.94351, direction TLT
+...\hbox(0.0+0.0)x166.94351, direction TLT
+....\glue(\leftskip) 0.0 plus 1.0fil
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(0.0+0.0)x0.0, direction TLT
+....\hbox(0.0+0.0)x166.94351, direction TLT
+.....\hbox(7.5+2.5)x166.94351, shifted 32.87242, direction TLT
+......\hbox(7.5+2.5)x166.94351, glue set 77.77676fil, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+.......\TU/lmr/m/n/10 A
+.......\TU/lmr/m/n/10 )
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+....\penalty 10000
+....\glue(\parfillskip) 0.0
+....\glue(\rightskip) 0.0 plus 1.0fil
+...\glue 0.0
+...\glue(\parskip) 0.0
+...\glue(\parskip) 0.0
+...\glue(\lineskip) 1.0
+...\hbox(19.27238+0.0)x166.94351, glue set 70.6235fil, direction TLT
+....\glue(\leftskip) 0.0 plus 1.0fil
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(0.0+0.0)x0.0, direction TLT
+....\hbox(19.27238+0.0)x25.69652, direction TLT
+.....\hbox(19.27238+0.0)x25.69652, direction TLT
+......\hbox(19.27243+0.0)x25.69658, direction TLT
+.......\hbox(19.27243+0.0)x25.69658, direction TLT
+........\hbox(19.27243+0.0)x0.0, direction TLT
+.........\pdfsave
+.........\pdfsetmatrix{.08 0 0 .08}
+.........\hbox(240.9+0.0)x0.0, glue set - 321.20001fil, direction TLT
+..........\hbox(240.9+0.0)x321.2, direction TLT
+...........\image(240.9+0.0)x321.2
+..........\glue 0.0 plus 1.0fil minus 1.0fil
+.........\pdfrestore
+........\kern25.69658
+........\glue 0.0 plus 1.0fil minus 1.0fil
+....\penalty 10000
+....\glue(\parfillskip) 0.0
+....\glue(\rightskip) 0.0 plus 1.0fil
+..\vbox(20.27238+0.0)x166.94351, direction TLT
+...\hbox(0.0+0.0)x166.94351, direction TLT
+....\glue(\leftskip) 0.0 plus 1.0fil
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(0.0+0.0)x0.0, direction TLT
+....\hbox(0.0+0.0)x166.94351, direction TLT
+.....\hbox(7.5+2.5)x166.94351, shifted 32.87242, direction TLT
+......\hbox(7.5+2.5)x166.94351, glue set 61.10527fil, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+.......\glue -3.33298
+.......\hbox(4.65279+0.0)x0.0, glue set - 13.06fil, direction TLT
+........\glue 0.0 plus 1.0fil minus 1.0fil
+........\hbox(4.65279+0.0)x13.06, glue set 8.05998fil, direction TLT
+.........\glue 0.0 plus 1.0fil minus 1.0fil
+.........\mathon
+.........\OML/cmm/m/it/10 ?
+.........\mathoff
+.......\glue 3.33298
+.......\hbox(7.5+2.5)x13.06, glue set 1.045fil, direction TLT
+........\glue 0.0 plus 1.0fil minus 1.0fil
+........\TU/lmr/m/n/10 B
+........\TU/lmr/m/n/10 )
+........\glue 0.0 plus 1.0fil minus 1.0fil
+.......\glue 3.33298
+.......\TU/lmr/m/n/10 [
+.......\TU/lmr/m/n/10 n
+.......\TU/lmr/m/n/10 o
+.......\TU/lmr/m/n/10 t
+.......\TU/lmr/m/n/10 a
+.......\TU/lmr/m/n/10 ]
+.......\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+....\penalty 10000
+....\glue(\parfillskip) 0.0
+....\glue(\rightskip) 0.0 plus 1.0fil
+...\glue 0.0
+...\glue(\parskip) 0.0
+...\glue(\parskip) 0.0
+...\glue(\lineskip) 1.0
+...\hbox(19.27238+0.0)x166.94351, glue set 70.6235fil, direction TLT
+....\glue(\leftskip) 0.0 plus 1.0fil
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(0.0+0.0)x0.0, direction TLT
+....\hbox(19.27238+0.0)x25.69652, direction TLT
+.....\hbox(19.27238+0.0)x25.69652, direction TLT
+......\hbox(19.27243+0.0)x25.69658, direction TLT
+.......\hbox(19.27243+0.0)x25.69658, direction TLT
+........\hbox(19.27243+0.0)x0.0, direction TLT
+.........\pdfsave
+.........\pdfsetmatrix{.08 0 0 .08}
+.........\hbox(240.9+0.0)x0.0, glue set - 321.20001fil, direction TLT
+..........\hbox(240.9+0.0)x321.2, direction TLT
+...........\image(240.9+0.0)x321.2
+..........\glue 0.0 plus 1.0fil minus 1.0fil
+.........\pdfrestore
+........\kern25.69658
+........\glue 0.0 plus 1.0fil minus 1.0fil
+....\penalty 10000
+....\glue(\parfillskip) 0.0
+....\glue(\rightskip) 0.0 plus 1.0fil
+..\penalty 10000
+..\glue(\parfillskip) 0.0 plus 1.0fil
+..\glue(\rightskip) 0.0
+.\penalty -51
+.\glue 5.80002 plus 2.0 minus 1.0
+.\glue -5.80002 plus -2.0 minus -1.0
+.\glue 16.0
+.\glue -16.0
+.\glue 20.0 plus 1.0 minus 1.0
+.\glue -20.0 plus -1.0 minus -1.0
+.\penalty -51
+.\glue 20.0 plus 1.0 minus 1.0
+! OK.
+<argument> ...yanspic} \end {enumext} }\showbox 0 
+l. ...  }
+============================================================
+============================================================
+TEST 19: [19] save-sep y show-pos en keyanspic
+============================================================
+* Package enumext: Start enumext with save-ans=kas on line ....
+* Package enumext: Creating \g__enumext_kas_prop on line ....
+Defining \g__enumext_kas_prop on line ...
+* Package enumext: Creating \g__enumext_kas_seq on line ....
+Defining \g__enumext_kas_seq on line ...
+* Package enumext: Creating \g__enumext_resume_kas_int on line ....
+Defining \g__enumext_resume_kas_int on line ...
+\g__enumext_resume_kas_int=\count...
+File: example-image-a.pdf Graphic file (type pdf)
+<use example-image-a.pdf>
+Package luatex.def Info: example-image-a.pdf  used on input line ....
+(luatex.def)             Requested size: 25.69652pt x 19.27238pt.
+File: example-image-a.pdf Graphic file (type pdf)
+<use example-image-a.pdf>
+Package luatex.def Info: example-image-a.pdf  used on input line ....
+(luatex.def)             Requested size: 25.69652pt x 19.27238pt.
+File: example-image-b.pdf Graphic file (type pdf)
+<use example-image-b.pdf>
+Package luatex.def Info: example-image-b.pdf  used on input line ....
+(luatex.def)             Requested size: 25.69652pt x 19.27238pt.
+File: example-image-b.pdf Graphic file (type pdf)
+<use example-image-b.pdf>
+Package luatex.def Info: example-image-b.pdf  used on input line ....
+(luatex.def)             Requested size: 25.69652pt x 19.27238pt.
+* Package enumext: Stop enumext with save-ans=kas on line ....
+* Package enumext: Elements in \g__enumext_kas_prop = 1.
+* Package enumext: Elements in \g__enumext_kas_seq = 1.
+* Package enumext: Value of \g__enumext_resume_kas_int = 1.
+* Package enumext: Value of \g__enumext_item_number_int = 1.
+* Package enumext: Value of \g__enumext_item_anskey_int = 1.
+* Package enumext: Difference item_number_int - item_anskey_int = 0.
+****************************************
+* Package enumext: Checking answers in 'kas' for {enumext}
+* started on line ... and close on line ...: 'OK', all items with answer.
+****************************************
+> \box...=
+\vbox(84.2034+0.0)x345.0, direction TLT
+.\penalty -51
+.\glue 10.0 plus 4.0 minus 5.0
+.\glue -10.0 plus -4.0 minus -5.0
+.\glue 6.0 plus 2.0 minus 4.0
+.\glue(\parskip) 4.0 plus 2.0 minus 1.0
+.\glue(\parskip) 0.0
+.\hbox(6.83+2.06)x333.88702, glue set 230.05702fil, shifted 11.11298, direction TLT
+..\localpar
+...\localinterlinepenalty=0
+...\localbrokenpenalty=0
+...\localleftbox=null
+...\localrightbox=null
+..\hbox(6.66+0.0)x0.0, direction TLT
+...\glue 0.0
+...\glue -7.78
+...\glue -3.33298
+...\hbox(6.66+0.0)x7.78, direction TLT
+....\glue 0.0
+....\hbox(0.0+0.0)x0.0, direction TLT
+.....\glue 0.0 plus 1.0fil minus 1.0fil
+....\glue 0.0
+....\TU/lmr/m/n/10 1
+....\TU/lmr/m/n/10 .
+....\glue 0.0 plus 1.0fill
+...\glue 3.33298
+..\penalty 0
+..\TU/lmr/m/n/10 P
+..\TU/lmr/m/n/10 r
+..\TU/lmr/m/n/10 e
+..\discretionary (penalty 50)
+...< \TU/lmr/m/n/10 -
+..\TU/lmr/m/n/10 g
+..\TU/lmr/m/n/10 u
+..\TU/lmr/m/n/10 n
+..\kern-0.28 (font)
+..\TU/lmr/m/n/10 t
+..\TU/lmr/m/n/10 a
+..\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+..\TU/lmr/m/n/10 c
+..\TU/lmr/m/n/10 o
+..\TU/lmr/m/n/10 n
+..\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+..\TU/lmr/m/n/10 i
+..\TU/lmr/m/n/10 m
+..\discretionary (penalty 50)
+...< \TU/lmr/m/n/10 -
+..\TU/lmr/m/n/10 a
+..\discretionary (penalty 50)
+...< \TU/lmr/m/n/10 -
+..\TU/lmr/m/n/10 g
+..\TU/lmr/m/n/10 e
+..\TU/lmr/m/n/10 n
+..\TU/lmr/m/n/10 e
+..\TU/lmr/m/n/10 s
+..\TU/lmr/m/n/10 .
+..\penalty 10000
+..\glue(\parfillskip) 0.0 plus 1.0fil
+..\glue(\rightskip) 0.0
+.\penalty -51
+.\glue 9.80002 plus 4.0 minus 2.0
+.\glue -9.80002 plus -4.0 minus -2.0
+.\glue -5.80002 plus 3.0 minus 1.0
+.\glue(\parskip) 15.60004 plus 1.0 minus 1.0
+.\glue(\parskip) 0.0
+.\glue(\lineskip) 1.0
+.\hbox(20.27238+0.0)x333.88702, shifted 11.11298, direction TLT
+..\localpar
+...\localinterlinepenalty=0
+...\localbrokenpenalty=0
+...\localleftbox=null
+...\localrightbox=null
+..\hbox(0.0+0.0)x0.0, direction TLT
+...\glue 0.0
+...\glue -13.06
+...\glue -3.33298
+...\hbox(0.0+0.0)x13.06, glue set 13.06fill, direction TLT
+....\glue 0.0 plus 1.0fill
+...\glue 3.33298
+..\penalty 0
+..\vbox(20.27238+0.0)x166.94351, direction TLT
+...\hbox(0.0+0.0)x166.94351, direction TLT
+....\glue(\leftskip) 0.0 plus 1.0fil
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(0.0+0.0)x0.0, direction TLT
+....\hbox(0.0+0.0)x166.94351, direction TLT
+.....\hbox(7.5+2.5)x166.94351, shifted 32.87242, direction TLT
+......\hbox(7.5+2.5)x166.94351, glue set 77.77676fil, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+.......\TU/lmr/m/n/10 A
+.......\TU/lmr/m/n/10 )
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+....\penalty 10000
+....\glue(\parfillskip) 0.0
+....\glue(\rightskip) 0.0 plus 1.0fil
+...\glue 0.0
+...\glue(\parskip) 0.0
+...\glue(\parskip) 0.0
+...\glue(\lineskip) 1.0
+...\hbox(19.27238+0.0)x166.94351, glue set 70.6235fil, direction TLT
+....\glue(\leftskip) 0.0 plus 1.0fil
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(0.0+0.0)x0.0, direction TLT
+....\hbox(19.27238+0.0)x25.69652, direction TLT
+.....\hbox(19.27238+0.0)x25.69652, direction TLT
+......\hbox(19.27243+0.0)x25.69658, direction TLT
+.......\hbox(19.27243+0.0)x25.69658, direction TLT
+........\hbox(19.27243+0.0)x0.0, direction TLT
+.........\pdfsave
+.........\pdfsetmatrix{.08 0 0 .08}
+.........\hbox(240.9+0.0)x0.0, glue set - 321.20001fil, direction TLT
+..........\hbox(240.9+0.0)x321.2, direction TLT
+...........\image(240.9+0.0)x321.2
+..........\glue 0.0 plus 1.0fil minus 1.0fil
+.........\pdfrestore
+........\kern25.69658
+........\glue 0.0 plus 1.0fil minus 1.0fil
+....\penalty 10000
+....\glue(\parfillskip) 0.0
+....\glue(\rightskip) 0.0 plus 1.0fil
+..\vbox(20.27238+0.0)x166.94351, direction TLT
+...\hbox(0.0+0.0)x166.94351, direction TLT
+....\glue(\leftskip) 0.0 plus 1.0fil
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(0.0+0.0)x0.0, direction TLT
+....\hbox(0.0+0.0)x166.94351, direction TLT
+.....\hbox(7.5+2.5)x166.94351, shifted 32.87242, direction TLT
+......\hbox(7.5+2.5)x166.94351, glue set 61.10527fil, direction TLT
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+.......\glue -3.33298
+.......\hbox(6.0+2.0)x0.0, glue set - 13.06fil, direction TLT
+........\glue 0.0 plus 1.0fil minus 1.0fil
+........\hbox(6.0+2.0)x13.06, glue set 4.092fil, direction TLT
+.........\glue 0.0 plus 1.0fil minus 1.0fil
+.........\TU/lmr/m/n/8 [
+.........\TU/lmr/m/n/8 1
+.........\TU/lmr/m/n/8 ]
+.......\glue 3.33298
+.......\hbox(7.5+2.5)x13.06, glue set 1.045fil, direction TLT
+........\glue 0.0 plus 1.0fil minus 1.0fil
+........\TU/lmr/m/n/10 B
+........\TU/lmr/m/n/10 )
+........\glue 0.0 plus 1.0fil minus 1.0fil
+.......\glue 3.33298
+.......\TU/lmr/m/n/10 [
+.......\TU/lmr/m/n/10 n
+.......\TU/lmr/m/n/10 o
+.......\TU/lmr/m/n/10 t
+.......\TU/lmr/m/n/10 a
+.......\TU/lmr/m/n/10 ]
+.......\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+.......\glue 0.0 plus 1.0fil minus 1.0fil
+....\penalty 10000
+....\glue(\parfillskip) 0.0
+....\glue(\rightskip) 0.0 plus 1.0fil
+...\glue 0.0
+...\glue(\parskip) 0.0
+...\glue(\parskip) 0.0
+...\glue(\lineskip) 1.0
+...\hbox(19.27238+0.0)x166.94351, glue set 70.6235fil, direction TLT
+....\glue(\leftskip) 0.0 plus 1.0fil
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(0.0+0.0)x0.0, direction TLT
+....\hbox(19.27238+0.0)x25.69652, direction TLT
+.....\hbox(19.27238+0.0)x25.69652, direction TLT
+......\hbox(19.27243+0.0)x25.69658, direction TLT
+.......\hbox(19.27243+0.0)x25.69658, direction TLT
+........\hbox(19.27243+0.0)x0.0, direction TLT
+.........\pdfsave
+.........\pdfsetmatrix{.08 0 0 .08}
+.........\hbox(240.9+0.0)x0.0, glue set - 321.20001fil, direction TLT
+..........\hbox(240.9+0.0)x321.2, direction TLT
+...........\image(240.9+0.0)x321.2
+..........\glue 0.0 plus 1.0fil minus 1.0fil
+.........\pdfrestore
+........\kern25.69658
+........\glue 0.0 plus 1.0fil minus 1.0fil
+....\penalty 10000
+....\glue(\parfillskip) 0.0
+....\glue(\rightskip) 0.0 plus 1.0fil
+..\penalty 10000
+..\glue(\parfillskip) 0.0 plus 1.0fil
+..\glue(\rightskip) 0.0
+.\penalty -51
+.\glue 5.80002 plus 2.0 minus 1.0
+.\glue -5.80002 plus -2.0 minus -1.0
+.\glue 16.0
+.\glue -16.0
+.\glue 20.0 plus 1.0 minus 1.0
+.\glue -20.0 plus -1.0 minus -1.0
+.\penalty -51
+.\glue 20.0 plus 1.0 minus 1.0
+.\glue -20.0 plus -1.0 minus -1.0
+.\penalty -51
+.\glue 20.0 plus 1.0 minus 1.0
+.\glue(\parskip) 0.0
+.\glue(\parskip) 0.0
+.\glue(\baselineskip) 5.25
+.\hbox(6.75+2.241)x345.0, glue set 175.27824fil, direction TLT
+..\localpar
+...\localinterlinepenalty=0
+...\localbrokenpenalty=0
+...\localleftbox=null
+...\localrightbox=null
+..\hbox(0.0+0.0)x11.11298, direction TLT
+...\glue 11.11298
+...\glue -7.78
+...\glue -3.33298
+...\hbox(0.0+0.0)x7.78, glue set 7.78fil, direction TLT
+....\glue 0.0 plus 1.0fil
+...\glue 3.33298
+..\penalty 0
+..\glue -11.11298
+..\hbox(6.75+2.241)x169.72176, direction TLT
+...\hbox(5.994+0.0)x7.78, glue set 0.57999fil, direction TLT
+....\TU/lmr/m/n/9 1
+....\TU/lmr/m/n/9 .
+....\glue 0.0 plus 1.0fil minus 1.0fil
+...\glue 3.33298
+...\vbox(6.75+2.241)x158.60878, direction TLT
+....\hbox(6.75+2.241)x158.60878, glue set 124.80473fil, direction TLT
+.....\localpar
+......\localinterlinepenalty=0
+......\localbrokenpenalty=0
+......\localleftbox=null
+......\localrightbox=null
+.....\hbox(0.0+0.0)x0.0, direction TLT
+.....\glue 0.0
+.....\TU/lmr/m/n/9 B
+.....\TU/lmr/m/n/9 )
+.....\TU/lmr/m/n/9 ;
+.....\glue(\spaceskip) 3.087 plus 1.5435 minus 1.029
+.....\TU/lmr/m/n/9 n
+.....\TU/lmr/m/n/9 o
+.....\TU/lmr/m/n/9 t
+.....\TU/lmr/m/n/9 a
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0
+..\penalty 10000
+..\glue(\parfillskip) 0.0 plus 1.0fil
+..\glue(\rightskip) 0.0
+.\penalty -51
+.\glue 0.0
+! OK.
+<argument> ...xt} \printkeyans *{kas} }\showbox 0 
+l. ...  }
+============================================================
+============================================================
+TEST 20: [20] mark-pos*=left
+============================================================
+* Package enumext: Start enumext with save-ans=kat on line ....
+* Package enumext: Creating \g__enumext_kat_prop on line ....
+Defining \g__enumext_kat_prop on line ...
+* Package enumext: Creating \g__enumext_kat_seq on line ....
+Defining \g__enumext_kat_seq on line ...
+* Package enumext: Creating \g__enumext_resume_kat_int on line ....
+Defining \g__enumext_resume_kat_int on line ...
+\g__enumext_resume_kat_int=\count...
+* Package enumext: Stop enumext with save-ans=kat on line ....
+* Package enumext: Elements in \g__enumext_kat_prop = 1.
+* Package enumext: Elements in \g__enumext_kat_seq = 1.
+* Package enumext: Value of \g__enumext_resume_kat_int = 1.
+* Package enumext: Value of \g__enumext_item_number_int = 1.
+* Package enumext: Value of \g__enumext_item_anskey_int = 1.
+* Package enumext: Difference item_number_int - item_anskey_int = 0.
+****************************************
+* Package enumext: Checking answers in 'kat' for {enumext}
+* started on line ... and close on line ...: 'OK', all items with answer.
+****************************************
+> \box...=
+\vbox(65.33+0.0)x345.0, direction TLT
+.\penalty -51
+.\glue 10.0 plus 4.0 minus 5.0
+.\glue -10.0 plus -4.0 minus -5.0
+.\glue 6.0 plus 2.0 minus 4.0
+.\glue(\parskip) 4.0 plus 2.0 minus 1.0
+.\glue(\parskip) 0.0
+.\hbox(6.83+2.06)x333.88702, glue set 291.20703fil, shifted 11.11298, direction TLT
+..\localpar
+...\localinterlinepenalty=0
+...\localbrokenpenalty=0
+...\localleftbox=null
+...\localrightbox=null
+..\hbox(6.66+0.0)x0.0, direction TLT
+...\glue 0.0
+...\glue -7.78
+...\glue -3.33298
+...\hbox(6.66+0.0)x7.78, direction TLT
+....\glue 0.0
+....\hbox(0.0+0.0)x0.0, direction TLT
+.....\glue 0.0 plus 1.0fil minus 1.0fil
+....\glue 0.0
+....\TU/lmr/m/n/10 1
+....\TU/lmr/m/n/10 .
+....\glue 0.0 plus 1.0fill
+...\glue 3.33298
+..\penalty 0
+..\TU/lmr/m/n/10 P
+..\TU/lmr/m/n/10 r
+..\TU/lmr/m/n/10 e
+..\discretionary (penalty 50)
+...< \TU/lmr/m/n/10 -
+..\TU/lmr/m/n/10 g
+..\TU/lmr/m/n/10 u
+..\TU/lmr/m/n/10 n
+..\kern-0.28 (font)
+..\TU/lmr/m/n/10 t
+..\TU/lmr/m/n/10 a
+..\TU/lmr/m/n/10 .
+..\penalty 10000
+..\glue(\parfillskip) 0.0 plus 1.0fil
+..\glue(\rightskip) 0.0
+.\penalty -51
+.\glue 8.0 plus 4.0 minus 2.0
+.\glue -8.0 plus -4.0 minus -2.0
+.\glue 6.0 plus 3.0 minus 1.0
+.\glue(\parskip) 2.0 plus 1.0 minus 1.0
+.\glue(\parskip) 0.0
+.\glue(\baselineskip) 2.44
+.\hbox(7.5+2.5)x317.49405, glue set 282.29407fil, shifted 27.50595, direction TLT
+..\localpar
+...\localinterlinepenalty=0
+...\localbrokenpenalty=0
+...\localleftbox=null
+...\localrightbox=null
+..\hbox(7.5+2.5)x0.0, direction TLT
+...\glue 0.0
+...\glue -13.06
+...\glue -3.33298
+...\hbox(7.5+2.5)x13.06, glue set 1.67fill, direction TLT
+....\TU/lmr/m/n/10 A
+....\TU/lmr/m/n/10 )
+....\glue 0.0 plus 1.0fill
+...\glue 3.33298
+..\penalty 0
+..\TU/lmr/m/n/10 P
+..\TU/lmr/m/n/10 r
+..\TU/lmr/m/n/10 i
+..\TU/lmr/m/n/10 m
+..\TU/lmr/m/n/10 e
+..\TU/lmr/m/n/10 r
+..\TU/lmr/m/n/10 a
+..\penalty 10000
+..\glue(\parfillskip) 0.0 plus 1.0fil
+..\glue(\rightskip) 0.0
+.\penalty -51
+.\glue 2.0 plus 1.0 minus 1.0
+.\glue(\parskip) 2.0 plus 1.0 minus 1.0
+.\glue(\parskip) 0.0
+.\glue(\baselineskip) 2.0
+.\hbox(7.5+2.5)x317.49405, glue set 234.65405fil, shifted 27.50595, direction TLT
+..\localpar
+...\localinterlinepenalty=0
+...\localbrokenpenalty=0
+...\localleftbox=null
+...\localrightbox=null
+..\hbox(7.5+2.5)x0.0, direction TLT
+...\glue 0.0
+...\glue -13.06
+...\glue -3.33298
+...\hbox(7.5+2.5)x13.06, glue set 2.09fill, direction TLT
+....\glue -3.33298
+....\hbox(4.66+0.0)x0.0, glue set - 13.06fil, direction TLT
+.....\glue 0.0 plus 1.0fil minus 1.0fil
+.....\hbox(4.66+0.0)x13.06, glue set 8.06fil, direction TLT
+......\TU/lmr/m/n/10 ∗
+......\glue 0.0 plus 1.0fil minus 1.0fil
+....\glue 3.33298
+....\TU/lmr/m/n/10 B
+....\TU/lmr/m/n/10 )
+....\glue 0.0 plus 1.0fill
+...\glue 3.33298
+..\penalty 0
+..\TU/lmr/m/n/10 S
+..\TU/lmr/m/n/10 e
+..\discretionary (penalty 50)
+...< \TU/lmr/m/n/10 -
+..\TU/lmr/m/n/10 g
+..\TU/lmr/m/n/10 u
+..\TU/lmr/m/n/10 n
+..\TU/lmr/m/n/10 d
+..\TU/lmr/m/n/10 a
+..\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+..\TU/lmr/m/n/10 (
+..\TU/lmr/m/n/10 c
+..\TU/lmr/m/n/10 o
+..\TU/lmr/m/n/10 r
+..\discretionary (penalty 50)
+...< \TU/lmr/m/n/10 -
+..\TU/lmr/m/n/10 r
+..\TU/lmr/m/n/10 e
+..\TU/lmr/m/n/10 c
+..\TU/lmr/m/n/10 t
+..\TU/lmr/m/n/10 a
+..\TU/lmr/m/n/10 )
+..\penalty 10000
+..\glue(\parfillskip) 0.0 plus 1.0fil
+..\glue(\rightskip) 0.0
+.\penalty -51
+.\glue 4.0 plus 2.0 minus 1.0
+.\glue -4.0 plus -2.0 minus -1.0
+.\glue 8.0 plus 3.0 minus 2.0
+.\glue -10.5 plus -3.0 minus -2.0
+.\penalty -51
+.\glue 2.5
+.\glue 8.0 plus 3.0 minus 2.0
+.\glue -8.0 plus -3.0 minus -2.0
+.\glue 10.0 plus 3.0 minus 5.0
+! OK.
+<argument> ...{keyans} \end {enumext} }\showbox 0 
+l. ...  }
+============================================================
+============================================================
+TEST 21: [21] mark-pos*=center
+============================================================
+* Package enumext: Start enumext with save-ans=kau on line ....
+* Package enumext: Creating \g__enumext_kau_prop on line ....
+Defining \g__enumext_kau_prop on line ...
+* Package enumext: Creating \g__enumext_kau_seq on line ....
+Defining \g__enumext_kau_seq on line ...
+* Package enumext: Creating \g__enumext_resume_kau_int on line ....
+Defining \g__enumext_resume_kau_int on line ...
+\g__enumext_resume_kau_int=\count...
+* Package enumext: Stop enumext with save-ans=kau on line ....
+* Package enumext: Elements in \g__enumext_kau_prop = 1.
+* Package enumext: Elements in \g__enumext_kau_seq = 1.
+* Package enumext: Value of \g__enumext_resume_kau_int = 1.
+* Package enumext: Value of \g__enumext_item_number_int = 1.
+* Package enumext: Value of \g__enumext_item_anskey_int = 1.
+* Package enumext: Difference item_number_int - item_anskey_int = 0.
+****************************************
+* Package enumext: Checking answers in 'kau' for {enumext}
+* started on line ... and close on line ...: 'OK', all items with answer.
+****************************************
+> \box...=
+\vbox(65.33+0.0)x345.0, direction TLT
+.\penalty -51
+.\glue 10.0 plus 4.0 minus 5.0
+.\glue -10.0 plus -4.0 minus -5.0
+.\glue 6.0 plus 2.0 minus 4.0
+.\glue(\parskip) 4.0 plus 2.0 minus 1.0
+.\glue(\parskip) 0.0
+.\hbox(6.83+2.06)x333.88702, glue set 291.20703fil, shifted 11.11298, direction TLT
+..\localpar
+...\localinterlinepenalty=0
+...\localbrokenpenalty=0
+...\localleftbox=null
+...\localrightbox=null
+..\hbox(6.66+0.0)x0.0, direction TLT
+...\glue 0.0
+...\glue -7.78
+...\glue -3.33298
+...\hbox(6.66+0.0)x7.78, direction TLT
+....\glue 0.0
+....\hbox(0.0+0.0)x0.0, direction TLT
+.....\glue 0.0 plus 1.0fil minus 1.0fil
+....\glue 0.0
+....\TU/lmr/m/n/10 1
+....\TU/lmr/m/n/10 .
+....\glue 0.0 plus 1.0fill
+...\glue 3.33298
+..\penalty 0
+..\TU/lmr/m/n/10 P
+..\TU/lmr/m/n/10 r
+..\TU/lmr/m/n/10 e
+..\discretionary (penalty 50)
+...< \TU/lmr/m/n/10 -
+..\TU/lmr/m/n/10 g
+..\TU/lmr/m/n/10 u
+..\TU/lmr/m/n/10 n
+..\kern-0.28 (font)
+..\TU/lmr/m/n/10 t
+..\TU/lmr/m/n/10 a
+..\TU/lmr/m/n/10 .
+..\penalty 10000
+..\glue(\parfillskip) 0.0 plus 1.0fil
+..\glue(\rightskip) 0.0
+.\penalty -51
+.\glue 8.0 plus 4.0 minus 2.0
+.\glue -8.0 plus -4.0 minus -2.0
+.\glue 6.0 plus 3.0 minus 1.0
+.\glue(\parskip) 2.0 plus 1.0 minus 1.0
+.\glue(\parskip) 0.0
+.\glue(\baselineskip) 2.44
+.\hbox(7.5+2.5)x317.49405, glue set 282.29407fil, shifted 27.50595, direction TLT
+..\localpar
+...\localinterlinepenalty=0
+...\localbrokenpenalty=0
+...\localleftbox=null
+...\localrightbox=null
+..\hbox(7.5+2.5)x0.0, direction TLT
+...\glue 0.0
+...\glue -13.06
+...\glue -3.33298
+...\hbox(7.5+2.5)x13.06, glue set 1.67fill, direction TLT
+....\TU/lmr/m/n/10 A
+....\TU/lmr/m/n/10 )
+....\glue 0.0 plus 1.0fill
+...\glue 3.33298
+..\penalty 0
+..\TU/lmr/m/n/10 P
+..\TU/lmr/m/n/10 r
+..\TU/lmr/m/n/10 i
+..\TU/lmr/m/n/10 m
+..\TU/lmr/m/n/10 e
+..\TU/lmr/m/n/10 r
+..\TU/lmr/m/n/10 a
+..\penalty 10000
+..\glue(\parfillskip) 0.0 plus 1.0fil
+..\glue(\rightskip) 0.0
+.\penalty -51
+.\glue 2.0 plus 1.0 minus 1.0
+.\glue(\parskip) 2.0 plus 1.0 minus 1.0
+.\glue(\parskip) 0.0
+.\glue(\baselineskip) 2.0
+.\hbox(7.5+2.5)x317.49405, glue set 234.65405fil, shifted 27.50595, direction TLT
+..\localpar
+...\localinterlinepenalty=0
+...\localbrokenpenalty=0
+...\localleftbox=null
+...\localrightbox=null
+..\hbox(7.5+2.5)x0.0, direction TLT
+...\glue 0.0
+...\glue -13.06
+...\glue -3.33298
+...\hbox(7.5+2.5)x13.06, glue set 2.09fill, direction TLT
+....\glue -3.33298
+....\hbox(4.66+0.0)x0.0, glue set - 13.06fil, direction TLT
+.....\glue 0.0 plus 1.0fil minus 1.0fil
+.....\hbox(4.66+0.0)x13.06, glue set 4.03fil, direction TLT
+......\glue 0.0 plus 1.0fil minus 1.0fil
+......\TU/lmr/m/n/10 ∗
+......\glue 0.0 plus 1.0fil minus 1.0fil
+....\glue 3.33298
+....\TU/lmr/m/n/10 B
+....\TU/lmr/m/n/10 )
+....\glue 0.0 plus 1.0fill
+...\glue 3.33298
+..\penalty 0
+..\TU/lmr/m/n/10 S
+..\TU/lmr/m/n/10 e
+..\discretionary (penalty 50)
+...< \TU/lmr/m/n/10 -
+..\TU/lmr/m/n/10 g
+..\TU/lmr/m/n/10 u
+..\TU/lmr/m/n/10 n
+..\TU/lmr/m/n/10 d
+..\TU/lmr/m/n/10 a
+..\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+..\TU/lmr/m/n/10 (
+..\TU/lmr/m/n/10 c
+..\TU/lmr/m/n/10 o
+..\TU/lmr/m/n/10 r
+..\discretionary (penalty 50)
+...< \TU/lmr/m/n/10 -
+..\TU/lmr/m/n/10 r
+..\TU/lmr/m/n/10 e
+..\TU/lmr/m/n/10 c
+..\TU/lmr/m/n/10 t
+..\TU/lmr/m/n/10 a
+..\TU/lmr/m/n/10 )
+..\penalty 10000
+..\glue(\parfillskip) 0.0 plus 1.0fil
+..\glue(\rightskip) 0.0
+.\penalty -51
+.\glue 4.0 plus 2.0 minus 1.0
+.\glue -4.0 plus -2.0 minus -1.0
+.\glue 8.0 plus 3.0 minus 2.0
+.\glue -10.5 plus -3.0 minus -2.0
+.\penalty -51
+.\glue 2.5
+.\glue 8.0 plus 3.0 minus 2.0
+.\glue -8.0 plus -3.0 minus -2.0
+.\glue 10.0 plus 3.0 minus 5.0
+! OK.
+<argument> ...{keyans} \end {enumext} }\showbox 0 
+l. ...  }
+============================================================

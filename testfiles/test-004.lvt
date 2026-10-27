@@ -1,0 +1,319 @@
+% test-004.lvt -- respuestas guardadas con anskey y anskey* en enumext
+%
+% Hecho con cariño por Pablo González L. <pablgonz@educarchile.cl>
+% para que enumext siga funcionando igual de bien después de cada cambio.
+%
+% Regresion:  l3build save test-004
+%             l3build check test-004
+%
+% Test de regresion del sistema de almacenamiento: \anskey, anskey*,
+% \printkeyans, \getkeyans, \foreachkeyans y las llaves de almacenamiento
+% (save-ans, save-key, save-sep, no-store, show-ans, show-pos, mark-*, wrap-ans,
+% break-col, item-join, item-star, item-sym*, item-pos*). Cada caso compone el
+% codigo en una caja y la muestra en el log (\BOXTEST). Los nombres de
+% almacenamiento no se reutilizan: save-ans crea la secuencia de forma global.
+% Los casos con etiquetado estan en test-011.
+\input{regression-test}
+
+\documentclass{article}
+\ExplSyntaxOn
+\debug_on:n { all }
+\ExplSyntaxOff
+\usepackage{enumext}
+\begin{document}
+
+\newcommand\BOXTEST[2]
+  {%
+    \TEST{#1}
+      {%
+        \setbox0=\vbox{\hsize=250pt \parindent=0pt #2}%
+        \showbox0
+      }%
+  }
+
+% anskey* lee su cuerpo como argumento: no puede ir dentro del argumento de otra
+% macro, asi que sus casos se componen directamente en el documento con
+% \BOXBEGIN y \BOXEND (la misma caja que \BOXTEST, sin el argumento).
+\newcommand\BOXBEGIN[1]
+  {%
+    \TYPE{=== #1 ===}%
+    \setbox0=\vbox\bgroup \hsize=250pt \parindent=0pt
+  }
+\newcommand\BOXEND{\egroup \showbox0 }
+
+\START
+
+\TYPE{=== A. Guardar e imprimir ===}
+
+\BOXTEST{[1] save-ans y \string\printkeyans}
+  {
+    \begin{enumext}[save-ans=sta]
+      \item Pregunta A. \anskey{Respuesta A}
+      \item Pregunta B. \anskey{Respuesta B}
+      \item Pregunta C. \anskey{Respuesta C}
+    \end{enumext}
+    \printkeyans{sta}
+  }
+
+\BOXTEST{[2] \string\printkeyans* (lista horizontal)}
+  {
+    \begin{enumext}[save-ans=stb]
+      \item Pregunta A. \anskey{Respuesta A}
+      \item Pregunta B. \anskey{Respuesta B}
+    \end{enumext}
+    \printkeyans*{stb}
+  }
+
+\BOXTEST{[3] \string\getkeyans}
+  {
+    \begin{enumext}[save-ans=stc]
+      \item Pregunta A. \anskey{Respuesta A}
+      \item Pregunta B. \anskey{Respuesta B}
+    \end{enumext}
+    Segunda: \getkeyans{stc:2}. Primera: \getkeyans{stc:1}.
+  }
+
+\BOXBEGIN{[4] anskey* guarda un cuerpo largo}
+\begin{enumext}[save-ans=std]
+  \item Pregunta A.
+    \begin{anskey*}
+      Cuerpo largo de la respuesta con varias palabras.
+    \end{anskey*}
+  \item Pregunta B. \anskey{Respuesta B}
+\end{enumext}
+\printkeyans{std}
+\BOXEND
+
+\BOXTEST{[5] enumext* con respuestas}
+  {
+    \begin{enumext*}[save-ans=ste, columns=2]
+      \item Pregunta A. \anskey{Respuesta A}
+      \item Pregunta B. \anskey{Respuesta B}
+    \end{enumext*}
+    \printkeyans{ste}
+  }
+
+\BOXTEST{[6] save-ans en un nivel interior: niveles anidados}
+  {
+    \begin{enumext}[save-ans=stf]
+      \item Pregunta A.
+        \begin{enumext}
+          \item Parte uno. \anskey{Uno}
+          \item Parte dos. \anskey{Dos}
+        \end{enumext}
+      \item Pregunta B. \anskey{Respuesta B}
+    \end{enumext}
+    \printkeyans{stf}
+  }
+
+\TYPE{=== B. Llaves de \string\anskey: break-col, item-join, item-star ===}
+
+\BOXTEST{[7] break-col}
+  {
+    \begin{enumext}[save-ans=stg]
+      \item Pregunta A. \anskey{Respuesta A}
+      \item Pregunta B. \anskey[break-col]{Respuesta B}
+    \end{enumext}
+    \printkeyans{stg}
+  }
+
+\BOXTEST{[8] item-join=2}
+  {
+    \begin{enumext}[save-ans=sth]
+      \item Pregunta A. \anskey{Respuesta A}
+      \item Pregunta B. \anskey[item-join=2]{Respuesta B}
+    \end{enumext}
+    \printkeyans*{sth}
+  }
+
+\BOXTEST{[9] item-star}
+  {
+    \begin{enumext}[save-ans=sti]
+      \item Pregunta A. \anskey{Respuesta A}
+      \item Pregunta B. \anskey[item-star]{Respuesta B}
+    \end{enumext}
+    \printkeyans{sti}
+  }
+
+\BOXTEST{[10] item-star con item-sym* e item-pos*}
+  {
+    \begin{enumext}[save-ans=stj]
+      \item Pregunta A. \anskey[item-star, item-sym*={$\ast$}, item-pos*=3pt]{Respuesta A}
+      \item Pregunta B. \anskey{Respuesta B}
+    \end{enumext}
+    \printkeyans{stj}
+  }
+
+\BOXBEGIN{[11] llaves de anskey* (item-star y break-col)}
+\begin{enumext}[save-ans=stk]
+  \item Pregunta A.
+    \begin{anskey*}[item-star]
+      Cuerpo uno.
+    \end{anskey*}
+  \item Pregunta B.
+    \begin{anskey*}[break-col]
+      Cuerpo dos.
+    \end{anskey*}
+\end{enumext}
+\printkeyans{stk}
+\BOXEND
+
+\TYPE{=== C. Mostrar las respuestas: show-ans, mark-ans, wrap-ans ===}
+
+\BOXTEST{[12] show-ans con el simbolo por defecto}
+  {
+    \begin{enumext}[save-ans=stl, show-ans=true]
+      \item Pregunta A. \anskey{Respuesta A}
+      \item Pregunta B. \anskey{Respuesta B}
+    \end{enumext}
+  }
+
+\BOXTEST{[13] show-ans con mark-ans, mark-pos, mark-sep y wrap-ans}
+  {
+    \begin{enumext}[save-ans=stm, show-ans=true, mark-ans={$\star$},
+                    mark-pos=right, mark-sep=6pt, wrap-ans={\textbf{#1}}]
+      \item Pregunta A. \anskey{Respuesta A}
+      \item Pregunta B. \anskey{Respuesta B}
+    \end{enumext}
+  }
+
+\BOXTEST{[14] mark-pos=center}
+  {
+    \begin{enumext}[save-ans=stn, show-ans=true, labelwidth=1.5cm,
+                    mark-ans={$\star$}, mark-pos=center]
+      \item Pregunta A. \anskey{Respuesta A}
+    \end{enumext}
+  }
+
+\BOXBEGIN{[15] show-ans con anskey*}
+\begin{enumext}[save-ans=sto, show-ans=true, mark-ans={$\star$}]
+  \item Pregunta A.
+    \begin{anskey*}
+      Cuerpo largo mostrado en la lista.
+    \end{anskey*}
+\end{enumext}
+\BOXEND
+
+\BOXTEST{[16] show-ans en enumext*}
+  {
+    \begin{enumext*}[save-ans=stp, show-ans=true, columns=2, mark-ans={$\star$}]
+      \item Pregunta A. \anskey{Respuesta A}
+      \item Pregunta B. \anskey{Respuesta B}
+    \end{enumext*}
+  }
+
+\TYPE{=== D. Posicion, control y llaves guardadas ===}
+
+\BOXTEST{[17] show-pos}
+  {
+    \begin{enumext}[save-ans=stq, show-pos=true]
+      \item Pregunta A. \anskey{Respuesta A}
+      \item Pregunta B. \anskey{Respuesta B}
+    \end{enumext}
+  }
+
+\BOXTEST{[18] show-pos con show-ans y wrap-ans}
+  {
+    \begin{enumext}[save-ans=str, show-pos=true, show-ans=true,
+                    wrap-ans={\emph{#1}}]
+      \item Pregunta A. \anskey{Respuesta A}
+    \end{enumext}
+  }
+
+\BOXTEST{[19] no-store en un nivel interior}
+  {
+    \begin{enumext}[save-ans=sts]
+      \item Pregunta A. \anskey{Respuesta A}
+      \item Pregunta B.
+        \begin{enumext}[no-store]
+          \item Sin respuesta
+          \item Sin respuesta
+        \end{enumext}
+      \item Pregunta C. \anskey{Respuesta C}
+    \end{enumext}
+    \printkeyans{sts}
+  }
+
+\BOXTEST{[20] check-ans}
+  {
+    \begin{enumext}[save-ans=stt, check-ans=true]
+      \item Pregunta A. \anskey{Respuesta A}
+      \item Pregunta B. \anskey{Respuesta B}
+    \end{enumext}
+  }
+
+\BOXTEST{[21] save-key reemplaza las llaves guardadas}
+  {
+    \begin{enumext}[save-ans=stu]
+      \item Pregunta A. \anskey{Respuesta A}
+      \item Pregunta B.
+        \begin{enumext}[nosep, columns=2, save-key={columns=3}]
+          \item Parte uno. \anskey{Uno}
+          \item Parte dos. \anskey{Dos}
+        \end{enumext}
+    \end{enumext}
+    \printkeyans{stu}
+  }
+
+\TYPE{=== E. \string\foreachkeyans ===}
+
+\newcommand\FILLSTORE[1]
+  {%
+    \begin{enumext}[save-ans=#1]
+      \item Uno. \anskey{Respuesta uno}
+      \item Dos. \anskey{Respuesta dos}
+      \item Tres. \anskey{Respuesta tres}
+      \item Cuatro. \anskey{Respuesta cuatro}
+    \end{enumext}%
+  }
+
+\BOXTEST{[22] \string\foreachkeyans sin llaves}
+  {
+    \FILLSTORE{stv}
+    \foreachkeyans{stv}
+  }
+
+\BOXTEST{[23] \string\foreachkeyans con sep}
+  {
+    \FILLSTORE{stw}
+    \foreachkeyans[sep={ / }]{stw}
+  }
+
+\BOXTEST{[24] \string\foreachkeyans con start y stop}
+  {
+    \FILLSTORE{stx}
+    \foreachkeyans[start=2, stop=3]{stx}
+  }
+
+\BOXTEST{[25] \string\foreachkeyans con step}
+  {
+    \FILLSTORE{sty}
+    \foreachkeyans[step=2]{sty}
+  }
+
+\BOXTEST{[26] \string\foreachkeyans con before, after y wrapper}
+  {
+    \FILLSTORE{stz}
+    \foreachkeyans[before={[}, after={]}, wrapper={\textbf{#1}}, sep={, }]{stz}
+  }
+
+\TYPE{=== F. Referencias ===}
+
+% El \newlabel de save-ref se escribe en el .aux con un \write diferido, que
+% solo se ejecuta cuando la caja se envia a la pagina. Por eso la caja se
+% muestra y despues se envia con \shipout (sin volcarla de nuevo en el log);
+% con checkruns = 2 la segunda pasada resuelve \ref.
+\TEST{[27] save-ref y \string\ref a una respuesta guardada}
+  {%
+    \setbox0=\vbox{\hsize=250pt \parindent=0pt
+      \begin{enumext}[save-ans=stref, save-ref=true]
+        \item Pregunta A. \anskey{Respuesta A}
+        \item Pregunta B. \anskey{Respuesta B}
+      \end{enumext}
+      La pregunta \ref{stref:2} tiene la respuesta \getkeyans{stref:2}.}%
+    \showbox0
+    \begingroup \tracingoutput=0 \shipout\copy0 \endgroup
+  }
+
+\OMIT
+\end{document}

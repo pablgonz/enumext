@@ -3641,6 +3641,8 @@ TEST 1: Show PDF Tags
           >
          <text-block xmlns="https://www.latex-project.org/ns/dflt"
             id="ID.0652"
+            xmlns:Layout="http://iso.org/pdf/ssn/Layout"
+            Layout:TextAlign="Justify"
             rolemaps-to="P"
            >
           <?MarkedContent page="4" ?>Three, on the whole row.
@@ -3828,6 +3830,8 @@ TEST 1: Show PDF Tags
           >
          <text-block xmlns="https://www.latex-project.org/ns/dflt"
             id="ID.0688"
+            xmlns:Layout="http://iso.org/pdf/ssn/Layout"
+            Layout:TextAlign="Justify"
             rolemaps-to="P"
            >
           <?MarkedContent page="4" ?>First paragraph.
@@ -4028,6 +4032,8 @@ TEST 1: Show PDF Tags
           >
          <text-block xmlns="https://www.latex-project.org/ns/dflt"
             id="ID.0726"
+            xmlns:Layout="http://iso.org/pdf/ssn/Layout"
+            Layout:TextAlign="Justify"
             rolemaps-to="P"
            >
           <?MarkedContent page="4" ?>Last item, on the whole row.
@@ -4090,6 +4096,8 @@ TEST 1: Show PDF Tags
           >
          <text-block xmlns="https://www.latex-project.org/ns/dflt"
             id="ID.0737"
+            xmlns:Layout="http://iso.org/pdf/ssn/Layout"
+            Layout:TextAlign="Justify"
             rolemaps-to="P"
            >
           <?MarkedContent page="4" ?>One
@@ -4114,6 +4122,8 @@ TEST 1: Show PDF Tags
           >
          <text-block xmlns="https://www.latex-project.org/ns/dflt"
             id="ID.0742"
+            xmlns:Layout="http://iso.org/pdf/ssn/Layout"
+            Layout:TextAlign="Justify"
             rolemaps-to="P"
            >
           <?MarkedContent page="4" ?>Two
@@ -4138,6 +4148,8 @@ TEST 1: Show PDF Tags
           >
          <text-block xmlns="https://www.latex-project.org/ns/dflt"
             id="ID.0747"
+            xmlns:Layout="http://iso.org/pdf/ssn/Layout"
+            Layout:TextAlign="Justify"
             rolemaps-to="P"
            >
           <?MarkedContent page="4" ?>Three
@@ -4279,6 +4291,8 @@ TEST 1: Show PDF Tags
           >
          <text-block xmlns="https://www.latex-project.org/ns/dflt"
             id="ID.0774"
+            xmlns:Layout="http://iso.org/pdf/ssn/Layout"
+            Layout:TextAlign="Justify"
             rolemaps-to="P"
            >
           <?MarkedContent page="5" ?>This sentence repeats to fill lines. This sentence repeats to fill lines. This sentence repeats to fill lines. This sentence repeats to fill lines. This sentence repeats to fill lines. This sentence repeats to fill lines. This sentence repeats to fill lines. This sentence repeats to fill lines. This sentence repeats to fill lines. This sentence repeats to fill lines. This sentence repeats to fill lines. This sentence repeats to fill lines. This sentence repeats to fill lines. This sentence repeats to fill lines. This sentence repeats to fill lines. This sentence repeats to fill lines. This sentence repeats to fill lines. This sentence repeats to fill lines. This sentence repeats to fill lines. This sentence repeats to fill 

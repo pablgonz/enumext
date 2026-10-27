@@ -1,5 +1,8 @@
 % test-100.lvt -- mensajes de error y de aviso de enumext
 %
+% Hecho con cariño por Pablo González L. <pablgonz@educarchile.cl>
+% para que enumext siga funcionando igual de bien después de cada cambio.
+%
 % Regresion:  l3build save test-100
 %             l3build check test-100
 %
@@ -84,14 +87,14 @@
 
 \CASE{A9}
   {
-    \begin{enumext}[show-length]
+    \begin{enumext}[show-length=true]
       \item Uno
     \end{enumext}
   }
 
 \CASE{A10}
   {
-    \begin{enumext*}[show-length]
+    \begin{enumext*}[show-length=true]
       \item Uno
     \end{enumext*}
   }
