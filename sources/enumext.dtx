@@ -1,8 +1,9 @@
 % \iffalse meta-comment
 % arara: lualatex: { branch: developer, draft: true }
-% arara: lualatex: { branch: developer, interaction: batchmode, shell: true }
+% arara: lualatex: { branch: developer, draft: true }
+% arara: lualatex: { branch: developer, interaction: batchmode, shell: false }
 % arara: clean: { extensions: [ aux, log, out, glo, gls, hd, ind, ilg, idx, toc, atfi ] }
-% arara: clean: { files: [ userdoc.idx, userdoc.ilg, userdoc.ind, mylhmc.lua, mylhmc.sty ] }
+% arara: clean: { files: [ userdoc.idx, userdoc.ilg, userdoc.ind ] }
 % arara: halt
 %
 % File: enumext.dtx
@@ -144,8 +145,8 @@
 \ExplSyntaxOff
 % Package documented and packages for the examples
 \usepackage{tikz,enumext} % main
-\usepackage{scontents}
-\usepackage{shellesc}
+% \usepackage{scontents}
+% \usepackage{shellesc}
 % LuaLaTeX syntax highlighter for l3doc (it also defines the color palette)
 \usepackage{mylhmc}
 \setmylhmc
@@ -153,7 +154,8 @@
     module  = enumext,
     provide =
       { setenumext, setenumextmeta, resetenumext, printkeyans, foreachkeyans,
-        getkeyans, anskey, anspic, miniright, keyans, keyanspic }
+        getkeyans, anskey, anspic, miniright, keyans, keyanspic },
+    key-path = {print, foreach, meta-families, },
   }
 % Colors
 \definecolor{newlinkcolor}{HTML}{0A602C}
@@ -657,10 +659,11 @@
                     skip_vertical, obeyedline, tl_replace_all, mbox, tl_rescan, tl_set_rescan, tex_scantokens,%
                     setcounter, .code, .meta, marginpar, c_zero_skip, tl_retokenize, keys_define, exp_after,%
                     settowidth, dimeval, dimexpr, IfBooleanTF, IfHyperBoolean, newlength, setlength, pagestyle,%
-                    definecolor, chapter, columnbreak, columnsep, rightmargin, phantomsection},%
+                    definecolor, chapter, columnbreak, columnsep, rightmargin, phantomsection,%
+                    check, save, testSE, release},%
 % Other words 5 (package name)
     keywordstyle  = [5]{\bfseries\color{pkgname}},%
-    keywords      = [5]{footnotehyper},%
+    keywords      = [5]{footnotehyper, l3build},%
 % Reserved words 6 (document class)
     keywordstyle  = [6]{\bfseries\color{clsname}},%
     keywords      = [6]{article},%
@@ -2199,7 +2202,7 @@
 %  environments where, by their implementation, it is not possible to
 %  adjust \mykey{labelwidth} and \mykey{list-indent} \emph{without}
 %  modifying the output. If you use \myenv*[no-index]{enumext} or \myenv*[no-index]{keyans}
-%  and want to get around the \emph{blank line} limitation or the |\par|
+%  and want to get around the effect of a \emph{blank line} or of the |\par|
 %  command followed by |\item| you can modify \mykey{labelwidth} and
 %  \mykey{list-indent} and get the same effect.
 % \end{important}
@@ -4157,9 +4160,9 @@ all the worksheets are as follows:
 % ref by data save in an array (list)} I managed to create a more solid
 % code than the original version, now using the \mypkg{l3prop}\cite{inter3} and \mypkg{l3seq}\cite{inter3}
 % modules together with the \mypkg[no-index]{hyperref}\cite{hyperref} and \mypkg[no-index]{enumitem}\cite{enumitem} packages, which did
-% the job, but with some limitations.
+% the job, but with some shortcomings.
 %
-% As time went by I took these limitations as a personal challenge which
+% As time went by I took these shortcomings as a personal challenge which
 % I called \emph{\enquote{reinventing the wheel}}, since there were packages and classes
 % that did more or less what I was looking for, but did not fit my simple
 % requirements. This \emph{\enquote{reinventing the wheel}} finally ended up becoming
@@ -4207,35 +4210,35 @@ all the worksheets are as follows:
 % \subsubsection*{Regression tests}
 %
 % The source repository includes a set of regression tests for \texttt{l3build},
-% kept in the \texttt{testfiles} directory. They are run with the
+% kept in the \myfile{testfiles} directory. They are run with the
 % \hologo{LuaTeX} engine and the development format \texttt{latex-dev}, and
 % each test is compiled twice so that references and labels are resolved before
 % the log is compared:
 %
 % \begin{itemize}
-%   \item \texttt{test-001} and \texttt{test-002}: lists without tagging, with
+%   \item \myfile{test-001} and \myfile{test-002}: lists without tagging, with
 %     the labels, the spacing, the nesting, the counters, the series and
-%     \myenv*[no-index]{enumext*}, and the independence between \cs{setenumext}
-%     and \cs{printkeyans};
-%   \item \texttt{test-003}: the keys that set vertical and horizontal spaces,
+%     \myenv*[no-index]{enumext*}, and the independence between |\setenumext|
+%     and |\printkeyans|;
+%   \item \myfile{test-003}: the keys that set vertical and horizontal spaces,
 %     penalties, the symbol of |\item*|, the code keys \mykey{before},
 %     \mykey{first} and \mykey{after}, and the \myenv{minipage} keys;
-%   \item \texttt{test-004}: the storage system with \cs{anskey},
-%     \myenv*[no-index]{anskey*}, \cs{printkeyans}, \cs{getkeyans} and
-%     \cs{foreachkeyans}, and the keys that store and show the answers;
-%   \item \texttt{test-005}: the environments \myenv*[no-index]{keyans},
+%   \item \myfile{test-004}: the storage system with |\anskey|,
+%     \myenv*[no-index]{anskey*}, |\printkeyans|, |\getkeyans| and
+%     |\foreachkeyans|, and the keys that store and show the answers;
+%   \item \myfile{test-005}: the environments \myenv*[no-index]{keyans},
 %     \myenv*[no-index]{keyans*} and \myenv*[no-index]{keyanspic}, and their keys;
-%   \item \texttt{test-010} and \texttt{test-011}: the same lists and the
-%     storage system with \texttt{tagging=on}, including the structure tree;
-%   \item \texttt{test-100}: the error and warning messages of the package.
+%   \item \myfile{test-010} and \myfile{test-011}: the same lists and the
+%     storage system with |tagging=on|, including the structure tree;
+%   \item \myfile{test-100}: the error and warning messages of the package.
 % \end{itemize}
 %
 % From the root of the repository, |l3build check| runs all the tests and
 % |l3build check test-001| runs a single one. After a deliberate change in the
 % package, |l3build save test-001| regenerates the reference file
-% \texttt{test-001.tlg}, which must be reviewed before committing it.
+% \myfile{test-001.tlg}, which must be reviewed before committing it.
 % The target |l3build testSE| compiles twice the documents in
-% \texttt{sources/test-pkg}, validates the tagged structure and copies the
+% \myfile{sources/test-pkg}, validates the tagged structure and copies the
 % \texttt{PDF} files that are attached to this manual; it is also run by
 % |l3build release|.
 %
@@ -4351,7 +4354,7 @@ all the worksheets are as follows:
 %      \item Error messages with a common layout.
 %      \item Tagged \texttt{PDF}: balanced paragraph hooks and the \texttt{TextAlign}
 %        attribute in the first paragraph of the items of \mykey{item-break}.
-%      \item Added regression tests, run with \texttt{l3build check}.
+%      \item Added regression tests, run with |l3build check|.
 %    \end{itemize}
 %  \item [v2.3 (ctan), 2026-10-23]
 %    \begin{itemize}
@@ -6890,10 +6893,9 @@ all the worksheets are as follows:
 % \subsection{Setting keys for \env{multicols} and \env{minipage}}\label{key:mini-multi}
 %
 % \begin{macro}[int]{mini-env, mini-sep, columns-sep, columns, mini-right, mini-right*}
-%    The default value of the \mykey[env]{columns-sep} key is handled by
-%    the state of the boolean variable \myhlc|\l_@@_columns_sep_X_bool|
-%    which is handled in the internal definition of the \myenv*[no-index]{enumext}
-%    and \myenv*[no-index]{keyans} environments.
+%    The default value of the \mykey[env]{columns-sep} key is zero; when the
+%    value is zero it is calculated in the internal definition of the
+%    environments from the dimension variable \myhlc|\l_@@_columns_sep_X_dim|.
 %    Define and set \mykey[env]{mini-env}, \mykey[env]{mini-sep}, \mykey{columns-sep}
 %    and \mykey[env]{columns} keys for \myenv*[no-index]{enumext}, \myenv*[no-index]{enumext*}, \myenv*[no-index]{keyans} and
 %    \myenv*[no-index]{keyans*} environments.
@@ -7495,7 +7497,7 @@ all the worksheets are as follows:
 % \subsubsection{Adjustment of vertical spaces for \env{minipage} in \env{keyans}}
 %
 % \begin{macro}[int]{\@@_keyans_minipage_set_skip:, \@@_keyans_minipage_add_space:, \@@_keyans_pre_itemsep_skip:}
-%    The function \myhlc|\@@_keyans_mini_set_vskip:| will take care of determining the
+%    The function \myhlc|\@@_keyans_minipage_set_skip:| will take care of determining the
 %    \enquote{adjusted} spaces applied \emph{\enquote{above}} and
 %    \emph{\enquote{below}} the \myhlc|\@@_mini_page| environment in
 %    \myenv*[no-index]{keyans}. The implementation of this function is the same
@@ -9424,7 +9426,7 @@ all the worksheets are as follows:
         mark-pos* .value_required:n = true,
         mark-pos* / unknown .code:n =
           \msg_error:nneee { enumext } { unknown-choice }
-            { mark-pos } { left,~right,~center } { \exp_not:n {##1} },
+            { mark-pos* } { left,~right,~center } { \exp_not:n {##1} },
         mark-sep* .dim_set:c = { l_@@_mark_sym_sep_ #2 _dim },
         mark-sep* .value_required:n = true,
         wrap-ans* .cs_set_protected:cp = { @@_keyans_wrapper_item_ #2 :n } ##1,
@@ -9560,7 +9562,7 @@ all the worksheets are as follows:
 %   key \mykey[env]{save-ans} is executed and the levels within this for the \myenv*[no-index]{enumext} and
 %   \myenv*[no-index]{enumext*} environments. This function is executed only if
 %   the variable \myhlc|\l_@@_store_save_key_X_bool| is false, that is, the key
-%   \mykey{store-key} is not active, establishing the variable
+%   \mykey[env]{save-key} is not active, establishing the variable
 %   \myhlc|\l_@@_store_save_key_X_tl| with the filtered \mymeta{keys}.
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_store_active_keys:n
@@ -9675,7 +9677,7 @@ all the worksheets are as follows:
 %   The function \myhlc|\@@_filter_save_key_pair:nn| will be responsible for
 %   \emph{\enquote{filtering keys}} that are passed \emph{\enquote{with value}} by
 %   excluding the \mykey[env]{series}, \mykey{resume}, \mykey[env]{save-ans}, \mykey[env]{save-ref},
-%   \mykey[env]{save-key}, \mykey[env]{check-ans}, \mykey[env]{show-ans}, \mykey{save-pos},
+%   \mykey[env]{save-key}, \mykey[env]{check-ans}, \mykey[env]{show-ans}, \mykey[env]{show-pos},
 %   \mykey[env]{mark-ans}, \mykey[env]{mark-pos}, \mykey[env]{mark-sep}, \mykey[env]{wrap-ans},
 %   \mykey[env]{mark-ans*}, \mykey[env]{mark-pos*}, \mykey[env]{mark-sep*}, \mykey[env]{wrap-ans*},
 %   \mykey[env]{wrap-opt}, \mykey[env]{save-sep}, \mykey[env]{mark-ref}, \mykey[env]{mini-env},
@@ -10059,7 +10061,7 @@ all the worksheets are as follows:
       }
     \tl_put_right:Nn \l_@@_store_anskey_arg_tl { \item }
 %    \end{macrocode}
-%   If the \mykey[anskey,anskey*]{item-join} key is present and the command is running under
+%   If the \mykey[anskey,anskey*]{item-join} key is present and the command is not running under
 %   \myenv*[no-index]{enumext*}, \myparg{number} is added to \myhlc|\l_@@_store_anskey_arg_tl|.
 %    \begin{macrocode}
     \bool_lazy_and:nnT
@@ -10126,7 +10128,7 @@ all the worksheets are as follows:
 % \begin{macro}[int]{\@@_anskey_show_wrap_arg:n}
 %   The function \myhlc|\@@_anskey_show_wrap_arg:n| \emph{\enquote{wraps}}
 %   the \mymarg{argument} passed to |\anskey| and the \mymeta{body}
-%   for \myenv*[no-index]{anskey*} when using the \mykey[env]{wrap-ans} and \mykey{wrap-sep} keys.
+%   for \myenv*[no-index]{anskey*} when using the \mykey[env]{wrap-ans} and \mykey[env]{mark-sep} keys.
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_anskey_show_wrap_arg:n
   {
@@ -10302,7 +10304,7 @@ all the worksheets are as follows:
 % \end{macro}
 %
 % \begin{macro}[int]{\@@_anskey_safe_outer:, \@@_anskey_safe_inner:}
-%   The \myhlc|\@@_store_anskey_safe_outer:| function will return the
+%   The \myhlc|\@@_anskey_safe_outer:| function will return the
 %   appropriate messages when the command is executed outside the
 %   environment in which the \mykey[env]{save-ans} key was activated.
 %    \begin{macrocode}
@@ -10627,7 +10629,7 @@ all the worksheets are as follows:
 %
 % \begin{macro}[int]{\@@_anskey_env_safe_outer:, \@@_anskey_env_safe_inner:,
 %                    \@@_store_anskey_env:n}
-%   The function \myhlc|\@@_store_anskey_safe_outer:| will return the
+%   The function \myhlc|\@@_anskey_env_safe_outer:| will return the
 %   appropriate messages when \myenv*[no-index]{anskey*} is executed outside the
 %   environment in which the \mykey[env]{save-ans} key was activated
 %   or within the \myenv*[no-index]{keyans}, \myenv*[no-index]{keyans*} or \myenv*[no-index]{keyanspic}
@@ -10989,11 +10991,8 @@ all the worksheets are as follows:
 %   \mypkg[no-index]{hyperref} package load, if both conditions are met, it will
 %   create the |\hyperlink| and then store using the
 %   \myhlc|\@@_store_addto_seq:V| function.
-%   Finally, copy the contents of the variable \myhlc|\l_@@_store_current_label_tl|
-%   into the global variable \myhlc|\g_@@_check_ans_item_tl| to be used
-%   by the function \myhlc|\@@_check_starred_cmd:n| and increment
-%   the value of the integer variable \myhlc|\g_@@_item_anskey_int| handled
-%   by the \mykey[env]{check-ans} key.
+%   Finally, when the \mykey[env]{check-ans} key is active, it increments
+%   the value of the integer variable \myhlc|\g_@@_item_anskey_int|.
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_keyans_addto_seq_link:
   {
@@ -12111,7 +12110,7 @@ all the worksheets are as follows:
 %   the implementation is similar, but, the value of |\partopsep| is always
 %   \mydim{0pt}. At this point the \mykey[env]{parsep} key is modified to
 %   make it take the value of the \mykey[env]{itemsep} key and later, in the
-%   environment definition, \mykey{parindent} is modified to make it set
+%   environment definition, |\parindent| is modified to make it set
 %   the value of \mykey[env]{listparindent} and \mykey{parsep} to set the value
 %   of |\parskip| locally.
 %
@@ -12227,7 +12226,7 @@ all the worksheets are as follows:
 % \end{macro}
 %
 % \begin{macro}[int]{\@@_parse_keys:n}
-%  The \myhlc|\@@_parse_store_keys:n| function first clears the
+%  The \myhlc|\@@_parse_keys:n| function first clears the
 %  variable \myhlc|\l_@@_series_name_str| used by the key \mykey[env]{series} and then
 %  checks if it is at the \emph{\enquote{first level}}; if so, it
 %  processes the \mymeta{keys} and then executes the function
@@ -12479,7 +12478,7 @@ all the worksheets are as follows:
 %   the key \mykey[env,foreachkeyans]{after}, \myhlc|\@@_check_ans_key_hook:| used by the key
 %   \mykey[env]{check-ans}, and \myhlc|\@@_vspace_below:| used by the keys \mykey[env]{below}
 %   and \mykey[env]{below*} are executed. Finally it sets \myhlc|\l_@@_standard_bool| to false and calls
-%   the function \myhlc|\@@_resume_save_counter:| used by the \mykey[env]{series},
+%   the function \myhlc|\@@_standard_save_counter:| used by the \mykey[env]{series},
 %   \mykey[env]{resume} and \mykey[env]{resume*} keys.
 %    \begin{macrocode}
     \@@_after_stop_list:
@@ -12519,16 +12518,13 @@ all the worksheets are as follows:
 % \begin{macro}{enumext}
 %   Now create the \myenv*{enumext} environment based on \myenv[no-index]{list}
 %   environment by levels. It accepts an optional \myoarg{key \textnormal{\textcolor{gray}{=}} val} argument
-%   in `|#1|'. First \myhlc|\@@_safe_exec:| checks where the environment is
-%   running (\S\ref{fun:safe-exec-enumext}) and \myhlc|\@@_parse_keys:n| processes
-%   the \mymeta{keys}. Then \myhlc|\@@_before_list:| calls the functions used by the
-%   keys \mykey[env]{above} and \mykey[env]{before*}, \myhlc|\@@_start_store_level:|
-%   activates the \emph{\enquote{storing structure}} and the list is opened with
-%   \myhlc|\@@_start_list:nn| using the label of the current level and the
-%   \mymeta{keys} that go in the second argument of the list. Finally
-%   \myhlc|\@@_set_item_width:| sets |\itemwidth| (\S\ref{fun:item-width-enumext})
-%   and \myhlc|\@@_after_args_exec:| executes the code set by the key \mykey[env]{first}.
-%   The second part of the definition is \myhlc|\@@_second_part:|.
+%   in `|#1|'. It first checks where the environment is running
+%   (\S\ref{fun:safe-exec-enumext}) and processes the \mymeta{keys}. Then it
+%   applies the vertical space and the code of the keys \mykey[env]{above} and
+%   \mykey[env]{before*}, activates the \emph{\enquote{storing structure}} and opens
+%   the list with the label of the current level. Finally it sets |\itemwidth|
+%   (\S\ref{fun:item-width-enumext}) and executes the code set by the key
+%   \mykey[env]{first}.
 %    \begin{macrocode}
 \NewDocumentEnvironment{enumext}{ O{} }
   {
@@ -12733,14 +12729,11 @@ all the worksheets are as follows:
 %
 % \begin{macro}{keyans}
 %   Defines the environment \myenv*{keyans}, also based on lists. It accepts an
-%   optional \myoarg{key \textnormal{\textcolor{gray}{=}} val} argument in `|#1|'. First \myhlc|\@@_keyans_safe_exec:|
-%   checks that the environment is available and where it is running, and
-%   \myhlc|\@@_keyans_parse_keys:n| processes the \mymeta{keys}. Then the list is
-%   opened with \myhlc|\@@_start_list:nn| using the label \myhlc|\l_@@_label_v_tl|,
-%   \myhlc|\@@_keyans_set_item_width:| sets |\itemwidth| (\S\ref{fun:item-width-keyans})
-%   and \myhlc|\@@_after_args_exec_v:| executes the code set by the key
-%   \mykey[env]{first}. In the second part \myhlc|\@@_check_starred_cmd:n| checks
-%   the use of |\item*| and \myhlc|\@@_second_part_v:| finishes the environment.
+%   optional \myoarg{key \textnormal{\textcolor{gray}{=}} val} argument in `|#1|'. It first checks that the environment is
+%   available and where it is running, and processes the \mymeta{keys}. Then it opens
+%   the list, sets |\itemwidth| (\S\ref{fun:item-width-keyans}) and executes the
+%   code set by the key \mykey[env]{first}. In the second part it checks the use
+%   of |\item*| and finishes the environment.
 %    \begin{macrocode}
 \NewDocumentEnvironment{keyans}{ O{} }
   {
@@ -13361,8 +13354,7 @@ all the worksheets are as follows:
 %
 % \begin{macro}{keyanspic}
 %   Defines the environment \myenv*{keyanspic}. It accepts an optional \myoarg{key \textnormal{\textcolor{gray}{=}} val}
-%   argument in `|#1|' that is processed by \myhlc|\@@_keyans_pic_parse_keys:n|
-%   after \myhlc|\@@_keyans_pic_safe_exec:| checks the nested level. For compatibility
+%   argument in `|#1|' that is processed after checking the nested level. For compatibility
 %   with \emph{tagged} \texttt{PDF} the |\begin{|\myenv[no-index]{list}|}|
 %   form must be used, along with a lot of conditional code using \myhlc|\IfDocumentMetadataTF|.
 %   First, the code for automatic \emph{tagged} \texttt{PDF}
@@ -13682,8 +13674,8 @@ all the worksheets are as follows:
 % |\item| to behave in the same way as in the \myenv*[no-index]{enumext} environment but
 % with an additional \emph{first optional argument} \myparg{number}.
 %
-% A side effect is the limitation of using |\item| in this way \emph{without}
-% using |\RenewDocumentCommand|, which loses the original definition and
+% A side effect of using |\item| in this way \emph{without}
+% using |\RenewDocumentCommand| is that the original definition is lost, which
 % affects the \emph{standard list environments} provided by \hologo{LaTeX}
 % and any environment defined using base \myenv[no-index]{list} environment, including:
 % \myenv[no-index]{itemize}, \myenv[no-index]{enumerate}, \myenv[no-index]{description}, \myenv[no-index]{quote},
@@ -13700,7 +13692,7 @@ all the worksheets are as follows:
 %
 % inside \myenv[no-index]{minipage}, but in partial tests this does not have the
 % desired effect and the vertical and horizontal spacing is distorted.
-% For now this remains a limitation, and its implementation may be
+% For now this remains unsolved, and its implementation may be
 % reconsidered in the future.
 % \end{important}
 %
@@ -14133,8 +14125,7 @@ all the worksheets are as follows:
 %
 % \begin{macro}{enumext*}
 %    The environment accepts an optional \myoarg{key \textnormal{\textcolor{gray}{=}} val} argument in `|#1|'
-%    that is processed by \myhlc|\@@_parse_keys_vii:n| after
-%    \myhlc|\@@_safe_exec_vii:| checks where it is running. The environment is
+%    that is processed after checking where it is running. The environment is
 %    generated and a temporary definition is given to \myhlc|\@@_stop_item_tmp_vii:| equal to
 %    \myhlc|\@@_first_item_tmp_vii:| and next to |\item| equal to \myhlc|\@@_start_item_tmp_vii:|
 %    which are redefined later. Unlike the implementation used by
@@ -14276,7 +14267,7 @@ all the worksheets are as follows:
 %   \mykey[env,foreachkeyans]{after}, \myhlc|\@@_check_ans_key_hook:| used by the key \mykey[env]{check-ans},
 %   \myhlc|\@@_vspace_below_vii:| used by the keys \mykey[env]{below} and
 %   \mykey[env]{below*}. Finally set \myhlc|\l_@@_starred_bool| to false and call
-%   the \myhlc|\@@_resume_save_counter:| function used by the \mykey[env]{series},
+%   the \myhlc|\@@_starred_save_counter:| function used by the \mykey[env]{series},
 %   \mykey[env]{resume} and \mykey[env]{resume*} keys.
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_after_list_vii:
@@ -14751,8 +14742,7 @@ all the worksheets are as follows:
 %   The implementation of \myenv*{keyans*} environment is the
 %   similar as that used by the \myenv*[no-index]{enumext*} environment except for the
 %   \myhlc|\@@_check_starred_cmd:n| function added in the second part. It accepts
-%   an optional \myoarg{key \textnormal{\textcolor{gray}{=}} val} argument in `|#1|' that is processed by
-%   \myhlc|\@@_parse_keys_viii:n| after \myhlc|\@@_safe_exec_viii:| checks that the
+%   an optional \myoarg{key \textnormal{\textcolor{gray}{=}} val} argument in `|#1|' that is processed after checking that the
 %   \mykey[env]{save-ans} key is active and where the environment is running.
 %    \begin{macrocode}
 \NewDocumentEnvironment{keyans*}{ o }
@@ -15309,8 +15299,7 @@ all the worksheets are as follows:
 % \begin{macro}{\getkeyans}
 %   The \ics*{getkeyans} command takes a \emph{mandatory argument} of the
 %   form \mymarg{store name \textcolor{red}{:} position} in `|#1|'. The argument
-%   is expanded and converted to a string before it is passed to
-%   \myhlc|\@@_getkeyans_aux:n|.
+%   is expanded and converted to a string before it is processed.
 %   Retrieve a \emph{\enquote{single content}}  stored by |\anskey|, |\anspic*|
 %   and |\item*| and \myenv*[no-index]{anskey*} from \emph{prop list} defined by \mykey[env]{save-ans} key.
 %    \begin{macrocode}
@@ -15620,9 +15609,9 @@ all the worksheets are as follows:
 %   \myoarg{key \textnormal{\textcolor{gray}{=}} val} in `|#2|' and a mandatory \mymarg{store name} in `|#3|'.
 %   Create a user command to print \emph{\enquote{all stored content}}
 %   in \emph{sequence} for |\anskey|, \myenv*[no-index]{anskey*}, |\item*| and |\anspic*|.
-%   Within a group the default values of the package are restored with
-%   \myhlc|\@@_default_restore:|, then the \emph{\enquote{precompiled keys}} are
-%   run and finally the internal function \myhlc|\@@_printkeyans:nnn| is called.
+%   Within a group the default values saved when the package was loaded are
+%   restored, then the \emph{\enquote{precompiled keys}} are run and finally the
+%   stored content is printed.
 %    \begin{macrocode}
 \NewDocumentCommand \printkeyans { s O{} m }
   {
@@ -16062,7 +16051,7 @@ all the worksheets are as follows:
 %
 % \begin{macro}[int]{before, after, sep, start, step, stop, wrapper, unknown}
 %   A set of \mymeta{keys} is defined for the command and the
-%   default values of these are saved in \myhlc|\g_@@_foreach_default_keys_tl| to avoid
+%   default values of these are saved in \myhlc|\l_@@_foreach_default_keys_tl| to avoid
 %   the use of a group.
 %    \begin{macrocode}
 \keys_define:nn { enumext / foreach }
@@ -16157,7 +16146,7 @@ all the worksheets are as follows:
 %
 % \begin{macro}{\foreachkeyans}
 %   The command accepts an optional \myoarg{key \textnormal{\textcolor{gray}{=}} val} argument in `|#1|' and a mandatory
-%   \mymarg{store name} in `|#2|', and passes both to \myhlc|\@@_foreach_keyans:nn|.
+%   \mymarg{store name} in `|#2|', and runs the loop over the content stored in it.
 %    \begin{macrocode}
 \NewDocumentCommand \foreachkeyans { +O{} m }
   {

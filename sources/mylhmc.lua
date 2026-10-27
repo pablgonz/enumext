@@ -626,6 +626,16 @@ end, {'string'})
 
 local color_data, push_templates, module_user_cmds = {}, {}, {}
 
+-- Segmentos de ruta de claves del módulo (\setmylhmc{key-path=print}): segmentos de
+-- ruta como `enumext / print` que se colorean como module_name aunque no
+-- sean un comando de `provide`. Solo se consultan en rutas de claves.
+local key_path_names = {}
+
+register_tex_cmd('luafun_register_key_path', function(name)
+  name = s_match(name, '^%s*(.-)%s*$') or name
+  if name ~= '' then key_path_names[name] = true end
+end, {'string'})
+
 register_tex_cmd('luafun_register_module_cmd', function(name)
   name = s_match(name, '^%s*(.-)%s*$') or name
   local clean = s_sub(name, 1, 1) == '\\' and s_sub(name, 2) or name
@@ -1424,7 +1434,7 @@ local function mylhmc_colorize_keys_path(text, fid, rh, rt)
            bb == 95 or bb == 45 then j = j + 1 else break end
       end
       local word = s_sub(text, i, j - 1)
-      if module_user_cmds[word] or
+      if module_user_cmds[word] or key_path_names[word] or
          (current_module_name ~= '' and word == current_module_name) then
         local h, t = mylhmc_colored_str(word, 'module_name', fid)
         rh, rt = mylhmc_append(rh, rt, h, t)

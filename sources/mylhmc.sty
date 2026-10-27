@@ -220,6 +220,12 @@
     provide .code:n =
       { \clist_map_function:nN {#1} \__mylhmc_luafun_register_module_cmd:n } ,
     provide .value_required:n = true ,
+    % Segmentos de ruta de claves del módulo (key-path=print): segmentos de ruta como
+    % `enumext / print` en \keys_define:nn/\keys_set:nn que se colorean
+    % como module_name aunque no sean un comando de `provide`.
+    key-path .code:n =
+      { \clist_map_function:nN {#1} \__mylhmc_luafun_register_key_path:n } ,
+    key-path .value_required:n = true ,
     % Respaldo de nombre de módulo para \myhlc antes de la primera
     % guarda %<@@=modulo> real -- vive solo del lado de Lua, nunca toca
     % \g__codedoc_module_name_tl (variable global de l3doc.cls).

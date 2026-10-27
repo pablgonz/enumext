@@ -315,5 +315,37 @@
     \begingroup \tracingoutput=0 \shipout\copy0 \endgroup
   }
 
+\TYPE{=== G. item-join con varias columnas ===}
+
+% Con columns=3 el item unido ocupa dos de las tres columnas de la fila.
+\BOXTEST{[28] item-join=2 con columns=3}
+  {
+    \begin{enumext}[save-ans=sua]
+      \item Pregunta A. \anskey{Respuesta A}
+      \item Pregunta B. \anskey[item-join=2]{Respuesta B}
+      \item Pregunta C. \anskey{Respuesta C}
+    \end{enumext}
+    \printkeyans*[columns=3]{sua}
+  }
+
+% Lo mismo con anskey*, que lee su cuerpo como argumento.
+\BOXBEGIN{[29] item-join=2 con columns=3 en anskey*}
+\begin{enumext}[save-ans=sub]
+  \item Pregunta A.
+    \begin{anskey*}
+      Cuerpo uno.
+    \end{anskey*}
+  \item Pregunta B.
+    \begin{anskey*}[item-join=2]
+      Cuerpo dos.
+    \end{anskey*}
+  \item Pregunta C.
+    \begin{anskey*}
+      Cuerpo tres.
+    \end{anskey*}
+\end{enumext}
+\printkeyans*[columns=3]{sub}
+\BOXEND
+
 \OMIT
 \end{document}
