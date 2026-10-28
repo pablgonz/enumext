@@ -695,7 +695,8 @@
     keywords      = [12]{let, verb, def, prevdepth, glue, if@minipage, splittopskip, showboxdepth, topskip,%
                     showoutput, nointerlineskip, ignorespaces, unskip, unkern, lastnodetype, rightskip,%
                     @rightskip, flushglue, @flushglue, hbadness, hss, scantokens, beginparpenalty, itempenalty,%
-                    endparpenalty, lowpenalty, vskip, kern},%
+                    endparpenalty, lowpenalty, vskip, kern, lineskip, lastskip, lastkern,%
+                    parshape, fontcharht, inputlineno},%
 % literate
     literate      =*{\{}{{{\color{brace}{\char`\{}}}}{1}
                     {\}}{{{\color{brace}{\char`\}}}}}{1}
@@ -4233,12 +4234,16 @@ all the worksheets are as follows:
 %     \mykey{mini-right}, |\miniright| and \myenv*[no-index]{multicols}) in
 %     \myenv*[no-index]{enumext}, \myenv*[no-index]{enumext*},
 %     \myenv*[no-index]{keyans} and \myenv*[no-index]{keyans*}, measured with
-%     boxes;
+%     boxes, and the closing of the \myenv{minipage} when the content ends in a
+%     character;
 %   \item \myfile{test-010} and \myfile{test-011}: the same lists and the
 %     storage system with |tagging=on|, including the structure tree;
 %   \item \myfile{test-012}: the structure tree with |tagging=on| of the
 %     \myenv{minipage} and \myenv{multicols} variants, where the position of
 %     the figures records the vertical spaces;
+%   \item \myfile{test-013}: the \mykey{base-fix} key, with the baseline of the
+%     nested list measured with boxes for different values of \mykey{parsep},
+%     \mykey{itemsep} and \mykey{columns};
 %   \item \myfile{test-100}: the error and warning messages of the package.
 % \end{itemize}
 %
@@ -4373,6 +4378,9 @@ all the worksheets are as follows:
 %        so the following headings close the previous section; and fixed the
 %        duplicate destinations of \myenv*[no-index]{keyans*} with
 %        \mypkg[no-index]{hyperref}.
+%      \item Fixed \mykey{base-fix}: the baseline of the nested \myenv*[no-index]{enumext}
+%        now matches the label of the \myenv*[no-index]{enumext*} item when the
+%        keys \mykey{parsep} or \mykey{itemsep} are changed, and with \mykey{columns}.
 %      \item Fixed the removal of the last \mymeta{skip} or \mymeta{kern} before closing
 %        the \myenv[no-index]{minipage} of \mykey{mini-env} and \mykey{mini-right}:
 %        when the content ended in a character (for example, a macro after
@@ -4561,7 +4569,7 @@ all the worksheets are as follows:
 %    \end{macrocode}
 % Now declare the \mypkg*[no-index]{enumext} package.
 %    \begin{macrocode}
-\ProvidesExplPackage {enumext} {2026-10-23} {2.3} {Enumerate exercise sheets}
+\ProvidesExplPackage {enumext} {2026-10-28} {2.4} {Enumerate exercise sheets}
 %    \end{macrocode}
 % Finally, check if the \mypkg{multicol} package is loaded; if not, it is loaded.
 %    \begin{macrocode}
@@ -5072,10 +5080,10 @@ all the worksheets are as follows:
 % \begin{macro}[int]{\@@_unskip_unkern:}
 %   The function \myhlc|\@@_unskip_unkern:| will remove the last \mymeta{skip}
 %   or \mymeta{kern} at execution time using the values \mydim{11} and
-%   \mydim{12} of |\lastnodetype| to apply |\unskip| or |\unkern| depending
+%   \mydim{12} of \myhlc|\lastnodetype| to apply \myhlc|\unskip| or \myhlc|\unkern| depending
 %   on the case. In the \emph{outer} vertical mode \TeX{} can't take things
-%   from the current page, because |\unskip| and |\unkern| are errors there, so a
-%   negative |\vskip| or |\kern| is used instead, as \hologo{LaTeX} does in
+%   from the current page, because \myhlc|\unskip| and \myhlc|\unkern| are errors there, so a
+%   negative \myhlc|\vskip| or \myhlc|\kern| is used instead, as \hologo{LaTeX} does in
 %   |\removelastskip|.
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_unskip_unkern:
@@ -5088,7 +5096,7 @@ all the worksheets are as follows:
               {
                 \mode_if_inner:TF
                   { \unskip }
-                  { \skip_vertical:n { -\tex_lastskip:D } }
+                  { \skip_vertical:n { -\lastskip } }
               }
               { \unskip }
           }
@@ -5098,7 +5106,7 @@ all the worksheets are as follows:
               {
                 \mode_if_inner:TF
                   { \unkern }
-                  { \tex_kern:D -\tex_lastkern:D \scan_stop: }
+                  { \kern -\lastkern \scan_stop: }
               }
               { \unkern }
           }
@@ -6526,8 +6534,9 @@ all the worksheets are as follows:
 %
 % When nesting starting right after |\item| (without material between them) there
 % is a problem with the alignment of the \emph{baseline} between the two environments.
-% One way to get around this problem is to place \myhlc|\mode_leave_vertical:|
-% apply |\vspace{-\baselineskip}| and set |\topsep=|\mydim{0pt} for
+% One way to get around this problem is to start the paragraph with
+% \myhlc|\mode_leave_vertical:|, apply a negative |\vspace| and set the keys
+% \mykey{topsep}, \mykey{above} and \mykey{above}|*| equal to \mydim{0pt} for
 % the \emph{\enquote{first level}} of the nested \myenv*[no-index]{enumext} environment.
 %
 % \begin{macro}[int]{base-fix}
@@ -6556,6 +6565,14 @@ all the worksheets are as follows:
 %   \myhlc|\l_@@_print_keyans_star_bool| set by the |\printkeyans| command is
 %   false and the variable \myhlc|\l_@@_base_line_fix_bool| is true.
 %
+%   The negative \emph{\enquote{vertical space}} is a line of text plus the
+%   value of \mykey{parsep} of the \myenv*[no-index]{enumext*} environment, since
+%   this is the gap that \hologo{TeX} leaves between the label of the |\item| and
+%   the first line of the nested list. With \mykey{columns} greater than one this
+%   gap does not include the \mykey{parsep}, so only the line of text is removed.
+%   The value of |\parsep| is not used, because inside \myenv*[no-index]{enumext*}
+%   it is equal to \mykey{itemsep}.
+%
 %   Sets the values of the keys \mykey[env]{topsep}, \mykey[env]{above}
 %   and \mykey[env]{above*} for the \emph{\enquote{first level}} of \myenv*[no-index]{enumext}
 %   environment equal to \mydim{0pt} and finally sets the variable \myhlc|\l_@@_base_line_fix_bool|
@@ -6571,7 +6588,16 @@ all the worksheets are as follows:
       }
       {
         \mode_leave_vertical:
-        \vspace { -\dim_eval:n { \baselineskip + \parsep } }
+        \vspace
+          {
+            -\dim_eval:n
+              {
+                \baselineskip
+                + \int_compare:nNnTF { \l_@@_columns_i_int } > { 1 }
+                  { 0pt }
+                  { \l_@@_parsep_vii_skip }
+              }
+          }
         \keys_set:nn { enumext / level-1 }
           {
             topsep = 0pt, above = 0pt, above* = 0pt,
@@ -6670,7 +6696,7 @@ all the worksheets are as follows:
 %    value is stored in the variable and only applied when it is greater
 %    than \mydim{0pt}. Here it is necessary to place
 %    \myhlc|\mode_leave_vertical:| and the plain \hologo{TeX} macro
-%    |\ignorespaces| to avoid unwanted extra space when using the
+%    \myhlc|\ignorespaces| to avoid unwanted extra space when using the
 %    \mykey{itemindent} key.
 %    \begin{macrocode}
 \cs_set_protected:Nn \@@_fake_item_indent:
@@ -7013,7 +7039,7 @@ all the worksheets are as follows:
 % the use of |\raggedcolumns| and this affects the lower space when
 % closing the environment, which is \emph{\enquote{smaller}} than
 % expected. My attempts to find the correct values using |\showoutput| and
-% |\showboxdepth| absolutely failed.
+% \myhlc|\showboxdepth| absolutely failed.
 % \end{important}
 %
 % \subsubsection{Adjustment of vertical spaces for \env{multicols} in \env{enumext}}
@@ -7206,7 +7232,7 @@ all the worksheets are as follows:
 % \end{figure}
 %
 % To keep the \emph{\enquote{left}} and \emph{\enquote{right}}
-% environments \emph{\enquote{aligned on top}}, preserving the |\baselineskip|
+% environments \emph{\enquote{aligned on top}}, preserving the \myhlc|\baselineskip|
 % and keeping the desired \emph{\enquote{spaces}} (|\topsep + [\partopsep]|) it is necessary
 % to \emph{\enquote{adjust}} the \emph{\enquote{vertical spaces}}
 % for \myenv[no-index]{minipage} environments.
@@ -7226,8 +7252,8 @@ all the worksheets are as follows:
 % when \myenv[no-index]{multicols} is nested the depth of its last line is
 % lost when it ends. For this reason the spaces on the \emph{\enquote{left side}} are
 % not obtained from fixed fractions of |\strutbox|:
-% the space \emph{\enquote{above}} is computed from |\prevdepth| and the
-% current |\baselineskip|, which is the same \emph{glue} that \hologo{TeX} inserts
+% the space \emph{\enquote{above}} is computed from \myhlc|\prevdepth| and the
+% current \myhlc|\baselineskip|, which is the same \emph{glue} that \hologo{TeX} inserts
 % between two lines, and the space \emph{\enquote{below}} is stored together with
 % the depth of the last line when the environment on the \emph{\enquote{left side}}
 % ends, to be applied once the environment on the \emph{\enquote{right side}}
@@ -7316,9 +7342,9 @@ all the worksheets are as follows:
 %   The function \myhlc|\@@_mini_baselineskip:| adds with |\addvspace| the space
 %   that \hologo{TeX} would insert between the previous line and a line of text
 %   whose height is that of the letter \enquote{l}, that is,
-%   |\baselineskip| minus |\prevdepth| minus that height, never less than
-%   |\lineskip|. If there is no previous line (|\prevdepth| is |-1000pt|) the space
-%   is zero. The |\nointerlineskip| command is executed before the space is
+%   \myhlc|\baselineskip| minus \myhlc|\prevdepth| minus that height, never less than
+%   \myhlc|\lineskip|. If there is no previous line (\myhlc|\prevdepth| is |-1000pt|) the space
+%   is zero. The \myhlc|\nointerlineskip| command is executed before the space is
 %   added, to prevent the \emph{glue} of the baseline from being added
 %   again between this space and the next box.
 %    \begin{macrocode}
@@ -7329,7 +7355,8 @@ all the worksheets are as follows:
     \dim_compare:nNnTF { \l_@@_mini_prev_dim } < { -999pt }
       { \dim_zero:N \l_@@_mini_gap_dim }
       {
-        \dim_set:Nn \l_@@_mini_gap_dim { \baselineskip - \l_@@_mini_prev_dim - \fontcharht\font`l }
+        \dim_set:Nn \l_@@_mini_gap_dim
+          { \baselineskip - \l_@@_mini_prev_dim - \fontcharht\font`l }
         \dim_compare:nNnT { \l_@@_mini_gap_dim } < { \lineskip }
           { \dim_set_eq:NN \l_@@_mini_gap_dim \lineskip }
       }
@@ -7340,15 +7367,15 @@ all the worksheets are as follows:
 %
 % \begin{macro}[int]{\@@_mini_capture_end:, \@@_mini_capture_multicols:, \@@_mini_apply_end:}
 %   The function \myhlc|\@@_mini_capture_end:| stores in \myhlc|\g_@@_mini_dp_dim| the
-%   value of |\prevdepth|, removes the last \emph{glue} (if any) saving its value in
+%   value of \myhlc|\prevdepth|, removes the last \emph{glue} (if any) saving its value in
 %   \myhlc|\g_@@_mini_end_skip| and sets \myhlc|\g_@@_mini_end_bool| to |true|.
 %   The function \myhlc|\@@_mini_capture_multicols:| does the same after a
-%   \myenv[no-index]{multicols} environment, where |\prevdepth| is not reliable:
-%   the last box is recovered with |\lastbox|, its depth is stored and the box
+%   \myenv[no-index]{multicols} environment, where \myhlc|\prevdepth| is not reliable:
+%   the last box is recovered with \myhlc|\lastbox|, its depth is stored and the box
 %   is put back, and the stored space is \myhlc|\l_@@_minipage_right_skip|.
 %   The function \myhlc|\@@_mini_apply_end:| is called after closing the
 %   environment on the \emph{\enquote{right side}}: if there is something stored, it
-%   restores |\prevdepth| and adds the stored space with |\addvspace|, so that the
+%   restores \myhlc|\prevdepth| and adds the stored space with |\addvspace|, so that the
 %   space \emph{\enquote{below}} is measured from the last line of the environment
 %   on the \emph{\enquote{left side}}.
 %    \begin{macrocode}
@@ -8219,7 +8246,8 @@ all the worksheets are as follows:
   {
     \str_case:nnF {#1}
       {
-        { resume } { } { resume* } { } { reset } { } { reset* } { } { base-fix } { }
+        { resume } { } { resume* } { } { reset } { } { reset* } { }
+          { base-fix } { }
       }
       { , { \exp_not:n {#1} } }
   }
@@ -9550,8 +9578,8 @@ all the worksheets are as follows:
   {
     \str_case:nnF {#1}
       {
-        { resume } { } { resume* } { } { reset } { } { reset* } { } { no-store } { }
-          { base-fix } { }
+        { resume } { } { resume* } { } { reset } { } { reset* } { }
+          { no-store } { } { base-fix } { }
       }
       { , { \exp_not:n {#1} } }
   }
@@ -9569,12 +9597,14 @@ all the worksheets are as follows:
   {
     \str_case:nnF {#1}
       {
-        { series    } { } { resume     } { } { save-ans    } { } { save-ref  } { }
-        { save-key  } { } { check-ans  } { } { show-ans    } { } { show-pos  } { }
-        { mark-ans  } { } { mark-pos   } { } { mark-sep    } { } { wrap-ans  } { }
-        { mark-ans* } { } { mark-pos*  } { } { mark-sep*   } { } { wrap-ans* } { }
-        { wrap-opt  } { } { save-sep   } { } { mark-ref    } { } { mini-env  } { }
-        { mini-sep  } { } { mini-right } { } { mini-right* } { }
+        { series     } { } { resume      } { } { save-ans  } { }
+        { save-ref   } { } { save-key    } { } { check-ans } { }
+        { show-ans   } { } { show-pos    } { } { mark-ans  } { }
+        { mark-pos   } { } { mark-sep    } { } { wrap-ans  } { }
+        { mark-ans*  } { } { mark-pos*   } { } { mark-sep* } { }
+        { wrap-ans*  } { } { wrap-opt    } { } { save-sep  } { }
+        { mark-ref   } { } { mini-env    } { } { mini-sep  } { }
+        { mini-right } { } { mini-right* } { }
       }
       { , { \exp_not:n {#1} } = { \exp_not:n {#2} } }
   }
@@ -10284,7 +10314,7 @@ all the worksheets are as follows:
 % which was not the best approach. Fortunately \hologo{LaTeX} release 2025-06-01
 % implemented the new \texttt{c-type} argument in the \mypkg[no-index]{ltcmd}\cite{ltnews},
 % with which the \mymeta{body} of the environment can be recorded in
-% \emph{verbatim mode}, and \myhlc|\tl_retokenize:n| (wrapper around the |\scantokens|)
+% \emph{verbatim mode}, and \myhlc|\tl_retokenize:n| (wrapper around the \myhlc|\scantokens|)
 % provided by \hologo{LaTeX}3 release 2025-07-08 does the work as the
 % original implementation.
 %
@@ -11992,9 +12022,9 @@ all the worksheets are as follows:
 %   the implementation is similar, but, the value of |\partopsep| is always
 %   \mydim{0pt}. At this point the \mykey[env]{parsep} key is modified to
 %   make it take the value of the \mykey[env]{itemsep} key and later, in the
-%   environment definition, |\parindent| is modified to make it set
+%   environment definition, \myhlc|\parindent| is modified to make it set
 %   the value of \mykey[env]{listparindent} and \mykey{parsep} to set the value
-%   of |\parskip| locally.
+%   of \myhlc|\parskip| locally.
 %
 % \begin{important}*
 %  For compatibility with \emph{tagged} \texttt{PDF} and \hologo{LaTeX}
@@ -12028,7 +12058,8 @@ all the worksheets are as follows:
         \skip_set_eq:Nc \parsep  { l_@@_itemsep_ #1 _skip }
         \skip_zero:N \partopsep
         \usecounter { enumX #1 }
-        % \setcounter { enumX #1 } { \int_eval:n { \int_use:c { l_@@_start_ #1 _int } - 1 } }
+        % \setcounter { enumX #1 }
+        %   { \int_eval:n { \int_use:c { l_@@_start_ #1 _int } - 1 } }
         \@@_starred_ref:
         \str_if_eq:nnTF {#1} { vii }
           {
@@ -12822,6 +12853,14 @@ all the worksheets are as follows:
 %   closed by hand, the same function is called before closing it. The number is
 %   cleared globally the first time, so the attribute is added only once even if
 %   the paragraph is ended inside a group.
+%   The class names \texttt{justify}, \texttt{center}, \texttt{raggedright} and
+%   \texttt{raggedleft} are the values of the key \texttt{para-attr-class} of the
+%   \texttt{para} instances defined by \mypkg{latex-lab-block}\cite{latexlab}, and
+%   \myhlc|\@@_first_para_align:| translates them to the values of the
+%   \texttt{TextAlign} attribute: \texttt{justify} to \texttt{Justify},
+%   \texttt{center} to \texttt{Center}, \texttt{raggedright} to \texttt{Start} and
+%   \texttt{raggedleft} to \texttt{End}. Any other class leaves the paragraph
+%   without the attribute.
 %    \begin{macrocode}
 \cs_new_protected_nopar:Nn \@@_first_para_start:
   {
@@ -12837,10 +12876,16 @@ all the worksheets are as follows:
       {
         \tl_clear:N \l_@@_first_para_class_tl
         \tl_if_exist:cTF { l_tag_para_attr_class_tl }
-          { \tl_set_eq:Nc \l_@@_first_para_class_tl { l_tag_para_attr_class_tl } }
+          {
+            \tl_set_eq:Nc \l_@@_first_para_class_tl
+              { l_tag_para_attr_class_tl }
+          }
           {
             \tl_if_exist:cT { l__tag_para_attr_class_tl }
-              { \tl_set_eq:Nc \l_@@_first_para_class_tl { l__tag_para_attr_class_tl } }
+              {
+                \tl_set_eq:Nc \l_@@_first_para_class_tl
+                  { l__tag_para_attr_class_tl }
+              }
           }
         \str_case:Vn \l_@@_first_para_class_tl
           {
@@ -13886,7 +13931,7 @@ all the worksheets are as follows:
   }
 %    \end{macrocode}
 %   The function \myhlc|\@@_stop_mini_vii:| closes the \myhlc|\@@_mini_page|
-%   environment on the \emph{\enquote{left side}}, applies |\hfill| and
+%   environment on the \emph{\enquote{left side}}, applies \myhlc|\hfill| and
 %   sets the variable \myhlc|\g_@@_minipage_active_vii_bool| to |true|
 %   which will be used in the function \myhlc|\@@_after_env:nn| to execute
 %   the \myenv[no-index]{minipage} on the \emph{\enquote{right side}}. At this point
@@ -14045,7 +14090,7 @@ all the worksheets are as follows:
 %    \myhlc|\@@_first_item_tmp_vii:| and next to |\item| equal to \myhlc|\@@_start_item_tmp_vii:|
 %    which are redefined later. Unlike the implementation used by
 %    the \mypkg[no-index]{shortlst} package, the values of
-%    |\rightskip| and |\@rightskip| are not set equal to |\@flushglue|, whose value is
+%    \myhlc|\rightskip| and |\@rightskip| are not set equal to |\@flushglue|, whose value is
 %    \mydim{0.0pt plus 1.0 fil}; in the tests performed this fails in
 %    some circumstances and different results are obtained when using
 %    \hologo{pdfTeX} and \hologo{LuaTeX}.
@@ -14372,7 +14417,7 @@ all the worksheets are as follows:
 %   position by the \mykey[env]{align} key; inside its argument it
 %   executes the \mykey[env]{font} key together with the function defined by the
 %   \mykey{wrap-label} or \mykey{wrap-label*} keys. Finally it executes the
-%   \mykey[env]{labelsep} key applying a \myhlc|\skip_horizontal:N| and |\ignorespaces|.
+%   \mykey[env]{labelsep} key applying a \myhlc|\skip_horizontal:N| and \myhlc|\ignorespaces|.
 %
 % \begin{important}
 %   For compatibility with \emph{tagged} \texttt{PDF} and \mypkg[no-index]{hyperref}
@@ -14490,13 +14535,13 @@ all the worksheets are as follows:
       \@@_stop_start_list_tag:
 %    \end{macrocode}
 %   Finally the \myenv[no-index]{minipage} environment is opened, the
-%   \emph{\enquote{item content}} is captured, |\parindent| takes the value of the
-%   key \mykey[env]{listparindent} and |\parskip| takes the value of the key
+%   \emph{\enquote{item content}} is captured, \myhlc|\parindent| takes the value of the
+%   key \mykey[env]{listparindent} and \myhlc|\parskip| takes the value of the key
 %   \mykey[env]{parsep}, then the keys \mykey[env]{itemindent} and
 %   \mykey[env]{first} are executed.
 %
 % \begin{important}*
-%  Here the use of |\unskip| and \myhlc|\skip_horizontal:n| with the value of
+%  Here the use of \myhlc|\unskip| and \myhlc|\skip_horizontal:n| with the value of
 %  \mykey{listparindent} is necessary, otherwise an unwanted space is
 %  created when using |\item|\myoarg{opt} and the value passed to the key
 %  \mykey{itemindent} is incremented.
@@ -14525,7 +14570,7 @@ all the worksheets are as follows:
     \hbox_set_end:
 %    \end{macrocode}
 %   Here the \emph{warnings} are reduced a bit by setting the value
-%   of |\hbadness| to \mydim{10000}, print |\item| and \emph{\enquote{item content}}
+%   of \myhlc|\hbadness| to \mydim{10000}, print |\item| and \emph{\enquote{item content}}
 %   from the \emph{horizontal box}.
 %    \begin{macrocode}
     \int_set:Nn \hbadness { 10000 }
@@ -14619,7 +14664,7 @@ all the worksheets are as follows:
 % \begin{macro}[int]{\@@_remove_extra_parsep_vii:}
 %   Remove the extra \emph{vertical space} equal to |\parsep=\itemsep| when the
 %   total number of |\item| is divisible by the number of |\item| in the last
-%   row of the environment. Here the use of |\unskip| or |\removelastskip|
+%   row of the environment. Here the use of \myhlc|\unskip| or |\removelastskip|
 %   fails and does not obtain the expected result; using |\vspace| is
 %   the option and in this case a simplified version can be used since
 %   it is always in \mymeta{vertical mode}.

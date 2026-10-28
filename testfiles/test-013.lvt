@@ -1,0 +1,251 @@
+% test-013.lvt -- llave base-fix de enumext (sin etiquetado)
+%
+% Hecho con cariño por Pablo González L. <pablgonz@educarchile.cl>
+% para que enumext siga funcionando igual de bien después de cada cambio.
+%
+% Regresion:  l3build save test-013
+%             l3build check test-013
+%
+% Test de regresion de la llave base-fix: un enumext anidado en un item de
+% enumext*, sin material entre \item y el entorno, debe quedar en la misma
+% linea base que la etiqueta del item. La correccion depende del parsep de
+% enumext* (no del \parsep de LaTeX, que alli vale lo mismo que itemsep) y de
+% las columnas. Cada caso compone el codigo en una caja que se muestra en el
+% log (\BOXTEST). Los casos de referencia (sin la llave y dentro de enumerate)
+% sirven para comparar.
+\input{regression-test}
+
+\documentclass{article}
+\ExplSyntaxOn
+\debug_on:n { all }
+\ExplSyntaxOff
+\usepackage{enumext}
+\begin{document}
+
+\newcommand\BOXTEST[2]
+  {%
+    \TEST{#1}
+      {%
+        \setbox0=\vbox{\hsize=250pt \linewidth=\hsize \columnwidth=\hsize \parindent=0pt #2}%
+        \showbox0
+      }%
+  }
+
+\START
+
+\TYPE{=== A. Referencias ===}
+
+\BOXTEST{[1] sin base-fix: el interior baja una linea}
+  {
+    \begin{enumext*}[label=\arabic*.]
+      \item \begin{enumext}[label=\alph*)]
+        \item Uno
+        \item Dos
+      \end{enumext}
+      \item Siguiente
+    \end{enumext*}
+  }
+
+\BOXTEST{[2] enumext dentro de enumerate estandar}
+  {
+    \begin{enumerate}
+      \item \begin{enumext}[label=\alph*)]
+        \item Uno
+        \item Dos
+      \end{enumext}
+      \item Siguiente
+    \end{enumerate}
+  }
+
+\BOXTEST{[3] base-fix fuera de enumext* (se ignora)}
+  {
+    \begin{enumerate}
+      \item \begin{enumext}[base-fix, label=\alph*)]
+        \item Uno
+        \item Dos
+      \end{enumext}
+      \item Siguiente
+    \end{enumerate}
+  }
+
+\TYPE{=== B. base-fix con los valores por defecto ===}
+
+\BOXTEST{[4] base-fix, una columna}
+  {
+    \begin{enumext*}[label=\arabic*.]
+      \item \begin{enumext}[base-fix, label=\alph*)]
+        \item Uno
+        \item Dos
+      \end{enumext}
+      \item Siguiente
+    \end{enumext*}
+  }
+
+\BOXTEST{[5] base-fix, dos columnas}
+  {
+    \begin{enumext*}[label=\arabic*.]
+      \item \begin{enumext}[base-fix, label=\alph*), columns=2]
+        \item Uno
+        \item Dos
+        \item Tres
+        \item Cuatro
+      \end{enumext}
+      \item Siguiente
+    \end{enumext*}
+  }
+
+\BOXTEST{[6] base-fix, tres columnas}
+  {
+    \begin{enumext*}[label=\arabic*.]
+      \item \begin{enumext}[base-fix, label=\alph*), columns=3]
+        \item Uno
+        \item Dos
+        \item Tres
+      \end{enumext}
+      \item Siguiente
+    \end{enumext*}
+  }
+
+\BOXTEST{[7] base-fix con nosep en el interior}
+  {
+    \begin{enumext*}[label=\arabic*.]
+      \item \begin{enumext}[base-fix, label=\alph*), nosep]
+        \item Uno
+        \item Dos
+      \end{enumext}
+      \item Siguiente
+    \end{enumext*}
+  }
+
+\TYPE{=== C. Separaciones de enumext* ===}
+
+\BOXTEST{[8] base-fix, noitemsep en enumext*}
+  {
+    \begin{enumext*}[label=\arabic*., noitemsep]
+      \item \begin{enumext}[base-fix, label=\alph*)]
+        \item Uno
+        \item Dos
+      \end{enumext}
+      \item Siguiente
+    \end{enumext*}
+  }
+
+\BOXTEST{[9] base-fix, nosep en enumext*}
+  {
+    \begin{enumext*}[label=\arabic*., nosep]
+      \item \begin{enumext}[base-fix, label=\alph*), columns=2]
+        \item Uno
+        \item Dos
+      \end{enumext}
+      \item Siguiente
+    \end{enumext*}
+  }
+
+\BOXTEST{[10] base-fix, itemsep=10pt en enumext*}
+  {
+    \begin{enumext*}[label=\arabic*., itemsep=10pt]
+      \item \begin{enumext}[base-fix, label=\alph*)]
+        \item Uno
+        \item Dos
+      \end{enumext}
+      \item Siguiente
+    \end{enumext*}
+  }
+
+\BOXTEST{[11] base-fix, itemsep=10pt y dos columnas}
+  {
+    \begin{enumext*}[label=\arabic*., itemsep=10pt]
+      \item \begin{enumext}[base-fix, label=\alph*), columns=2]
+        \item Uno
+        \item Dos
+      \end{enumext}
+      \item Siguiente
+    \end{enumext*}
+  }
+
+\BOXTEST{[12] base-fix, parsep=8pt en enumext*}
+  {
+    \begin{enumext*}[label=\arabic*., parsep=8pt]
+      \item \begin{enumext}[base-fix, label=\alph*)]
+        \item Uno
+        \item Dos
+      \end{enumext}
+      \item Siguiente
+    \end{enumext*}
+  }
+
+\BOXTEST{[13] base-fix, parsep=2pt y dos columnas}
+  {
+    \begin{enumext*}[label=\arabic*., parsep=2pt]
+      \item \begin{enumext}[base-fix, label=\alph*), columns=2]
+        \item Uno
+        \item Dos
+      \end{enumext}
+      \item Siguiente
+    \end{enumext*}
+  }
+
+\BOXTEST{[14] base-fix, parsep=0pt e itemsep=7pt}
+  {
+    \begin{enumext*}[label=\arabic*., parsep=0pt, itemsep=7pt]
+      \item \begin{enumext}[base-fix, label=\alph*)]
+        \item Uno
+        \item Dos
+      \end{enumext}
+      \item Siguiente
+    \end{enumext*}
+  }
+
+\TYPE{=== D. Otros contextos ===}
+
+\BOXTEST{[15] base-fix con tamano de letra grande}
+  {
+    \large
+    \begin{enumext*}[label=\arabic*.]
+      \item \begin{enumext}[base-fix, label=\alph*)]
+        \item Uno
+        \item Dos
+      \end{enumext}
+      \item Siguiente
+    \end{enumext*}
+  }
+
+\BOXTEST{[16] base-fix con mini-env en el interior}
+  {
+    \begin{enumext*}[label=\arabic*.]
+      \item \begin{enumext}[base-fix, label=\alph*), mini-env=3cm]
+        \item Uno
+        \item Dos
+        \miniright
+        Derecha
+      \end{enumext}
+      \item Siguiente
+    \end{enumext*}
+  }
+
+\BOXTEST{[17] base-fix, dos listas en el mismo item}
+  {
+    \begin{enumext*}[label=\arabic*.]
+      \item \begin{enumext}[base-fix, label=\alph*)]
+        \item Uno
+      \end{enumext}
+      \begin{enumext}[label=\alph*)]
+        \item Dos
+      \end{enumext}
+      \item Siguiente
+    \end{enumext*}
+  }
+
+\BOXTEST{[18] base-fix con texto antes del entorno}
+  {
+    \begin{enumext*}[label=\arabic*.]
+      \item Texto \begin{enumext}[base-fix, label=\alph*)]
+        \item Uno
+        \item Dos
+      \end{enumext}
+      \item Siguiente
+    \end{enumext*}
+  }
+
+\OMIT
+\end{document}

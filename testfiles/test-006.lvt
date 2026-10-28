@@ -958,5 +958,73 @@
     Despues
   }
 
+\TYPE{=== I. contenido que termina en un caracter ===}
+
+% Si el ultimo nodo es un caracter (por ejemplo, una macro sin espacio al final)
+% no hay glue ni kern que quitar: el cierre de la minipage debe ejecutarse igual.
+\newcommand\FIN{Fin}
+
+\BOXTEST{[66] enumext con mini-env, \string\miniright y una macro al final}
+  {
+    Antes\par
+    \begin{enumext}[mini-env=3cm]
+      \item Uno
+      \item Dos
+      \miniright
+      \FIN
+    \end{enumext}
+    Despues
+  }
+
+\BOXTEST{[67] enumext con mini-env, texto y macro al final}
+  {
+    Antes\par
+    \begin{enumext}[mini-env=3cm]
+      \item Uno
+      \item Dos
+      \miniright
+      Texto \FIN
+    \end{enumext}
+    Despues
+  }
+
+\BOXTEST{[68] enumext* con mini-right, ultimo item con una macro al final}
+  {
+    Antes\par
+    \begin{enumext*}[mini-env=3cm, mini-right={Derecha}]
+      \item Uno
+      \item Dos \FIN
+    \end{enumext*}
+    Despues
+  }
+
+\BOXTEST{[69] keyans con mini-env, \string\miniright y una macro al final}
+  {
+    \begin{enumext}[save-ans=kza]
+      \item Pregunta.\par
+        \begin{keyans}[mini-env=3cm]
+          \item Primera
+          \item* Segunda (correcta)
+          \miniright
+          \FIN
+        \end{keyans}
+      \item Siguiente
+    \end{enumext}
+    Despues
+  }
+
+\BOXTEST{[70] keyans* con mini-right, ultimo item con una macro al final}
+  {
+    \begin{enumext}[save-ans=kzb]
+      \item Pregunta.\par
+        \begin{keyans*}[mini-env=3cm, mini-right={Derecha}]
+          \item Primera
+          \item* Segunda (correcta) \FIN
+        \end{keyans*}
+      \item Siguiente
+    \end{enumext}
+    Despues
+  }
+
 \OMIT
 \end{document}

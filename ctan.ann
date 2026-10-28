@@ -1,4 +1,4 @@
-Release v2.3:
+Release v2.4:
 – Update requirement to LaTeX release 2026-11-01.
 – Cleanup warnings and details returned by `expltools`.
 – Update code for _tagged_ PDF.
