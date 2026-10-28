@@ -1,0 +1,962 @@
+% test-006.lvt -- espacios verticales de minipage y multicols
+%
+% Hecho con cariño por Pablo González L. <pablgonz@educarchile.cl>
+% para que enumext siga funcionando igual de bien después de cada cambio.
+%
+% Regresion:  l3build save test-006
+%             l3build check test-006
+%
+% Test de regresion de los espacios verticales (arriba, abajo y alineacion de
+% la linea base) de las llaves mini-env, mini-right, mini-right*, columns y del
+% comando \miniright en enumext, keyans, enumext* y keyans*. Cada caso va
+% precedido y seguido de texto, en modo vertical u horizontal, y compone el
+% codigo en una caja que se muestra en el log (\BOXTEST). Se prueban los
+% valores de topsep, itemsep, partopsep y nosep, y los niveles anidados. Los
+% nombres de almacenamiento no se reutilizan. Las listas sin minipage ni
+% columnas sirven de referencia para comparar.
+\input{regression-test}
+
+\documentclass{article}
+\ExplSyntaxOn
+\debug_on:n { all }
+\ExplSyntaxOff
+\usepackage{enumext}
+\begin{document}
+
+\newcommand\BOXTEST[2]
+  {%
+    \TEST{#1}
+      {%
+        \setbox0=\vbox{\hsize=250pt \linewidth=\hsize \columnwidth=\hsize \parindent=0pt #2}%
+        \showbox0
+      }%
+  }
+
+\START
+
+\TYPE{=== A. enumext con mini-env: contexto y parametros ===}
+
+\BOXTEST{[1] enumext con mini-env, despues de texto, modo vertical}
+  {
+    Antes\par
+    \begin{enumext}[mini-env=3cm]
+      \item Uno
+      \item Dos
+      \item Tres
+      \miniright
+      Derecha
+    \end{enumext}
+    Despues
+  }
+
+\BOXTEST{[2] enumext con mini-env, despues de texto, modo horizontal}
+  {
+    Antes
+    \begin{enumext}[mini-env=3cm]
+      \item Uno
+      \item Dos
+      \item Tres
+      \miniright
+      Derecha
+    \end{enumext}
+    Despues
+  }
+
+\BOXTEST{[3] enumext con mini-env, sin texto antes}
+  {
+    \begin{enumext}[mini-env=3cm]
+      \item Uno
+      \item Dos
+      \item Tres
+      \miniright
+      Derecha
+    \end{enumext}
+    Despues
+  }
+
+\BOXTEST{[4] enumext con mini-env, topsep=0pt}
+  {
+    Antes\par
+    \begin{enumext}[mini-env=3cm, topsep=0pt]
+      \item Uno
+      \item Dos
+      \item Tres
+      \miniright
+      Derecha
+    \end{enumext}
+    Despues
+  }
+
+\BOXTEST{[5] enumext con mini-env, nosep}
+  {
+    Antes\par
+    \begin{enumext}[mini-env=3cm, nosep]
+      \item Uno
+      \item Dos
+      \item Tres
+      \miniright
+      Derecha
+    \end{enumext}
+    Despues
+  }
+
+\BOXTEST{[6] enumext con mini-env, topsep e itemsep}
+  {
+    Antes\par
+    \begin{enumext}[mini-env=3cm, topsep=6pt, itemsep=3pt]
+      \item Uno
+      \item Dos
+      \item Tres
+      \miniright
+      Derecha
+    \end{enumext}
+    Despues
+  }
+
+\BOXTEST{[7] enumext con mini-env, partopsep}
+  {
+    Antes\par
+    \begin{enumext}[mini-env=3cm, partopsep=5pt]
+      \item Uno
+      \item Dos
+      \item Tres
+      \miniright
+      Derecha
+    \end{enumext}
+    Despues
+  }
+
+\BOXTEST{[8] enumext con mini-env, topsep con estiramiento}
+  {
+    Antes\par
+    \begin{enumext}[mini-env=3cm, topsep=12pt plus 2pt]
+      \item Uno
+      \item Dos
+      \item Tres
+      \miniright
+      Derecha
+    \end{enumext}
+    Despues
+  }
+
+\TYPE{=== B. enumext con mini-env y columnas ===}
+
+\BOXTEST{[9] enumext con mini-env, dos columnas}
+  {
+    Antes\par
+    \begin{enumext}[mini-env=3cm, columns=2]
+      \item Uno
+      \item Dos
+      \item Tres
+      \item Cuatro
+      \item Cinco
+      \item Seis
+      \miniright
+      Derecha
+    \end{enumext}
+    Despues
+  }
+
+\BOXTEST{[10] enumext con mini-env, tres columnas y miniright*}
+  {
+    Antes\par
+    \begin{enumext}[mini-env=3cm, columns=3]
+      \item Uno
+      \item Dos
+      \item Tres
+      \item Cuatro
+      \item Cinco
+      \item Seis
+      \miniright*
+      Derecha
+    \end{enumext}
+    Despues
+  }
+
+\BOXTEST{[11] enumext con mini-env, dos columnas y topsep=0pt}
+  {
+    Antes\par
+    \begin{enumext}[mini-env=3cm, columns=2, topsep=0pt]
+      \item Uno
+      \item Dos
+      \item Tres
+      \item Cuatro
+      \item Cinco
+      \item Seis
+      \miniright
+      Derecha
+    \end{enumext}
+    Despues
+  }
+
+\TYPE{=== C. enumext anidado con mini-env ===}
+
+\BOXTEST{[12] nivel 2 en modo vertical}
+  {
+    \begin{enumext}
+      \item Padre\par
+        \begin{enumext}[mini-env=3cm]
+          \item Uno
+          \item Dos
+          \item Tres
+          \miniright
+          Derecha
+        \end{enumext}
+      \item Siguiente
+    \end{enumext}
+    Despues
+  }
+
+\BOXTEST{[13] nivel 2 en modo horizontal}
+  {
+    \begin{enumext}
+      \item Padre
+        \begin{enumext}[mini-env=3cm]
+          \item Uno
+          \item Dos
+          \item Tres
+          \miniright
+          Derecha
+        \end{enumext}
+      \item Siguiente
+    \end{enumext}
+    Despues
+  }
+
+\BOXTEST{[14] nivel 2 al final del padre}
+  {
+    \begin{enumext}
+      \item Padre\par
+        \begin{enumext}[mini-env=3cm]
+          \item Uno
+          \item Dos
+          \item Tres
+          \miniright
+          Derecha
+        \end{enumext}
+    \end{enumext}
+    Despues
+  }
+
+\BOXTEST{[15] nivel 3}
+  {
+    \begin{enumext}
+      \item Primero\par
+      \begin{enumext}
+        \item Segundo\par
+          \begin{enumext}[mini-env=2cm]
+            \item Uno
+            \item Dos
+            \item Tres
+            \miniright
+            Derecha
+          \end{enumext}
+      \end{enumext}
+    \end{enumext}
+    Despues
+  }
+
+\BOXTEST{[16] nivel 2 con dos columnas}
+  {
+    \begin{enumext}
+      \item Padre\par
+        \begin{enumext}[mini-env=2cm, columns=2]
+          \item Uno
+          \item Dos
+          \item Tres
+          \item Cuatro
+          \miniright
+          Derecha
+        \end{enumext}
+    \end{enumext}
+    Despues
+  }
+
+\BOXTEST{[17] nivel 2 con topsep=0pt y partopsep}
+  {
+    \begin{enumext}[topsep=0pt]
+      \item Padre\par
+        \begin{enumext}[mini-env=3cm, topsep=0pt, partopsep=4pt]
+          \item Uno
+          \item Dos
+          \item Tres
+          \miniright
+          Derecha
+        \end{enumext}
+    \end{enumext}
+    Despues
+  }
+
+\BOXTEST{[18] miniright omitido}
+  {
+    Antes\par
+    \begin{enumext}[mini-env=3cm]
+      \item Uno
+      \item Dos
+      \item Tres
+    \end{enumext}
+    Despues
+  }
+
+\TYPE{=== D. keyans con mini-env ===}
+
+\BOXTEST{[19] keyans con mini-env, modo vertical}
+  {
+    \begin{enumext}[save-ans=kva]
+      \item Pregunta.\par
+        \begin{keyans}[mini-env=3cm]
+          \item Primera
+          \item* Segunda (correcta)
+          \item Tercera
+          \item Cuarta
+          \miniright
+          Derecha
+        \end{keyans}
+      \item Siguiente
+    \end{enumext}
+    Despues
+  }
+
+\BOXTEST{[20] keyans con mini-env, modo horizontal}
+  {
+    \begin{enumext}[save-ans=kvb]
+      \item Pregunta.
+        \begin{keyans}[mini-env=3cm]
+          \item Primera
+          \item* Segunda (correcta)
+          \item Tercera
+          \item Cuarta
+          \miniright
+          Derecha
+        \end{keyans}
+      \item Siguiente
+    \end{enumext}
+    Despues
+  }
+
+\BOXTEST{[21] keyans con mini-env, topsep=0pt}
+  {
+    \begin{enumext}[save-ans=kvc]
+      \item Pregunta.\par
+        \begin{keyans}[mini-env=3cm, topsep=0pt]
+          \item Primera
+          \item* Segunda (correcta)
+          \item Tercera
+          \item Cuarta
+          \miniright
+          Derecha
+        \end{keyans}
+      \item Siguiente
+    \end{enumext}
+    Despues
+  }
+
+\BOXTEST{[22] keyans con mini-env, nosep}
+  {
+    \begin{enumext}[save-ans=kvd]
+      \item Pregunta.\par
+        \begin{keyans}[mini-env=3cm, nosep]
+          \item Primera
+          \item* Segunda (correcta)
+          \item Tercera
+          \item Cuarta
+          \miniright
+          Derecha
+        \end{keyans}
+      \item Siguiente
+    \end{enumext}
+    Despues
+  }
+
+\BOXTEST{[23] keyans con mini-env, topsep e itemsep}
+  {
+    \begin{enumext}[save-ans=kve]
+      \item Pregunta.\par
+        \begin{keyans}[mini-env=3cm, topsep=6pt, itemsep=3pt]
+          \item Primera
+          \item* Segunda (correcta)
+          \item Tercera
+          \item Cuarta
+          \miniright
+          Derecha
+        \end{keyans}
+      \item Siguiente
+    \end{enumext}
+    Despues
+  }
+
+\BOXTEST{[24] keyans con mini-env, partopsep}
+  {
+    \begin{enumext}[save-ans=kvf]
+      \item Pregunta.\par
+        \begin{keyans}[mini-env=3cm, partopsep=5pt]
+          \item Primera
+          \item* Segunda (correcta)
+          \item Tercera
+          \item Cuarta
+          \miniright
+          Derecha
+        \end{keyans}
+      \item Siguiente
+    \end{enumext}
+    Despues
+  }
+
+\BOXTEST{[25] keyans con mini-env, dos columnas}
+  {
+    \begin{enumext}[save-ans=kvg]
+      \item Pregunta.\par
+        \begin{keyans}[mini-env=3cm, columns=2]
+          \item Primera
+          \item* Segunda (correcta)
+          \item Tercera
+          \item Cuarta
+          \miniright
+          Derecha
+        \end{keyans}
+      \item Siguiente
+    \end{enumext}
+    Despues
+  }
+
+\BOXTEST{[26] keyans con mini-env, tres columnas y miniright*}
+  {
+    \begin{enumext}[save-ans=kvh]
+      \item Pregunta.\par
+        \begin{keyans}[mini-env=3cm, columns=3]
+          \item Primera
+          \item* Segunda (correcta)
+          \item Tercera
+          \item Cuarta
+          \miniright*
+          Derecha
+        \end{keyans}
+      \item Siguiente
+    \end{enumext}
+    Despues
+  }
+
+\BOXTEST{[27] keyans con mini-env, miniright omitido}
+  {
+    \begin{enumext}[save-ans=kvi]
+      \item Pregunta.\par
+        \begin{keyans}[mini-env=3cm]
+          \item Primera
+          \item* Segunda (correcta)
+        \end{keyans}
+    \end{enumext}
+    Despues
+  }
+
+\TYPE{=== E. enumext* con mini-right ===}
+
+\BOXTEST{[28] enumext* con mini-right, modo vertical}
+  {
+    Antes\par
+    \begin{enumext*}[mini-env=3cm, mini-right={Derecha}]
+      \item Uno
+      \item Dos
+      \item Tres
+    \end{enumext*}
+    Despues
+  }
+
+\BOXTEST{[29] enumext* con mini-right, modo horizontal}
+  {
+    Antes
+    \begin{enumext*}[mini-env=3cm, mini-right={Derecha}]
+      \item Uno
+      \item Dos
+      \item Tres
+    \end{enumext*}
+    Despues
+  }
+
+\BOXTEST{[30] enumext* con mini-right, sin texto antes}
+  {
+    \begin{enumext*}[mini-env=3cm, mini-right={Derecha}]
+      \item Uno
+      \item Dos
+      \item Tres
+    \end{enumext*}
+    Despues
+  }
+
+\BOXTEST{[31] enumext* con mini-right, topsep=0pt}
+  {
+    Antes\par
+    \begin{enumext*}[mini-env=3cm, mini-right={Derecha}, topsep=0pt]
+      \item Uno
+      \item Dos
+      \item Tres
+    \end{enumext*}
+    Despues
+  }
+
+\BOXTEST{[32] enumext* con mini-right, nosep}
+  {
+    Antes\par
+    \begin{enumext*}[mini-env=3cm, mini-right={Derecha}, nosep]
+      \item Uno
+      \item Dos
+      \item Tres
+    \end{enumext*}
+    Despues
+  }
+
+\BOXTEST{[33] enumext* con mini-right, topsep e itemsep}
+  {
+    Antes\par
+    \begin{enumext*}[mini-env=3cm, mini-right={Derecha}, topsep=6pt, itemsep=3pt]
+      \item Uno
+      \item Dos
+      \item Tres
+    \end{enumext*}
+    Despues
+  }
+
+\BOXTEST{[34] enumext* con mini-right, partopsep}
+  {
+    Antes\par
+    \begin{enumext*}[mini-env=3cm, mini-right={Derecha}, partopsep=5pt]
+      \item Uno
+      \item Dos
+      \item Tres
+    \end{enumext*}
+    Despues
+  }
+
+\BOXTEST{[35] enumext* con mini-right, topsep con estiramiento}
+  {
+    Antes\par
+    \begin{enumext*}[mini-env=3cm, mini-right={Derecha}, topsep=12pt plus 2pt]
+      \item Uno
+      \item Dos
+      \item Tres
+    \end{enumext*}
+    Despues
+  }
+
+\BOXTEST{[36] enumext* con mini-right, anidado en modo vertical}
+  {
+    \begin{enumext}
+      \item Padre\par
+        \begin{enumext*}[mini-env=3cm, mini-right={Derecha}]
+          \item Uno
+          \item Dos
+          \item Tres
+        \end{enumext*}
+      \item Siguiente
+    \end{enumext}
+    Despues
+  }
+
+\BOXTEST{[37] enumext* con mini-right, anidado en modo horizontal}
+  {
+    \begin{enumext}
+      \item Padre
+        \begin{enumext*}[mini-env=3cm, mini-right={Derecha}]
+          \item Uno
+          \item Dos
+          \item Tres
+        \end{enumext*}
+      \item Siguiente
+    \end{enumext}
+    Despues
+  }
+
+\BOXTEST{[38] enumext* con mini-right, anidado con topsep=0pt}
+  {
+    \begin{enumext}
+      \item Padre\par
+        \begin{enumext*}[mini-env=3cm, mini-right={Derecha}, topsep=0pt]
+          \item Uno
+          \item Dos
+          \item Tres
+        \end{enumext*}
+      \item Siguiente
+    \end{enumext}
+    Despues
+  }
+
+\BOXTEST{[39] enumext* con mini-right*}
+  {
+    Antes\par
+    \begin{enumext*}[mini-env=3cm, mini-right*={Derecha}]
+      \item Uno
+      \item Dos
+    \end{enumext*}
+    Despues
+  }
+
+\BOXTEST{[40] enumext* con mini-right y dos columnas}
+  {
+    Antes\par
+    \begin{enumext*}[mini-env=3cm, mini-right={Derecha}, columns=2]
+      \item Uno
+      \item Dos
+      \item Tres
+      \item Cuatro
+    \end{enumext*}
+    Despues
+  }
+
+\TYPE{=== F. keyans* con mini-right ===}
+
+\BOXTEST{[41] keyans* con mini-right, modo vertical}
+  {
+    \begin{enumext}[save-ans=kwa]
+      \item Pregunta.\par
+        \begin{keyans*}[mini-env=3cm, mini-right={Derecha}]
+          \item Primera
+          \item* Segunda (correcta)
+          \item Tercera
+        \end{keyans*}
+      \item Siguiente
+    \end{enumext}
+    Despues
+  }
+
+\BOXTEST{[42] keyans* con mini-right, modo horizontal}
+  {
+    \begin{enumext}[save-ans=kwb]
+      \item Pregunta.
+        \begin{keyans*}[mini-env=3cm, mini-right={Derecha}]
+          \item Primera
+          \item* Segunda (correcta)
+          \item Tercera
+        \end{keyans*}
+      \item Siguiente
+    \end{enumext}
+    Despues
+  }
+
+\BOXTEST{[43] keyans* con mini-right, topsep=0pt}
+  {
+    \begin{enumext}[save-ans=kwc]
+      \item Pregunta.\par
+        \begin{keyans*}[mini-env=3cm, mini-right={Derecha}, topsep=0pt]
+          \item Primera
+          \item* Segunda (correcta)
+          \item Tercera
+        \end{keyans*}
+      \item Siguiente
+    \end{enumext}
+    Despues
+  }
+
+\BOXTEST{[44] keyans* con mini-right, nosep}
+  {
+    \begin{enumext}[save-ans=kwd]
+      \item Pregunta.\par
+        \begin{keyans*}[mini-env=3cm, mini-right={Derecha}, nosep]
+          \item Primera
+          \item* Segunda (correcta)
+          \item Tercera
+        \end{keyans*}
+      \item Siguiente
+    \end{enumext}
+    Despues
+  }
+
+\BOXTEST{[45] keyans* con mini-right, topsep e itemsep}
+  {
+    \begin{enumext}[save-ans=kwe]
+      \item Pregunta.\par
+        \begin{keyans*}[mini-env=3cm, mini-right={Derecha}, topsep=12pt, itemsep=3pt]
+          \item Primera
+          \item* Segunda (correcta)
+          \item Tercera
+        \end{keyans*}
+      \item Siguiente
+    \end{enumext}
+    Despues
+  }
+
+\BOXTEST{[46] keyans* con mini-right, partopsep}
+  {
+    \begin{enumext}[save-ans=kwf]
+      \item Pregunta.\par
+        \begin{keyans*}[mini-env=3cm, mini-right={Derecha}, partopsep=5pt]
+          \item Primera
+          \item* Segunda (correcta)
+          \item Tercera
+        \end{keyans*}
+      \item Siguiente
+    \end{enumext}
+    Despues
+  }
+
+\BOXTEST{[47] keyans* con mini-right, mini-right*}
+  {
+    \begin{enumext}[save-ans=kwg]
+      \item Pregunta.\par
+        \begin{keyans*}[mini-env=3cm, mini-right*={Derecha}]
+          \item Primera
+          \item* Segunda (correcta)
+          \item Tercera
+        \end{keyans*}
+      \item Siguiente
+    \end{enumext}
+    Despues
+  }
+
+\BOXTEST{[48] keyans* con mini-right, dos columnas}
+  {
+    \begin{enumext}[save-ans=kwh]
+      \item Pregunta.\par
+        \begin{keyans*}[mini-env=3cm, mini-right={Derecha}, columns=2]
+          \item Primera
+          \item* Segunda (correcta)
+          \item Tercera
+        \end{keyans*}
+      \item Siguiente
+    \end{enumext}
+    Despues
+  }
+
+\TYPE{=== G. multicols sin minipage ===}
+
+\BOXTEST{[49] multicols sin minipage: enumext, dos columnas}
+  {
+    Antes\par
+    \begin{enumext}[columns=2]
+      \item Uno
+      \item Dos
+      \item Tres
+      \item Cuatro
+      \item Cinco
+      \item Seis
+    \end{enumext}
+    Despues
+  }
+
+\BOXTEST{[50] multicols sin minipage: enumext, tres columnas, modo horizontal}
+  {
+    Antes
+    \begin{enumext}[columns=3]
+      \item Uno
+      \item Dos
+      \item Tres
+      \item Cuatro
+      \item Cinco
+      \item Seis
+    \end{enumext}
+    Despues
+  }
+
+\BOXTEST{[51] multicols sin minipage: enumext, dos columnas y topsep=0pt}
+  {
+    Antes\par
+    \begin{enumext}[columns=2, topsep=0pt]
+      \item Uno
+      \item Dos
+      \item Tres
+      \item Cuatro
+      \item Cinco
+      \item Seis
+    \end{enumext}
+    Despues
+  }
+
+\BOXTEST{[52] multicols sin minipage: enumext, dos columnas y nosep}
+  {
+    Antes\par
+    \begin{enumext}[columns=2, nosep]
+      \item Uno
+      \item Dos
+      \item Tres
+      \item Cuatro
+      \item Cinco
+      \item Seis
+    \end{enumext}
+    Despues
+  }
+
+\BOXTEST{[53] multicols sin minipage: enumext, dos columnas y partopsep}
+  {
+    Antes\par
+    \begin{enumext}[columns=2, partopsep=5pt]
+      \item Uno
+      \item Dos
+      \item Tres
+      \item Cuatro
+      \item Cinco
+      \item Seis
+    \end{enumext}
+    Despues
+  }
+
+\BOXTEST{[54] multicols sin minipage: enumext, dos columnas e itemsep}
+  {
+    Antes\par
+    \begin{enumext}[columns=2, itemsep=6pt]
+      \item Uno
+      \item Dos
+      \item Tres
+      \item Cuatro
+      \item Cinco
+      \item Seis
+    \end{enumext}
+    Despues
+  }
+
+\BOXTEST{[55] multicols sin minipage: enumext nivel 2, dos columnas}
+  {
+    \begin{enumext}
+      \item Padre\par
+        \begin{enumext}[columns=2]
+          \item Uno
+          \item Dos
+          \item Tres
+          \item Cuatro
+        \end{enumext}
+      \item Siguiente
+    \end{enumext}
+    Despues
+  }
+
+\BOXTEST{[56] multicols sin minipage: enumext nivel 2, dos columnas y topsep=0pt}
+  {
+    \begin{enumext}
+      \item Padre\par
+        \begin{enumext}[columns=2, topsep=0pt]
+          \item Uno
+          \item Dos
+          \item Tres
+          \item Cuatro
+        \end{enumext}
+      \item Siguiente
+    \end{enumext}
+    Despues
+  }
+
+\BOXTEST{[57] multicols sin minipage: enumext nivel 2, tres columnas e itemsep}
+  {
+    \begin{enumext}
+      \item Padre\par
+        \begin{enumext}[columns=3, itemsep=6pt]
+          \item Uno
+          \item Dos
+          \item Tres
+          \item Cuatro
+        \end{enumext}
+      \item Siguiente
+    \end{enumext}
+    Despues
+  }
+
+\BOXTEST{[58] multicols sin minipage: keyans, dos columnas}
+  {
+    \begin{enumext}[save-ans=kxa]
+      \item Pregunta.\par
+        \begin{keyans}[columns=2]
+          \item Primera
+          \item* Segunda (correcta)
+          \item Tercera
+          \item Cuarta
+        \end{keyans}
+      \item Siguiente
+    \end{enumext}
+    Despues
+  }
+
+\BOXTEST{[59] multicols sin minipage: keyans, tres columnas, modo horizontal}
+  {
+    \begin{enumext}[save-ans=kxb]
+      \item Pregunta.
+        \begin{keyans}[columns=3]
+          \item Primera
+          \item* Segunda (correcta)
+          \item Tercera
+          \item Cuarta
+        \end{keyans}
+      \item Siguiente
+    \end{enumext}
+    Despues
+  }
+
+\BOXTEST{[60] multicols sin minipage: keyans, dos columnas y topsep=0pt}
+  {
+    \begin{enumext}[save-ans=kxc]
+      \item Pregunta.\par
+        \begin{keyans}[columns=2, topsep=0pt]
+          \item Primera
+          \item* Segunda (correcta)
+          \item Tercera
+          \item Cuarta
+        \end{keyans}
+      \item Siguiente
+    \end{enumext}
+    Despues
+  }
+
+\BOXTEST{[61] multicols sin minipage: keyans, dos columnas y partopsep}
+  {
+    \begin{enumext}[save-ans=kxd]
+      \item Pregunta.\par
+        \begin{keyans}[columns=2, partopsep=5pt]
+          \item Primera
+          \item* Segunda (correcta)
+          \item Tercera
+          \item Cuarta
+        \end{keyans}
+      \item Siguiente
+    \end{enumext}
+    Despues
+  }
+
+\TYPE{=== H. listas de referencia (sin minipage ni columnas) ===}
+
+\BOXTEST{[62] enumext de referencia, modo vertical}
+  {
+    Antes\par
+    \begin{enumext}
+      \item Uno
+      \item Dos
+      \item Tres
+    \end{enumext}
+    Despues
+  }
+
+\BOXTEST{[63] enumext de referencia, nivel 2}
+  {
+    \begin{enumext}
+      \item Padre\par
+        \begin{enumext}
+          \item Uno
+          \item Dos
+          \item Tres
+        \end{enumext}
+      \item Siguiente
+    \end{enumext}
+    Despues
+  }
+
+\BOXTEST{[64] enumext* de referencia}
+  {
+    Antes\par
+    \begin{enumext*}
+      \item Uno
+      \item Dos
+      \item Tres
+    \end{enumext*}
+    Despues
+  }
+
+\BOXTEST{[65] keyans de referencia}
+  {
+    \begin{enumext}[save-ans=ky]
+      \item Pregunta.\par
+        \begin{keyans}
+          \item Primera
+          \item* Segunda (correcta)
+          \item Tercera
+        \end{keyans}
+      \item Siguiente
+    \end{enumext}
+    Despues
+  }
+
+\OMIT
+\end{document}

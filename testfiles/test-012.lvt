@@ -1,0 +1,413 @@
+% test-012.lvt -- estructura etiquetada de minipage y multicols de enumext
+%
+% Hecho con cariño por Pablo González L. <pablgonz@educarchile.cl>
+% para que enumext siga funcionando igual de bien después de cada cambio.
+%
+% Regresion:  l3build save test-012
+%             l3build check test-012
+%
+% Test de regresion del etiquetado (tagged PDF) de las llaves mini-env,
+% mini-right, mini-right*, columns y del comando \miniright en enumext, keyans,
+% enumext* y keyans*. El log guarda el arbol de etiquetas (\SHOWPDFTAGS). Las
+% figuras (con texto alternativo) estan en el lado derecho y despues de cada
+% caso: su Layout:BBox registra la posicion vertical, asi que un cambio en los
+% espacios de arriba o de abajo de minipage y multicols cambia el log. Los
+% espacios sin etiquetado estan en test-006.
+\input{regression-test}
+
+\DocumentMetadata
+  {
+    lang=en-US,
+    pdfversion=2.0,
+    pdfstandard=ua-2,
+    tagging=on,
+  }
+\documentclass{article}
+\ExplSyntaxOn
+\debug_on:n { all }
+\ExplSyntaxOff
+\usepackage{graphicx}
+\usepackage{enumext}
+\usepackage{hyperref}
+\hypersetup
+  {
+    pdfdisplaydoctitle = true,
+    pdftitle           = {test-012: tagged minipage and multicols of enumext},
+  }
+\newcommand\PICA{\includegraphics[scale=0.08, alt={An uppercase letter A}]{example-image-a}}
+\newcommand\PICB{\includegraphics[scale=0.08, alt={An uppercase letter B}]{example-image-b}}
+\newcommand\PICC{\includegraphics[scale=0.08, alt={An uppercase letter C}]{example-image-c}}
+\begin{document}
+
+\section*{A. Minipage in \texttt{enumext}}
+
+% Estructura: lista con las figuras y su posicion vertical.
+1. List with minipage after text.
+
+Text before.
+
+\begin{enumext}[mini-env=3cm]
+  \item One
+  \item Two
+  \item Three
+  \miniright
+    \fbox{\PICA}
+\end{enumext}
+
+After the list. \PICB
+
+% Estructura: lista con las figuras y su posicion vertical.
+2. List with minipage in horizontal mode.
+
+Text before.
+\begin{enumext}[mini-env=3cm]
+  \item One
+  \item Two
+  \item Three
+  \miniright
+    \fbox{\PICA}
+\end{enumext}
+
+After the list. \PICB
+
+% Estructura: lista con las figuras y su posicion vertical.
+3. List with minipage and topsep zero.
+
+Text before.
+
+\begin{enumext}[mini-env=3cm, topsep=0pt]
+  \item One
+  \item Two
+  \item Three
+  \miniright
+    \fbox{\PICA}
+\end{enumext}
+
+After the list. \PICB
+
+% Estructura: lista con las figuras y su posicion vertical.
+4. List with minipage and nosep.
+
+Text before.
+
+\begin{enumext}[mini-env=3cm, nosep]
+  \item One
+  \item Two
+  \item Three
+  \miniright
+    \fbox{\PICA}
+\end{enumext}
+
+After the list. \PICB
+
+% Estructura: lista con las figuras y su posicion vertical.
+5. List with minipage and starred miniright.
+
+Text before.
+
+\begin{enumext}[mini-env=3cm]
+  \item One
+  \item Two
+  \item Three
+  \miniright*
+    \fbox{\PICA}
+\end{enumext}
+
+After the list. \PICB
+
+% Estructura: lista con las figuras y su posicion vertical.
+6. Columns and minipage.
+
+Text before.
+
+\begin{enumext}[mini-env=3cm, columns=2]
+  \item One
+  \item Two
+  \item Three
+  \item Four
+  \miniright
+    \fbox{\PICA}
+\end{enumext}
+
+After the list. \PICB
+
+% Estructura: lista con las figuras y su posicion vertical.
+7. Columns, minipage and topsep zero.
+
+Text before.
+
+\begin{enumext}[mini-env=3cm, columns=2, topsep=0pt]
+  \item One
+  \item Two
+  \item Three
+  \item Four
+  \miniright
+    \fbox{\PICA}
+\end{enumext}
+
+After the list. \PICB
+
+% Estructura: lista con las figuras y su posicion vertical.
+8. Nested list with minipage.
+
+\begin{enumext}
+  \item Parent item.
+
+    \begin{enumext}[mini-env=3cm]
+      \item One
+      \item Two
+      \item Three
+      \miniright
+        \fbox{\PICA}
+    \end{enumext}
+  \item Next item.
+\end{enumext}
+
+After the list. \PICB
+
+% Estructura: lista con las figuras y su posicion vertical.
+9. List with columns and no minipage.
+
+Text before.
+
+\begin{enumext}[columns=2]
+  \item One
+  \item Two
+  \item Three
+  \item Four
+\end{enumext}
+
+After the list. \PICB
+
+\section*{B. Minipage in \texttt{keyans}}
+
+% Estructura: lista con las figuras y su posicion vertical.
+10. Keyans with minipage.
+
+\begin{enumext}[save-ans=tka]
+  \item Question.
+
+    \begin{keyans}[mini-env=3cm]
+      \item First
+      \item* Second (correct)
+      \item Third
+      \item Fourth
+      \miniright
+        \fbox{\PICA}
+    \end{keyans}
+  \item Next question.
+\end{enumext}
+
+After the list. \PICB
+
+% Estructura: lista con las figuras y su posicion vertical.
+11. Keyans with minipage in horizontal mode.
+
+\begin{enumext}[save-ans=tkb]
+  \item Question.
+    \begin{keyans}[mini-env=3cm]
+      \item First
+      \item* Second (correct)
+      \item Third
+      \item Fourth
+      \miniright
+        \fbox{\PICA}
+    \end{keyans}
+  \item Next question.
+\end{enumext}
+
+After the list. \PICB
+
+% Estructura: lista con las figuras y su posicion vertical.
+12. Keyans with minipage and topsep zero.
+
+\begin{enumext}[save-ans=tkc]
+  \item Question.
+
+    \begin{keyans}[mini-env=3cm, topsep=0pt]
+      \item First
+      \item* Second (correct)
+      \item Third
+      \item Fourth
+      \miniright
+        \fbox{\PICA}
+    \end{keyans}
+  \item Next question.
+\end{enumext}
+
+After the list. \PICB
+
+% Estructura: lista con las figuras y su posicion vertical.
+13. Keyans with columns and minipage.
+
+\begin{enumext}[save-ans=tkd]
+  \item Question.
+
+    \begin{keyans}[mini-env=3cm, columns=2]
+      \item First
+      \item* Second (correct)
+      \item Third
+      \item Fourth
+      \miniright
+        \fbox{\PICA}
+    \end{keyans}
+  \item Next question.
+\end{enumext}
+
+After the list. \PICB
+
+% Estructura: lista con las figuras y su posicion vertical.
+14. Keyans with columns and no minipage.
+
+\begin{enumext}[save-ans=tke]
+  \item Question.
+
+    \begin{keyans}[columns=2]
+      \item First
+      \item* Second (correct)
+      \item Third
+      \item Fourth
+    \end{keyans}
+  \item Next question.
+\end{enumext}
+
+After the list. \PICB
+
+\section*{C. Minipage in \texttt{enumext*} and \texttt{keyans*}}
+
+% Estructura: lista con las figuras y su posicion vertical.
+15. Horizontal list with minipage.
+
+Text before.
+
+\begin{enumext*}[mini-env=3cm, mini-right={\PICA}]
+  \item One
+  \item Two
+  \item Three
+\end{enumext*}
+
+After the list. \PICB
+
+% Estructura: lista con las figuras y su posicion vertical.
+16. Horizontal list with minipage in horizontal mode.
+
+Text before.
+\begin{enumext*}[mini-env=3cm, mini-right={\PICA}]
+  \item One
+  \item Two
+  \item Three
+\end{enumext*}
+
+After the list. \PICB
+
+% Estructura: lista con las figuras y su posicion vertical.
+17. Horizontal list with minipage and topsep zero.
+
+Text before.
+
+\begin{enumext*}[mini-env=3cm, mini-right={\PICA}, topsep=0pt]
+  \item One
+  \item Two
+  \item Three
+\end{enumext*}
+
+After the list. \PICB
+
+% Estructura: lista con las figuras y su posicion vertical.
+18. Horizontal list with minipage and nosep.
+
+Text before.
+
+\begin{enumext*}[mini-env=3cm, mini-right={\PICA}, nosep]
+  \item One
+  \item Two
+  \item Three
+\end{enumext*}
+
+After the list. \PICB
+
+% Estructura: lista con las figuras y su posicion vertical.
+19. Nested horizontal list with minipage.
+
+\begin{enumext}
+  \item Parent item.
+
+    \begin{enumext*}[mini-env=3cm, mini-right={\PICA}]
+      \item One
+      \item Two
+      \item Three
+    \end{enumext*}
+  \item Next item.
+\end{enumext}
+
+After the list. \PICB
+
+% Estructura: lista con las figuras y su posicion vertical.
+20. Horizontal answers with minipage.
+
+\begin{enumext}[save-ans=thk]
+  \item Question.
+
+    \begin{keyans*}[mini-env=3cm, mini-right={\PICA}]
+      \item One
+      \item* Two
+      \item Three
+    \end{keyans*}
+  \item Next question.
+\end{enumext}
+
+After the list. \PICB
+
+% Estructura: lista con las figuras y su posicion vertical.
+21. Horizontal answers with minipage in horizontal mode.
+
+\begin{enumext}[save-ans=thl]
+  \item Question.
+    \begin{keyans*}[mini-env=3cm, mini-right={\PICA}]
+      \item One
+      \item* Two
+      \item Three
+    \end{keyans*}
+  \item Next question.
+\end{enumext}
+
+After the list. \PICB
+
+% Estructura: lista con las figuras y su posicion vertical.
+22. Horizontal answers with minipage and topsep zero.
+
+\begin{enumext}[save-ans=thm]
+  \item Question.
+
+    \begin{keyans*}[mini-env=3cm, mini-right={\PICA}, topsep=0pt]
+      \item One
+      \item* Two
+      \item Three
+    \end{keyans*}
+  \item Next question.
+\end{enumext}
+
+After the list. \PICB
+
+\section*{D. Reference lists}
+
+% Estructura: lista con las figuras y su posicion vertical.
+23. List without minipage.
+
+Text before.
+
+\begin{enumext}
+  \item One
+  \item Two
+  \item Three
+\end{enumext}
+
+After the list. \PICB
+
+\START
+
+\SHOWPDFTAGS
+
+\OMIT
+
+\end{document}

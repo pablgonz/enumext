@@ -717,7 +717,7 @@ Defining \g__enumext_resume_kad_int on line ...
 * started on line ... and close on line ...: 'OK', all items with answer.
 ****************************************
 > \box...=
-\vbox(60.77+0.0)x345.0, direction TLT
+\vbox(64.77+0.0)x345.0, direction TLT
 .\penalty -51
 .\glue 10.0 plus 4.0 minus 5.0
 .\glue -10.0 plus -4.0 minus -5.0
@@ -760,7 +760,7 @@ Defining \g__enumext_resume_kad_int on line ...
 ..\glue(\parfillskip) 0.0 plus 1.0fil
 ..\glue(\rightskip) 0.0
 .\penalty 10000
-.\glue 4.0 plus 2.0 minus 1.0
+.\glue 8.0 plus 4.0 minus 2.0
 .\kern-0.06
 .\hbox(26.0+1.94)x333.88702, glue set 4.09825fil, shifted 11.11298, direction TLT
 ..\vbox(26.0+0.0)x162.84526, glue set - 0.35715, direction TLT

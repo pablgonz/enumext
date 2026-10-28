@@ -3656,13 +3656,13 @@ TEST 33: [33] mini-env y mini-sep
 ============================================================
 Overfull \hbox (66.54726pt too wide) in paragraph at lines ...
 [] [] 
-\hbox(0.0+46.94)x250.0, direction TLT
+\hbox(0.0+36.94)x250.0, direction TLT
 .\localpar
 ..\localinterlinepenalty=0
 ..\localbrokenpenalty=0
 ..\localleftbox=null
 ..\localrightbox=null
-.\vbox(0.0+46.94)x178.54936, direction TLT
+.\vbox(0.0+36.94)x178.54936, direction TLT
 ..\glue 0.0
 ..\penalty -51
 ..\glue 10.0 plus 3.0 minus 5.0
@@ -3728,7 +3728,6 @@ Overfull \hbox (66.54726pt too wide) in paragraph at lines ...
 ...\glue(\parfillskip) 0.0 plus 1.0fil
 ...\glue(\rightskip) 0.0
 ..\penalty -51
-..\glue 10.0 plus 3.0 minus 5.0
 .\glue 0.0 plus 1.0fill
 .\vbox(0.0+17.05)x137.9979, direction TLT
 ..\glue 0.0
@@ -3771,19 +3770,18 @@ Overfull \hbox (66.54726pt too wide) in paragraph at lines ...
 .\glue(\parfillskip) 0.0 plus 1.0fil
 .\glue(\rightskip) 0.0
 > \box...=
-\vbox(2.09999+46.94)x250.0, direction TLT
+\vbox(46.94+0.0)x250.0, direction TLT
 .\penalty 10000
-.\penalty 10000
-.\glue 2.09999
+.\glue 0.0
 .\glue(\parskip) 0.0 plus 1.0
 .\glue(\parskip) 0.0
-.\hbox(0.0+46.94)x250.0, direction TLT
+.\hbox(0.0+36.94)x250.0, direction TLT
 ..\localpar
 ...\localinterlinepenalty=0
 ...\localbrokenpenalty=0
 ...\localleftbox=null
 ...\localrightbox=null
-..\vbox(0.0+46.94)x178.54936, direction TLT
+..\vbox(0.0+36.94)x178.54936, direction TLT
 ...\glue 0.0
 ...\penalty -51
 ...\glue 10.0 plus 3.0 minus 5.0
@@ -3849,7 +3847,6 @@ Overfull \hbox (66.54726pt too wide) in paragraph at lines ...
 ....\glue(\parfillskip) 0.0 plus 1.0fil
 ....\glue(\rightskip) 0.0
 ...\penalty -51
-...\glue 10.0 plus 3.0 minus 5.0
 ..\glue 0.0 plus 1.0fill
 ..\vbox(0.0+17.05)x137.9979, direction TLT
 ...\glue 0.0
@@ -3891,6 +3888,8 @@ Overfull \hbox (66.54726pt too wide) in paragraph at lines ...
 ..\penalty 10000
 ..\glue(\parfillskip) 0.0 plus 1.0fil
 ..\glue(\rightskip) 0.0
+.\penalty -51
+.\glue 10.0 plus 3.0 minus 5.0
 ! OK.
 <argument> ...derecha. \end {enumext} }\showbox 0 
 l. ...  }
@@ -3900,13 +3899,13 @@ TEST 34: [34] miniright* conserva la justificacion
 ============================================================
 Overfull \hbox (91.66702pt too wide) in paragraph at lines ...
 [] [] 
-\hbox(0.0+46.94)x250.0, direction TLT
+\hbox(0.0+36.94)x250.0, direction TLT
 .\localpar
 ..\localinterlinepenalty=0
 ..\localbrokenpenalty=0
 ..\localleftbox=null
 ..\localrightbox=null
-.\vbox(0.0+46.94)x203.66913, direction TLT
+.\vbox(0.0+36.94)x203.66913, direction TLT
 ..\glue 0.0
 ..\penalty -51
 ..\glue 10.0 plus 3.0 minus 5.0
@@ -3972,7 +3971,6 @@ Overfull \hbox (91.66702pt too wide) in paragraph at lines ...
 ...\glue(\parfillskip) 0.0 plus 1.0fil
 ...\glue(\rightskip) 0.0
 ..\penalty -51
-..\glue 10.0 plus 3.0 minus 5.0
 .\glue 0.0 plus 1.0fill
 .\vbox(0.0+17.05)x137.9979, direction TLT
 ..\glue 0.0
@@ -4029,19 +4027,18 @@ Overfull \hbox (91.66702pt too wide) in paragraph at lines ...
 .\glue(\parfillskip) 0.0 plus 1.0fil
 .\glue(\rightskip) 0.0
 > \box...=
-\vbox(2.09999+46.94)x250.0, direction TLT
+\vbox(46.94+0.0)x250.0, direction TLT
 .\penalty 10000
-.\penalty 10000
-.\glue 2.09999
+.\glue 0.0
 .\glue(\parskip) 0.0 plus 1.0
 .\glue(\parskip) 0.0
-.\hbox(0.0+46.94)x250.0, direction TLT
+.\hbox(0.0+36.94)x250.0, direction TLT
 ..\localpar
 ...\localinterlinepenalty=0
 ...\localbrokenpenalty=0
 ...\localleftbox=null
 ...\localrightbox=null
-..\vbox(0.0+46.94)x203.66913, direction TLT
+..\vbox(0.0+36.94)x203.66913, direction TLT
 ...\glue 0.0
 ...\penalty -51
 ...\glue 10.0 plus 3.0 minus 5.0
@@ -4107,7 +4104,6 @@ Overfull \hbox (91.66702pt too wide) in paragraph at lines ...
 ....\glue(\parfillskip) 0.0 plus 1.0fil
 ....\glue(\rightskip) 0.0
 ...\penalty -51
-...\glue 10.0 plus 3.0 minus 5.0
 ..\glue 0.0 plus 1.0fill
 ..\vbox(0.0+17.05)x137.9979, direction TLT
 ...\glue 0.0
@@ -4163,6 +4159,8 @@ Overfull \hbox (91.66702pt too wide) in paragraph at lines ...
 ..\penalty 10000
 ..\glue(\parfillskip) 0.0 plus 1.0fil
 ..\glue(\rightskip) 0.0
+.\penalty -51
+.\glue 10.0 plus 3.0 minus 5.0
 ! OK.
 <argument> ...centrar. \end {enumext} }\showbox 0 
 l. ...  }
@@ -4172,13 +4170,13 @@ TEST 35: [35] mini-right en enumext*
 ============================================================
 Overfull \hbox (91.66702pt too wide) in paragraph at lines ...
 [] [] 
-\hbox(0.0+27.05)x250.0, direction TLT
+\hbox(0.0+19.05)x250.0, direction TLT
 .\localpar
 ..\localinterlinepenalty=0
 ..\localbrokenpenalty=0
 ..\localleftbox=null
 ..\localrightbox=null
-.\vbox(0.0+27.05)x203.66913, direction TLT
+.\vbox(0.0+19.05)x203.66913, direction TLT
 ..\glue 0.0
 ..\penalty -51
 ..\glue 8.0 plus 2.0 minus 4.0
@@ -4250,7 +4248,6 @@ Overfull \hbox (91.66702pt too wide) in paragraph at lines ...
 ..\glue(\parskip) 4.0 plus 2.0 minus 1.0
 ..\glue(\parskip) 0.0
 ..\penalty -51
-..\glue 8.0 plus 2.0 minus 4.0
 .\glue 0.0 plus 1.0fill
 .\vbox(0.0+15.27)x137.9979, direction TLT
 ..\glue 0.0
@@ -4295,18 +4292,18 @@ Overfull \hbox (91.66702pt too wide) in paragraph at lines ...
 .\glue(\parfillskip) 0.0 plus 1.0fil
 .\glue(\rightskip) 0.0
 > \box...=
-\vbox(38.33499+0.0)x250.0, direction TLT
+\vbox(27.05+0.0)x250.0, direction TLT
 .\penalty 10000
-.\glue 2.11499
+.\glue 0.0
 .\glue(\parskip) 0.0 plus 1.0
 .\glue(\parskip) 0.0
-.\hbox(0.0+27.05)x250.0, direction TLT
+.\hbox(0.0+19.05)x250.0, direction TLT
 ..\localpar
 ...\localinterlinepenalty=0
 ...\localbrokenpenalty=0
 ...\localleftbox=null
 ...\localrightbox=null
-..\vbox(0.0+27.05)x203.66913, direction TLT
+..\vbox(0.0+19.05)x203.66913, direction TLT
 ...\glue 0.0
 ...\penalty -51
 ...\glue 8.0 plus 2.0 minus 4.0
@@ -4378,7 +4375,6 @@ Overfull \hbox (91.66702pt too wide) in paragraph at lines ...
 ...\glue(\parskip) 4.0 plus 2.0 minus 1.0
 ...\glue(\parskip) 0.0
 ...\penalty -51
-...\glue 8.0 plus 2.0 minus 4.0
 ..\glue 0.0 plus 1.0fill
 ..\vbox(0.0+15.27)x137.9979, direction TLT
 ...\glue 0.0
@@ -4422,7 +4418,8 @@ Overfull \hbox (91.66702pt too wide) in paragraph at lines ...
 ..\penalty 10000
 ..\glue(\parfillskip) 0.0 plus 1.0fil
 ..\glue(\rightskip) 0.0
-.\glue 9.17 plus 2.0 minus 4.0
+.\penalty -51
+.\glue 8.0 plus 2.0 minus 4.0
 ! OK.
 <argument> ...tem Dos \end {enumext*} }\showbox 0 
 l. ...  }
@@ -4432,13 +4429,13 @@ TEST 36: [36] mini-right* y mini-sep en enumext*
 ============================================================
 Overfull \hbox (66.54726pt too wide) in paragraph at lines ...
 [] [] 
-\hbox(0.0+38.94)x250.0, direction TLT
+\hbox(0.0+30.94)x250.0, direction TLT
 .\localpar
 ..\localinterlinepenalty=0
 ..\localbrokenpenalty=0
 ..\localleftbox=null
 ..\localrightbox=null
-.\vbox(0.0+38.94)x178.54936, direction TLT
+.\vbox(0.0+30.94)x178.54936, direction TLT
 ..\glue 0.0
 ..\penalty -51
 ..\glue 8.0 plus 2.0 minus 4.0
@@ -4513,7 +4510,6 @@ Overfull \hbox (66.54726pt too wide) in paragraph at lines ...
 ..\glue(\parskip) 4.0 plus 2.0 minus 1.0
 ..\glue(\parskip) 0.0
 ..\penalty -51
-..\glue 8.0 plus 2.0 minus 4.0
 .\glue 0.0 plus 1.0fill
 .\vbox(0.0+15.27)x137.9979, direction TLT
 ..\glue 0.0
@@ -4561,18 +4557,18 @@ Overfull \hbox (66.54726pt too wide) in paragraph at lines ...
 .\glue(\parfillskip) 0.0 plus 1.0fil
 .\glue(\rightskip) 0.0
 > \box...=
-\vbox(50.22499+0.0)x250.0, direction TLT
+\vbox(38.94+0.0)x250.0, direction TLT
 .\penalty 10000
-.\glue 2.11499
+.\glue 0.0
 .\glue(\parskip) 0.0 plus 1.0
 .\glue(\parskip) 0.0
-.\hbox(0.0+38.94)x250.0, direction TLT
+.\hbox(0.0+30.94)x250.0, direction TLT
 ..\localpar
 ...\localinterlinepenalty=0
 ...\localbrokenpenalty=0
 ...\localleftbox=null
 ...\localrightbox=null
-..\vbox(0.0+38.94)x178.54936, direction TLT
+..\vbox(0.0+30.94)x178.54936, direction TLT
 ...\glue 0.0
 ...\penalty -51
 ...\glue 8.0 plus 2.0 minus 4.0
@@ -4647,7 +4643,6 @@ Overfull \hbox (66.54726pt too wide) in paragraph at lines ...
 ...\glue(\parskip) 4.0 plus 2.0 minus 1.0
 ...\glue(\parskip) 0.0
 ...\penalty -51
-...\glue 8.0 plus 2.0 minus 4.0
 ..\glue 0.0 plus 1.0fill
 ..\vbox(0.0+15.27)x137.9979, direction TLT
 ...\glue 0.0
@@ -4694,7 +4689,8 @@ Overfull \hbox (66.54726pt too wide) in paragraph at lines ...
 ..\penalty 10000
 ..\glue(\parfillskip) 0.0 plus 1.0fil
 ..\glue(\rightskip) 0.0
-.\glue 9.17 plus 2.0 minus 4.0
+.\penalty -51
+.\glue 8.0 plus 2.0 minus 4.0
 ! OK.
 <argument> ...tem Dos \end {enumext*} }\showbox 0 
 l. ...  }

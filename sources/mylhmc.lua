@@ -631,6 +631,36 @@ local color_data, push_templates, module_user_cmds = {}, {}, {}
 -- sean un comando de `provide`. Solo se consultan en rutas de claves.
 local key_path_names = {}
 
+-- Primitivas del motor (TeX, eTeX, LuaTeX): se leen de tex.primitives() para
+-- que coincidan con el motor en uso. Solo nombres alfabéticos; \end queda
+-- fuera porque en LaTeX es la macro que cierra entornos.
+local primitive_names = {}
+if tex and tex.primitives then
+  for k, v in pairs(tex.primitives()) do
+    local name = type(k) == 'number' and v or k
+    if s_find(name, '^%a+$') then primitive_names[name] = true end
+  end
+  primitive_names['end'] = nil
+end
+-- Macros de plain TeX de bajo nivel que LaTeX hereda (ltplain): asignación
+-- de registros, grupos, bucles, saltos y penalizaciones, cajas auxiliares.
+-- Se tratan como las primitivas. Quedan fuera las que LaTeX usa como
+-- comandos de usuario (fuentes, \item, \footnote, símbolos y acentos).
+for w in s_gmatch([[
+  bgroup egroup endgraf endline loop repeat iterate obeylines obeyspaces
+  dospecials frenchspacing nonfrenchspacing newcount newdimen newskip
+  newmuskip newbox newtoks newread newwrite newfam newlanguage newinsert
+  newhelp newif nointerlineskip offinterlineskip smallskip medskip bigskip
+  smallbreak medbreak bigbreak goodbreak nobreak allowbreak break filbreak
+  eject supereject removelastskip leavevmode null empty space enskip enspace
+  thinspace negthinspace hglue vglue hideskip hidewidth narrower hang
+  textindent line leftline rightline centerline llap rlap smash phantom
+  hphantom vphantom strut strutbox normalbaselines normalbaselineskip
+  normallineskip normallineskiplimit smallskipamount medskipamount
+  bigskipamount maxdimen jot raggedbottom active wlog loggingall tracingall
+  showhyphens dotfill hrulefill ialign oalign ooalign
+]], '%S+') do primitive_names[w] = true end
+
 register_tex_cmd('luafun_register_key_path', function(name)
   name = s_match(name, '^%s*(.-)%s*$') or name
   if name ~= '' then key_path_names[name] = true end
@@ -2189,6 +2219,7 @@ mylhmc_colorize_code = function(line, fid)
       local effective = type_colors[t]
       if effective then
         local bare = s_sub(chunk, 1, 1) == '\\' and s_sub(chunk, 2) or chunk
+        if t == 23 and primitive_names[bare] then effective = 'primitive' end
         if module_user_cmds[bare] or module_user_cmds[chunk] then effective = 'module_name' end
       end
       h, tl = mylhmc_colored_str(chunk, effective, fid)

@@ -383,7 +383,7 @@
       \mode_leave_vertical:
       \hbox_to_wd:nn { -\marginparsep }
         {
-          \tex_hss:D
+          \hss
           \textcolor { keyname } { \small \ttfamily {#2} }
         }
       \IfBooleanTF {#1}
@@ -571,7 +571,7 @@
       {
         \hbox_to_wd:nn { \marginparsep }
           {
-            \tex_hss:D
+            \hss
             \textcolor { module_at } { #1 } % privatefun
           }
       }
@@ -826,7 +826,7 @@
         \contentsname \quad
           {
             \color { gray }
-            \tex_leaders:D \tex_hrule:D height 5pt depth -4.4pt \tex_hfill:D
+            \leaders \hrule height 5pt depth -4.4pt \hfill
           }
       }
     \__mydoc_mkboth:nn { \text_uppercase:n { \contentsname } } { \text_uppercase:n { \contentsname } }
@@ -838,7 +838,7 @@
     \vspace* { -3pt }
       {
         \color { gray }
-        \tex_hrule:D height 0.6pt
+        \hrule height 0.6pt
       }
     \vspace* { 5pt }
     \group_end:
@@ -1009,7 +1009,7 @@
 % provided great answers and ideas. Here are notes on the main ones:
 %
 % \begin{enumerate}[left=0pt, labelsep=5pt, nosep, label=\small\arabic*.,topsep=2pt]
-% \item Answer given by Alan Munn in \href{https://tex.stackexchange.com/a/300418}{\textbackslash topsep,  \textbackslash itemsep, \textbackslash partopsep, \textbackslash parsep - what do they each mean (and what about the bottom)?}
+% \item Answer given by Alan Munn in \href{https://tex.stackexchange.com/a/300418}{\textbackslash topsep, \textbackslash itemsep, \textbackslash partopsep, \textbackslash parsep - what do they each mean (and what about the bottom)?}
 %
 % \item Answer given by Enrico Gregorio in \href{https://tex.stackexchange.com/a/34172}{Understanding minipages - aligning at top}
 %
@@ -1044,7 +1044,7 @@
 % \section{Introduction}
 %
 % In the \hologo{LaTeX} world there are many useful packages and
-% classes for creating \emph{\enquote{lists of exercises}}, \emph{\enquote{worksheets}}  or
+% classes for creating \emph{\enquote{lists of exercises}}, \emph{\enquote{worksheets}} or
 % \emph{\enquote{multiple choice questions}}, classes like \myclass{exam}\cite{exam}
 % and packages like \mypkg{xsim}\cite{xsim} do the job perfectly, but
 % they don't always fit the basic day to day needs.
@@ -1250,7 +1250,7 @@
 % \begin{figure}[ht]
 %   \centering
 %   \begin{tikzpicture}[line cap=round,line join=round,x=0.8cm,y=0.8cm,every node/.style={font=\footnotesize}]
-%     \draw[<->,color=gray] (-0.5,6.175) --node[below,,text=lightgray,font=\footnotesize\ttfamily]{margin page} (2,6.175);
+%     \draw[<->,color=gray] (-0.5,6.175) --node[below,text=lightgray,font=\footnotesize\ttfamily]{margin page} (2,6.175);
 %     \draw[line width=0.5pt,dash pattern=on 2pt off 2pt,color=gray] (2,4.85) -- (2,7.5);
 %     \draw[<->,color=gray] (2.0,7.0) --node[above,text=blue!75]{\texttt{\textbackslash{}labelindent}} (4.5,7.0);
 %     \draw[<->,color=gray] (4.5,7.0) --node[above,text=blue!75]{\texttt{\textbackslash{}labelwidth}} (7.5,7.0);
@@ -1606,7 +1606,7 @@
 %    The \emph{starred argument} `|*|' cannot be separated by spaces
 %    `\verb*| |' from the command, i.e. |\item*| and the
 %    \emph{first optional argument} does NOT support \emph{verbatim content}.
-%    It can be configured with the keys  \mykey{item-sym*} and \mykey{item-pos*}
+%    It can be configured with the keys \mykey{item-sym*} and \mykey{item-pos*}
 %    locally in the environment or globally using |\setenumext| command (\S\ref{sec:setenumext}).
 % \end{function}
 %
@@ -1815,7 +1815,7 @@
 % All \mymeta{keys} described in this section are available for the
 % \myenv*[no-index]{enumext}, \myenv*[no-index]{enumext*}, \myenv*[no-index]{keyans} and \myenv*[no-index]{keyans*}
 % environments with the exception of the keys \mykey{series}, \mykey{resume},
-% \mykey{resume*}, \mykey{reset} and \mykey{reset*}  which are only available
+% \mykey{resume*}, \mykey{reset} and \mykey{reset*} which are only available
 % for the \myenv*[no-index]{enumext} and \myenv*[no-index]{enumext*} environments; and the keys
 % \mykey{mini-right}, \mykey{mini-right*} which are only available for
 % the \myenv*[no-index]{enumext*} and \myenv*[no-index]{keyans*} environments.
@@ -1897,7 +1897,7 @@
 % The default values are calculated by means of the \emph{width} of a box
 % by setting a \emph{value} to the current counter set by \mykey{label}
 % key using `\mydim{0}' for \ilabel[no-index]{arabic*}, `|M|' for \ilabel[no-index]{Alph*},
-% `|m|' for \ilabel[no-index]{alph*}, `|VIII|' for  \ilabel[no-index]{Roman*} and `|viii|'
+% `|m|' for \ilabel[no-index]{alph*}, `|VIII|' for \ilabel[no-index]{Roman*} and `|viii|'
 % for \ilabel[no-index]{roman*}.
 %
 % \keyexampcmd{widest}{integer \textnormal{\textcolor{lightgray}{\textbar}} string}{empty}[env]
@@ -2103,7 +2103,7 @@
 % This is a \emph{\enquote{switch-key}} that does not receive an
 % argument available \emph{only} for the \emph{\enquote{first level}} of environment
 % \myenv*[no-index]{enumext}. Fix the \emph{baseline} when an environment \myenv*[no-index]{enumext}
-% is nested  in \myenv*[no-index]{enumext*} and there is no material between the
+% is nested in \myenv*[no-index]{enumext*} and there is no material between the
 % |\item| and the start of the environment for example |\item \begin{enumext}|
 % within the environment \myenv*[no-index]{enumext*}. Internally sets the keys \mykey{topsep},
 % \mykey{above} and \mykey{above}|*| at \mydim{0pt}.
@@ -2193,7 +2193,7 @@
 %
 % Sets the extra \emph{horizontal indentation}, beyond \mykey{labelsep},
 % of the \emph{\enquote{first line}} of each |\item| that is not followed
-% by a \emph{\enquote{blank line}} or the |\par| command . This value must
+% by a \emph{\enquote{blank line}} or the |\par| command. This value must
 % be greater than or equal to \mydim{0pt} and is applied internally using
 % |\hspace| \emph{without} modifying the value of |\itemindent|.
 %
@@ -2725,7 +2725,7 @@
 % Wraps the \emph{mandatory argument} \mymeta{content} passed to the |\anskey|
 % and the \mymeta{body} in \myenv*[no-index]{anskey*} environment referenced by |{#1}|
 % when using the \mykey{show-ans} or \mykey{show-pos} keys.
-% The \mymarg{code} must be passed between  braces and only affects how the
+% The \mymarg{code} must be passed between braces and only affects how the
 % \mymeta{content} or \mymeta{body} is displayed and NOT the \emph{\enquote{stored
 % content}} in the \emph{sequence} and \emph{prop list} \mymarg{store
 % name} set by \mykey{save-ans} key. If this key is passed using
@@ -2933,7 +2933,7 @@
 % \subsubsection{Keys for \texttt{anskey*}}
 %
 % The \myenv*[no-index]{anskey*} environment uses the same \mymeta{keys} as the
-% |\anskey| command  next to the \mymeta{keys} \mykey{write-env}, \mykey{overwrite}
+% |\anskey| command next to the \mymeta{keys} \mykey{write-env}, \mykey{overwrite}
 % and \mykey{force-eol}. The environment is available for all levels of the
 % \myenv*[no-index]{enumext} environment and the \myenv*[no-index]{enumext*} environment, but
 % it is disabled for the \myenv*[no-index]{keyans}, \myenv*[no-index]{keyans*} and
@@ -3763,7 +3763,7 @@ all the worksheets are as follows:
 % \begin{enumext}[save-ans=simplews,columns=1,check-ans=true,nosep,save-ref=true,wrap-label={\tikz[scale=0.25]\duck[signpost=\scalebox{0.6}{#1}];}]
 %  \item Factor $x^{2}-2x+1$ \anskey{$\left(x-1\right)^{2}$}
 %  \item Factor $3x+3y+3z$ \anskey{$3(x+y+z)$}
-%  \item[] The following questions need to be cuaqtified :)
+%  \item[] The following questions need to be quantified :)
 %  \item True False
 %    \begin{enumext}[nosep]
 %      \item $\alpha > \delta$ \anskey{False}
@@ -4228,8 +4228,17 @@ all the worksheets are as follows:
 %     |\foreachkeyans|, and the keys that store and show the answers;
 %   \item \myfile{test-005}: the environments \myenv*[no-index]{keyans},
 %     \myenv*[no-index]{keyans*} and \myenv*[no-index]{keyanspic}, and their keys;
+%   \item \myfile{test-006}: the exact vertical spaces above, below and beside
+%     the \myenv{minipage} and \myenv{multicols} variants (\mykey{mini-env},
+%     \mykey{mini-right}, |\miniright| and \myenv*[no-index]{multicols}) in
+%     \myenv*[no-index]{enumext}, \myenv*[no-index]{enumext*},
+%     \myenv*[no-index]{keyans} and \myenv*[no-index]{keyans*}, measured with
+%     boxes;
 %   \item \myfile{test-010} and \myfile{test-011}: the same lists and the
 %     storage system with |tagging=on|, including the structure tree;
+%   \item \myfile{test-012}: the structure tree with |tagging=on| of the
+%     \myenv{minipage} and \myenv{multicols} variants, where the position of
+%     the figures records the vertical spaces;
 %   \item \myfile{test-100}: the error and warning messages of the package.
 % \end{itemize}
 %
@@ -4308,9 +4317,8 @@ all the worksheets are as follows:
 % laboratory}. Available from
 % \textsc{ctan}, \url{https://www.ctan.org/pkg/latex-lab}, 2026.
 %
-% \bibitem{luavisual} \textsc{Gundlach, Patrick}. \enquote{The \textsf{lua-visual-debug}
-% package}. Available from
-% \textsc{ctan}, \url{https://www.ctan.org/pkg/lua-visual-debug}, 2026.
+% \bibitem{indent} \enquote{\textsf{indent} – Environments that change margins}.
+% Available from \textsc{ctan}, \url{https://www.ctan.org/pkg/indent}, 1993.
 %
 % \bibitem{scontents} \textsc{González, Pablo}. \enquote{\textsf{scontents} - Stores
 % \hologo{LaTeX} contents in memory or files}. Available from
@@ -4349,11 +4357,26 @@ all the worksheets are as follows:
 %      \item New key \mykey{item-break} for \myenv*[no-index]{enumext*} and
 %        \myenv*[no-index]{keyans*}: an item that occupies the whole row is
 %        typeset without \myenv[no-index]{minipage} and can be broken between pages.
-%      \item Fixed \mykey{widest} with a \mymeta{string} for the labels \texttt{\textbackslash{}Roman*}
-%        and \texttt{\textbackslash{}roman*}, which was never converted.
+%      \item Fixed \mykey{widest} with a \mymeta{string} for the labels \ilabel[no-index]{Roman*}
+%        and \ilabel[no-index]{roman*}, which was never converted.
 %      \item Error messages with a common layout.
 %      \item Tagged \texttt{PDF}: balanced paragraph hooks and the \texttt{TextAlign}
 %        attribute in the first paragraph of the items of \mykey{item-break}.
+%      \item The vertical spaces above, below and beside \mykey{mini-env},
+%        \mykey{mini-right}, \mykey{mini-right*} and |\miniright| are computed
+%        exactly, as in a list without \myenv[no-index]{minipage}; in
+%        \myenv*[no-index]{keyans*} the space on the right side uses
+%        \mykey{topsep}.
+%      \item Tagged \texttt{PDF}: the \myenv[no-index]{minipage} on the right
+%        side of \myenv*[no-index]{enumext*} and \myenv*[no-index]{keyans*} no
+%        longer leaves the tagging state of a \myenv[no-index]{minipage} active,
+%        so the following headings close the previous section; and fixed the
+%        duplicate destinations of \myenv*[no-index]{keyans*} with
+%        \mypkg[no-index]{hyperref}.
+%      \item Fixed the removal of the last \mymeta{skip} or \mymeta{kern} before closing
+%        the \myenv[no-index]{minipage} of \mykey{mini-env} and \mykey{mini-right}:
+%        when the content ended in a character (for example, a macro after
+%        |\miniright|) the environment was never closed.
 %      \item Added regression tests, run with |l3build check|.
 %    \end{itemize}
 %  \item [v2.3 (ctan), 2026-10-23]
@@ -4742,9 +4765,7 @@ all the worksheets are as follows:
 %
 % \begin{variable}[int]{
 %   \g_@@_minipage_stat_int,
-%   \l_@@_minipage_after_skip,
 %   \g_@@_minipage_right_skip,
-%   \g_@@_minipage_after_skip,
 %   \l_@@_minipage_left_X_dim,
 %   \l_@@_minipage_active_X_bool,
 % }
@@ -4753,9 +4774,7 @@ all the worksheets are as follows:
 %   and \mykey{mini-sep} (\S\ref{key:mini-multi},~\S\ref{subsec:vspace-minipage}).
 %    \begin{macrocode}
 \int_new:N  \g_@@_minipage_stat_int
-\skip_new:N \l_@@_minipage_after_skip
 \skip_new:N \g_@@_minipage_right_skip
-\skip_new:N \g_@@_minipage_after_skip
 \cs_set_protected:Nn \@@_tmp:n
   {
     \dim_new:c  { l_@@_minipage_left_ #1 _dim    }
@@ -5061,7 +5080,7 @@ all the worksheets are as follows:
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_unskip_unkern:
   {
-    \int_case:nnT { \lastnodetype }
+    \int_case:nn { \lastnodetype }
       {
         { 11 }
           {
@@ -5637,7 +5656,7 @@ all the worksheets are as follows:
 %   \myenv[no-index]{minipage}) setting the |\if@minipage| switch to |false|
 %   to allow spaces at the \emph{\enquote{above}} of the environment,
 %   plus \myhlc|\skip_vertical:N \c_zero_skip| is added to maintain alignment
-%   on \emph{\enquote{top}} in the first part and  \myhlc|\skip_vertical:N \c_zero_skip|
+%   on \emph{\enquote{top}} in the first part and \myhlc|\skip_vertical:N \c_zero_skip|
 %   in the second part to allow spaces \emph{\enquote{below}}. This environment
 %   will be used internally by the \mykey[env]{mini-env} key, it is NOT documented
 %   in the user interface and is for internal use only. Within this environment
@@ -5700,7 +5719,7 @@ all the worksheets are as follows:
 %
 %   Variables to store the \emph{\enquote{name of the counters}}
 %   \icounter{enumXi}, \icounter{enumXii}, \icounter{enumXiii} and
-%   \icounter{enumXiv} for \myenv*[no-index]{enumext}  environment,
+%   \icounter{enumXiv} for \myenv*[no-index]{enumext} environment,
 %   \icounter{enumXv} for \myenv*[no-index]{keyans} environment and
 %   \icounter{enumXvi} for the \myenv*[no-index]{keyanspic} environment.
 %   The counters \icounter{enumXvii} and \icounter{enumXviii} are used
@@ -6102,7 +6121,7 @@ all the worksheets are as follows:
 %   The \myhlc|\@@_standard_ref:nn| function will first pass the key
 %   \emph{argument} \mykey{ref} to the variable
 %   \myhlc|\l_@@_ref_key_arg_tl| and analyze its state, if it is not \emph{empty}
-%   it will set a copy of of the \emph{current counter style} save in
+%   it will set a copy of the \emph{current counter style} saved in
 %   \myhlc|\l_@@_the_counter_X_tl| to \myhlc|\l_@@_ref_the_count_tl| and
 %   then set the variable \myhlc|\l_@@_renew_counter_X_tl| which will
 %   modify |\theenumX|.
@@ -6759,7 +6778,7 @@ all the worksheets are as follows:
 %
 % \begin{macro}[int]{before, before*, after, first}
 %    Define and set \mykey[env,foreachkeyans]{before}, \mykey[env]{before*}, \mykey[env,foreachkeyans]{after} and \mykey[env]{first} keys
-%    for \myenv*[no-index]{enumext}, \myenv*[no-index]{enumext*}, \myenv*[no-index]{keyans} and  \myenv*[no-index]{keyans*} environments.
+%    for \myenv*[no-index]{enumext}, \myenv*[no-index]{enumext*}, \myenv*[no-index]{keyans} and \myenv*[no-index]{keyans*} environments.
 %    \begin{macrocode}
 \cs_set_protected:Nn \@@_tmp:nn
   {
@@ -7076,7 +7095,7 @@ all the worksheets are as follows:
 % \begin{macro}[int]{\@@_multi_addvspace:}
 %   The function \myhlc|\@@_multi_addvspace:| will apply the spaces set using
 %   |\addvspace| \emph{\enquote{above}} the \myenv[no-index]{multicols} environment
-%   in \myenv*[no-index]{enumext}, taking into account whether  \hologo{TeX} is in
+%   in \myenv*[no-index]{enumext}, taking into account whether \hologo{TeX} is in
 %   \mymeta{horizontal mode} or \mymeta{vertical mode}.
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_multi_addvspace:
@@ -7106,7 +7125,8 @@ all the worksheets are as follows:
 %    \emph{\enquote{adjusted spaces}} applied \emph{\enquote{above}} and
 %    \emph{\enquote{below}} the \myenv[no-index]{multicols} environment in
 %    \myenv*[no-index]{keyans}. The implementation of this function is the same
-%    as the one used in \myenv*[no-index]{enumext}.
+%    as the one used in \myenv*[no-index]{enumext}, including the value of
+%    |\parsep| of the previous level, which is added to the space \emph{\enquote{above}}.
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_keyans_multi_set_vskip:
   {
@@ -7117,6 +7137,10 @@ all the worksheets are as follows:
     \skip_set:Nn \l_@@_multicols_below_v_skip
       {
         \l_@@_topsep_v_skip
+      }
+    \skip_if_eq:nnF { \l_@@_parsep_i_skip } { \c_zero_skip }
+      {
+        \skip_add:Nn \l_@@_multicols_above_v_skip { \l_@@_parsep_i_skip }
       }
   }
 \cs_new_protected:Nn \@@_keyans_multi_addvspace:
@@ -7192,33 +7216,56 @@ all the worksheets are as follows:
 % environment can be nested in the \myenv[no-index]{minipage} environment, the \enquote{top} and
 % \enquote{bottom} spaces are affected when |topsep=|\mydim{0pt} and to this is added the
 % |\partopsep| parameter that comes into action according to whether \hologo{TeX}
-% is in \mymeta{horizontal mode} or \mymeta{vertical mode}. Depending on these cases, small
-% adjustments must be made using |\vspace| and |\addvspace| to
+% is in \mymeta{horizontal mode} or \mymeta{vertical mode}. Depending on these cases, the
+% spaces are computed and added with |\addvspace| to
 % obtain the \emph{\enquote{desired vertical spacing}}.
 %
 % \begin{important}*
-% Again, it must be made clear that the implementation here is a \emph{\enquote{bit
-% questionable}}, but hunting the spaces (|glue|) produced by the \myenv[no-index]{minipage}
-% environment is quite complicated, even more if \myenv[no-index]{multicols} it is nested.
-% The setting of the values was more \emph{\enquote{trial and error}}
-% (approx to |\strutbox|), using the help of the \mypkg{lua-visual-debug}\cite{luavisual}
-% package, again the attempts to find the correct values using |\showoutput| and
-% |\showboxdepth| absolutely failed.
+% The \enquote{top} and \enquote{bottom} spaces cannot be read directly from the
+% \emph{glue} produced by the \myenv[no-index]{minipage} environment, and
+% when \myenv[no-index]{multicols} is nested the depth of its last line is
+% lost when it ends. For this reason the spaces on the \emph{\enquote{left side}} are
+% not obtained from fixed fractions of |\strutbox|:
+% the space \emph{\enquote{above}} is computed from |\prevdepth| and the
+% current |\baselineskip|, which is the same \emph{glue} that \hologo{TeX} inserts
+% between two lines, and the space \emph{\enquote{below}} is stored together with
+% the depth of the last line when the environment on the \emph{\enquote{left side}}
+% ends, to be applied once the environment on the \emph{\enquote{right side}}
+% is closed. In this way the spaces follow the size of the font
+% used in the document.
 % \end{important}
 %
 % \subsubsection{Definition of variables}
 %
 % \begin{variable}[int]{
-%   \l_@@_minipage_temp_skip,
-%   \l_@@_minipage_left_skip,
 %   \l_@@_minipage_right_skip,
+%   \l_@@_mini_prev_dim,
+%   \l_@@_mini_gap_dim,
+%   \l_@@_mini_last_box,
+%   \g_@@_mini_dp_dim,
+%   \g_@@_mini_end_skip,
+%   \g_@@_mini_end_bool,
 % }
 %   Internal variables used by the keys \mykey{mini-env} and \mykey{mini-sep}
-%   (\S\ref{subsec:vspace-minipage}).
+%   (\S\ref{subsec:vspace-minipage}). The variable \myhlc|\l_@@_minipage_right_skip|
+%   holds the space applied \emph{\enquote{above}} the \myhlc|\@@_mini_page|
+%   environment on the \emph{\enquote{right side}} and \emph{\enquote{below}}
+%   the \myenv[no-index]{multicols} environment. The variables
+%   \myhlc|\l_@@_mini_prev_dim|, \myhlc|\l_@@_mini_gap_dim| and
+%   \myhlc|\l_@@_mini_last_box| are used to compute the space
+%   \emph{\enquote{above}} and to recover the last box of the \myenv[no-index]{multicols}
+%   environment. The variables \myhlc|\g_@@_mini_dp_dim| and
+%   \myhlc|\g_@@_mini_end_skip| store the depth of the last line and the
+%   space \emph{\enquote{below}}, while \myhlc|\g_@@_mini_end_bool| indicates
+%   that both are pending to be applied.
 %    \begin{macrocode}
-\skip_new:N \l_@@_minipage_temp_skip
-\skip_new:N \l_@@_minipage_left_skip
 \skip_new:N \l_@@_minipage_right_skip
+\dim_new:N  \l_@@_mini_prev_dim
+\dim_new:N  \l_@@_mini_gap_dim
+\box_new:N  \l_@@_mini_last_box
+\dim_new:N  \g_@@_mini_dp_dim
+\skip_new:N \g_@@_mini_end_skip
+\bool_new:N \g_@@_mini_end_bool
 %    \end{macrocode}
 % \end{variable}
 %
@@ -7263,17 +7310,99 @@ all the worksheets are as follows:
 %    \end{macrocode}
 % \end{macro}
 %
+% \subsubsection{Computation of the vertical spaces for \env{minipage}}
+%
+% \begin{macro}[int]{\@@_mini_baselineskip:}
+%   The function \myhlc|\@@_mini_baselineskip:| adds with |\addvspace| the space
+%   that \hologo{TeX} would insert between the previous line and a line of text
+%   whose height is that of the letter \enquote{l}, that is,
+%   |\baselineskip| minus |\prevdepth| minus that height, never less than
+%   |\lineskip|. If there is no previous line (|\prevdepth| is |-1000pt|) the space
+%   is zero. The |\nointerlineskip| command is executed before the space is
+%   added, to prevent the \emph{glue} of the baseline from being added
+%   again between this space and the next box.
+%    \begin{macrocode}
+\cs_new_protected:Nn \@@_mini_baselineskip:
+  {
+    \dim_set:Nn \l_@@_mini_prev_dim { \prevdepth }
+    \nointerlineskip
+    \dim_compare:nNnTF { \l_@@_mini_prev_dim } < { -999pt }
+      { \dim_zero:N \l_@@_mini_gap_dim }
+      {
+        \dim_set:Nn \l_@@_mini_gap_dim { \baselineskip - \l_@@_mini_prev_dim - \fontcharht\font`l }
+        \dim_compare:nNnT { \l_@@_mini_gap_dim } < { \lineskip }
+          { \dim_set_eq:NN \l_@@_mini_gap_dim \lineskip }
+      }
+    \addvspace{ \l_@@_mini_gap_dim }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}[int]{\@@_mini_capture_end:, \@@_mini_capture_multicols:, \@@_mini_apply_end:}
+%   The function \myhlc|\@@_mini_capture_end:| stores in \myhlc|\g_@@_mini_dp_dim| the
+%   value of |\prevdepth|, removes the last \emph{glue} (if any) saving its value in
+%   \myhlc|\g_@@_mini_end_skip| and sets \myhlc|\g_@@_mini_end_bool| to |true|.
+%   The function \myhlc|\@@_mini_capture_multicols:| does the same after a
+%   \myenv[no-index]{multicols} environment, where |\prevdepth| is not reliable:
+%   the last box is recovered with |\lastbox|, its depth is stored and the box
+%   is put back, and the stored space is \myhlc|\l_@@_minipage_right_skip|.
+%   The function \myhlc|\@@_mini_apply_end:| is called after closing the
+%   environment on the \emph{\enquote{right side}}: if there is something stored, it
+%   restores |\prevdepth| and adds the stored space with |\addvspace|, so that the
+%   space \emph{\enquote{below}} is measured from the last line of the environment
+%   on the \emph{\enquote{left side}}.
+%    \begin{macrocode}
+\cs_new_protected:Nn \@@_mini_capture_end:
+  {
+    \dim_gset:Nn \g_@@_mini_dp_dim { \prevdepth }
+    \skip_gzero:N \g_@@_mini_end_skip
+    \int_compare:nNnT { \lastnodetype } = { 11 }
+      {
+        \skip_gset:Nn \g_@@_mini_end_skip { \lastskip }
+        \unskip
+      }
+    \bool_gset_true:N \g_@@_mini_end_bool
+  }
+\cs_new_protected:Nn \@@_mini_capture_multicols:
+  {
+    \int_compare:nNnTF { \lastnodetype } = { 1 }
+      {
+        \box_set_to_last:N \l_@@_mini_last_box
+        \dim_gset:Nn \g_@@_mini_dp_dim { \box_dp:N \l_@@_mini_last_box }
+        \nointerlineskip
+        \box_use_drop:N \l_@@_mini_last_box
+      }
+      { \dim_gset:Nn \g_@@_mini_dp_dim { \prevdepth } }
+    \skip_gset_eq:NN \g_@@_mini_end_skip \l_@@_minipage_right_skip
+    \bool_gset_true:N \g_@@_mini_end_bool
+  }
+\cs_new_protected:Nn \@@_mini_apply_end:
+  {
+    \bool_if:NT \g_@@_mini_end_bool
+      {
+        \par
+        \dim_compare:nNnF { \g_@@_mini_dp_dim } < { -999pt }
+          { \dim_set_eq:NN \prevdepth \g_@@_mini_dp_dim }
+        \addpenalty { \@endparpenalty }
+        \addvspace { \g_@@_mini_end_skip }
+        \bool_gset_false:N \g_@@_mini_end_bool
+      }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
 % \subsubsection{Adjustment of vertical spaces for \env{minipage} in \env{enumext}}
 %
 % \begin{macro}[int]{\@@_minipage_set_skip:, \@@_minipage_add_space:}
 %    The function \myhlc|\@@_minipage_set_skip:| will take care of determining the
-%    \emph{\enquote{adjust}} spaces applied \emph{\enquote{above}} and
-%    \emph{\enquote{below}} the \myhlc|\@@_mini_page| environment in
-%    \myenv*[no-index]{enumext}.
+%    value of \myhlc|\l_@@_minipage_right_skip|, the space applied
+%    \emph{\enquote{above}} the \myhlc|\@@_mini_page| environment on the
+%    \emph{\enquote{right side}} and \emph{\enquote{below}} the
+%    \myenv[no-index]{multicols} environment in \myenv*[no-index]{enumext}.
 %
 %    First it sets the value of \myhlc|\l_@@_minipage_right_skip| equal to
 %    |\topsep|, then checks if \hologo{TeX} is in \mymeta{vertical mode} and, if so,
-%    adds |\partopsep|, followed by setting the value of \myhlc|\l_@@_minipage_after_skip|.
+%    adds |\partopsep|.
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_minipage_set_skip:
   {
@@ -7288,17 +7417,12 @@ all the worksheets are as follows:
             \skip_use:c { l_@@_partopsep_ \@@_level: _skip }
           }
       }
-    \skip_set_eq:NN \l_@@_minipage_after_skip \l_@@_minipage_right_skip
 %    \end{macrocode}
-%   Adjusts the values \myhlc|\l_@@_multicols_above_X_skip|
-%   and \myhlc|\l_@@_multicols_below_X_skip| and calls the function
-%   \myhlc|\@@_pre_itemsep_skip:|.
+%   Sets the value of \myhlc|\l_@@_multicols_above_X_skip| equal to
+%   \myhlc|\l_@@_minipage_right_skip|.
 %    \begin{macrocode}
     \skip_set_eq:cN
       { l_@@_multicols_above_ \@@_level: _skip } \l_@@_minipage_right_skip
-    \skip_set_eq:cN
-      { l_@@_multicols_below_ \@@_level: _skip } \l_@@_minipage_right_skip
-    \@@_pre_itemsep_skip:
 %    \end{macrocode}
 %   If the environment \myenv[no-index]{multicols} is active, it sets |\topskip=|\mydim{0pt}
 %   and then makes |\multicolsep| have the same value as \myhlc|\l_@@_multicols_above_X_skip|.
@@ -7314,11 +7438,12 @@ all the worksheets are as follows:
 %   The function \myhlc|\@@_minipage_add_space:| will apply the spaces on the \emph{\enquote{left side}} using
 %   |\addvspace| \emph{\enquote{above}} the \myhlc|\@@_mini_page|
 %   environment, taking into account whether \hologo{TeX} is in
-%   \mymeta{horizontal mode} or \mymeta{vertical mode}. Here the plain \hologo{TeX} macro
-%   |\nointerlineskip| is used to prevent baseline \emph{\enquote{glue}} being
-%   added between the next pair of boxes in a \emph{vertical list}. For the latter
-%   some adjustments are made since the |\partopsep| parameter comes into
-%   play and this affects the \emph{vertical spacing}.
+%   \mymeta{horizontal mode} or \mymeta{vertical mode}. First the last
+%   \mymeta{skip} or \mymeta{kern} is removed; in \mymeta{vertical mode} only
+%   |\nopagebreak| is added, while in \mymeta{horizontal mode} the paragraph is
+%   ended and |\partopsep| is set to zero, since this parameter comes into
+%   play according to the mode and this affects the \emph{vertical spacing}.
+%   The space is then added with the function \myhlc|\@@_mini_baselineskip:|.
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_minipage_add_space:
   {
@@ -7326,187 +7451,27 @@ all the worksheets are as follows:
     \@@_unskip_unkern:
     \mode_if_vertical:TF
       {
-        \nopagebreak\nointerlineskip
+        \nopagebreak
       }
       {
-        \par\nopagebreak\nointerlineskip
+        \par\nopagebreak
         \skip_zero:c { l_@@_partopsep_ \@@_level: _skip }
       }
-    \int_compare:nNnTF
-      { \int_use:c { l_@@_columns_ \@@_level: _int } } > { 1 }
-      {
-        \addvspace{ 0.445\box_ht:N \strutbox }
-      }
-      {
-        \addvspace{ 0.250\box_ht:N \strutbox }
-      }
-  }
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}[int]{\@@_pre_itemsep_skip:}
-%   The function \myhlc|\@@_pre_itemsep_skip:| will adjust the spaces below the
-%   environment \myenv[no-index]{minipage} and the environment \myenv[no-index]{multicols} if
-%   it is nested in it, taking into account the value of |\itemsep| from
-%   the previous level.
-%    \begin{macrocode}
-\cs_new_protected:Nn \@@_pre_itemsep_skip:
-  {
-    \int_case:nn { \l_@@_level_int }
-      {
-        { 2 }
-          {
-            \skip_if_eq:nnTF
-              { \l_@@_itemsep_i_skip } { \l_@@_minipage_after_skip }
-              {
-                \skip_set:Nn \l_@@_minipage_after_skip
-                  { 0.150\box_ht:N \strutbox }
-                \skip_set:Nn \l_@@_multicols_below_ii_skip
-                  { 0.350\box_ht:N \strutbox }
-              }
-              {
-                \dim_compare:nNnT
-                  { \l_@@_itemsep_i_skip } < { \l_@@_minipage_after_skip }
-                  {
-                    \skip_sub:Nn
-                      \l_@@_minipage_after_skip { \l_@@_itemsep_i_skip }
-                    \skip_sub:Nn
-                      \l_@@_multicols_below_ii_skip { \l_@@_itemsep_i_skip }
-                    \skip_add:Nn
-                      \l_@@_minipage_after_skip { 0.150\box_ht:N \strutbox }
-                    \skip_add:Nn
-                      \l_@@_multicols_below_ii_skip
-                        { 0.350\box_ht:N \strutbox }
-                  }
-                \dim_compare:nNnT
-                  { \l_@@_itemsep_i_skip } > { \l_@@_minipage_after_skip }
-                  {
-                    \skip_set:Nn \l_@@_minipage_temp_skip
-                      {
-                        \l_@@_itemsep_i_skip - \l_@@_minipage_after_skip
-                      }
-                    \skip_sub:Nn
-                      \l_@@_minipage_after_skip { \l_@@_itemsep_i_skip }
-                    \skip_sub:Nn
-                      \l_@@_multicols_below_ii_skip { \l_@@_itemsep_i_skip }
-                    \skip_add:Nn
-                      \l_@@_minipage_after_skip
-                      { 0.150\box_ht:N \strutbox + \l_@@_minipage_temp_skip }
-                    \skip_add:Nn
-                      \l_@@_multicols_below_ii_skip
-                      { 0.350\box_ht:N \strutbox + \l_@@_minipage_temp_skip }
-                  }
-              }
-          }
-        { 3 }
-          {
-            \skip_if_eq:nnTF
-              { \l_@@_itemsep_ii_skip } { \c_zero_skip }
-              {
-                \skip_set:Nn \l_@@_minipage_after_skip
-                  { 0.150\box_ht:N \strutbox }
-                \skip_set:Nn \l_@@_multicols_below_iii_skip
-                  { 0.350\box_ht:N \strutbox }
-              }
-              {
-                \dim_compare:nNnT
-                  { \l_@@_itemsep_ii_skip } < { \l_@@_minipage_after_skip }
-                  {
-                    \skip_sub:Nn
-                      \l_@@_minipage_after_skip { \l_@@_itemsep_ii_skip }
-                    \skip_sub:Nn
-                      \l_@@_multicols_below_iii_skip
-                        { \l_@@_itemsep_ii_skip }
-                    \skip_add:Nn
-                      \l_@@_minipage_after_skip { 0.150\box_ht:N \strutbox }
-                    \skip_add:Nn
-                      \l_@@_multicols_below_iii_skip
-                        { 0.350\box_ht:N \strutbox }
-                  }
-                \dim_compare:nNnT
-                  { \l_@@_itemsep_ii_skip } > { \l_@@_minipage_after_skip }
-                  {
-                    \skip_set:Nn \l_@@_minipage_temp_skip
-                      {
-                        \l_@@_itemsep_ii_skip - \l_@@_minipage_after_skip
-                      }
-                    \skip_sub:Nn
-                      \l_@@_minipage_after_skip { \l_@@_itemsep_ii_skip }
-                    \skip_sub:Nn
-                      \l_@@_multicols_below_iii_skip
-                        { \l_@@_itemsep_ii_skip }
-                    \skip_add:Nn
-                      \l_@@_minipage_after_skip
-                      { 0.150\box_ht:N \strutbox + \l_@@_minipage_temp_skip }
-                    \skip_add:Nn
-                      \l_@@_multicols_below_iii_skip
-                      { 0.350\box_ht:N \strutbox + \l_@@_minipage_temp_skip }
-                  }
-              }
-          }
-        { 4 }
-          {
-            \skip_if_eq:nnTF { \l_@@_itemsep_iii_skip } { \c_zero_skip }
-              {
-                \skip_set:Nn \l_@@_minipage_after_skip
-                  { 0.150\box_ht:N \strutbox }
-                \skip_set:Nn \l_@@_multicols_below_iv_skip
-                  { 0.350\box_ht:N \strutbox }
-              }
-              {
-                \dim_compare:nNnT
-                  { \l_@@_itemsep_iii_skip } < { \l_@@_minipage_after_skip }
-                  {
-                    \skip_sub:Nn
-                      \l_@@_minipage_after_skip { \l_@@_itemsep_iii_skip }
-                    \skip_sub:Nn
-                      \l_@@_multicols_below_iv_skip
-                        { \l_@@_itemsep_iii_skip }
-                    \skip_add:Nn
-                      \l_@@_minipage_after_skip { 0.150\box_ht:N \strutbox }
-                    \skip_add:Nn
-                      \l_@@_multicols_below_iv_skip
-                        { 0.350\box_ht:N \strutbox }
-                  }
-                \dim_compare:nNnT
-                  { \l_@@_itemsep_iii_skip } > { \l_@@_minipage_after_skip }
-                  {
-                    \skip_set:Nn \l_@@_minipage_temp_skip
-                      {
-                        \l_@@_itemsep_iii_skip - \l_@@_minipage_after_skip
-                      }
-                    \skip_sub:Nn
-                      \l_@@_minipage_after_skip { \l_@@_itemsep_iii_skip }
-                    \skip_sub:Nn
-                      \l_@@_multicols_below_iv_skip
-                        { \l_@@_itemsep_iii_skip }
-                    \skip_add:Nn
-                      \l_@@_minipage_after_skip
-                      { 0.150\box_ht:N \strutbox + \l_@@_minipage_temp_skip }
-                    \skip_add:Nn
-                      \l_@@_multicols_below_iv_skip
-                      { 0.350\box_ht:N \strutbox + \l_@@_minipage_temp_skip }
-                  }
-              }
-          }
-      }
+    \@@_mini_baselineskip:
   }
 %    \end{macrocode}
 % \end{macro}
 %
 % \subsubsection{Adjustment of vertical spaces for \env{minipage} in \env{keyans}}
 %
-% \begin{macro}[int]{\@@_keyans_minipage_set_skip:, \@@_keyans_minipage_add_space:, \@@_keyans_pre_itemsep_skip:}
+% \begin{macro}[int]{\@@_keyans_minipage_set_skip:, \@@_keyans_minipage_add_space:}
 %    The function \myhlc|\@@_keyans_minipage_set_skip:| will take care of determining the
-%    \enquote{adjusted} spaces applied \emph{\enquote{above}} and
-%    \emph{\enquote{below}} the \myhlc|\@@_mini_page| environment in
-%    \myenv*[no-index]{keyans}. The implementation of this function is the same
-%    as the one used in \myenv*[no-index]{enumext}.
+%    value of \myhlc|\l_@@_minipage_right_skip| in \myenv*[no-index]{keyans}. The
+%    implementation of these functions is the same as the one used in
+%    \myenv*[no-index]{enumext}.
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_keyans_minipage_set_skip:
   {
-    \skip_zero:N \l_@@_minipage_after_skip
-    \skip_zero:N \l_@@_minipage_left_skip
     \skip_zero:N \l_@@_minipage_right_skip
     \skip_set:Nn \l_@@_minipage_right_skip
       {
@@ -7519,10 +7484,7 @@ all the worksheets are as follows:
             \l_@@_partopsep_v_skip
           }
       }
-    \skip_set_eq:NN \l_@@_minipage_after_skip \l_@@_minipage_right_skip
     \skip_set_eq:NN \l_@@_multicols_above_v_skip \l_@@_minipage_right_skip
-    \skip_set_eq:NN \l_@@_multicols_below_v_skip \l_@@_minipage_right_skip
-    \@@_keyans_pre_itemsep_skip:
     \int_compare:nNnT { \l_@@_columns_v_int } > { 1 }
       {
         \skip_zero:N \topskip
@@ -7535,53 +7497,13 @@ all the worksheets are as follows:
     \@@_unskip_unkern:
     \mode_if_vertical:TF
       {
-        \nopagebreak\nointerlineskip
+        \nopagebreak
       }
       {
-        \par\nopagebreak\nointerlineskip
+        \par\nopagebreak
         \skip_zero:N \l_@@_partopsep_v_skip
       }
-    \int_compare:nNnTF { \l_@@_columns_v_int } > { 1 }
-      {
-        \addvspace{ 0.445\box_ht:N \strutbox }
-      }
-      {
-        \addvspace{ 0.250\box_ht:N \strutbox }
-      }
-  }
-\cs_new_protected:Nn \@@_keyans_pre_itemsep_skip:
-  {
-    \skip_if_eq:nnTF
-      { \l_@@_itemsep_i_skip } { \l_@@_minipage_after_skip }
-      {
-        \skip_set:Nn \l_@@_minipage_after_skip { 0.150\box_ht:N \strutbox }
-        \skip_set:Nn \l_@@_multicols_below_v_skip { 0.350\box_ht:N \strutbox }
-      }
-      {
-        \dim_compare:nNnT
-          { \l_@@_itemsep_i_skip } < { \l_@@_minipage_after_skip }
-          {
-            \skip_sub:Nn \l_@@_minipage_after_skip { \l_@@_itemsep_i_skip }
-            \skip_sub:Nn \l_@@_multicols_below_v_skip { \l_@@_itemsep_i_skip }
-            \skip_add:Nn \l_@@_minipage_after_skip { 0.150\box_ht:N \strutbox }
-            \skip_add:Nn \l_@@_multicols_below_v_skip
-              { 0.350\box_ht:N \strutbox }
-          }
-        \dim_compare:nNnT
-          { \l_@@_itemsep_i_skip } > { \l_@@_minipage_after_skip }
-          {
-            \skip_set:Nn \l_@@_minipage_temp_skip
-              {
-                \l_@@_itemsep_i_skip - \l_@@_minipage_after_skip
-              }
-            \skip_sub:Nn \l_@@_minipage_after_skip { \l_@@_itemsep_i_skip }
-            \skip_sub:Nn \l_@@_multicols_below_v_skip { \l_@@_itemsep_i_skip }
-            \skip_add:Nn \l_@@_minipage_after_skip
-              { 0.150\box_ht:N \strutbox + \l_@@_minipage_temp_skip }
-            \skip_add:Nn \l_@@_multicols_below_v_skip
-              { 0.350\box_ht:N \strutbox + \l_@@_minipage_temp_skip }
-          }
-      }
+    \@@_mini_baselineskip:
   }
 %    \end{macrocode}
 % \end{macro}
@@ -7590,66 +7512,19 @@ all the worksheets are as follows:
 %
 % \begin{macro}[int]{\@@_mini_set_vskip_vii:, \@@_mini_set_vskip_viii:}
 %    The functions \myhlc|\@@_mini_set_vskip_vii:| and \myhlc|\@@_mini_set_vskip_viii:| will take care of determining the
-%    \enquote{adjusted} spaces applied \emph{\enquote{above}} and
-%    \emph{\enquote{below}} the \myhlc|\@@_mini_page| environment in
-%    \myenv*[no-index]{enumext*} and \myenv*[no-index]{keyans*}.
+%    space applied \emph{\enquote{above}} the \myhlc|\@@_mini_page| environment on the
+%    \emph{\enquote{right side}} in \myenv*[no-index]{enumext*} and
+%    \myenv*[no-index]{keyans*}. It is stored in \myhlc|\g_@@_minipage_right_skip|
+%    and has the same value as the |\topsep| of the environment, which is
+%    the space that the list adds above the environment on the \emph{\enquote{left side}}.
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_mini_set_vskip_vii:
   {
-    \skip_zero:N \l_@@_minipage_left_skip
-    \skip_gzero:N \g_@@_minipage_right_skip
-    \skip_gzero:N \g_@@_minipage_after_skip
-    \skip_if_eq:nnTF { \l_@@_topsep_vii_skip } { \c_zero_skip }
-      {
-        \skip_set:Nn \l_@@_minipage_left_skip { 0.5\box_dp:N \strutbox }
-        \skip_gset:Nn \g_@@_minipage_right_skip { 0.325\box_dp:N \strutbox }
-      }
-      {
-        \skip_set:Nn \l_@@_minipage_left_skip { 0.5875\box_dp:N \strutbox }
-        \skip_gset:Nn \g_@@_minipage_right_skip
-          {
-            \l_@@_topsep_vii_skip
-          }
-        \skip_gset:Nn \g_@@_minipage_after_skip
-          {
-            0.325\box_dp:N \strutbox + \l_@@_topsep_vii_skip
-          }
-      }
+    \skip_gset:Nn \g_@@_minipage_right_skip { \l_@@_topsep_vii_skip }
   }
 \cs_new_protected:Nn \@@_mini_set_vskip_viii:
   {
-    \skip_zero:N \l_@@_minipage_after_skip
-    \skip_zero:N \l_@@_minipage_left_skip
-    \skip_zero:N \l_@@_minipage_right_skip
-    \skip_if_eq:nnTF { \l_@@_topsep_viii_skip } { \c_zero_skip }
-      {
-        \skip_set:Nn \l_@@_minipage_left_skip
-          {
-            0.5\box_dp:N \strutbox
-          }
-        \skip_set:Nn \l_@@_minipage_right_skip
-          {
-            \l_@@_partopsep_viii_skip
-          }
-        \skip_set:Nn \l_@@_minipage_after_skip
-          {
-            1.6\box_dp:N \strutbox
-          }
-      }
-      {
-        \skip_set:Nn \l_@@_minipage_left_skip
-          {
-            0.5875\box_dp:N \strutbox
-          }
-        \skip_set:Nn \l_@@_minipage_right_skip
-          {
-            \l_@@_topsep_viii_skip
-          }
-        \skip_set:Nn \l_@@_minipage_after_skip
-          {
-            0.325\box_dp:N \strutbox + \l_@@_topsep_viii_skip
-          }
-      }
+    \skip_gset:Nn \g_@@_minipage_right_skip { \l_@@_topsep_viii_skip }
   }
 %    \end{macrocode}
 % \end{macro}
@@ -7659,7 +7534,8 @@ all the worksheets are as follows:
 %   \myhlc|\@@_mini_addvspace_viii:| will apply the vertical space
 %   \emph{\enquote{only above}} the \myhlc|\@@_mini_page| environment on
 %   the \emph{left side} when the \mykey[env]{mini-right} key is active in the
-%   \myenv*[no-index]{enumext*} and \myenv*[no-index]{keyans*} environments.
+%   \myenv*[no-index]{enumext*} and \myenv*[no-index]{keyans*} environments,
+%   using the function \myhlc|\@@_mini_baselineskip:|.
 %
 %   Here it does NOT take into account whether \hologo{TeX} is in
 %   \mymeta{horizontal mode} or \mymeta{vertical mode}, since |\partopsep|
@@ -7669,13 +7545,13 @@ all the worksheets are as follows:
   {
     \@@_mini_set_vskip_vii:
     \par\nopagebreak
-    \addvspace { \l_@@_minipage_left_skip }
+    \@@_mini_baselineskip:
   }
 \cs_new_protected:Nn \@@_mini_addvspace_viii:
   {
     \@@_mini_set_vskip_viii:
     \par\nopagebreak
-    \addvspace { \l_@@_minipage_left_skip }
+    \@@_mini_baselineskip:
   }
 %    \end{macrocode}
 % \end{macro}
@@ -7739,9 +7615,13 @@ all the worksheets are as follows:
 %    \myenv[no-index]{multicols} environment with the \myhlc|\@@_mini_page|
 %    environment on the \emph{\enquote{left side}}, then opens the
 %    \myhlc|\@@_mini_page| environment on the \emph{\enquote{right
-%    side}}, applies the adjusted \emph{\enquote{vertical spaces}}, followed by
+%    side}}, applies the adjusted \emph{\enquote{vertical space}} above it, followed by
 %    adding the |\centering| command when the \emph{starred argument} `|*|' is not
 %    present, and sets \myhlc|\g_@@_minipage_stat_int| to zero; otherwise it returns an error.
+%    Before closing the environment on the \emph{\enquote{left side}} the space
+%    \emph{\enquote{below}} is stored with \myhlc|\@@_mini_capture_end:| (or
+%    with \myhlc|\@@_mini_capture_multicols:| when \myenv[no-index]{multicols} is
+%    active), to be applied after the environment on the \emph{\enquote{right side}}.
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_mini_right_cmd:n
   {
@@ -7752,7 +7632,8 @@ all the worksheets are as follows:
         \int_compare:nNnT
           { \int_use:c { l_@@_columns_ \@@_level: _int } } = { 1 }
           {
-            \par\addvspace{ \l_@@_minipage_after_skip }
+            \par
+            \@@_mini_capture_end:
           }
         \end@@_mini_page
         \hfill
@@ -7789,7 +7670,8 @@ all the worksheets are as follows:
         \@@_keyans_multicols_stop:
         \int_compare:nNnT { \l_@@_columns_v_int } = { 1 }
           {
-            \par\addvspace{ \l_@@_minipage_after_skip }
+            \par
+            \@@_mini_capture_end:
           }
         \end@@_mini_page
         \hfill
@@ -7985,7 +7867,7 @@ all the worksheets are as follows:
 % \end{macro}
 %
 % \begin{macro}[int]{\@@_vspace_below_vii:, \@@_vspace_below_viii:}
-%    The functions \myhlc|\@@_vspace_below_vii:| and  \myhlc|\@@_vspace_below_viii:|
+%    The functions \myhlc|\@@_vspace_below_vii:| and \myhlc|\@@_vspace_below_viii:|
 %    apply the \emph{vertical space below} the \myenv*[no-index]{enumext*} and
 %    \myenv*[no-index]{keyans*} environments set by the \mykey[env]{below*} and \mykey[env]{below} keys.
 %    \begin{macrocode}
@@ -8848,7 +8730,7 @@ all the worksheets are as follows:
 %    \end{macrocode}
 % \end{macro}
 %
-% \subsection{Setting \texttt{save-ans}, \texttt{check-ans} and  \texttt{no-store} keys}\label{subsec:set-save-check-nostore}
+% \subsection{Setting \texttt{save-ans}, \texttt{check-ans} and \texttt{no-store} keys}\label{subsec:set-save-check-nostore}
 %
 % The key \mykey{save-ans} is directly associated with the keys
 % \mykey{check-ans}, \mykey{no-store}, \mykey{resume} and
@@ -10200,7 +10082,7 @@ all the worksheets are as follows:
 % control over |\item| when storing.
 %
 % The |\anskey| command will cover this point and give it similar
-% behaviour to that of |\item| in the \myenv*[no-index]{enumext} and \myenv*[no-index]{enumext*}
+% behavior to that of |\item| in the \myenv*[no-index]{enumext} and \myenv*[no-index]{enumext*}
 % environments executed as follows |\anskey|\myoarg{key \textnormal{\textcolor{gray}{=}} val}\mymarg{content}.
 %
 % \subsubsection{Definition of variables for \cs[no-index]{anskey}}
@@ -10781,7 +10663,7 @@ all the worksheets are as follows:
 %    \end{macrocode}
 %
 % \begin{important}*
-%  This function is passed to the  function \myhlc|\@@_after_env:nn| for the
+%  This function is passed to the function \myhlc|\@@_after_env:nn| for the
 %  environments \myenv*[no-index]{enumext} (\S\ref{env:enumext}) and \myenv*[no-index]{enumext*} (\S\ref{env:starred})
 %  and it is executed only when the environments are not nested or at some level of these.
 % \end{important}
@@ -10903,7 +10785,7 @@ all the worksheets are as follows:
   }
 %    \end{macrocode}
 %   The auxiliary function \myhlc|\@@_keyans_store_ref_aux_i:| set the
-%   variable \myhlc|\l_@@_newlabel_arg_one_tl| which will  contain
+%   variable \myhlc|\l_@@_newlabel_arg_one_tl| which will contain
 %   \mymarg{store name \textcolor{red}{:} position} analyzing whether
 %   the environment in which they are executed is \myenv*[no-index]{enumext*} or
 %   \myenv*[no-index]{enumext}.
@@ -11034,7 +10916,7 @@ all the worksheets are as follows:
       }
   }
 %    \end{macrocode}
-%   The function \myhlc|\@@_keyans_show_item_opt:|  will print the optional
+%   The function \myhlc|\@@_keyans_show_item_opt:| will print the optional
 %   arguments of |\item*| and |\anspic*| when the \mykey[env]{show-ans} or
 %   \mykey[env]{show-pos} keys are set next to the key \mykey[env]{wrap-opt} in
 %   \myenv*[no-index]{keyans} and \myenv*[no-index]{keyanspic} environments.
@@ -11053,7 +10935,7 @@ all the worksheets are as follows:
       }
   }
 %    \end{macrocode}
-%   The function \myhlc|\@@_keyans_show_item_opt_viii:|  will print the optional
+%   The function \myhlc|\@@_keyans_show_item_opt_viii:| will print the optional
 %   argument of |\item*| when the \mykey{show-ans} or \mykey{show-pos}
 %   keys are set next to the key \mykey{wrap-opt} in \myenv*[no-index]{keyans*}
 %   environment.
@@ -11525,7 +11407,7 @@ all the worksheets are as follows:
 % \subsubsection{Handling unknown keys for \env{keyans}, \env{keyans*} and \env{keyanspic}}\label{key:unknown-keys-keyans}
 %
 % \begin{macro}[int]{unknown, \@@_keyans_unknown_keys:n, \@@_keyans_unknown_keys:nn}
-%   Define and set |unknown| key for  \myenv*[no-index]{keyans}, \myenv*[no-index]{keyans*}
+%   Define and set |unknown| key for \myenv*[no-index]{keyans}, \myenv*[no-index]{keyans*}
 %   and \myenv*[no-index]{keyanspic} environments. Here it is necessary to set
 %   \myhlc|\l_@@_envir_name_tl| in case an |unknown| key is passed using |\setenumext|.
 %    \begin{macrocode}
@@ -11564,7 +11446,7 @@ all the worksheets are as follows:
 % \subsubsection{Handling unknown keys for \env{enumext*}}\label{key:unknown-keys-starred}
 %
 % \begin{macro}[int]{unknown}
-%   Define and set |unknown| key for  \myenv*[no-index]{enumext*} environment.
+%   Define and set |unknown| key for \myenv*[no-index]{enumext*} environment.
 %    \begin{macrocode}
 \keys_define:nn { enumext / enumext* }
   {
@@ -11881,7 +11763,7 @@ all the worksheets are as follows:
 % \end{macro}
 %
 % \begin{macro}[int]{list-lengths-not-nested}
-%  Messages used by \mykey[env]{show-length} key in  \myenv*[no-index]{enumext*},
+%  Messages used by \mykey[env]{show-length} key in \myenv*[no-index]{enumext*},
 %  \myenv*[no-index]{keyans*} and \myenv*[no-index]{keyans}.
 %    \begin{macrocode}
 \msg_new:nnn { enumext } { list-lengths-not-nested }
@@ -12370,7 +12252,11 @@ all the worksheets are as follows:
 %
 % \begin{macro}[int]{\@@_multicols_stop:}
 %   The function \myhlc|\@@_multicols_stop:| will stop the \myenv[no-index]{multicols}
-%   environment and apply the \emph{\enquote{vertical adjust}} spacing.
+%   environment and apply the \emph{\enquote{vertical adjust}} spacing. When
+%   the \mykey[env]{mini-env} key is active the space is not added here:
+%   it is stored with \myhlc|\@@_mini_capture_multicols:| to be applied
+%   by \myhlc|\@@_mini_apply_end:| after the environment on the
+%   \emph{\enquote{right side}}.
 %   For compatibility with \emph{tagged} \texttt{PDF}, the closing of the
 %   \myenv[no-index]{list} environment is executed here along with \myhlc|\@@_stop_store_level:|.
 %    \begin{macrocode}
@@ -12384,7 +12270,14 @@ all the worksheets are as follows:
         \end{multicols}
         \@@_unskip_unkern:
         \@@_unskip_unkern:
-        \par\addvspace{ \skip_use:c { l_@@_multicols_below_ \@@_level: _skip } }
+        \par
+        \bool_if:cTF { l_@@_minipage_active_ \@@_level: _bool }
+          {
+            \@@_mini_capture_multicols:
+          }
+          {
+            \addvspace{ \skip_use:c { l_@@_multicols_below_ \@@_level: _skip } }
+          }
       }
       {
         \@@_stop_list:
@@ -12454,7 +12347,7 @@ all the worksheets are as follows:
 %   |true|, a small test is executed to check if the use of
 %   |\miniright| was omitted (the \myhlc|\@@_mini_page|
 %   environment has not been closed), then it closes \myhlc|\@@_mini_page|
-%   and adds the \emph{adjusted vertical space} \myhlc|\l_@@_minipage_after_skip|,
+%   and adds the stored \emph{adjusted vertical space} using \myhlc|\@@_mini_apply_end:|,
 %   otherwise it closes the \myenv[no-index]{multicols} environment.
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_second_part:
@@ -12469,6 +12362,7 @@ all the worksheets are as follows:
         \int_gzero:N \g_@@_minipage_stat_int
         \@@_unskip_unkern: % remove topsep + [partopsep]
         \end@@_mini_page
+        \@@_mini_apply_end:
       }
       {
         \@@_multicols_stop:
@@ -12678,7 +12572,14 @@ all the worksheets are as follows:
         \end{multicols}
         \@@_unskip_unkern:
         \@@_unskip_unkern:
-        \par\addvspace{ \l_@@_multicols_below_v_skip }
+        \par
+        \bool_if:NTF \l_@@_minipage_active_v_bool
+          {
+            \@@_mini_capture_multicols:
+          }
+          {
+            \addvspace{ \l_@@_multicols_below_v_skip }
+          }
       }
       {
         \@@_stop_list:
@@ -12696,7 +12597,7 @@ all the worksheets are as follows:
         \int_gzero:N \g_@@_minipage_stat_int
         \@@_unskip_unkern: % remove \topsep + [\partopsep]
         \end@@_mini_page
-        \par\addvspace{ \l_@@_minipage_after_skip }
+        \@@_mini_apply_end:
       }
       {
         \@@_keyans_multicols_stop:
@@ -13681,7 +13582,7 @@ all the worksheets are as follows:
 % \myenv[no-index]{itemize}, \myenv[no-index]{enumerate}, \myenv[no-index]{description}, \myenv[no-index]{quote},
 % \myenv[no-index]{quotation}, \myenv[no-index]{verse}, \myenv[no-index]{center}, \myenv[no-index]{flushleft},
 % \myenv[no-index]{flushright}, \myenv[no-index]{verbatim}, \myenv[no-index]{tabbing}, \myenv[no-index]{trivlist},
-% \myenv[no-index]{list}  and all environments created with |\newtheorem|.
+% \myenv[no-index]{list} and all environments created with |\newtheorem|.
 %
 % \begin{important}*
 % One way to get around this is to use something like:
@@ -13994,7 +13895,9 @@ all the worksheets are as follows:
 %   mechanism for storage in \emph{sequence} of the |\anskey| command
 %   and \myenv*[no-index]{anskey*} environment. This function is passed to the
 %   \myhlc|\@@_after_list_vii:| function in the second part of the \myenv*[no-index]{enumext*}
-%   environment definition (\S\ref{env:starred}).
+%   environment definition (\S\ref{env:starred}). Before closing the
+%   \myhlc|\@@_mini_page| the function \myhlc|\@@_mini_capture_end:| stores
+%   the space \emph{\enquote{below}}.
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_stop_mini_vii:
   {
@@ -14002,6 +13905,7 @@ all the worksheets are as follows:
       {
         \@@_stop_list:
         \@@_stop_store_level_vii:
+        \@@_mini_capture_end:
         \IfDocumentMetadataT { \tag_resume:n {enumext*} }
         \end@@_mini_page
         \hfill
@@ -14020,12 +13924,19 @@ all the worksheets are as follows:
 %  in the \myenv[no-index]{minipage} environment on the \emph{\enquote{right
 %  side}} is executed. For compatibility with the \mypkg{caption} package and possibly
 %  other \mymarg{code} passed to this key, it is passed to a box and
-%  then printed.
+%  then printed. Once the \myenv[no-index]{minipage} on the \emph{\enquote{right
+%  side}} is closed, \myhlc|\@@_mini_apply_end:| adds the stored space
+%  \emph{\enquote{below}}. This minipage is opened after the environment has
+%  ended, so it is placed in a group; otherwise the assignments that
+%  \hologo{LaTeX} makes when \emph{tagging} \texttt{PDF} is active (for
+%  example, the one that makes a heading warn that it is inside a box) would
+%  remain active after the list.
 %    \begin{macrocode}
 \@@_after_env:nn {enumext*}
   {
     \bool_if:NT \g_@@_minipage_active_vii_bool
       {
+        \group_begin:
         \@@_minipage:w [ t ] { \g_@@_minipage_right_vii_dim }
           \legacy_if_gset_false:n { @minipage }
           \skip_vertical:N \c_zero_skip
@@ -14044,7 +13955,8 @@ all the worksheets are as follows:
           \box_use_drop:N \l_@@_miniright_code_vii_box
           \skip_vertical:N \c_zero_skip
         \@@_endminipage:
-        \par\addvspace{ \g_@@_minipage_after_skip }
+        \group_end:
+        \@@_mini_apply_end:
       }
     \bool_gset_false:N \g_@@_minipage_active_vii_bool
     \bool_gset_true:N \g_@@_minipage_center_vii_bool
@@ -14083,6 +13995,7 @@ all the worksheets are as follows:
     \bool_if:NTF \l_@@_minipage_active_viii_bool
       {
         \@@_stop_list:
+        \@@_mini_capture_end:
         \IfDocumentMetadataT { \tag_resume:n {keyans*} }
         \end@@_mini_page
         \hfill
@@ -14096,6 +14009,7 @@ all the worksheets are as follows:
   {
     \bool_if:NT \g_@@_minipage_active_viii_bool
       {
+        \group_begin:
         \@@_mini_page{ \g_@@_minipage_right_viii_dim }
           \par\addvspace { \g_@@_minipage_right_skip }
           \bool_if:NF \g_@@_minipage_center_viii_bool
@@ -14111,7 +14025,8 @@ all the worksheets are as follows:
             }
           \box_use_drop:N \l_@@_miniright_code_viii_box
         \end@@_mini_page
-        \par\addvspace{ \g_@@_minipage_after_skip }
+        \group_end:
+        \@@_mini_apply_end:
       }
     \bool_gset_false:N \g_@@_minipage_active_viii_bool
     \bool_gset_true:N \g_@@_minipage_center_viii_bool
@@ -14663,6 +14578,8 @@ all the worksheets are as follows:
 %   and \myhlc|\linewidth| are internal parameters of the \hologo{LaTeX} kernel and
 %   relying on them is not correct practice, so the code must be reviewed if the
 %   kernel changes them.
+%   The technique of adjusting these parameters, instead of using a surrounding
+%   list, comes from the \mypkg{indent}\cite{indent} package.
 % \end{important}
 %
 %    \begin{macrocode}
@@ -14674,7 +14591,7 @@ all the worksheets are as follows:
         { \l_@@_labelwidth_vii_dim + \l_@@_labelsep_vii_dim }
       \dim_sub:Nn \linewidth
         { \l_@@_labelwidth_vii_dim + \l_@@_labelsep_vii_dim }
-      \tex_parshape:D \c_one_int \@totalleftmargin \linewidth
+      \parshape \c_one_int \@totalleftmargin \linewidth
       \skip_horizontal:n
         { -\l_@@_labelwidth_vii_dim - \l_@@_labelsep_vii_dim }
       \@@_start_list_tag:n {enumext*}
@@ -15091,6 +15008,13 @@ all the worksheets are as follows:
         \legacy_if_set_false:n { @noitemarg }
         \legacy_if:nT { @nmbrlist }
           {
+            \IfDocumentMetadataT
+              {
+                \bool_if:NT \l_@@_hyperref_bool
+                  {
+                    \legacy_if_set_true:n { @hyper@item }
+                  }
+              }
             \refstepcounter{enumXviii}
           }
       }
@@ -15188,7 +15112,7 @@ all the worksheets are as follows:
         { \l_@@_labelwidth_viii_dim + \l_@@_labelsep_viii_dim }
       \dim_sub:Nn \linewidth
         { \l_@@_labelwidth_viii_dim + \l_@@_labelsep_viii_dim }
-      \tex_parshape:D \c_one_int \@totalleftmargin \linewidth
+      \parshape \c_one_int \@totalleftmargin \linewidth
       \skip_horizontal:n
         { -\l_@@_labelwidth_viii_dim - \l_@@_labelsep_viii_dim }
       \@@_start_list_tag:n {keyans*}
@@ -15300,7 +15224,7 @@ all the worksheets are as follows:
 %   The \ics*{getkeyans} command takes a \emph{mandatory argument} of the
 %   form \mymarg{store name \textcolor{red}{:} position} in `|#1|'. The argument
 %   is expanded and converted to a string before it is processed.
-%   Retrieve a \emph{\enquote{single content}}  stored by |\anskey|, |\anspic*|
+%   Retrieve a \emph{\enquote{single content}} stored by |\anskey|, |\anspic*|
 %   and |\item*| and \myenv*[no-index]{anskey*} from \emph{prop list} defined by \mykey[env]{save-ans} key.
 %    \begin{macrocode}
 \NewDocumentCommand \getkeyans { m }
