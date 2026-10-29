@@ -214,6 +214,18 @@
     \printkeyans*{d4}
   }
 
+\CASE{D9}
+  {
+    \begin{enumext}[save-ans=d9, check-ans=true]
+      \item Uno
+        \begin{enumext*}
+          \item A
+        \end{enumext*}
+        \anskey{a}
+    \end{enumext}
+    \printkeyans*{d9}
+  }
+
 \TYPE{=== E. anskey y anskey* ===}
 
 \CASE{E1}
@@ -524,6 +536,14 @@
 \CASE{G7}
   {
     \setenumext[enumext,x]{}
+  }
+
+\CASE{G8}
+  {
+    \setenumext[enumext,x,y]{label={\alph*)}}
+    \setbox0=\vbox{\begin{enumext}\item Uno\end{enumext}}
+    \showboxbreadth=100 \showboxdepth=100
+    \showbox0
   }
 
 \TYPE{=== I. Avisos de columnas ===}

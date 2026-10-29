@@ -13,8 +13,8 @@
 % la vineta y de la etiqueta con valores grandes de labelwidth y labelsep.
 % Seccion C: quote, quotation, verse y list. Seccion D: entornos basados en
 % \trivlist (center, flushleft, flushright, trivlist, tabbing y teoremas), con
-% una o varias columnas y con la llave item-break. verbatim no puede ir en el
-% argumento de \BOXTEST y no se prueba aqui. Cada caso compone el codigo en una
+% una o varias columnas y con la llave item-break. verbatim (seccion E) va fuera
+% del argumento de \BOXTEST. Cada caso compone el codigo en una
 % caja que se muestra en el log (\BOXTEST).
 \input{regression-test}
 
@@ -234,6 +234,30 @@
       \item EEE
     \end{enumext*}
   }
+
+\TYPE{=== E. verbatim dentro de enumext* ===}
+
+\TYPE{[22] enumext*: verbatim en un item}
+\setbox0=\vbox{\hsize=250pt \linewidth=\hsize \columnwidth=\hsize \parindent=0pt
+\begin{enumext*}
+  \item AAA
+\begin{verbatim}
+x  y
+\end{verbatim}
+  \item BBB
+\end{enumext*}}
+\showbox0
+
+\TYPE{[23] enumext*: verbatim con item-break=true}
+\setbox0=\vbox{\hsize=250pt \linewidth=\hsize \columnwidth=\hsize \parindent=0pt
+\begin{enumext*}[item-break=true]
+  \item AAA
+\begin{verbatim}
+x  y
+\end{verbatim}
+  \item BBB
+\end{enumext*}}
+\showbox0
 
 \OMIT
 \end{document}

@@ -4232,7 +4232,8 @@ all the worksheets are as follows:
 %     \myenv*[no-index]{anskey*}, |\printkeyans|, |\getkeyans| and
 %     |\foreachkeyans|, and the keys that store and show the answers;
 %   \item \myfile{test-005}: the environments \myenv*[no-index]{keyans},
-%     \myenv*[no-index]{keyans*} and \myenv*[no-index]{keyanspic}, and their keys;
+%     \myenv*[no-index]{keyans*} and \myenv*[no-index]{keyanspic}, their keys and
+%     the standard lists nested in the options of \myenv*[no-index]{keyans*};
 %   \item \myfile{test-006}: the exact vertical spaces above, below and beside
 %     the \myenv{minipage} and \myenv{multicols} variants (\mykey{mini-env},
 %     \mykey{mini-right}, |\miniright| and \myenv*[no-index]{multicols}) in
@@ -4261,9 +4262,9 @@ all the worksheets are as follows:
 %   \item \myfile{test-016}: the values of \mykey{labelwidth} and \mykey{labelsep}
 %     inside the nested lists, and the environments \myenv[no-index]{quote},
 %     \myenv[no-index]{quotation}, \myenv[no-index]{verse}, \myenv[no-index]{list},
-%     \myenv[no-index]{center}, \myenv[no-index]{trivlist}, \myenv[no-index]{tabbing}
-%     and the theorems nested in the content of an item of \myenv*[no-index]{enumext*},
-%     measured with boxes;
+%     \myenv[no-index]{center}, \myenv[no-index]{trivlist}, \myenv[no-index]{tabbing},
+%     \myenv[no-index]{verbatim} and the theorems nested in the content of an item
+%     of \myenv*[no-index]{enumext*}, measured with boxes;
 %   \item \myfile{test-100}: the error and warning messages of the package.
 % \end{itemize}
 %
@@ -4374,6 +4375,13 @@ all the worksheets are as follows:
 % \begin{description}[font=\small\sffamily,wide=0pt,style=multiline,leftmargin=1.1\descrwidth,nosep,noitemsep]
 %  \item [\fileversion{} (ctan), \filedate]
 %    \begin{itemize}
+%      \item Fixed the duplicate error messages when |\anskey|, \myenv*[no-index]{anskey*},
+%        |\anspic| or a nested \myenv*[no-index]{keyans}, \myenv*[no-index]{keyans*} and
+%        \myenv*[no-index]{keyanspic} were used without \mykey[env]{save-ans}: the
+%        message about \mykey[env]{save-ans} is no longer repeated inside these environments.
+%      \item Fixed |\setenumext| when all the levels of the optional argument are
+%        invalid: the keys were applied to all the families instead of only
+%        returning the error message.
 %      \item Fixed bad interaction between |\setenumext| and |\printkeyans|: the
 %        values set for the environments no longer modify the printed content.
 %      \item Fixed spurious errors in |\miniright| and in \myenv*[no-index]{keyans}
@@ -4846,7 +4854,7 @@ all the worksheets are as follows:
 %   \l_@@_store_current_opt_arg_tl,
 % }
 %
-%   The variable \myhlc|\l_@@_store_active_bool| setting by
+%   The variable \myhlc|\l_@@_store_active_bool| set by
 %   \mykey{save-ans} key (\S\ref{key:save-ans}) activates all the
 %   mechanism related to \ics*{anskey}, \myenv*[no-index]{anskey*}, \myenv*[no-index]{keyans},
 %   \myenv*[no-index]{keyans*} and \myenv*[no-index]{keyanspic} environments.
@@ -4933,9 +4941,9 @@ all the worksheets are as follows:
 %
 % \begin{variable}[int]{\l_@@_hyperref_bool, \l_@@_footnotes_key_bool}
 %   The boolean variable \myhlc|\l_@@_hyperref_bool| will determine if the
-%   \mypkg{hyperref} package is present or load in memory
+%   \mypkg{hyperref} package is present or loaded in memory
 %   (\S\ref{subsec:hyperref}). The boolean variable \myhlc|\l_@@_footnotes_key_bool|
-%   determine if \mypkg[no-index]{hyperref} is load with key |hyperfootnotes=true|.
+%   determines if \mypkg[no-index]{hyperref} is loaded with the key |hyperfootnotes=true|.
 %    \begin{macrocode}
 \bool_new:N \l_@@_hyperref_bool
 \bool_new:N \l_@@_footnotes_key_bool
@@ -5161,7 +5169,7 @@ all the worksheets are as follows:
       }
   }
 %    \end{macrocode}
-%   The function \myhlc|\@@_is_on_first_level:| will sets the variables
+%   The function \myhlc|\@@_is_on_first_level:| sets the variables
 %   \myhlc|\l_@@_standard_first_bool| (\S\ref{key:save-ans}),
 %   \myhlc|\l_@@_starred_first_bool| (\S\ref{key:save-ans}) to |true|
 %   only if the environment is not nested and it is at the \emph{\enquote{first level}}.
@@ -5439,7 +5447,7 @@ all the worksheets are as follows:
 % \end{macro}
 %
 % \begin{macro}[int]{\@@_newlabel:nn}\label{fun:newlabel}
-%   The function \myhlc|\@@_newlabel:nn| write the information to the |.aux|
+%   The function \myhlc|\@@_newlabel:nn| writes the information to the |.aux|
 %   file when using the \mykey[env]{save-ref} key. The arguments taken by the
 %   function are:
 %
@@ -5544,7 +5552,7 @@ all the worksheets are as follows:
 %    \end{macrocode}
 %   The \myenv*[no-index]{enumext*} and \myenv*[no-index]{keyans*} environments are implemented
 %   using \myenv[no-index]{minipage}, so |\footnote| must also be redefined to keep
-%   these numbering as if it were part of the document.
+%   this numbering as if it were part of the document.
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_renew_footnote_mini:
   {
@@ -5783,7 +5791,7 @@ all the worksheets are as follows:
 %   the package loading. The arguments taken by the function are:
 %
 % \begin{arguments}
-%    \item A token list \myhlc|\l_@@_counter_X_tl| for \emph{\enquote{store}} the counter's name.
+%    \item A token list \myhlc|\l_@@_counter_X_tl| to \emph{\enquote{store}} the counter's name.
 %    \item The counter's name.
 % \end{arguments}
 %
@@ -5890,7 +5898,7 @@ all the worksheets are as follows:
 % \end{macro}
 %
 % \begin{macro}[int]{\@@_label_width_by_box:Nn, \@@_label_width_by_box:cv}
-%    The function \myhlc|\@@_label_width_by_box:Nn| set the default |\labelwidth|
+%    The function \myhlc|\@@_label_width_by_box:Nn| sets the default |\labelwidth|
 %    using a box width if no \mykey[env]{labelwidth} key is passed.
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_label_width_by_box:Nn
@@ -6320,7 +6328,7 @@ all the worksheets are as follows:
 %    \end{macrocode}
 %    Finally the function \myhlc|\@@_keyans_ref:| will execute the
 %    modification for the reference system in the second argument of the
-%    \myenv*[no-index]{keyans*} environment definition.
+%    \myenv*[no-index]{keyans} environment definition.
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_keyans_ref:
   {
@@ -6336,7 +6344,7 @@ all the worksheets are as follows:
 %
 % \begin{macro}[int]{\@@_start_from:NNn, \@@_start_from:ccn, \@@_start_from:cce}
 %    The function \myhlc|\@@_start_from:NNn| used by \mykey[env,foreachkeyans]{start} and \mykey[env]{start*}
-%    keys take three arguments:
+%    keys takes three arguments:
 %
 % \begin{arguments}
 %    \item \myhlc|\l_@@_label_X_tl|
@@ -6379,7 +6387,7 @@ all the worksheets are as follows:
 %
 % \begin{macro}[int]{\@@_widest_from:nNNn, \@@_widest_from:nccn}
 %    The function \myhlc|\@@_widest_from:nNNn| used by the \mykey[env]{widest}
-%    key take four arguments:
+%    key takes four arguments:
 %
 % \begin{arguments}
 %    \item The counter associated with the environment level
@@ -6462,7 +6470,7 @@ all the worksheets are as follows:
 %   \textcolor{red}{\texttt{\textbackslash}}|@endparpenalty| work together
 %   to ensure that list environments look good, avoiding unsightly page
 %   breaks that can break the flow of the \myenv[no-index]{list}, so it's a good
-%   idea to have a \mymeta{keys} to access these.
+%   idea to have some \mymeta{keys} to access these.
 %    \begin{macrocode}
 \cs_set_protected:Nn \@@_tmp:nn
   {
@@ -6860,7 +6868,7 @@ all the worksheets are as follows:
 %    \mykey[env,foreachkeyans]{before} key \emph{\enquote{before}} the \myenv*[no-index]{enumext}
 %    environment is started in \emph{second argument} of the list. The
 %    \mymarg{code} is executed \emph{\enquote{knowing}}
-%    all definition and values provides by \mymeta{keys}:
+%    all the definitions and values provided by the \mymeta{keys}:
 %    |\list|\mymarg{arg one}|{|\mymeta{arg two}\mymarg[cbc=module_name,ac=araracolor]{code}|}|
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_before_keys_exec:
@@ -7052,7 +7060,7 @@ all the worksheets are as follows:
 % It should be made clear that the implementation here is a \emph{\enquote{bit
 % questionable}}. At first glance doing |\multicolsep=\topsep| seemed right, but the results
 % were not always as expected. An almost \emph{imperceptible} detail is that in some cases the
-% |\itemsep| values of are \emph{\enquote{stretched}}, possibly due to
+% |\itemsep| values are \emph{\enquote{stretched}}, possibly due to
 % the use of |\raggedcolumns| and this affects the lower space when
 % closing the environment, which is \emph{\enquote{smaller}} than
 % expected. My attempts to find the correct values using |\showoutput| and
@@ -7091,7 +7099,7 @@ all the worksheets are as follows:
 % \end{macro}
 %
 % \begin{macro}[int]{\@@_add_pre_parsep:}
-%    The function \myhlc|\@@_add_pre_parsep:| \emph{\enquote{adjusted}} the value
+%    The function \myhlc|\@@_add_pre_parsep:| \emph{\enquote{adjusts}} the value
 %    of \myhlc|\l_@@_multicols_above_X_skip| detecting the value of
 %    |\parsep| from the previous level. This is necessary since
 %    |\parsep| from the previous level affects the \emph{vertical spaces}.
@@ -7511,7 +7519,7 @@ all the worksheets are as follows:
 % \begin{macro}[int]{\@@_keyans_minipage_set_skip:, \@@_keyans_minipage_add_space:}
 %    The function \myhlc|\@@_keyans_minipage_set_skip:| will take care of determining the
 %    value of \myhlc|\l_@@_minipage_right_skip| in \myenv*[no-index]{keyans}. The
-%    implementation of these functions is the same as the one used in
+%    implementation of this function is the same as the one used in
 %    \myenv*[no-index]{enumext}.
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_keyans_minipage_set_skip:
@@ -7800,7 +7808,7 @@ all the worksheets are as follows:
 % \subsubsection{Functions for \texttt{above} and \texttt{below} keys in \env{enumext}}
 %
 % \begin{macro}[int]{\@@_vspace_above:}
-%    The function \myhlc|\@@_vspace_above:| apply the \emph{vertical space above}
+%    The function \myhlc|\@@_vspace_above:| applies the \emph{vertical space above}
 %    the \myenv*[no-index]{enumext} environment set by the \mykey[env]{above*} and \mykey[env]{above} keys.
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_vspace_above:
@@ -7821,7 +7829,7 @@ all the worksheets are as follows:
 % \end{macro}
 %
 % \begin{macro}[int]{\@@_vspace_below:}
-%    The function \myhlc|\@@_vspace_below:| apply the \emph{vertical space below}
+%    The function \myhlc|\@@_vspace_below:| applies the \emph{vertical space below}
 %    the \myenv*[no-index]{enumext} environment set by the \mykey[env]{below*} and \mykey[env]{below} keys.
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_vspace_below:
@@ -7844,7 +7852,7 @@ all the worksheets are as follows:
 % \subsubsection{Functions for \texttt{above} and \texttt{below} keys in \env{keyans}}
 %
 % \begin{macro}[int]{\@@_vspace_above_v:}
-%    The function \myhlc|\@@_vspace_above_v:| apply the \emph{vertical space above}
+%    The function \myhlc|\@@_vspace_above_v:| applies the \emph{vertical space above}
 %    the \myenv*[no-index]{keyans} environment set by the \mykey[env]{above} and \mykey[env]{above*} keys.
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_vspace_above_v:
@@ -7862,7 +7870,7 @@ all the worksheets are as follows:
 % \end{macro}
 %
 % \begin{macro}[int]{\@@_vspace_below_v:}
-%    The function \myhlc|\@@_vspace_below_v:| apply the \emph{vertical space below}
+%    The function \myhlc|\@@_vspace_below_v:| applies the \emph{vertical space below}
 %    the \myenv*[no-index]{keyans} environment set by the \mykey[env]{below*} and \mykey[env]{below} keys.
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_vspace_below_v:
@@ -8003,9 +8011,9 @@ all the worksheets are as follows:
 %   Defines the keys \mykey[env]{series}, \mykey[env]{resume}
 %   and \mykey[env]{resume*} for the \emph{\enquote{all levels}}
 %   of \myenv*[no-index]{enumext} and \myenv*[no-index]{enumext*}.
-%   It is not necessary to make sure that |\printkeyans| is not running
-%   otherwise the \emph{start value} of the environments would be increased when
-%   using \mykey{resume} or \mykey{resume}|*| keys.
+%   Both keys do nothing while |\printkeyans| is running, otherwise the
+%   \emph{start value} of the environments would be increased when using
+%   \mykey{resume} or \mykey{resume}|*| keys.
 %
 %   In version 1.6 it is allowed to pass the key \mykey{resume} \emph{without
 %   value} by means of the command |\setenumext|, for the correct operation
@@ -8064,22 +8072,25 @@ all the worksheets are as follows:
 % \begin{macro}[int]{\@@_standard_save_counter:, \@@_standard_save_counter_aux:,
 %                    \@@_starred_save_counter:, \@@_starred_save_counter_aux:}
 %   The \myhlc|\@@_standard_save_counter:| and \myhlc|\@@_starred_save_counter:|
-%   functions will save the last counter value to \myhlc|\g_@@_series_#1_int|
-%   if the \mykey[env]{series}|=|\mymarg{series name} key has been passed, to
-%   \myhlc|\c@ @@_resume_X_int| if it has passed the key \mykey[env]{resume}
-%   \emph{without value} and the key \mykey{series} is not active, in
-%   \myhlc|\g_@@_series_#1_X_int| if the key
-%   \mykey{resume}|=|\mymarg{series name} has been passed and in
-%   \myhlc|\g_@@_series_#1_X_int| if the key has
-%   been passed \mykey[env]{save-ans}|=|\mymarg{store name}.
+%   functions will save the last counter value to \myhlc|\g_@@_series_#1_X_int|
+%   with the name given to the key \mykey[env]{series}|=|\mymarg{series name}
+%   if it has been passed, to \myhlc|\c@ @@_resume_X_int| if none of the keys
+%   \mykey[env]{series}, \mykey[env]{resume}|=|\mymarg{series name} and
+%   \mykey[env]{save-ans} has been passed (the case of the key
+%   \mykey[env]{resume} \emph{without value}), to
+%   \myhlc|\g_@@_series_#1_X_int| with the name given to the key
+%   \mykey{resume}|=|\mymarg{series name} if it has been passed and, in the
+%   \emph{\enquote{first level}}, to \myhlc|\g_@@_resume_#1_int| with the
+%   \mymarg{store name} if the key \mykey[env]{save-ans}|=|\mymarg{store name}
+%   has been passed.
 %
 % \begin{important}*
 %   The variables \myhlc|\l_@@_series_name_str| and \myhlc|\l_@@_series_name_tl|
 %   contain the same \mymarg{series name} but are executed at different
 %   moments, the integer variable with \myhlc|\l_@@_series_name_str| sets the value
-%   when execute \mykey{series}|=|\mymarg{series name} and the
+%   when executing \mykey{series}|=|\mymarg{series name} and the
 %   integer variable with \myhlc|\l_@@_series_name_tl| sets the subsequent
-%   values when use \mykey{resume}|=|\mymarg{series name}.
+%   values when using \mykey{resume}|=|\mymarg{series name}.
 %   This function is passed to the \myenv*[no-index]{enumext} environment definition (\S\ref{env:enumext})
 %   and the \myenv*[no-index]{enumext*} environment definition (\S\ref{env:starred}).
 % \end{important}
@@ -8929,7 +8940,7 @@ all the worksheets are as follows:
 %    which contains the \mymarg{store name} of the \emph{sequence}
 %    and \emph{prop list} to be used. If \myhlc|\l_@@_store_name_tl| is
 %    \emph{empty} it returns an error message, otherwise it returns the
-%    appropriate message \myhlc|\@@_start_save_ans_msg:| and proceed to execute
+%    appropriate message \myhlc|\@@_start_save_ans_msg:| and proceeds to execute
 %    the function \myhlc|\@@_storing_exec:| for \myenv*[no-index]{enumext} and
 %    \myenv*[no-index]{enumext*} environments.
 %    \begin{macrocode}
@@ -8960,7 +8971,7 @@ all the worksheets are as follows:
 %   \myenv*[no-index]{keyans*} and \myenv*[no-index]{keyanspic} environments and will set
 %   to |true| the variable \myhlc|\l_@@_check_answers_bool| used for
 %   internal checking answers mechanism set by the \mykey[env]{check-ans} and \mykey[env]{no-store}
-%   keys, copy \mymarg{store name} into the variable \myhlc|\g_@@_store_name_tl|.
+%   keys, and copies the \mymarg{store name} into the variable \myhlc|\g_@@_store_name_tl|.
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_storing_exec:
   {
@@ -9008,7 +9019,7 @@ all the worksheets are as follows:
 %  If the line begins with |\item| or |\item*| and \emph{opens a nested
 %  environment} each |\item| or |\item*| in the nested environment must
 %  have a \emph{single} execution of the |\anskey| command and the counter
-%  associated to the sum of |\item| and |\item*| executions must decrementing
+%  associated to the sum of |\item| and |\item*| executions must be decremented
 %  by \emph{\enquote{one}} to maintain equality.
 %
 % \end{quote}
@@ -9382,7 +9393,7 @@ all the worksheets are as follows:
 %   Adds the \mymeta{keys} \mykey[env]{mark-ref} and \mykey[env]{save-ref} related to the
 %   \emph{\enquote{storage system}} and internal mechanism of
 %   \emph{\enquote{label and ref}} along with the \mymeta{keys} \mykey[env]{show-ans},
-%   \mykey[env]{show-pos} and the\mymeta{keys} \mykey[env]{mark-ans}, \mykey[env]{mark-pos},
+%   \mykey[env]{show-pos} and the \mymeta{keys} \mykey[env]{mark-ans}, \mykey[env]{mark-pos},
 %   \mykey[env]{mark-sep} and \mykey[env]{wrap-ans} for the command |\anskey|,
 %   the environment \myenv*[no-index]{anskey*} and the \mymeta{keys} for environments
 %   \myenv*[no-index]{keyans} and \myenv*[no-index]{keyans*} only at the \emph{first level}
@@ -9665,8 +9676,9 @@ all the worksheets are as follows:
 % \begin{macro}[int]{\@@_store_addto_seq:n, \@@_store_addto_seq:v, \@@_store_addto_seq:V}
 %   The function \myhlc|\@@_store_addto_seq:n| stores the \mymarg{content} in
 %   \emph{sequence} defined by \mykey[env]{save-ans} key. This function
-%   is used by |\anskey| in \myenv*[no-index]{enumext}, |\item*| in
-%   \myenv*[no-index]{keyans} and |\anspic| in \myenv*[no-index]{keyanspic}.
+%   is used by |\anskey| and \myenv*[no-index]{anskey*} in \myenv*[no-index]{enumext} and
+%   \myenv*[no-index]{enumext*}, |\item*| in \myenv*[no-index]{keyans} and
+%   \myenv*[no-index]{keyans*} and |\anspic*| in \myenv*[no-index]{keyanspic}.
 %
 %   The form in which the \mymarg{content} is stored in \emph{sequence} is in
 %   an internal \myenv*[no-index]{enumext} or \myenv*[no-index]{enumext*} environments with
@@ -9771,7 +9783,7 @@ all the worksheets are as follows:
 % \subsubsection{Function for show marks and position}
 %
 % \begin{macro}[int]{\@@_print_keyans_box:NN, \@@_print_keyans_box:cc}
-%   The function \myhlc|\@@_print_keyans_box:NN| print a box in the left
+%   The function \myhlc|\@@_print_keyans_box:NN| prints a box in the left
 %   margin with \myhlc|\l_@@_mark_answer_sym_tl| used by the \mykey[env]{wrap-ans},
 %   \mykey[env]{show-ans} and \mykey[env]{show-pos} keys. The function takes two
 %   arguments:
@@ -9916,7 +9928,7 @@ all the worksheets are as follows:
 % \subsubsection{Definition of variables}
 %
 % \begin{variable}[int]{\l_@@_store_anskey_arg_tl}
-%   The variable \myhlc|\l_@@_store_anskey_arg_tl| save the \emph{argument}
+%   The variable \myhlc|\l_@@_store_anskey_arg_tl| saves the \emph{argument}
 %   of |\anskey| (\S\ref{cmd:anskey}).
 %    \begin{macrocode}
 \tl_new:N \l_@@_store_anskey_arg_tl
@@ -10232,14 +10244,34 @@ all the worksheets are as follows:
 %    \end{macrocode}
 % \end{macro}
 %
+% \begin{macro}[int]{\@@_in_keyans:}
+%   Inside \myenv*[no-index]{keyans}, \myenv*[no-index]{keyans*} and
+%   \myenv*[no-index]{keyanspic} the flag \myhlc|\l_@@_store_active_bool| is
+%   set to false on purpose, so the \mykey[env]{save-ans} checks cannot use it
+%   there. The predicate \myhlc|\@@_in_keyans:| is true when any of these
+%   environments is open, and it avoids a second error message for the same
+%   mistake.
+%    \begin{macrocode}
+\prg_new_conditional:Npnn \@@_in_keyans: { p , T , F , TF }
+  {
+    \int_compare:nNnTF
+      { \l_@@_keyans_level_int + \l_@@_keyans_level_h_int
+        + \l_@@_keyans_pic_level_int } > { 0 }
+      { \prg_return_true: } { \prg_return_false: }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
 % \begin{macro}[int]{\@@_anskey_safe_outer:, \@@_anskey_safe_inner:}
 %   The \myhlc|\@@_anskey_safe_outer:| function will return the
 %   appropriate messages when the command is executed outside the
-%   environment in which the \mykey[env]{save-ans} key was activated.
+%   environment in which the \mykey[env]{save-ans} key was activated or
+%   inside the \myenv*[no-index]{keyans}, \myenv*[no-index]{keyans*} or
+%   \myenv*[no-index]{keyanspic} environments.
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_anskey_safe_outer:
   {
-    \bool_if:NF \l_@@_store_active_bool
+    \bool_lazy_or:nnF { \l_@@_store_active_bool } { \@@_in_keyans_p: }
       {
         \msg_error:nnnn { enumext } { anskey-wrong-place }{ anskey }{ enumext }
       }
@@ -10294,11 +10326,11 @@ all the worksheets are as follows:
 %   sure where the command is executed, then the state of the
 %   variable \myhlc|\l_@@_check_answers_bool| set by the key \mykey[env]{no-store} is checked;
 %   if it is true, \myhlc|\g_@@_item_anskey_int| is incremented for the internal
-%   \emph{\enquote{check answer}} system and execute the function
-%   \myhlc|\@@_anskey_safe_inner:n| to ensure that the command is not
-%   nested and that the argument is not empty, finally search the
-%   \myoarg{key \textnormal{\textcolor{gray}{=}} val} and call the
-%   function \myhlc|\@@_store_anskey_arg:n|.
+%   \emph{\enquote{check answer}} system and the function
+%   \myhlc|\@@_anskey_safe_inner:n| is executed to ensure that the command is not
+%   nested and that the argument is not empty; finally the
+%   \myoarg{key \textnormal{\textcolor{gray}{=}} val} is searched and the
+%   function \myhlc|\@@_store_anskey_arg:n| is called.
 %    \begin{macrocode}
 \NewDocumentCommand \anskey { o +m }
   {
@@ -10343,11 +10375,11 @@ all the worksheets are as follows:
 %   \l_@@_write_anskey_env_file_name_tl,
 %   \l_@@_write_anskey_env_file_iow,
 % }
-%   The variable \myhlc|\l_@@_store_anskey_env_tl| save the \mymeta{body}
+%   The variable \myhlc|\l_@@_store_anskey_env_tl| saves the \mymeta{body}
 %   of the environment \myenv*[no-index]{anskey*} (\S\ref{env:anskey}).
 %
 %   The variables \myhlc|\l_@@_write_anskey_env_bool|, \myhlc|\l_@@_write_anskey_env_file_name_tl|
-%   and \myhlc|\l_@@_write_anskey_env_file_iow| they are used by the \mykey{write-env}
+%   and \myhlc|\l_@@_write_anskey_env_file_iow| are used by the \mykey{write-env}
 %   and \mykey{overwrite} keys in the \myenv*[no-index]{anskey*} environment implementation.
 %    \begin{macrocode}
 \tl_new:N   \l_@@_store_anskey_env_tl
@@ -10359,7 +10391,7 @@ all the worksheets are as follows:
 %
 % \begin{variable}[int]{\c_@@_anskey_env_hidden_space_str}
 %   The \myhlc|\c_@@_anskey_env_hidden_space_str| is a constant \emph{string}
-%   to used to hide the \mymeta{forced space} added by \hologo{TeX} when
+%    used to hide the \mymeta{forced space} added by \hologo{TeX} when
 %   recording content in a macro. This \emph{string} contains the \emph{reserved phrase}
 %   `|%^^Aenumextheol%|' which is added to the end of the argument stored
 %   in \emph{sequence} and \emph{prop list} when the key \mykey{force-eol} is false.
@@ -10510,7 +10542,7 @@ all the worksheets are as follows:
 % \begin{macro}[int]{\@@_anskey_env_file_if_writable:n, \@@_anskey_env_file_if_writable:nT,
 %                    \@@_anskey_env_file_if_writable:nF, \@@_anskey_env_file_if_writable:nTF,
 %                    \@@_anskey_env_file_write:nn, \@@_anskey_env_file_write:VV}
-%   The conditional function \myhlc|\@@_anskey_env_file_if_writable:n| used by
+%   The conditional function \myhlc|\@@_anskey_env_file_if_writable:n| is used by
 %   the \mykey[anskey*]{write-env} and \mykey[anskey*]{overwrite} keys in the \myenv*[no-index]{anskey*}
 %   environment to determine whether the output file is written or overwritten.
 %    \begin{macrocode}
@@ -10566,7 +10598,7 @@ all the worksheets are as follows:
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_anskey_env_safe_outer:
   {
-    \bool_if:NF \l_@@_store_active_bool
+    \bool_lazy_or:nnF { \l_@@_store_active_bool } { \@@_in_keyans_p: }
       {
         \msg_error:nnn { enumext } { anskey-env-error } { anskey* }
       }
@@ -10649,7 +10681,7 @@ all the worksheets are as follows:
 %   \mykey[env]{no-store} is checked. If it is true, it looks for \myoarg{key \textnormal{\textcolor{gray}{=}} val}
 %   and verifies that the \emph{argument} \texttt{c-type} \mymeta{body} is not empty.
 %   Finally, it runs the internal check function \myhlc|\@@_anskey_env_safe_inner:n|
-%   and call the function \myhlc|\@@_store_anskey_arg:n|.
+%   and calls the function \myhlc|\@@_store_anskey_arg:n|.
 %    \begin{macrocode}
 \NewDocumentEnvironment{anskey*}{ o c }
   {
@@ -10678,7 +10710,7 @@ all the worksheets are as follows:
 % \begin{macro}[int]{\@@_execute_after_env:}
 %   The \myhlc|\@@_execute_after_env:| function will first return the
 %   appropriate message for the end of the environment in which the
-%   \mykey[env]{save-ans} key is being executed, then call the
+%   \mykey[env]{save-ans} key is being executed, then calls the
 %   \myhlc|\@@_item_answer_diff:| function and then writes the values of
 %   the global variables used to the |.log| file. If the key
 %   \mykey[env]{check-ans} is active, it executes the function
@@ -10831,7 +10863,7 @@ all the worksheets are as follows:
       }
   }
 %    \end{macrocode}
-%   The auxiliary function \myhlc|\@@_keyans_store_ref_aux_i:| set the
+%   The auxiliary function \myhlc|\@@_keyans_store_ref_aux_i:| sets the
 %   variable \myhlc|\l_@@_newlabel_arg_one_tl| which will contain
 %   \mymarg{store name \textcolor{red}{:} position} analyzing whether
 %   the environment in which they are executed is \myenv*[no-index]{enumext*} or
@@ -11059,9 +11091,10 @@ all the worksheets are as follows:
   }
 %    \end{macrocode}
 %   The function \myhlc|\@@_keyans_show_pos:| will print the \mymeta{position}
-%   of the stored content in \emph{prop list}. Need add |1| to
-%   \myhlc|\g_@@_#1_prop| for \myenv*[no-index]{keyans}
-%   environment.
+%   of the stored content in \emph{prop list}. It is the number of elements of the
+%   prop list plus the value of \myhlc|\l_@@_show_pos_tmp_int|, which is incremented
+%   in each execution inside \myenv*[no-index]{keyans} and is zero in the other
+%   environments.
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_keyans_show_pos:
   {
@@ -11105,7 +11138,7 @@ all the worksheets are as follows:
 % of them have to be redefined; in addition, a couple of \emph{global}
 % variables are needed to pass the values from one command to the other.
 %
-% When \emph{labeling} \texttt{PDF} is active |\makelabel| is redefined
+% When \emph{tagged} \texttt{PDF} is active |\makelabel| is redefined
 % as |\hss #1| and the only way to get the \mykey{align} key to work
 % correctly is to redefine |\makelabel| using |\makebox|. The best way to
 % implement this is to use the conditional command \myhlc|\IfDocumentMetadataTF|
@@ -11159,7 +11192,7 @@ all the worksheets are as follows:
 %    The |\item*|, |\item*|\myoarg{symbol} and |\item*|\myoarg{symbol}\myoarg{offset}
 %    work like the \emph{numbered} |\item|, but placing a \mymeta{symbol}
 %    to the \emph{\enquote{left}} of the \mymeta{label} separated from
-%    it by the value the second \emph{optional argument} \mymeta{offset}.
+%    it by the value of the second \emph{optional argument} \mymeta{offset}.
 %
 % \begin{arguments}
 %   \item \myhlc|\l_@@_item_symbol_X_tl|
@@ -11369,8 +11402,8 @@ all the worksheets are as follows:
 % \subsubsection{Definition of error messages}
 %
 % \begin{macro}[int]{starred-unknown-key, starred-unknown-key-value}
-% Message used by unknown \mymeta{keys} in \myenv*[no-index]{enumext*}.
-% environment.
+% Message used by unknown \mymeta{keys} in \myenv*[no-index]{enumext*}
+%   environment.
 %    \begin{macrocode}
 \msg_new:nnnn { enumext } { starred-unknown-key }
   {
@@ -11529,7 +11562,7 @@ all the worksheets are as follows:
 % \subsubsection{Handling unknown keys for \env{enumext}}\label{key:unknown-keys-standard}
 %
 % \begin{macro}[int]{unknown, \@@_standard_unknown_keys:n, \@@_standard_unknown_keys:nn}
-%   Defines and set the key |unknown| for \myenv*[no-index]{enumext} environment.
+%   Defines and sets the key |unknown| for \myenv*[no-index]{enumext} environment.
 %    \begin{macrocode}
 \cs_set_protected:Nn \@@_tmp:n
   {
@@ -11611,7 +11644,7 @@ all the worksheets are as follows:
 %   Now \emph{store} the current \mymeta{label} first in the \emph{prop list}
 %   (including the \emph{optional argument}), run the internal \emph{\enquote{label and ref}}
 %   system if the \mykey[env]{save-ref} key is active, then \emph{store} in the \emph{sequence}
-%   and finally increments \myhlc|\g_@@_check_starred_cmd_int| for internal
+%   and finally it increments \myhlc|\g_@@_check_starred_cmd_int| for internal
 %   check system.
 %    \begin{macrocode}
     \@@_keyans_addto_prop:n {#1}
@@ -12533,7 +12566,7 @@ all the worksheets are as follows:
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_keyans_safe_exec:
   {
-    \bool_if:NF \l_@@_store_active_bool
+    \bool_lazy_or:nnF { \l_@@_store_active_bool } { \@@_in_keyans_p: }
       {
         \msg_error:nnnn { enumext } { wrong-place }{ keyans }{ save-ans }
       }
@@ -13536,7 +13569,7 @@ all the worksheets are as follows:
 %    \begin{macrocode}
 \NewDocumentCommand \anspic { s o +m }
   {
-    \bool_if:NF \l_@@_store_active_bool
+    \bool_lazy_or:nnF { \l_@@_store_active_bool } { \@@_in_keyans_p: }
       {
         \msg_error:nnnn { enumext } { wrong-place }{ keyanspic }{ save-ans }
       }
@@ -14840,7 +14873,7 @@ all the worksheets are as follows:
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_safe_exec_viii:
   {
-    \bool_if:NF \l_@@_store_active_bool
+    \bool_lazy_or:nnF { \l_@@_store_active_bool } { \@@_in_keyans_p: }
       {
         \msg_error:nnnn { enumext } { wrong-place }{ keyans* }{ save-ans }
       }
@@ -15703,18 +15736,6 @@ all the worksheets are as follows:
 %
 % \subsubsection{Definition of variables for \cs[no-index]{setenumext}}
 %
-% \begin{variable}[int]{\c_@@_all_families_seq}
-%    They are stored in the constant sequence \myhlc|\c_@@_all_families_seq|
-%    separated by commas.
-%    \begin{macrocode}
-\seq_const_from_clist:Nn \c_@@_all_families_seq
-  {
-    enumext-1, enumext-2, enumext-3, enumext-4, keyans, enumext*,
-    keyans*, print-1, print-2, print-3, print-4, print-*, print*,
-  }
-%    \end{macrocode}
-% \end{variable}
-%
 % \begin{variable}[int]{
 %   \l_@@_setkey_tmpa_tl,
 %   \l_@@_setkey_tmpb_tl,
@@ -15910,9 +15931,7 @@ all the worksheets are as follows:
       {
         \seq_put_right:Ne \l_@@_setkey_tmpa_seq { \tl_trim_spaces:n {#1} }
       }
-    \seq_if_empty:NTF \l_@@_setkey_tmpa_seq
-      { \seq_map_inline:Nn \c_@@_all_families_seq }
-      { \seq_map_inline:Nn \l_@@_setkey_tmpa_seq }
+    \seq_map_inline:Nn \l_@@_setkey_tmpa_seq
       {
         \keys_set:nn { enumext / meta-families } { ##1 = {#2} }
       }

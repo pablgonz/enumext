@@ -297,5 +297,46 @@
     \end{enumext}
   }
 
+\TYPE{=== E. keyans* con listas anidadas ===}
+
+\BOXTEST{[22] keyans* con listas estandar dentro de las opciones}
+  {
+    \begin{enumext}[save-ans=kav]
+      \item Pregunta.
+        \begin{keyans*}[columns=3]
+          \item Primera
+            \begin{itemize}
+              \item x
+              \item y
+            \end{itemize}
+          \item* Segunda (correcta)
+            \begin{enumerate}
+              \item p
+              \item q
+            \end{enumerate}
+          \item Tercera
+            \begin{center}
+              centrado
+            \end{center}
+        \end{keyans*}
+    \end{enumext}
+    \printkeyans*{kav}
+  }
+
+\BOXTEST{[23] keyans* con item-break y una lista estandar dentro}
+  {
+    \begin{enumext}[save-ans=kaw]
+      \item Pregunta.
+        \begin{keyans*}[item-break=true]
+          \item Primera
+            \begin{itemize}
+              \item x
+              \item y
+            \end{itemize}
+          \item* Segunda (correcta)
+        \end{keyans*}
+    \end{enumext}
+  }
+
 \OMIT
 \end{document}
