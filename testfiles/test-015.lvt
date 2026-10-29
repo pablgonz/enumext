@@ -1,0 +1,136 @@
+% test-015.lvt -- listas estandar dentro de enumext* (sin etiquetado)
+%
+% Hecho con cariño por Pablo González L. <pablgonz@educarchile.cl>
+% para que enumext siga funcionando igual de bien después de cada cambio.
+%
+% Regresion:  l3build save test-015
+%             l3build check test-015
+%
+% Test de regresion del \item dentro de listas estandar anidadas en el contenido
+% de un item de enumext*: itemize, enumerate y description (tambien a dos
+% niveles), con una o varias columnas, items unidos, \item[...] y la llave
+% item-break. Cada caso compone el codigo en una caja que se muestra en el log
+% (\BOXTEST); el caso de referencia con minipage sirve para comparar el espacio
+% vertical de la lista anidada.
+\input{regression-test}
+
+\documentclass{article}
+\ExplSyntaxOn
+\debug_on:n { all }
+\ExplSyntaxOff
+\usepackage{enumext}
+\begin{document}
+
+\newcommand\BOXTEST[2]
+  {%
+    \TEST{#1}
+      {%
+        \setbox0=\vbox{\hsize=250pt \linewidth=\hsize \columnwidth=\hsize \parindent=0pt #2}%
+        \showbox0
+      }%
+  }
+
+
+
+\START
+
+\TYPE{=== A. Referencia con minipage ===}
+
+\BOXTEST{[1] minipage: itemize con texto antes y despues}
+  {
+    \begin{minipage}[t]{200pt}
+      \parskip=\parsep
+      AAA
+      \begin{itemize}\item bbb \item ccc\end{itemize}
+      DDD
+    \end{minipage}
+  }
+
+\TYPE{=== B. enumext*, una columna ===}
+
+\BOXTEST{[2] enumext*: itemize con texto antes y despues}
+  {
+    \begin{enumext*}[columns=1]
+      \item AAA \begin{itemize}\item bbb \item ccc\end{itemize} DDD
+      \item EEE
+    \end{enumext*}
+  }
+
+\BOXTEST{[3] enumext*: enumerate}
+  {
+    \begin{enumext*}[columns=1]
+      \item AAA \begin{enumerate}\item bbb \item ccc\end{enumerate} DDD
+      \item EEE
+    \end{enumext*}
+  }
+
+\BOXTEST{[4] enumext*: description}
+  {
+    \begin{enumext*}[columns=1]
+      \item AAA \begin{description}\item[x] bbb \item[y] ccc\end{description} DDD
+      \item EEE
+    \end{enumext*}
+  }
+
+\BOXTEST{[5] enumext*: lista a dos niveles}
+  {
+    \begin{enumext*}[columns=1]
+      \item AAA
+        \begin{itemize}
+          \item bbb \begin{enumerate}\item ccc \item ddd\end{enumerate}
+          \item eee
+        \end{itemize}
+      \item FFF
+    \end{enumext*}
+  }
+
+\BOXTEST{[6] enumext*: lista al final del item}
+  {
+    \begin{enumext*}[columns=1]
+      \item AAA \begin{itemize}\item bbb\end{itemize}
+      \item CCC
+    \end{enumext*}
+  }
+
+\TYPE{=== C. enumext*, varias columnas ===}
+
+\BOXTEST{[7] enumext*: columns=2 con listas en distintos items}
+  {
+    \begin{enumext*}[columns=2]
+      \item AAA \begin{itemize}\item bbb \item ccc\end{itemize}
+      \item DDD
+      \item EEE \begin{enumerate}\item fff \item ggg\end{enumerate}
+      \item HHH
+    \end{enumext*}
+  }
+
+\BOXTEST{[8] enumext*: item unido \item(2) y \item[X] con lista}
+  {
+    \begin{enumext*}[columns=3]
+      \item AAA
+      \item(2) BBB \begin{itemize}\item ccc \item ddd\end{itemize}
+      \item[X] EEE \begin{itemize}\item fff\end{itemize}
+    \end{enumext*}
+  }
+
+\TYPE{=== D. enumext*, item-break ===}
+
+\BOXTEST{[9] enumext*: item-break=true con lista}
+  {
+    \begin{enumext*}[columns=1,item-break=true]
+      \item AAA \begin{itemize}\item bbb \item ccc\end{itemize} DDD
+      \item EEE \begin{enumerate}\item fff \item ggg\end{enumerate}
+    \end{enumext*}
+  }
+
+\BOXTEST{[10] enumext*: item-break=true, \item(2) en una fila de 2 columnas}
+  {
+    \begin{enumext*}[columns=2,item-break=true]
+      \item(2) AAA \begin{itemize}\item bbb \item ccc\end{itemize} DDD
+      \item EEE
+      \item FFF
+    \end{enumext*}
+  }
+
+\OMIT
+\end{document}

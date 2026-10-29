@@ -1,0 +1,109 @@
+% arara: lualatex: { branch: developer, draft: true }
+% arara: lualatex: { branch: developer, draft: true }
+% arara: lualatex: { branch: developer }
+% arara: clean: { extensions: [ aux, log, out] }
+% arara: move: { files: [ enumext-11-luamml-mathml.html ], target: 'enumext-11-mathml.html' }
+\DocumentMetadata
+  {
+    lang=en-US,
+    pdfversion=2.0,
+    pdfstandard=ua-2,
+    tagging=on,
+  }
+\documentclass{article}
+\usepackage[top=2cm,bottom=2cm,left=1cm,right=1cm]{geometry}
+\usepackage{unicode-math,hyperref,enumext}
+\hypersetup
+  {
+    colorlinks = true,
+    pdftitle   = {Test tagged PDF for enumext package},
+  }
+\newtheorem{thm}{Theorem}
+\begin{document}
+\section{Lists based on \texttt{list} inside \texttt{enumext*}}
+
+\begin{enumext*}[columns=1,label=\arabic*.]
+  \item Before \begin{quote}A quote.\end{quote} after.
+  \item Before \begin{quotation}A quotation.\end{quotation} after.
+  \item Before \begin{verse}Line one \\ Line two\end{verse} after.
+  \item Before \begin{list}{--}{\leftmargin=2em}\item One \item Two\end{list} after.
+\end{enumext*}
+
+\section{Environments based on \texttt{trivlist} inside \texttt{enumext*}}
+
+\begin{enumext*}[columns=1,label=\arabic*.]
+  \item Before \begin{center}Centered text\end{center} after.
+  \item Before \begin{flushleft}Left text\end{flushleft} after.
+  \item Before \begin{flushright}Right text\end{flushright} after.
+  \item Before \begin{trivlist}\item[X] One \item[Y] Two\end{trivlist} after.
+  \item Before \begin{thm}A theorem.\end{thm} after.
+  \item Before \begin{tabbing}aa\=bb\\cc\>dd\end{tabbing} after.
+  \item Before
+\begin{verbatim}
+verbatim text
+\end{verbatim}
+  after.
+\end{enumext*}
+
+Mixing a standard list and an environment based on \texttt{trivlist}, two
+columns and a joined item.
+
+\begin{enumext*}[columns=2,label=\alph*)]
+  \item A \begin{center}Centered\end{center}
+  \item B \begin{itemize}\item x \item y\end{itemize}
+  \item(2) C \begin{center}Centered\end{center}
+    \begin{itemize}\item x\end{itemize}
+    \begin{flushright}Right\end{flushright}
+  \item D
+\end{enumext*}
+
+\section{With \texttt{item-break=true}}
+
+The environment is followed by text.
+
+\begin{enumext*}[columns=1,item-break=true]
+  \item Before \begin{center}Centered text\end{center} after.
+\end{enumext*}
+
+The environment is the last thing of an item that is not the last one.
+
+\begin{enumext*}[columns=1,item-break=true]
+  \item Before \begin{center}Centered text\end{center}
+  \item Other
+\end{enumext*}
+
+The environment is the last thing of the last item.
+
+\begin{enumext*}[columns=1,item-break=true]
+  \item Before \begin{thm}A theorem.\end{thm}
+\end{enumext*}
+
+Several items.
+
+\begin{enumext*}[columns=2,item-break=true,label=\arabic*.]
+  \item One
+  \item Two
+  \item(2) Three \begin{trivlist}\item[X] x \item[Y] y\end{trivlist}
+  \item Four
+  \item Five \begin{quote}A quote.\end{quote} done.
+\end{enumext*}
+
+\section{Different \texttt{labelwidth} and \texttt{labelsep}}
+
+\begin{enumext*}[columns=1,label=\arabic*.,labelwidth=3em,labelsep=1.5em]
+  \item Before \begin{itemize}\item One \item Two\end{itemize}
+    \begin{description}\item[a] One \item[b] Two\end{description}
+    \begin{thm}A theorem.\end{thm}
+\end{enumext*}
+
+\section{Nested in \texttt{enumext}}
+
+\begin{enumext}
+  \item Question
+    \begin{enumext*}[columns=2]
+      \item One \begin{center}Centered\end{center}
+      \item Two \begin{quote}A quote.\end{quote}
+    \end{enumext*}
+  \item Another question
+\end{enumext}
+\end{document}

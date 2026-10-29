@@ -354,6 +354,126 @@ Text after the environment.
   \item Four
 \end{enumext*}
 
+\section*{G. Standard lists inside \texttt{enumext*}}
+
+% Estructura: itemize, enumerate y description dentro del contenido del item.
+27. Standard lists in the item content.
+
+\begin{enumext*}[columns=1,label=\arabic*.]
+  \item Before \begin{itemize}\item One \item Two\end{itemize} after.
+  \item Before \begin{enumerate}\item One \item Two\end{enumerate} after.
+  \item Before \begin{description}\item[a] One \item[b] Two\end{description}
+\end{enumext*}
+
+% Estructura: lista dentro de lista a dos niveles.
+28. Two levels of nesting.
+
+\begin{enumext*}[columns=1,label=\arabic*.]
+  \item Text
+    \begin{itemize}
+      \item Level 1 \begin{enumerate}\item Level 2 \item Level 2\end{enumerate}
+      \item Level 1
+    \end{itemize}
+  \item Next
+\end{enumext*}
+
+% Estructura: listas en columnas, items unidos y con etiqueta propia.
+29. Standard lists with columns and joined items.
+
+\begin{enumext*}[columns=3,label=\alph*)]
+  \item A \begin{itemize}\item x \item y\end{itemize}
+  \item(2) B \begin{enumerate}\item x \item y\end{enumerate}
+  \item[X] C \begin{itemize}\item x\end{itemize}
+  \item D
+\end{enumext*}
+
+% Estructura: item-break, la lista va seguida de texto.
+30. Full row item with a list followed by text.
+
+\begin{enumext*}[columns=1,item-break=true]
+  \item Before \begin{itemize}\item One \item Two\end{itemize} after.
+\end{enumext*}
+
+% Estructura: item-break, la lista es lo ultimo de un item que no es el ultimo.
+31. Full row item ending with a list, not the last one.
+
+\begin{enumext*}[columns=1,item-break=true]
+  \item Before \begin{itemize}\item One \item Two\end{itemize}
+  \item Other
+\end{enumext*}
+
+% Estructura: item-break, la lista es lo ultimo del ultimo item.
+32. Full row item ending with a list, the last one.
+
+\begin{enumext*}[columns=1,item-break=true]
+  \item Before \begin{enumerate}\item One \item Two\end{enumerate}
+\end{enumext*}
+
+\section*{H. Environments based on \texttt{list} and \texttt{trivlist} inside \texttt{enumext*}}
+
+% Estructura: quote, quotation, verse y list dentro del contenido del item.
+33. Quote, quotation, verse and list in the item content.
+
+\begin{enumext*}[columns=1,label=\arabic*.]
+  \item Before \begin{quote}A quote.\end{quote} after.
+  \item Before \begin{quotation}A quotation.\end{quotation} after.
+  \item Before \begin{verse}Line one \\ Line two\end{verse} after.
+  \item Before \begin{list}{--}{\leftmargin=2em}\item One \item Two\end{list} after.
+\end{enumext*}
+
+% Estructura: center, flushleft y flushright no crean estructura propia.
+34. Center, flushleft and flushright in the item content.
+
+\begin{enumext*}[columns=1,label=\arabic*.]
+  \item Before \begin{center}Centered text\end{center} after.
+  \item Before \begin{flushleft}Left text\end{flushleft} after.
+  \item Before \begin{flushright}Right text\end{flushright} after.
+\end{enumext*}
+
+% Estructura: trivlist con varios items, teorema y verbatim.
+35. Trivlist, theorem and verbatim in the item content.
+
+\newtheorem{thm}{Theorem}
+
+\begin{enumext*}[columns=1,label=\arabic*.]
+  \item Before \begin{trivlist}\item[X] One \item[Y] Two\end{trivlist} after.
+  \item Before \begin{thm}A theorem.\end{thm} after.
+  \item Before
+\begin{verbatim}
+verbatim text
+\end{verbatim}
+  after.
+\end{enumext*}
+
+% Estructura: lista estandar y center en el mismo item, columnas e item unido.
+36. Standard list and center in the same item, with columns.
+
+\begin{enumext*}[columns=2,label=\alph*)]
+  \item A \begin{center}Centered\end{center}
+  \item B \begin{itemize}\item x \item y\end{itemize}
+  \item(2) C \begin{center}Centered\end{center}
+    \begin{itemize}\item x\end{itemize}
+    \begin{flushright}Right\end{flushright}
+  \item D
+\end{enumext*}
+
+% Estructura: item-break, center y trivlist al final de un item y del ultimo.
+37. Full row item with center and trivlist.
+
+\begin{enumext*}[columns=1,item-break=true]
+  \item Before \begin{center}Centered text\end{center}
+  \item Before \begin{trivlist}\item[X] One \item[Y] Two\end{trivlist}
+\end{enumext*}
+
+% Estructura: labelwidth y labelsep distintos, las listas conservan los suyos.
+38. Different labelwidth and labelsep.
+
+\begin{enumext*}[columns=1,label=\arabic*.,labelwidth=3em,labelsep=1.5em]
+  \item Before \begin{itemize}\item One \item Two\end{itemize}
+    \begin{description}\item[a] One \item[b] Two\end{description}
+    \begin{thm}A theorem.\end{thm}
+\end{enumext*}
+
 \START
 
 \SHOWPDFTAGS

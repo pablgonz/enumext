@@ -1,0 +1,249 @@
+% test-014.lvt -- espacios verticales de keyanspic de enumext (sin etiquetado)
+%
+% Hecho con cariño por Pablo González L. <pablgonz@educarchile.cl>
+% para que enumext siga funcionando igual de bien después de cada cambio.
+%
+% Regresion:  l3build save test-014
+%             l3build check test-014
+%
+% Test de regresion del espacio vertical del entorno keyanspic: arriba y abajo
+% del entorno (llave layout-top), entre filas (layout-sep) y entre la imagen y
+% la etiqueta (label-sep), con la etiqueta debajo y encima de las imagenes.
+% Las imagenes son reglas de alto conocido y cada caso compone el codigo en una
+% caja que se muestra en el log (\BOXTEST). El caso de referencia con keyans
+% sirve para comparar el espacio arriba y abajo.
+\input{regression-test}
+
+\documentclass{article}
+\ExplSyntaxOn
+\debug_on:n { all }
+\ExplSyntaxOff
+\usepackage{enumext}
+\begin{document}
+
+\newcommand\BOXTEST[2]
+  {%
+    \TEST{#1}
+      {%
+        \setbox0=\vbox{\hsize=250pt \linewidth=\hsize \columnwidth=\hsize \parindent=0pt #2}%
+        \showbox0
+      }%
+  }
+
+\newcommand\PIC[1]{\rule{30pt}{#1pt}}
+
+\START
+
+\TYPE{=== A. Referencia con keyans ===}
+
+\BOXTEST{[1] keyans: espacio arriba y abajo}
+  {
+    \begin{enumext}[save-ans=test, nosep]
+      \item Pregunta
+        \begin{keyans}
+          \item Uno
+          \item Dos
+        \end{keyans}
+      \item Siguiente
+    \end{enumext}
+  }
+
+\TYPE{=== B. Etiqueta debajo y encima, una fila ===}
+
+\BOXTEST{[2] label-pos=below, una fila}
+  {
+    \begin{enumext}[save-ans=test, nosep]
+      \item Pregunta
+        \begin{keyanspic}
+          \anspic{\PIC{30}} \anspic{\PIC{30}} \anspic{\PIC{30}}
+        \end{keyanspic}
+      \item Siguiente
+    \end{enumext}
+  }
+
+\BOXTEST{[3] label-pos=above, una fila}
+  {
+    \begin{enumext}[save-ans=test, nosep]
+      \item Pregunta
+        \begin{keyanspic}[label-pos=above]
+          \anspic{\PIC{30}} \anspic{\PIC{30}} \anspic{\PIC{30}}
+        \end{keyanspic}
+      \item Siguiente
+    \end{enumext}
+  }
+
+\TYPE{=== C. Varias filas ===}
+
+\BOXTEST{[4] label-pos=below, layout-sty={2,2}}
+  {
+    \begin{enumext}[save-ans=test, nosep]
+      \item Pregunta
+        \begin{keyanspic}[layout-sty={2,2}]
+          \anspic{\PIC{30}} \anspic{\PIC{30}} \anspic{\PIC{30}} \anspic{\PIC{30}}
+        \end{keyanspic}
+      \item Siguiente
+    \end{enumext}
+  }
+
+\BOXTEST{[5] label-pos=above, layout-sty={2,2}}
+  {
+    \begin{enumext}[save-ans=test, nosep]
+      \item Pregunta
+        \begin{keyanspic}[label-pos=above, layout-sty={2,2}]
+          \anspic{\PIC{30}} \anspic{\PIC{30}} \anspic{\PIC{30}} \anspic{\PIC{30}}
+        \end{keyanspic}
+      \item Siguiente
+    \end{enumext}
+  }
+
+\TYPE{=== D. Llaves de espacio: layout-top ===}
+
+\BOXTEST{[6] layout-top=0pt, label-pos=below}
+  {
+    \begin{enumext}[save-ans=test, nosep]
+      \item Pregunta
+        \begin{keyanspic}[layout-top=0pt]
+          \anspic{\PIC{30}} \anspic{\PIC{30}}
+        \end{keyanspic}
+      \item Siguiente
+    \end{enumext}
+  }
+
+\BOXTEST{[7] layout-top=10pt, label-pos=below}
+  {
+    \begin{enumext}[save-ans=test, nosep]
+      \item Pregunta
+        \begin{keyanspic}[layout-top=10pt]
+          \anspic{\PIC{30}} \anspic{\PIC{30}}
+        \end{keyanspic}
+      \item Siguiente
+    \end{enumext}
+  }
+
+\BOXTEST{[8] layout-top=0pt, label-pos=above}
+  {
+    \begin{enumext}[save-ans=test, nosep]
+      \item Pregunta
+        \begin{keyanspic}[label-pos=above, layout-top=0pt]
+          \anspic{\PIC{30}} \anspic{\PIC{30}}
+        \end{keyanspic}
+      \item Siguiente
+    \end{enumext}
+  }
+
+\BOXTEST{[9] layout-top=10pt, label-pos=above}
+  {
+    \begin{enumext}[save-ans=test, nosep]
+      \item Pregunta
+        \begin{keyanspic}[label-pos=above, layout-top=10pt]
+          \anspic{\PIC{30}} \anspic{\PIC{30}}
+        \end{keyanspic}
+      \item Siguiente
+    \end{enumext}
+  }
+
+\TYPE{=== E. Llaves de espacio: layout-sep y label-sep ===}
+
+\BOXTEST{[10] layout-sep=0pt, layout-sty={1,1}, label-pos=below}
+  {
+    \begin{enumext}[save-ans=test, nosep]
+      \item Pregunta
+        \begin{keyanspic}[layout-sty={1,1}, layout-sep=0pt]
+          \anspic{\PIC{30}} \anspic{\PIC{30}}
+        \end{keyanspic}
+      \item Siguiente
+    \end{enumext}
+  }
+
+\BOXTEST{[11] layout-sep=10pt, layout-sty={1,1}, label-pos=below}
+  {
+    \begin{enumext}[save-ans=test, nosep]
+      \item Pregunta
+        \begin{keyanspic}[layout-sty={1,1}, layout-sep=10pt]
+          \anspic{\PIC{30}} \anspic{\PIC{30}}
+        \end{keyanspic}
+      \item Siguiente
+    \end{enumext}
+  }
+
+\BOXTEST{[12] layout-sep=10pt, layout-sty={1,1}, label-pos=above}
+  {
+    \begin{enumext}[save-ans=test, nosep]
+      \item Pregunta
+        \begin{keyanspic}[label-pos=above, layout-sty={1,1}, layout-sep=10pt]
+          \anspic{\PIC{30}} \anspic{\PIC{30}}
+        \end{keyanspic}
+      \item Siguiente
+    \end{enumext}
+  }
+
+\BOXTEST{[13] label-sep=5pt, label-pos=below}
+  {
+    \begin{enumext}[save-ans=test, nosep]
+      \item Pregunta
+        \begin{keyanspic}[label-sep=5pt]
+          \anspic{\PIC{30}} \anspic{\PIC{30}}
+        \end{keyanspic}
+      \item Siguiente
+    \end{enumext}
+  }
+
+\BOXTEST{[14] label-sep=5pt, label-pos=above}
+  {
+    \begin{enumext}[save-ans=test, nosep]
+      \item Pregunta
+        \begin{keyanspic}[label-pos=above, label-sep=5pt]
+          \anspic{\PIC{30}} \anspic{\PIC{30}}
+        \end{keyanspic}
+      \item Siguiente
+    \end{enumext}
+  }
+
+\TYPE{=== F. Imagenes de distinta altura y espacios del entorno ===}
+
+\BOXTEST{[15] alturas distintas en la misma fila, label-pos=below}
+  {
+    \begin{enumext}[save-ans=test, nosep]
+      \item Pregunta
+        \begin{keyanspic}
+          \anspic{\PIC{20}} \anspic{\PIC{40}} \anspic{\PIC{60}}
+        \end{keyanspic}
+      \item Siguiente
+    \end{enumext}
+  }
+
+\BOXTEST{[16] alturas distintas en la misma fila, label-pos=above}
+  {
+    \begin{enumext}[save-ans=test, nosep]
+      \item Pregunta
+        \begin{keyanspic}[label-pos=above]
+          \anspic{\PIC{20}} \anspic{\PIC{40}} \anspic{\PIC{60}}
+        \end{keyanspic}
+      \item Siguiente
+    \end{enumext}
+  }
+
+\BOXTEST{[17] enumext con los espacios por defecto, label-pos=below}
+  {
+    \begin{enumext}[save-ans=test]
+      \item Pregunta
+        \begin{keyanspic}
+          \anspic{\PIC{30}} \anspic{\PIC{30}}
+        \end{keyanspic}
+      \item Siguiente
+    \end{enumext}
+  }
+
+\BOXTEST{[18] enumext con los espacios por defecto, label-pos=above}
+  {
+    \begin{enumext}[save-ans=test]
+      \item Pregunta
+        \begin{keyanspic}[label-pos=above]
+          \anspic{\PIC{30}} \anspic{\PIC{30}}
+        \end{keyanspic}
+      \item Siguiente
+    \end{enumext}
+  }
+
+\OMIT
+\end{document}

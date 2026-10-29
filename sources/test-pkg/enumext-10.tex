@@ -1,0 +1,106 @@
+% arara: lualatex: { branch: developer, draft: true }
+% arara: lualatex: { branch: developer, draft: true }
+% arara: lualatex: { branch: developer }
+% arara: clean: { extensions: [ aux, log, out] }
+% arara: move: { files: [ enumext-10-luamml-mathml.html ], target: 'enumext-10-mathml.html' }
+\DocumentMetadata
+  {
+    lang=en-US,
+    pdfversion=2.0,
+    pdfstandard=ua-2,
+    tagging=on,
+  }
+\documentclass{article}
+\usepackage[top=2cm,bottom=2cm,left=1cm,right=1cm]{geometry}
+\usepackage{unicode-math,hyperref,enumext}
+\hypersetup
+  {
+    colorlinks = true,
+    pdftitle   = {Test tagged PDF for enumext package},
+  }
+\begin{document}
+\section{Standard lists inside \texttt{enumext*}}
+
+Itemize, enumerate and description in the item content.
+
+\begin{enumext*}[columns=1,label=\arabic*.]
+  \item Before \begin{itemize}\item One \item Two\end{itemize} after.
+  \item Before \begin{enumerate}\item One \item Two\end{enumerate} after.
+  \item Before \begin{description}\item[a] One \item[b] Two\end{description}
+\end{enumext*}
+
+Two levels of nesting.
+
+\begin{enumext*}[columns=1,label=\arabic*.]
+  \item Text
+    \begin{itemize}
+      \item Level 1 \begin{enumerate}\item Level 2 \item Level 2\end{enumerate}
+      \item Level 1
+    \end{itemize}
+  \item Next
+\end{enumext*}
+
+Columns, joined items and items with their own label.
+
+\begin{enumext*}[columns=3,label=\alph*)]
+  \item A \begin{itemize}\item x \item y\end{itemize}
+  \item(2) B \begin{enumerate}\item x \item y\end{enumerate}
+  \item[X] C \begin{itemize}\item x\end{itemize}
+  \item D
+\end{enumext*}
+
+\section{Standard lists with \texttt{item-break=true}}
+
+The list is followed by text.
+
+\begin{enumext*}[columns=1,item-break=true]
+  \item Before \begin{itemize}\item One \item Two\end{itemize} after.
+\end{enumext*}
+
+The list is the last thing of an item that is not the last one.
+
+\begin{enumext*}[columns=1,item-break=true]
+  \item Before \begin{itemize}\item One \item Two\end{itemize}
+  \item Other
+\end{enumext*}
+
+The list is the last thing of the last item.
+
+\begin{enumext*}[columns=1,item-break=true]
+  \item Before \begin{enumerate}\item One \item Two\end{enumerate}
+\end{enumext*}
+
+The list is the last thing of the item and there is an empty line.
+
+\begin{enumext*}[columns=1,item-break=true]
+  \item Before \begin{itemize}\item One \item Two\end{itemize}
+
+\end{enumext*}
+
+Several items, with and without the list at the end.
+
+\begin{enumext*}[columns=2,item-break=true,label=\arabic*.]
+  \item One
+  \item Two
+  \item(2) Three \begin{itemize}\item x \item y\end{itemize}
+  \item Four
+  \item(2) Five \begin{enumerate}\item x \item y\end{enumerate} done.
+\end{enumext*}
+
+\section{Nested in \texttt{enumext}}
+
+\begin{enumext}
+  \item Question
+    \begin{enumext*}[columns=2]
+      \item One \begin{itemize}\item x\end{itemize}
+      \item Two
+    \end{enumext*}
+  \item Another question
+\end{enumext}
+
+Without \texttt{item-break} (minipage), the list is the last thing of the item.
+
+\begin{enumext*}[columns=1]
+  \item Before \begin{itemize}\item One \item Two\end{itemize}
+\end{enumext*}
+\end{document}

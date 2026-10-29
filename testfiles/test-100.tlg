@@ -910,38 +910,4 @@ For immediate help type H <return>.
 l. ...          \item
                       A
 Starred environments are horizontal lists and can't be nested.
-! Extra }, or forgotten \endgroup.
-\__enumext_endminipage: ...color@endgroup \egroup 
-                                                  \expandafter \@iiiparbox \...
-l. ...          \item
-                      A
-I've deleted a group-closing symbol because it seems to be
-spurious, as in `$x}$'. But perhaps the } is legitimate and
-you forgot something else, as in `\hbox{$x}'. In such cases
-the way to recover is to insert both the forgotten and the
-deleted material, e.g., by typing `I$}'.
-! LaTeX Error: Something's wrong--perhaps a missing \item.
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-l. ...          \item
-                      A
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
 Package enumext Warning: Not enough space to join items (1) > 0 on line ....
-! LaTeX Error: Something's wrong--perhaps a missing \item.
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-l. ...        \end{enumext*}
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-! Missing } inserted.
-<inserted text> 
-                }
-l. ...    \end{enumext*}
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.

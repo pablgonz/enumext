@@ -1,0 +1,239 @@
+% test-016.lvt -- parametros y entornos de trivlist dentro de enumext* (sin etiquetado)
+%
+% Hecho con cariño por Pablo González L. <pablgonz@educarchile.cl>
+% para que enumext siga funcionando igual de bien después de cada cambio.
+%
+% Regresion:  l3build save test-016
+%             l3build check test-016
+%
+% Test de regresion de las listas y entornos que se anidan en el contenido de
+% un item de enumext*. Seccion A: \labelwidth y \labelsep dentro de la lista
+% anidada deben ser los del documento y no los del entorno (se muestran con
+% \showthe) y una lista que fija los suyos los conserva. Seccion B: posicion de
+% la vineta y de la etiqueta con valores grandes de labelwidth y labelsep.
+% Seccion C: quote, quotation, verse y list. Seccion D: entornos basados en
+% \trivlist (center, flushleft, flushright, trivlist, tabbing y teoremas), con
+% una o varias columnas y con la llave item-break. verbatim no puede ir en el
+% argumento de \BOXTEST y no se prueba aqui. Cada caso compone el codigo en una
+% caja que se muestra en el log (\BOXTEST).
+\input{regression-test}
+
+\documentclass{article}
+\ExplSyntaxOn
+\debug_on:n { all }
+\ExplSyntaxOff
+\usepackage{enumext}
+\newtheorem{thm}{Theorem}
+\begin{document}
+
+\newcommand\BOXTEST[2]
+  {%
+    \TEST{#1}
+      {%
+        \setbox0=\vbox{\hsize=250pt \linewidth=\hsize \columnwidth=\hsize \parindent=0pt #2}%
+        \showbox0
+      }%
+  }
+
+\makeatletter
+\newcommand\SHOWLAB
+  {%
+    \typeout{labelwidth=\the\labelwidth, labelsep=\the\labelsep}%
+  }
+\makeatother
+
+\START
+
+\TYPE{=== A. labelwidth y labelsep dentro de la lista anidada ===}
+
+\TEST{[1] referencia con minipage}
+  {
+    \begin{minipage}{200pt}
+      \begin{itemize}\item\SHOWLAB\end{itemize}
+    \end{minipage}
+  }
+
+\TEST{[2] enumext*: itemize conserva los valores del documento}
+  {
+    \begin{enumext*}[columns=1,labelwidth=30pt,labelsep=10pt]
+      \item \begin{itemize}\item\SHOWLAB\end{itemize}
+    \end{enumext*}
+  }
+
+\TEST{[3] enumext*: description conserva los valores del documento}
+  {
+    \begin{enumext*}[columns=1,labelwidth=30pt,labelsep=10pt]
+      \item \begin{description}\item[x]\SHOWLAB\end{description}
+    \end{enumext*}
+  }
+
+\TEST{[4] enumext*: list con labelwidth y labelsep propios}
+  {
+    \begin{enumext*}[columns=1,labelwidth=30pt,labelsep=10pt]
+      \item \begin{list}{-}{\labelwidth=7pt \labelsep=3pt}\item\SHOWLAB\end{list}
+    \end{enumext*}
+  }
+
+\TEST{[5] enumext*: item-break=true}
+  {
+    \begin{enumext*}[columns=1,labelwidth=30pt,labelsep=10pt,item-break=true]
+      \item \begin{itemize}\item\SHOWLAB\end{itemize}
+    \end{enumext*}
+  }
+
+\TEST{[6] enumext*: segundo item de dos columnas}
+  {
+    \begin{enumext*}[columns=2,labelwidth=30pt,labelsep=10pt]
+      \item AAA
+      \item \begin{itemize}\item\SHOWLAB\end{itemize}
+    \end{enumext*}
+  }
+
+\TYPE{=== B. posicion de la vineta y de la etiqueta ===}
+
+\BOXTEST{[7] referencia con minipage: itemize y description}
+  {
+    \begin{minipage}[t]{200pt}
+      \parskip=\parsep
+      AAA
+      \begin{itemize}\item bbb\end{itemize}
+      \begin{description}\item[x] ccc\end{description}
+    \end{minipage}
+  }
+
+\BOXTEST{[8] enumext*: itemize y description, labelwidth=30pt y labelsep=10pt}
+  {
+    \begin{enumext*}[columns=1,labelwidth=30pt,labelsep=10pt]
+      \item AAA
+        \begin{itemize}\item bbb\end{itemize}
+        \begin{description}\item[x] ccc\end{description}
+    \end{enumext*}
+  }
+
+\BOXTEST{[9] enumext*: itemize y description con item-break=true}
+  {
+    \begin{enumext*}[columns=1,labelwidth=30pt,labelsep=10pt,item-break=true]
+      \item AAA
+        \begin{itemize}\item bbb\end{itemize}
+        \begin{description}\item[x] ccc\end{description}
+    \end{enumext*}
+  }
+
+\TYPE{=== C. quote, quotation, verse y list ===}
+
+\BOXTEST{[10] enumext*: quote}
+  {
+    \begin{enumext*}[columns=1]
+      \item AAA \begin{quote}bbb\end{quote} CCC
+      \item DDD
+    \end{enumext*}
+  }
+
+\BOXTEST{[11] enumext*: quotation}
+  {
+    \begin{enumext*}[columns=1]
+      \item AAA \begin{quotation}bbb\end{quotation} CCC
+      \item DDD
+    \end{enumext*}
+  }
+
+\BOXTEST{[12] enumext*: verse}
+  {
+    \begin{enumext*}[columns=1]
+      \item AAA \begin{verse}bbb \\ ccc\end{verse} DDD
+      \item EEE
+    \end{enumext*}
+  }
+
+\BOXTEST{[13] enumext*: list con dos items}
+  {
+    \begin{enumext*}[columns=1]
+      \item AAA \begin{list}{--}{\leftmargin=2em}\item bbb \item ccc\end{list} DDD
+      \item EEE
+    \end{enumext*}
+  }
+
+\TYPE{=== D. entornos basados en trivlist ===}
+
+\BOXTEST{[14] referencia con minipage: center, flushleft y flushright}
+  {
+    \begin{minipage}[t]{200pt}
+      \parskip=\parsep
+      AAA
+      \begin{center}BBB\end{center}
+      \begin{flushleft}CCC\end{flushleft}
+      \begin{flushright}DDD\end{flushright}
+      EEE
+    \end{minipage}
+  }
+
+\BOXTEST{[15] enumext*: center, flushleft y flushright}
+  {
+    \begin{enumext*}[columns=1]
+      \item AAA
+        \begin{center}BBB\end{center}
+        \begin{flushleft}CCC\end{flushleft}
+        \begin{flushright}DDD\end{flushright}
+        EEE
+      \item FFF
+    \end{enumext*}
+  }
+
+\BOXTEST{[16] enumext*: trivlist con un item y con varios items}
+  {
+    \begin{enumext*}[columns=1]
+      \item AAA
+        \begin{trivlist}\item[X] bbb\end{trivlist}
+        \begin{trivlist}\item[Y] ccc \item[Z] ddd\end{trivlist}
+      \item EEE
+    \end{enumext*}
+  }
+
+\BOXTEST{[17] enumext*: tabbing}
+  {
+    \begin{enumext*}[columns=1]
+      \item AAA
+        \begin{tabbing}aa\=bb\\cc\>dd\end{tabbing}
+      \item EEE
+    \end{enumext*}
+  }
+
+\BOXTEST{[18] enumext*: teorema}
+  {
+    \begin{enumext*}[columns=1]
+      \item AAA
+        \begin{thm}bbb\end{thm}
+      \item EEE
+    \end{enumext*}
+  }
+
+\BOXTEST{[19] enumext*: trivlist y lista estandar en el mismo item}
+  {
+    \begin{enumext*}[columns=1]
+      \item AAA
+        \begin{center}BBB\end{center}
+        \begin{itemize}\item ccc\end{itemize}
+        \begin{center}DDD\end{center}
+      \item EEE
+    \end{enumext*}
+  }
+
+\BOXTEST{[20] enumext*: center con columns=2 y label en el segundo item}
+  {
+    \begin{enumext*}[columns=2]
+      \item AAA \begin{center}BBB\end{center}
+      \item CCC \begin{flushright}DDD\end{flushright}
+    \end{enumext*}
+  }
+
+\BOXTEST{[21] enumext*: center y trivlist con item-break=true}
+  {
+    \begin{enumext*}[columns=1,item-break=true]
+      \item AAA \begin{center}BBB\end{center}
+        \begin{trivlist}\item[X] ccc \item[Y] ddd\end{trivlist}
+      \item EEE
+    \end{enumext*}
+  }
+
+\OMIT
+\end{document}
