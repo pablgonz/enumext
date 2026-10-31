@@ -726,13 +726,15 @@ local function release_target()
     run_l3build("ctan", " (" .. ctanzip .. ".zip)")
   end
 
-  -- 7. Perform CTAN upload dry run. With --debug l3build posts the form to
-  -- httpbin.org and always exits with status 1, so the check looks at the
-  -- echoed form (package and version) instead of the exit status.
+  -- 7. Perform CTAN upload dry run. With --debug l3build prints the fields of
+  -- the form and then posts it to httpbin.org, which can refuse the zip (body
+  -- too large) or be down; l3build exits with status 1 in any case. So the
+  -- check looks at the fields that l3build prints (package and version), not
+  -- at the answer of the server.
   os_message("Running dry-run upload check")
   local dryrun = os_capture("l3build upload -F ctan.ann --debug 2>&1", true)
-  local okpkg = string.find(dryrun, '"pkg": "' .. ctanpkg .. '"', 1, true)
-  local okver = string.find(dryrun, '"version": "' .. uploadconfig.version .. '"', 1, true)
+  local okpkg = string.find(dryrun, "ctan-upload | pkg: " .. ctanpkg .. "\n", 1, true)
+  local okver = string.find(dryrun, "ctan-upload | version: " .. uploadconfig.version .. "\n", 1, true)
   if not (okpkg and okver) then
     error("** Error!!: dry-run upload check failed; nothing was tagged or pushed")
   end
