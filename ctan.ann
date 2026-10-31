@@ -1,4 +1,6 @@
-Release v2.4:
-– Update requirement to LaTeX release 2026-11-01.
-– Cleanup warnings and details returned by `expltools`.
+Release v2.4
+– New key `item-break` for `enumext*` and `keyans*`.
+– Standard lists and environments can be used inside `enumext*` and `keyans*`.
+– Fixes in `\setenumext`, `\printkeyans`, `mini-env` and `base-fix`.
 – Update code for _tagged_ PDF.
+– Common layout for messages and new regression tests.

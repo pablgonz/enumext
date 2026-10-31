@@ -264,7 +264,9 @@ local mathtag_names =
 
 local keys_names =
   P'keys_define:' * S'Ncn' * P'n' +
-  P'keys_set:'    * S'Ncn' * P'n'
+  -- 2.º argumento entre llaves: n, o, e, x, f (keys_set:ne, :nx, :no, :nf…).
+  -- nV/nv no: ahí el 2.º argumento es una variable, no un grupo.
+  P'keys_set:'    * S'Ncn' * S'noexf'
 
 -- Resto de la familia \keys_...:n... (l3keys) cuyo PRIMER argumento es
 -- siempre {módulo} o {módulo/path}, pero cuyo SEGUNDO argumento cambia
@@ -418,6 +420,7 @@ code_rules = {
   {48, hook_name_convention},
   {37, P'\\' * pkgstruct_names},
   {49, P'\\' * support_names},
+  {53, P'\\' * (P'DeclareInstance' + P'EditInstance') * -(alpha + P'@')},
   {25, P'\\' * structure_names},
   {14, P'\\' * ltcmd_def_names},
   {33, P'\\' * ltcmd_use_names},
@@ -432,10 +435,15 @@ code_rules = {
   {5,  P'\\' * P'__' * name_chars ^ 1 * (P':' * sig_chars ^ 0) ^ -1},
   {34, P'\\' * legacy_names},
   {26, P'\\' * gen_variant_suffix},
+  -- `#1 (p.ej. \char`#1): backtick + parámetro; se separa en el handler.
+  {55, P'`' * P'#' ^ 1 * digit},
   {30, P'\\' * cs_w},
   {31, P'\\' * cs_end},
   {16, P'.' * (alpha + S'_') ^ 1 * P':' * (alpha + S'_') ^ 0},
   {28, P'``'},
+  -- `\^^L y `^^L: el carácter con notación ^^ cuenta como UN solo token
+  -- (^^X, o ^^ab con dos hex en minúscula); todo se colorea como backtick.
+  {17, P'`' * P'\\' ^ -1 * P'\x5e\x5e' * (S'0123456789abcdef' * S'0123456789abcdef' + P(1))},
   {17, P'`' * P'\\' * (P(1) - alpha)},
   {17, P'`' * P'\\' * alpha * -alpha},
   {17, P'`' * (P(1) - alpha - P'\\')},
@@ -914,12 +922,21 @@ local kv = {  -- claves (keys_*, .meta, single keyval)
   keys_meta_argnum = 0,  -- argumento actual (1 o 2)
   keys_meta_brace_count = 0,
   in_keys_module_arg = false,
+  -- Cuerpos alternativos de un mismo \keys_define:nn en líneas %<guarda>:
+  -- guard_reopen = el cuerpo se cerró dentro de una guarda; in_guard = estamos
+  -- coloreando el resto de una línea de guarda.
+  guard_reopen = false,
+  in_guard = false,
   keys_module_arg_depth = 0,
   keys_module_arg_done = false,
   keys_module_arg_argnum = 0,
   keys_module_arg_total_n = 0,
   in_single_keyval = false,
   single_keyval_depth = 0,
+  -- \DeclareInstance{tipo}{nombre}{plantilla}{claves}: las claves van en el
+  -- argumento n.º target (4; 3 para \EditInstance); arg cuenta los grupos.
+  single_keyval_arg = 0,
+  single_keyval_target = 1,
 }
 local ms = {  -- mensajes (msg_*)
   in_msgerror = false,
@@ -1010,8 +1027,10 @@ local tag_label_cmds = {
 -- Si justo después de un comando viene {nombre} y nombre es del módulo
 -- (provide o contiene el nombre del módulo), emite el grupo con el nombre
 -- en module_name y devuelve la nueva posición; si no, no consume nada.
-local function mylhmc_module_brace_arg(line, e, fid, rh, rt)
-  local ws, name, nxt = s_match(line, '^(%s*){([^{}]-)}()', e)
+-- (con br: argumento opcional [familia], p.ej. \ProcessKeyOptions[mod])
+local function mylhmc_module_brace_arg(line, e, fid, rh, rt, br)
+  local pat = br and '^(%s*)%[([^%[%]]-)%]()' or '^(%s*){([^{}]-)}()'
+  local ws, name, nxt = s_match(line, pat, e)
   if not name then return rh, rt, e end
   -- Espacios opcionales dentro de las llaves ({ nombre } es válido en expl3).
   local lead, inner, trail = s_match(name, '^(%s*)(.-)(%s*)$')
@@ -1024,7 +1043,7 @@ local function mylhmc_module_brace_arg(line, e, fid, rh, rt)
   if ws ~= '' then
     h, tl = mylhmc_str_to_nodes(ws, fid); rh, rt = mylhmc_append(rh, rt, h, tl)
   end
-  h, tl = mylhmc_colored_str('{', 'brace', fid); rh, rt = mylhmc_append(rh, rt, h, tl)
+  h, tl = mylhmc_colored_str(br and '[' or '{', br and 'bracket' or 'brace', fid); rh, rt = mylhmc_append(rh, rt, h, tl)
   if lead ~= '' then
     h, tl = mylhmc_str_to_nodes(lead, fid); rh, rt = mylhmc_append(rh, rt, h, tl)
   end
@@ -1035,9 +1054,14 @@ local function mylhmc_module_brace_arg(line, e, fid, rh, rt)
   if trail ~= '' then
     h, tl = mylhmc_str_to_nodes(trail, fid); rh, rt = mylhmc_append(rh, rt, h, tl)
   end
-  h, tl = mylhmc_colored_str('}', 'brace', fid); rh, rt = mylhmc_append(rh, rt, h, tl)
+  h, tl = mylhmc_colored_str(br and ']' or '}', br and 'bracket' or 'brace', fid); rh, rt = mylhmc_append(rh, rt, h, tl)
   return rh, rt, nxt
 end
+
+-- Comandos de l3keys2e cuyo argumento opcional [familia] suele ser el módulo.
+local key_family_cmds = {
+  ['\\ProcessKeyOptions'] = true, ['\\DeclareKeys'] = true, ['\\SetKeys'] = true,
+}
 
 -- Cuántos de los primeros argumentos {…} de cada comando de sockets son
 -- nombres (de socket o de plug) con forma de camino a/b/c.
@@ -1640,7 +1664,8 @@ local function mylhmc_colorize_plain_text(text, fid, rh, rt)
       -- nombre con espacios internos (expl3): color continuo, como en csnames
       h, tl = mylhmc_colored_str(text, cs.name_color, fid)
     end
-  elseif kv.in_single_keyval and kv.single_keyval_depth == 1 then
+  elseif kv.in_single_keyval and kv.single_keyval_depth == 1
+         and kv.single_keyval_arg == kv.single_keyval_target then
     rh, rt = mylhmc_colorize_trimmed_keyname(text, fid, rh, rt); h, tl = nil, nil
   elseif ft.font_bracket_active and ft.font_bracket_depth == 1 then
     rh, rt = mylhmc_colorize_trimmed_keyname(text, fid, rh, rt); h, tl = nil, nil
@@ -1729,6 +1754,9 @@ mylhmc_colorize_code = function(line, fid)
           end
         end
         if kv.in_single_keyval then
+          if kv.single_keyval_depth == 0 then
+            kv.single_keyval_arg = kv.single_keyval_arg + 1
+          end
           kv.single_keyval_depth = kv.single_keyval_depth + 1
         end
         if ft.font_brace_pending then
@@ -1797,6 +1825,7 @@ mylhmc_colorize_code = function(line, fid)
                 kv.in_keys_context = true
               else
                 kv.in_keys_context, kv.keys_body_opened = false, false
+                kv.guard_reopen = kv.in_guard
               end
             end
           end
@@ -1855,8 +1884,10 @@ mylhmc_colorize_code = function(line, fid)
         end
         if kv.in_single_keyval and kv.single_keyval_depth > 0 then
           kv.single_keyval_depth = kv.single_keyval_depth - 1
-          if kv.single_keyval_depth == 0 then
+          if kv.single_keyval_depth == 0
+             and kv.single_keyval_arg >= kv.single_keyval_target then
             kv.in_single_keyval = false
+            kv.single_keyval_arg, kv.single_keyval_target = 0, 1
           end
         end
         if ft.font_brace_pending and ft.font_brace_depth > 0 then
@@ -1897,6 +1928,11 @@ mylhmc_colorize_code = function(line, fid)
         end
       end
       h, tl = mylhmc_colored_str(chunk, 'bracket', fid)
+    elseif t == 55 then
+      local hashes = s_match(chunk, '^`(#+)')
+      h, tl = mylhmc_colored_str('`', 'backtick', fid); rh, rt = mylhmc_append(rh, rt, h, tl)
+      h, tl = mylhmc_colored_str(hashes, 'argument', fid); rh, rt = mylhmc_append(rh, rt, h, tl)
+      h, tl = mylhmc_colored_str(s_sub(chunk, -1), 'argnum', fid)
     elseif t == 24 then
       local hashes = s_match(chunk, '^#+')
       local num    = s_sub(chunk, #hashes + 1)
@@ -2089,6 +2125,10 @@ mylhmc_colorize_code = function(line, fid)
         fl.in_file_arg, fl.file_arg_depth, fl.file_arg_done = true, 0, false
       end
       h, tl = mylhmc_emit_with_signature(chunk, 'pkgstruct', fid)
+    elseif t == 53 then
+      kv.in_single_keyval, kv.single_keyval_depth, kv.single_keyval_arg = true, 0, 0
+      kv.single_keyval_target = s_find(chunk, 'Declare', 1, true) and 4 or 3
+      h, tl = mylhmc_emit_with_signature(chunk, 'pkgstruct', fid)
     elseif t == 49 then
       if s_find(chunk, 'hypersetup', 1, true)
          or s_find(chunk, 'unimathsetup', 1, true)
@@ -2229,6 +2269,10 @@ mylhmc_colorize_code = function(line, fid)
         rh, rt = mylhmc_append(rh, rt, h, tl); h, tl = nil, nil
         rh, rt, e = mylhmc_module_brace_arg(line, e, fid, rh, rt)
       end
+      if key_family_cmds[chunk] then
+        rh, rt = mylhmc_append(rh, rt, h, tl); h, tl = nil, nil
+        rh, rt, e = mylhmc_module_brace_arg(line, e, fid, rh, rt, true)
+      end
       -- \newcounter{nombre}, \setcounter{nombre}{…}, \value{nombre}…
       local counter_n = counter_cmds[chunk]
       if counter_n then
@@ -2351,7 +2395,16 @@ local function mylhmc_render_guard(line, fid)
   if rh then n_write(d_tonode(rh)) end
   if after and after ~= '' then
     after = mylhmc_apply_at_at(after)
+    -- Otra guarda con un cuerpo '{ … }' alternativo del mismo \keys_define:nn
+    -- (%<latex> { … } / %<plain> { … }): se reabre el contexto de claves.
+    if kv.guard_reopen and s_find(after, '^%s*{') then
+      kv.in_keys_context, kv.keys_body_opened, kv.keys_depth, kv.keys_in_choices =
+        true, true, 0, false
+    end
+    kv.guard_reopen = false
+    kv.in_guard = true
     local ah = mylhmc_colorize_code(after, fid); if ah then n_write(d_tonode(ah)) end
+    kv.in_guard = false
   end
 end
 
@@ -2449,6 +2502,7 @@ register_tex_cmd('luafun_process_line', function()
     end
   else
     line = mylhmc_apply_at_at(line)
+    kv.guard_reopen = false
     local indent = s_match(line, '^(%s+)')
     local rest = line
     local rh, rt

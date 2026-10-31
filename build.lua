@@ -34,7 +34,7 @@
 -- General package identification
 module     = "enumext"
 pkgversion = "2.4"
-pkgdate    = "2026-10-28"
+pkgdate    = "2026-11-01"
 ltxrelease = "2026-11-01"
 
 -- Configuration of files for build and installation
@@ -330,8 +330,8 @@ local function make_tmp_dir()
     os_message("Creating temporary directory " .. tmpdir)
   end
 
-  -- Copy source files (.dtx and .ins)
-  errorlevel = cp("*.dtx", sourcefiledir, tmpdir) + cp("*.ins", sourcefiledir, tmpdir)
+  -- Copy source files (only enumext.dtx and enumext.ins)
+  errorlevel = cp(module .. ".dtx", sourcefiledir, tmpdir) + cp(module .. ".ins", sourcefiledir, tmpdir)
   if errorlevel ~= 0 then
     error("** Error!!: Failed to copy source files to " .. tmpdir)
   else
@@ -413,6 +413,35 @@ local function fail(msg)
   error(msg)
 end
 
+-- Extensions of the files that a compilation leaves behind
+local generated_ext = {
+  aux = true, log = true, out = true, toc = true, lof = true, lot = true,
+  nav = true, snm = true, vrb = true, bbl = true, blg = true, fls = true,
+  tuc = true, xdv = true, gz = true, fdb_latexmk = true,
+}
+
+-- Copies to the temporary directory what the examples in srcdir need: every
+-- file except the leftovers of a compilation and the PDF of each .tex (the PDF
+-- is the result, not an input). Returns the number of files copied or, on
+-- failure, nil and the name of the file.
+local function copy_inputs(srcdir)
+  local tex = {}
+  for file in lfs.dir(srcdir) do
+    local name = file:match("^(.+)%.tex$")
+    if name then tex[name] = true end
+  end
+  local count = 0
+  for file in lfs.dir(srcdir) do
+    local name, ext = file:match("^(.+)%.([^.]+)$")
+    if name and lfs.attributes(srcdir .. "/" .. file, "mode") == "file"
+       and not generated_ext[ext] and not (ext == "pdf" and tex[name]) then
+      if cp(file, srcdir, tmpdir) ~= 0 then return nil, file end
+      count = count + 1
+    end
+  end
+  return count
+end
+
 -- Helper to detect whether an executable is in the PATH (Windows and Linux)
 local function has_cmd(cmd)
   local is_windows = package.config:sub(1, 1) == "\\"
@@ -477,10 +506,11 @@ local function compile_samples(srcdir, label, opts)
   local samples = list_samples(srcdir, opts.skip)
   make_tmp_dir()
 
-  if cp("*.*", srcdir, tmpdir) ~= 0 then
-    fail("** Error!!: Failed to copy " .. label .. " files from " .. srcdir .. " to " .. tmpdir)
+  local copied, bad = copy_inputs(srcdir)
+  if not copied then
+    fail("** Error!!: Failed to copy " .. bad .. " from " .. srcdir .. " to " .. tmpdir)
   end
-  os_message("Copied " .. label .. " files from " .. srcdir .. " to " .. tmpdir)
+  os_message("Copied " .. copied .. " " .. label .. " files from " .. srcdir .. " to " .. tmpdir)
 
   if opts.validate then
     announce_validators()

@@ -4,25 +4,20 @@ Don't change this file in any respect.
 ============================================================
 TEST 1: [1] keyans: espacio arriba y abajo
 ============================================================
-* Package enumext: Start enumext with save-ans=test on line ....
-* Package enumext: Creating \g__enumext_test_prop on line ....
+Package enumext Info: Start 'enumext' with 'save-ans=test' on line ....
+Package enumext Info: Creating \g__enumext_test_prop on line ....
 Defining \g__enumext_test_prop on line ...
-* Package enumext: Creating \g__enumext_test_seq on line ....
+Package enumext Info: Creating \g__enumext_test_seq on line ....
 Defining \g__enumext_test_seq on line ...
-* Package enumext: Creating \g__enumext_resume_test_int on line ....
+Package enumext Info: Creating \g__enumext_resume_test_int on line ....
 Defining \g__enumext_resume_test_int on line ...
 \g__enumext_resume_test_int=\count...
 Package enumext Warning: Missing '\item*' in 'keyans' start on line ....
-* Package enumext: Stop enumext with save-ans=test on line ....
-* Package enumext: Elements in \g__enumext_test_prop = 0.
-* Package enumext: Elements in \g__enumext_test_seq = 0.
-* Package enumext: Value of \g__enumext_resume_test_int = 2.
-* Package enumext: Value of \g__enumext_item_number_int = 2.
-* Package enumext: Value of \g__enumext_item_anskey_int = 0.
-* Package enumext: Difference item_number_int - item_anskey_int = 2.
-Checking answers in 'test' for {enumext}
-started on line ... and close on line ...: 'NOT OK'
-Items > Answers.
+Package enumext Info: Stop 'enumext' with 'save-ans=test' on line ....
+Package enumext Info: Storage 'test': \g__enumext_test_prop has 0 elements, \g__enumext_test_seq has 0 elements, \g__enumext_resume_test_int = 2.
+Package enumext Info: Items = 2, answers = 0, difference = 2.
+Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
+(enumext)             Started on line ... and closed on line ....
 > \box...=
 \vbox(56.89+0.0)x250.0, direction TLT
 .\penalty -51
@@ -174,18 +169,13 @@ l. ...  }
 ============================================================
 TEST 2: [2] label-pos=below, una fila
 ============================================================
-* Package enumext: Start enumext with save-ans=test on line ....
+Package enumext Info: Start 'enumext' with 'save-ans=test' on line ....
 Package enumext Warning: Missing '\anspic*' in 'keyanspic' start on line ....
-* Package enumext: Stop enumext with save-ans=test on line ....
-* Package enumext: Elements in \g__enumext_test_prop = 0.
-* Package enumext: Elements in \g__enumext_test_seq = 0.
-* Package enumext: Value of \g__enumext_resume_test_int = 2.
-* Package enumext: Value of \g__enumext_item_number_int = 2.
-* Package enumext: Value of \g__enumext_item_anskey_int = 0.
-* Package enumext: Difference item_number_int - item_anskey_int = 2.
-Checking answers in 'test' for {enumext}
-started on line ... and close on line ...: 'NOT OK'
-Items > Answers.
+Package enumext Info: Stop 'enumext' with 'save-ans=test' on line ....
+Package enumext Info: Storage 'test': \g__enumext_test_prop has 0 elements, \g__enumext_test_seq has 0 elements, \g__enumext_resume_test_int = 2.
+Package enumext Info: Items = 2, answers = 0, difference = 2.
+Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
+(enumext)             Started on line ... and closed on line ....
 > \box...=
 \vbox(76.75002+0.0)x250.0, direction TLT
 .\penalty -51
@@ -413,18 +403,13 @@ l. ...  }
 ============================================================
 TEST 3: [3] label-pos=above, una fila
 ============================================================
-* Package enumext: Start enumext with save-ans=test on line ....
+Package enumext Info: Start 'enumext' with 'save-ans=test' on line ....
 Package enumext Warning: Missing '\anspic*' in 'keyanspic' start on line ....
-* Package enumext: Stop enumext with save-ans=test on line ....
-* Package enumext: Elements in \g__enumext_test_prop = 0.
-* Package enumext: Elements in \g__enumext_test_seq = 0.
-* Package enumext: Value of \g__enumext_resume_test_int = 2.
-* Package enumext: Value of \g__enumext_item_number_int = 2.
-* Package enumext: Value of \g__enumext_item_anskey_int = 0.
-* Package enumext: Difference item_number_int - item_anskey_int = 2.
-Checking answers in 'test' for {enumext}
-started on line ... and close on line ...: 'NOT OK'
-Items > Answers.
+Package enumext Info: Stop 'enumext' with 'save-ans=test' on line ....
+Package enumext Info: Storage 'test': \g__enumext_test_prop has 0 elements, \g__enumext_test_seq has 0 elements, \g__enumext_resume_test_int = 2.
+Package enumext Info: Items = 2, answers = 0, difference = 2.
+Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
+(enumext)             Started on line ... and closed on line ....
 > \box...=
 \vbox(74.04004+0.0)x250.0, direction TLT
 .\penalty -51
@@ -649,18 +634,13 @@ l. ...  }
 ============================================================
 TEST 4: [4] label-pos=below, layout-sty={2,2}
 ============================================================
-* Package enumext: Start enumext with save-ans=test on line ....
+Package enumext Info: Start 'enumext' with 'save-ans=test' on line ....
 Package enumext Warning: Missing '\anspic*' in 'keyanspic' start on line ....
-* Package enumext: Stop enumext with save-ans=test on line ....
-* Package enumext: Elements in \g__enumext_test_prop = 0.
-* Package enumext: Elements in \g__enumext_test_seq = 0.
-* Package enumext: Value of \g__enumext_resume_test_int = 2.
-* Package enumext: Value of \g__enumext_item_number_int = 2.
-* Package enumext: Value of \g__enumext_item_anskey_int = 0.
-* Package enumext: Difference item_number_int - item_anskey_int = 2.
-Checking answers in 'test' for {enumext}
-started on line ... and close on line ...: 'NOT OK'
-Items > Answers.
+Package enumext Info: Stop 'enumext' with 'save-ans=test' on line ....
+Package enumext Info: Storage 'test': \g__enumext_test_prop has 0 elements, \g__enumext_test_seq has 0 elements, \g__enumext_resume_test_int = 2.
+Package enumext Info: Items = 2, answers = 0, difference = 2.
+Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
+(enumext)             Started on line ... and closed on line ....
 > \box...=
 \vbox(124.35005+0.0)x250.0, direction TLT
 .\penalty -51
@@ -937,18 +917,13 @@ l. ...  }
 ============================================================
 TEST 5: [5] label-pos=above, layout-sty={2,2}
 ============================================================
-* Package enumext: Start enumext with save-ans=test on line ....
+Package enumext Info: Start 'enumext' with 'save-ans=test' on line ....
 Package enumext Warning: Missing '\anspic*' in 'keyanspic' start on line ....
-* Package enumext: Stop enumext with save-ans=test on line ....
-* Package enumext: Elements in \g__enumext_test_prop = 0.
-* Package enumext: Elements in \g__enumext_test_seq = 0.
-* Package enumext: Value of \g__enumext_resume_test_int = 2.
-* Package enumext: Value of \g__enumext_item_number_int = 2.
-* Package enumext: Value of \g__enumext_item_anskey_int = 0.
-* Package enumext: Difference item_number_int - item_anskey_int = 2.
-Checking answers in 'test' for {enumext}
-started on line ... and close on line ...: 'NOT OK'
-Items > Answers.
+Package enumext Info: Stop 'enumext' with 'save-ans=test' on line ....
+Package enumext Info: Storage 'test': \g__enumext_test_prop has 0 elements, \g__enumext_test_seq has 0 elements, \g__enumext_resume_test_int = 2.
+Package enumext Info: Items = 2, answers = 0, difference = 2.
+Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
+(enumext)             Started on line ... and closed on line ....
 > \box...=
 \vbox(118.04004+0.0)x250.0, direction TLT
 .\penalty -51
@@ -1221,18 +1196,13 @@ l. ...  }
 ============================================================
 TEST 6: [6] layout-top=0pt, label-pos=below
 ============================================================
-* Package enumext: Start enumext with save-ans=test on line ....
+Package enumext Info: Start 'enumext' with 'save-ans=test' on line ....
 Package enumext Warning: Missing '\anspic*' in 'keyanspic' start on line ....
-* Package enumext: Stop enumext with save-ans=test on line ....
-* Package enumext: Elements in \g__enumext_test_prop = 0.
-* Package enumext: Elements in \g__enumext_test_seq = 0.
-* Package enumext: Value of \g__enumext_resume_test_int = 2.
-* Package enumext: Value of \g__enumext_item_number_int = 2.
-* Package enumext: Value of \g__enumext_item_anskey_int = 0.
-* Package enumext: Difference item_number_int - item_anskey_int = 2.
-Checking answers in 'test' for {enumext}
-started on line ... and close on line ...: 'NOT OK'
-Items > Answers.
+Package enumext Info: Stop 'enumext' with 'save-ans=test' on line ....
+Package enumext Info: Storage 'test': \g__enumext_test_prop has 0 elements, \g__enumext_test_seq has 0 elements, \g__enumext_resume_test_int = 2.
+Package enumext Info: Items = 2, answers = 0, difference = 2.
+Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
+(enumext)             Started on line ... and closed on line ....
 > \box...=
 \vbox(68.75002+0.0)x250.0, direction TLT
 .\penalty -51
@@ -1424,18 +1394,13 @@ l. ...  }
 ============================================================
 TEST 7: [7] layout-top=10pt, label-pos=below
 ============================================================
-* Package enumext: Start enumext with save-ans=test on line ....
+Package enumext Info: Start 'enumext' with 'save-ans=test' on line ....
 Package enumext Warning: Missing '\anspic*' in 'keyanspic' start on line ....
-* Package enumext: Stop enumext with save-ans=test on line ....
-* Package enumext: Elements in \g__enumext_test_prop = 0.
-* Package enumext: Elements in \g__enumext_test_seq = 0.
-* Package enumext: Value of \g__enumext_resume_test_int = 2.
-* Package enumext: Value of \g__enumext_item_number_int = 2.
-* Package enumext: Value of \g__enumext_item_anskey_int = 0.
-* Package enumext: Difference item_number_int - item_anskey_int = 2.
-Checking answers in 'test' for {enumext}
-started on line ... and close on line ...: 'NOT OK'
-Items > Answers.
+Package enumext Info: Stop 'enumext' with 'save-ans=test' on line ....
+Package enumext Info: Storage 'test': \g__enumext_test_prop has 0 elements, \g__enumext_test_seq has 0 elements, \g__enumext_resume_test_int = 2.
+Package enumext Info: Items = 2, answers = 0, difference = 2.
+Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
+(enumext)             Started on line ... and closed on line ....
 > \box...=
 \vbox(88.75002+0.0)x250.0, direction TLT
 .\penalty -51
@@ -1627,18 +1592,13 @@ l. ...  }
 ============================================================
 TEST 8: [8] layout-top=0pt, label-pos=above
 ============================================================
-* Package enumext: Start enumext with save-ans=test on line ....
+Package enumext Info: Start 'enumext' with 'save-ans=test' on line ....
 Package enumext Warning: Missing '\anspic*' in 'keyanspic' start on line ....
-* Package enumext: Stop enumext with save-ans=test on line ....
-* Package enumext: Elements in \g__enumext_test_prop = 0.
-* Package enumext: Elements in \g__enumext_test_seq = 0.
-* Package enumext: Value of \g__enumext_resume_test_int = 2.
-* Package enumext: Value of \g__enumext_item_number_int = 2.
-* Package enumext: Value of \g__enumext_item_anskey_int = 0.
-* Package enumext: Difference item_number_int - item_anskey_int = 2.
-Checking answers in 'test' for {enumext}
-started on line ... and close on line ...: 'NOT OK'
-Items > Answers.
+Package enumext Info: Stop 'enumext' with 'save-ans=test' on line ....
+Package enumext Info: Storage 'test': \g__enumext_test_prop has 0 elements, \g__enumext_test_seq has 0 elements, \g__enumext_resume_test_int = 2.
+Package enumext Info: Items = 2, answers = 0, difference = 2.
+Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
+(enumext)             Started on line ... and closed on line ....
 > \box...=
 \vbox(66.04004+0.0)x250.0, direction TLT
 .\penalty -51
@@ -1827,18 +1787,13 @@ l. ...  }
 ============================================================
 TEST 9: [9] layout-top=10pt, label-pos=above
 ============================================================
-* Package enumext: Start enumext with save-ans=test on line ....
+Package enumext Info: Start 'enumext' with 'save-ans=test' on line ....
 Package enumext Warning: Missing '\anspic*' in 'keyanspic' start on line ....
-* Package enumext: Stop enumext with save-ans=test on line ....
-* Package enumext: Elements in \g__enumext_test_prop = 0.
-* Package enumext: Elements in \g__enumext_test_seq = 0.
-* Package enumext: Value of \g__enumext_resume_test_int = 2.
-* Package enumext: Value of \g__enumext_item_number_int = 2.
-* Package enumext: Value of \g__enumext_item_anskey_int = 0.
-* Package enumext: Difference item_number_int - item_anskey_int = 2.
-Checking answers in 'test' for {enumext}
-started on line ... and close on line ...: 'NOT OK'
-Items > Answers.
+Package enumext Info: Stop 'enumext' with 'save-ans=test' on line ....
+Package enumext Info: Storage 'test': \g__enumext_test_prop has 0 elements, \g__enumext_test_seq has 0 elements, \g__enumext_resume_test_int = 2.
+Package enumext Info: Items = 2, answers = 0, difference = 2.
+Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
+(enumext)             Started on line ... and closed on line ....
 > \box...=
 \vbox(86.04004+0.0)x250.0, direction TLT
 .\penalty -51
@@ -2028,18 +1983,13 @@ l. ...  }
 ============================================================
 TEST 10: [10] layout-sep=0pt, layout-sty={1,1}, label-pos=below
 ============================================================
-* Package enumext: Start enumext with save-ans=test on line ....
+Package enumext Info: Start 'enumext' with 'save-ans=test' on line ....
 Package enumext Warning: Missing '\anspic*' in 'keyanspic' start on line ....
-* Package enumext: Stop enumext with save-ans=test on line ....
-* Package enumext: Elements in \g__enumext_test_prop = 0.
-* Package enumext: Elements in \g__enumext_test_seq = 0.
-* Package enumext: Value of \g__enumext_resume_test_int = 2.
-* Package enumext: Value of \g__enumext_item_number_int = 2.
-* Package enumext: Value of \g__enumext_item_anskey_int = 0.
-* Package enumext: Difference item_number_int - item_anskey_int = 2.
-Checking answers in 'test' for {enumext}
-started on line ... and close on line ...: 'NOT OK'
-Items > Answers.
+Package enumext Info: Stop 'enumext' with 'save-ans=test' on line ....
+Package enumext Info: Storage 'test': \g__enumext_test_prop has 0 elements, \g__enumext_test_seq has 0 elements, \g__enumext_resume_test_int = 2.
+Package enumext Info: Items = 2, answers = 0, difference = 2.
+Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
+(enumext)             Started on line ... and closed on line ....
 > \box...=
 \vbox(122.35005+0.0)x250.0, direction TLT
 .\penalty -51
@@ -2244,18 +2194,13 @@ l. ...  }
 ============================================================
 TEST 11: [11] layout-sep=10pt, layout-sty={1,1}, label-pos=below
 ============================================================
-* Package enumext: Start enumext with save-ans=test on line ....
+Package enumext Info: Start 'enumext' with 'save-ans=test' on line ....
 Package enumext Warning: Missing '\anspic*' in 'keyanspic' start on line ....
-* Package enumext: Stop enumext with save-ans=test on line ....
-* Package enumext: Elements in \g__enumext_test_prop = 0.
-* Package enumext: Elements in \g__enumext_test_seq = 0.
-* Package enumext: Value of \g__enumext_resume_test_int = 2.
-* Package enumext: Value of \g__enumext_item_number_int = 2.
-* Package enumext: Value of \g__enumext_item_anskey_int = 0.
-* Package enumext: Difference item_number_int - item_anskey_int = 2.
-Checking answers in 'test' for {enumext}
-started on line ... and close on line ...: 'NOT OK'
-Items > Answers.
+Package enumext Info: Stop 'enumext' with 'save-ans=test' on line ....
+Package enumext Info: Storage 'test': \g__enumext_test_prop has 0 elements, \g__enumext_test_seq has 0 elements, \g__enumext_resume_test_int = 2.
+Package enumext Info: Items = 2, answers = 0, difference = 2.
+Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
+(enumext)             Started on line ... and closed on line ....
 > \box...=
 \vbox(132.35005+0.0)x250.0, direction TLT
 .\penalty -51
@@ -2460,18 +2405,13 @@ l. ...  }
 ============================================================
 TEST 12: [12] layout-sep=10pt, layout-sty={1,1}, label-pos=above
 ============================================================
-* Package enumext: Start enumext with save-ans=test on line ....
+Package enumext Info: Start 'enumext' with 'save-ans=test' on line ....
 Package enumext Warning: Missing '\anspic*' in 'keyanspic' start on line ....
-* Package enumext: Stop enumext with save-ans=test on line ....
-* Package enumext: Elements in \g__enumext_test_prop = 0.
-* Package enumext: Elements in \g__enumext_test_seq = 0.
-* Package enumext: Value of \g__enumext_resume_test_int = 2.
-* Package enumext: Value of \g__enumext_item_number_int = 2.
-* Package enumext: Value of \g__enumext_item_anskey_int = 0.
-* Package enumext: Difference item_number_int - item_anskey_int = 2.
-Checking answers in 'test' for {enumext}
-started on line ... and close on line ...: 'NOT OK'
-Items > Answers.
+Package enumext Info: Stop 'enumext' with 'save-ans=test' on line ....
+Package enumext Info: Storage 'test': \g__enumext_test_prop has 0 elements, \g__enumext_test_seq has 0 elements, \g__enumext_resume_test_int = 2.
+Package enumext Info: Items = 2, answers = 0, difference = 2.
+Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
+(enumext)             Started on line ... and closed on line ....
 > \box...=
 \vbox(126.04004+0.0)x250.0, direction TLT
 .\penalty -51
@@ -2673,18 +2613,13 @@ l. ...  }
 ============================================================
 TEST 13: [13] label-sep=5pt, label-pos=below
 ============================================================
-* Package enumext: Start enumext with save-ans=test on line ....
+Package enumext Info: Start 'enumext' with 'save-ans=test' on line ....
 Package enumext Warning: Missing '\anspic*' in 'keyanspic' start on line ....
-* Package enumext: Stop enumext with save-ans=test on line ....
-* Package enumext: Elements in \g__enumext_test_prop = 0.
-* Package enumext: Elements in \g__enumext_test_seq = 0.
-* Package enumext: Value of \g__enumext_resume_test_int = 2.
-* Package enumext: Value of \g__enumext_item_number_int = 2.
-* Package enumext: Value of \g__enumext_item_anskey_int = 0.
-* Package enumext: Difference item_number_int - item_anskey_int = 2.
-Checking answers in 'test' for {enumext}
-started on line ... and close on line ...: 'NOT OK'
-Items > Answers.
+Package enumext Info: Stop 'enumext' with 'save-ans=test' on line ....
+Package enumext Info: Storage 'test': \g__enumext_test_prop has 0 elements, \g__enumext_test_seq has 0 elements, \g__enumext_resume_test_int = 2.
+Package enumext Info: Items = 2, answers = 0, difference = 2.
+Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
+(enumext)             Started on line ... and closed on line ....
 > \box...=
 \vbox(81.75002+0.0)x250.0, direction TLT
 .\penalty -51
@@ -2876,18 +2811,13 @@ l. ...  }
 ============================================================
 TEST 14: [14] label-sep=5pt, label-pos=above
 ============================================================
-* Package enumext: Start enumext with save-ans=test on line ....
+Package enumext Info: Start 'enumext' with 'save-ans=test' on line ....
 Package enumext Warning: Missing '\anspic*' in 'keyanspic' start on line ....
-* Package enumext: Stop enumext with save-ans=test on line ....
-* Package enumext: Elements in \g__enumext_test_prop = 0.
-* Package enumext: Elements in \g__enumext_test_seq = 0.
-* Package enumext: Value of \g__enumext_resume_test_int = 2.
-* Package enumext: Value of \g__enumext_item_number_int = 2.
-* Package enumext: Value of \g__enumext_item_anskey_int = 0.
-* Package enumext: Difference item_number_int - item_anskey_int = 2.
-Checking answers in 'test' for {enumext}
-started on line ... and close on line ...: 'NOT OK'
-Items > Answers.
+Package enumext Info: Stop 'enumext' with 'save-ans=test' on line ....
+Package enumext Info: Storage 'test': \g__enumext_test_prop has 0 elements, \g__enumext_test_seq has 0 elements, \g__enumext_resume_test_int = 2.
+Package enumext Info: Items = 2, answers = 0, difference = 2.
+Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
+(enumext)             Started on line ... and closed on line ....
 > \box...=
 \vbox(79.04004+0.0)x250.0, direction TLT
 .\penalty -51
@@ -3077,18 +3007,13 @@ l. ...  }
 ============================================================
 TEST 15: [15] alturas distintas en la misma fila, label-pos=below
 ============================================================
-* Package enumext: Start enumext with save-ans=test on line ....
+Package enumext Info: Start 'enumext' with 'save-ans=test' on line ....
 Package enumext Warning: Missing '\anspic*' in 'keyanspic' start on line ....
-* Package enumext: Stop enumext with save-ans=test on line ....
-* Package enumext: Elements in \g__enumext_test_prop = 0.
-* Package enumext: Elements in \g__enumext_test_seq = 0.
-* Package enumext: Value of \g__enumext_resume_test_int = 2.
-* Package enumext: Value of \g__enumext_item_number_int = 2.
-* Package enumext: Value of \g__enumext_item_anskey_int = 0.
-* Package enumext: Difference item_number_int - item_anskey_int = 2.
-Checking answers in 'test' for {enumext}
-started on line ... and close on line ...: 'NOT OK'
-Items > Answers.
+Package enumext Info: Stop 'enumext' with 'save-ans=test' on line ....
+Package enumext Info: Storage 'test': \g__enumext_test_prop has 0 elements, \g__enumext_test_seq has 0 elements, \g__enumext_resume_test_int = 2.
+Package enumext Info: Items = 2, answers = 0, difference = 2.
+Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
+(enumext)             Started on line ... and closed on line ....
 > \box...=
 \vbox(106.75002+0.0)x250.0, direction TLT
 .\penalty -51
@@ -3316,18 +3241,13 @@ l. ...  }
 ============================================================
 TEST 16: [16] alturas distintas en la misma fila, label-pos=above
 ============================================================
-* Package enumext: Start enumext with save-ans=test on line ....
+Package enumext Info: Start 'enumext' with 'save-ans=test' on line ....
 Package enumext Warning: Missing '\anspic*' in 'keyanspic' start on line ....
-* Package enumext: Stop enumext with save-ans=test on line ....
-* Package enumext: Elements in \g__enumext_test_prop = 0.
-* Package enumext: Elements in \g__enumext_test_seq = 0.
-* Package enumext: Value of \g__enumext_resume_test_int = 2.
-* Package enumext: Value of \g__enumext_item_number_int = 2.
-* Package enumext: Value of \g__enumext_item_anskey_int = 0.
-* Package enumext: Difference item_number_int - item_anskey_int = 2.
-Checking answers in 'test' for {enumext}
-started on line ... and close on line ...: 'NOT OK'
-Items > Answers.
+Package enumext Info: Stop 'enumext' with 'save-ans=test' on line ....
+Package enumext Info: Storage 'test': \g__enumext_test_prop has 0 elements, \g__enumext_test_seq has 0 elements, \g__enumext_resume_test_int = 2.
+Package enumext Info: Items = 2, answers = 0, difference = 2.
+Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
+(enumext)             Started on line ... and closed on line ....
 > \box...=
 \vbox(104.04004+0.0)x250.0, direction TLT
 .\penalty -51
@@ -3551,18 +3471,13 @@ l. ...  }
 ============================================================
 TEST 17: [17] enumext con los espacios por defecto, label-pos=below
 ============================================================
-* Package enumext: Start enumext with save-ans=test on line ....
+Package enumext Info: Start 'enumext' with 'save-ans=test' on line ....
 Package enumext Warning: Missing '\anspic*' in 'keyanspic' start on line ....
-* Package enumext: Stop enumext with save-ans=test on line ....
-* Package enumext: Elements in \g__enumext_test_prop = 0.
-* Package enumext: Elements in \g__enumext_test_seq = 0.
-* Package enumext: Value of \g__enumext_resume_test_int = 2.
-* Package enumext: Value of \g__enumext_item_number_int = 2.
-* Package enumext: Value of \g__enumext_item_anskey_int = 0.
-* Package enumext: Difference item_number_int - item_anskey_int = 2.
-Checking answers in 'test' for {enumext}
-started on line ... and close on line ...: 'NOT OK'
-Items > Answers.
+Package enumext Info: Stop 'enumext' with 'save-ans=test' on line ....
+Package enumext Info: Storage 'test': \g__enumext_test_prop has 0 elements, \g__enumext_test_seq has 0 elements, \g__enumext_resume_test_int = 2.
+Package enumext Info: Items = 2, answers = 0, difference = 2.
+Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
+(enumext)             Started on line ... and closed on line ....
 > \box...=
 \vbox(104.75002+0.0)x250.0, direction TLT
 .\penalty -51
@@ -3755,18 +3670,13 @@ l. ...  }
 ============================================================
 TEST 18: [18] enumext con los espacios por defecto, label-pos=above
 ============================================================
-* Package enumext: Start enumext with save-ans=test on line ....
+Package enumext Info: Start 'enumext' with 'save-ans=test' on line ....
 Package enumext Warning: Missing '\anspic*' in 'keyanspic' start on line ....
-* Package enumext: Stop enumext with save-ans=test on line ....
-* Package enumext: Elements in \g__enumext_test_prop = 0.
-* Package enumext: Elements in \g__enumext_test_seq = 0.
-* Package enumext: Value of \g__enumext_resume_test_int = 2.
-* Package enumext: Value of \g__enumext_item_number_int = 2.
-* Package enumext: Value of \g__enumext_item_anskey_int = 0.
-* Package enumext: Difference item_number_int - item_anskey_int = 2.
-Checking answers in 'test' for {enumext}
-started on line ... and close on line ...: 'NOT OK'
-Items > Answers.
+Package enumext Info: Stop 'enumext' with 'save-ans=test' on line ....
+Package enumext Info: Storage 'test': \g__enumext_test_prop has 0 elements, \g__enumext_test_seq has 0 elements, \g__enumext_resume_test_int = 2.
+Package enumext Info: Items = 2, answers = 0, difference = 2.
+Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
+(enumext)             Started on line ... and closed on line ....
 > \box...=
 \vbox(102.04004+0.0)x250.0, direction TLT
 .\penalty -51

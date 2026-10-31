@@ -45,7 +45,7 @@
         later.~Update~your~TeX~distribution.
       }
   }
-\ProvidesExplPackage {enumext} {2026-10-28} {2.4} {Enumerate exercise sheets}
+\ProvidesExplPackage {enumext} {2026-11-01} {2.4} {Enumerate exercise sheets}
 \hook_gput_code:nnn {begindocument} {enumext}
   {
     \IfPackageLoadedTF { multicol }
@@ -72,8 +72,6 @@
 \tl_new:N   \g__enumext_start_line_tl
 \tl_new:N   \g__enumext_envir_name_tl
 \tl_new:N   \l__enumext_envir_name_tl
-\tl_new:N \g__enumext_first_para_struct_tl
-\tl_new:N \l__enumext_first_para_class_tl
 \dim_new:N \l__enumext_current_widest_dim
 \bool_new:N \l__enumext_resume_count_bool
 \cs_set_protected:Nn \__enumext_tmp:n
@@ -176,20 +174,14 @@
   }
 \msg_new:nnn { enumext } { prop-seq-int-hook }
   {
-    *~Package~enumext:~Elements~in~
-    \c_backslash_str g__enumext_ #1 _prop~=~#2.\\
-    *~Package~enumext:~Elements~in~
-    \c_backslash_str g__enumext_ #1 _seq~=~#3.\\
-    *~Package~enumext:~Value~of~
+    Storage~'#1':~
+    \c_backslash_str g__enumext_ #1 _prop~has~#2~elements,~
+    \c_backslash_str g__enumext_ #1 _seq~has~#3~elements,~
     \c_backslash_str g__enumext_resume_ #1 _int~=~#4.
   }
 \msg_new:nnn { enumext } { item-answer-hook }
   {
-    *~Package~enumext:~Value~of~
-    \token_to_str:N \g__enumext_item_number_int \c_space_tl =~#1.\\
-    *~Package~enumext:~Value~of~
-    \token_to_str:N \g__enumext_item_anskey_int \c_space_tl =~#2.\\
-    *~Package~enumext:~Difference~item_number_int~-~item_anskey_int~=~#3.
+    Items~=~#1,~answers~=~#2,~difference~=~#3.
   }
 \cs_generate_variant:Nn \keys_precompile:nnN { neN }
 \cs_generate_variant:Nn \seq_use:Nn { NV }
@@ -356,7 +348,7 @@
   }
 \cs_new_protected:Nn \__enumext_log_global_vars:
   {
-    \msg_log:nneeee { enumext } { prop-seq-int-hook }
+    \msg_info:nneeee { enumext } { prop-seq-int-hook }
       { \g__enumext_store_name_tl }
       { \prop_count:c { g__enumext_ \g__enumext_store_name_tl _prop } }
       { \seq_count:c { g__enumext_ \g__enumext_store_name_tl _seq } }
@@ -364,7 +356,7 @@
   }
 \cs_new_protected:Nn \__enumext_log_answer_vars:
   {
-    \msg_log:nneee { enumext } { item-answer-hook }
+    \msg_info:nneee { enumext } { item-answer-hook }
       { \int_use:N \g__enumext_item_number_int }
       { \int_use:N \g__enumext_item_anskey_int }
       { \int_eval:n { \g__enumext_item_number_int - \g__enumext_item_anskey_int} }
@@ -2360,47 +2352,38 @@
   }
 \msg_new:nnn { enumext } { save-ans-log }
   {
-    *~Package~enumext:~Start~#1~with~save-ans=#2~\msg_line_context:.
+    Start~'#1'~with~'save-ans=#2'~\msg_line_context:.
   }
 \msg_new:nnn { enumext } { save-ans-log-hook }
   {
-    *~Package~enumext:~Stop~#1~with~save-ans=#2~\msg_line_context:.
+    Stop~'#1'~with~'save-ans=#2'~\msg_line_context:.
   }
 \msg_new:nnn { enumext } { store-prop }
   {
-    *~Package~enumext:~Creating~
-    \c_backslash_str g__enumext_ #1 _prop~\msg_line_context:.
+    Creating~\c_backslash_str g__enumext_ #1 _prop~\msg_line_context:.
   }
 \msg_new:nnn { enumext } { store-seq }
   {
-    *~Package~enumext:~Creating~
-    \c_backslash_str g__enumext_ #1 _seq~\msg_line_context:.
+    Creating~\c_backslash_str g__enumext_ #1 _seq~\msg_line_context:.
   }
 \msg_new:nnn { enumext } { store-int }
   {
-    *~Package~enumext:~Creating~
-    \c_backslash_str g__enumext_resume_ #1 _int~\msg_line_context:.
+    Creating~\c_backslash_str g__enumext_resume_ #1 _int~\msg_line_context:.
   }
 \msg_new:nnn { enumext } { items-same-answer }
   {
-    ****************************************\\
-    *~Package~enumext:~Checking~answers~in~'#1'~
-    for~\c_left_brace_str #2 \c_right_brace_str\\
-    *~started~#3~and~close~\msg_line_context: :~
-    'OK',~all~items~with~answer.\\
-    ****************************************
+    Answers~in~'#1'~(#2):~OK,~items~=~answers.\\
+    Started~#3~and~closed~\msg_line_context:.
   }
 \msg_new:nnn { enumext } { item-greater-answer }
   {
-    Checking~answers~in~'#1'~for~\c_left_brace_str #2 \c_right_brace_str\\
-    started~#3~and~close~\msg_line_context: :~'NOT~OK'\\
-    Items~>~Answers.
+    Answers~in~'#1'~(#2):~NOT~OK,~items~>~answers.\\
+    Started~#3~and~closed~\msg_line_context:.
   }
 \msg_new:nnn { enumext } { item-less-answer }
   {
-    Checking~answers~in~'#1'~for~\c_left_brace_str #2 \c_right_brace_str\\
-    started~#3~and~close~\msg_line_context: :~'NOT~OK'\\
-    Items~<~Answers.
+    Answers~in~'#1'~(#2):~NOT~OK,~items~<~answers.\\
+    Started~#3~and~closed~\msg_line_context:.
   }
 \cs_set_protected:Nn \__enumext_tmp:n
   {
@@ -2413,12 +2396,12 @@
 \clist_map_inline:nn { level-1, enumext* } { \__enumext_tmp:n {#1} }
 \cs_new_protected:Nn \__enumext_start_save_ans_msg:
   {
-    \msg_term:nnVV { enumext } { save-ans-log }
+    \msg_info:nnVV { enumext } { save-ans-log }
       \g__enumext_envir_name_tl \l__enumext_store_name_tl
   }
 \cs_new_protected:Nn \__enumext_stop_save_ans_msg:
   {
-    \msg_term:nnVV { enumext } { save-ans-log-hook }
+    \msg_info:nnVV { enumext } { save-ans-log-hook }
       \g__enumext_envir_name_tl \g__enumext_store_name_tl
   }
 \cs_new_protected:Nn \__enumext_storing_set:n
@@ -2448,17 +2431,17 @@
     \tl_gset:NV \g__enumext_store_name_tl \l__enumext_store_name_tl
     \prop_if_exist:cF { g__enumext_ \l__enumext_store_name_tl _prop }
       {
-        \msg_log:nnV { enumext } { store-prop } \l__enumext_store_name_tl
+        \msg_info:nnV { enumext } { store-prop } \l__enumext_store_name_tl
         \prop_new:c { g__enumext_ \l__enumext_store_name_tl _prop }
       }
     \seq_if_exist:cF { g__enumext_ \l__enumext_store_name_tl _seq }
       {
-        \msg_log:nnV { enumext } { store-seq } \l__enumext_store_name_tl
+        \msg_info:nnV { enumext } { store-seq } \l__enumext_store_name_tl
         \seq_new:c { g__enumext_ \l__enumext_store_name_tl _seq }
       }
     \int_if_exist:cF { g__enumext_resume_ \l__enumext_store_name_tl _int }
       {
-        \msg_log:nnV { enumext } { store-int } \l__enumext_store_name_tl
+        \msg_info:nnV { enumext } { store-int } \l__enumext_store_name_tl
         \int_new:c { g__enumext_resume_ \l__enumext_store_name_tl _int }
       }
   }
@@ -2578,7 +2561,7 @@
   }
 \cs_new_protected:Nn \__enumext_check_ans_msg_same_ok:
   {
-    \msg_term:nneee { enumext } { items-same-answer } { \g__enumext_store_name_tl }
+    \msg_info:nneee { enumext } { items-same-answer } { \g__enumext_store_name_tl }
       { \g__enumext_envir_name_tl } { \g__enumext_start_line_tl }
   }
 \cs_new_protected:Nn \__enumext_check_ans_msg_greater:
@@ -2598,17 +2581,17 @@
   }
 \cs_new_protected:Nn \__enumext_check_ans_log_msg_less:
   {
-    \msg_log:nneee { enumext } { item-less-answer } { \g__enumext_store_name_tl }
+    \msg_info:nneee { enumext } { item-less-answer } { \g__enumext_store_name_tl }
       { \g__enumext_envir_name_tl } { \g__enumext_start_line_tl }
   }
 \cs_new_protected:Nn \__enumext_check_ans_log_msg_same_ok:
   {
-    \msg_log:nneee { enumext } { items-same-answer }  { \g__enumext_store_name_tl }
+    \msg_info:nneee { enumext } { items-same-answer }  { \g__enumext_store_name_tl }
       { \g__enumext_envir_name_tl } { \g__enumext_start_line_tl }
   }
 \cs_new_protected:Nn \__enumext_check_ans_log_msg_greater:
   {
-    \msg_log:nneee { enumext } { item-greater-answer } { \g__enumext_store_name_tl }
+    \msg_info:nneee { enumext } { item-greater-answer } { \g__enumext_store_name_tl }
       { \g__enumext_envir_name_tl } { \g__enumext_start_line_tl }
   }
 \cs_new_protected:Nn \__enumext_check_starred_cmd:n
@@ -3205,9 +3188,16 @@
         \msg_error:nnnn { enumext } { anskey-cmd-key-value-unknown } {#1} {#2}
       }
   }
+\prg_new_conditional:Npnn \__enumext_in_keyans: { p , T , F , TF }
+  {
+    \int_compare:nNnTF
+      { \l__enumext_keyans_level_int + \l__enumext_keyans_level_h_int
+        + \l__enumext_keyans_pic_level_int } > { 0 }
+      { \prg_return_true: } { \prg_return_false: }
+  }
 \cs_new_protected:Nn \__enumext_anskey_safe_outer:
   {
-    \bool_if:NF \l__enumext_store_active_bool
+    \bool_lazy_or:nnF { \l__enumext_store_active_bool } { \__enumext_in_keyans_p: }
       {
         \msg_error:nnnn { enumext } { anskey-wrong-place }{ anskey }{ enumext }
       }
@@ -3395,7 +3385,7 @@
 \cs_generate_variant:Nn \__enumext_anskey_env_file_write:nn { VV }
 \cs_new_protected:Nn \__enumext_anskey_env_safe_outer:
   {
-    \bool_if:NF \l__enumext_store_active_bool
+    \bool_lazy_or:nnF { \l__enumext_store_active_bool } { \__enumext_in_keyans_p: }
       {
         \msg_error:nnn { enumext } { anskey-env-error } { anskey* }
       }
@@ -4496,7 +4486,7 @@
   }
 \cs_new_protected:Nn \__enumext_keyans_safe_exec:
   {
-    \bool_if:NF \l__enumext_store_active_bool
+    \bool_lazy_or:nnF { \l__enumext_store_active_bool } { \__enumext_in_keyans_p: }
       {
         \msg_error:nnnn { enumext } { wrong-place }{ keyans }{ save-ans }
       }
@@ -4665,6 +4655,22 @@
       \tag_struct_end:n {tag=LI}
     \tag_suspend:n {#1}
   }
+\socket_new_plug:nnn {tagsupport/__enumext/starred} {stop-start-tags-break}
+  {
+          \tag_mc_end:
+        \tag_struct_end:n {tag=Lbl}
+        \tag_struct_begin:n {tag=LBody}
+          \tag_socket_use:nn {para/semantic/begin} { }
+          \tag_socket_use:nn {para/textblock/begin} { }
+  }
+\socket_new_plug:nnn {tagsupport/__enumext/starred} {stop-list-tags-break}
+  {
+          \tag_socket_use:n {para/textblock/end}
+          \tag_socket_use:nn {para/semantic/end} { }
+        \tag_struct_end:n {tag=LBody}
+      \tag_struct_end:n {tag=LI}
+    \tag_suspend:n {#1}
+  }
 \cs_new_protected_nopar:Nn \__enumext_start_list_tag:n
   {
     \IfDocumentMetadataT
@@ -4678,6 +4684,14 @@
     \IfDocumentMetadataT
       {
         \socket_assign_plug:nn {tagsupport/__enumext/starred} {stop-start-tags}
+        \socket_use:nn {tagsupport/__enumext/starred} { }
+      }
+  }
+\cs_new_protected_nopar:Nn \__enumext_stop_start_break_tag:
+  {
+    \IfDocumentMetadataT
+      {
+        \socket_assign_plug:nn {tagsupport/__enumext/starred} {stop-start-tags-break}
         \socket_use:nn {tagsupport/__enumext/starred} { }
       }
   }
@@ -4695,80 +4709,15 @@
       {
         \mode_if_vertical:TF
           {
+            \par
             \socket_assign_plug:nn {tagsupport/__enumext/starred} {stop-list-tags-par}
           }
           {
-            \tag_mc_end:
-            \__enumext_first_para_align:
-            \__enumext_para_count:n { end }
-            \socket_assign_plug:nn {tagsupport/__enumext/starred} {stop-list-tags}
+            \socket_assign_plug:nn
+              {tagsupport/__enumext/starred} {stop-list-tags-break}
           }
         \socket_use:nn {tagsupport/__enumext/starred} {#1}
       }
-  }
-\cs_new_protected_nopar:Nn \__enumext_para_count:n
-  {
-    \tag_if_active:T
-      {
-        \bool_if:cT { l__tag_para_bool }
-          {
-            \bool_if:cF { l__tag_para_flattened_bool }
-              { \cs_if_exist_use:c { __tag_gincr_para_main_ #1 _int: } }
-            \cs_if_exist_use:c { __tag_gincr_para_ #1 _int: }
-          }
-      }
-  }
-\cs_new_protected_nopar:Nn \__enumext_first_para_start:
-  {
-    \tag_if_active:T
-      {
-        \tl_gset:Ne \g__enumext_first_para_struct_tl { \tag_get:n { struct_num } }
-        \hook_gput_next_code:nn { para/end } { \__enumext_first_para_align: }
-      }
-  }
-\cs_new_protected_nopar:Nn \__enumext_first_para_align:
-  {
-    \tl_if_empty:NF \g__enumext_first_para_struct_tl
-      {
-        \tl_clear:N \l__enumext_first_para_class_tl
-        \tl_if_exist:cTF { l_tag_para_attr_class_tl }
-          {
-            \tl_set_eq:Nc \l__enumext_first_para_class_tl
-              { l_tag_para_attr_class_tl }
-          }
-          {
-            \tl_if_exist:cT { l__tag_para_attr_class_tl }
-              {
-                \tl_set_eq:Nc \l__enumext_first_para_class_tl
-                  { l__tag_para_attr_class_tl }
-              }
-          }
-        \str_case:Vn \l__enumext_first_para_class_tl
-          {
-            { justify }
-              {
-                \__enumext_first_para_align:n { Justify }
-              }
-            { center }
-              {
-                \__enumext_first_para_align:n { Center }
-              }
-            { raggedright }
-              {
-                \__enumext_first_para_align:n { Start }
-              }
-            { raggedleft }
-              {
-                \__enumext_first_para_align:n { End }
-              }
-          }
-        \tl_gclear:N \g__enumext_first_para_struct_tl
-      }
-  }
-\cs_new_protected_nopar:Nn \__enumext_first_para_align:n
-  {
-    \tag_struct_gput:ene { \g__enumext_first_para_struct_tl } { attribute }
-      { /O ~ /Layout ~ /TextAlign ~ /#1 }
   }
 \socket_new:nn {tagsupport/__enumext/keyanspic}{ 0 }
 \socket_new_plug:nnn {tagsupport/__enumext/keyanspic} {start-list-tags}
@@ -4973,7 +4922,7 @@
     \IfDocumentMetadataT
       {
         \tag_resume:n {keyanspic}
-        \tag_tool:n {para/tagging=false} % no socket for this now
+        \tag_socket_use:n { para/off }
         \tag_suspend:n {keyanspic}
       }
   }
@@ -5140,7 +5089,7 @@
   }
 \NewDocumentCommand \anspic { s o +m }
   {
-    \bool_if:NF \l__enumext_store_active_bool
+    \bool_lazy_or:nnF { \l__enumext_store_active_bool } { \__enumext_in_keyans_p: }
       {
         \msg_error:nnnn { enumext } { wrong-place }{ keyanspic }{ save-ans }
       }
@@ -5486,6 +5435,7 @@
     \__enumext_parse_keys_vii:n {#1}
     \__enumext_before_list_vii:
     \__enumext_start_store_level_vii:
+    \__enumext_nested_save:
     \__enumext_start_list:nn { }
       {
         \__enumext_list_arg_two_vii:
@@ -5497,7 +5447,9 @@
     \setcounter { enumXvii }
       { \int_eval:n { \int_use:c { l__enumext_start_vii_int } - 1 } }
     \cs_set_eq:NN \__enumext_stop_item_tmp_vii: \__enumext_first_item_tmp_vii:
-    \cs_set_eq:NN \item \__enumext_start_item_tmp_vii:
+    \cs_set_eq:NN \item \__enumext_item_switch_vii:
+    \int_set:Nn \l__enumext_base_depth_int { \@listdepth }
+    \bool_set_false:N \l__enumext_trivlist_bool
     \ignorespaces
   }
   {
@@ -5697,6 +5649,43 @@
       }
     \skip_horizontal:N \l__enumext_labelsep_vii_dim \ignorespaces
   }
+\int_new:N  \l__enumext_base_depth_int
+\bool_new:N \l__enumext_trivlist_bool
+\dim_new:N  \l__enumext_outer_labelwidth_dim
+\dim_new:N  \l__enumext_outer_labelsep_dim
+\cs_new_protected_nopar:Npn \__enumext_item_switch:N #1
+  {
+    \bool_lazy_or:nnTF
+      { \int_compare_p:nNn { \@listdepth } > { \l__enumext_base_depth_int } }
+      { \l__enumext_trivlist_bool }
+      { \__enumext_item_std:w }
+      { #1 }
+  }
+\cs_new_protected_nopar:Nn \__enumext_nested_save:
+  {
+    \dim_set_eq:NN \l__enumext_outer_labelwidth_dim \labelwidth
+    \dim_set_eq:NN \l__enumext_outer_labelsep_dim \labelsep
+  }
+\cs_new_protected_nopar:Nn \__enumext_nested_reset:
+  {
+    \int_set:Nn \l__enumext_base_depth_int { \@listdepth }
+    \bool_set_false:N \l__enumext_trivlist_bool
+    \dim_set_eq:NN \labelwidth \l__enumext_outer_labelwidth_dim
+    \dim_set_eq:NN \labelsep \l__enumext_outer_labelsep_dim
+  }
+\__enumext_at_begin_document:n
+  {
+    \cs_new_eq:NN \__enumext_trivlist_orig: \trivlist
+    \cs_set_protected_nopar:Npn \trivlist
+      {
+        \__enumext_trivlist_orig:
+        \bool_set_true:N \l__enumext_trivlist_bool
+      }
+  }
+\cs_new_protected_nopar:Nn \__enumext_item_switch_vii:
+  { \__enumext_item_switch:N \__enumext_start_item_tmp_vii: }
+\cs_new_protected_nopar:Nn \__enumext_item_switch_viii:
+  { \__enumext_item_switch:N \__enumext_start_item_tmp_viii: }
 \cs_new_protected_nopar:Npn \__enumext_start_item_vii:w [#1]
   {
     \bool_lazy_and:nnTF
@@ -5722,6 +5711,7 @@
       \__enumext_fake_make_label_vii:n {#1}
       \__enumext_stop_start_list_tag:
       \__enumext_minipage:w [ t ]{ \l__enumext_joined_width_vii_dim }
+        \__enumext_nested_reset:
         \dim_set_eq:NN \parindent \l__enumext_listparindent_vii_dim
         \skip_set_eq:NN \parskip \l__enumext_parsep_vii_skip
         \__enumext_unskip_unkern:
@@ -5760,10 +5750,8 @@
         { -\l__enumext_labelwidth_vii_dim - \l__enumext_labelsep_vii_dim }
       \__enumext_start_list_tag:n {enumext*}
       \__enumext_fake_make_label_vii:n {#1}
-      \__enumext_stop_start_list_tag:
-      \__enumext_para_count:n { begin }
-      \__enumext_first_para_start:
-      \IfDocumentMetadataT { \tag_mc_begin:n { tag = text-block } }
+      \__enumext_nested_reset:
+      \__enumext_stop_start_break_tag:
       \dim_set_eq:NN \parindent \l__enumext_listparindent_vii_dim
       \skip_set_eq:NN \parskip \l__enumext_parsep_vii_skip
       \tl_use:N \l__enumext_fake_item_indent_vii_tl
@@ -5802,6 +5790,7 @@
     \__enumext_safe_exec_viii:
     \__enumext_parse_keys_viii:n {#1}
     \__enumext_before_list_viii:
+    \__enumext_nested_save:
     \__enumext_start_list:nn { }
       {
         \__enumext_list_arg_two_viii:
@@ -5814,7 +5803,9 @@
     \setcounter { enumXviii }
       { \int_eval:n { \int_use:c { l__enumext_start_viii_int } - 1 } }
     \cs_set_eq:NN \__enumext_stop_item_tmp_viii: \__enumext_first_item_tmp_viii:
-    \cs_set_eq:NN \item \__enumext_start_item_tmp_viii:
+    \cs_set_eq:NN \item \__enumext_item_switch_viii:
+    \int_set:Nn \l__enumext_base_depth_int { \@listdepth }
+    \bool_set_false:N \l__enumext_trivlist_bool
     \ignorespaces
   }
   {
@@ -5827,7 +5818,7 @@
   }
 \cs_new_protected:Nn \__enumext_safe_exec_viii:
   {
-    \bool_if:NF \l__enumext_store_active_bool
+    \bool_lazy_or:nnF { \l__enumext_store_active_bool } { \__enumext_in_keyans_p: }
       {
         \msg_error:nnnn { enumext } { wrong-place }{ keyans* }{ save-ans }
       }
@@ -6051,6 +6042,7 @@
       \__enumext_fake_make_label_viii:n {#1}
       \__enumext_stop_start_list_tag:
       \__enumext_minipage:w [ t ]{ \l__enumext_joined_width_viii_dim }
+        \__enumext_nested_reset:
         \dim_set_eq:NN \parindent \l__enumext_listparindent_viii_dim
         \skip_set_eq:NN \parskip \l__enumext_parsep_viii_skip
         \__enumext_unskip_unkern:
@@ -6093,10 +6085,8 @@
         { -\l__enumext_labelwidth_viii_dim - \l__enumext_labelsep_viii_dim }
       \__enumext_start_list_tag:n {keyans*}
       \__enumext_fake_make_label_viii:n {#1}
-      \__enumext_stop_start_list_tag:
-      \__enumext_para_count:n { begin }
-      \__enumext_first_para_start:
-      \IfDocumentMetadataT { \tag_mc_begin:n { tag = text-block } }
+      \__enumext_nested_reset:
+      \__enumext_stop_start_break_tag:
       \dim_set_eq:NN \parindent \l__enumext_listparindent_viii_dim
       \skip_set_eq:NN \parskip \l__enumext_parsep_viii_skip
       \tl_use:N \l__enumext_fake_item_indent_viii_tl
@@ -6356,11 +6346,6 @@
       \bool_set_false:N \l__enumext_print_keyans_cmd_bool
     \group_end:
   }
-\seq_const_from_clist:Nn \c__enumext_all_families_seq
-  {
-    enumext-1, enumext-2, enumext-3, enumext-4, keyans, enumext*,
-    keyans*, print-1, print-2, print-3, print-4, print-*, print*,
-  }
 \tl_new:N  \l__enumext_setkey_tmpa_tl
 \tl_new:N  \l__enumext_setkey_tmpb_tl
 \int_new:N \l__enumext_setkey_tmpa_int
@@ -6488,9 +6473,7 @@
       {
         \seq_put_right:Ne \l__enumext_setkey_tmpa_seq { \tl_trim_spaces:n {#1} }
       }
-    \seq_if_empty:NTF \l__enumext_setkey_tmpa_seq
-      { \seq_map_inline:Nn \c__enumext_all_families_seq }
-      { \seq_map_inline:Nn \l__enumext_setkey_tmpa_seq }
+    \seq_map_inline:Nn \l__enumext_setkey_tmpa_seq
       {
         \keys_set:nn { enumext / meta-families } { ##1 = {#2} }
       }

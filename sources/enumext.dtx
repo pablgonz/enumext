@@ -2799,8 +2799,9 @@
 %
 % \keyexampcmd{check-ans}{true \textnormal{\textcolor{lightgray}{\textbar}} false}{false}[env]
 %
-% Enables the \emph{checking answer} mechanism displaying an
-% appropriate message on the terminal. This key works under the logic
+% Enables the \emph{checking answer} mechanism: a warning is shown on the
+% terminal when the number of items and answers differ, and the result is written
+% to the |.log| file. This key works under the logic
 % that each |\item| or |\item*| that does not open an
 % inner level or nested environment contains \emph{\enquote{only one
 % answer}} or \emph{\enquote{only one execution}} of the |\anskey|
@@ -4375,50 +4376,26 @@ all the worksheets are as follows:
 % \begin{description}[font=\small\sffamily,wide=0pt,style=multiline,leftmargin=1.1\descrwidth,nosep,noitemsep]
 %  \item [\fileversion{} (ctan), \filedate]
 %    \begin{itemize}
-%      \item Fixed the duplicate error messages when |\anskey|, \myenv*[no-index]{anskey*},
-%        |\anspic| or a nested \myenv*[no-index]{keyans}, \myenv*[no-index]{keyans*} and
-%        \myenv*[no-index]{keyanspic} were used without \mykey[env]{save-ans}: the
-%        message about \mykey[env]{save-ans} is no longer repeated inside these environments.
-%      \item Fixed |\setenumext| when all the levels of the optional argument are
-%        invalid: the keys were applied to all the families instead of only
-%        returning the error message.
-%      \item Fixed bad interaction between |\setenumext| and |\printkeyans|: the
-%        values set for the environments no longer modify the printed content.
-%      \item Fixed spurious errors in |\miniright| and in \myenv*[no-index]{keyans}
-%        used outside \mykey{save-ans}, and the \TeX{} error \texttt{You can't
-%        use \textbackslash unskip in vertical mode} with \mykey{mini-env}.
 %      \item New key \mykey{item-break} for \myenv*[no-index]{enumext*} and
 %        \myenv*[no-index]{keyans*}: an item that occupies the whole row is
 %        typeset without \myenv[no-index]{minipage} and can be broken between pages.
-%      \item Fixed \mykey{widest} with a \mymeta{string} for the labels \ilabel[no-index]{Roman*}
-%        and \ilabel[no-index]{roman*}, which was never converted.
-%      \item Error messages with a common layout.
-%      \item Tagged \texttt{PDF}: balanced paragraph hooks and the \texttt{TextAlign}
-%        attribute in the first paragraph of the items of \mykey{item-break}.
-%      \item The vertical spaces above, below and beside \mykey{mini-env},
-%        \mykey{mini-right}, \mykey{mini-right*} and |\miniright| are computed
-%        exactly, as in a list without \myenv[no-index]{minipage}; in
-%        \myenv*[no-index]{keyans*} the space on the right side uses
-%        \mykey{topsep}.
-%      \item Tagged \texttt{PDF}: the \myenv[no-index]{minipage} on the right
-%        side of \myenv*[no-index]{enumext*} and \myenv*[no-index]{keyans*} no
-%        longer leaves the tagging state of a \myenv[no-index]{minipage} active,
-%        so the following headings close the previous section; and fixed the
-%        duplicate destinations of \myenv*[no-index]{keyans*} with
-%        \mypkg[no-index]{hyperref}.
-%      \item Fixed \mykey{base-fix}: the baseline of the nested \myenv*[no-index]{enumext}
-%        now matches the label of the \myenv*[no-index]{enumext*} item when the
-%        keys \mykey{parsep} or \mykey{itemsep} are changed, and with \mykey{columns}.
-%      \item Fixed the removal of the last \mymeta{skip} or \mymeta{kern} before closing
-%        the \myenv[no-index]{minipage} of \mykey{mini-env} and \mykey{mini-right}:
-%        when the content ended in a character (for example, a macro after
-%        |\miniright|) the environment was never closed.
 %      \item The standard lists and the environments \myenv[no-index]{quote},
-%        \myenv[no-index]{quotation}, \myenv[no-index]{verse}, \myenv[no-index]{list},
-%        \myenv[no-index]{center}, \myenv[no-index]{flushleft}, \myenv[no-index]{flushright},
-%        \myenv[no-index]{trivlist}, \myenv[no-index]{tabbing}, \myenv[no-index]{verbatim}
-%        and those created with |\newtheorem| can be used in the content of the
-%        items of \myenv*[no-index]{enumext*} and \myenv*[no-index]{keyans*}.
+%        \myenv[no-index]{quotation}, \myenv[no-index]{verse}, \myenv[no-index]{center},
+%        \myenv[no-index]{tabbing}, \myenv[no-index]{verbatim}, those created with
+%        |\newtheorem| and similar ones can be used in the items of
+%        \myenv*[no-index]{enumext*} and \myenv*[no-index]{keyans*}.
+%      \item Fixed the duplicate error messages when the \mykey[env]{save-ans} key is
+%        missing, the behavior of |\setenumext| with invalid levels and its
+%        interaction with |\printkeyans|, and \mykey{widest} for the labels
+%        \ilabel[no-index]{Roman*} and \ilabel[no-index]{roman*}.
+%      \item Fixed |\miniright| and \mykey{mini-env}, \mykey{mini-right} and
+%        \mykey{mini-right*}: spurious errors, exact vertical spaces and the end
+%        of the \myenv[no-index]{minipage}. Fixed \mykey{base-fix} with
+%        \mykey{parsep}, \mykey{itemsep} and \mykey{columns}.
+%      \item Tagged \texttt{PDF}: balanced paragraph hooks, \texttt{TextAlign}
+%        attribute in \mykey{item-break}, and the \myenv[no-index]{minipage} on the
+%        right side no longer leaves the tagging state active.
+%      \item Error and information messages with a common layout.
 %      \item Added regression tests, run with |l3build check|.
 %    \end{itemize}
 %  \item [v2.3 (ctan), 2026-10-23]
@@ -4603,7 +4580,7 @@ all the worksheets are as follows:
 %    \end{macrocode}
 % Now declare the \mypkg*[no-index]{enumext} package.
 %    \begin{macrocode}
-\ProvidesExplPackage {enumext} {2026-10-28} {2.4} {Enumerate exercise sheets}
+\ProvidesExplPackage {enumext} {2026-11-01} {2.4} {Enumerate exercise sheets}
 %    \end{macrocode}
 % Finally, check if the \mypkg{multicol} package is loaded; if not, it is loaded.
 %    \begin{macrocode}
@@ -4994,28 +4971,22 @@ all the worksheets are as follows:
 % \subsubsection{Definition of messages for the internal hooks}
 %
 % These messages are not error messages, they only write information to the
-% |.log| file.
+% |.log| file with the standard layout of the information messages.
 %
 % \begin{macro}[int]{prop-seq-int-hook, item-answer-hook}
 % Messages written to the |.log| file by the internal hooks that show the values of the
-% global variables.
+% global variables of the storage.
 %    \begin{macrocode}
 \msg_new:nnn { enumext } { prop-seq-int-hook }
   {
-    *~Package~enumext:~Elements~in~
-    \c_backslash_str g_@@_ #1 _prop~=~#2.\\
-    *~Package~enumext:~Elements~in~
-    \c_backslash_str g_@@_ #1 _seq~=~#3.\\
-    *~Package~enumext:~Value~of~
+    Storage~'#1':~
+    \c_backslash_str g_@@_ #1 _prop~has~#2~elements,~
+    \c_backslash_str g_@@_ #1 _seq~has~#3~elements,~
     \c_backslash_str g_@@_resume_ #1 _int~=~#4.
   }
 \msg_new:nnn { enumext } { item-answer-hook }
   {
-    *~Package~enumext:~Value~of~
-    \token_to_str:N \g_@@_item_number_int \c_space_tl =~#1.\\
-    *~Package~enumext:~Value~of~
-    \token_to_str:N \g_@@_item_anskey_int \c_space_tl =~#2.\\
-    *~Package~enumext:~Difference~item_number_int~-~item_anskey_int~=~#3.
+    Items~=~#1,~answers~=~#2,~difference~=~#3.
   }
 %    \end{macrocode}
 % \end{macro}
@@ -5295,7 +5266,7 @@ all the worksheets are as follows:
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_log_global_vars:
   {
-    \msg_log:nneeee { enumext } { prop-seq-int-hook }
+    \msg_info:nneeee { enumext } { prop-seq-int-hook }
       { \g_@@_store_name_tl }
       { \prop_count:c { g_@@_ \g_@@_store_name_tl _prop } }
       { \seq_count:c { g_@@_ \g_@@_store_name_tl _seq } }
@@ -5308,7 +5279,7 @@ all the worksheets are as follows:
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_log_answer_vars:
   {
-    \msg_log:nneee { enumext } { item-answer-hook }
+    \msg_info:nneee { enumext } { item-answer-hook }
       { \int_use:N \g_@@_item_number_int }
       { \int_use:N \g_@@_item_anskey_int }
       { \int_eval:n { \g_@@_item_number_int - \g_@@_item_anskey_int} }
@@ -8825,19 +8796,19 @@ all the worksheets are as follows:
 %
 % \subsubsection{Definition of messages for the storage system}
 %
-% These messages are not error messages, they report to the terminal and
-% to the |.log| file what the \emph{\enquote{storage system}} is doing.
+% These messages are not error messages, they report to the |.log| file what the
+% \emph{\enquote{storage system}} is doing.
 %
 % \begin{macro}[int]{save-ans-log, save-ans-log-hook}
-% Messages written when the \mykey[env]{save-ans} key starts and stops.
+% Messages written to the |.log| file when the \mykey[env]{save-ans} key starts and stops.
 %    \begin{macrocode}
 \msg_new:nnn { enumext } { save-ans-log }
   {
-    *~Package~enumext:~Start~#1~with~save-ans=#2~\msg_line_context:.
+    Start~'#1'~with~'save-ans=#2'~\msg_line_context:.
   }
 \msg_new:nnn { enumext } { save-ans-log-hook }
   {
-    *~Package~enumext:~Stop~#1~with~save-ans=#2~\msg_line_context:.
+    Stop~'#1'~with~'save-ans=#2'~\msg_line_context:.
   }
 %    \end{macrocode}
 % \end{macro}
@@ -8848,18 +8819,15 @@ all the worksheets are as follows:
 %    \begin{macrocode}
 \msg_new:nnn { enumext } { store-prop }
   {
-    *~Package~enumext:~Creating~
-    \c_backslash_str g_@@_ #1 _prop~\msg_line_context:.
+    Creating~\c_backslash_str g_@@_ #1 _prop~\msg_line_context:.
   }
 \msg_new:nnn { enumext } { store-seq }
   {
-    *~Package~enumext:~Creating~
-    \c_backslash_str g_@@_ #1 _seq~\msg_line_context:.
+    Creating~\c_backslash_str g_@@_ #1 _seq~\msg_line_context:.
   }
 \msg_new:nnn { enumext } { store-int }
   {
-    *~Package~enumext:~Creating~
-    \c_backslash_str g_@@_resume_ #1 _int~\msg_line_context:.
+    Creating~\c_backslash_str g_@@_resume_ #1 _int~\msg_line_context:.
   }
 %    \end{macrocode}
 % \end{macro}
@@ -8870,24 +8838,18 @@ all the worksheets are as follows:
 %    \begin{macrocode}
 \msg_new:nnn { enumext } { items-same-answer }
   {
-    ****************************************\\
-    *~Package~enumext:~Checking~answers~in~'#1'~
-    for~\c_left_brace_str #2 \c_right_brace_str\\
-    *~started~#3~and~close~\msg_line_context: :~
-    'OK',~all~items~with~answer.\\
-    ****************************************
+    Answers~in~'#1'~(#2):~OK,~items~=~answers.\\
+    Started~#3~and~closed~\msg_line_context:.
   }
 \msg_new:nnn { enumext } { item-greater-answer }
   {
-    Checking~answers~in~'#1'~for~\c_left_brace_str #2 \c_right_brace_str\\
-    started~#3~and~close~\msg_line_context: :~'NOT~OK'\\
-    Items~>~Answers.
+    Answers~in~'#1'~(#2):~NOT~OK,~items~>~answers.\\
+    Started~#3~and~closed~\msg_line_context:.
   }
 \msg_new:nnn { enumext } { item-less-answer }
   {
-    Checking~answers~in~'#1'~for~\c_left_brace_str #2 \c_right_brace_str\\
-    started~#3~and~close~\msg_line_context: :~'NOT~OK'\\
-    Items~<~Answers.
+    Answers~in~'#1'~(#2):~NOT~OK,~items~<~answers.\\
+    Started~#3~and~closed~\msg_line_context:.
   }
 %    \end{macrocode}
 % \end{macro}
@@ -8914,7 +8876,7 @@ all the worksheets are as follows:
 %
 % \begin{macro}[int]{\@@_start_save_ans_msg:, \@@_stop_save_ans_msg:}
 %   The functions \myhlc|\@@_start_save_ans_msg:| and \myhlc|\@@_stop_save_ans_msg:|
-%   will display in the terminal and |.log| file the environment in which
+%   will write in the |.log| file the environment in which
 %   the \mykey[env]{save-ans} key was executed along with the line at the
 %   beginning and end of it. The function \myhlc|\@@_start_save_ans_msg:| will
 %   be passed to \myhlc|\@@_storing_set:n| and the function
@@ -8923,12 +8885,12 @@ all the worksheets are as follows:
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_start_save_ans_msg:
   {
-    \msg_term:nnVV { enumext } { save-ans-log }
+    \msg_info:nnVV { enumext } { save-ans-log }
       \g_@@_envir_name_tl \l_@@_store_name_tl
   }
 \cs_new_protected:Nn \@@_stop_save_ans_msg:
   {
-    \msg_term:nnVV { enumext } { save-ans-log-hook }
+    \msg_info:nnVV { enumext } { save-ans-log-hook }
       \g_@@_envir_name_tl \g_@@_store_name_tl
   }
 %    \end{macrocode}
@@ -8987,17 +8949,17 @@ all the worksheets are as follows:
 %    \begin{macrocode}
     \prop_if_exist:cF { g_@@_ \l_@@_store_name_tl _prop }
       {
-        \msg_log:nnV { enumext } { store-prop } \l_@@_store_name_tl
+        \msg_info:nnV { enumext } { store-prop } \l_@@_store_name_tl
         \prop_new:c { g_@@_ \l_@@_store_name_tl _prop }
       }
     \seq_if_exist:cF { g_@@_ \l_@@_store_name_tl _seq }
       {
-        \msg_log:nnV { enumext } { store-seq } \l_@@_store_name_tl
+        \msg_info:nnV { enumext } { store-seq } \l_@@_store_name_tl
         \seq_new:c { g_@@_ \l_@@_store_name_tl _seq }
       }
     \int_if_exist:cF { g_@@_resume_ \l_@@_store_name_tl _int }
       {
-        \msg_log:nnV { enumext } { store-int } \l_@@_store_name_tl
+        \msg_info:nnV { enumext } { store-int } \l_@@_store_name_tl
         \int_new:c { g_@@_resume_ \l_@@_store_name_tl _int }
       }
   }
@@ -9233,7 +9195,7 @@ all the worksheets are as follows:
   }
 \cs_new_protected:Nn \@@_check_ans_msg_same_ok:
   {
-    \msg_term:nneee { enumext } { items-same-answer } { \g_@@_store_name_tl }
+    \msg_info:nneee { enumext } { items-same-answer } { \g_@@_store_name_tl }
       { \g_@@_envir_name_tl } { \g_@@_start_line_tl }
   }
 \cs_new_protected:Nn \@@_check_ans_msg_greater:
@@ -9264,17 +9226,17 @@ all the worksheets are as follows:
   }
 \cs_new_protected:Nn \@@_check_ans_log_msg_less:
   {
-    \msg_log:nneee { enumext } { item-less-answer } { \g_@@_store_name_tl }
+    \msg_info:nneee { enumext } { item-less-answer } { \g_@@_store_name_tl }
       { \g_@@_envir_name_tl } { \g_@@_start_line_tl }
   }
 \cs_new_protected:Nn \@@_check_ans_log_msg_same_ok:
   {
-    \msg_log:nneee { enumext } { items-same-answer }  { \g_@@_store_name_tl }
+    \msg_info:nneee { enumext } { items-same-answer }  { \g_@@_store_name_tl }
       { \g_@@_envir_name_tl } { \g_@@_start_line_tl }
   }
 \cs_new_protected:Nn \@@_check_ans_log_msg_greater:
   {
-    \msg_log:nneee { enumext } { item-greater-answer } { \g_@@_store_name_tl }
+    \msg_info:nneee { enumext } { item-greater-answer } { \g_@@_store_name_tl }
       { \g_@@_envir_name_tl } { \g_@@_start_line_tl }
   }
 %    \end{macrocode}
@@ -10714,8 +10676,8 @@ all the worksheets are as follows:
 %   \myhlc|\@@_item_answer_diff:| function and then writes the values of
 %   the global variables used to the |.log| file. If the key
 %   \mykey[env]{check-ans} is active, it executes the function
-%   \myhlc|\@@_check_ans_show:| and shows the result in the terminal, otherwise
-%   it executes the function \myhlc|\@@_check_ans_log:| and writes the
+%   \myhlc|\@@_check_ans_show:|, which warns on the terminal if the numbers differ,
+%   otherwise it executes the function \myhlc|\@@_check_ans_log:| and writes the
 %   results in the |.log| file, and finally executes the function
 %   \myhlc|\@@_reset_global_vars:| returning the used variables to their
 %   original state.
@@ -12078,7 +12040,7 @@ all the worksheets are as follows:
 %
 % \begin{important}*
 %  For compatibility with \emph{tagged} \texttt{PDF} and \hologo{LaTeX}
-%  release 2026-06-01, |\setcounter| is moved to |\begin{list}|\mymarg{arg one}|{|\mymeta{arg two}|}\setcounter|
+%  release 2026-06-01, |\setcounter| is moved to |\begin{list}|\mymarg{arg one}\mymarg{arg two}|\setcounter|
 %  in the definition of the environments \myenv*[no-index]{enumext*} and \myenv*[no-index]{keyans*} (\S\ref{env:starred},~\S\ref{env:keyans-starred}).
 %  This resolves the nesting problem reported by Tim Prescott (\texttt{@teepeemm}) in
 %  \href{https://github.com/pablgonz/enumext/issues/5}{enumext* nested in enumext starts at 2 with DocumentMetadata}
@@ -12745,7 +12707,7 @@ all the worksheets are as follows:
 % \emph{list environments} and the \myenv[no-index]{list} environment. Unfortunately
 % non-standard \emph{list environments} like \myenv*[no-index]{keyanspic} or the
 % horizontal list environments \myenv*[no-index]{enumext*} and \myenv*[no-index]{keyans*} are
-% not structured in a nice way, i.e. the expected result in the \texttt{PDF}
+% not structured in a nice way, i.e. the visual result in the \texttt{PDF}
 % file is the expected one, but the underlying structure is not correct. In
 % simple terms, for \emph{tagged} \texttt{PDF} a \myenv[no-index]{list} environment
 % is a \myenv[no-index]{list} environment, no matter what it looks like in the \texttt{PDF} file.
@@ -12864,7 +12826,7 @@ all the worksheets are as follows:
 %   \texttt{para/textblock/begin} of the \hologo{LaTeX} kernel. These
 %   sockets also take care of the counters of the \emph{paragraph hooks}, the
 %   names of the tags and the class of the \texttt{Layout} attribute
-%   \texttt{TextAlign}, so no internal variable of \mypkg{tagpdf} is needed.
+%   \texttt{TextAlign}.
 %   If the last paragraph of the item has already been ended by a \myhlc|\par|,
 %   coming from an empty line before the next \myhlc|\item| or before \myhlc|\end|
 %   or from a \myhlc|\par| inside a group, the hook has closed the
@@ -13608,7 +13570,7 @@ all the worksheets are as follows:
 % Since |\item| is not redefined with |\RenewDocumentCommand|, the original
 % definition of the kernel is replaced by the one of the horizontal environment.
 % The original is not lost, a copy is made at the beginning of the document and
-% |\item| is turned into a \emph{dispatcher} that decides which of the two
+% |\item| is turned into a \emph{switch} that decides which of the two
 % definitions must be run, as explained in \S\ref{subsec:item-nested}. Because of
 % this, the \emph{standard list environments} and any environment defined using
 % base \myenv[no-index]{list} or \myhlc|\trivlist| can be used in the \mymeta{content}
@@ -13892,7 +13854,7 @@ all the worksheets are as follows:
 %   environment on the \emph{\enquote{right side}} is executed
 %   \emph{\enquote{after}} closing the environment, so it is necessary to
 %   make a global copy of the variable \myhlc|\l_@@_minipage_right_vii_dim| in
-%   the variable \myhlc|\g_@@_minipage_right_vii_dim|.%
+%   the variable \myhlc|\g_@@_minipage_right_vii_dim|.
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_start_mini_vii:
   {
@@ -14071,8 +14033,8 @@ all the worksheets are as follows:
 %    The environment accepts an optional \myoarg{key \textnormal{\textcolor{gray}{=}} val} argument in `|#1|'
 %    that is processed after checking where it is running. The environment is
 %    generated and a temporary definition is given to \myhlc|\@@_stop_item_tmp_vii:| equal to
-%    \myhlc|\@@_first_item_tmp_vii:| and next to |\item| equal to the dispatcher
-%    \myhlc|\@@_item_dispatch_vii:| (\S\ref{subsec:item-nested}), which decides whether
+%    \myhlc|\@@_first_item_tmp_vii:| and next to |\item| equal to the switch
+%    \myhlc|\@@_item_switch_vii:| (\S\ref{subsec:item-nested}), which decides whether
 %    |\item| belongs to \env{enumext*} (\myhlc|\@@_start_item_tmp_vii:|, redefined
 %    later) or to a standard list nested inside it; the nesting depth of
 %    the \env{enumext*} environment is stored in \myhlc|\l_@@_base_depth_int|. Unlike the implementation used by
@@ -14107,7 +14069,7 @@ all the worksheets are as follows:
     \setcounter { enumXvii }
       { \int_eval:n { \int_use:c { l_@@_start_vii_int } - 1 } }
     \cs_set_eq:NN \@@_stop_item_tmp_vii: \@@_first_item_tmp_vii:
-    \cs_set_eq:NN \item \@@_item_dispatch_vii:
+    \cs_set_eq:NN \item \@@_item_switch_vii:
     \int_set:Nn \l_@@_base_depth_int { \@listdepth }
     \bool_set_false:N \l_@@_trivlist_bool
     \ignorespaces
@@ -14494,7 +14456,7 @@ all the worksheets are as follows:
 % \myhlc|\l_@@_trivlist_bool| is set to true by a wrapper of
 % \myhlc|\trivlist|. The assignment is
 % local to the group of the nested environment, so the boolean is true while
-% it is open and false again when it is closed, and the dispatcher executes the
+% it is open and false again when it is closed, and the switch executes the
 % copy \myhlc|\@@_item_std:w| in the same way. The boolean is set to false when
 % the environment starts and after opening each item.
 %
@@ -14502,9 +14464,9 @@ all the worksheets are as follows:
 %   The nested lists inherit \myhlc|\labelwidth| and \myhlc|\labelsep| from the
 %   group in which they are opened, which is the one of the \env{list} that defines
 %   \myenv*[no-index]{enumext*}, where they have the values of the keys
-%   \mykey{labelwidth} and \mykey{labelsep}. The result is that the label of
-%   \myenv[no-index]{itemize} was displaced and the space after the label of
-%   \myenv[no-index]{description} and of the theorems was changed. The values that
+%   \mykey{labelwidth} and \mykey{labelsep}. Without a correction the label of
+%   \myenv[no-index]{itemize} would be displaced and the space after the label of
+%   \myenv[no-index]{description} and of the theorems would change. The values that
 %   they have before starting the environment are saved in
 %   \myhlc|\l_@@_outer_labelwidth_dim| and \myhlc|\l_@@_outer_labelsep_dim|, and
 %   \myhlc|\@@_nested_reset:| restores them after opening the
@@ -14518,8 +14480,8 @@ all the worksheets are as follows:
 % \begin{macro}[int]{\l_@@_base_depth_int, \l_@@_trivlist_bool,
 %                    \@@_trivlist_orig:,
 %                    \l_@@_outer_labelwidth_dim, \l_@@_outer_labelsep_dim,
-%                    \@@_item_dispatch:N, \@@_item_dispatch_vii:,
-%                    \@@_item_dispatch_viii:, \@@_nested_save:, \@@_nested_reset:}
+%                    \@@_item_switch:N, \@@_item_switch_vii:,
+%                    \@@_item_switch_viii:, \@@_nested_save:, \@@_nested_reset:}
 %   First the variables: the depth of lists of the environment, the boolean that
 %   is true inside an environment based on \myhlc|\trivlist| and the values of
 %   \myhlc|\labelwidth| and \myhlc|\labelsep| before starting the environment.
@@ -14529,12 +14491,12 @@ all the worksheets are as follows:
 \dim_new:N  \l_@@_outer_labelwidth_dim
 \dim_new:N  \l_@@_outer_labelsep_dim
 %    \end{macrocode}
-%   The function \myhlc|\@@_item_dispatch:N| executes the copy of the kernel
+%   The function \myhlc|\@@_item_switch:N| executes the copy of the kernel
 %   |\item| when the depth of lists is greater than the stored one or when the
 %   boolean is true, otherwise it executes the function in its argument, the real
 %   |\item| of the environment.
 %    \begin{macrocode}
-\cs_new_protected_nopar:Npn \@@_item_dispatch:N #1
+\cs_new_protected_nopar:Npn \@@_item_switch:N #1
   {
     \bool_lazy_or:nnTF
       { \int_compare_p:nNn { \@listdepth } > { \l_@@_base_depth_int } }
@@ -14581,10 +14543,10 @@ all the worksheets are as follows:
 %   Finally the definition of |\item| in \myenv*[no-index]{enumext*} and
 %   \myenv*[no-index]{keyans*} respectively.
 %    \begin{macrocode}
-\cs_new_protected_nopar:Nn \@@_item_dispatch_vii:
-  { \@@_item_dispatch:N \@@_start_item_tmp_vii: }
-\cs_new_protected_nopar:Nn \@@_item_dispatch_viii:
-  { \@@_item_dispatch:N \@@_start_item_tmp_viii: }
+\cs_new_protected_nopar:Nn \@@_item_switch_vii:
+  { \@@_item_switch:N \@@_start_item_tmp_vii: }
+\cs_new_protected_nopar:Nn \@@_item_switch_viii:
+  { \@@_item_switch:N \@@_start_item_tmp_viii: }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -14650,7 +14612,7 @@ all the worksheets are as follows:
 %   \mykey[env]{first} are executed. Inside the \myenv[no-index]{minipage}
 %   |\@listdepth| is reset to zero, so the nesting depth is stored again in
 %   \myhlc|\l_@@_base_depth_int| right after opening it; this allows the
-%   dispatcher (\S\ref{subsec:item-nested}) to recognize standard lists nested in the item.
+%   switch (\S\ref{subsec:item-nested}) to recognize standard lists nested in the item.
 %
 % \begin{important}*
 %  Here the use of \myhlc|\@@_unskip_unkern:| (run twice) and
@@ -14842,7 +14804,7 @@ all the worksheets are as follows:
     \setcounter { enumXviii }
       { \int_eval:n { \int_use:c { l_@@_start_viii_int } - 1 } }
     \cs_set_eq:NN \@@_stop_item_tmp_viii: \@@_first_item_tmp_viii:
-    \cs_set_eq:NN \item \@@_item_dispatch_viii:
+    \cs_set_eq:NN \item \@@_item_switch_viii:
     \int_set:Nn \l_@@_base_depth_int { \@listdepth }
     \bool_set_false:N \l_@@_trivlist_bool
     \ignorespaces
@@ -15619,9 +15581,8 @@ all the worksheets are as follows:
       { label = { \exp_not:v { c_@@_default_label_ #2 _tl } } }
   }
 %    \end{macrocode}
-%   Finally the function \myhlc|\@@_default_restore:| restores the default
-%   values of all the environments and the values are saved when the package
-%   is loaded.
+%   Finally the function \myhlc|\@@_default_restore:| restores, for all the
+%   environments, the values saved when the package was loaded.
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_default_restore:
   {
