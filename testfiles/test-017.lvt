@@ -74,10 +74,13 @@ Text\footnote{Note in the text.}
 
 5. Footnote in an item that stores the answer.
 
-\begin{keyans*}[save-ans=notes,columns=2]
-  \item* A\footnote{Note in keyans*.}
-  \item* B
-\end{keyans*}
+\begin{enumext}[save-ans=notes]
+  \item Question.
+    \begin{keyans*}[columns=2]
+      \item* A\footnote{Note in keyans*.}
+      \item* B
+    \end{keyans*}
+\end{enumext}
 
 \START
 

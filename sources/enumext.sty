@@ -499,53 +499,58 @@
     \seq_gclear:N \g__enumext_footnote_starred_arg_seq
     \seq_gclear:N \g__enumext_footnote_starred_int_seq
   }
-\cs_new_protected:Nn \__enumext_footnotetext_fix:
+\box_new:N \g__enumext_footnote_box
+\dim_new:N \l__enumext_footnote_wd_dim
+\IfDocumentMetadataT
   {
-    \cs_set_protected:Npn \fnote_footnotetext:n ##1
+    \NewSocketPlug { fntext/process } { enumextsave }
       {
-        \hook_use:n { fntext/before }
-        \tag_socket_use:n { fntext/begin }
+        \global \setbox \g__enumext_footnote_box \vbox
+          {
+            \unvbox \g__enumext_footnote_box
+            \columnwidth \l__enumext_footnote_wd_dim
+            #1
+          }
+      }
+  }
+\cs_new_protected:Nn \__enumext_renew_footnote_mini_tagged:
+  {
+    \dim_set_eq:NN \l__enumext_footnote_wd_dim \columnwidth
+    \RenewDocumentCommand \footnote { o +m }
+      {
+        \tl_if_novalue:nTF {##1}
+          {
+            \stepcounter{footnote}
+            \int_gset_eq:Nc \g__enumext_footnote_starred_int { c@footnote }
+          }
+          {
+            \int_gset:Nn \g__enumext_footnote_starred_int {##1}
+          }
+        \footnotemark [ \g__enumext_footnote_starred_int ]
+        \group_begin:
+          \cs_set:Npn \@mpfn { footnote }
+          \cs_set_eq:NN \thempfn \thefootnote
+          \cs_set_eq:NN \@footnotetext \fnote_footnotetext:n
+          \AssignSocketPlug { fntext/process } { enumextsave }
+          \footnotetext [ \g__enumext_footnote_starred_int ] {##2}
+        \group_end:
+      }
+  }
+\cs_new_protected:Nn \__enumext_print_footnote_mini_tagged:
+  {
+    \box_if_empty:NF \g__enumext_footnote_box
+      {
         \socket_use:nn { fntext/process }
           {
-            \hook_use:n { fntext }
             \reset@font
             \footnotesize
             \interlinepenalty \interfootnotelinepenalty
             \splittopskip \footnotesep
             \splitmaxdepth \dp \strutbox
             \floatingpenalty \@MM
-            \hsize \columnwidth
-            \@parboxrestore
-            \UseTaggingSocket { para/restore }
-            \parindent 1em
-            \def \@currentcounter { footnote }
-            \protected@edef \@currentlabel { \p@footnote \@thefnmark }
-            \hook_use:n { fntext/para }
-            \color@begingroup
-              \socket_use:nn { fntext/make }
-                {
-                  \socket_use:n { fntext/begin }
-                  \hook_use:n { fntext/begin }
-                  \ignorespaces
-                  ##1
-                  \hook_use:n { fntext/end }
-                  \socket_use:n { fntext/end }
-                }
-              \par
-              \@endpefalse
-            \color@endgroup
+            \unvbox \g__enumext_footnote_box
           }
-        \tag_socket_use:n { fntext/end }
-        \hook_use:n { fntext/after }
       }
-    \cs_set_eq:NN \@footnotetext \fnote_footnotetext:n
-  }
-\cs_new_protected:Nn \__enumext_print_footnote_mini_tagged:
-  {
-    \group_begin:
-      \__enumext_footnotetext_fix:
-      \__enumext_print_footnote_mini:
-    \group_end:
   }
 \cs_new_protected:Nn \__enumext_renew_footnote_standard:
   {
@@ -591,7 +596,7 @@
       {
         \bool_if:NF \l__enumext_footnotehyper_tag_bool
           {
-            \__enumext_renew_footnote_mini:
+            \__enumext_renew_footnote_mini_tagged:
           }
       }
       {

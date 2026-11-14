@@ -1503,10 +1503,10 @@
 %  notes. If \mypkg[no-index]{footnotehyper} is not loaded, or it is an older version
 %  that is not compatible with \emph{tagged} \texttt{PDF}, the package redefines
 %  |\footnote| internally and the \enquote{links} are not produced; in
-%  \myenv*[no-index]{enumext*} and \myenv*[no-index]{keyans*} it also applies a
-%  temporary workaround for the kernel issue 1337 (a |\footnotetext| after a list
-%  gives a \texttt{tagpdf} error), so the notes are valid but they are not inside
-%  the item in the structure tree. With an older
+%  \myenv*[no-index]{enumext*} and \myenv*[no-index]{keyans*} the notes are
+%  processed inside the item and printed after the environment, which avoids the
+%  kernel issue 1337 (a |\footnotetext| after a list gives a \texttt{tagpdf}
+%  error). With an older
 %  version, load \mypkg[no-index]{footnotehyper} only when \emph{tagged}
 %  \texttt{PDF} is not active, using |\IfDocumentMetadataF|.
 % \end{important}
@@ -5496,6 +5496,8 @@ all the worksheets are as follows:
 %   \g_@@_footnote_starred_arg_seq,
 %   \g_@@_footnote_standard_int_seq,
 %   \g_@@_footnote_starred_int_seq,
+%   \g_@@_footnote_box,
+%   \l_@@_footnote_wd_dim,
 % }
 %   Internal variables used for redefinition of |\footnote| (\S\ref{subsec:footnote}).
 %    \begin{macrocode}
@@ -5510,7 +5512,7 @@ all the worksheets are as follows:
 %
 % \begin{macro}[int]{\@@_footnotetext:nn, \@@_renew_footnote:,
 %                    \@@_print_footnote:, \@@_renew_footnote_mini:,
-%                    \@@_print_footnote_mini:, \@@_footnotetext_fix:,
+%                    \@@_print_footnote_mini:, \@@_renew_footnote_mini_tagged:,
 %                    \@@_print_footnote_mini_tagged:}
 %   Redefinition of the |\footnote| command using |\footnotetext| and
 %   |\footnotemark| for the \mykey[env]{mini-env} key in the \myenv*[no-index]{enumext} and
@@ -5587,61 +5589,73 @@ all the worksheets are as follows:
   }
 %    \end{macrocode}
 %   With \emph{tagged} \texttt{PDF}, a |\footnotetext| placed after a list
-%   gives a \texttt{tagpdf} error (see \texttt{tagging-project} issue 1337).
-%   The function \myhlc|\@@_footnotetext_fix:| makes a local copy of the
-%   kernel function \myhlc|\fnote_footnotetext:n| adding \cs{@endpefalse}
-%   after the final |\par| (workaround proposed by Ulrike Fischer) and assigns
-%   it to |\@footnotetext|. The function \myhlc|\@@_print_footnote_mini_tagged:|
-%   uses it inside a group, so the notes of the rest of the document are not
-%   affected.
+%   gives a \texttt{tagpdf} error (see \texttt{tagging-project} issue 1337), so
+%   in the \myenv*[no-index]{enumext*} and \myenv*[no-index]{keyans*}
+%   environments the notes are processed inside the item, as the
+%   \mypkg[no-index]{footnotehyper} package does. The plug |enumextsave| of the
+%   socket |fntext/process| saves the note in the box
+%   \myhlc|\g_@@_footnote_box| instead of inserting it, with the width stored in
+%   \myhlc|\l_@@_footnote_wd_dim|.
 %    \begin{macrocode}
-\cs_new_protected:Nn \@@_footnotetext_fix:
+\box_new:N \g_@@_footnote_box
+\dim_new:N \l_@@_footnote_wd_dim
+\IfDocumentMetadataT
   {
-    \cs_set_protected:Npn \fnote_footnotetext:n ##1
+    \NewSocketPlug { fntext/process } { enumextsave }
       {
-        \hook_use:n { fntext/before }
-        \tag_socket_use:n { fntext/begin }
+        \global \setbox \g_@@_footnote_box \vbox
+          {
+            \unvbox \g_@@_footnote_box
+            \columnwidth \l_@@_footnote_wd_dim
+            #1
+          }
+      }
+  }
+%    \end{macrocode}
+%   The function \myhlc|\@@_renew_footnote_mini_tagged:| redefines |\footnote|
+%   to use that plug in a group, with the counter and the mark of the document
+%   (not those of the \myenv[no-index]{minipage}), and
+%   \myhlc|\@@_print_footnote_mini_tagged:| delivers the saved notes after the
+%   environment with the default plug of the socket.
+%    \begin{macrocode}
+\cs_new_protected:Nn \@@_renew_footnote_mini_tagged:
+  {
+    \dim_set_eq:NN \l_@@_footnote_wd_dim \columnwidth
+    \RenewDocumentCommand \footnote { o +m }
+      {
+        \tl_if_novalue:nTF {##1}
+          {
+            \stepcounter{footnote}
+            \int_gset_eq:Nc \g_@@_footnote_starred_int { c@footnote }
+          }
+          {
+            \int_gset:Nn \g_@@_footnote_starred_int {##1}
+          }
+        \footnotemark [ \g_@@_footnote_starred_int ]
+        \group_begin:
+          \cs_set:Npn \@mpfn { footnote }
+          \cs_set_eq:NN \thempfn \thefootnote
+          \cs_set_eq:NN \@footnotetext \fnote_footnotetext:n
+          \AssignSocketPlug { fntext/process } { enumextsave }
+          \footnotetext [ \g_@@_footnote_starred_int ] {##2}
+        \group_end:
+      }
+  }
+\cs_new_protected:Nn \@@_print_footnote_mini_tagged:
+  {
+    \box_if_empty:NF \g_@@_footnote_box
+      {
         \socket_use:nn { fntext/process }
           {
-            \hook_use:n { fntext }
             \reset@font
             \footnotesize
             \interlinepenalty \interfootnotelinepenalty
             \splittopskip \footnotesep
             \splitmaxdepth \dp \strutbox
             \floatingpenalty \@MM
-            \hsize \columnwidth
-            \@parboxrestore
-            \UseTaggingSocket { para/restore }
-            \parindent 1em
-            \def \@currentcounter { footnote }
-            \protected@edef \@currentlabel { \p@footnote \@thefnmark }
-            \hook_use:n { fntext/para }
-            \color@begingroup
-              \socket_use:nn { fntext/make }
-                {
-                  \socket_use:n { fntext/begin }
-                  \hook_use:n { fntext/begin }
-                  \ignorespaces
-                  ##1
-                  \hook_use:n { fntext/end }
-                  \socket_use:n { fntext/end }
-                }
-              \par
-              \@endpefalse
-            \color@endgroup
+            \unvbox \g_@@_footnote_box
           }
-        \tag_socket_use:n { fntext/end }
-        \hook_use:n { fntext/after }
       }
-    \cs_set_eq:NN \@footnotetext \fnote_footnotetext:n
-  }
-\cs_new_protected:Nn \@@_print_footnote_mini_tagged:
-  {
-    \group_begin:
-      \@@_footnotetext_fix:
-      \@@_print_footnote_mini:
-    \group_end:
   }
 %    \end{macrocode}
 % \end{macro}
@@ -5706,7 +5720,7 @@ all the worksheets are as follows:
       {
         \bool_if:NF \l_@@_footnotehyper_tag_bool
           {
-            \@@_renew_footnote_mini:
+            \@@_renew_footnote_mini_tagged:
           }
       }
       {
