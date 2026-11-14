@@ -1,0 +1,85 @@
+% test-018.lvt -- notas al pie con etiquetado sin footnotehyper
+%
+% Hecho con cariño por Pablo González L. <pablgonz@educarchile.cl>
+% para que enumext siga funcionando igual de bien después de cada cambio.
+%
+% Regresion:  l3build save test-018
+%             l3build check test-018
+%
+% Test de regresion de \footnote con etiquetado (tagged PDF) cuando el paquete
+% footnotehyper NO esta cargado: enumext aplica su propio parche y, en
+% enumext* y keyans*, la copia local de \fnote_footnotetext:n. Se comprueba que
+% las notas salen y que el arbol de etiquetas queda cerrado (sin error tagpdf).
+\input{regression-test}
+
+\DocumentMetadata
+  {
+    lang=en-US,
+    pdfversion=2.0,
+    pdfstandard=ua-2,
+    tagging=on,
+  }
+\documentclass{article}
+\ExplSyntaxOn
+\debug_on:n { all }
+\ExplSyntaxOff
+\usepackage{enumext}
+\usepackage{hyperref}
+\hypersetup
+  {
+    pdfdisplaydoctitle = true,
+    pdftitle           = {test-018: footnotes without footnotehyper},
+  }
+\begin{document}
+
+\section*{A. The environment \texttt{enumext}}
+
+1. Footnote in the text and in the items.
+
+Text\footnote{Note in the text.}
+
+\begin{enumext}
+  \item One\footnote{Note in the first item.}
+  \item Two\footnote{Note in the second item.}
+\end{enumext}
+
+2. Nested levels.
+
+\begin{enumext}
+  \item First\footnote{First level.}
+    \begin{enumext}
+      \item Second\footnote{Second level.}
+    \end{enumext}
+\end{enumext}
+
+\section*{B. The environment \texttt{enumext*}}
+
+3. Footnotes in two columns.
+
+\begin{enumext*}[columns=2]
+  \item A\footnote{Note A.}
+  \item B\footnote{Note B.}
+\end{enumext*}
+
+4. Item that occupies the whole row.
+
+\begin{enumext*}[columns=1,item-break=true]
+  \item Before\footnote{Whole row.} \begin{center}Centered\end{center}
+\end{enumext*}
+
+\section*{C. The environment \texttt{keyans*}}
+
+5. Footnote in an item that stores the answer.
+
+\begin{keyans*}[save-ans=notes,columns=2]
+  \item* A\footnote{Note in keyans*.}
+  \item* B
+\end{keyans*}
+
+\START
+
+\SHOWPDFTAGS
+
+\OMIT
+
+\end{document}

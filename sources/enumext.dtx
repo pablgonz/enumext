@@ -1502,7 +1502,11 @@
 %  v2.0 or later loaded, the package \mypkg*[no-index]{enumext} uses it for the
 %  notes. If \mypkg[no-index]{footnotehyper} is not loaded, or it is an older version
 %  that is not compatible with \emph{tagged} \texttt{PDF}, the package redefines
-%  |\footnote| internally and the \enquote{links} are not produced. With an older
+%  |\footnote| internally and the \enquote{links} are not produced; in
+%  \myenv*[no-index]{enumext*} and \myenv*[no-index]{keyans*} it also applies a
+%  temporary workaround for the kernel issue 1337 (a |\footnotetext| after a list
+%  gives a \texttt{tagpdf} error), so the notes are valid but they are not inside
+%  the item in the structure tree. With an older
 %  version, load \mypkg[no-index]{footnotehyper} only when \emph{tagged}
 %  \texttt{PDF} is not active, using |\IfDocumentMetadataF|.
 % \end{important}
@@ -4380,6 +4384,9 @@ all the worksheets are as follows:
 %    \begin{itemize}
 %      \item Support for \mypkg[no-index]{footnotehyper} v2.0 with \emph{tagged}
 %        \texttt{PDF}: if it is loaded, it manages the |\footnote| in the environments.
+%      \item Fixed the \texttt{tagpdf} error for |\footnote| in \myenv*[no-index]{enumext*}
+%        and \myenv*[no-index]{keyans*} with \emph{tagged} \texttt{PDF} when
+%        \mypkg[no-index]{footnotehyper} is not loaded.
 %    \end{itemize}
 %  \item [v2.4 (ctan), 2026-11-01]
 %    \begin{itemize}
@@ -5503,7 +5510,8 @@ all the worksheets are as follows:
 %
 % \begin{macro}[int]{\@@_footnotetext:nn, \@@_renew_footnote:,
 %                    \@@_print_footnote:, \@@_renew_footnote_mini:,
-%                    \@@_print_footnote_mini:}
+%                    \@@_print_footnote_mini:, \@@_footnotetext_fix:,
+%                    \@@_print_footnote_mini_tagged:}
 %   Redefinition of the |\footnote| command using |\footnotetext| and
 %   |\footnotemark| for the \mykey[env]{mini-env} key in the \myenv*[no-index]{enumext} and
 %   \myenv*[no-index]{keyans} environments.
@@ -5578,6 +5586,64 @@ all the worksheets are as follows:
     \seq_gclear:N \g_@@_footnote_starred_int_seq
   }
 %    \end{macrocode}
+%   With \emph{tagged} \texttt{PDF}, a |\footnotetext| placed after a list
+%   gives a \texttt{tagpdf} error (see \texttt{tagging-project} issue 1337).
+%   The function \myhlc|\@@_footnotetext_fix:| makes a local copy of the
+%   kernel function \myhlc|\fnote_footnotetext:n| adding \cs{@endpefalse}
+%   after the final |\par| (workaround proposed by Ulrike Fischer) and assigns
+%   it to |\@footnotetext|. The function \myhlc|\@@_print_footnote_mini_tagged:|
+%   uses it inside a group, so the notes of the rest of the document are not
+%   affected.
+%    \begin{macrocode}
+\cs_new_protected:Nn \@@_footnotetext_fix:
+  {
+    \cs_set_protected:Npn \fnote_footnotetext:n ##1
+      {
+        \hook_use:n { fntext/before }
+        \tag_socket_use:n { fntext/begin }
+        \socket_use:nn { fntext/process }
+          {
+            \hook_use:n { fntext }
+            \reset@font
+            \footnotesize
+            \interlinepenalty \interfootnotelinepenalty
+            \splittopskip \footnotesep
+            \splitmaxdepth \dp \strutbox
+            \floatingpenalty \@MM
+            \hsize \columnwidth
+            \@parboxrestore
+            \UseTaggingSocket { para/restore }
+            \parindent 1em
+            \def \@currentcounter { footnote }
+            \protected@edef \@currentlabel { \p@footnote \@thefnmark }
+            \hook_use:n { fntext/para }
+            \color@begingroup
+              \socket_use:nn { fntext/make }
+                {
+                  \socket_use:n { fntext/begin }
+                  \hook_use:n { fntext/begin }
+                  \ignorespaces
+                  ##1
+                  \hook_use:n { fntext/end }
+                  \socket_use:n { fntext/end }
+                }
+              \par
+              \@endpefalse
+            \color@endgroup
+          }
+        \tag_socket_use:n { fntext/end }
+        \hook_use:n { fntext/after }
+      }
+    \cs_set_eq:NN \@footnotetext \fnote_footnotetext:n
+  }
+\cs_new_protected:Nn \@@_print_footnote_mini_tagged:
+  {
+    \group_begin:
+      \@@_footnotetext_fix:
+      \@@_print_footnote_mini:
+    \group_end:
+  }
+%    \end{macrocode}
 % \end{macro}
 %
 % \begin{macro}[int]{\@@_renew_footnote_standard:, \@@_print_footnote_standard:,
@@ -5587,7 +5653,9 @@ all the worksheets are as follows:
 %   key in the \myenv*[no-index]{enumext} and \myenv*[no-index]{keyans} environments. It is
 %   executed when the \mypkg[no-index]{footnotehyper} package does not manage the
 %   notes: when it is not loaded or, with \emph{tagged} \texttt{PDF} active,
-%   when its version does not support it.
+%   when its version does not support it. In this last case the notes of the
+%   \myenv*[no-index]{enumext*} and \myenv*[no-index]{keyans*} environments are
+%   printed with \myhlc|\@@_print_footnote_mini_tagged:|.
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_renew_footnote_standard:
   {
@@ -5654,7 +5722,7 @@ all the worksheets are as follows:
       {
         \bool_if:NF \l_@@_footnotehyper_tag_bool
           {
-            \@@_print_footnote_mini:
+            \@@_print_footnote_mini_tagged:
           }
       }
       {

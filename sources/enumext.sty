@@ -499,6 +499,54 @@
     \seq_gclear:N \g__enumext_footnote_starred_arg_seq
     \seq_gclear:N \g__enumext_footnote_starred_int_seq
   }
+\cs_new_protected:Nn \__enumext_footnotetext_fix:
+  {
+    \cs_set_protected:Npn \fnote_footnotetext:n ##1
+      {
+        \hook_use:n { fntext/before }
+        \tag_socket_use:n { fntext/begin }
+        \socket_use:nn { fntext/process }
+          {
+            \hook_use:n { fntext }
+            \reset@font
+            \footnotesize
+            \interlinepenalty \interfootnotelinepenalty
+            \splittopskip \footnotesep
+            \splitmaxdepth \dp \strutbox
+            \floatingpenalty \@MM
+            \hsize \columnwidth
+            \@parboxrestore
+            \UseTaggingSocket { para/restore }
+            \parindent 1em
+            \def \@currentcounter { footnote }
+            \protected@edef \@currentlabel { \p@footnote \@thefnmark }
+            \hook_use:n { fntext/para }
+            \color@begingroup
+              \socket_use:nn { fntext/make }
+                {
+                  \socket_use:n { fntext/begin }
+                  \hook_use:n { fntext/begin }
+                  \ignorespaces
+                  ##1
+                  \hook_use:n { fntext/end }
+                  \socket_use:n { fntext/end }
+                }
+              \par
+              \@endpefalse
+            \color@endgroup
+          }
+        \tag_socket_use:n { fntext/end }
+        \hook_use:n { fntext/after }
+      }
+    \cs_set_eq:NN \@footnotetext \fnote_footnotetext:n
+  }
+\cs_new_protected:Nn \__enumext_print_footnote_mini_tagged:
+  {
+    \group_begin:
+      \__enumext_footnotetext_fix:
+      \__enumext_print_footnote_mini:
+    \group_end:
+  }
 \cs_new_protected:Nn \__enumext_renew_footnote_standard:
   {
     \bool_if:NT \g__enumext_standard_bool
@@ -559,7 +607,7 @@
       {
         \bool_if:NF \l__enumext_footnotehyper_tag_bool
           {
-            \__enumext_print_footnote_mini:
+            \__enumext_print_footnote_mini_tagged:
           }
       }
       {
