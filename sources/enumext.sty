@@ -159,6 +159,7 @@
 \clist_map_inline:nn { i, ii, iii, iv, vii } { \__enumext_tmp:n {#1} }
 \bool_new:N \l__enumext_hyperref_bool
 \bool_new:N \l__enumext_footnotes_key_bool
+\bool_new:N \l__enumext_footnotehyper_tag_bool
 \tl_new:N \l__enumext_newlabel_arg_one_tl
 \tl_new:N \l__enumext_newlabel_arg_two_tl
 \tl_new:N \l__enumext_write_aux_file_tl
@@ -396,6 +397,13 @@
         \bool_set_false:N \l__enumext_footnotes_key_bool
       }
   }
+\IfDocumentMetadataT
+  {
+    \IfPackageAtLeastT { footnotehyper } { 2026/11/12 }
+      {
+        \bool_set_true:N \l__enumext_footnotehyper_tag_bool
+      }
+  }
     \bool_if:NTF \l__enumext_hyperref_bool
       {
         \cs_new_eq:NN \__enumext_hypertarget:nn \hypertarget
@@ -497,7 +505,10 @@
       {
         \IfDocumentMetadataTF
           {
-            \__enumext_renew_footnote:
+            \bool_if:NF \l__enumext_footnotehyper_tag_bool
+              {
+                \__enumext_renew_footnote:
+              }
           }
           {
             \bool_if:NF \l__enumext_footnotes_key_bool
@@ -513,7 +524,10 @@
       {
         \IfDocumentMetadataTF
           {
-            \__enumext_print_footnote:
+            \bool_if:NF \l__enumext_footnotehyper_tag_bool
+              {
+                \__enumext_print_footnote:
+              }
           }
           {
             \bool_if:NF \l__enumext_footnotes_key_bool
@@ -527,7 +541,10 @@
   {
     \IfDocumentMetadataTF
       {
-        \__enumext_renew_footnote_mini:
+        \bool_if:NF \l__enumext_footnotehyper_tag_bool
+          {
+            \__enumext_renew_footnote_mini:
+          }
       }
       {
         \bool_if:NF \l__enumext_footnotes_key_bool
@@ -540,7 +557,10 @@
   {
     \IfDocumentMetadataTF
       {
-        \__enumext_print_footnote_mini:
+        \bool_if:NF \l__enumext_footnotehyper_tag_bool
+          {
+            \__enumext_print_footnote_mini:
+          }
       }
       {
         \bool_if:NF \l__enumext_footnotes_key_bool

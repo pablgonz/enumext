@@ -1,0 +1,88 @@
+% test-017.lvt -- notas al pie con etiquetado y footnotehyper
+%
+% Hecho con cariño por Pablo González L. <pablgonz@educarchile.cl>
+% para que enumext siga funcionando igual de bien después de cada cambio.
+%
+% Regresion:  l3build save test-017
+%             l3build check test-017
+%
+% Test de regresion de \footnote con etiquetado (tagged PDF) cuando el paquete
+% footnotehyper esta cargado: enumext no aplica su propio parche y las notas
+% las maneja footnotehyper. Se comprueba que las notas salen en enumext, en
+% enumext* y en keyans*, y que el arbol de etiquetas queda cerrado.
+\input{regression-test}
+
+\DocumentMetadata
+  {
+    lang=en-US,
+    pdfversion=2.0,
+    pdfstandard=ua-2,
+    tagging=on,
+  }
+\documentclass{article}
+\ExplSyntaxOn
+\debug_on:n { all }
+\ExplSyntaxOff
+\usepackage{enumext}
+\usepackage{footnotehyper}
+\makesavenoteenv{enumext}
+\makesavenoteenv{enumext*}
+\usepackage{hyperref}
+\hypersetup
+  {
+    pdfdisplaydoctitle = true,
+    pdftitle           = {test-017: footnotes with footnotehyper},
+  }
+\begin{document}
+
+\section*{A. The environment \texttt{enumext}}
+
+1. Footnote in the text and in the items.
+
+Text\footnote{Note in the text.}
+
+\begin{enumext}
+  \item One\footnote{Note in the first item.}
+  \item Two\footnote{Note in the second item.}
+\end{enumext}
+
+2. Nested levels.
+
+\begin{enumext}
+  \item First\footnote{First level.}
+    \begin{enumext}
+      \item Second\footnote{Second level.}
+    \end{enumext}
+\end{enumext}
+
+\section*{B. The environment \texttt{enumext*}}
+
+3. Footnotes in two columns.
+
+\begin{enumext*}[columns=2]
+  \item A\footnote{Note A.}
+  \item B\footnote{Note B.}
+\end{enumext*}
+
+4. Item that occupies the whole row.
+
+\begin{enumext*}[columns=1,item-break=true]
+  \item Before\footnote{Whole row.} \begin{center}Centered\end{center}
+\end{enumext*}
+
+\section*{C. The environment \texttt{keyans*}}
+
+5. Footnote in an item that stores the answer.
+
+\begin{keyans*}[save-ans=notes,columns=2]
+  \item* A\footnote{Note in keyans*.}
+  \item* B
+\end{keyans*}
+
+\START
+
+\SHOWPDFTAGS
+
+\OMIT
+
+\end{document}

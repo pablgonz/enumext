@@ -1479,30 +1479,32 @@
 % uses |\footnotetext|\myoarg{number} and |\footnotemark|\myoarg{number}\mymarg{text}
 % and \enquote{links} for this are not supported by the \mypkg[no-index]{hyperref} package.
 %
-% The best way to solve this if \emph{tagged} \texttt{PDF} is NOT active
-% is to use Jean-François Burnol's \mypkg{footnotehyper}\cite{footnotehyper}
-% package. It will support keeping the \enquote{links} if
-% \mypkg[no-index]{hyperref} is loaded with the |hyperfootnotes=true| option (default).
-% Load it is as follows:
+% The best way to solve this is to use Jean-François Burnol's
+% \mypkg{footnotehyper}\cite{footnotehyper} package. It will support keeping the
+% \enquote{links} if \mypkg[no-index]{hyperref} is loaded with the
+% |hyperfootnotes=true| option (default). Version 2.0 (2026/11/12) also supports
+% \emph{tagged} \texttt{PDF}. Load it is as follows:
 %
 % \iffalse
 %<*example>
 % \fi
 \begin{examplecode}[frame=single]
-\IfDocumentMetadataF
-  {
-    \usepackage{`\mypkg{footnotehyper}`}
-    \makesavenoteenv{enumext}
-    \makesavenoteenv{enumext*}
-  }
+\usepackage{`\mypkg{footnotehyper}`}
+\makesavenoteenv{enumext}
+\makesavenoteenv{enumext*}
 \end{examplecode}
 % \iffalse
 %</example>
 % \fi
 %
 % \begin{important}
-%  At the moment the \mypkg[no-index]{footnotehyper} package v1.1f (2025/11/15) is not compatible
-%  with \emph{tagged} \texttt{PDF}.
+%  With \emph{tagged} \texttt{PDF} active and \mypkg[no-index]{footnotehyper}
+%  v2.0 or later loaded, the package \mypkg*[no-index]{enumext} uses it for the
+%  notes. If \mypkg[no-index]{footnotehyper} is not loaded, or it is an older version
+%  that is not compatible with \emph{tagged} \texttt{PDF}, the package redefines
+%  |\footnote| internally and the \enquote{links} are not produced. With an older
+%  version, load \mypkg[no-index]{footnotehyper} only when \emph{tagged}
+%  \texttt{PDF} is not active, using |\IfDocumentMetadataF|.
 % \end{important}
 %
 % \section{The environments provided}
@@ -1573,9 +1575,9 @@
 %
 % \item You cannot have floating environments like \myenv[no-index]{figure} or
 %   \myenv[no-index]{table} or |\marginpar| but |\footnote| with \mypkg[no-index]{hyperref}
-%   is supported. If you want to activate links \emph{\enquote{without}}
-%   \emph{tagged} \texttt{PDF} active you must load \mypkg[no-index]{footnotehyper}
-%   and \mypkg[no-index]{hyperref} packages (\S\ref{subsubsec:footnote}).
+%   is supported. If you want to activate the links you must load
+%   \mypkg[no-index]{footnotehyper} and \mypkg[no-index]{hyperref} packages
+%   (\S\ref{subsubsec:footnote}).
 %
 % \item The standard list environments \myenv[no-index]{itemize},
 %   \myenv[no-index]{enumerate}, \myenv[no-index]{description},
@@ -4376,6 +4378,11 @@ all the worksheets are as follows:
 % \begin{description}[font=\small\sffamily,wide=0pt,style=multiline,leftmargin=1.1\descrwidth,nosep,noitemsep]
 %  \item [\fileversion{} (ctan), \filedate]
 %    \begin{itemize}
+%      \item Support for \mypkg[no-index]{footnotehyper} v2.0 with \emph{tagged}
+%        \texttt{PDF}: if it is loaded, it manages the |\footnote| in the environments.
+%    \end{itemize}
+%  \item [v2.4 (ctan), 2026-11-01]
+%    \begin{itemize}
 %      \item New key \mykey{item-break} for \myenv*[no-index]{enumext*} and
 %        \myenv*[no-index]{keyans*}: an item that occupies the whole row is
 %        typeset without \myenv[no-index]{minipage} and can be broken between pages.
@@ -4916,14 +4923,19 @@ all the worksheets are as follows:
 %
 % \subsubsection{\texttt{hyperref}, labels and references}
 %
-% \begin{variable}[int]{\l_@@_hyperref_bool, \l_@@_footnotes_key_bool}
+% \begin{variable}[int]{\l_@@_hyperref_bool, \l_@@_footnotes_key_bool,
+%                       \l_@@_footnotehyper_tag_bool}
 %   The boolean variable \myhlc|\l_@@_hyperref_bool| will determine if the
 %   \mypkg{hyperref} package is present or loaded in memory
 %   (\S\ref{subsec:hyperref}). The boolean variable \myhlc|\l_@@_footnotes_key_bool|
 %   determines if \mypkg[no-index]{hyperref} is loaded with the key |hyperfootnotes=true|.
+%   The boolean variable \myhlc|\l_@@_footnotehyper_tag_bool| determines if
+%   \emph{tagged} \texttt{PDF} is active and the \mypkg[no-index]{footnotehyper}
+%   package, with support for it, is loaded.
 %    \begin{macrocode}
 \bool_new:N \l_@@_hyperref_bool
 \bool_new:N \l_@@_footnotes_key_bool
+\bool_new:N \l_@@_footnotehyper_tag_bool
 %    \end{macrocode}
 % \end{variable}
 %
@@ -5385,7 +5397,10 @@ all the worksheets are as follows:
 %   If the variable \myhlc|\l_@@_footnotes_key_bool| is true, it checks
 %   whether the package \mypkg{footnotehyper} is loaded; if it is not,
 %   \myhlc|\l_@@_footnotes_key_bool| is set to false and |\footnote| is
-%   redefined.
+%   redefined. When \emph{tagged} \texttt{PDF} is active and the package
+%   \mypkg{footnotehyper} is loaded in version 2.0 (2026/11/12) or later, which
+%   supports it, the boolean variable \myhlc|\l_@@_footnotehyper_tag_bool|
+%   is set to |true| and |\footnote| is not redefined.
 %    \begin{macrocode}
 \bool_if:NT \l_@@_footnotes_key_bool
   {
@@ -5395,6 +5410,13 @@ all the worksheets are as follows:
       }
       {
         \bool_set_false:N \l_@@_footnotes_key_bool
+      }
+  }
+\IfDocumentMetadataT
+  {
+    \IfPackageAtLeastT { footnotehyper } { 2026/11/12 }
+      {
+        \bool_set_true:N \l_@@_footnotehyper_tag_bool
       }
   }
 %    \end{macrocode}
@@ -5563,8 +5585,9 @@ all the worksheets are as follows:
 %   The redefinition of |\footnote| is encapsulated to pass it to the internal
 %   \myhlc|\@@_mini_page| environment used by the \mykey[env]{mini-env}
 %   key in the \myenv*[no-index]{enumext} and \myenv*[no-index]{keyans} environments. It is
-%   executed when \emph{tagged} \texttt{PDF} is active or when
-%   the \mypkg[no-index]{footnotehyper} package is not loaded.
+%   executed when the \mypkg[no-index]{footnotehyper} package does not manage the
+%   notes: when it is not loaded or, with \emph{tagged} \texttt{PDF} active,
+%   when its version does not support it.
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_renew_footnote_standard:
   {
@@ -5572,7 +5595,10 @@ all the worksheets are as follows:
       {
         \IfDocumentMetadataTF
           {
-            \@@_renew_footnote:
+            \bool_if:NF \l_@@_footnotehyper_tag_bool
+              {
+                \@@_renew_footnote:
+              }
           }
           {
             \bool_if:NF \l_@@_footnotes_key_bool
@@ -5588,7 +5614,10 @@ all the worksheets are as follows:
       {
         \IfDocumentMetadataTF
           {
-            \@@_print_footnote:
+            \bool_if:NF \l_@@_footnotehyper_tag_bool
+              {
+                \@@_print_footnote:
+              }
           }
           {
             \bool_if:NF \l_@@_footnotes_key_bool
@@ -5601,14 +5630,16 @@ all the worksheets are as follows:
 %    \end{macrocode}
 %   The redefinition of |\footnote| is encapsulated to pass it to the
 %   \myenv*[no-index]{enumext*} and \myenv*[no-index]{keyans*} environments. It is executed
-%   when \emph{tagged} \texttt{PDF} is active or when the
-%   \mypkg[no-index]{footnotehyper} package is not loaded.
+%   under the same conditions.
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_renew_footnote_starred:
   {
     \IfDocumentMetadataTF
       {
-        \@@_renew_footnote_mini:
+        \bool_if:NF \l_@@_footnotehyper_tag_bool
+          {
+            \@@_renew_footnote_mini:
+          }
       }
       {
         \bool_if:NF \l_@@_footnotes_key_bool
@@ -5621,7 +5652,10 @@ all the worksheets are as follows:
   {
     \IfDocumentMetadataTF
       {
-        \@@_print_footnote_mini:
+        \bool_if:NF \l_@@_footnotehyper_tag_bool
+          {
+            \@@_print_footnote_mini:
+          }
       }
       {
         \bool_if:NF \l_@@_footnotes_key_bool
@@ -5633,7 +5667,7 @@ all the worksheets are as follows:
 %    \end{macrocode}
 %   In \myenv*[no-index]{enumext*} and \myenv*[no-index]{keyans*} environments it is necessary to use
 %   \emph{\enquote{hooks}} to print |\footnote| with support for
-%   \emph{tagged} \texttt{PDF}.
+%   \emph{tagged} \texttt{PDF} when the redefinition above is used.
 %    \begin{macrocode}
 \@@_after_env:nn { enumext* }
   {
