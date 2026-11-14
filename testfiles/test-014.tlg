@@ -177,7 +177,7 @@ Package enumext Info: Items = 2, answers = 0, difference = 2.
 Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 (enumext)             Started on line ... and closed on line ....
 > \box...=
-\vbox(76.75002+0.0)x250.0, direction TLT
+\vbox(75.89+0.0)x250.0, direction TLT
 .\penalty -51
 .\glue 0.0 plus 1.0
 .\glue 0.0
@@ -217,14 +217,16 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ..\penalty 10000
 ..\glue(\parfillskip) 0.0 plus 1.0fil
 ..\glue(\rightskip) 0.0
+.\glue 4.0 plus 2.0 minus 1.0
+.\glue 2.44
+.\glue -2.44
 .\penalty -51
-.\glue 5.80002 plus 2.0 minus 1.0
-.\glue -5.80002 plus -2.0 minus -1.0
-.\glue -9.80002 plus 1.0
-.\glue(\parskip) 15.60004 plus 1.0 minus 1.0
+.\glue 2.44
+.\glue -2.44
+.\glue 0.44 plus -1.0 minus -1.0
+.\glue(\parskip) 2.0 plus 1.0 minus 1.0
 .\glue(\parskip) 0.0
-.\glue(\lineskip) 1.0
-.\hbox(31.0+0.0)x238.88702, shifted 11.11298, direction TLT
+.\hbox(45.0+0.0)x238.88702, shifted 11.11298, direction TLT
 ..\localpar
 ...\localinterlinepenalty=0
 ...\localbrokenpenalty=0
@@ -238,7 +240,7 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ....\glue 0.0 plus 1.0fill
 ...\glue 3.33298
 ..\penalty 0
-..\vbox(31.0+0.0)x79.62901, direction TLT
+..\vbox(45.0+0.0)x79.62901, direction TLT
 ...\hbox(0.0+0.0)x79.62901, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -248,7 +250,7 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 .....\localrightbox=null
 ....\hbox(0.0+0.0)x0.0, direction TLT
 ....\hbox(0.0+0.0)x79.62901, direction TLT
-.....\hbox(7.5+2.5)x79.62901, shifted 43.60004, direction TLT
+.....\hbox(7.5+2.5)x79.62901, shifted 42.5, direction TLT
 ......\hbox(7.5+2.5)x79.62901, glue set 34.1195fil, direction TLT
 .......\glue 0.0 plus 1.0fil minus 1.0fil
 .......\TU/lmr/m/n/10 A
@@ -257,10 +259,8 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
-...\glue 0.0
 ...\glue(\parskip) 0.0
 ...\glue(\parskip) 0.0
-...\glue(\lineskip) 1.0
 ...\hbox(30.0+0.0)x79.62901, glue set 24.81451fil, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -274,7 +274,8 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
-..\vbox(31.0+0.0)x79.62901, direction TLT
+...\kern15.0
+..\vbox(45.0+0.0)x79.62901, direction TLT
 ...\hbox(0.0+0.0)x79.62901, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -284,7 +285,7 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 .....\localrightbox=null
 ....\hbox(0.0+0.0)x0.0, direction TLT
 ....\hbox(0.0+0.0)x79.62901, direction TLT
-.....\hbox(7.5+2.5)x79.62901, shifted 43.60004, direction TLT
+.....\hbox(7.5+2.5)x79.62901, shifted 42.5, direction TLT
 ......\hbox(7.5+2.5)x79.62901, glue set 34.32951fil, direction TLT
 .......\glue 0.0 plus 1.0fil minus 1.0fil
 .......\TU/lmr/m/n/10 B
@@ -293,10 +294,8 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
-...\glue 0.0
 ...\glue(\parskip) 0.0
 ...\glue(\parskip) 0.0
-...\glue(\lineskip) 1.0
 ...\hbox(30.0+0.0)x79.62901, glue set 24.81451fil, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -310,7 +309,8 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
-..\vbox(31.0+0.0)x79.62901, direction TLT
+...\kern15.0
+..\vbox(45.0+0.0)x79.62901, direction TLT
 ...\hbox(0.0+0.0)x79.62901, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -320,7 +320,7 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 .....\localrightbox=null
 ....\hbox(0.0+0.0)x0.0, direction TLT
 ....\hbox(0.0+0.0)x79.62901, direction TLT
-.....\hbox(7.5+2.5)x79.62901, shifted 43.60004, direction TLT
+.....\hbox(7.5+2.5)x79.62901, shifted 42.5, direction TLT
 ......\hbox(7.5+2.5)x79.62901, glue set 34.2595fil, direction TLT
 .......\glue 0.0 plus 1.0fil minus 1.0fil
 .......\TU/lmr/m/n/10 C
@@ -329,10 +329,8 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
-...\glue 0.0
 ...\glue(\parskip) 0.0
 ...\glue(\parskip) 0.0
-...\glue(\lineskip) 1.0
 ...\hbox(30.0+0.0)x79.62901, glue set 24.81451fil, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -346,19 +344,24 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
+...\kern15.0
 ..\penalty 10000
 ..\glue(\parfillskip) 0.0 plus 1.0fil
 ..\glue(\rightskip) 0.0
+.\glue 4.0 plus 2.0 minus 1.0
+.\glue -4.0 plus -2.0 minus -1.0
+.\glue 4.0 plus 2.0 minus 1.0
+.\glue -6.5 plus -2.0 minus -1.0
 .\penalty -51
-.\glue 5.80002 plus 2.0 minus 1.0
-.\glue -5.80002 plus -2.0 minus -1.0
-.\glue 16.0
-.\glue -16.0
+.\glue 2.5
+.\glue 4.0 plus 2.0 minus 1.0
+.\glue -6.5 plus -2.0 minus -1.0
 .\penalty -51
-.\glue 16.0
+.\glue 2.5
+.\glue 4.0 plus 2.0 minus 1.0
 .\glue(\parskip) 0.0
 .\glue(\parskip) 0.0
-.\glue(\baselineskip) 4.95
+.\glue(\baselineskip) 2.45
 .\hbox(7.05+2.06)x238.88702, glue set 199.15703fil, shifted 11.11298, direction TLT
 ..\localpar
 ...\localinterlinepenalty=0
@@ -411,7 +414,7 @@ Package enumext Info: Items = 2, answers = 0, difference = 2.
 Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 (enumext)             Started on line ... and closed on line ....
 > \box...=
-\vbox(74.04004+0.0)x250.0, direction TLT
+\vbox(71.89+0.0)x250.0, direction TLT
 .\penalty -51
 .\glue 0.0 plus 1.0
 .\glue 0.0
@@ -451,13 +454,15 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ..\penalty 10000
 ..\glue(\parfillskip) 0.0 plus 1.0fil
 ..\glue(\rightskip) 0.0
+.\glue 4.0 plus 2.0 minus 1.0
+.\glue 2.44
+.\glue -2.44
 .\penalty -51
-.\glue 5.80002 plus 2.0 minus 1.0
-.\glue -5.80002 plus -2.0 minus -1.0
-.\glue 3.80002 plus 1.0
+.\glue 2.44
+.\glue -2.44
+.\glue 0.44 plus -1.0 minus -1.0
 .\glue(\parskip) 2.0 plus 1.0 minus 1.0
 .\glue(\parskip) 0.0
-.\glue(\baselineskip) 2.44
 .\hbox(7.5+33.5)x238.88702, shifted 11.11298, direction TLT
 ..\localpar
 ...\localinterlinepenalty=0
@@ -489,11 +494,9 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
-...\glue 0.0
-...\glue 0.0
+...\glue 1.0
 ...\glue(\parskip) 0.0
 ...\glue(\parskip) 0.0
-...\glue(\lineskip) 1.0
 ...\hbox(30.0+0.0)x79.62901, glue set 24.81451fil, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -524,11 +527,9 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
-...\glue 0.0
-...\glue 0.0
+...\glue 1.0
 ...\glue(\parskip) 0.0
 ...\glue(\parskip) 0.0
-...\glue(\lineskip) 1.0
 ...\hbox(30.0+0.0)x79.62901, glue set 24.81451fil, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -559,11 +560,9 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
-...\glue 0.0
-...\glue 0.0
+...\glue 1.0
 ...\glue(\parskip) 0.0
 ...\glue(\parskip) 0.0
-...\glue(\lineskip) 1.0
 ...\hbox(30.0+0.0)x79.62901, glue set 24.81451fil, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -580,15 +579,20 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ..\penalty 10000
 ..\glue(\parfillskip) 0.0 plus 1.0fil
 ..\glue(\rightskip) 0.0
+.\glue 4.0 plus 2.0 minus 1.0
+.\glue -4.0 plus -2.0 minus -1.0
+.\glue 4.0 plus 2.0 minus 1.0
+.\glue -6.5 plus -2.0 minus -1.0
 .\penalty -51
-.\glue 5.80002 plus 2.0 minus 1.0
-.\glue -10.80002 plus -2.0 minus -1.0
+.\glue 2.5
+.\glue 4.0 plus 2.0 minus 1.0
+.\glue -6.5 plus -2.0 minus -1.0
 .\penalty -51
-.\glue 5.0
-.\glue 5.80002 plus 2.0 minus 1.0
+.\glue 2.5
+.\glue 4.0 plus 2.0 minus 1.0
 .\glue(\parskip) 0.0
 .\glue(\parskip) 0.0
-.\glue(\lineskip) 1.0
+.\glue(\baselineskip) 2.45
 .\hbox(7.05+2.06)x238.88702, glue set 199.15703fil, shifted 11.11298, direction TLT
 ..\localpar
 ...\localinterlinepenalty=0
@@ -642,7 +646,7 @@ Package enumext Info: Items = 2, answers = 0, difference = 2.
 Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 (enumext)             Started on line ... and closed on line ....
 > \box...=
-\vbox(124.35005+0.0)x250.0, direction TLT
+\vbox(122.89+0.0)x250.0, direction TLT
 .\penalty -51
 .\glue 0.0 plus 1.0
 .\glue 0.0
@@ -682,14 +686,16 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ..\penalty 10000
 ..\glue(\parfillskip) 0.0 plus 1.0fil
 ..\glue(\rightskip) 0.0
+.\glue 4.0 plus 2.0 minus 1.0
+.\glue 2.44
+.\glue -2.44
 .\penalty -51
-.\glue 5.80002 plus 2.0 minus 1.0
-.\glue -5.80002 plus -2.0 minus -1.0
-.\glue -9.80002 plus 1.0
-.\glue(\parskip) 15.60004 plus 1.0 minus 1.0
+.\glue 2.44
+.\glue -2.44
+.\glue 0.44 plus -1.0 minus -1.0
+.\glue(\parskip) 2.0 plus 1.0 minus 1.0
 .\glue(\parskip) 0.0
-.\glue(\lineskip) 1.0
-.\hbox(31.0+0.0)x238.88702, shifted 11.11298, direction TLT
+.\hbox(45.0+0.0)x238.88702, shifted 11.11298, direction TLT
 ..\localpar
 ...\localinterlinepenalty=0
 ...\localbrokenpenalty=0
@@ -703,7 +709,7 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ....\glue 0.0 plus 1.0fill
 ...\glue 3.33298
 ..\penalty 0
-..\vbox(31.0+0.0)x119.44351, direction TLT
+..\vbox(45.0+0.0)x119.44351, direction TLT
 ...\hbox(0.0+0.0)x119.44351, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -713,7 +719,7 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 .....\localrightbox=null
 ....\hbox(0.0+0.0)x0.0, direction TLT
 ....\hbox(0.0+0.0)x119.44351, direction TLT
-.....\hbox(7.5+2.5)x119.44351, shifted 43.60004, direction TLT
+.....\hbox(7.5+2.5)x119.44351, shifted 42.5, direction TLT
 ......\hbox(7.5+2.5)x119.44351, glue set 54.02676fil, direction TLT
 .......\glue 0.0 plus 1.0fil minus 1.0fil
 .......\TU/lmr/m/n/10 A
@@ -722,10 +728,8 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
-...\glue 0.0
 ...\glue(\parskip) 0.0
 ...\glue(\parskip) 0.0
-...\glue(\lineskip) 1.0
 ...\hbox(30.0+0.0)x119.44351, glue set 44.72176fil, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -739,7 +743,8 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
-..\vbox(31.0+0.0)x119.44351, direction TLT
+...\kern15.0
+..\vbox(45.0+0.0)x119.44351, direction TLT
 ...\hbox(0.0+0.0)x119.44351, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -749,7 +754,7 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 .....\localrightbox=null
 ....\hbox(0.0+0.0)x0.0, direction TLT
 ....\hbox(0.0+0.0)x119.44351, direction TLT
-.....\hbox(7.5+2.5)x119.44351, shifted 43.60004, direction TLT
+.....\hbox(7.5+2.5)x119.44351, shifted 42.5, direction TLT
 ......\hbox(7.5+2.5)x119.44351, glue set 54.23676fil, direction TLT
 .......\glue 0.0 plus 1.0fil minus 1.0fil
 .......\TU/lmr/m/n/10 B
@@ -758,10 +763,8 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
-...\glue 0.0
 ...\glue(\parskip) 0.0
 ...\glue(\parskip) 0.0
-...\glue(\lineskip) 1.0
 ...\hbox(30.0+0.0)x119.44351, glue set 44.72176fil, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -775,20 +778,20 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
+...\kern15.0
 ..\penalty 10000
 ..\glue(\parfillskip) 0.0 plus 1.0fil
 ..\glue(\rightskip) 0.0
-.\glue(\parskip) 15.60004 plus 1.0 minus 1.0
+.\glue(\parskip) 2.0 plus 1.0 minus 1.0
 .\glue(\parskip) 0.0
-.\glue(\lineskip) 1.0
-.\hbox(31.0+0.0)x238.88702, shifted 11.11298, direction TLT
+.\hbox(45.0+0.0)x238.88702, shifted 11.11298, direction TLT
 ..\localpar
 ...\localinterlinepenalty=0
 ...\localbrokenpenalty=0
 ...\localleftbox=null
 ...\localrightbox=null
 ..\hbox(0.0+0.0)x0.0, direction TLT
-..\vbox(31.0+0.0)x119.44351, direction TLT
+..\vbox(45.0+0.0)x119.44351, direction TLT
 ...\hbox(0.0+0.0)x119.44351, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -798,7 +801,7 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 .....\localrightbox=null
 ....\hbox(0.0+0.0)x0.0, direction TLT
 ....\hbox(0.0+0.0)x119.44351, direction TLT
-.....\hbox(7.5+2.5)x119.44351, shifted 43.60004, direction TLT
+.....\hbox(7.5+2.5)x119.44351, shifted 42.5, direction TLT
 ......\hbox(7.5+2.5)x119.44351, glue set 54.16676fil, direction TLT
 .......\glue 0.0 plus 1.0fil minus 1.0fil
 .......\TU/lmr/m/n/10 C
@@ -807,10 +810,8 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
-...\glue 0.0
 ...\glue(\parskip) 0.0
 ...\glue(\parskip) 0.0
-...\glue(\lineskip) 1.0
 ...\hbox(30.0+0.0)x119.44351, glue set 44.72176fil, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -824,7 +825,8 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
-..\vbox(31.0+0.0)x119.44351, direction TLT
+...\kern15.0
+..\vbox(45.0+0.0)x119.44351, direction TLT
 ...\hbox(0.0+0.0)x119.44351, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -834,7 +836,7 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 .....\localrightbox=null
 ....\hbox(0.0+0.0)x0.0, direction TLT
 ....\hbox(0.0+0.0)x119.44351, direction TLT
-.....\hbox(7.5+2.5)x119.44351, shifted 43.60004, direction TLT
+.....\hbox(7.5+2.5)x119.44351, shifted 42.5, direction TLT
 ......\hbox(7.5+2.5)x119.44351, glue set 53.95676fil, direction TLT
 .......\glue 0.0 plus 1.0fil minus 1.0fil
 .......\TU/lmr/m/n/10 D
@@ -843,10 +845,8 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
-...\glue 0.0
 ...\glue(\parskip) 0.0
 ...\glue(\parskip) 0.0
-...\glue(\lineskip) 1.0
 ...\hbox(30.0+0.0)x119.44351, glue set 44.72176fil, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -860,19 +860,24 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
+...\kern15.0
 ..\penalty 10000
 ..\glue(\parfillskip) 0.0 plus 1.0fil
 ..\glue(\rightskip) 0.0
+.\glue 4.0 plus 2.0 minus 1.0
+.\glue -4.0 plus -2.0 minus -1.0
+.\glue 4.0 plus 2.0 minus 1.0
+.\glue -6.5 plus -2.0 minus -1.0
 .\penalty -51
-.\glue 5.80002 plus 2.0 minus 1.0
-.\glue -5.80002 plus -2.0 minus -1.0
-.\glue 16.0
-.\glue -16.0
+.\glue 2.5
+.\glue 4.0 plus 2.0 minus 1.0
+.\glue -6.5 plus -2.0 minus -1.0
 .\penalty -51
-.\glue 16.0
+.\glue 2.5
+.\glue 4.0 plus 2.0 minus 1.0
 .\glue(\parskip) 0.0
 .\glue(\parskip) 0.0
-.\glue(\baselineskip) 4.95
+.\glue(\baselineskip) 2.45
 .\hbox(7.05+2.06)x238.88702, glue set 199.15703fil, shifted 11.11298, direction TLT
 ..\localpar
 ...\localinterlinepenalty=0
@@ -925,7 +930,7 @@ Package enumext Info: Items = 2, answers = 0, difference = 2.
 Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 (enumext)             Started on line ... and closed on line ....
 > \box...=
-\vbox(118.04004+0.0)x250.0, direction TLT
+\vbox(114.89+0.0)x250.0, direction TLT
 .\penalty -51
 .\glue 0.0 plus 1.0
 .\glue 0.0
@@ -965,13 +970,15 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ..\penalty 10000
 ..\glue(\parfillskip) 0.0 plus 1.0fil
 ..\glue(\rightskip) 0.0
+.\glue 4.0 plus 2.0 minus 1.0
+.\glue 2.44
+.\glue -2.44
 .\penalty -51
-.\glue 5.80002 plus 2.0 minus 1.0
-.\glue -5.80002 plus -2.0 minus -1.0
-.\glue 3.80002 plus 1.0
+.\glue 2.44
+.\glue -2.44
+.\glue 0.44 plus -1.0 minus -1.0
 .\glue(\parskip) 2.0 plus 1.0 minus 1.0
 .\glue(\parskip) 0.0
-.\glue(\baselineskip) 2.44
 .\hbox(7.5+33.5)x238.88702, shifted 11.11298, direction TLT
 ..\localpar
 ...\localinterlinepenalty=0
@@ -1003,11 +1010,9 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
-...\glue 0.0
-...\glue 0.0
+...\glue 1.0
 ...\glue(\parskip) 0.0
 ...\glue(\parskip) 0.0
-...\glue(\lineskip) 1.0
 ...\hbox(30.0+0.0)x119.44351, glue set 44.72176fil, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -1038,11 +1043,9 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
-...\glue 0.0
-...\glue 0.0
+...\glue 1.0
 ...\glue(\parskip) 0.0
 ...\glue(\parskip) 0.0
-...\glue(\lineskip) 1.0
 ...\hbox(30.0+0.0)x119.44351, glue set 44.72176fil, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -1061,7 +1064,6 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ..\glue(\rightskip) 0.0
 .\glue(\parskip) 2.0 plus 1.0 minus 1.0
 .\glue(\parskip) 0.0
-.\glue(\lineskip) 1.0
 .\hbox(7.5+33.5)x238.88702, shifted 11.11298, direction TLT
 ..\localpar
 ...\localinterlinepenalty=0
@@ -1086,11 +1088,9 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
-...\glue 0.0
-...\glue 0.0
+...\glue 1.0
 ...\glue(\parskip) 0.0
 ...\glue(\parskip) 0.0
-...\glue(\lineskip) 1.0
 ...\hbox(30.0+0.0)x119.44351, glue set 44.72176fil, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -1121,11 +1121,9 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
-...\glue 0.0
-...\glue 0.0
+...\glue 1.0
 ...\glue(\parskip) 0.0
 ...\glue(\parskip) 0.0
-...\glue(\lineskip) 1.0
 ...\hbox(30.0+0.0)x119.44351, glue set 44.72176fil, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -1142,15 +1140,20 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ..\penalty 10000
 ..\glue(\parfillskip) 0.0 plus 1.0fil
 ..\glue(\rightskip) 0.0
+.\glue 4.0 plus 2.0 minus 1.0
+.\glue -4.0 plus -2.0 minus -1.0
+.\glue 4.0 plus 2.0 minus 1.0
+.\glue -6.5 plus -2.0 minus -1.0
 .\penalty -51
-.\glue 5.80002 plus 2.0 minus 1.0
-.\glue -10.80002 plus -2.0 minus -1.0
+.\glue 2.5
+.\glue 4.0 plus 2.0 minus 1.0
+.\glue -6.5 plus -2.0 minus -1.0
 .\penalty -51
-.\glue 5.0
-.\glue 5.80002 plus 2.0 minus 1.0
+.\glue 2.5
+.\glue 4.0 plus 2.0 minus 1.0
 .\glue(\parskip) 0.0
 .\glue(\parskip) 0.0
-.\glue(\lineskip) 1.0
+.\glue(\baselineskip) 2.45
 .\hbox(7.05+2.06)x238.88702, glue set 199.15703fil, shifted 11.11298, direction TLT
 ..\localpar
 ...\localinterlinepenalty=0
@@ -1204,7 +1207,7 @@ Package enumext Info: Items = 2, answers = 0, difference = 2.
 Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 (enumext)             Started on line ... and closed on line ....
 > \box...=
-\vbox(68.75002+0.0)x250.0, direction TLT
+\vbox(63.0+0.0)x250.0, direction TLT
 .\penalty -51
 .\glue 0.0 plus 1.0
 .\glue 0.0
@@ -1244,14 +1247,13 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ..\penalty 10000
 ..\glue(\parfillskip) 0.0 plus 1.0fil
 ..\glue(\rightskip) 0.0
+.\glue 0.0
 .\penalty -51
-.\glue 1.80002
-.\glue -1.80002
-.\glue -13.80002 plus -1.0 minus -1.0
-.\glue(\parskip) 15.60004 plus 1.0 minus 1.0
+.\glue 0.0
+.\glue -2.0 plus -1.0 minus -1.0
+.\glue(\parskip) 2.0 plus 1.0 minus 1.0
 .\glue(\parskip) 0.0
-.\glue(\lineskip) 1.0
-.\hbox(31.0+0.0)x238.88702, shifted 11.11298, direction TLT
+.\hbox(45.0+0.0)x238.88702, shifted 11.11298, direction TLT
 ..\localpar
 ...\localinterlinepenalty=0
 ...\localbrokenpenalty=0
@@ -1265,7 +1267,7 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ....\glue 0.0 plus 1.0fill
 ...\glue 3.33298
 ..\penalty 0
-..\vbox(31.0+0.0)x119.44351, direction TLT
+..\vbox(45.0+0.0)x119.44351, direction TLT
 ...\hbox(0.0+0.0)x119.44351, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -1275,7 +1277,7 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 .....\localrightbox=null
 ....\hbox(0.0+0.0)x0.0, direction TLT
 ....\hbox(0.0+0.0)x119.44351, direction TLT
-.....\hbox(7.5+2.5)x119.44351, shifted 43.60004, direction TLT
+.....\hbox(7.5+2.5)x119.44351, shifted 42.5, direction TLT
 ......\hbox(7.5+2.5)x119.44351, glue set 54.02676fil, direction TLT
 .......\glue 0.0 plus 1.0fil minus 1.0fil
 .......\TU/lmr/m/n/10 A
@@ -1284,10 +1286,8 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
-...\glue 0.0
 ...\glue(\parskip) 0.0
 ...\glue(\parskip) 0.0
-...\glue(\lineskip) 1.0
 ...\hbox(30.0+0.0)x119.44351, glue set 44.72176fil, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -1301,7 +1301,8 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
-..\vbox(31.0+0.0)x119.44351, direction TLT
+...\kern15.0
+..\vbox(45.0+0.0)x119.44351, direction TLT
 ...\hbox(0.0+0.0)x119.44351, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -1311,7 +1312,7 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 .....\localrightbox=null
 ....\hbox(0.0+0.0)x0.0, direction TLT
 ....\hbox(0.0+0.0)x119.44351, direction TLT
-.....\hbox(7.5+2.5)x119.44351, shifted 43.60004, direction TLT
+.....\hbox(7.5+2.5)x119.44351, shifted 42.5, direction TLT
 ......\hbox(7.5+2.5)x119.44351, glue set 54.23676fil, direction TLT
 .......\glue 0.0 plus 1.0fil minus 1.0fil
 .......\TU/lmr/m/n/10 B
@@ -1320,10 +1321,8 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
-...\glue 0.0
 ...\glue(\parskip) 0.0
 ...\glue(\parskip) 0.0
-...\glue(\lineskip) 1.0
 ...\hbox(30.0+0.0)x119.44351, glue set 44.72176fil, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -1337,19 +1336,17 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
+...\kern15.0
 ..\penalty 10000
 ..\glue(\parfillskip) 0.0 plus 1.0fil
 ..\glue(\rightskip) 0.0
+.\glue 0.0
 .\penalty -51
-.\glue 1.80002
-.\glue -1.80002
-.\glue 12.0
-.\glue -12.0
+.\glue 0.0
 .\penalty -51
-.\glue 12.0
+.\glue 0.0
 .\glue(\parskip) 0.0
 .\glue(\parskip) 0.0
-.\glue(\baselineskip) 4.95
 .\hbox(7.05+2.06)x238.88702, glue set 199.15703fil, shifted 11.11298, direction TLT
 ..\localpar
 ...\localinterlinepenalty=0
@@ -1402,7 +1399,7 @@ Package enumext Info: Items = 2, answers = 0, difference = 2.
 Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 (enumext)             Started on line ... and closed on line ....
 > \box...=
-\vbox(88.75002+0.0)x250.0, direction TLT
+\vbox(83.0+0.0)x250.0, direction TLT
 .\penalty -51
 .\glue 0.0 plus 1.0
 .\glue 0.0
@@ -1442,14 +1439,15 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ..\penalty 10000
 ..\glue(\parfillskip) 0.0 plus 1.0fil
 ..\glue(\rightskip) 0.0
+.\glue 10.0
+.\glue -10.0
 .\penalty -51
-.\glue 11.80002
-.\glue -11.80002
-.\glue -3.80002 plus -1.0 minus -1.0
-.\glue(\parskip) 15.60004 plus 1.0 minus 1.0
+.\glue 10.0
+.\glue -10.0
+.\glue 8.0 plus -1.0 minus -1.0
+.\glue(\parskip) 2.0 plus 1.0 minus 1.0
 .\glue(\parskip) 0.0
-.\glue(\lineskip) 1.0
-.\hbox(31.0+0.0)x238.88702, shifted 11.11298, direction TLT
+.\hbox(45.0+0.0)x238.88702, shifted 11.11298, direction TLT
 ..\localpar
 ...\localinterlinepenalty=0
 ...\localbrokenpenalty=0
@@ -1463,7 +1461,7 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ....\glue 0.0 plus 1.0fill
 ...\glue 3.33298
 ..\penalty 0
-..\vbox(31.0+0.0)x119.44351, direction TLT
+..\vbox(45.0+0.0)x119.44351, direction TLT
 ...\hbox(0.0+0.0)x119.44351, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -1473,7 +1471,7 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 .....\localrightbox=null
 ....\hbox(0.0+0.0)x0.0, direction TLT
 ....\hbox(0.0+0.0)x119.44351, direction TLT
-.....\hbox(7.5+2.5)x119.44351, shifted 43.60004, direction TLT
+.....\hbox(7.5+2.5)x119.44351, shifted 42.5, direction TLT
 ......\hbox(7.5+2.5)x119.44351, glue set 54.02676fil, direction TLT
 .......\glue 0.0 plus 1.0fil minus 1.0fil
 .......\TU/lmr/m/n/10 A
@@ -1482,10 +1480,8 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
-...\glue 0.0
 ...\glue(\parskip) 0.0
 ...\glue(\parskip) 0.0
-...\glue(\lineskip) 1.0
 ...\hbox(30.0+0.0)x119.44351, glue set 44.72176fil, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -1499,7 +1495,8 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
-..\vbox(31.0+0.0)x119.44351, direction TLT
+...\kern15.0
+..\vbox(45.0+0.0)x119.44351, direction TLT
 ...\hbox(0.0+0.0)x119.44351, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -1509,7 +1506,7 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 .....\localrightbox=null
 ....\hbox(0.0+0.0)x0.0, direction TLT
 ....\hbox(0.0+0.0)x119.44351, direction TLT
-.....\hbox(7.5+2.5)x119.44351, shifted 43.60004, direction TLT
+.....\hbox(7.5+2.5)x119.44351, shifted 42.5, direction TLT
 ......\hbox(7.5+2.5)x119.44351, glue set 54.23676fil, direction TLT
 .......\glue 0.0 plus 1.0fil minus 1.0fil
 .......\TU/lmr/m/n/10 B
@@ -1518,10 +1515,8 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
-...\glue 0.0
 ...\glue(\parskip) 0.0
 ...\glue(\parskip) 0.0
-...\glue(\lineskip) 1.0
 ...\hbox(30.0+0.0)x119.44351, glue set 44.72176fil, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -1535,19 +1530,21 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
+...\kern15.0
 ..\penalty 10000
 ..\glue(\parfillskip) 0.0 plus 1.0fil
 ..\glue(\rightskip) 0.0
+.\glue 10.0
+.\glue -10.0
+.\glue 10.0
+.\glue -10.0
 .\penalty -51
-.\glue 11.80002
-.\glue -11.80002
-.\glue 22.0
-.\glue -22.0
+.\glue 10.0
+.\glue -10.0
 .\penalty -51
-.\glue 22.0
+.\glue 10.0
 .\glue(\parskip) 0.0
 .\glue(\parskip) 0.0
-.\glue(\baselineskip) 4.95
 .\hbox(7.05+2.06)x238.88702, glue set 199.15703fil, shifted 11.11298, direction TLT
 ..\localpar
 ...\localinterlinepenalty=0
@@ -1600,7 +1597,7 @@ Package enumext Info: Items = 2, answers = 0, difference = 2.
 Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 (enumext)             Started on line ... and closed on line ....
 > \box...=
-\vbox(66.04004+0.0)x250.0, direction TLT
+\vbox(59.0+0.0)x250.0, direction TLT
 .\penalty -51
 .\glue 0.0 plus 1.0
 .\glue 0.0
@@ -1640,13 +1637,12 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ..\penalty 10000
 ..\glue(\parfillskip) 0.0 plus 1.0fil
 ..\glue(\rightskip) 0.0
+.\glue 0.0
 .\penalty -51
-.\glue 1.80002
-.\glue -1.80002
-.\glue -0.19998 plus -1.0 minus -1.0
+.\glue 0.0
+.\glue -2.0 plus -1.0 minus -1.0
 .\glue(\parskip) 2.0 plus 1.0 minus 1.0
 .\glue(\parskip) 0.0
-.\glue(\baselineskip) 2.44
 .\hbox(7.5+33.5)x238.88702, shifted 11.11298, direction TLT
 ..\localpar
 ...\localinterlinepenalty=0
@@ -1678,11 +1674,9 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
-...\glue 0.0
-...\glue 0.0
+...\glue 1.0
 ...\glue(\parskip) 0.0
 ...\glue(\parskip) 0.0
-...\glue(\lineskip) 1.0
 ...\hbox(30.0+0.0)x119.44351, glue set 44.72176fil, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -1713,11 +1707,9 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
-...\glue 0.0
-...\glue 0.0
+...\glue 1.0
 ...\glue(\parskip) 0.0
 ...\glue(\parskip) 0.0
-...\glue(\lineskip) 1.0
 ...\hbox(30.0+0.0)x119.44351, glue set 44.72176fil, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -1734,15 +1726,13 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ..\penalty 10000
 ..\glue(\parfillskip) 0.0 plus 1.0fil
 ..\glue(\rightskip) 0.0
+.\glue 0.0
 .\penalty -51
-.\glue 1.80002
-.\glue -6.80002
+.\glue 0.0
 .\penalty -51
-.\glue 5.0
-.\glue 1.80002
+.\glue 0.0
 .\glue(\parskip) 0.0
 .\glue(\parskip) 0.0
-.\glue(\lineskip) 1.0
 .\hbox(7.05+2.06)x238.88702, glue set 199.15703fil, shifted 11.11298, direction TLT
 ..\localpar
 ...\localinterlinepenalty=0
@@ -1795,7 +1785,7 @@ Package enumext Info: Items = 2, answers = 0, difference = 2.
 Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 (enumext)             Started on line ... and closed on line ....
 > \box...=
-\vbox(86.04004+0.0)x250.0, direction TLT
+\vbox(79.0+0.0)x250.0, direction TLT
 .\penalty -51
 .\glue 0.0 plus 1.0
 .\glue 0.0
@@ -1835,13 +1825,14 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ..\penalty 10000
 ..\glue(\parfillskip) 0.0 plus 1.0fil
 ..\glue(\rightskip) 0.0
+.\glue 10.0
+.\glue -10.0
 .\penalty -51
-.\glue 11.80002
-.\glue -11.80002
-.\glue 9.80002 plus -1.0 minus -1.0
+.\glue 10.0
+.\glue -10.0
+.\glue 8.0 plus -1.0 minus -1.0
 .\glue(\parskip) 2.0 plus 1.0 minus 1.0
 .\glue(\parskip) 0.0
-.\glue(\baselineskip) 2.44
 .\hbox(7.5+33.5)x238.88702, shifted 11.11298, direction TLT
 ..\localpar
 ...\localinterlinepenalty=0
@@ -1873,11 +1864,9 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
-...\glue 0.0
-...\glue 0.0
+...\glue 1.0
 ...\glue(\parskip) 0.0
 ...\glue(\parskip) 0.0
-...\glue(\lineskip) 1.0
 ...\hbox(30.0+0.0)x119.44351, glue set 44.72176fil, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -1908,11 +1897,9 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
-...\glue 0.0
-...\glue 0.0
+...\glue 1.0
 ...\glue(\parskip) 0.0
 ...\glue(\parskip) 0.0
-...\glue(\lineskip) 1.0
 ...\hbox(30.0+0.0)x119.44351, glue set 44.72176fil, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -1929,15 +1916,17 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ..\penalty 10000
 ..\glue(\parfillskip) 0.0 plus 1.0fil
 ..\glue(\rightskip) 0.0
+.\glue 10.0
+.\glue -10.0
+.\glue 10.0
+.\glue -10.0
 .\penalty -51
-.\glue 11.80002
-.\glue -16.80002
+.\glue 10.0
+.\glue -10.0
 .\penalty -51
-.\glue 5.0
-.\glue 11.80002
+.\glue 10.0
 .\glue(\parskip) 0.0
 .\glue(\parskip) 0.0
-.\glue(\lineskip) 1.0
 .\hbox(7.05+2.06)x238.88702, glue set 199.15703fil, shifted 11.11298, direction TLT
 ..\localpar
 ...\localinterlinepenalty=0
@@ -1991,7 +1980,7 @@ Package enumext Info: Items = 2, answers = 0, difference = 2.
 Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 (enumext)             Started on line ... and closed on line ....
 > \box...=
-\vbox(122.35005+0.0)x250.0, direction TLT
+\vbox(120.89+0.0)x250.0, direction TLT
 .\penalty -51
 .\glue 0.0 plus 1.0
 .\glue 0.0
@@ -2031,14 +2020,14 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ..\penalty 10000
 ..\glue(\parfillskip) 0.0 plus 1.0fil
 ..\glue(\rightskip) 0.0
+.\glue 4.0 plus 2.0 minus 1.0
+.\glue 2.44
+.\glue -2.44
 .\penalty -51
-.\glue 5.80002 plus 2.0 minus 1.0
-.\glue -5.80002 plus -2.0 minus -1.0
-.\glue -7.80002 plus 2.0 minus 1.0
-.\glue(\parskip) 13.60004
+.\glue 2.44
 .\glue(\parskip) 0.0
-.\glue(\lineskip) 1.0
-.\hbox(31.0+0.0)x238.88702, shifted 11.11298, direction TLT
+.\glue(\parskip) 0.0
+.\hbox(45.0+0.0)x238.88702, shifted 11.11298, direction TLT
 ..\localpar
 ...\localinterlinepenalty=0
 ...\localbrokenpenalty=0
@@ -2052,7 +2041,7 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ....\glue 0.0 plus 1.0fill
 ...\glue 3.33298
 ..\penalty 0
-..\vbox(31.0+0.0)x238.88702, direction TLT
+..\vbox(45.0+0.0)x238.88702, direction TLT
 ...\hbox(0.0+0.0)x238.88702, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -2062,7 +2051,7 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 .....\localrightbox=null
 ....\hbox(0.0+0.0)x0.0, direction TLT
 ....\hbox(0.0+0.0)x238.88702, direction TLT
-.....\hbox(7.5+2.5)x238.88702, shifted 43.60004, direction TLT
+.....\hbox(7.5+2.5)x238.88702, shifted 42.5, direction TLT
 ......\hbox(7.5+2.5)x238.88702, glue set 113.74852fil, direction TLT
 .......\glue 0.0 plus 1.0fil minus 1.0fil
 .......\TU/lmr/m/n/10 A
@@ -2071,10 +2060,8 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
-...\glue 0.0
 ...\glue(\parskip) 0.0
 ...\glue(\parskip) 0.0
-...\glue(\lineskip) 1.0
 ...\hbox(30.0+0.0)x238.88702, glue set 104.44351fil, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -2088,20 +2075,20 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
+...\kern15.0
 ..\penalty 10000
 ..\glue(\parfillskip) 0.0 plus 1.0fil
 ..\glue(\rightskip) 0.0
-.\glue(\parskip) 13.60004
 .\glue(\parskip) 0.0
-.\glue(\lineskip) 1.0
-.\hbox(31.0+0.0)x238.88702, shifted 11.11298, direction TLT
+.\glue(\parskip) 0.0
+.\hbox(45.0+0.0)x238.88702, shifted 11.11298, direction TLT
 ..\localpar
 ...\localinterlinepenalty=0
 ...\localbrokenpenalty=0
 ...\localleftbox=null
 ...\localrightbox=null
 ..\hbox(0.0+0.0)x0.0, direction TLT
-..\vbox(31.0+0.0)x238.88702, direction TLT
+..\vbox(45.0+0.0)x238.88702, direction TLT
 ...\hbox(0.0+0.0)x238.88702, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -2111,7 +2098,7 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 .....\localrightbox=null
 ....\hbox(0.0+0.0)x0.0, direction TLT
 ....\hbox(0.0+0.0)x238.88702, direction TLT
-.....\hbox(7.5+2.5)x238.88702, shifted 43.60004, direction TLT
+.....\hbox(7.5+2.5)x238.88702, shifted 42.5, direction TLT
 ......\hbox(7.5+2.5)x238.88702, glue set 113.95851fil, direction TLT
 .......\glue 0.0 plus 1.0fil minus 1.0fil
 .......\TU/lmr/m/n/10 B
@@ -2120,10 +2107,8 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
-...\glue 0.0
 ...\glue(\parskip) 0.0
 ...\glue(\parskip) 0.0
-...\glue(\lineskip) 1.0
 ...\hbox(30.0+0.0)x238.88702, glue set 104.44351fil, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -2137,19 +2122,24 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
+...\kern15.0
 ..\penalty 10000
 ..\glue(\parfillskip) 0.0 plus 1.0fil
 ..\glue(\rightskip) 0.0
+.\glue 4.0 plus 2.0 minus 1.0
+.\glue -4.0 plus -2.0 minus -1.0
+.\glue 4.0 plus 2.0 minus 1.0
+.\glue -6.5 plus -2.0 minus -1.0
 .\penalty -51
-.\glue 5.80002 plus 2.0 minus 1.0
-.\glue -5.80002 plus -2.0 minus -1.0
-.\glue 16.0
-.\glue -16.0
+.\glue 2.5
+.\glue 4.0 plus 2.0 minus 1.0
+.\glue -6.5 plus -2.0 minus -1.0
 .\penalty -51
-.\glue 16.0
+.\glue 2.5
+.\glue 4.0 plus 2.0 minus 1.0
 .\glue(\parskip) 0.0
 .\glue(\parskip) 0.0
-.\glue(\baselineskip) 4.95
+.\glue(\baselineskip) 2.45
 .\hbox(7.05+2.06)x238.88702, glue set 199.15703fil, shifted 11.11298, direction TLT
 ..\localpar
 ...\localinterlinepenalty=0
@@ -2202,7 +2192,7 @@ Package enumext Info: Items = 2, answers = 0, difference = 2.
 Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 (enumext)             Started on line ... and closed on line ....
 > \box...=
-\vbox(132.35005+0.0)x250.0, direction TLT
+\vbox(130.89+0.0)x250.0, direction TLT
 .\penalty -51
 .\glue 0.0 plus 1.0
 .\glue 0.0
@@ -2242,14 +2232,16 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ..\penalty 10000
 ..\glue(\parfillskip) 0.0 plus 1.0fil
 ..\glue(\rightskip) 0.0
+.\glue 4.0 plus 2.0 minus 1.0
+.\glue 2.44
+.\glue -2.44
 .\penalty -51
-.\glue 5.80002 plus 2.0 minus 1.0
-.\glue -5.80002 plus -2.0 minus -1.0
-.\glue -17.80002 plus 2.0 minus 1.0
-.\glue(\parskip) 23.60004
+.\glue 2.44
+.\glue -2.44
+.\glue -7.56
+.\glue(\parskip) 10.0
 .\glue(\parskip) 0.0
-.\glue(\lineskip) 1.0
-.\hbox(31.0+0.0)x238.88702, shifted 11.11298, direction TLT
+.\hbox(45.0+0.0)x238.88702, shifted 11.11298, direction TLT
 ..\localpar
 ...\localinterlinepenalty=0
 ...\localbrokenpenalty=0
@@ -2263,7 +2255,7 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ....\glue 0.0 plus 1.0fill
 ...\glue 3.33298
 ..\penalty 0
-..\vbox(31.0+0.0)x238.88702, direction TLT
+..\vbox(45.0+0.0)x238.88702, direction TLT
 ...\hbox(0.0+0.0)x238.88702, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -2273,7 +2265,7 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 .....\localrightbox=null
 ....\hbox(0.0+0.0)x0.0, direction TLT
 ....\hbox(0.0+0.0)x238.88702, direction TLT
-.....\hbox(7.5+2.5)x238.88702, shifted 43.60004, direction TLT
+.....\hbox(7.5+2.5)x238.88702, shifted 42.5, direction TLT
 ......\hbox(7.5+2.5)x238.88702, glue set 113.74852fil, direction TLT
 .......\glue 0.0 plus 1.0fil minus 1.0fil
 .......\TU/lmr/m/n/10 A
@@ -2282,10 +2274,8 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
-...\glue 0.0
 ...\glue(\parskip) 0.0
 ...\glue(\parskip) 0.0
-...\glue(\lineskip) 1.0
 ...\hbox(30.0+0.0)x238.88702, glue set 104.44351fil, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -2299,20 +2289,20 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
+...\kern15.0
 ..\penalty 10000
 ..\glue(\parfillskip) 0.0 plus 1.0fil
 ..\glue(\rightskip) 0.0
-.\glue(\parskip) 23.60004
+.\glue(\parskip) 10.0
 .\glue(\parskip) 0.0
-.\glue(\lineskip) 1.0
-.\hbox(31.0+0.0)x238.88702, shifted 11.11298, direction TLT
+.\hbox(45.0+0.0)x238.88702, shifted 11.11298, direction TLT
 ..\localpar
 ...\localinterlinepenalty=0
 ...\localbrokenpenalty=0
 ...\localleftbox=null
 ...\localrightbox=null
 ..\hbox(0.0+0.0)x0.0, direction TLT
-..\vbox(31.0+0.0)x238.88702, direction TLT
+..\vbox(45.0+0.0)x238.88702, direction TLT
 ...\hbox(0.0+0.0)x238.88702, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -2322,7 +2312,7 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 .....\localrightbox=null
 ....\hbox(0.0+0.0)x0.0, direction TLT
 ....\hbox(0.0+0.0)x238.88702, direction TLT
-.....\hbox(7.5+2.5)x238.88702, shifted 43.60004, direction TLT
+.....\hbox(7.5+2.5)x238.88702, shifted 42.5, direction TLT
 ......\hbox(7.5+2.5)x238.88702, glue set 113.95851fil, direction TLT
 .......\glue 0.0 plus 1.0fil minus 1.0fil
 .......\TU/lmr/m/n/10 B
@@ -2331,10 +2321,8 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
-...\glue 0.0
 ...\glue(\parskip) 0.0
 ...\glue(\parskip) 0.0
-...\glue(\lineskip) 1.0
 ...\hbox(30.0+0.0)x238.88702, glue set 104.44351fil, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -2348,19 +2336,24 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
+...\kern15.0
 ..\penalty 10000
 ..\glue(\parfillskip) 0.0 plus 1.0fil
 ..\glue(\rightskip) 0.0
+.\glue 4.0 plus 2.0 minus 1.0
+.\glue -4.0 plus -2.0 minus -1.0
+.\glue 4.0 plus 2.0 minus 1.0
+.\glue -6.5 plus -2.0 minus -1.0
 .\penalty -51
-.\glue 5.80002 plus 2.0 minus 1.0
-.\glue -5.80002 plus -2.0 minus -1.0
-.\glue 16.0
-.\glue -16.0
+.\glue 2.5
+.\glue 4.0 plus 2.0 minus 1.0
+.\glue -6.5 plus -2.0 minus -1.0
 .\penalty -51
-.\glue 16.0
+.\glue 2.5
+.\glue 4.0 plus 2.0 minus 1.0
 .\glue(\parskip) 0.0
 .\glue(\parskip) 0.0
-.\glue(\baselineskip) 4.95
+.\glue(\baselineskip) 2.45
 .\hbox(7.05+2.06)x238.88702, glue set 199.15703fil, shifted 11.11298, direction TLT
 ..\localpar
 ...\localinterlinepenalty=0
@@ -2413,7 +2406,7 @@ Package enumext Info: Items = 2, answers = 0, difference = 2.
 Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 (enumext)             Started on line ... and closed on line ....
 > \box...=
-\vbox(126.04004+0.0)x250.0, direction TLT
+\vbox(122.89+0.0)x250.0, direction TLT
 .\penalty -51
 .\glue 0.0 plus 1.0
 .\glue 0.0
@@ -2453,13 +2446,15 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ..\penalty 10000
 ..\glue(\parfillskip) 0.0 plus 1.0fil
 ..\glue(\rightskip) 0.0
+.\glue 4.0 plus 2.0 minus 1.0
+.\glue 2.44
+.\glue -2.44
 .\penalty -51
-.\glue 5.80002 plus 2.0 minus 1.0
-.\glue -5.80002 plus -2.0 minus -1.0
-.\glue -4.19998 plus 2.0 minus 1.0
+.\glue 2.44
+.\glue -2.44
+.\glue -7.56
 .\glue(\parskip) 10.0
 .\glue(\parskip) 0.0
-.\glue(\baselineskip) 2.44
 .\hbox(7.5+33.5)x238.88702, shifted 11.11298, direction TLT
 ..\localpar
 ...\localinterlinepenalty=0
@@ -2491,11 +2486,9 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
-...\glue 0.0
-...\glue 0.0
+...\glue 1.0
 ...\glue(\parskip) 0.0
 ...\glue(\parskip) 0.0
-...\glue(\lineskip) 1.0
 ...\hbox(30.0+0.0)x238.88702, glue set 104.44351fil, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -2514,7 +2507,6 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ..\glue(\rightskip) 0.0
 .\glue(\parskip) 10.0
 .\glue(\parskip) 0.0
-.\glue(\lineskip) 1.0
 .\hbox(7.5+33.5)x238.88702, shifted 11.11298, direction TLT
 ..\localpar
 ...\localinterlinepenalty=0
@@ -2539,11 +2531,9 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
-...\glue 0.0
-...\glue 0.0
+...\glue 1.0
 ...\glue(\parskip) 0.0
 ...\glue(\parskip) 0.0
-...\glue(\lineskip) 1.0
 ...\hbox(30.0+0.0)x238.88702, glue set 104.44351fil, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -2560,15 +2550,20 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ..\penalty 10000
 ..\glue(\parfillskip) 0.0 plus 1.0fil
 ..\glue(\rightskip) 0.0
+.\glue 4.0 plus 2.0 minus 1.0
+.\glue -4.0 plus -2.0 minus -1.0
+.\glue 4.0 plus 2.0 minus 1.0
+.\glue -6.5 plus -2.0 minus -1.0
 .\penalty -51
-.\glue 5.80002 plus 2.0 minus 1.0
-.\glue -10.80002 plus -2.0 minus -1.0
+.\glue 2.5
+.\glue 4.0 plus 2.0 minus 1.0
+.\glue -6.5 plus -2.0 minus -1.0
 .\penalty -51
-.\glue 5.0
-.\glue 5.80002 plus 2.0 minus 1.0
+.\glue 2.5
+.\glue 4.0 plus 2.0 minus 1.0
 .\glue(\parskip) 0.0
 .\glue(\parskip) 0.0
-.\glue(\lineskip) 1.0
+.\glue(\baselineskip) 2.45
 .\hbox(7.05+2.06)x238.88702, glue set 199.15703fil, shifted 11.11298, direction TLT
 ..\localpar
 ...\localinterlinepenalty=0
@@ -2621,7 +2616,7 @@ Package enumext Info: Items = 2, answers = 0, difference = 2.
 Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 (enumext)             Started on line ... and closed on line ....
 > \box...=
-\vbox(81.75002+0.0)x250.0, direction TLT
+\vbox(75.89+0.0)x250.0, direction TLT
 .\penalty -51
 .\glue 0.0 plus 1.0
 .\glue 0.0
@@ -2661,14 +2656,16 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ..\penalty 10000
 ..\glue(\parfillskip) 0.0 plus 1.0fil
 ..\glue(\rightskip) 0.0
+.\glue 4.0 plus 2.0 minus 1.0
+.\glue 2.44
+.\glue -2.44
 .\penalty -51
-.\glue 5.80002 plus 2.0 minus 1.0
-.\glue -5.80002 plus -2.0 minus -1.0
-.\glue -14.80002 plus 1.0
-.\glue(\parskip) 20.60004 plus 1.0 minus 1.0
+.\glue 2.44
+.\glue -2.44
+.\glue 0.44 plus -1.0 minus -1.0
+.\glue(\parskip) 2.0 plus 1.0 minus 1.0
 .\glue(\parskip) 0.0
-.\glue(\lineskip) 1.0
-.\hbox(31.0+0.0)x238.88702, shifted 11.11298, direction TLT
+.\hbox(45.0+0.0)x238.88702, shifted 11.11298, direction TLT
 ..\localpar
 ...\localinterlinepenalty=0
 ...\localbrokenpenalty=0
@@ -2682,7 +2679,7 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ....\glue 0.0 plus 1.0fill
 ...\glue 3.33298
 ..\penalty 0
-..\vbox(31.0+0.0)x119.44351, direction TLT
+..\vbox(45.0+0.0)x119.44351, direction TLT
 ...\hbox(0.0+0.0)x119.44351, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -2692,7 +2689,7 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 .....\localrightbox=null
 ....\hbox(0.0+0.0)x0.0, direction TLT
 ....\hbox(0.0+0.0)x119.44351, direction TLT
-.....\hbox(7.5+2.5)x119.44351, shifted 48.60004, direction TLT
+.....\hbox(7.5+2.5)x119.44351, shifted 42.5, direction TLT
 ......\hbox(7.5+2.5)x119.44351, glue set 54.02676fil, direction TLT
 .......\glue 0.0 plus 1.0fil minus 1.0fil
 .......\TU/lmr/m/n/10 A
@@ -2701,10 +2698,8 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
-...\glue 0.0
 ...\glue(\parskip) 0.0
 ...\glue(\parskip) 0.0
-...\glue(\lineskip) 1.0
 ...\hbox(30.0+0.0)x119.44351, glue set 44.72176fil, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -2718,7 +2713,8 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
-..\vbox(31.0+0.0)x119.44351, direction TLT
+...\kern15.0
+..\vbox(45.0+0.0)x119.44351, direction TLT
 ...\hbox(0.0+0.0)x119.44351, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -2728,7 +2724,7 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 .....\localrightbox=null
 ....\hbox(0.0+0.0)x0.0, direction TLT
 ....\hbox(0.0+0.0)x119.44351, direction TLT
-.....\hbox(7.5+2.5)x119.44351, shifted 48.60004, direction TLT
+.....\hbox(7.5+2.5)x119.44351, shifted 42.5, direction TLT
 ......\hbox(7.5+2.5)x119.44351, glue set 54.23676fil, direction TLT
 .......\glue 0.0 plus 1.0fil minus 1.0fil
 .......\TU/lmr/m/n/10 B
@@ -2737,10 +2733,8 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
-...\glue 0.0
 ...\glue(\parskip) 0.0
 ...\glue(\parskip) 0.0
-...\glue(\lineskip) 1.0
 ...\hbox(30.0+0.0)x119.44351, glue set 44.72176fil, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -2754,19 +2748,24 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
+...\kern15.0
 ..\penalty 10000
 ..\glue(\parfillskip) 0.0 plus 1.0fil
 ..\glue(\rightskip) 0.0
+.\glue 4.0 plus 2.0 minus 1.0
+.\glue -4.0 plus -2.0 minus -1.0
+.\glue 4.0 plus 2.0 minus 1.0
+.\glue -6.5 plus -2.0 minus -1.0
 .\penalty -51
-.\glue 5.80002 plus 2.0 minus 1.0
-.\glue -5.80002 plus -2.0 minus -1.0
-.\glue 21.0
-.\glue -21.0
+.\glue 2.5
+.\glue 4.0 plus 2.0 minus 1.0
+.\glue -6.5 plus -2.0 minus -1.0
 .\penalty -51
-.\glue 21.0
+.\glue 2.5
+.\glue 4.0 plus 2.0 minus 1.0
 .\glue(\parskip) 0.0
 .\glue(\parskip) 0.0
-.\glue(\baselineskip) 4.95
+.\glue(\baselineskip) 2.45
 .\hbox(7.05+2.06)x238.88702, glue set 199.15703fil, shifted 11.11298, direction TLT
 ..\localpar
 ...\localinterlinepenalty=0
@@ -2819,7 +2818,7 @@ Package enumext Info: Items = 2, answers = 0, difference = 2.
 Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 (enumext)             Started on line ... and closed on line ....
 > \box...=
-\vbox(79.04004+0.0)x250.0, direction TLT
+\vbox(75.89+0.0)x250.0, direction TLT
 .\penalty -51
 .\glue 0.0 plus 1.0
 .\glue 0.0
@@ -2859,14 +2858,16 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ..\penalty 10000
 ..\glue(\parfillskip) 0.0 plus 1.0fil
 ..\glue(\rightskip) 0.0
+.\glue 4.0 plus 2.0 minus 1.0
+.\glue 2.44
+.\glue -2.44
 .\penalty -51
-.\glue 5.80002 plus 2.0 minus 1.0
-.\glue -5.80002 plus -2.0 minus -1.0
-.\glue 3.80002 plus 1.0
+.\glue 2.44
+.\glue -2.44
+.\glue 0.44 plus -1.0 minus -1.0
 .\glue(\parskip) 2.0 plus 1.0 minus 1.0
 .\glue(\parskip) 0.0
-.\glue(\baselineskip) 2.44
-.\hbox(7.5+38.5)x238.88702, shifted 11.11298, direction TLT
+.\hbox(7.5+37.5)x238.88702, shifted 11.11298, direction TLT
 ..\localpar
 ...\localinterlinepenalty=0
 ...\localbrokenpenalty=0
@@ -2880,7 +2881,7 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ....\glue 0.0 plus 1.0fill
 ...\glue 3.33298
 ..\penalty 0
-..\vbox(7.5+38.5)x119.44351, direction TLT
+..\vbox(7.5+37.5)x119.44351, direction TLT
 ...\hbox(7.5+2.5)x119.44351, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -2897,11 +2898,9 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
-...\glue 0.0
 ...\glue 5.0
 ...\glue(\parskip) 0.0
 ...\glue(\parskip) 0.0
-...\glue(\lineskip) 1.0
 ...\hbox(30.0+0.0)x119.44351, glue set 44.72176fil, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -2915,7 +2914,7 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
-..\vbox(7.5+38.5)x119.44351, direction TLT
+..\vbox(7.5+37.5)x119.44351, direction TLT
 ...\hbox(7.5+2.5)x119.44351, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -2932,11 +2931,9 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
-...\glue 0.0
 ...\glue 5.0
 ...\glue(\parskip) 0.0
 ...\glue(\parskip) 0.0
-...\glue(\lineskip) 1.0
 ...\hbox(30.0+0.0)x119.44351, glue set 44.72176fil, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -2953,15 +2950,20 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ..\penalty 10000
 ..\glue(\parfillskip) 0.0 plus 1.0fil
 ..\glue(\rightskip) 0.0
+.\glue 4.0 plus 2.0 minus 1.0
+.\glue -4.0 plus -2.0 minus -1.0
+.\glue 4.0 plus 2.0 minus 1.0
+.\glue -6.5 plus -2.0 minus -1.0
 .\penalty -51
-.\glue 5.80002 plus 2.0 minus 1.0
-.\glue -10.80002 plus -2.0 minus -1.0
+.\glue 2.5
+.\glue 4.0 plus 2.0 minus 1.0
+.\glue -6.5 plus -2.0 minus -1.0
 .\penalty -51
-.\glue 5.0
-.\glue 5.80002 plus 2.0 minus 1.0
+.\glue 2.5
+.\glue 4.0 plus 2.0 minus 1.0
 .\glue(\parskip) 0.0
 .\glue(\parskip) 0.0
-.\glue(\lineskip) 1.0
+.\glue(\baselineskip) 2.45
 .\hbox(7.05+2.06)x238.88702, glue set 199.15703fil, shifted 11.11298, direction TLT
 ..\localpar
 ...\localinterlinepenalty=0
@@ -3015,7 +3017,7 @@ Package enumext Info: Items = 2, answers = 0, difference = 2.
 Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 (enumext)             Started on line ... and closed on line ....
 > \box...=
-\vbox(106.75002+0.0)x250.0, direction TLT
+\vbox(105.89+0.0)x250.0, direction TLT
 .\penalty -51
 .\glue 0.0 plus 1.0
 .\glue 0.0
@@ -3055,14 +3057,16 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ..\penalty 10000
 ..\glue(\parfillskip) 0.0 plus 1.0fil
 ..\glue(\rightskip) 0.0
+.\glue 4.0 plus 2.0 minus 1.0
+.\glue 2.44
+.\glue -2.44
 .\penalty -51
-.\glue 5.80002 plus 2.0 minus 1.0
-.\glue -5.80002 plus -2.0 minus -1.0
-.\glue -9.80002 plus 1.0
-.\glue(\parskip) 15.60004 plus 1.0 minus 1.0
+.\glue 2.44
+.\glue -2.44
+.\glue 0.44 plus -1.0 minus -1.0
+.\glue(\parskip) 2.0 plus 1.0 minus 1.0
 .\glue(\parskip) 0.0
-.\glue(\lineskip) 1.0
-.\hbox(61.0+0.0)x238.88702, shifted 11.11298, direction TLT
+.\hbox(75.0+0.0)x238.88702, shifted 11.11298, direction TLT
 ..\localpar
 ...\localinterlinepenalty=0
 ...\localbrokenpenalty=0
@@ -3076,7 +3080,7 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ....\glue 0.0 plus 1.0fill
 ...\glue 3.33298
 ..\penalty 0
-..\vbox(21.0+0.0)x79.62901, direction TLT
+..\vbox(35.0+0.0)x79.62901, direction TLT
 ...\hbox(0.0+0.0)x79.62901, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -3086,7 +3090,7 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 .....\localrightbox=null
 ....\hbox(0.0+0.0)x0.0, direction TLT
 ....\hbox(0.0+0.0)x79.62901, direction TLT
-.....\hbox(7.5+2.5)x79.62901, shifted 33.60004, direction TLT
+.....\hbox(7.5+2.5)x79.62901, shifted 32.5, direction TLT
 ......\hbox(7.5+2.5)x79.62901, glue set 34.1195fil, direction TLT
 .......\glue 0.0 plus 1.0fil minus 1.0fil
 .......\TU/lmr/m/n/10 A
@@ -3095,10 +3099,8 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
-...\glue 0.0
 ...\glue(\parskip) 0.0
 ...\glue(\parskip) 0.0
-...\glue(\lineskip) 1.0
 ...\hbox(20.0+0.0)x79.62901, glue set 24.81451fil, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -3112,7 +3114,8 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
-..\vbox(41.0+0.0)x79.62901, direction TLT
+...\kern15.0
+..\vbox(55.0+0.0)x79.62901, direction TLT
 ...\hbox(0.0+0.0)x79.62901, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -3122,7 +3125,7 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 .....\localrightbox=null
 ....\hbox(0.0+0.0)x0.0, direction TLT
 ....\hbox(0.0+0.0)x79.62901, direction TLT
-.....\hbox(7.5+2.5)x79.62901, shifted 53.60004, direction TLT
+.....\hbox(7.5+2.5)x79.62901, shifted 52.5, direction TLT
 ......\hbox(7.5+2.5)x79.62901, glue set 34.32951fil, direction TLT
 .......\glue 0.0 plus 1.0fil minus 1.0fil
 .......\TU/lmr/m/n/10 B
@@ -3131,10 +3134,8 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
-...\glue 0.0
 ...\glue(\parskip) 0.0
 ...\glue(\parskip) 0.0
-...\glue(\lineskip) 1.0
 ...\hbox(40.0+0.0)x79.62901, glue set 24.81451fil, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -3148,7 +3149,8 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
-..\vbox(61.0+0.0)x79.62901, direction TLT
+...\kern15.0
+..\vbox(75.0+0.0)x79.62901, direction TLT
 ...\hbox(0.0+0.0)x79.62901, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -3158,7 +3160,7 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 .....\localrightbox=null
 ....\hbox(0.0+0.0)x0.0, direction TLT
 ....\hbox(0.0+0.0)x79.62901, direction TLT
-.....\hbox(7.5+2.5)x79.62901, shifted 73.60004, direction TLT
+.....\hbox(7.5+2.5)x79.62901, shifted 72.5, direction TLT
 ......\hbox(7.5+2.5)x79.62901, glue set 34.2595fil, direction TLT
 .......\glue 0.0 plus 1.0fil minus 1.0fil
 .......\TU/lmr/m/n/10 C
@@ -3167,10 +3169,8 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
-...\glue 0.0
 ...\glue(\parskip) 0.0
 ...\glue(\parskip) 0.0
-...\glue(\lineskip) 1.0
 ...\hbox(60.0+0.0)x79.62901, glue set 24.81451fil, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -3184,19 +3184,24 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
+...\kern15.0
 ..\penalty 10000
 ..\glue(\parfillskip) 0.0 plus 1.0fil
 ..\glue(\rightskip) 0.0
+.\glue 4.0 plus 2.0 minus 1.0
+.\glue -4.0 plus -2.0 minus -1.0
+.\glue 4.0 plus 2.0 minus 1.0
+.\glue -6.5 plus -2.0 minus -1.0
 .\penalty -51
-.\glue 5.80002 plus 2.0 minus 1.0
-.\glue -5.80002 plus -2.0 minus -1.0
-.\glue 16.0
-.\glue -16.0
+.\glue 2.5
+.\glue 4.0 plus 2.0 minus 1.0
+.\glue -6.5 plus -2.0 minus -1.0
 .\penalty -51
-.\glue 16.0
+.\glue 2.5
+.\glue 4.0 plus 2.0 minus 1.0
 .\glue(\parskip) 0.0
 .\glue(\parskip) 0.0
-.\glue(\baselineskip) 4.95
+.\glue(\baselineskip) 2.45
 .\hbox(7.05+2.06)x238.88702, glue set 199.15703fil, shifted 11.11298, direction TLT
 ..\localpar
 ...\localinterlinepenalty=0
@@ -3249,7 +3254,7 @@ Package enumext Info: Items = 2, answers = 0, difference = 2.
 Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 (enumext)             Started on line ... and closed on line ....
 > \box...=
-\vbox(104.04004+0.0)x250.0, direction TLT
+\vbox(101.89+0.0)x250.0, direction TLT
 .\penalty -51
 .\glue 0.0 plus 1.0
 .\glue 0.0
@@ -3289,13 +3294,15 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ..\penalty 10000
 ..\glue(\parfillskip) 0.0 plus 1.0fil
 ..\glue(\rightskip) 0.0
+.\glue 4.0 plus 2.0 minus 1.0
+.\glue 2.44
+.\glue -2.44
 .\penalty -51
-.\glue 5.80002 plus 2.0 minus 1.0
-.\glue -5.80002 plus -2.0 minus -1.0
-.\glue 3.80002 plus 1.0
+.\glue 2.44
+.\glue -2.44
+.\glue 0.44 plus -1.0 minus -1.0
 .\glue(\parskip) 2.0 plus 1.0 minus 1.0
 .\glue(\parskip) 0.0
-.\glue(\baselineskip) 2.44
 .\hbox(7.5+63.5)x238.88702, shifted 11.11298, direction TLT
 ..\localpar
 ...\localinterlinepenalty=0
@@ -3327,11 +3334,9 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
-...\glue 0.0
-...\glue 0.0
+...\glue 1.0
 ...\glue(\parskip) 0.0
 ...\glue(\parskip) 0.0
-...\glue(\lineskip) 1.0
 ...\hbox(20.0+0.0)x79.62901, glue set 24.81451fil, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -3362,11 +3367,9 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
-...\glue 0.0
-...\glue 0.0
+...\glue 1.0
 ...\glue(\parskip) 0.0
 ...\glue(\parskip) 0.0
-...\glue(\lineskip) 1.0
 ...\hbox(40.0+0.0)x79.62901, glue set 24.81451fil, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -3397,11 +3400,9 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
-...\glue 0.0
-...\glue 0.0
+...\glue 1.0
 ...\glue(\parskip) 0.0
 ...\glue(\parskip) 0.0
-...\glue(\lineskip) 1.0
 ...\hbox(60.0+0.0)x79.62901, glue set 24.81451fil, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -3418,15 +3419,20 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ..\penalty 10000
 ..\glue(\parfillskip) 0.0 plus 1.0fil
 ..\glue(\rightskip) 0.0
+.\glue 4.0 plus 2.0 minus 1.0
+.\glue -4.0 plus -2.0 minus -1.0
+.\glue 4.0 plus 2.0 minus 1.0
+.\glue -6.5 plus -2.0 minus -1.0
 .\penalty -51
-.\glue 5.80002 plus 2.0 minus 1.0
-.\glue -10.80002 plus -2.0 minus -1.0
+.\glue 2.5
+.\glue 4.0 plus 2.0 minus 1.0
+.\glue -6.5 plus -2.0 minus -1.0
 .\penalty -51
-.\glue 5.0
-.\glue 5.80002 plus 2.0 minus 1.0
+.\glue 2.5
+.\glue 4.0 plus 2.0 minus 1.0
 .\glue(\parskip) 0.0
 .\glue(\parskip) 0.0
-.\glue(\lineskip) 1.0
+.\glue(\baselineskip) 2.45
 .\hbox(7.05+2.06)x238.88702, glue set 199.15703fil, shifted 11.11298, direction TLT
 ..\localpar
 ...\localinterlinepenalty=0
@@ -3479,7 +3485,7 @@ Package enumext Info: Items = 2, answers = 0, difference = 2.
 Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 (enumext)             Started on line ... and closed on line ....
 > \box...=
-\vbox(104.75002+0.0)x250.0, direction TLT
+\vbox(101.45+0.0)x250.0, direction TLT
 .\penalty -51
 .\glue 10.0 plus 4.0 minus 5.0
 .\glue -10.0 plus -4.0 minus -5.0
@@ -3520,14 +3526,18 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ..\penalty 10000
 ..\glue(\parfillskip) 0.0 plus 1.0fil
 ..\glue(\rightskip) 0.0
+.\glue 4.0 plus 2.0 minus 1.0
+.\glue 2.44
+.\glue -2.44
 .\penalty -51
-.\glue 9.80002 plus 4.0 minus 2.0
-.\glue -9.80002 plus -4.0 minus -2.0
-.\glue -5.80002 plus 3.0 minus 1.0
-.\glue(\parskip) 15.60004 plus 1.0 minus 1.0
+.\glue 2.44
+.\glue -2.44
+.\glue 4.0 plus 2.0 minus 1.0
+.\glue -4.0 plus -2.0 minus -1.0
+.\glue 2.0 plus 1.0
+.\glue(\parskip) 2.0 plus 1.0 minus 1.0
 .\glue(\parskip) 0.0
-.\glue(\lineskip) 1.0
-.\hbox(31.0+0.0)x238.88702, shifted 11.11298, direction TLT
+.\hbox(45.0+0.0)x238.88702, shifted 11.11298, direction TLT
 ..\localpar
 ...\localinterlinepenalty=0
 ...\localbrokenpenalty=0
@@ -3541,7 +3551,7 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ....\glue 0.0 plus 1.0fill
 ...\glue 3.33298
 ..\penalty 0
-..\vbox(31.0+0.0)x119.44351, direction TLT
+..\vbox(45.0+0.0)x119.44351, direction TLT
 ...\hbox(0.0+0.0)x119.44351, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -3551,7 +3561,7 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 .....\localrightbox=null
 ....\hbox(0.0+0.0)x0.0, direction TLT
 ....\hbox(0.0+0.0)x119.44351, direction TLT
-.....\hbox(7.5+2.5)x119.44351, shifted 43.60004, direction TLT
+.....\hbox(7.5+2.5)x119.44351, shifted 42.5, direction TLT
 ......\hbox(7.5+2.5)x119.44351, glue set 54.02676fil, direction TLT
 .......\glue 0.0 plus 1.0fil minus 1.0fil
 .......\TU/lmr/m/n/10 A
@@ -3560,10 +3570,8 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
-...\glue 0.0
 ...\glue(\parskip) 0.0
 ...\glue(\parskip) 0.0
-...\glue(\lineskip) 1.0
 ...\hbox(30.0+0.0)x119.44351, glue set 44.72176fil, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -3577,7 +3585,8 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
-..\vbox(31.0+0.0)x119.44351, direction TLT
+...\kern15.0
+..\vbox(45.0+0.0)x119.44351, direction TLT
 ...\hbox(0.0+0.0)x119.44351, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -3587,7 +3596,7 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 .....\localrightbox=null
 ....\hbox(0.0+0.0)x0.0, direction TLT
 ....\hbox(0.0+0.0)x119.44351, direction TLT
-.....\hbox(7.5+2.5)x119.44351, shifted 43.60004, direction TLT
+.....\hbox(7.5+2.5)x119.44351, shifted 42.5, direction TLT
 ......\hbox(7.5+2.5)x119.44351, glue set 54.23676fil, direction TLT
 .......\glue 0.0 plus 1.0fil minus 1.0fil
 .......\TU/lmr/m/n/10 B
@@ -3596,10 +3605,8 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
-...\glue 0.0
 ...\glue(\parskip) 0.0
 ...\glue(\parskip) 0.0
-...\glue(\lineskip) 1.0
 ...\hbox(30.0+0.0)x119.44351, glue set 44.72176fil, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -3613,19 +3620,20 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
+...\kern15.0
 ..\penalty 10000
 ..\glue(\parfillskip) 0.0 plus 1.0fil
 ..\glue(\rightskip) 0.0
+.\glue 4.0 plus 2.0 minus 1.0
+.\glue -4.0 plus -2.0 minus -1.0
+.\glue 0.0
 .\penalty -51
-.\glue 5.80002 plus 2.0 minus 1.0
-.\glue -5.80002 plus -2.0 minus -1.0
-.\glue 16.0
-.\glue -16.0
+.\glue 0.0
 .\penalty -51
-.\glue 16.0
+.\glue 4.0 plus 2.0 minus 1.0
 .\glue(\parskip) 4.0 plus 2.0 minus 1.0
 .\glue(\parskip) 0.0
-.\glue(\baselineskip) 4.95
+.\glue(\baselineskip) 2.45
 .\hbox(7.05+2.06)x238.88702, glue set 199.15703fil, shifted 11.11298, direction TLT
 ..\localpar
 ...\localinterlinepenalty=0
@@ -3678,7 +3686,7 @@ Package enumext Info: Items = 2, answers = 0, difference = 2.
 Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 (enumext)             Started on line ... and closed on line ....
 > \box...=
-\vbox(102.04004+0.0)x250.0, direction TLT
+\vbox(97.45+0.0)x250.0, direction TLT
 .\penalty -51
 .\glue 10.0 plus 4.0 minus 5.0
 .\glue -10.0 plus -4.0 minus -5.0
@@ -3719,13 +3727,17 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ..\penalty 10000
 ..\glue(\parfillskip) 0.0 plus 1.0fil
 ..\glue(\rightskip) 0.0
+.\glue 4.0 plus 2.0 minus 1.0
+.\glue 2.44
+.\glue -2.44
 .\penalty -51
-.\glue 9.80002 plus 4.0 minus 2.0
-.\glue -9.80002 plus -4.0 minus -2.0
-.\glue 7.80002 plus 3.0 minus 1.0
+.\glue 2.44
+.\glue -2.44
+.\glue 4.0 plus 2.0 minus 1.0
+.\glue -4.0 plus -2.0 minus -1.0
+.\glue 2.0 plus 1.0
 .\glue(\parskip) 2.0 plus 1.0 minus 1.0
 .\glue(\parskip) 0.0
-.\glue(\baselineskip) 2.44
 .\hbox(7.5+33.5)x238.88702, shifted 11.11298, direction TLT
 ..\localpar
 ...\localinterlinepenalty=0
@@ -3757,11 +3769,9 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
-...\glue 0.0
-...\glue 0.0
+...\glue 1.0
 ...\glue(\parskip) 0.0
 ...\glue(\parskip) 0.0
-...\glue(\lineskip) 1.0
 ...\hbox(30.0+0.0)x119.44351, glue set 44.72176fil, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -3792,11 +3802,9 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
-...\glue 0.0
-...\glue 0.0
+...\glue 1.0
 ...\glue(\parskip) 0.0
 ...\glue(\parskip) 0.0
-...\glue(\lineskip) 1.0
 ...\hbox(30.0+0.0)x119.44351, glue set 44.72176fil, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -3813,15 +3821,16 @@ Package enumext Info: Answers in 'test' (enumext): NOT OK, items > answers.
 ..\penalty 10000
 ..\glue(\parfillskip) 0.0 plus 1.0fil
 ..\glue(\rightskip) 0.0
+.\glue 4.0 plus 2.0 minus 1.0
+.\glue -4.0 plus -2.0 minus -1.0
+.\glue 0.0
 .\penalty -51
-.\glue 5.80002 plus 2.0 minus 1.0
-.\glue -10.80002 plus -2.0 minus -1.0
+.\glue 0.0
 .\penalty -51
-.\glue 5.0
-.\glue 5.80002 plus 2.0 minus 1.0
+.\glue 4.0 plus 2.0 minus 1.0
 .\glue(\parskip) 4.0 plus 2.0 minus 1.0
 .\glue(\parskip) 0.0
-.\glue(\lineskip) 1.0
+.\glue(\baselineskip) 2.45
 .\hbox(7.05+2.06)x238.88702, glue set 199.15703fil, shifted 11.11298, direction TLT
 ..\localpar
 ...\localinterlinepenalty=0

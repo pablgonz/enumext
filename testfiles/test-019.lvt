@@ -1,0 +1,176 @@
+% test-019.lvt -- espacios visibles de keyanspic en distintos tamaños de letra
+%
+% Hecho con cariño por Pablo González L. <pablgonz@educarchile.cl>
+% para que enumext siga funcionando igual de bien después de cada cambio.
+%
+% Regresion:  l3build save test-019
+%             l3build check test-019
+%
+% Test de regresion de los espacios verticales visibles de keyanspic con letra
+% de 10pt, 11pt y 12pt (con su \baselineskip). Cada caso compone el codigo en
+% una caja y un recorrido en Lua mide la separacion entre las cajas visibles:
+% arriba del entorno, entre la etiqueta y la imagen (label-sep), entre filas
+% (layout-sep) y abajo del entorno, sin contar la etiqueta numerica de los
+% items de enumext. Los valores esperados son: arriba y abajo
+% iguales a los de keyans, y las llaves layout-top, layout-sep y label-sep
+% dan exactamente el valor pedido.
+\input{regression-test}
+
+\documentclass{article}
+\ExplSyntaxOn
+\debug_on:n { all }
+\ExplSyntaxOff
+\usepackage{enumext}
+\begin{document}
+
+\directlua{
+  local HL,VL,RU,GL,KE,GY =
+    node.id("hlist"),node.id("vlist"),node.id("rule"),node.id("glue"),
+    node.id("kern"),node.id("glyph")
+  local leaves
+  local count
+  local function r2(x) return math.floor(x/65536*100+0.5)/100 end
+  local function txt(h)
+    local s = ""
+    for x in node.traverse(h.head) do
+      if x.id == GY and string.len(s) < 10 then s = s..utf8.char(x.char) end
+    end
+    return s
+  end
+  local function place(n,top)
+    local base = top + n.height
+    if n.id == VL then
+      local cur = top
+      for c in node.traverse(n.head) do
+        if c.id == GL then cur = cur + c.width
+        elseif c.id == KE then cur = cur + c.kern
+        elseif c.id == HL or c.id == VL then
+          place(c,cur)
+          cur = cur + c.height + c.depth
+        elseif c.id == RU then
+          count = count + 1
+          leaves[count] = {t=cur,b=cur+c.height+c.depth,s="RULE"}
+          cur = cur + c.height + c.depth
+        end
+      end
+    else
+      local t = txt(n)
+      if t ~= "" and (string.byte(t,1) < 48 or string.byte(t,1) > 57) then
+        count = count + 1
+        leaves[count] = {t=top,b=top+n.height+n.depth,s=t}
+      end
+      for c in node.traverse(n.head) do
+        if c.id == HL or c.id == VL then
+          place(c,base + c.shift - c.height)
+        elseif c.id == RU then
+          local h = c.height
+          if h < -1073741823 then h = n.height end
+          local d = c.depth
+          if d < -1073741823 then d = n.depth end
+          count = count + 1
+          leaves[count] = {t=base-h,b=base+d,s="RULE"}
+        end
+      end
+    end
+  end
+  function enumext_gaps(b)
+    leaves = {}
+    count = 0
+    place(tex.box[b],0)
+    table.sort(leaves,function(a,c)
+      if math.abs(a.t-c.t) > 65536 then return a.t < c.t end
+      return a.s < c.s
+    end)
+    local out = {}
+    local m = 0
+    local prev = nil
+    for _,l in ipairs(leaves) do
+      if prev ~= nil and l.t - prev > -32768 then
+        m = m + 1
+        out[m] = tostring(r2(l.t - prev))
+      end
+      if prev == nil or l.b > prev then prev = l.b end
+    end
+    texio.write_nl("term_and_log","GAPS: "..table.concat(out," "))
+  end
+}
+
+\ExplSyntaxOn
+\msg_redirect_module:nnn { enumext } { info } { none }
+\msg_redirect_module:nnn { enumext } { warning } { none }
+\ExplSyntaxOff
+
+\newcommand\PIC[1]{\rule{30pt}{#1pt}}
+
+% #1 nombre del caso, #2 tamaño de letra, #3 contenido de la caja.
+\newcommand\GAPS[3]
+  {%
+    \TEST{#1}
+      {%
+        \setbox0=\vbox
+          {%
+            \hsize=250pt \linewidth=\hsize \columnwidth=\hsize \parindent=0pt
+            #2 #3%
+          }%
+        \directlua{enumext_gaps(0)}%
+      }%
+  }
+
+% #1 tamaño, #2 llaves de keyanspic, #3 distribucion de filas.
+\newcommand\PICCASE[3]
+  {%
+    \GAPS{[keyanspic #2 #3]}{#1}
+      {%
+        \begin{enumext}[save-ans=s, nosep]
+          \item Pregunta
+            \begin{keyanspic}[#2, #3]
+              \anspic*{\PIC{30}} \anspic{\PIC{30}}
+            \end{keyanspic}
+          \item Siguiente
+        \end{enumext}%
+      }%
+  }
+
+% #1 tamaño, #2 posicion de la etiqueta.
+\newcommand\POSCASES[2]
+  {%
+    \PICCASE{#1}{#2}{}
+    \PICCASE{#1}{#2,layout-top=0pt}{}
+    \PICCASE{#1}{#2,layout-top=10pt}{}
+    \PICCASE{#1}{#2,label-sep=0pt}{}
+    \PICCASE{#1}{#2,label-sep=5pt}{}
+    \PICCASE{#1}{#2}{layout-sty={1,1}}
+    \PICCASE{#1}{#2,layout-sep=0pt}{layout-sty={1,1}}
+    \PICCASE{#1}{#2,layout-sep=10pt}{layout-sty={1,1}}
+  }
+
+\newcommand\ALLCASES[1]
+  {%
+    \GAPS{[keyans referencia]}{#1}
+      {%
+        \begin{enumext}[save-ans=s, nosep]
+          \item Pregunta
+            \begin{keyans}
+              \item* Uno
+              \item* Dos
+            \end{keyans}
+          \item Siguiente
+        \end{enumext}%
+      }%
+    \POSCASES{#1}{label-pos=below}
+    \POSCASES{#1}{label-pos=above}
+  }
+
+\START
+
+\TYPE{=== A. Letra de 10pt ===}
+\ALLCASES{\fontsize{10}{12}\selectfont}
+
+\TYPE{=== B. Letra de 11pt ===}
+\ALLCASES{\fontsize{10.95}{13.6}\selectfont}
+
+\TYPE{=== C. Letra de 12pt ===}
+\ALLCASES{\fontsize{12}{14.5}\selectfont}
+
+\OMIT
+\end{document}

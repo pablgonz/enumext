@@ -2542,7 +2542,7 @@ Package enumext Info: Items = 1, answers = 1, difference = 0.
 Package enumext Info: Answers in 'kam' (enumext): OK, items = answers.
 (enumext)             Started on line ... and closed on line ....
 > \box...=
-\vbox(84.2034+0.0)x345.0, direction TLT
+\vbox(82.90338+0.0)x345.0, direction TLT
 .\penalty -51
 .\glue 10.0 plus 4.0 minus 5.0
 .\glue -10.0 plus -4.0 minus -5.0
@@ -2601,14 +2601,18 @@ Package enumext Info: Answers in 'kam' (enumext): OK, items = answers.
 ..\penalty 10000
 ..\glue(\parfillskip) 0.0 plus 1.0fil
 ..\glue(\rightskip) 0.0
+.\glue 4.0 plus 2.0 minus 1.0
+.\glue 2.44
+.\glue -2.44
 .\penalty -51
-.\glue 9.80002 plus 4.0 minus 2.0
-.\glue -9.80002 plus -4.0 minus -2.0
-.\glue -5.80002 plus 3.0 minus 1.0
-.\glue(\parskip) 15.60004 plus 1.0 minus 1.0
+.\glue 2.44
+.\glue -2.44
+.\glue 4.0 plus 2.0 minus 1.0
+.\glue -4.0 plus -2.0 minus -1.0
+.\glue 2.0 plus 1.0
+.\glue(\parskip) 2.0 plus 1.0 minus 1.0
 .\glue(\parskip) 0.0
-.\glue(\lineskip) 1.0
-.\hbox(20.27238+0.0)x333.88702, glue set 0.00002fil, shifted 11.11298, direction TLT
+.\hbox(34.27238+0.0)x333.88702, glue set 0.00002fil, shifted 11.11298, direction TLT
 ..\localpar
 ...\localinterlinepenalty=0
 ...\localbrokenpenalty=0
@@ -2622,7 +2626,7 @@ Package enumext Info: Answers in 'kam' (enumext): OK, items = answers.
 ....\glue 0.0 plus 1.0fill
 ...\glue 3.33298
 ..\penalty 0
-..\vbox(20.27238+0.0)x111.29567, direction TLT
+..\vbox(34.27238+0.0)x111.29567, direction TLT
 ...\hbox(0.0+0.0)x111.29567, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -2632,7 +2636,7 @@ Package enumext Info: Answers in 'kam' (enumext): OK, items = answers.
 .....\localrightbox=null
 ....\hbox(0.0+0.0)x0.0, direction TLT
 ....\hbox(0.0+0.0)x111.29567, direction TLT
-.....\hbox(7.5+2.5)x111.29567, shifted 32.87242, direction TLT
+.....\hbox(7.5+2.5)x111.29567, shifted 31.77238, direction TLT
 ......\hbox(7.5+2.5)x111.29567, glue set 49.95284fil, direction TLT
 .......\glue 0.0 plus 1.0fil minus 1.0fil
 .......\TU/lmr/m/n/10 A
@@ -2641,10 +2645,8 @@ Package enumext Info: Answers in 'kam' (enumext): OK, items = answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
-...\glue 0.0
 ...\glue(\parskip) 0.0
 ...\glue(\parskip) 0.0
-...\glue(\lineskip) 1.0
 ...\hbox(19.27238+0.0)x111.29567, glue set 42.79958fil, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -2670,7 +2672,8 @@ Package enumext Info: Answers in 'kam' (enumext): OK, items = answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
-..\vbox(20.27238+0.0)x111.29567, direction TLT
+...\kern15.0
+..\vbox(34.27238+0.0)x111.29567, direction TLT
 ...\hbox(0.0+0.0)x111.29567, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -2680,7 +2683,7 @@ Package enumext Info: Answers in 'kam' (enumext): OK, items = answers.
 .....\localrightbox=null
 ....\hbox(0.0+0.0)x0.0, direction TLT
 ....\hbox(0.0+0.0)x111.29567, direction TLT
-.....\hbox(7.5+2.5)x111.29567, shifted 32.87242, direction TLT
+.....\hbox(7.5+2.5)x111.29567, shifted 31.77238, direction TLT
 ......\hbox(7.5+2.5)x111.29567, glue set 47.45135fil, direction TLT
 .......\glue 0.0 plus 1.0fil minus 1.0fil
 .......\hbox(7.5+2.5)x13.06, glue set 1.045fil, direction TLT
@@ -2693,10 +2696,8 @@ Package enumext Info: Answers in 'kam' (enumext): OK, items = answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
-...\glue 0.0
 ...\glue(\parskip) 0.0
 ...\glue(\parskip) 0.0
-...\glue(\lineskip) 1.0
 ...\hbox(19.27238+0.0)x111.29567, glue set 42.79958fil, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -2722,7 +2723,8 @@ Package enumext Info: Answers in 'kam' (enumext): OK, items = answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
-..\vbox(20.27238+0.0)x111.29567, direction TLT
+...\kern15.0
+..\vbox(34.27238+0.0)x111.29567, direction TLT
 ...\hbox(0.0+0.0)x111.29567, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -2732,7 +2734,7 @@ Package enumext Info: Answers in 'kam' (enumext): OK, items = answers.
 .....\localrightbox=null
 ....\hbox(0.0+0.0)x0.0, direction TLT
 ....\hbox(0.0+0.0)x111.29567, direction TLT
-.....\hbox(7.5+2.5)x111.29567, shifted 32.87242, direction TLT
+.....\hbox(7.5+2.5)x111.29567, shifted 31.77238, direction TLT
 ......\hbox(7.5+2.5)x111.29567, glue set 50.09283fil, direction TLT
 .......\glue 0.0 plus 1.0fil minus 1.0fil
 .......\TU/lmr/m/n/10 C
@@ -2741,10 +2743,8 @@ Package enumext Info: Answers in 'kam' (enumext): OK, items = answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
-...\glue 0.0
 ...\glue(\parskip) 0.0
 ...\glue(\parskip) 0.0
-...\glue(\lineskip) 1.0
 ...\hbox(19.27238+0.0)x111.29567, glue set 42.79958fil, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -2770,24 +2770,24 @@ Package enumext Info: Answers in 'kam' (enumext): OK, items = answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
+...\kern15.0
 ..\penalty 10000
 ..\glue(\parfillskip) 0.0 plus 1.0fil
 ..\glue(\rightskip) 0.0
+.\glue 4.0 plus 2.0 minus 1.0
+.\glue -4.0 plus -2.0 minus -1.0
+.\glue 0.0
 .\penalty -51
-.\glue 5.80002 plus 2.0 minus 1.0
-.\glue -5.80002 plus -2.0 minus -1.0
-.\glue 16.0
-.\glue -16.0
-.\glue 20.0 plus 1.0 minus 1.0
-.\glue -20.0 plus -1.0 minus -1.0
+.\glue 0.0
 .\penalty -51
-.\glue 20.0 plus 1.0 minus 1.0
-.\glue -20.0 plus -1.0 minus -1.0
+.\glue 10.0 plus 3.0 minus 5.0
+.\glue -12.5 plus -3.0 minus -5.0
 .\penalty -51
-.\glue 20.0 plus 1.0 minus 1.0
+.\glue 2.5
+.\glue 10.0 plus 3.0 minus 5.0
 .\glue(\parskip) 0.0
 .\glue(\parskip) 0.0
-.\glue(\baselineskip) 5.25
+.\glue(\baselineskip) 2.75
 .\hbox(6.75+2.241)x345.0, glue set 175.27824fil, direction TLT
 ..\localpar
 ...\localinterlinepenalty=0
@@ -2875,7 +2875,7 @@ Package enumext Info: Items = 1, answers = 1, difference = 0.
 Package enumext Info: Answers in 'kan' (enumext): OK, items = answers.
 (enumext)             Started on line ... and closed on line ....
 > \box...=
-\vbox(106.83482+0.0)x345.0, direction TLT
+\vbox(107.43477+0.0)x345.0, direction TLT
 .\penalty -51
 .\glue 10.0 plus 4.0 minus 5.0
 .\glue -10.0 plus -4.0 minus -5.0
@@ -2934,14 +2934,18 @@ Package enumext Info: Answers in 'kan' (enumext): OK, items = answers.
 ..\penalty 10000
 ..\glue(\parfillskip) 0.0 plus 1.0fil
 ..\glue(\rightskip) 0.0
+.\glue 4.0 plus 2.0 minus 1.0
+.\glue 2.44
+.\glue -2.44
 .\penalty -51
-.\glue 9.80002 plus 4.0 minus 2.0
-.\glue -9.80002 plus -4.0 minus -2.0
-.\glue -5.80002 plus 3.0 minus 1.0
-.\glue(\parskip) 15.60004 plus 1.0 minus 1.0
+.\glue 2.44
+.\glue -2.44
+.\glue 4.0 plus 2.0 minus 1.0
+.\glue -4.0 plus -2.0 minus -1.0
+.\glue 2.0 plus 1.0
+.\glue(\parskip) 2.0 plus 1.0 minus 1.0
 .\glue(\parskip) 0.0
-.\glue(\lineskip) 1.0
-.\hbox(20.27238+0.0)x333.88702, shifted 11.11298, direction TLT
+.\hbox(34.27238+0.0)x333.88702, shifted 11.11298, direction TLT
 ..\localpar
 ...\localinterlinepenalty=0
 ...\localbrokenpenalty=0
@@ -2955,7 +2959,7 @@ Package enumext Info: Answers in 'kan' (enumext): OK, items = answers.
 ....\glue 0.0 plus 1.0fill
 ...\glue 3.33298
 ..\penalty 0
-..\vbox(20.27238+0.0)x166.94351, direction TLT
+..\vbox(34.27238+0.0)x166.94351, direction TLT
 ...\hbox(0.0+0.0)x166.94351, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -2965,7 +2969,7 @@ Package enumext Info: Answers in 'kan' (enumext): OK, items = answers.
 .....\localrightbox=null
 ....\hbox(0.0+0.0)x0.0, direction TLT
 ....\hbox(0.0+0.0)x166.94351, direction TLT
-.....\hbox(7.5+2.5)x166.94351, shifted 32.87242, direction TLT
+.....\hbox(7.5+2.5)x166.94351, shifted 31.77238, direction TLT
 ......\hbox(7.5+2.5)x166.94351, glue set 77.77676fil, direction TLT
 .......\glue 0.0 plus 1.0fil minus 1.0fil
 .......\TU/lmr/m/n/10 A
@@ -2974,10 +2978,8 @@ Package enumext Info: Answers in 'kan' (enumext): OK, items = answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
-...\glue 0.0
 ...\glue(\parskip) 0.0
 ...\glue(\parskip) 0.0
-...\glue(\lineskip) 1.0
 ...\hbox(19.27238+0.0)x166.94351, glue set 70.6235fil, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -3003,7 +3005,8 @@ Package enumext Info: Answers in 'kan' (enumext): OK, items = answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
-..\vbox(20.27238+0.0)x166.94351, direction TLT
+...\kern15.0
+..\vbox(34.27238+0.0)x166.94351, direction TLT
 ...\hbox(0.0+0.0)x166.94351, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -3013,7 +3016,7 @@ Package enumext Info: Answers in 'kan' (enumext): OK, items = answers.
 .....\localrightbox=null
 ....\hbox(0.0+0.0)x0.0, direction TLT
 ....\hbox(0.0+0.0)x166.94351, direction TLT
-.....\hbox(7.5+2.5)x166.94351, shifted 32.87242, direction TLT
+.....\hbox(7.5+2.5)x166.94351, shifted 31.77238, direction TLT
 ......\hbox(7.5+2.5)x166.94351, glue set 75.27527fil, direction TLT
 .......\glue 0.0 plus 1.0fil minus 1.0fil
 .......\hbox(7.5+2.5)x13.06, glue set 1.045fil, direction TLT
@@ -3026,10 +3029,8 @@ Package enumext Info: Answers in 'kan' (enumext): OK, items = answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
-...\glue 0.0
 ...\glue(\parskip) 0.0
 ...\glue(\parskip) 0.0
-...\glue(\lineskip) 1.0
 ...\hbox(19.27238+0.0)x166.94351, glue set 70.6235fil, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -3055,20 +3056,20 @@ Package enumext Info: Answers in 'kan' (enumext): OK, items = answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
+...\kern15.0
 ..\penalty 10000
 ..\glue(\parfillskip) 0.0 plus 1.0fil
 ..\glue(\rightskip) 0.0
-.\glue(\parskip) 15.60004 plus 1.0 minus 1.0
+.\glue(\parskip) 2.0 plus 1.0 minus 1.0
 .\glue(\parskip) 0.0
-.\glue(\lineskip) 1.0
-.\hbox(20.27238+0.0)x333.88702, shifted 11.11298, direction TLT
+.\hbox(34.27238+0.0)x333.88702, shifted 11.11298, direction TLT
 ..\localpar
 ...\localinterlinepenalty=0
 ...\localbrokenpenalty=0
 ...\localleftbox=null
 ...\localrightbox=null
 ..\hbox(0.0+0.0)x0.0, direction TLT
-..\vbox(20.27238+0.0)x333.88702, direction TLT
+..\vbox(34.27238+0.0)x333.88702, direction TLT
 ...\hbox(0.0+0.0)x333.88702, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -3078,7 +3079,7 @@ Package enumext Info: Answers in 'kan' (enumext): OK, items = answers.
 .....\localrightbox=null
 ....\hbox(0.0+0.0)x0.0, direction TLT
 ....\hbox(0.0+0.0)x333.88702, direction TLT
-.....\hbox(7.5+2.5)x333.88702, shifted 32.87242, direction TLT
+.....\hbox(7.5+2.5)x333.88702, shifted 31.77238, direction TLT
 ......\hbox(7.5+2.5)x333.88702, glue set 161.38852fil, direction TLT
 .......\glue 0.0 plus 1.0fil minus 1.0fil
 .......\TU/lmr/m/n/10 C
@@ -3087,10 +3088,8 @@ Package enumext Info: Answers in 'kan' (enumext): OK, items = answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
-...\glue 0.0
 ...\glue(\parskip) 0.0
 ...\glue(\parskip) 0.0
-...\glue(\lineskip) 1.0
 ...\hbox(19.27238+0.0)x333.88702, glue set 154.09525fil, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -3116,18 +3115,17 @@ Package enumext Info: Answers in 'kan' (enumext): OK, items = answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
+...\kern15.0
 ..\penalty 10000
 ..\glue(\parfillskip) 0.0 plus 1.0fil
 ..\glue(\rightskip) 0.0
+.\glue 4.0 plus 2.0 minus 1.0
+.\glue -4.0 plus -2.0 minus -1.0
+.\glue 0.0
 .\penalty -51
-.\glue 5.80002 plus 2.0 minus 1.0
-.\glue -5.80002 plus -2.0 minus -1.0
-.\glue 16.0
-.\glue -16.0
-.\glue 20.0 plus 1.0 minus 1.0
-.\glue -20.0 plus -1.0 minus -1.0
+.\glue 0.0
 .\penalty -51
-.\glue 20.0 plus 1.0 minus 1.0
+.\glue 10.0 plus 3.0 minus 5.0
 ! OK.
 <argument> ...yanspic} \end {enumext} }\showbox 0 
 l. ...  }
@@ -3157,7 +3155,7 @@ Package enumext Info: Items = 1, answers = 1, difference = 0.
 Package enumext Info: Answers in 'kao' (enumext): OK, items = answers.
 (enumext)             Started on line ... and closed on line ....
 > \box...=
-\vbox(71.4024+0.0)x345.0, direction TLT
+\vbox(67.16238+0.0)x345.0, direction TLT
 .\penalty -51
 .\glue 10.0 plus 4.0 minus 5.0
 .\glue -10.0 plus -4.0 minus -5.0
@@ -3216,13 +3214,17 @@ Package enumext Info: Answers in 'kao' (enumext): OK, items = answers.
 ..\penalty 10000
 ..\glue(\parfillskip) 0.0 plus 1.0fil
 ..\glue(\rightskip) 0.0
+.\glue 4.0 plus 2.0 minus 1.0
+.\glue 2.44
+.\glue -2.44
 .\penalty -51
-.\glue 9.80002 plus 4.0 minus 2.0
-.\glue -9.80002 plus -4.0 minus -2.0
-.\glue 7.80002 plus 3.0 minus 1.0
+.\glue 2.44
+.\glue -2.44
+.\glue 4.0 plus 2.0 minus 1.0
+.\glue -4.0 plus -2.0 minus -1.0
+.\glue 2.0 plus 1.0
 .\glue(\parskip) 2.0 plus 1.0 minus 1.0
 .\glue(\parskip) 0.0
-.\glue(\baselineskip) 2.44
 .\hbox(7.5+22.77238)x333.88702, shifted 11.11298, direction TLT
 ..\localpar
 ...\localinterlinepenalty=0
@@ -3254,11 +3256,9 @@ Package enumext Info: Answers in 'kao' (enumext): OK, items = answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
-...\glue 0.0
-...\glue 0.0
+...\glue 1.0
 ...\glue(\parskip) 0.0
 ...\glue(\parskip) 0.0
-...\glue(\lineskip) 1.0
 ...\hbox(19.27238+0.0)x166.94351, glue set 70.6235fil, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -3305,11 +3305,9 @@ Package enumext Info: Answers in 'kao' (enumext): OK, items = answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
-...\glue 0.0
-...\glue 0.0
+...\glue 1.0
 ...\glue(\parskip) 0.0
 ...\glue(\parskip) 0.0
-...\glue(\lineskip) 1.0
 ...\hbox(19.27238+0.0)x166.94351, glue set 70.6235fil, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -3338,15 +3336,12 @@ Package enumext Info: Answers in 'kao' (enumext): OK, items = answers.
 ..\penalty 10000
 ..\glue(\parfillskip) 0.0 plus 1.0fil
 ..\glue(\rightskip) 0.0
+.\glue 4.0 plus 2.0 minus 1.0
+.\glue -4.0 plus -2.0 minus -1.0
+.\glue 0.0
 .\penalty -51
-.\glue 5.80002 plus 2.0 minus 1.0
-.\glue -5.80002 plus -2.0 minus -1.0
-.\glue 9.80002 plus 3.0 minus 2.0
-.\glue -14.80002 plus -3.0 minus -2.0
+.\glue 0.0
 .\penalty -51
-.\glue 5.0
-.\glue 9.80002 plus 3.0 minus 2.0
-.\glue -9.80002 plus -3.0 minus -2.0
 .\glue 10.0 plus 3.0 minus 5.0
 ! OK.
 <argument> ...yanspic} \end {enumext} }\showbox 0 
@@ -3385,7 +3380,7 @@ Package enumext Info: Items = 1, answers = 1, difference = 0.
 Package enumext Info: Answers in 'kap' (enumext): OK, items = answers.
 (enumext)             Started on line ... and closed on line ....
 > \box...=
-\vbox(75.9624+0.0)x345.0, direction TLT
+\vbox(72.16238+0.0)x345.0, direction TLT
 .\penalty -51
 .\glue 10.0 plus 4.0 minus 5.0
 .\glue -10.0 plus -4.0 minus -5.0
@@ -3444,14 +3439,18 @@ Package enumext Info: Answers in 'kap' (enumext): OK, items = answers.
 ..\penalty 10000
 ..\glue(\parfillskip) 0.0 plus 1.0fil
 ..\glue(\rightskip) 0.0
+.\glue 4.0 plus 2.0 minus 1.0
+.\glue 2.44
+.\glue -2.44
 .\penalty -51
-.\glue 9.80002 plus 4.0 minus 2.0
-.\glue -9.80002 plus -4.0 minus -2.0
-.\glue -11.80002 plus 3.0 minus 1.0
-.\glue(\parskip) 21.60004 plus 1.0 minus 1.0
+.\glue 2.44
+.\glue -2.44
+.\glue 4.0 plus 2.0 minus 1.0
+.\glue -4.0 plus -2.0 minus -1.0
+.\glue 2.0 plus 1.0
+.\glue(\parskip) 2.0 plus 1.0 minus 1.0
 .\glue(\parskip) 0.0
-.\glue(\lineskip) 1.0
-.\hbox(20.27238+0.0)x333.88702, shifted 11.11298, direction TLT
+.\hbox(35.27238+0.0)x333.88702, shifted 11.11298, direction TLT
 ..\localpar
 ...\localinterlinepenalty=0
 ...\localbrokenpenalty=0
@@ -3465,7 +3464,7 @@ Package enumext Info: Answers in 'kap' (enumext): OK, items = answers.
 ....\glue 0.0 plus 1.0fill
 ...\glue 3.33298
 ..\penalty 0
-..\vbox(20.27238+0.0)x166.94351, direction TLT
+..\vbox(35.27238+0.0)x166.94351, direction TLT
 ...\hbox(0.0+0.0)x166.94351, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -3475,7 +3474,7 @@ Package enumext Info: Answers in 'kap' (enumext): OK, items = answers.
 .....\localrightbox=null
 ....\hbox(0.0+0.0)x0.0, direction TLT
 ....\hbox(0.0+0.0)x166.94351, direction TLT
-.....\hbox(7.5+2.5)x166.94351, shifted 38.87242, direction TLT
+.....\hbox(7.5+2.5)x166.94351, shifted 32.77238, direction TLT
 ......\hbox(7.5+2.5)x166.94351, glue set 77.77676fil, direction TLT
 .......\glue 0.0 plus 1.0fil minus 1.0fil
 .......\TU/lmr/m/n/10 A
@@ -3484,10 +3483,8 @@ Package enumext Info: Answers in 'kap' (enumext): OK, items = answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
-...\glue 0.0
 ...\glue(\parskip) 0.0
 ...\glue(\parskip) 0.0
-...\glue(\lineskip) 1.0
 ...\hbox(19.27238+0.0)x166.94351, glue set 70.6235fil, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -3513,7 +3510,8 @@ Package enumext Info: Answers in 'kap' (enumext): OK, items = answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
-..\vbox(20.27238+0.0)x166.94351, direction TLT
+...\kern16.0
+..\vbox(35.27238+0.0)x166.94351, direction TLT
 ...\hbox(0.0+0.0)x166.94351, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -3523,7 +3521,7 @@ Package enumext Info: Answers in 'kap' (enumext): OK, items = answers.
 .....\localrightbox=null
 ....\hbox(0.0+0.0)x0.0, direction TLT
 ....\hbox(0.0+0.0)x166.94351, direction TLT
-.....\hbox(7.5+2.5)x166.94351, shifted 38.87242, direction TLT
+.....\hbox(7.5+2.5)x166.94351, shifted 32.77238, direction TLT
 ......\hbox(7.5+2.5)x166.94351, glue set 75.27527fil, direction TLT
 .......\glue 0.0 plus 1.0fil minus 1.0fil
 .......\hbox(7.5+2.5)x13.06, glue set 1.045fil, direction TLT
@@ -3536,10 +3534,8 @@ Package enumext Info: Answers in 'kap' (enumext): OK, items = answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
-...\glue 0.0
 ...\glue(\parskip) 0.0
 ...\glue(\parskip) 0.0
-...\glue(\lineskip) 1.0
 ...\hbox(19.27238+0.0)x166.94351, glue set 70.6235fil, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -3565,18 +3561,17 @@ Package enumext Info: Answers in 'kap' (enumext): OK, items = answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
+...\kern16.0
 ..\penalty 10000
 ..\glue(\parfillskip) 0.0 plus 1.0fil
 ..\glue(\rightskip) 0.0
+.\glue 4.0 plus 2.0 minus 1.0
+.\glue -4.0 plus -2.0 minus -1.0
+.\glue 0.0
 .\penalty -51
-.\glue 5.80002 plus 2.0 minus 1.0
-.\glue -5.80002 plus -2.0 minus -1.0
-.\glue 22.0
-.\glue -22.0
-.\glue 26.0 plus 1.0 minus 1.0
-.\glue -26.0 plus -1.0 minus -1.0
+.\glue 0.0
 .\penalty -51
-.\glue 26.0 plus 1.0 minus 1.0
+.\glue 10.0 plus 3.0 minus 5.0
 ! OK.
 <argument> ...yanspic} \end {enumext} }\showbox 0 
 l. ...  }
@@ -3622,7 +3617,7 @@ Package enumext Info: Items = 1, answers = 1, difference = 0.
 Package enumext Info: Answers in 'kaq' (enumext): OK, items = answers.
 (enumext)             Started on line ... and closed on line ....
 > \box...=
-\vbox(122.83482+0.0)x345.0, direction TLT
+\vbox(115.43477+0.0)x345.0, direction TLT
 .\penalty -51
 .\glue 10.0 plus 4.0 minus 5.0
 .\glue -10.0 plus -4.0 minus -5.0
@@ -3681,14 +3676,15 @@ Package enumext Info: Answers in 'kaq' (enumext): OK, items = answers.
 ..\penalty 10000
 ..\glue(\parfillskip) 0.0 plus 1.0fil
 ..\glue(\rightskip) 0.0
+.\glue 8.0
+.\glue -8.0
 .\penalty -51
-.\glue 13.80002 plus 2.0 minus 1.0
-.\glue -13.80002 plus -2.0 minus -1.0
-.\glue -9.80002 plus 2.0 minus 1.0
-.\glue(\parskip) 23.60004
+.\glue 8.0
+.\glue -8.0
+.\glue -2.0
+.\glue(\parskip) 10.0
 .\glue(\parskip) 0.0
-.\glue(\lineskip) 1.0
-.\hbox(20.27238+0.0)x333.88702, shifted 11.11298, direction TLT
+.\hbox(34.27238+0.0)x333.88702, shifted 11.11298, direction TLT
 ..\localpar
 ...\localinterlinepenalty=0
 ...\localbrokenpenalty=0
@@ -3702,7 +3698,7 @@ Package enumext Info: Answers in 'kaq' (enumext): OK, items = answers.
 ....\glue 0.0 plus 1.0fill
 ...\glue 3.33298
 ..\penalty 0
-..\vbox(20.27238+0.0)x166.94351, direction TLT
+..\vbox(34.27238+0.0)x166.94351, direction TLT
 ...\hbox(0.0+0.0)x166.94351, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -3712,7 +3708,7 @@ Package enumext Info: Answers in 'kaq' (enumext): OK, items = answers.
 .....\localrightbox=null
 ....\hbox(0.0+0.0)x0.0, direction TLT
 ....\hbox(0.0+0.0)x166.94351, direction TLT
-.....\hbox(7.5+2.5)x166.94351, shifted 32.87242, direction TLT
+.....\hbox(7.5+2.5)x166.94351, shifted 31.77238, direction TLT
 ......\hbox(7.5+2.5)x166.94351, glue set 77.77676fil, direction TLT
 .......\glue 0.0 plus 1.0fil minus 1.0fil
 .......\TU/lmr/m/n/10 A
@@ -3721,10 +3717,8 @@ Package enumext Info: Answers in 'kaq' (enumext): OK, items = answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
-...\glue 0.0
 ...\glue(\parskip) 0.0
 ...\glue(\parskip) 0.0
-...\glue(\lineskip) 1.0
 ...\hbox(19.27238+0.0)x166.94351, glue set 70.6235fil, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -3750,7 +3744,8 @@ Package enumext Info: Answers in 'kaq' (enumext): OK, items = answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
-..\vbox(20.27238+0.0)x166.94351, direction TLT
+...\kern15.0
+..\vbox(34.27238+0.0)x166.94351, direction TLT
 ...\hbox(0.0+0.0)x166.94351, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -3760,7 +3755,7 @@ Package enumext Info: Answers in 'kaq' (enumext): OK, items = answers.
 .....\localrightbox=null
 ....\hbox(0.0+0.0)x0.0, direction TLT
 ....\hbox(0.0+0.0)x166.94351, direction TLT
-.....\hbox(7.5+2.5)x166.94351, shifted 32.87242, direction TLT
+.....\hbox(7.5+2.5)x166.94351, shifted 31.77238, direction TLT
 ......\hbox(7.5+2.5)x166.94351, glue set 75.27527fil, direction TLT
 .......\glue 0.0 plus 1.0fil minus 1.0fil
 .......\hbox(7.5+2.5)x13.06, glue set 1.045fil, direction TLT
@@ -3773,10 +3768,8 @@ Package enumext Info: Answers in 'kaq' (enumext): OK, items = answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
-...\glue 0.0
 ...\glue(\parskip) 0.0
 ...\glue(\parskip) 0.0
-...\glue(\lineskip) 1.0
 ...\hbox(19.27238+0.0)x166.94351, glue set 70.6235fil, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -3802,20 +3795,20 @@ Package enumext Info: Answers in 'kaq' (enumext): OK, items = answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
+...\kern15.0
 ..\penalty 10000
 ..\glue(\parfillskip) 0.0 plus 1.0fil
 ..\glue(\rightskip) 0.0
-.\glue(\parskip) 23.60004
+.\glue(\parskip) 10.0
 .\glue(\parskip) 0.0
-.\glue(\lineskip) 1.0
-.\hbox(20.27238+0.0)x333.88702, shifted 11.11298, direction TLT
+.\hbox(34.27238+0.0)x333.88702, shifted 11.11298, direction TLT
 ..\localpar
 ...\localinterlinepenalty=0
 ...\localbrokenpenalty=0
 ...\localleftbox=null
 ...\localrightbox=null
 ..\hbox(0.0+0.0)x0.0, direction TLT
-..\vbox(20.27238+0.0)x333.88702, direction TLT
+..\vbox(34.27238+0.0)x333.88702, direction TLT
 ...\hbox(0.0+0.0)x333.88702, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -3825,7 +3818,7 @@ Package enumext Info: Answers in 'kaq' (enumext): OK, items = answers.
 .....\localrightbox=null
 ....\hbox(0.0+0.0)x0.0, direction TLT
 ....\hbox(0.0+0.0)x333.88702, direction TLT
-.....\hbox(7.5+2.5)x333.88702, shifted 32.87242, direction TLT
+.....\hbox(7.5+2.5)x333.88702, shifted 31.77238, direction TLT
 ......\hbox(7.5+2.5)x333.88702, glue set 161.38852fil, direction TLT
 .......\glue 0.0 plus 1.0fil minus 1.0fil
 .......\TU/lmr/m/n/10 C
@@ -3834,10 +3827,8 @@ Package enumext Info: Answers in 'kaq' (enumext): OK, items = answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
-...\glue 0.0
 ...\glue(\parskip) 0.0
 ...\glue(\parskip) 0.0
-...\glue(\lineskip) 1.0
 ...\hbox(19.27238+0.0)x333.88702, glue set 154.09525fil, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -3863,18 +3854,23 @@ Package enumext Info: Answers in 'kaq' (enumext): OK, items = answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
+...\kern15.0
 ..\penalty 10000
 ..\glue(\parfillskip) 0.0 plus 1.0fil
 ..\glue(\rightskip) 0.0
+.\glue 8.0
+.\glue -8.0
+.\glue 4.0 plus -2.0 minus -1.0
+.\glue -4.0 plus 2.0 minus 1.0
 .\penalty -51
-.\glue 9.80002
-.\glue -9.80002
-.\glue 20.0
-.\glue -20.0
-.\glue 24.0 plus 1.0 minus 1.0
-.\glue -24.0 plus -1.0 minus -1.0
+.\glue 4.0 plus -2.0 minus -1.0
+.\glue -4.0 plus 2.0 minus 1.0
+.\glue 8.0 plus -1.0
+.\glue -8.0 plus 1.0
 .\penalty -51
-.\glue 24.0 plus 1.0 minus 1.0
+.\glue 8.0 plus -1.0
+.\glue -8.0 plus 1.0
+.\glue 10.0 plus 3.0 minus 5.0
 ! OK.
 <argument> ...yanspic} \end {enumext} }\showbox 0 
 l. ...  }
@@ -3912,7 +3908,7 @@ Package enumext Info: Items = 1, answers = 1, difference = 0.
 Package enumext Info: Answers in 'kar' (enumext): OK, items = answers.
 (enumext)             Started on line ... and closed on line ....
 > \box...=
-\vbox(69.9624+0.0)x345.0, direction TLT
+\vbox(71.16238+0.0)x345.0, direction TLT
 .\penalty -51
 .\glue 10.0 plus 4.0 minus 5.0
 .\glue -10.0 plus -4.0 minus -5.0
@@ -3971,14 +3967,18 @@ Package enumext Info: Answers in 'kar' (enumext): OK, items = answers.
 ..\penalty 10000
 ..\glue(\parfillskip) 0.0 plus 1.0fil
 ..\glue(\rightskip) 0.0
+.\glue 4.0 plus 2.0 minus 1.0
+.\glue 2.44
+.\glue -2.44
 .\penalty -51
-.\glue 9.80002 plus 4.0 minus 2.0
-.\glue -9.80002 plus -4.0 minus -2.0
-.\glue -5.80002 plus 3.0 minus 1.0
-.\glue(\parskip) 15.60004 plus 1.0 minus 1.0
+.\glue 2.44
+.\glue -2.44
+.\glue 4.0 plus 2.0 minus 1.0
+.\glue -4.0 plus -2.0 minus -1.0
+.\glue 2.0 plus 1.0
+.\glue(\parskip) 2.0 plus 1.0 minus 1.0
 .\glue(\parskip) 0.0
-.\glue(\lineskip) 1.0
-.\hbox(20.27238+0.0)x333.88702, shifted 11.11298, direction TLT
+.\hbox(34.27238+0.0)x333.88702, shifted 11.11298, direction TLT
 ..\localpar
 ...\localinterlinepenalty=0
 ...\localbrokenpenalty=0
@@ -3992,7 +3992,7 @@ Package enumext Info: Answers in 'kar' (enumext): OK, items = answers.
 ....\glue 0.0 plus 1.0fill
 ...\glue 3.33298
 ..\penalty 0
-..\vbox(20.27238+0.0)x166.94351, direction TLT
+..\vbox(34.27238+0.0)x166.94351, direction TLT
 ...\hbox(0.0+0.0)x166.94351, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -4002,7 +4002,7 @@ Package enumext Info: Answers in 'kar' (enumext): OK, items = answers.
 .....\localrightbox=null
 ....\hbox(0.0+0.0)x0.0, direction TLT
 ....\hbox(0.0+0.0)x166.94351, direction TLT
-.....\hbox(7.5+2.5)x166.94351, shifted 32.87242, direction TLT
+.....\hbox(7.5+2.5)x166.94351, shifted 31.77238, direction TLT
 ......\hbox(7.5+2.5)x166.94351, glue set 77.77676fil, direction TLT
 .......\glue 0.0 plus 1.0fil minus 1.0fil
 .......\TU/lmr/m/n/10 A
@@ -4011,10 +4011,8 @@ Package enumext Info: Answers in 'kar' (enumext): OK, items = answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
-...\glue 0.0
 ...\glue(\parskip) 0.0
 ...\glue(\parskip) 0.0
-...\glue(\lineskip) 1.0
 ...\hbox(19.27238+0.0)x166.94351, glue set 70.6235fil, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -4040,7 +4038,8 @@ Package enumext Info: Answers in 'kar' (enumext): OK, items = answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
-..\vbox(20.27238+0.0)x166.94351, direction TLT
+...\kern15.0
+..\vbox(34.27238+0.0)x166.94351, direction TLT
 ...\hbox(0.0+0.0)x166.94351, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -4050,7 +4049,7 @@ Package enumext Info: Answers in 'kar' (enumext): OK, items = answers.
 .....\localrightbox=null
 ....\hbox(0.0+0.0)x0.0, direction TLT
 ....\hbox(0.0+0.0)x166.94351, direction TLT
-.....\hbox(7.5+2.5)x166.94351, shifted 32.87242, direction TLT
+.....\hbox(7.5+2.5)x166.94351, shifted 31.77238, direction TLT
 ......\hbox(7.5+2.5)x166.94351, glue set 61.10527fil, direction TLT
 .......\glue 0.0 plus 1.0fil minus 1.0fil
 .......\glue -3.33298
@@ -4079,10 +4078,8 @@ Package enumext Info: Answers in 'kar' (enumext): OK, items = answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
-...\glue 0.0
 ...\glue(\parskip) 0.0
 ...\glue(\parskip) 0.0
-...\glue(\lineskip) 1.0
 ...\hbox(19.27238+0.0)x166.94351, glue set 70.6235fil, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -4108,18 +4105,17 @@ Package enumext Info: Answers in 'kar' (enumext): OK, items = answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
+...\kern15.0
 ..\penalty 10000
 ..\glue(\parfillskip) 0.0 plus 1.0fil
 ..\glue(\rightskip) 0.0
+.\glue 4.0 plus 2.0 minus 1.0
+.\glue -4.0 plus -2.0 minus -1.0
+.\glue 0.0
 .\penalty -51
-.\glue 5.80002 plus 2.0 minus 1.0
-.\glue -5.80002 plus -2.0 minus -1.0
-.\glue 16.0
-.\glue -16.0
-.\glue 20.0 plus 1.0 minus 1.0
-.\glue -20.0 plus -1.0 minus -1.0
+.\glue 0.0
 .\penalty -51
-.\glue 20.0 plus 1.0 minus 1.0
+.\glue 10.0 plus 3.0 minus 5.0
 ! OK.
 <argument> ...yanspic} \end {enumext} }\showbox 0 
 l. ...  }
@@ -4157,7 +4153,7 @@ Package enumext Info: Items = 1, answers = 1, difference = 0.
 Package enumext Info: Answers in 'kas' (enumext): OK, items = answers.
 (enumext)             Started on line ... and closed on line ....
 > \box...=
-\vbox(84.2034+0.0)x345.0, direction TLT
+\vbox(82.90338+0.0)x345.0, direction TLT
 .\penalty -51
 .\glue 10.0 plus 4.0 minus 5.0
 .\glue -10.0 plus -4.0 minus -5.0
@@ -4216,14 +4212,18 @@ Package enumext Info: Answers in 'kas' (enumext): OK, items = answers.
 ..\penalty 10000
 ..\glue(\parfillskip) 0.0 plus 1.0fil
 ..\glue(\rightskip) 0.0
+.\glue 4.0 plus 2.0 minus 1.0
+.\glue 2.44
+.\glue -2.44
 .\penalty -51
-.\glue 9.80002 plus 4.0 minus 2.0
-.\glue -9.80002 plus -4.0 minus -2.0
-.\glue -5.80002 plus 3.0 minus 1.0
-.\glue(\parskip) 15.60004 plus 1.0 minus 1.0
+.\glue 2.44
+.\glue -2.44
+.\glue 4.0 plus 2.0 minus 1.0
+.\glue -4.0 plus -2.0 minus -1.0
+.\glue 2.0 plus 1.0
+.\glue(\parskip) 2.0 plus 1.0 minus 1.0
 .\glue(\parskip) 0.0
-.\glue(\lineskip) 1.0
-.\hbox(20.27238+0.0)x333.88702, shifted 11.11298, direction TLT
+.\hbox(34.27238+0.0)x333.88702, shifted 11.11298, direction TLT
 ..\localpar
 ...\localinterlinepenalty=0
 ...\localbrokenpenalty=0
@@ -4237,7 +4237,7 @@ Package enumext Info: Answers in 'kas' (enumext): OK, items = answers.
 ....\glue 0.0 plus 1.0fill
 ...\glue 3.33298
 ..\penalty 0
-..\vbox(20.27238+0.0)x166.94351, direction TLT
+..\vbox(34.27238+0.0)x166.94351, direction TLT
 ...\hbox(0.0+0.0)x166.94351, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -4247,7 +4247,7 @@ Package enumext Info: Answers in 'kas' (enumext): OK, items = answers.
 .....\localrightbox=null
 ....\hbox(0.0+0.0)x0.0, direction TLT
 ....\hbox(0.0+0.0)x166.94351, direction TLT
-.....\hbox(7.5+2.5)x166.94351, shifted 32.87242, direction TLT
+.....\hbox(7.5+2.5)x166.94351, shifted 31.77238, direction TLT
 ......\hbox(7.5+2.5)x166.94351, glue set 77.77676fil, direction TLT
 .......\glue 0.0 plus 1.0fil minus 1.0fil
 .......\TU/lmr/m/n/10 A
@@ -4256,10 +4256,8 @@ Package enumext Info: Answers in 'kas' (enumext): OK, items = answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
-...\glue 0.0
 ...\glue(\parskip) 0.0
 ...\glue(\parskip) 0.0
-...\glue(\lineskip) 1.0
 ...\hbox(19.27238+0.0)x166.94351, glue set 70.6235fil, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -4285,7 +4283,8 @@ Package enumext Info: Answers in 'kas' (enumext): OK, items = answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
-..\vbox(20.27238+0.0)x166.94351, direction TLT
+...\kern15.0
+..\vbox(34.27238+0.0)x166.94351, direction TLT
 ...\hbox(0.0+0.0)x166.94351, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -4295,7 +4294,7 @@ Package enumext Info: Answers in 'kas' (enumext): OK, items = answers.
 .....\localrightbox=null
 ....\hbox(0.0+0.0)x0.0, direction TLT
 ....\hbox(0.0+0.0)x166.94351, direction TLT
-.....\hbox(7.5+2.5)x166.94351, shifted 32.87242, direction TLT
+.....\hbox(7.5+2.5)x166.94351, shifted 31.77238, direction TLT
 ......\hbox(7.5+2.5)x166.94351, glue set 61.10527fil, direction TLT
 .......\glue 0.0 plus 1.0fil minus 1.0fil
 .......\glue -3.33298
@@ -4324,10 +4323,8 @@ Package enumext Info: Answers in 'kas' (enumext): OK, items = answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
-...\glue 0.0
 ...\glue(\parskip) 0.0
 ...\glue(\parskip) 0.0
-...\glue(\lineskip) 1.0
 ...\hbox(19.27238+0.0)x166.94351, glue set 70.6235fil, direction TLT
 ....\glue(\leftskip) 0.0 plus 1.0fil
 ....\localpar
@@ -4353,24 +4350,24 @@ Package enumext Info: Answers in 'kas' (enumext): OK, items = answers.
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 1.0fil
+...\kern15.0
 ..\penalty 10000
 ..\glue(\parfillskip) 0.0 plus 1.0fil
 ..\glue(\rightskip) 0.0
+.\glue 4.0 plus 2.0 minus 1.0
+.\glue -4.0 plus -2.0 minus -1.0
+.\glue 0.0
 .\penalty -51
-.\glue 5.80002 plus 2.0 minus 1.0
-.\glue -5.80002 plus -2.0 minus -1.0
-.\glue 16.0
-.\glue -16.0
-.\glue 20.0 plus 1.0 minus 1.0
-.\glue -20.0 plus -1.0 minus -1.0
+.\glue 0.0
 .\penalty -51
-.\glue 20.0 plus 1.0 minus 1.0
-.\glue -20.0 plus -1.0 minus -1.0
+.\glue 10.0 plus 3.0 minus 5.0
+.\glue -12.5 plus -3.0 minus -5.0
 .\penalty -51
-.\glue 20.0 plus 1.0 minus 1.0
+.\glue 2.5
+.\glue 10.0 plus 3.0 minus 5.0
 .\glue(\parskip) 0.0
 .\glue(\parskip) 0.0
-.\glue(\baselineskip) 5.25
+.\glue(\baselineskip) 2.75
 .\hbox(6.75+2.241)x345.0, glue set 175.27824fil, direction TLT
 ..\localpar
 ...\localinterlinepenalty=0

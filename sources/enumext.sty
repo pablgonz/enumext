@@ -4850,8 +4850,15 @@
 \str_new:N  \l__enumext_anspic_mini_pos_str
 \box_new:N  \l__enumext_anspic_label_box
 \box_new:N  \l__enumext_anspic_body_box
+\dim_new:N  \l__enumext_anspic_label_ht_dim
+\dim_new:N  \l__enumext_anspic_label_dp_dim
 \dim_new:N  \l__enumext_anspic_label_htdp_dim
 \dim_new:N  \l__enumext_anspic_body_htdp_dim
+\dim_new:N  \l__enumext_anspic_gap_dim
+\skip_new:N \l__enumext_anspic_label_sep_skip
+\skip_new:N \l__enumext_anspic_top_skip
+\bool_new:N \l__enumext_anspic_label_sep_bool
+\bool_new:N \l__enumext_anspic_top_bool
 \msg_new:nnnn { enumext } { keyanspic-nested }
   {
     The~environment~'keyanspic'~can't~be~nested~\msg_line_context:.
@@ -4898,13 +4905,21 @@
     label-pos / unknown .code:n =
       \msg_error:nneee { enumext } { unknown-choice }
         { label-pos } { above,~ below } { \exp_not:n {#1} },
-    label-sep  .skip_set:N = \l__enumext_anspic_label_sep_skip,
+    label-sep  .code:n =
+      {
+        \skip_set:Nn \l__enumext_anspic_label_sep_skip {#1}
+        \bool_set_true:N \l__enumext_anspic_label_sep_bool
+      },
     label-sep  .value_required:n = true,
     layout-sty .tl_set:N = \l__enumext_anspic_layout_style_tl,
     layout-sty .value_required:n = true,
     layout-sep .meta:nn = { enumext / keyans } { parsep = {#1} },
     layout-sep .value_required:n = true,
-    layout-top .meta:nn = { enumext / keyans } { topsep = {#1} },
+    layout-top .code:n =
+      {
+        \skip_set:Nn \l__enumext_anspic_top_skip {#1}
+        \bool_set_true:N \l__enumext_anspic_top_bool
+      },
     layout-top .value_required:n = true,
     mark-ans   .meta:nn = { enumext / keyans } { mark-ans = {#1} },
     mark-ans   .value_required:n = true,
@@ -4956,27 +4971,72 @@
     \bool_set_false:N \l__enumext_leftmargin_tmp_v_bool
     \__enumext_list_arg_two_v:
     \__enumext_keyans_pic_skip_abs:N \parsep
-    \bool_if:NF \l__enumext_anspic_label_above_bool
+    \stepcounter { enumXv }
+    \hbox_set:Nn \l__enumext_anspic_label_box { \l__enumext_label_v_tl }
+    \dim_set:Nn \l__enumext_anspic_label_ht_dim { \box_ht:N \l__enumext_anspic_label_box }
+    \dim_set:Nn \l__enumext_anspic_label_dp_dim { \box_dp:N \l__enumext_anspic_label_box }
+    \dim_set:Nn \l__enumext_anspic_label_htdp_dim
       {
-        \stepcounter { enumXv }
-        \hbox_set:Nn \l__enumext_anspic_label_box { \l__enumext_label_v_tl }
-        \dim_set:Nn \l__enumext_anspic_label_htdp_dim
+        \l__enumext_anspic_label_ht_dim + \l__enumext_anspic_label_dp_dim
+      }
+    \bool_if:NT \l__enumext_anspic_label_above_bool
+      {
+        \addtocounter { enumXv } { -1 }
+      }
+    \bool_if:NF \l__enumext_anspic_label_sep_bool
+      {
+        \bool_if:NTF \l__enumext_anspic_label_above_bool
           {
-            \box_ht_plus_dp:N \l__enumext_anspic_label_box
+            \skip_set:Nn \l__enumext_anspic_label_sep_skip { 1pt }
           }
-        \skip_add:Nn \parsep
           {
-            \l__enumext_anspic_label_htdp_dim
-            + \box_dp:N \strutbox
-            + \l__enumext_anspic_label_sep_skip
+            \skip_set:Nn \l__enumext_anspic_label_sep_skip { 5pt }
           }
       }
     \dim_add:Nn \leftmargin { -\l__enumext_labelwidth_v_dim - \l__enumext_labelsep_v_dim }
     \ignorespaces
-    \skip_add:Nn \topsep { 0.5\box_dp:N \strutbox }
+    \skip_zero:N \topsep
     \dim_zero:N  \listparindent
     \skip_zero:N \partopsep
     \skip_zero:N \itemsep
+  }
+\cs_new_protected:Nn \__enumext_anspic_top_glue:
+  {
+    \bool_if:NTF \l__enumext_anspic_top_bool
+      {
+        \addvspace { \l__enumext_anspic_top_skip }
+      }
+      {
+        \addvspace { \l__enumext_topsep_v_skip }
+        \dim_compare:nNnF { \prevdepth } < { -999pt }
+          {
+            \dim_set:Nn \l__enumext_anspic_gap_dim
+              {
+                \baselineskip - \prevdepth - \l__enumext_anspic_label_ht_dim
+              }
+            \dim_compare:nNnTF { \l__enumext_anspic_gap_dim } < { \lineskiplimit }
+              {
+                \skip_vertical:N \lineskip
+              }
+              {
+                \skip_vertical:n { \l__enumext_anspic_gap_dim }
+              }
+          }
+      }
+    \nointerlineskip
+  }
+\cs_new_protected:Nn \__enumext_anspic_bottom_glue:
+  {
+    \bool_if:NTF \l__enumext_anspic_top_bool
+      {
+        \nointerlineskip
+        \skip_vertical:N \l__enumext_anspic_top_skip
+      }
+      {
+        \prevdepth \l__enumext_anspic_label_dp_dim
+        \skip_vertical:N \l__enumext_topsep_v_skip
+      }
+    \skip_zero:N \parskip
   }
 \NewDocumentEnvironment{keyanspic}{ o }
   {
@@ -4987,7 +5047,9 @@
       {
         \tag_suspend:n {list}
       }
+    \__enumext_anspic_top_glue:
     \item[] \scan_stop:
+    \nointerlineskip
     \RenewDocumentCommand \item {}
       {
         \msg_error:nn { enumext } { keyanspic-item-cmd }
@@ -5009,6 +5071,8 @@
       {
         \tag_suspend:n {keyanspic}
       }
+    \par
+    \__enumext_anspic_bottom_glue:
     \end{list}
     \IfDocumentMetadataT
       {
@@ -5016,21 +5080,6 @@
       }
     \__enumext_check_starred_cmd:n { anspic }
     \setcounter { enumXvi } { 0 }
-    \bool_if:NTF \l__enumext_anspic_label_above_bool
-      {
-        \par\addvspace{ 0.5\box_dp:N \strutbox }
-      }
-      {
-        \par
-        \addvspace
-          {
-            \dim_eval:n
-              {
-                \l__enumext_anspic_label_htdp_dim + \box_ht_plus_dp:N \strutbox
-                + \l__enumext_anspic_label_sep_skip + \l__enumext_topsep_v_skip
-              }
-          }
-      }
   }
 \cs_new_protected:Nn \__enumext_anspic_body_dim:n
   {
@@ -5094,10 +5143,9 @@
           {
             -\dim_eval:n
               {
-                \l__enumext_anspic_label_htdp_dim
-                + \l__enumext_anspic_body_htdp_dim
-                + \box_dp:N \strutbox
+                \l__enumext_anspic_body_htdp_dim
                 + \l__enumext_anspic_label_sep_skip
+                + \l__enumext_anspic_label_ht_dim
               }
           }
           [ 0pt ] [ 0pt ]
@@ -5111,12 +5159,21 @@
     \__enumext_anspic_start_list_tag:
     \__enumext_anspic_label_pos:nnn {#1} {#2} {#3}
     \__enumext_anspic_stop_start_list_tag:
+    \par
+    \nointerlineskip
     \bool_if:NTF \l__enumext_anspic_label_above_bool
       {
-        \\[\l__enumext_anspic_label_sep_skip] #3
+        \skip_vertical:N \l__enumext_anspic_label_sep_skip
+        #3
       }
       {
-        \\ #3
+        #3
+        \par
+        \nointerlineskip
+        \kern \dim_eval:n
+          {
+            \l__enumext_anspic_label_sep_skip + \l__enumext_anspic_label_htdp_dim
+          }
       }
     \__enumext_anspic_stop_list_tag:
   }
@@ -5149,6 +5206,7 @@
           }
       }
     \par
+    \nointerlineskip
   }
 \cs_new_protected:Nn \__enumext_anspic_exec:
   {

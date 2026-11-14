@@ -3268,11 +3268,12 @@
 % \enquote{above} or \enquote{below} \emph{drawings} or \emph{tabular}
 % when the |\anspic| command is executed.
 %
-% \keyexampcmd{label-sep}{rubber length \textnormal{\textcolor{lightgray}{\textbar}} rigid length}{internal adjustment}[env]
+% \keyexampcmd{label-sep}{rubber length \textnormal{\textcolor{lightgray}{\textbar}} rigid length}{1pt above \textnormal{\textcolor{lightgray}{\textbar}} 5pt below}[env]
 %
 % Set the \emph{vertical spacing} between the \mymeta{label} centered
 % \enquote{above} or \enquote{below} and \emph{drawings} or \emph{tabular}
-% when running the |\anspic| command.
+% when running the |\anspic| command. The value is the exact distance between
+% the \mymeta{label} and the \emph{drawing or tabular}, with any font size.
 %
 % \keyexampcmd{layout-sty}{n° upper \textnormal{\textcolor{gray}{,}} n° lower}{not set}[env]
 %
@@ -3282,18 +3283,21 @@
 % and if not set or the \mymeta{nº lower} is omitted the \emph{drawings}
 % or \emph{tabular} will be put on a \emph{single line}.
 %
-% \keyexampcmd{layout-sep}{rubber length \textnormal{\textcolor{lightgray}{\textbar}} rigid length}{adjusted parsep from keyans}[env]
+% \keyexampcmd{layout-sep}{rubber length \textnormal{\textcolor{lightgray}{\textbar}} rigid length}{parsep from keyans}[env]
 %
 % Set the \emph{vertical separation} between the number of
 % \emph{drawings} or \emph{tabular} placed at the \enquote{upper} and
 % \enquote{lower} within the environment when executing the |\anspic|
-% command. Internally adjusts the \mykey{parsep} value taken from the
-% \myenv*[no-index]{keyans} environment.
+% command. Internally sets the \mykey{parsep} value taken from the
+% \myenv*[no-index]{keyans} environment. The value is the exact distance
+% between the rows, with any font size.
 %
-% \keyexampcmd{layout-top}{rubber length \textnormal{\textcolor{lightgray}{\textbar}} rigid length}{adjusted topsep from keyans}[env]
+% \keyexampcmd{layout-top}{rubber length \textnormal{\textcolor{lightgray}{\textbar}} rigid length}{topsep from keyans}[env]
 %
 % Set the \emph{vertical space} added to both the top and bottom of the environment.
-% Internally adjust the value of \mykey{topsep} taken from \myenv*[no-index]{keyans} environment.
+% The value is the exact distance between the environment and the neighbouring
+% lines, with any font size. If it is not set, the space above and below is the
+% same as in the \myenv*[no-index]{keyans} environment.
 %
 % The keys \mykey{mark-ans*}, \mykey{mark-pos*}, \mykey{mark-sep*}, \mykey{save-sep},
 % \mykey{wrap-opt}, \mykey{wrap-ans*}, \mykey{show-ans} and \mykey{show-pos}
@@ -4384,6 +4388,11 @@ all the worksheets are as follows:
 %    \begin{itemize}
 %      \item Support for \mypkg[no-index]{footnotehyper} v2.0 with \emph{tagged}
 %        \texttt{PDF}: if it is loaded, it manages the |\footnote| in the environments.
+%      \item The \myenv*[no-index]{keyanspic} environment now adds the vertical space
+%        calculated with the real dimensions: \mykey{layout-top}, \mykey{layout-sep}
+%        and \mykey{label-sep} give the exact distance with any font size, and by default
+%        the space above and below is the same as in \myenv*[no-index]{keyans}.
+%        The default value of \mykey{label-sep} is \mydim{1pt} above and \mydim{5pt} below.
 %      \item Fixed the \texttt{tagpdf} error for |\footnote| in \myenv*[no-index]{enumext*}
 %        and \myenv*[no-index]{keyans*} with \emph{tagged} \texttt{PDF} when
 %        \mypkg[no-index]{footnotehyper} is not loaded.
@@ -13146,8 +13155,15 @@ all the worksheets are as follows:
 %   \l_@@_anspic_mini_pos_str,
 %   \l_@@_anspic_label_box,
 %   \l_@@_anspic_body_box,
+%   \l_@@_anspic_label_ht_dim,
+%   \l_@@_anspic_label_dp_dim,
 %   \l_@@_anspic_label_htdp_dim,
 %   \l_@@_anspic_body_htdp_dim,
+%   \l_@@_anspic_gap_dim,
+%   \l_@@_anspic_label_sep_skip,
+%   \l_@@_anspic_top_skip,
+%   \l_@@_anspic_label_sep_bool,
+%   \l_@@_anspic_top_bool,
 % }
 %    Internal variables used by \myenv*[no-index]{keyanspic} environment and
 %   \ics*{anspic} command (\S\ref{env:keyanspic}).
@@ -13160,8 +13176,15 @@ all the worksheets are as follows:
 \str_new:N  \l_@@_anspic_mini_pos_str
 \box_new:N  \l_@@_anspic_label_box
 \box_new:N  \l_@@_anspic_body_box
+\dim_new:N  \l_@@_anspic_label_ht_dim
+\dim_new:N  \l_@@_anspic_label_dp_dim
 \dim_new:N  \l_@@_anspic_label_htdp_dim
 \dim_new:N  \l_@@_anspic_body_htdp_dim
+\dim_new:N  \l_@@_anspic_gap_dim
+\skip_new:N \l_@@_anspic_label_sep_skip
+\skip_new:N \l_@@_anspic_top_skip
+\bool_new:N \l_@@_anspic_label_sep_bool
+\bool_new:N \l_@@_anspic_top_bool
 %    \end{macrocode}
 % \end{variable}
 %
@@ -13238,13 +13261,21 @@ all the worksheets are as follows:
     label-pos / unknown .code:n =
       \msg_error:nneee { enumext } { unknown-choice }
         { label-pos } { above,~ below } { \exp_not:n {#1} },
-    label-sep  .skip_set:N = \l_@@_anspic_label_sep_skip,
+    label-sep  .code:n =
+      {
+        \skip_set:Nn \l_@@_anspic_label_sep_skip {#1}
+        \bool_set_true:N \l_@@_anspic_label_sep_bool
+      },
     label-sep  .value_required:n = true,
     layout-sty .tl_set:N = \l_@@_anspic_layout_style_tl,
     layout-sty .value_required:n = true,
     layout-sep .meta:nn = { enumext / keyans } { parsep = {#1} },
     layout-sep .value_required:n = true,
-    layout-top .meta:nn = { enumext / keyans } { topsep = {#1} },
+    layout-top .code:n =
+      {
+        \skip_set:Nn \l_@@_anspic_top_skip {#1}
+        \bool_set_true:N \l_@@_anspic_top_bool
+      },
     layout-top .value_required:n = true,
     mark-ans   .meta:nn = { enumext / keyans } { mark-ans = {#1} },
     mark-ans   .value_required:n = true,
@@ -13272,7 +13303,8 @@ all the worksheets are as follows:
 % \end{macro}
 %
 % \begin{macro}[int]{\@@_keyans_pic_safe_exec:, \@@_keyans_pic_parse_keys:n,
-%                    \@@_keyans_pic_skip_abs:N, \@@_keyans_pic_arg_two:}
+%                    \@@_keyans_pic_skip_abs:N, \@@_keyans_pic_arg_two:,
+%                    \@@_anspic_top_glue:, \@@_anspic_bottom_glue:}
 %   The function \myhlc|\@@_keyans_pic_safe_exec:| check the nested level
 %   position inside the \myenv*[no-index]{enumext} environment.
 %    \begin{macrocode}
@@ -13312,7 +13344,7 @@ all the worksheets are as follows:
 %   \emph{second argument} of the \myenv[no-index]{list} environment that defines
 %   the \myenv*[no-index]{keyanspic} environment, taking the
 %   configuration of the \emph{\enquote{spaces}} and the keys
-%   \mykey[env]{label}, \mykey[env]{wrap-label}, \mykey[env]{parsep} and \mykey[env]{topsep}
+%   \mykey[env]{label}, \mykey[env]{wrap-label} and \mykey[env]{parsep}
 %   from the \myenv*[no-index]{keyans} environment.
 %   The first step is to set the boolean variable
 %   \myhlc|\l_@@_leftmargin_tmp_v_bool| handled by the \mykey[env]{list-indent} key
@@ -13326,37 +13358,109 @@ all the worksheets are as follows:
     \@@_list_arg_two_v:
     \@@_keyans_pic_skip_abs:N \parsep
 %    \end{macrocode}
-%   Now the counter |enumXv| of the \myenv*[no-index]{keyans} environment is incremented
-%   and the \emph{total height} of the \mymeta{label} is saved in
-%   \myhlc|\l_@@_anspic_label_htdp_dim| used by |\anspic|, and the
-%   values of |\parsep| are adjusted only if the key \mykey[env]{label-pos} is set to \emph{below}.
+%   Now the counter |enumXv| of the \myenv*[no-index]{keyans} environment is
+%   incremented and the dimensions of the \mymeta{label} are saved in
+%   \myhlc|\l_@@_anspic_label_ht_dim|, \myhlc|\l_@@_anspic_label_dp_dim| and
+%   \myhlc|\l_@@_anspic_label_htdp_dim|, used by |\anspic|, the counter is
+%   restored if the key \mykey[env]{label-pos} is set to \emph{above}.
+%   If the key \mykey[env]{label-sep} is not set, its value is \mydim{1pt} for
+%   \emph{above} and \mydim{5pt} for \emph{below}.
 %    \begin{macrocode}
-    \bool_if:NF \l_@@_anspic_label_above_bool
+    \stepcounter { enumXv }
+    \hbox_set:Nn \l_@@_anspic_label_box { \l_@@_label_v_tl }
+    \dim_set:Nn \l_@@_anspic_label_ht_dim { \box_ht:N \l_@@_anspic_label_box }
+    \dim_set:Nn \l_@@_anspic_label_dp_dim { \box_dp:N \l_@@_anspic_label_box }
+    \dim_set:Nn \l_@@_anspic_label_htdp_dim
       {
-        \stepcounter { enumXv }
-        \hbox_set:Nn \l_@@_anspic_label_box { \l_@@_label_v_tl }
-        \dim_set:Nn \l_@@_anspic_label_htdp_dim
+        \l_@@_anspic_label_ht_dim + \l_@@_anspic_label_dp_dim
+      }
+    \bool_if:NT \l_@@_anspic_label_above_bool
+      {
+        \addtocounter { enumXv } { -1 }
+      }
+    \bool_if:NF \l_@@_anspic_label_sep_bool
+      {
+        \bool_if:NTF \l_@@_anspic_label_above_bool
           {
-            \box_ht_plus_dp:N \l_@@_anspic_label_box
+            \skip_set:Nn \l_@@_anspic_label_sep_skip { 1pt }
           }
-        \skip_add:Nn \parsep
           {
-            \l_@@_anspic_label_htdp_dim
-            + \box_dp:N \strutbox
-            + \l_@@_anspic_label_sep_skip
+            \skip_set:Nn \l_@@_anspic_label_sep_skip { 5pt }
           }
       }
 %    \end{macrocode}
-%   Finally the value of |\leftmargin| and |\topsep| is \emph{adjusted},
-%   then |\listparindent|, |\partopsep| and |\itemsep| are set to zero so that
-%   the \emph{horizontal} and \emph{vertical} space is not affected.
+%   Finally the value of |\leftmargin| is \emph{adjusted}, then |\topsep|,
+%   |\listparindent|, |\partopsep| and |\itemsep| are set to zero so that
+%   the \emph{horizontal} and \emph{vertical} space is not affected. The spaces
+%   \emph{\enquote{above}} and \emph{\enquote{below}} the environment are added by
+%   \myhlc|\@@_anspic_top_glue:| and \myhlc|\@@_anspic_bottom_glue:|.
 %    \begin{macrocode}
     \dim_add:Nn \leftmargin { -\l_@@_labelwidth_v_dim - \l_@@_labelsep_v_dim }
     \ignorespaces
-    \skip_add:Nn \topsep { 0.5\box_dp:N \strutbox }
+    \skip_zero:N \topsep
     \dim_zero:N  \listparindent
     \skip_zero:N \partopsep
     \skip_zero:N \itemsep
+  }
+%    \end{macrocode}
+%   The function \myhlc|\@@_anspic_top_glue:| adds the \emph{vertical space}
+%   \emph{\enquote{above}} the first row. If the key \mykey[env]{layout-top} is
+%   set, that value is used. Otherwise the value of |\topsep| taken from the
+%   \myenv*[no-index]{keyans} environment is added, plus the space that
+%   \hologo{TeX} would add between the previous line and a line with the height of
+%   the \mymeta{label}, calculated with \myhlc|\baselineskip|, \myhlc|\lineskip|
+%   and \myhlc|\lineskiplimit|, so that the space is the same as \emph{\enquote{above}}
+%   the first |\item| of \myenv*[no-index]{keyans}. Finally \myhlc|\nointerlineskip|
+%   avoids adding more space.
+%    \begin{macrocode}
+\cs_new_protected:Nn \@@_anspic_top_glue:
+  {
+    \bool_if:NTF \l_@@_anspic_top_bool
+      {
+        \addvspace { \l_@@_anspic_top_skip }
+      }
+      {
+        \addvspace { \l_@@_topsep_v_skip }
+        \dim_compare:nNnF { \prevdepth } < { -999pt }
+          {
+            \dim_set:Nn \l_@@_anspic_gap_dim
+              {
+                \baselineskip - \prevdepth - \l_@@_anspic_label_ht_dim
+              }
+            \dim_compare:nNnTF { \l_@@_anspic_gap_dim } < { \lineskiplimit }
+              {
+                \skip_vertical:N \lineskip
+              }
+              {
+                \skip_vertical:n { \l_@@_anspic_gap_dim }
+              }
+          }
+      }
+    \nointerlineskip
+  }
+%    \end{macrocode}
+%   The function \myhlc|\@@_anspic_bottom_glue:| adds the \emph{vertical space}
+%   \emph{\enquote{below}} the last row. If the key \mykey[env]{layout-top} is
+%   set, that value is used and \myhlc|\nointerlineskip| avoids adding more space.
+%   Otherwise \myhlc|\prevdepth| takes the depth of the \mymeta{label} and the value
+%   of |\topsep| taken from the \myenv*[no-index]{keyans} environment is added,
+%   so that the space is the same as \emph{\enquote{below}} the last |\item| of
+%   \myenv*[no-index]{keyans}. It must be executed before closing the
+%   \myenv[no-index]{list} environment and |\parskip| is set to zero, otherwise
+%   |\endtrivlist| adds it to the space.
+%    \begin{macrocode}
+\cs_new_protected:Nn \@@_anspic_bottom_glue:
+  {
+    \bool_if:NTF \l_@@_anspic_top_bool
+      {
+        \nointerlineskip
+        \skip_vertical:N \l_@@_anspic_top_skip
+      }
+      {
+        \prevdepth \l_@@_anspic_label_dp_dim
+        \skip_vertical:N \l_@@_topsep_v_skip
+      }
+    \skip_zero:N \parskip
   }
 %    \end{macrocode}
 % \end{macro}
@@ -13369,7 +13473,10 @@ all the worksheets are as follows:
 %   First, the code for automatic \emph{tagged} \texttt{PDF}
 %   for \myenv[no-index]{list} environments is stopped, |\item| is redefined so that it cannot be
 %   used, and the code for automatic \emph{tagged} \texttt{PDF} is stopped for
-%   the \myenv*[no-index]{keyanspic} environment.
+%   the \myenv*[no-index]{keyanspic} environment. The space \emph{\enquote{above}}
+%   is added with \myhlc|\@@_anspic_top_glue:| before |\item|, and
+%   \myhlc|\nointerlineskip| avoids adding the space between lines for the
+%   first row.
 %    \begin{macrocode}
 \NewDocumentEnvironment{keyanspic}{ o }
   {
@@ -13380,7 +13487,9 @@ all the worksheets are as follows:
       {
         \tag_suspend:n {list}
       }
+    \@@_anspic_top_glue:
     \item[] \scan_stop:
+    \nointerlineskip
     \RenewDocumentCommand \item {}
       {
         \msg_error:nn { enumext } { keyanspic-item-cmd }
@@ -13395,7 +13504,9 @@ all the worksheets are as follows:
 %    \end{macrocode}
 %   In the second part of the environment definition, the code for
 %   \emph{tagged} \texttt{PDF} is placed manually and the command is executed:
-%   |\anspic| is run using the \myhlc|\@@_anspic_exec:| function.
+%   |\anspic| is run using the \myhlc|\@@_anspic_exec:| function. The space
+%   \emph{\enquote{below}} is added before closing the \myenv[no-index]{list}
+%   environment.
 %    \begin{macrocode}
   {
     \IfDocumentMetadataT
@@ -13407,32 +13518,19 @@ all the worksheets are as follows:
       {
         \tag_suspend:n {keyanspic}
       }
+    \par
+    \@@_anspic_bottom_glue:
     \end{list}
     \IfDocumentMetadataT
       {
         \tag_struct_end:n {tag=L}
       }
 %    \end{macrocode}
-%   Finally it checks if |\anspic*| has been used, sets the counter |enumXvi|
-%   to zero and applies the \enquote{adjusted} vertical space at the bottom.
+%   Finally it checks if |\anspic*| has been used and sets the counter
+%   |enumXvi| to zero.
 %    \begin{macrocode}
     \@@_check_starred_cmd:n { anspic }
     \setcounter { enumXvi } { 0 }
-    \bool_if:NTF \l_@@_anspic_label_above_bool
-      {
-        \par\addvspace{ 0.5\box_dp:N \strutbox }
-      }
-      {
-        \par
-        \addvspace
-          {
-            \dim_eval:n
-              {
-                \l_@@_anspic_label_htdp_dim + \box_ht_plus_dp:N \strutbox
-                + \l_@@_anspic_label_sep_skip + \l_@@_topsep_v_skip
-              }
-          }
-      }
   }
 %    \end{macrocode}
 % \end{macro}
@@ -13526,7 +13624,12 @@ all the worksheets are as follows:
 %   The function \myhlc|\@@_anspic_label_pos:nnn| will be in charge of
 %   handling the \emph{\enquote{counter}} and the position of the \mymeta{label},
 %   set by \mykey{label-pos} key which will have the same configuration
-%   as the \myenv*[no-index]{keyans} environment.
+%   as the \myenv*[no-index]{keyans} environment. When the \mymeta{label} goes
+%   \emph{\enquote{below}} it is placed in a box without \emph{height} and
+%   \emph{depth} and lowered the \emph{height plus depth} of the
+%   \emph{drawing or tabular}, the value of \mykey[env]{label-sep} and the
+%   \emph{height} of the \mymeta{label}, so that it ends below the
+%   \emph{drawing or tabular}.
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_anspic_label_pos:nnn
   {
@@ -13541,10 +13644,9 @@ all the worksheets are as follows:
           {
             -\dim_eval:n
               {
-                \l_@@_anspic_label_htdp_dim
-                + \l_@@_anspic_body_htdp_dim
-                + \box_dp:N \strutbox
+                \l_@@_anspic_body_htdp_dim
                 + \l_@@_anspic_label_sep_skip
+                + \l_@@_anspic_label_ht_dim
               }
           }
           [ 0pt ] [ 0pt ]
@@ -13559,19 +13661,34 @@ all the worksheets are as follows:
 %   the code compatible with \emph{tagged} \texttt{PDF} and the arguments
 %   within the \myhlc|\l_@@_anspic_args_seq| sequence which will be processed
 %   by the \myhlc|\@@_anspic_print:n| function in the second part of the
-%   definition of the \myenv*[no-index]{keyanspic} environment.
+%   definition of the \myenv*[no-index]{keyanspic} environment. The
+%   \mymeta{label} is closed with |\par| and \myhlc|\nointerlineskip| avoids the
+%   space between lines, so the separation is exactly the value of
+%   \mykey[env]{label-sep}. If the \mymeta{label} goes \emph{\enquote{below}}, that
+%   separation and the \emph{height plus depth} of the \mymeta{label} are
+%   reserved at the end with |\kern|, because the \myenv[no-index]{minipage}
+%   environment removes the last glue with |\unskip|.
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_anspic_args:nnn
   {
     \@@_anspic_start_list_tag:
     \@@_anspic_label_pos:nnn {#1} {#2} {#3}
     \@@_anspic_stop_start_list_tag:
+    \par
+    \nointerlineskip
     \bool_if:NTF \l_@@_anspic_label_above_bool
       {
-        \\[\l_@@_anspic_label_sep_skip] #3
+        \skip_vertical:N \l_@@_anspic_label_sep_skip
+        #3
       }
       {
-        \\ #3
+        #3
+        \par
+        \nointerlineskip
+        \kern \dim_eval:n
+          {
+            \l_@@_anspic_label_sep_skip + \l_@@_anspic_label_htdp_dim
+          }
       }
     \@@_anspic_stop_list_tag:
   }
@@ -13589,7 +13706,9 @@ all the worksheets are as follows:
 %   The function \myhlc|\@@_anspic_row:n| will set the \emph{widths} for the
 %   \myenv[no-index]{minipage} environments and place \emph{all arguments} passed
 %   to |\anspic| \emph{saved} in the \myhlc|\l_@@_anspic_args_seq| sequence
-%   inside them.
+%   inside them. After each row \myhlc|\nointerlineskip| avoids the space between
+%   lines, so the separation between rows is exactly the value of |\parsep|
+%   set by the key \mykey[env]{layout-sep}.
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_anspic_row:n
   {
@@ -13615,6 +13734,7 @@ all the worksheets are as follows:
           }
       }
     \par
+    \nointerlineskip
   }
 %    \end{macrocode}
 %   The \myhlc|\@@_anspic_exec:| function will execute all the code in the
