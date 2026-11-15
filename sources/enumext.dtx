@@ -1483,7 +1483,7 @@
 % \mypkg{footnotehyper}\cite{footnotehyper} package. It will support keeping the
 % \enquote{links} if \mypkg[no-index]{hyperref} is loaded with the
 % |hyperfootnotes=true| option (default). Version 2.0 (2026/11/12) also supports
-% \emph{tagged} \texttt{PDF}. Load it is as follows:
+% \emph{tagged} \texttt{PDF}. Load it as follows:
 %
 % \iffalse
 %<*example>
@@ -1506,9 +1506,8 @@
 %  \myenv*[no-index]{enumext*} and \myenv*[no-index]{keyans*} the notes are
 %  processed inside the item and printed after the environment, which avoids the
 %  kernel issue 1337 (a |\footnotetext| after a list gives a \texttt{tagpdf}
-%  error). With an older
-%  version, load \mypkg[no-index]{footnotehyper} only when \emph{tagged}
-%  \texttt{PDF} is not active, using |\IfDocumentMetadataF|.
+%  error). With an older version, load \mypkg[no-index]{footnotehyper} only
+%  when \emph{tagged} \texttt{PDF} is not active, using |\IfDocumentMetadataF|.
 % \end{important}
 %
 % \section{The environments provided}
@@ -4276,6 +4275,15 @@ all the worksheets are as follows:
 %     \myenv[no-index]{center}, \myenv[no-index]{trivlist}, \myenv[no-index]{tabbing},
 %     \myenv[no-index]{verbatim} and the theorems nested in the content of an item
 %     of \myenv*[no-index]{enumext*}, measured with boxes;
+%   \item \myfile{test-017} and \myfile{test-018}: the |\footnote| command in
+%     \myenv*[no-index]{enumext}, \myenv*[no-index]{enumext*} and
+%     \myenv*[no-index]{keyans*} with |tagging=on|, with and without the
+%     \mypkg[no-index]{footnotehyper} package, where the structure tree must be
+%     the same in both cases;
+%   \item \myfile{test-019}: the visible vertical spaces of the environment
+%     \myenv*[no-index]{keyanspic} with the font sizes 10pt, 11pt and 12pt,
+%     measured between the boxes of the \texttt{PDF}, for the keys
+%     \mykey[env]{layout-top}, \mykey[env]{layout-sep} and \mykey[env]{label-sep};
 %   \item \myfile{test-100}: the error and warning messages of the package.
 % \end{itemize}
 %
@@ -4316,7 +4324,7 @@ all the worksheets are as follows:
 %
 % \bibitem{footnotehyper} \textsc{Burnol, Jean-François}. \enquote{The \textsf{footnotehyper}
 % package}. Available from
-% \textsc{ctan}, \url{https://www.ctan.org/pkg/footnotehyper}, 2025.
+% \textsc{ctan}, \url{https://www.ctan.org/pkg/footnotehyper}, 2026.
 %
 % \bibitem{shortlst} \textsc{Lemvig, Mogens}. \enquote{The \textsf{shortlst}
 % package}. Available from
