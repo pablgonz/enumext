@@ -5559,10 +5559,10 @@ all the worksheets are as follows:
   {
     \NewSocketPlug { fntext/process } { enumextsave }
       {
-        \global \setbox \g_@@_footnote_box \vbox
+        \vbox_gset:Nn \g_@@_footnote_box
           {
-            \unvbox \g_@@_footnote_box
-            \columnwidth \l_@@_footnote_wd_dim
+            \vbox_unpack_drop:N \g_@@_footnote_box
+            \dim_set_eq:NN \columnwidth \l_@@_footnote_wd_dim
             #1
           }
       }
@@ -5605,11 +5605,11 @@ all the worksheets are as follows:
           {
             \reset@font
             \footnotesize
-            \interlinepenalty \interfootnotelinepenalty
-            \splittopskip \footnotesep
-            \splitmaxdepth \dp \strutbox
-            \floatingpenalty \@MM
-            \unvbox \g_@@_footnote_box
+            \int_set_eq:NN \interlinepenalty \interfootnotelinepenalty
+            \skip_set:Nn \splittopskip { \footnotesep }
+            \dim_set:Nn \splitmaxdepth { \box_dp:N \strutbox }
+            \int_set_eq:NN \floatingpenalty \@MM
+            \vbox_unpack_drop:N \g_@@_footnote_box
           }
       }
   }
