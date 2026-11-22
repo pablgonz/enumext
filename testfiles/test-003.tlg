@@ -2857,35 +2857,33 @@ l. ...  }
 TEST 25: [25] mode-box
 ============================================================
 > \box...=
-\vbox(52.0+0.0)x345.0, direction TLT
+\vbox(46.94+0.0)x345.0, direction TLT
 .\penalty -51
 .\glue 10.0 plus 4.0 minus 5.0
 .\glue -10.0 plus -4.0 minus -5.0
 .\glue 6.0 plus 2.0 minus 4.0
 .\glue(\parskip) 4.0 plus 2.0 minus 1.0
 .\glue(\parskip) 0.0
-.\hbox(8.39996+3.60004)x313.21428, glue set 295.1543fil, shifted 31.78572, direction TLT
+.\hbox(6.83+0.22)x313.21428, glue set 295.1543fil, shifted 31.78572, direction TLT
 ..\localpar
 ...\localinterlinepenalty=0
 ...\localbrokenpenalty=0
 ...\localleftbox=null
 ...\localrightbox=null
-..\hbox(8.39996+3.60004)x0.0, direction TLT
+..\hbox(6.55+0.0)x0.0, direction TLT
 ...\glue 0.0
 ...\glue -28.45274
 ...\glue -3.33298
-...\hbox(8.39996+3.60004)x28.45274, direction TLT
-....\rule(8.39996+3.60004)x0.0
-....\hbox(0.0+0.0)x28.45274, direction TLT
-.....\hbox(6.55+0.0)x28.45274, glue set 19.51274fil, direction TLT
-......\glue 0.0
-......\hbox(0.0+0.0)x0.0, direction TLT
-.......\glue 0.0 plus 1.0fil minus 1.0fil
-......\glue 0.0
-......\TU/lmr/bx/n/10 1
-......\TU/lmr/bx/n/10 .
-......\kern0.0 (italic)
+...\hbox(6.55+0.0)x28.45274, direction TLT
+....\hbox(6.55+0.0)x28.45274, glue set 19.51274fil, direction TLT
+.....\glue 0.0
+.....\hbox(0.0+0.0)x0.0, direction TLT
 ......\glue 0.0 plus 1.0fil minus 1.0fil
+.....\glue 0.0
+.....\TU/lmr/bx/n/10 1
+.....\TU/lmr/bx/n/10 .
+.....\kern0.0 (italic)
+.....\glue 0.0 plus 1.0fil minus 1.0fil
 ...\glue 3.33298
 ..\penalty 0
 ..\TU/lmr/m/n/10 U
@@ -2898,29 +2896,27 @@ TEST 25: [25] mode-box
 .\glue 4.0 plus 2.0 minus 1.0
 .\glue(\parskip) 4.0 plus 2.0 minus 1.0
 .\glue(\parskip) 0.0
-.\glue(\baselineskip) 0.0
-.\hbox(8.39996+3.60004)x313.21428, glue set 296.63428fil, shifted 31.78572, direction TLT
+.\glue(\baselineskip) 4.95
+.\hbox(6.83+0.11)x313.21428, glue set 296.63428fil, shifted 31.78572, direction TLT
 ..\localpar
 ...\localinterlinepenalty=0
 ...\localbrokenpenalty=0
 ...\localleftbox=null
 ...\localrightbox=null
-..\hbox(8.39996+3.60004)x0.0, direction TLT
+..\hbox(6.55+0.0)x0.0, direction TLT
 ...\glue 0.0
 ...\glue -28.45274
 ...\glue -3.33298
-...\hbox(8.39996+3.60004)x28.45274, direction TLT
-....\rule(8.39996+3.60004)x0.0
-....\hbox(0.0+0.0)x28.45274, direction TLT
-.....\hbox(6.55+0.0)x28.45274, glue set 19.51274fil, direction TLT
-......\glue 0.0
-......\hbox(0.0+0.0)x0.0, direction TLT
-.......\glue 0.0 plus 1.0fil minus 1.0fil
-......\glue 0.0
-......\TU/lmr/bx/n/10 2
-......\TU/lmr/bx/n/10 .
-......\kern0.0 (italic)
+...\hbox(6.55+0.0)x28.45274, direction TLT
+....\hbox(6.55+0.0)x28.45274, glue set 19.51274fil, direction TLT
+.....\glue 0.0
+.....\hbox(0.0+0.0)x0.0, direction TLT
 ......\glue 0.0 plus 1.0fil minus 1.0fil
+.....\glue 0.0
+.....\TU/lmr/bx/n/10 2
+.....\TU/lmr/bx/n/10 .
+.....\kern0.0 (italic)
+.....\glue 0.0 plus 1.0fil minus 1.0fil
 ...\glue 3.33298
 ..\penalty 0
 ..\TU/lmr/m/n/10 D

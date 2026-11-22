@@ -11351,12 +11351,13 @@ all the worksheets are as follows:
 %   \mykey{mode-box} is active.
 %
 % \begin{important}
-%  Here it is necessary to use |\strut\smash| to maintain text \emph{alignment}
-%  in case the user wants to use |\labelbx| for example. In experiments
-%  with \emph{mimicking} the \myenv[no-index]{description} environment it was the only way
-%  out and it seems to have no adverse effects and may serve in the future
-%  as a basis for a more generic \myenv[no-index]{list} environment package than
-%  \mypkg*[no-index]{enumext}.
+%  The label is not smashed, so a tall label (an image, a duck
+%  drawn with \texttt{tikz}, \ldots) still increases the height of the line as it does with
+%  the standard |\makelabel|. A multi-line label made with |\parbox[t]| needs
+%  |\noindent| at the start of the paragraph (see |\labelbx| in
+%  \S\ref{subsec:description-multiline}), otherwise the \emph{tagged}
+%  \texttt{PDF} code puts material before the first line and the baseline
+%  is lost.
 % \end{important}
 %
 %    \begin{macrocode}
@@ -11382,15 +11383,12 @@ all the worksheets are as follows:
             \IfDocumentMetadataT { \SuspendTagging { enumext } }
             \@@_make_label_content:n {##1}
           }
-        \strut\smash
-          {
-            \makebox
-              [ \dim_max:nn
-                  { \dim_use:c { l_@@_labelwidth_ \@@_level: _dim } }
-                  { \box_wd:N \l_@@_label_width_by_box } ]
-              [ \str_use:c { l_@@_align_label_pos_ \@@_level: _str } ]
-              { \@@_make_label_content:n {##1} }
-          } % close smash
+        \makebox
+          [ \dim_max:nn
+              { \dim_use:c { l_@@_labelwidth_ \@@_level: _dim } }
+              { \box_wd:N \l_@@_label_width_by_box } ]
+          [ \str_use:c { l_@@_align_label_pos_ \@@_level: _str } ]
+          { \@@_make_label_content:n {##1} }
         \tl_gclear:N \g_@@_item_symbol_aux_tl
       }
   }
