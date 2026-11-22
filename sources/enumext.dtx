@@ -2110,9 +2110,18 @@
 % \subsubsection{Horizontal spaces}
 %
 % \keyexampcmd{list-offset}{rigid length}{\mydim{0}pt}[env]
-% Sets the \emph{horizontal translation} of the entire environment level from the left edge
-% of the box defined by the \mykey{labelwidth} key. Internally sets the values of
-% |\leftmargin| and |\itemindent| for the current level.
+% Sets the \emph{horizontal translation} of the entire environment level, that is, the
+% distance from the left margin of the enclosing environment to the left edge of the box
+% defined by the \mykey{labelwidth} key. It is the counterpart of the |\labelindent|
+% parameter of \mypkg[no-index]{enumitem} (\S\ref{subsec:left-margin}). Together with the
+% \mykey{list-indent} key it sets the values of |\leftmargin| and |\itemindent| for the current
+% level as follows:
+%
+% \begin{center}
+%   |\leftmargin| = \mykey{list-offset} + \mykey{list-indent}\\
+%   |\itemindent| = \mykey{labelwidth} + \mykey{labelsep} $-$ \mykey{list-indent}
+% \end{center}
+%
 %
 % \keyexampcmd{list-indent}{rigid length}{labelwidth + labelsep}[env]
 % Sets the \emph{indentation} of the whole environment under the box defined by
@@ -4332,8 +4341,8 @@ all the worksheets are as follows:
 % \begin{description}[font=\small\sffamily,leftmargin=1.1\descrwidth,labelwidth=1.1\descrwidth,labelsep=0pt,itemindent=0pt,nosep,noitemsep]
 %  \item [\fileversion{} (ctan), \filedate]
 %    \begin{itemize}
-%      \item The \mykey{save-ref} key creates the link target and the label with
-%        |\MakeLinkTarget| and |\label| when \mypkg[no-index]{hyperref} is loaded.
+%      \item When \mypkg[no-index]{hyperref} is loaded the \mykey{save-ref} key creates the link
+%        target with |\MakeLinkTarget| and the label with |\label|.
 %      \item \emph{Tagged} \texttt{PDF}: the lists whose \mykey{label} does not use the
 %        counter, for example \mykey{label}|={}| or \mykey{label}|=|\mymarg{\textbackslash{}textbullet},
 %        are now declared as \emph{unordered} lists instead of \emph{ordered} lists.
@@ -4718,10 +4727,9 @@ all the worksheets are as follows:
 %   \l_@@_leftmargin_tmp_X_dim,
 %   \l_@@_leftmargin_X_dim,
 % }
-%   The boolean variable \myhlc|\l_@@_leftmargin_tmp_X_bool| and the
-%   dimensional variable \myhlc|\l_@@_leftmargin_tmp_X_dim|
-%   are used by the \mykey{list-indent} key (\S\ref{key:list-indent}).
-%   The variable \myhlc|\l_@@_leftmargin_X_dim| is used and set by the function
+%   The key \mykey{list-indent} (\S\ref{key:list-indent}) uses the boolean variable
+%   \myhlc|\l_@@_leftmargin_tmp_X_bool| and the dimension \myhlc|\l_@@_leftmargin_tmp_X_dim|. The
+%   dimension \myhlc|\l_@@_leftmargin_X_dim| is used and set by the function
 %   \myhlc|\@@_calc_hspace:NNNNNNN| (\S\ref{subsubsec:leftmargin}).
 %    \begin{macrocode}
 \cs_set_protected:Nn \@@_tmp:n
@@ -4874,14 +4882,13 @@ all the worksheets are as follows:
 %   \l_@@_mark_position_v_str,
 %   \l_@@_mark_position_viii_str,
 % }
-%   The boolean \myhlc|\l_@@_print_keyans_cmd_bool| is true while the command
-%   \ics*{printkeyans} (\S\ref{cmd:printkeyans}) is running and the environments
-%   consult it, the boolean \myhlc|\l_@@_print_keyans_star_bool| is true when
-%   the command receives the \emph{starred} argument and the token lists
-%   \myhlc|\l_@@_print_keyans_X_tl| store the keys passed to each environment.
-%   The strings \myhlc|\l_@@_mark_position_str|, \myhlc|\l_@@_mark_position_v_str|
-%   and \myhlc|\l_@@_mark_position_viii_str| store the position of the marks
-%   set by the \mykey{mark-pos} key (\S\ref{subsec:storage-system}).
+%   The boolean \myhlc|\l_@@_print_keyans_cmd_bool| is true while the command \ics*{printkeyans}
+%   (\S\ref{cmd:printkeyans}) is running and the environments consult it. The boolean
+%   \myhlc|\l_@@_print_keyans_star_bool| is true when the command receives the \emph{starred}
+%   argument and the token lists \myhlc|\l_@@_print_keyans_X_tl| store the keys passed to each
+%   environment. The position of the marks set by the \mykey{mark-pos} key
+%   (\S\ref{subsec:storage-system}) is stored in the strings \myhlc|\l_@@_mark_position_str|,
+%   \myhlc|\l_@@_mark_position_v_str| and \myhlc|\l_@@_mark_position_viii_str|.
 %    \begin{macrocode}
 \bool_new:N \l_@@_print_keyans_star_bool
 \bool_new:N \l_@@_print_keyans_cmd_bool
@@ -6965,11 +6972,11 @@ all the worksheets are as follows:
 % \begin{macro}[int]{\@@_before_args_exec_vii:, \@@_before_args_exec_viii:,
 %                    \@@_before_keys_exec_vii:, \@@_before_keys_exec_viii:,
 %                    \@@_after_stop_list_vii:, \@@_after_stop_list_viii:}
-% Same implementation as the one used in the \myenv*[no-index]{enumext} environment,
-% except that there are no \myhlc|\@@_after_args_exec_vii:| and
-% \myhlc|\@@_after_args_exec_viii:| functions: the \mymarg{code} set by the
-% \mykey[env]{first} key is used directly by \myhlc|\@@_start_item_vii:w| and
-% \myhlc|\@@_start_item_viii:w|, inside the \env{minipage} of each \cs{item}.
+%   Same implementation as the one used in the \myenv*[no-index]{enumext} environment, except that
+%   the functions \myhlc|\@@_after_args_exec_vii:| and \myhlc|\@@_after_args_exec_viii:| do not
+%   exist. Instead, the \mymarg{code} set by the \mykey[env]{first} key is used directly by
+%   \myhlc|\@@_start_item_vii:w| and \myhlc|\@@_start_item_viii:w| inside the \env{minipage} of each
+%   \cs{item}.
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_before_args_exec_vii:
   {
@@ -7481,11 +7488,10 @@ all the worksheets are as follows:
 % \subsubsection{Adjustment of vertical spaces for \env{minipage} in \env{enumext}}
 %
 % \begin{macro}[int]{\@@_minipage_set_skip:, \@@_minipage_add_space:}
-%    The function \myhlc|\@@_minipage_set_skip:| will take care of determining the
-%    value of \myhlc|\l_@@_minipage_right_skip|, the space applied
-%    \emph{\enquote{above}} the \myhlc|\@@_mini_page| environment on the
-%    \emph{\enquote{right side}} and \emph{\enquote{below}} the
-%    \myenv[no-index]{multicols} environment in \myenv*[no-index]{enumext}.
+%    In the \myenv*[no-index]{enumext} environment, the function \myhlc|\@@_minipage_set_skip:| will
+%    take care of determining the value of \myhlc|\l_@@_minipage_right_skip|, the space applied
+%    \emph{\enquote{above}} the \myhlc|\@@_mini_page| environment on the \emph{\enquote{right side}}
+%    and \emph{\enquote{below}} the \myenv[no-index]{multicols} environment.
 %
 %    First it sets the value of \myhlc|\l_@@_minipage_right_skip| equal to
 %    |\topsep|, then checks if \hologo{TeX} is in \mymeta{vertical mode} and, if so,
@@ -7505,8 +7511,8 @@ all the worksheets are as follows:
           }
       }
 %    \end{macrocode}
-%   Sets the value of the variable \myhlc|\l_@@_multicols_above_X_skip| equal to the value of
-%   \myhlc|\l_@@_minipage_right_skip|.
+%   Sets the value of the variable \myhlc|\l_@@_multicols_above_X_skip| equal to the value of the
+%   variable \myhlc|\l_@@_minipage_right_skip|.
 %    \begin{macrocode}
     \skip_set_eq:cN
       { l_@@_multicols_above_ \@@_level: _skip }
@@ -9070,10 +9076,9 @@ all the worksheets are as follows:
 % \end{enumerate}
 %
 %
-% The integer variable associated to the sum of each |\item| and |\item*|
-% in the environment \myhlc|\g_@@_item_number_int| must match the
-% integer variable \myhlc|\g_@@_item_anskey_int| associated
-% to the execution of the command |\anskey|. The cases are analyzed below:
+%   The integer variable \myhlc|\g_@@_item_number_int|, associated to the sum of each |\item| and
+%   |\item*| in the environment, must match the integer variable \myhlc|\g_@@_item_anskey_int|,
+%   associated to the execution of the command |\anskey|. The cases are analyzed below:
 %
 % \begin{enumerate}[label=\alph*),labelindent=0pt,leftmargin=!,noitemsep, partopsep=0pt, topsep=5pt]
 %   \item If the list only has one level the number of |\item + \item*| = |\anskey|
@@ -9202,9 +9207,9 @@ all the worksheets are as follows:
 % \end{macro}
 %
 % \begin{macro}[int]{\@@_check_ans_key_hook:}
-%   The function \myhlc|\@@_check_ans_key_hook:| will \emph{export} the status
-%   of the local variable \myhlc|\l_@@_check_ans_key_bool| to the global variable
-%   \myhlc|\g_@@_check_ans_key_bool| only if the key \mykey[env]{check-ans} is active.
+%   Only if the key \mykey[env]{check-ans} is active, the function \myhlc|\@@_check_ans_key_hook:|
+%   will \emph{export} the status of the local variable \myhlc|\l_@@_check_ans_key_bool| to the
+%   global variable \myhlc|\g_@@_check_ans_key_bool|.
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_check_ans_key_hook:
   {
@@ -9732,9 +9737,9 @@ all the worksheets are as follows:
 % \subsubsection{Functions for storing structure in the sequence}
 %
 % \begin{macro}[int]{\@@_store_level_open:, \@@_store_level_close:}
-%   The \emph{\enquote{storing structure}} is handled by the functions
-%   \myhlc|\@@_store_level_open:| and \myhlc|\@@_store_level_close:| which are
-%   executed per level within the \myenv*[no-index]{enumext} environment.
+%   Within the \myenv*[no-index]{enumext} environment, the \emph{\enquote{storing structure}} is
+%   handled per level by the functions \myhlc|\@@_store_level_open:| and
+%   \myhlc|\@@_store_level_close:|.
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_store_level_open:
   {
@@ -9772,9 +9777,9 @@ all the worksheets are as follows:
 % \end{macro}
 %
 % \begin{macro}[int]{\@@_store_level_open_vii:, \@@_store_level_close_vii:}
-%   The \emph{\enquote{storing structure}} is handled by the functions
-%   \myhlc|\@@_store_level_open_vii:| and \myhlc|\@@_store_level_close_vii:|
-%   which are executed in the \myenv*[no-index]{enumext*} environment.
+%   The functions \myhlc|\@@_store_level_open_vii:| and \myhlc|\@@_store_level_close_vii:| handle
+%   the \emph{\enquote{storing structure}} and are executed in the \myenv*[no-index]{enumext*}
+%   environment.
 %
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_store_level_open_vii:
@@ -9937,9 +9942,8 @@ all the worksheets are as follows:
         \int_eval:n { \prop_count:c { g_@@_ \l_@@_store_name_tl _prop } }
       }
 %    \end{macrocode}
-%   Now execute the function \myhlc|\@@_newlabel:nn| and save the result in
-%   the variable \myhlc|\l_@@_write_aux_file_tl| and finally write it in the
-%   |.aux| file.
+%   Now the function \myhlc|\@@_newlabel:nn| is executed and the result is saved in the variable
+%   \myhlc|\l_@@_write_aux_file_tl|, which is finally written in the |.aux| file.
 %    \begin{macrocode}
     \tl_put_right:Ne \l_@@_write_aux_file_tl
       {
@@ -10662,16 +10666,13 @@ all the worksheets are as follows:
       }
   }
 %    \end{macrocode}
-%   The \myhlc|\@@_store_anskey_env:n| function will first pass the
-%   \texttt{c-type} argument \mymeta{body} to the variable \myhlc|\l_@@_store_anskey_env_tl| and
-%   replace the macro |\obeyedline| with |^^J| and then execute the
-%   \mykey{write-env} and \mykey{overwrite} keys, check the state of the
-%   variable \myhlc|\l_@@_anskey_env_force_eol_bool| managed by the \mykey{force-eol}
-%   key, and adds \myhlc|\c_@@_anskey_env_hidden_space_str| if
-%   necessary. Finally it uses \myhlc|\exp_args:Ne| on the
-%   \myhlc|\@@_store_anskey_arg:n| to expand the \myhlc|\tl_retokenize:n|
-%   function which rescans the \myhlc|\l_@@_store_anskey_env_tl| variable
-%   before processing it.
+%   The \myhlc|\@@_store_anskey_env:n| function will first pass the \texttt{c-type} argument
+%   \mymeta{body} to \myhlc|\l_@@_store_anskey_env_tl| and replace the macro |\obeyedline| with
+%   |^^J|. Then it executes the \mykey{write-env} and \mykey{overwrite} keys, checks the state of
+%   \myhlc|\l_@@_anskey_env_force_eol_bool| managed by the \mykey{force-eol} key, and adds
+%   \myhlc|\c_@@_anskey_env_hidden_space_str| if necessary. Finally it uses \myhlc|\exp_args:Ne| on
+%   \myhlc|\@@_store_anskey_arg:n| to expand the function \myhlc|\tl_retokenize:n|, which rescans
+%   \myhlc|\l_@@_store_anskey_env_tl| before processing it.
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_store_anskey_env:n
   {
@@ -10948,12 +10949,12 @@ all the worksheets are as follows:
 % \subsubsection{Storing content in sequence}
 %
 % \begin{macro}[int]{\@@_keyans_addto_seq:n, \@@_keyans_addto_seq_link:}
-%   The function \myhlc|\@@_keyans_addto_seq:n| will pass the
-%   contents of the current \mymeta{label} \myhlc|\l_@@_label_v_tl| for the
-%   \myenv*[no-index]{keyans} environment and the \myhlc|\l_@@_label_vi_tl| for the \myenv*[no-index]{keyanspic} environment when using
-%   |\item*| and |\anspic*|, followed by the \mymeta{contents} of the
-%   \emph{optional argument} of both commands to the \myhlc|\l_@@_store_current_label_tl|
-%   variable to the sequence defined by the \mykey[env]{save-ans} key.
+%   The function \myhlc|\@@_keyans_addto_seq:n| will pass the contents of the current \mymeta{label}
+%   to the variable \myhlc|\l_@@_store_current_label_tl|. This is \myhlc|\l_@@_label_v_tl| for the
+%   \myenv*[no-index]{keyans} environment and \myhlc|\l_@@_label_vi_tl| for the
+%   \myenv*[no-index]{keyanspic} environment when using |\item*| and |\anspic*|, followed by the
+%   \mymeta{contents} of the \emph{optional argument} of both commands, and then to the sequence
+%   defined by the \mykey[env]{save-ans} key.
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_keyans_addto_seq:n
   {
@@ -11188,14 +11189,13 @@ all the worksheets are as follows:
 % \end{variable}
 %
 % \begin{macro}[int]{\@@_default_item:n}
-%   First it checks if the \emph{optional argument} is present; if it is NOT
-%   present, it checks the state of the variable \myhlc|\l_@@_check_answers_bool|
-%   set by the key \mykey[env]{no-store}, sets the boolean variable
-%   \myhlc|\l_@@_wrap_label_X_bool| to |true| for the key \mykey[env]{wrap-label}
-%   and executes \myhlc|\@@_item_std:w| and the key \mykey[env]{itemindent}; otherwise it checks the state
-%   of the boolean variable \myhlc|\l_@@_wrap_label_opt_X_bool| set
-%   by the key \mykey[env]{wrap-label*} and executes \myhlc|\@@_item_std:w| with
-%   the \emph{optional argument} and the key \mykey{itemindent}.
+%   First it checks if the \emph{optional argument} is present. If it is NOT present, it checks the
+%   state of the variable \myhlc|\l_@@_check_answers_bool| set by the key \mykey[env]{no-store}, and
+%   then sets the boolean variable \myhlc|\l_@@_wrap_label_X_bool| to |true| for the key
+%   \mykey[env]{wrap-label}. After that it executes \myhlc|\@@_item_std:w| and the key
+%   \mykey[env]{itemindent}. Otherwise it checks the state of the boolean variable
+%   \myhlc|\l_@@_wrap_label_opt_X_bool| set by the key \mykey[env]{wrap-label*}, and executes
+%   \myhlc|\@@_item_std:w| with the \emph{optional argument} and the key \mykey{itemindent}.
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_default_item:n
   {
@@ -11311,11 +11311,11 @@ all the worksheets are as follows:
 % \end{macro}
 %
 % \begin{macro}[int]{\@@_make_label:, \@@_make_label_std:, \@@_make_label_box:}
-%   The function \myhlc|\@@_make_label:| redefines |\makelabel| for the keys
-%   \mykey[env]{mode-box}, \mykey[env]{align}, \mykey[env]{font}, \mykey[env]{wrap-label},
-%   \mykey[env]{wrap-label*} and |\item*| for \myenv*[no-index]{enumext} environment.
-%   This function is passed to \myhlc|\@@_list_arg_two_X:| used
-%   in the definition of the \myenv*[no-index]{enumext} environment (\S\ref{env:enumext}).
+%   The function \myhlc|\@@_make_label:| redefines |\makelabel| for the keys \mykey[env]{mode-box},
+%   \mykey[env]{align}, \mykey[env]{font}, \mykey[env]{wrap-label}, \mykey[env]{wrap-label*} and
+%   |\item*| for the \myenv*[no-index]{enumext} environment. This function is passed to
+%   \myhlc|\@@_list_arg_two_X:|, used in the definition of the \myenv*[no-index]{enumext}
+%   environment (\S\ref{env:enumext}).
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_make_label:
   {
@@ -12523,11 +12523,12 @@ all the worksheets are as follows:
         \@@_multicols_stop:
       }
 %    \end{macrocode}
-%   Now the functions \myhlc|\@@_after_stop_list:| (key \mykey[env,foreachkeyans]{after}),
-%   \myhlc|\@@_check_ans_key_hook:| (key \mykey[env]{check-ans}) and \myhlc|\@@_vspace_below:| (keys
-%   \mykey[env]{below} and \mykey[env]{below*}) are executed. Finally it sets
-%   \myhlc|\l_@@_standard_bool| to false and calls the function \myhlc|\@@_standard_save_counter:|,
-%   used by the \mykey[env]{series}, \mykey[env]{resume} and \mykey[env]{resume*} keys.
+%   Now the function \myhlc|\@@_after_stop_list:|, used by the key \mykey[env,foreachkeyans]{after},
+%   is executed. After that come the function \myhlc|\@@_check_ans_key_hook:|, used by the key
+%   \mykey[env]{check-ans}, and the function \myhlc|\@@_vspace_below:|, used by the keys
+%   \mykey[env]{below} and \mykey[env]{below*}. Finally it sets \myhlc|\l_@@_standard_bool| to false
+%   and calls the function \myhlc|\@@_standard_save_counter:|, used by the \mykey[env]{series},
+%   \mykey[env]{resume} and \mykey[env]{resume*} keys.
 %    \begin{macrocode}
     \@@_after_stop_list:
     \@@_check_ans_key_hook:
@@ -14139,18 +14140,15 @@ all the worksheets are as follows:
 %    \end{macrocode}
 % \end{macro}
 %
-%  Finally the \mymarg{code} passed to the \mykey{mini-right}
-%  or \mykey{mini-right*} keys stored in the variable \myhlc|\g_@@_miniright_code_vii_tl|
-%  in the \myenv[no-index]{minipage} environment on the \emph{\enquote{right
-%  side}} is executed. For compatibility with the \mypkg{caption} package and possibly
-%  other \mymarg{code} passed to this key, it is passed to a box and
-%  then printed. Once the \myenv[no-index]{minipage} on the \emph{\enquote{right
-%  side}} is closed, \myhlc|\@@_mini_apply_end:| adds the stored space
-%  \emph{\enquote{below}}. This minipage is opened after the environment has
-%  ended, so it is placed in a group; otherwise the assignments that
-%  \hologo{LaTeX} makes when \emph{tagging} \texttt{PDF} is active (for
-%  example, the one that makes a heading warn that it is inside a box) would
-%  remain active after the list.
+%  Finally the \mymarg{code} passed to the \mykey{mini-right} or \mykey{mini-right*} keys and stored
+%  in the variable \myhlc|\g_@@_miniright_code_vii_tl| is executed in the \myenv[no-index]{minipage}
+%  environment on the \emph{\enquote{right side}}. For compatibility with the \mypkg{caption}
+%  package and possibly other \mymarg{code} passed to this key, it is passed to a box and then
+%  printed. Once the \myenv[no-index]{minipage} on the \emph{\enquote{right side}} is closed,
+%  \myhlc|\@@_mini_apply_end:| adds the stored space \emph{\enquote{below}}. This minipage is opened
+%  after the environment has ended, so it is placed in a group; otherwise the assignments that
+%  \hologo{LaTeX} makes when \emph{tagging} \texttt{PDF} is active (for example, the one that makes
+%  a heading warn that it is inside a box) would remain active after the list.
 %    \begin{macrocode}
 \@@_after_env:nn {enumext*}
   {
@@ -14400,15 +14398,14 @@ all the worksheets are as follows:
 % \end{macro}
 %
 % \begin{macro}[int]{\@@_after_list_vii:}
-%   The function \myhlc|\@@_after_list_vii:| first calls the function
-%   \myhlc|\@@_stop_mini_vii:| which internally calls \myhlc|\@@_stop_list:| and
-%   \myhlc|\@@_stop_store_level_vii:| (\S\ref{subsubsec:mini-env}) used
-%   by the keys \mykey[env]{mini-env}, \mykey[env]{mini-right} and \mykey[env]{mini-right*},
-%   then to the functions \myhlc|\@@_after_stop_list_vii:| used by the key
-%   \mykey[env,foreachkeyans]{after}, \myhlc|\@@_check_ans_key_hook:| used by the key \mykey[env]{check-ans},
-%   \myhlc|\@@_vspace_below_vii:| used by the keys \mykey[env]{below} and
-%   \mykey[env]{below*}. Finally set \myhlc|\l_@@_starred_bool| to false and call
-%   the \myhlc|\@@_starred_save_counter:| function used by the \mykey[env]{series},
+%   The function \myhlc|\@@_after_list_vii:| first calls \myhlc|\@@_stop_mini_vii:|, which
+%   internally calls \myhlc|\@@_stop_list:| and \myhlc|\@@_stop_store_level_vii:|
+%   (\S\ref{subsubsec:mini-env}) used by the keys \mykey[env]{mini-env}, \mykey[env]{mini-right} and
+%   \mykey[env]{mini-right*}. Then it calls \myhlc|\@@_after_stop_list_vii:|, used by the key
+%   \mykey[env,foreachkeyans]{after}. After that it calls \myhlc|\@@_check_ans_key_hook:|, used by
+%   the key \mykey[env]{check-ans}, and \myhlc|\@@_vspace_below_vii:|, used by the keys
+%   \mykey[env]{below} and \mykey[env]{below*}. Finally it sets \myhlc|\l_@@_starred_bool| to false
+%   and calls \myhlc|\@@_starred_save_counter:|, used by the \mykey[env]{series},
 %   \mykey[env]{resume} and \mykey[env]{resume*} keys.
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_after_list_vii:
@@ -15388,11 +15385,9 @@ all the worksheets are as follows:
 % \subsubsection{Real definition of \cs{item} in \env{keyans*}}
 %
 % \begin{macro}[int]{\@@_start_item_viii:w, \@@_start_item_box_viii:w, \@@_stop_item_viii:}
-%    The implementation at this point is very similar to that of the
-%    \myenv*[no-index]{enumext*} environment; the function
-%    \myhlc|\@@_start_item_viii:w| chooses between
-%    \myhlc|\@@_start_item_break_viii:n| and \myhlc|\@@_start_item_box_viii:w|
-%    in the same way.
+%    The implementation at this point is very similar to that of the \myenv*[no-index]{enumext*}
+%    environment. The function \myhlc|\@@_start_item_viii:w| chooses between
+%    \myhlc|\@@_start_item_break_viii:n| and \myhlc|\@@_start_item_box_viii:w| in the same way.
 %    \begin{macrocode}
 \cs_new_protected_nopar:Npn \@@_start_item_viii:w [#1]
   {
@@ -16309,9 +16304,8 @@ all the worksheets are as follows:
 % \subsubsection{Definition of keys for \cs[no-index]{foreachkeyans}}
 %
 % \begin{macro}[int]{before, after, sep, start, step, stop, wrapper, unknown}
-%   A set of \mymeta{keys} is defined for the command and the
-%   default values of these are saved in \myhlc|\l_@@_foreach_default_keys_tl| to avoid
-%   the use of a group.
+%   A set of \mymeta{keys} is defined for the command. The default values of these are saved in the
+%   variable \myhlc|\l_@@_foreach_default_keys_tl| to avoid the use of a group.
 %    \begin{macrocode}
 \keys_define:nn { enumext / foreach }
   {
