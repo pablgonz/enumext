@@ -1568,12 +1568,14 @@
           }
       }
     \skip_set_eq:cN
-      { l__enumext_multicols_above_ \__enumext_level: _skip } \l__enumext_minipage_right_skip
+      { l__enumext_multicols_above_ \__enumext_level: _skip }
+      \l__enumext_minipage_right_skip
     \int_compare:nNnT
       { \int_use:c { l__enumext_columns_ \__enumext_level: _int } } > { 1 }
       {
         \skip_zero:N \topskip
-        \skip_set_eq:Nc \multicolsep { l__enumext_multicols_above_ \__enumext_level: _skip }
+        \skip_set_eq:Nc \multicolsep
+          { l__enumext_multicols_above_ \__enumext_level: _skip }
       }
   }
 \cs_new_protected:Nn \__enumext_minipage_add_space:
@@ -1679,7 +1681,8 @@
 \cs_new_protected:Nn \__enumext_mini_right_cmd:n
   {
     \dim_compare:nNnTF
-      { \dim_use:c { l__enumext_minipage_right_ \__enumext_level: _dim } } > { \c_zero_dim }
+      { \dim_use:c { l__enumext_minipage_right_ \__enumext_level: _dim } }
+      > { \c_zero_dim }
       {
         \__enumext_multicols_stop:
         \int_compare:nNnT
@@ -1690,7 +1693,8 @@
           }
         \end__enumext_mini_page
         \hfill
-        \__enumext_mini_page{ \dim_use:c { l__enumext_minipage_right_ \__enumext_level: _dim } }
+        \__enumext_mini_page
+          { \dim_use:c { l__enumext_minipage_right_ \__enumext_level: _dim } }
           \par\nointerlineskip
           \addvspace { \l__enumext_minipage_right_skip }
           \bool_if:nF {#1}
@@ -1766,7 +1770,8 @@
 \cs_new_protected:Nn \__enumext_vspace_above:
   {
     \skip_if_eq:nnF
-      { \skip_use:c { l__enumext_vspace_above_ \__enumext_level: _skip } } { \c_zero_skip }
+      { \skip_use:c { l__enumext_vspace_above_ \__enumext_level: _skip } }
+      { \c_zero_skip }
       {
         \bool_if:cTF { l__enumext_vspace_a_star_ \__enumext_level: _bool }
           {
@@ -1780,7 +1785,8 @@
 \cs_new_protected:Nn \__enumext_vspace_below:
   {
     \skip_if_eq:nnF
-      { \skip_use:c { l__enumext_vspace_below_ \__enumext_level: _skip } } { \c_zero_skip }
+      { \skip_use:c { l__enumext_vspace_below_ \__enumext_level: _skip } }
+      { \c_zero_skip }
       {
         \bool_if:cTF { l__enumext_vspace_b_star_ \__enumext_level: _bool }
           {
@@ -1959,7 +1965,8 @@
             \tl_if_empty:NT \l__enumext_store_name_tl
               {
                 \int_gset_eq:cc
-                  { c@ __enumext_resume_ \__enumext_level: _int } { c@enumX \__enumext_level: }
+                  { c@ __enumext_resume_ \__enumext_level: _int }
+                  { c@enumX \__enumext_level: }
               }
           }
       }
@@ -2150,7 +2157,8 @@
               { g__enumext_series_ \l__enumext_series_name_str _ \__enumext_level: _int }
               {
                 \int_new:c
-                  { g__enumext_series_ \l__enumext_series_name_str _ \__enumext_level: _int }
+              { g__enumext_series_ \l__enumext_series_name_str
+                _ \__enumext_level: _int }
               }
           }
         \int_compare:nNnT { \l__enumext_level_h_int } = { 1 }
@@ -2821,7 +2829,8 @@
     \bool_if:NF \l__enumext_store_save_key_vii_bool
       {
         \tl_clear:N \l__enumext_store_save_key_vii_tl
-        \tl_set:Ne \l__enumext_store_save_key_vii_tl { \__enumext_filter_save_key:n {#1} }
+        \tl_set:Ne \l__enumext_store_save_key_vii_tl
+          { \__enumext_filter_save_key:n {#1} }
       }
   }
 \cs_set_protected:Nn \__enumext_tmp:n
@@ -2925,7 +2934,8 @@
               {
                 ]
               }
-            \__enumext_store_addto_seq:v { l__enumext_store_save_key_ \__enumext_level: _tl }
+            \__enumext_store_addto_seq:v
+              { l__enumext_store_save_key_ \__enumext_level: _tl }
           }
       }
   }
@@ -3163,7 +3173,8 @@
               }
           }
         \__enumext_print_keyans_box:cc
-          { l__enumext_labelwidth_ \__enumext_level: _dim } { l__enumext_mark_sym_sep_dim }
+          { l__enumext_labelwidth_ \__enumext_level: _dim }
+          { l__enumext_mark_sym_sep_dim }
       }
     \__enumext_anskey_wrapper:n {#1}
   }
@@ -3581,7 +3592,8 @@
       {
         \cs_set_protected:Nn \__enumext_tmp:n
           {
-            \tl_set_eq:cc { l__enumext_label_copy_ ##1 _tl } { l__enumext_label_ ##1 _tl }
+            \tl_set_eq:cc { l__enumext_label_copy_ ##1 _tl }
+              { l__enumext_label_ ##1 _tl }
             \tl_reverse:c { l__enumext_label_copy_ ##1 _tl }
             \tl_remove_once:cn { l__enumext_label_copy_ ##1 _tl } { . }
             \tl_reverse:c { l__enumext_label_copy_ ##1 _tl }
@@ -3637,7 +3649,8 @@
           { \item \l__enumext_label_vi_tl }
       }
       {
-        \tl_put_right:Ne \l__enumext_store_current_label_tl { \item \l__enumext_label_v_tl }
+        \tl_put_right:Ne \l__enumext_store_current_label_tl
+          { \item \l__enumext_label_v_tl }
       }
     \tl_if_novalue:nF {#1}
       {
@@ -3789,13 +3802,15 @@
             \bool_set_true:N \l__enumext_item_number_bool
           }
         \bool_set_true:c { l__enumext_wrap_label_ \__enumext_level: _bool }
-        \__enumext_item_std:w \tl_use:c { l__enumext_fake_item_indent_ \__enumext_level: _tl }
+        \__enumext_item_std:w
+          \tl_use:c { l__enumext_fake_item_indent_ \__enumext_level: _tl }
       }
       {
         \bool_set_eq:cc
           { l__enumext_wrap_label_ \__enumext_level: _bool }
           { l__enumext_wrap_label_opt_ \__enumext_level: _bool }
-        \__enumext_item_std:w [#1] \tl_use:c { l__enumext_fake_item_indent_ \__enumext_level: _tl }
+        \__enumext_item_std:w [#1]
+          \tl_use:c { l__enumext_fake_item_indent_ \__enumext_level: _tl }
       }
   }
 \cs_new_protected:Nn \__enumext_item_starred_exec:nn
@@ -3803,7 +3818,8 @@
     \tl_if_novalue:nTF {#1}
       {
         \tl_gset_eq:Nc
-          \g__enumext_item_symbol_aux_tl { l__enumext_item_symbol_ \__enumext_level: _tl }
+          \g__enumext_item_symbol_aux_tl
+            { l__enumext_item_symbol_ \__enumext_level: _tl }
       }
       {
         \tl_gset:Nn \g__enumext_item_symbol_aux_tl {#1}
@@ -3823,7 +3839,8 @@
         \bool_set_true:N \l__enumext_item_number_bool
       }
     \bool_set_true:c { l__enumext_wrap_label_ \__enumext_level: _bool }
-    \__enumext_item_std:w \tl_use:c { l__enumext_fake_item_indent_ \__enumext_level: _tl }
+    \__enumext_item_std:w
+      \tl_use:c { l__enumext_fake_item_indent_ \__enumext_level: _tl }
   }
 \cs_new_protected:Nn \__enumext_item_starred_exec:
   {
@@ -4428,7 +4445,8 @@
       { \int_use:c { l__enumext_columns_ \__enumext_level: _int } } > { 1 }
       {
         \dim_compare:nNnT
-          { \dim_use:c { l__enumext_columns_sep_ \__enumext_level: _dim } } = { \c_zero_dim }
+          { \dim_use:c { l__enumext_columns_sep_ \__enumext_level: _dim } }
+          = { \c_zero_dim }
           {
             \dim_set:cn { l__enumext_columns_sep_ \__enumext_level: _dim }
               {
@@ -4468,7 +4486,8 @@
             \__enumext_mini_capture_multicols:
           }
           {
-            \addvspace{ \skip_use:c { l__enumext_multicols_below_ \__enumext_level: _skip } }
+            \addvspace
+              { \skip_use:c { l__enumext_multicols_below_ \__enumext_level: _skip } }
           }
       }
       {
@@ -4482,7 +4501,8 @@
     \__enumext_before_args_exec:
     \__enumext_check_ans_active:
     \dim_compare:nNnT
-      { \dim_use:c { l__enumext_minipage_right_ \__enumext_level: _dim } } > { \c_zero_dim }
+      { \dim_use:c { l__enumext_minipage_right_ \__enumext_level: _dim } }
+      > { \c_zero_dim }
       {
         \dim_set:cn { l__enumext_minipage_left_ \__enumext_level: _dim }
           {
@@ -4494,7 +4514,8 @@
         \int_gincr:N \g__enumext_minipage_stat_int
         \__enumext_minipage_add_space:
         \noindent
-        \__enumext_mini_page{ \dim_use:c { l__enumext_minipage_left_ \__enumext_level: _dim } }
+        \__enumext_mini_page
+          { \dim_use:c { l__enumext_minipage_left_ \__enumext_level: _dim } }
       }
     \__enumext_multicols_start:
   }
@@ -4602,7 +4623,9 @@
       {
         \dim_set:Nn \l__enumext_minipage_left_v_dim
           {
-            \linewidth - \l__enumext_minipage_right_v_dim - \l__enumext_minipage_hsep_v_dim
+            \linewidth
+            - \l__enumext_minipage_right_v_dim
+            - \l__enumext_minipage_hsep_v_dim
           }
         \bool_set_true:N \l__enumext_minipage_active_v_bool
         \int_gincr:N \g__enumext_minipage_stat_int
@@ -4986,8 +5009,10 @@
     \__enumext_keyans_pic_skip_abs:N \parsep
     \stepcounter { enumXv }
     \hbox_set:Nn \l__enumext_anspic_label_box { \l__enumext_label_v_tl }
-    \dim_set:Nn \l__enumext_anspic_label_ht_dim { \box_ht:N \l__enumext_anspic_label_box }
-    \dim_set:Nn \l__enumext_anspic_label_dp_dim { \box_dp:N \l__enumext_anspic_label_box }
+    \dim_set:Nn \l__enumext_anspic_label_ht_dim
+      { \box_ht:N \l__enumext_anspic_label_box }
+    \dim_set:Nn \l__enumext_anspic_label_dp_dim
+      { \box_dp:N \l__enumext_anspic_label_box }
     \dim_set:Nn \l__enumext_anspic_label_htdp_dim
       {
         \l__enumext_anspic_label_ht_dim + \l__enumext_anspic_label_dp_dim
@@ -5006,7 +5031,8 @@
             \skip_set:Nn \l__enumext_anspic_label_sep_skip { 5pt }
           }
       }
-    \dim_add:Nn \leftmargin { -\l__enumext_labelwidth_v_dim - \l__enumext_labelsep_v_dim }
+    \dim_add:Nn \leftmargin
+      { -\l__enumext_labelwidth_v_dim - \l__enumext_labelsep_v_dim }
     \ignorespaces
     \skip_zero:N \topsep
     \dim_zero:N  \listparindent
@@ -5342,7 +5368,8 @@
 \cs_new_protected:Nn \__enumext_starred_joined_item_vii:n
   {
     \int_set:Nn \l__enumext_joined_item_vii_int {#1}
-    \int_compare:nNnT { \l__enumext_joined_item_vii_int } > { \l__enumext_columns_vii_int }
+    \int_compare:nNnT
+      { \l__enumext_joined_item_vii_int } > { \l__enumext_columns_vii_int }
       {
         \msg_warning:nnee { enumext } { item-joined }
           { \int_use:N \l__enumext_joined_item_vii_int }
@@ -5370,7 +5397,8 @@
       }
     \int_compare:nNnTF { \l__enumext_joined_item_vii_int } > { 1 }
       {
-        \int_set_eq:NN \l__enumext_joined_item_aux_vii_int \l__enumext_joined_item_vii_int
+        \int_set_eq:NN
+          \l__enumext_joined_item_aux_vii_int \l__enumext_joined_item_vii_int
         \int_decr:N \l__enumext_joined_item_aux_vii_int
         \int_add:Nn \l__enumext_item_column_pos_vii_int
           { \l__enumext_joined_item_aux_vii_int }
@@ -5423,7 +5451,8 @@
       }
     \int_compare:nNnTF { \l__enumext_joined_item_viii_int } > { 1 }
       {
-        \int_set_eq:NN \l__enumext_joined_item_aux_viii_int \l__enumext_joined_item_viii_int
+        \int_set_eq:NN
+          \l__enumext_joined_item_aux_viii_int \l__enumext_joined_item_viii_int
         \int_decr:N \l__enumext_joined_item_aux_viii_int
         \int_add:Nn \l__enumext_item_column_pos_viii_int
           { \l__enumext_joined_item_aux_viii_int }
@@ -5709,7 +5738,8 @@
     \bool_set_false:N \l__enumext_item_starred_vii_bool
     \peek_meaning:NTF [
       {
-        \bool_set_eq:NN \l__enumext_wrap_label_vii_bool \l__enumext_wrap_label_opt_vii_bool
+        \bool_set_eq:NN
+          \l__enumext_wrap_label_vii_bool \l__enumext_wrap_label_opt_vii_bool
         \__enumext_start_item_vii:w
       }
       {
