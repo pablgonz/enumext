@@ -33,8 +33,8 @@
 
 -- General package identification
 module     = "enumext"
-pkgversion = "2.5"
-pkgdate    = "2026-11-14"
+pkgversion = "2.6"
+pkgdate    = "2026-11-24"
 ltxrelease = "2026-11-01"
 
 -- Configuration of files for build and installation

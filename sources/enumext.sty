@@ -45,7 +45,7 @@
         later.~Update~your~TeX~distribution.
       }
   }
-\ProvidesExplPackage {enumext} {2026-11-14} {2.5} {Enumerate exercise sheets}
+\ProvidesExplPackage {enumext} {2026-11-24} {2.6} {Enumerate exercise sheets}
 \hook_gput_code:nnn {begindocument} {enumext}
   {
     \IfPackageLoadedTF { multicol }
@@ -3880,26 +3880,30 @@
         \tl_gclear:N \g__enumext_item_symbol_aux_tl
       }
   }
+\cs_new_protected:Nn \__enumext_make_label_content:n
+  {
+    \__enumext_item_starred_exec:
+    \tl_use:c { l__enumext_label_font_style_ \__enumext_level: _tl }
+    \bool_if:cTF { l__enumext_wrap_label_ \__enumext_level: _bool }
+      { \use:c { __enumext_wrapper_label_ \__enumext_level: :n } {#1} }
+      {#1}
+  }
 \cs_new_protected:Nn \__enumext_make_label_box:
   {
     \RenewDocumentCommand \makelabel { m }
       {
-        \strut\smash
+        \hbox_set:Nn \l__enumext_label_width_by_box
           {
-            \makebox
-              [ \dim_use:c { l__enumext_labelwidth_ \__enumext_level: _dim } ]
-              [ \str_use:c { l__enumext_align_label_pos_ \__enumext_level: _str } ]
-              {
-                \__enumext_item_starred_exec:
-                \tl_use:c { l__enumext_label_font_style_ \__enumext_level: _tl }
-                \bool_if:cTF { l__enumext_wrap_label_ \__enumext_level: _bool }
-                  {
-                    \use:c { __enumext_wrapper_label_ \__enumext_level: :n } {##1}
-                  }
-                  {##1}
-                \tl_gclear:N \g__enumext_item_symbol_aux_tl
-              }
-          } % close smash
+            \IfDocumentMetadataT { \SuspendTagging { enumext } }
+            \__enumext_make_label_content:n {##1}
+          }
+        \makebox
+          [ \dim_max:nn
+              { \dim_use:c { l__enumext_labelwidth_ \__enumext_level: _dim } }
+              { \box_wd:N \l__enumext_label_width_by_box } ]
+          [ \str_use:c { l__enumext_align_label_pos_ \__enumext_level: _str } ]
+          { \__enumext_make_label_content:n {##1} }
+        \tl_gclear:N \g__enumext_item_symbol_aux_tl
       }
   }
 \cs_set_protected:Nn \__enumext_tmp:nn

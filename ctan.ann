@@ -1,5 +1,5 @@
-Release v2.5
-– Support for footnotehyper v2.0 with tagged PDF; without it, footnotes in
+Release v2.6
+– Support for footnotehyper v2.6 with tagged PDF; without it, footnotes in
   enumext* and keyans* are now processed inside the item.
 – keyanspic: exact vertical spaces with any font size; new defaults for
   label-sep (1pt above, 5pt below).
