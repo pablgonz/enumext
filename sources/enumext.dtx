@@ -4337,6 +4337,11 @@ all the worksheets are as follows:
 %      \item \emph{Tagged} \texttt{PDF}: the lists whose \mykey{label} does not use the
 %        counter, for example \mykey{label}|={}| or \mykey{label}|=|\mymarg{\textbackslash{}textbullet},
 %        are now declared as \emph{unordered} lists instead of \emph{ordered} lists.
+%      \item \emph{Tagged} \texttt{PDF}: in \myenv*[no-index]{enumext} and \myenv*[no-index]{keyans}
+%        a label wider than |\labelwidth| pushes the text instead of overlapping it, and
+%        tall labels (images, \texttt{tikz} pictures) are no longer smashed and
+%        increase the height of the line again.
+%      \item The documentation is now a \emph{tagged} \texttt{PDF} (PDF/UA-2).
 %    \end{itemize}
 %  \item [v2.5 (ctan), 2026-11-14]
 %    \begin{itemize}

@@ -1,6 +1,8 @@
 Release v2.6
-– Support for footnotehyper v2.6 with tagged PDF; without it, footnotes in
-  enumext* and keyans* are now processed inside the item.
-– keyanspic: exact vertical spaces with any font size; new defaults for
-  label-sep (1pt above, 5pt below).
-– New regression tests and documentation updates.
+– save-ref: the link target and the label are created with \MakeLinkTarget and
+  \label when hyperref is loaded.
+– Tagged PDF: lists whose label does not use the counter, for example label={},
+  are now declared as unordered lists.
+– Tagged PDF: in enumext and keyans a label wider than \labelwidth no longer
+  overlaps the text and tall labels are no longer smashed.
+– The documentation is now a tagged PDF (PDF/UA-2).
