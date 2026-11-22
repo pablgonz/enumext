@@ -137,12 +137,19 @@
 
 \hook_gput_code:nnn { begindocument } { mylhmc }
   {
+    % Fuente de los números de línea: se resuelve UNA vez. \ttfamily\tiny en
+    % cada línea costaba más que todo el coloreado en Lua.
+    \group_begin:
+      \ttfamily \tiny
+      \exp_last_unbraced:NNNo \tex_global:D \tex_let:D
+        \__mylhmc_lineno_font: { \tex_the:D \tex_font:D }
+    \group_end:
     \renewcommand \theCodelineNo
       {
         \__mylhmc_luafun_actual_text_begin:
         \group_begin:
           \color_select:n { mylhmc / guard / angle }
-          \ttfamily \tiny \arabic { CodelineNo }
+          \__mylhmc_lineno_font: \arabic { CodelineNo }
         \group_end:
         \__mylhmc_luafun_actual_text_end:
       }
@@ -195,7 +202,9 @@
   {
     \tex_noindent:D
     \__mylhmc_luafun_process_line:
-    \tex_par:D
+    % \par de LaTeX (no la primitiva): dispara el hook de fin de párrafo;
+    % con tagging, \tex_par:D dejaba cada línea como un párrafo sin cerrar.
+    \par
   }
 
 \cs_generate_variant:Nn \__mylhmc_set_end_pattern:n { V }
@@ -267,5 +276,245 @@
 
 \NewDocumentCommand \setmylhmc { m }
   { \keys_set:nn { mylhmc } { #1 } }
+
+% ---------------------------------------------------------------------
+% Tagging support for l3doc (only with \DocumentMetadata).
+% Loads the latex-lab l3doc support and maps its structures to standard
+% PDF structure types (its own function/macro/... types are unknown to the
+% LaTeX RelaxNG schemas). A later \AssignStructureRole overrides any of them.
+% ---------------------------------------------------------------------
+\IfDocumentMetadataT
+  {
+    \RequirePackage { latex-lab-testphase-l3doc }
+    \AssignStructureRole { doc/function              } { Sect    }
+    \AssignStructureRole { doc/functionnames         } { Caption }
+    \AssignStructureRole { doc/functionname          } { Code    }
+    \AssignStructureRole { doc/functionnamepart      } { Span    }
+    \AssignStructureRole { doc/syntax                } { Div     }
+    \AssignStructureRole { doc/function-description  } { Div     }
+    \AssignStructureRole { doc/macro                 } { Sect    }
+    \AssignStructureRole { doc/macronames            } { Caption }
+    \AssignStructureRole { doc/macroname             } { Code    }
+    \AssignStructureRole { doc/variable              } { Sect    }
+    \AssignStructureRole { doc/variablenames         } { Caption }
+    \AssignStructureRole { doc/variablename          } { Code    }
+    \AssignStructureRole { doc/codelinenum           } { Lbl     }
+    % The macro environment of latex-lab-testphase-l3doc hard-codes the tag
+    % name `macro'; use the (re)assigned role instead.
+    \cs_if_exist:NT \__codedoc_macro_dump:
+      {
+        \cs_set_protected:Npn \__codedoc_macro_dump:
+          {
+            \int_compare:nNnF { \l__codedoc_nested_macro_int } > { 1 }
+              {
+                \begin{displayblock}
+                  [ tag-name = \UseStructureName{doc/macro} , begin-vspace = \MacroTopsep ]
+                \UseTaggingSocket{doc/container/macronames}{\l__codedoc_current_names_struct_tl}
+              }
+            \noindent \llap
+              {
+                \tagmcend
+                \hbox_unpack_drop:N \l__codedoc_macro_index_box
+                \vtop to \baselineskip
+                  {
+                    \vbox_unpack_drop:N \l__codedoc_macro_box
+                    \vss
+                  }
+                \hspace{\labelsep}
+                \tagmcbegin{}
+              }
+          }
+      }
+  }
+
+% ---------------------------------------------------------------------
+% Short verbatim: \setmylhmc{ shortverb = \| , shortverb-options = {...} }
+% removes the l3doc short verbs \" and the given one, and defines the
+% latter again with listings (\lstMakeShortInline).
+% ---------------------------------------------------------------------
+\tl_new:N \l__mylhmc_shortverb_tl
+\tl_new:N \l__mylhmc_shortverb_options_tl
+\keys_define:nn { mylhmc }
+  {
+    shortverb         .tl_set:N = \l__mylhmc_shortverb_tl ,
+    shortverb-options .tl_set:N = \l__mylhmc_shortverb_options_tl ,
+    shortverb-options .initial:n = { basicstyle = \ttfamily } ,
+  }
+\cs_new_protected:Npn \__mylhmc_shortverb_make:nn #1 #2
+  { \lstMakeShortInline [ #1 ] #2 }
+\cs_generate_variant:Nn \__mylhmc_shortverb_make:nn { VV }
+\cs_new_protected:Npn \__mylhmc_shortverb_setup:
+  {
+    \tl_if_empty:NF \l__mylhmc_shortverb_tl
+      {
+        \DeleteShortVerb \"
+        \exp_last_unbraced:NV \DeleteShortVerb \l__mylhmc_shortverb_tl
+        \__mylhmc_shortverb_make:VV
+          \l__mylhmc_shortverb_options_tl \l__mylhmc_shortverb_tl
+      }
+  }
+\hook_gput_code:nnn { begindocument } { mylhmc } { \__mylhmc_shortverb_setup: }
+
+% ---------------------------------------------------------------------
+% Coloured \meta, \marg, \oarg and (p)arg:
+%   \mymeta[opts]{x}  <x>      \mymarg[opts]{x}  {<x>}
+%   \myoarg[opts]{x}  [<x>]    \myparg[opts]{x}  (<x>)
+% opts (module mylhmc/meta): type=tt|rm, cf (text), ac (angles),
+% sbc (brackets), cbc (braces), pbc (parentheses).
+% \setmylhmc{ meta/angle-font = <font switches> } sets the font of the
+% angle brackets.
+% ---------------------------------------------------------------------
+\tl_new:N \l__mylhmc_meta_font_tl
+\tl_new:N \l__mylhmc_meta_anglefont_tl
+\keys_define:nn { mylhmc / meta }
+  {
+    type .choice:,
+    type / tt .code:n = \tl_set:Nn \l__mylhmc_meta_font_tl { \ttfamily },
+    type / rm .code:n = \tl_set:Nn \l__mylhmc_meta_font_tl { \rmfamily },
+    type .initial:n = tt,
+    cf   .tl_set:N = \l__mylhmc_meta_color_tl,
+    cf   .initial:n = keyname,
+    ac   .tl_set:N = \l__mylhmc_meta_anglecolor_tl,
+    ac   .initial:n = lightgray,
+    sbc  .tl_set:N = \l__mylhmc_meta_brackcolor_tl,
+    sbc  .initial:n = gray,
+    cbc  .tl_set:N = \l__mylhmc_meta_bracecolor_tl,
+    cbc  .initial:n = gray,
+    pbc  .tl_set:N = \l__mylhmc_meta_parencolor_tl,
+    pbc  .initial:n = gray,
+    angle-font .code:n =
+      { \tl_trim_spaces_apply:nN {#1} \__mylhmc_meta_set_anglefont:n },
+  }
+\cs_new_protected:Npn \__mylhmc_meta_set_anglefont:n #1
+  { \tl_set:Nn \l__mylhmc_meta_anglefont_tl {#1} }
+\NewDocumentCommand \mymeta { O{} m }
+  { \__mylhmc_meta_generic:Nnn \__mylhmc_meta:n { #1 } { #2 } }
+\NewDocumentCommand \mymarg { O{} m }
+  { \__mylhmc_meta_generic:Nnn \__mylhmc_marg:n { #1 } { #2 } }
+\NewDocumentCommand \myoarg { O{} m }
+  { \__mylhmc_meta_generic:Nnn \__mylhmc_oarg:n { #1 } { #2 } }
+\NewDocumentCommand \myparg { O{} m }
+  { \__mylhmc_meta_generic:Nnn \__mylhmc_parg:n { #1 } { #2 } }
+\cs_new_protected:Npn \__mylhmc_meta_generic:Nnn #1 #2 #3
+  {
+    \group_begin:
+      \keys_set:nn { mylhmc / meta } { #2 }
+      \color { \l__mylhmc_meta_color_tl }
+      \l__mylhmc_meta_font_tl
+      #1 { #3 }
+    \group_end:
+  }
+\cs_new_protected:Npn \__mylhmc_meta:n #1
+  {
+    \__mylhmc_meta_angle:n { \textlangle }
+    \__mylhmc_meta_meta:n { #1 }
+    \__mylhmc_meta_angle:n { \textrangle }
+  }
+\cs_new_protected:Npn \__mylhmc_marg:n #1
+  {
+    \__mylhmc_meta_brace:n { \textbraceleft }
+    \__mylhmc_meta:n { #1 }
+    \__mylhmc_meta_brace:n { \textbraceright }
+  }
+\cs_new_protected:Npn \__mylhmc_oarg:n #1
+  {
+    \__mylhmc_meta_brack:n { [ }
+    \__mylhmc_meta:n { #1 }
+    \__mylhmc_meta_brack:n { ] }
+  }
+\cs_new_protected:Npn \__mylhmc_parg:n #1
+  {
+    \__mylhmc_meta_brace:n { ( }
+    \__mylhmc_meta:n { #1 }
+    \__mylhmc_meta_brace:n { ) }
+  }
+\cs_new_protected:Npn \__mylhmc_meta_meta:n #1
+  { \textnormal { \textit {#1} } }
+\cs_new_protected:Npn \__mylhmc_meta_angle:n #1
+  {
+    \group_begin:
+      \l__mylhmc_meta_anglefont_tl
+      \exp_args:NV \textcolor \l__mylhmc_meta_anglecolor_tl {#1}
+    \group_end:
+  }
+\cs_new_protected:Npn \__mylhmc_meta_brace:n #1
+  {
+    \group_begin:
+      \color { \l__mylhmc_meta_bracecolor_tl }
+      #1
+    \group_end:
+  }
+\cs_new_protected:Npn \__mylhmc_meta_brack:n #1
+  { \exp_args:NV \textcolor \l__mylhmc_meta_brackcolor_tl {#1} }
+
+% ---------------------------------------------------------------------
+% \myattach{file}{content}: attached file whose annotation is `content'.
+% With \DocumentMetadata the file is embedded with the pdfmanagement
+% (\pdffile_embed_file:nnn, /AFRelationship /Supplement as PDF/UA-2
+% requires) and the annotation goes in an Annot structure; `content' is
+% marked as artifact. Without \DocumentMetadata, attachfile2 is used.
+% \setmylhmc{ attach-color = <color> } sets the color of `content'.
+% ---------------------------------------------------------------------
+\tl_new:N \l__mylhmc_attach_color_tl
+\keys_define:nn { mylhmc }
+  {
+    attach-color .tl_set:N = \l__mylhmc_attach_color_tl ,
+    attach-color .initial:n = black ,
+  }
+\IfDocumentMetadataTF
+  {
+    \box_new:N \l__mylhmc_attach_box
+    \hook_gput_code:nnn { begindocument } { mylhmc }
+      { \pdfxform_new:nnn { mylhmc/attach/emptyAP } { } { \hbox_to_wd:nn { 1sp } { } } }
+    \cs_new_protected:Npn \__mylhmc_attach:nn #1#2
+      {
+        \pdf_object_if_exist:nF { mylhmc/attach/#1 }
+          {
+            \group_begin:
+              \pdfdict_put:nnn { l_pdffile/Filespec } { AFRelationship } { /Supplement }
+              \pdffile_embed_file:nnn {#1} {#1} { mylhmc/attach/#1 }
+            \group_end:
+          }
+        \hbox_set:Nn \l__mylhmc_attach_box
+          { \exp_args:NV \textcolor \l__mylhmc_attach_color_tl {#2} }
+        \tag_struct_begin:n { tag = Annot , alt = { Archivo~adjunto~#1 } }
+        \pdfannot_box:nnne
+          { \box_wd:N \l__mylhmc_attach_box }
+          { \box_ht:N \l__mylhmc_attach_box }
+          { \box_dp:N \l__mylhmc_attach_box }
+          {
+            /Subtype /FileAttachment
+            /FS ~ \pdf_object_ref:n { mylhmc/attach/#1 }
+            /Contents ~ (Archivo~adjunto~#1)
+            /AP ~ << /N ~ \pdfxform_ref:n { mylhmc/attach/emptyAP } >>
+            \tag_if_active:T { /StructParent ~ \tag_struct_parent_int: }
+          }
+        \tag_if_active:T
+          {
+            \tag_struct_insert_annot:ee
+              { \pdfannot_box_ref_last: } { \tag_struct_parent_int: }
+          }
+        \tag_struct_end:
+        \tag_mc_end_push:
+        \tag_mc_begin:n { artifact }
+        \box_use_drop:N \l__mylhmc_attach_box
+        \tag_mc_end:
+        \tag_mc_begin_pop:n { }
+      }
+  }
+  {
+    \RequirePackage { attachfile2 }
+    \cs_new_protected:Npn \__mylhmc_attach:nn #1#2
+      {
+        \use:e
+          {
+            \exp_not:N \textattachfile
+              [ color = \exp_not:V \l__mylhmc_attach_color_tl , print = false ]
+              { \exp_not:n {#1} } { \exp_not:n {#2} }
+          }
+      }
+  }
+\NewDocumentCommand \myattach { m m }
+  { \__mylhmc_attach:nn {#1} {#2} }
 
 \file_input_stop:

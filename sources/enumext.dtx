@@ -28,9 +28,17 @@
 %
 % \iffalse
 %<*driver>
+\DocumentMetadata
+  {
+    lang        = en-US,
+    pdfversion  = 2.0,
+    pdfstandard = ua-2,
+    tagging     = on,
+  }
 \documentclass[full]{l3doc}
 \usepackage[svgnames]{xcolor}
-\usepackage[sf,bf,compact,medium,pagestyles]{titlesec}
+\usepackage[sf,bf,compact,medium]{titlesec}
+\usepackage{titleps}
 \usepackage{lastpage,microtype,attachfile2,multicol,listings,titletoc,fontawesome5}
 \usepackage[english]{babel}
 \usepackage[top=0.5in,bottom=0.3in,left=1.70in,right=0.7in,footskip=0.2in,headheight=1cm,headsep=0.27cm]{geometry}
@@ -83,13 +91,6 @@
    RawFeature        = {+latn,+rand,+kern,+size},%
    FontFace          = {b}{n}{ffmw10.otf},% fix replace font
    ]
-% Remove `"` and `|` for short verbatim defined in l3doc, then set short |...|
-\AtBeginDocument
-  {
-    \DeleteShortVerb \"
-    \DeleteShortVerb \|
-    \lstMakeShortInline[language=enumext-doc,basicstyle=\ttfamily]\|
-  }
 % Index
 \usepackage{imakeidx}
 \indexsetup{level=\section,firstpagestyle=myheader,othercode=\pagestyle{myheader}}
@@ -156,12 +157,21 @@
       { setenumext, setenumextmeta, resetenumext, printkeyans, foreachkeyans,
         getkeyans, anskey, anspic, miniright, keyans, keyanspic },
     key-path = {print, foreach, meta-families, },
+    shortverb         = \|,
+    shortverb-options = { language=enumext-doc, basicstyle=\ttfamily },
+    attach-color      = newlinkcolor,
+    meta/angle-font   = { \fontfamily{lmrotf}\fontshape{n}\selectfont },
   }
 % Colors
 \definecolor{newlinkcolor}{HTML}{0A602C}
 \definecolor{rulecolor}{rgb}{0.96,0.96,0.96}
 % Get file info
 \GetFileInfo{enumext.sty}
+% The l3doc environment arguments uses the enumitem key nolistsep, which is not
+% supported by the tagged version of enumitem (latex-lab-enumitem)
+\RenewDocumentEnvironment { arguments } { }
+  { \enumerate [ nosep, label = \texttt{\#\arabic*} ~ : , labelsep = ! ] }
+  { \endenumerate }
 % Config hyperref
 \hypersetup
   {
@@ -184,98 +194,6 @@
         { \textcolor { module_name } { enum } \textcolor { OrangeRed } { ext } }
     \group_end:
   }
-% Custom \meta[...]{...}, \marg[...]{...} and \oarg[...]{...} with color
-\NewDocumentCommand \mymeta { O{} m }
-  {
-    \__mydoc_meta_generic:Nnn \__mydoc_meta:n { #1 } { #2 }
-  }
-\NewDocumentCommand \mymarg { O{} m }
-  {
-    \__mydoc_meta_generic:Nnn \__mydoc_marg:n { #1 } { #2 }
-  }
-\NewDocumentCommand \myoarg { O{} m }
-  {
-    \__mydoc_meta_generic:Nnn \__mydoc_oarg:n { #1 } { #2 }
-  }
-\NewDocumentCommand \myparg { O{} m }
-  {
-    \__mydoc_meta_generic:Nnn \__mydoc_parg:n { #1 } { #2 }
-  }
-% Variables and keys
-\tl_new:N \l_userdoc_meta_font_tl
-\keys_define:nn { userdoc / mymeta }
-  {
-    type .choice:,
-    type / tt .code:n = \tl_set:Nn \l_userdoc_meta_font_tl { \ttfamily },
-    type / rm .code:n = \tl_set:Nn \l_userdoc_meta_font_tl { \rmfamily },
-    type .initial:n = tt,
-    cf   .tl_set:N = \l_userdoc_meta_color_tl,
-    cf   .initial:n = keyname,
-    ac   .tl_set:N = \l_userdoc_meta_anglecolor_tl,
-    ac   .initial:n = lightgray,
-    sbc  .tl_set:N = \l_userdoc_meta_brackcolor_tl,
-    sbc  .initial:n = gray,
-    cbc  .tl_set:N = \l_userdoc_meta_bracecolor_tl,
-    cbc  .initial:n = gray,
-    pbc  .tl_set:N = \l_userdoc_meta_parencolor_tl,
-    pbc  .initial:n = gray,
-  }
-% Internal commands
-\cs_new_protected:Npn \__mydoc_meta_generic:Nnn #1 #2 #3
-  {
-    \group_begin:
-      \keys_set:nn { userdoc / mymeta } { #2 }
-      \color{ \l_userdoc_meta_color_tl }
-      \l_userdoc_meta_font_tl
-      #1 { #3 } % #1 is \__mydoc_meta:n, \__mydoc_marg:n, \__mydoc_oarg:n or \__mydoc_parg:n
-    \group_end:
-  }
-\cs_new_protected:Npn \__mydoc_meta:n #1
-  {
-    \__mydoc_meta_angle:n { \textlangle }
-    \__mydoc_meta_meta:n { #1 }
-    \__mydoc_meta_angle:n { \textrangle }
-  }
-\cs_new_protected:Npn \__mydoc_marg:n #1
-  {
-    \__mydoc_meta_brace:n { \textbraceleft }
-    \__mydoc_meta:n { #1 }
-    \__mydoc_meta_brace:n { \textbraceright }
-  }
-\cs_new_protected:Npn \__mydoc_oarg:n #1
-  {
-    \__mydoc_meta_brack:n { [ }
-    \__mydoc_meta:n { #1 }
-    \__mydoc_meta_brack:n { ] }
-  }
-\cs_new_protected:Npn \__mydoc_parg:n #1
-  {
-    \__mydoc_meta_brace:n { ( }
-    \__mydoc_meta:n { #1 }
-    \__mydoc_meta_brace:n { ) }
-  }
-\cs_new_protected:Npn \__mydoc_meta_meta:n #1
-  {
-    \textnormal{\textit{#1}}
-  }
-\cs_new_protected:Npn \__mydoc_meta_angle:n #1
-  {
-    \group_begin:
-      \fontfamily{lmrotf}\fontshape{n}\selectfont
-      \textcolor{\l_userdoc_meta_anglecolor_tl}{#1}
-    \group_end:
-  }
-\cs_new_protected:Npn \__mydoc_meta_brace:n #1
-  {
-    \group_begin:
-      \color{\l_userdoc_meta_bracecolor_tl}
-        #1
-    \group_end:
-  }
-\cs_new_protected:Npn \__mydoc_meta_brack:n #1
-  {
-    \textcolor{\l_userdoc_meta_brackcolor_tl}{#1}
-  }
 % Color the characters matched by the regex #2 in the token list #1 with the
 % palette color #3 (only the first match, or every match)
 \cs_new_protected:Npn \__mydoc_color_once:Nnn #1 #2 #3
@@ -292,17 +210,17 @@
 \makeatletter
 \DeclareTextCommandDefault{\textbornstd}{\tc@check@symbol2\textbornstd}
 \makeatother
+% The glyph `born' has no Unicode mapping (PDF/UA requires it)
+\pdfextension glyphtounicode { born } { 002A }
 \DeclareRobustCommand{\textborn}{{\fontfamily{lmr}\selectfont\textbornstd}}
 \newcommand{\oldtextasteriskcentered}{{\fontfamily{lmr}\selectfont\textasteriskcentered}}
 % \envexamp{m}
-\newsavebox{\boxexaenv}
 \tl_new:N \l_tempc_tl
 \NewDocumentCommand \envexamp { m }
   {
     \tl_set:Nn \l_tempc_tl { #1 }
     \__mydoc_color_once:Nnn \l_tempc_tl { \* } { star }
-    \begin{lrbox}{\boxexaenv}%
-      \begin{minipage}[t]{3\marginparwidth}%
+    \begin{minipage}[t]{3\marginparwidth}%
         \raggedright\ttfamily\small
         \textcolor{gray}{\textbackslash begin\{\textcolor{module_name}{{\tl_use:N \l_tempc_tl}}\}\myoarg
         [type=tt,sbc=gray,ac=lightgray,cf=keyname]{keyval~list}}\par%
@@ -310,9 +228,7 @@
         \hspace{0.25cm}\ics*{item}\space\myoarg[sbc=gray,ac=lightgray,cf=keyname]{custom}\space\mymeta[ac=lightgray,cf=gray]{item~content}\par
         \hspace{0.25cm}\ics*{item*}\myoarg[sbc=gray,ac=lightgray,cf=keyname]{symbol}\myoarg[sbc=gray,ac=lightgray,cf=keyname]{offset}\space\mymeta[ac=lightgray,cf=gray]{item~content}\par
         \textcolor{gray}{\textbackslash end\{{\textcolor{module_name}{{\tl_use:N \l_tempc_tl}}}\}}\par
-      \end{minipage}%
-    \end{lrbox}%
-    \usebox{\boxexaenv}
+    \end{minipage}
   }
 % \cmdexamp{o m o m o}
 \tl_new:N \l_tempd_tl
@@ -545,7 +461,7 @@
           \IfFileExists { #2.tex }
             {
               Source~file~
-              \textattachfile[color=newlinkcolor,print=false]{#2.tex}{\faFile*[regular]}.
+              \myattach {#2.tex} {\faFile*[regular]}.
             }
             { }
         }
@@ -553,9 +469,9 @@
           \IfFileExists { #2.pdf }
             {
               Source~file~
-              \textattachfile[color=newlinkcolor,print=false]{#2.tex}{\faFile*[regular]}~
+              \myattach {#2.tex} {\faFile*[regular]}~
               and~\emph{tagged}~\texttt{PDF}~
-              \textattachfile[color=newlinkcolor,print=false]{#2.pdf}{\faFilePdf[regular]}.
+              \myattach {#2.pdf} {\faFilePdf[regular]}.
             }
             { }
         }
@@ -899,9 +815,11 @@
 % For non-numbered list samples, need ´%´ at end (prevent wrong unwanted spaces)
 \NewDocumentCommand \labelbx { s +m }
   {%
+    \SuspendTagging{\parbox}%
     \IfBooleanTF{#1}
       {\strut\smash{\parbox[t]{\labelwidth}{\raggedright{#2}}}}%
       {\strut\smash{\parbox[t]{\labelwidth}{\raggedleft{#2}}}}%
+    \ResumeTagging{\parbox}%
   }
 % For azetina sample
 \newlength{\itemwd}
@@ -994,7 +912,7 @@
 % \emph{\enquote{multiple choice questions}}, the basic idea behind
 % \mypkg*[no-index]{enumext} is to cover three points:
 %
-% \begin{enumerate}[left=0pt, nosep,labelsep=5pt, label=\small\arabic*.,topsep=2pt]
+% \begin{enumerate}[labelindent=0pt,leftmargin=!, nosep,labelsep=5pt, label=\small\arabic*.,topsep=2pt]
 %   \item To have a simple interface to be able to write \emph{\enquote{lists of
 %         exercises}} with \emph{\enquote{answers}}.
 %   \item To have a simple interface for writing \emph{\enquote{multiple choice
@@ -1009,7 +927,7 @@
 % of the \href{https://tex.stackexchange.com}{TeX-SX} community who have
 % provided great answers and ideas. Here are notes on the main ones:
 %
-% \begin{enumerate}[left=0pt, labelsep=5pt, nosep, label=\small\arabic*.,topsep=2pt]
+% \begin{enumerate}[labelindent=0pt,leftmargin=!, labelsep=5pt, nosep, label=\small\arabic*.,topsep=2pt]
 % \item Answer given by Alan Munn in \href{https://tex.stackexchange.com/a/300418}{\textbackslash topsep, \textbackslash itemsep, \textbackslash partopsep, \textbackslash parsep - what do they each mean (and what about the bottom)?}
 %
 % \item Answer given by Enrico Gregorio in \href{https://tex.stackexchange.com/a/34172}{Understanding minipages - aligning at top}
@@ -1930,7 +1848,7 @@
 %
 % \newsavebox{\hashbox}
 % \begin{lrbox}{\hashbox}
-% \lstinline[language=enumext-doc,basicstyle=\ttfamily]+{#1}+
+% \texttt{\{\#1\}}
 % \end{lrbox}
 %
 % \keyexampcmd{wrap-label}{code{} \space\usebox{\hashbox} more code}{empty}[env]
@@ -2530,24 +2448,24 @@
 \vspace*{-1\baselineskip}
 \begin{minipage}[t]{0.45\linewidth}
 \centering
-\begin{examplecode}[frame=none,mathescape=true]
+\begin{examplecode}[frame=none]
 \begin{enumext}[save-ans=`\mymarg{store name}`]
   \item Text \anskey{answer}
   \item Text
     \begin{keyans}
-          $\cdots$
+          `$\cdots$`
     \end{keyans}
 \end{enumext}
 \end{examplecode}
 \end{minipage}\hfill
 \begin{minipage}[t]{0.45\linewidth}
 \vspace{0pt}\centering
-\begin{examplecode}[frame=none,mathescape=true]
+\begin{examplecode}[frame=none]
 \begin{enumext}[save-ans=`\mymarg{store name}`]
   \item Text \anskey{answer}
   \item Text
     \begin{keyanspic}
-          $\cdots$
+          `$\cdots$`
     \end{keyanspic}
 \end{enumext}
 \end{examplecode}
@@ -2605,12 +2523,12 @@
 % \iffalse
 %<*example>
 % \fi
-\begin{examplecode}[frame=none,mathescape=true]
+\begin{examplecode}[frame=none]
 \begin{enumext}[save-ans=`\mymarg{store name}`]
   \item Text \anskey{answer}
   \item Text
     \begin{enumext}[nosep, columns=2, save-key={columns=3}]
-          $\cdots$
+          `$\cdots$`
     \end{enumext}
 \end{enumext}
 \end{examplecode}
@@ -3607,7 +3525,7 @@ all the worksheets are as follows:
 % The source files of the examples can be compiled with the excellent \arara\footnote{The cool \TeX\ automation tool:
 % \url{https://www.ctan.org/pkg/arara}} tool.
 %
-% \subsubsection*{Example 1}
+% \subsection*{Example 1}
 %
 % Adapted from the response given by Enrico Gregorio in \href{https://tex.stackexchange.com/q/461730/7832}{Squares for answer choice options and perfect alignment to mathematical answers}.
 % \myattachfile*{enumext-exa-1}
@@ -3657,7 +3575,7 @@ all the worksheets are as follows:
 %
 % \printkeyans[columns=1]{sabastiano}
 %
-% \subsubsection*{Example 2}
+% \subsection*{Example 2}
 %
 % Adapted from the response given by Florent Rougon in \href{https://tex.stackexchange.com/q/529034/7832}{Multiple choice questions with proposed answers in random order — addition of automatic correction (cross mark)}.
 %   \myattachfile*{enumext-exa-2}
@@ -3704,7 +3622,7 @@ all the worksheets are as follows:
 %
 % \printkeyans*[columns=2]{sabastiano2}
 %
-% \subsubsection*{Example 3}
+% \subsection*{Example 3}
 %
 % A \emph{\enquote{simple multiple choice}} test.
 %   \myattachfile*{enumext-exa-3}
@@ -3768,7 +3686,7 @@ all the worksheets are as follows:
 %
 % \printkeyans[columns=2]{simplemc}
 %
-% \subsubsection*{Example 4}
+% \subsection*{Example 4}
 %
 % A \emph{\enquote{simple worksheet}} using ducks :)
 %   \myattachfile*{enumext-exa-4}
@@ -3800,7 +3718,7 @@ all the worksheets are as follows:
 %
 % \printkeyans[columns=2]{simplews}
 %
-% \subsubsection*{Example 5}
+% \subsection*{Example 5}
 %
 % Adapted from the response given by Stephen in \href{https://tex.stackexchange.com/a/691544}{SAT like question format}.
 %   \myattachfile*{enumext-exa-5}
@@ -3841,7 +3759,7 @@ all the worksheets are as follows:
 %
 % \printkeyans[columns=4]{stylesat}
 %
-% \subsubsection*{Example 6}
+% \subsection*{Example 6}
 %
 % Adapted from the response to \href{https://tex.stackexchange.com/q/728584}{Environment for enumerate environment}.
 %   \myattachfile*{enumext-exa-6}
@@ -3967,6 +3885,14 @@ all the worksheets are as follows:
 % to generate these \emph{\enquote{fake environments}} is to set \mykey{label}|={}|
 % or \mykey{label}|=|\mymarg{some} and play with the \mykey{list-indent}, \mykey{list-offset},
 % \mykey{font} and \mykey{wrap-label} keys.
+%
+% \begin{important}*
+%  With \emph{tagged} \texttt{PDF} a list whose \mykey{label} does not use the
+%  counter of the level is declared as \emph{unordered}, as it happens in
+%  \myenv[no-index]{itemize}. It is not declared as \emph{description}, so
+%  the \emph{fake} \myenv[no-index]{description} environments are also
+%  \emph{unordered}.
+% \end{important}
 %
 % \subsection*{Fake \texttt{itemize} environment}\label{subsec:fake-itemize}
 %
@@ -4181,7 +4107,7 @@ all the worksheets are as follows:
 % requirements. This \emph{\enquote{reinventing the wheel}} finally ended up becoming
 % \mypkg*[no-index]{enumext}.
 %
-% \subsubsection*{Why list environments?}
+% \subsection*{Why list environments?}
 %
 % The answer is simple, first I love the beauty of its syntax and many of
 % what I had already written used the \myenv[no-index]{enumerate} environment or
@@ -4195,7 +4121,7 @@ all the worksheets are as follows:
 % Of course, seeing the final result of the experiment
 % \emph{\enquote{reinventing the wheel}} I am quite satisfied.
 %
-% \subsubsection*{Why not random questions and other utilities}
+% \subsection*{Why not random questions and other utilities}
 %
 % The \emph{\enquote{random}} type questions I love and hate them at the
 % same time, although they simplify a lot the work when creating a
@@ -4389,8 +4315,16 @@ all the worksheets are as follows:
 % \setlist[itemize,1]{label=\textendash,leftmargin=*,labelsep=0.5em,nosep,noitemsep}
 % \newlength\descrwidth
 % \settowidth{\descrwidth}{\textsf{v1.0, (ctan), 2024-11-01} }
-% \begin{description}[font=\small\sffamily,wide=0pt,style=multiline,leftmargin=1.1\descrwidth,nosep,noitemsep]
+% \begin{description}[font=\small\sffamily,leftmargin=1.1\descrwidth,labelwidth=1.1\descrwidth,labelsep=0pt,itemindent=0pt,nosep,noitemsep]
 %  \item [\fileversion{} (ctan), \filedate]
+%    \begin{itemize}
+%      \item The \mykey{save-ref} key creates the link target and the label with
+%        |\MakeLinkTarget| and |\label| when \mypkg[no-index]{hyperref} is loaded.
+%      \item \emph{Tagged} \texttt{PDF}: the lists whose \mykey{label} does not use the
+%        counter, for example \mykey{label}|={}| or \mykey{label}|=|\mymarg{\textbackslash{}textbullet},
+%        are now declared as \emph{unordered} lists instead of \emph{ordered} lists.
+%    \end{itemize}
+%  \item [v2.5 (ctan), 2026-11-14]
 %    \begin{itemize}
 %      \item Support for \mypkg[no-index]{footnotehyper} v2.0 with \emph{tagged}
 %        \texttt{PDF}: if it is loaded, it manages the |\footnote| in the environments.
@@ -5390,7 +5324,7 @@ all the worksheets are as follows:
 %
 % \subsection{Compatibility with hyperref and footnotehyper}\label{subsec:hyperref}
 %
-% \begin{macro}[int]{\@@_after_hyperref:, \@@_hypertarget:nn, \@@_phantomsection:}
+% \begin{macro}[int]{\@@_after_hyperref:}
 %    First, the necessary rules are defined using \emph{\enquote{hooks}} to
 %    determine if the \mypkg[no-index]{hyperref} package is loaded.
 %    \begin{macrocode}
@@ -5441,22 +5375,6 @@ all the worksheets are as follows:
         \bool_set_true:N \l_@@_footnotehyper_tag_bool
       }
   }
-%    \end{macrocode}
-%   The functions \myhlc|\@@_hypertarget:nn| and \myhlc|\@@_phantomsection:|
-%   correspond to the internal copies of |\hypertarget| and
-%   |\phantomsection|. If the boolean variable \myhlc|\l_@@_hyperref_bool|
-%   is false the functions \myhlc|\@@_hypertarget:nn| and \myhlc|\@@_phantomsection:|
-%   will be disabled.
-%    \begin{macrocode}
-    \bool_if:NTF \l_@@_hyperref_bool
-      {
-        \cs_new_eq:NN \@@_hypertarget:nn \hypertarget
-        \cs_new_eq:NN \@@_phantomsection: \phantomsection
-      }
-      {
-        \cs_new_eq:NN \@@_hypertarget:nn \use_none:nn
-        \cs_new_eq:NN \@@_phantomsection: \prg_do_nothing:
-      }
   }
 %    \end{macrocode}
 % \end{macro}
@@ -5472,26 +5390,30 @@ all the worksheets are as follows:
 % \end{arguments}
 %
 % \begin{important}*
-%   The trick here is to manage the number of arguments passed to
-%   |\newlabel{#1}{#2}| according to the presence of the \mypkg[no-index]{hyperref}
-%   package.
+%   If the \mypkg[no-index]{hyperref} package is loaded the link target is created
+%   with |\MakeLinkTarget*| and the label with |\label|, which writes the
+%   |\newlabel| with the page, the \emph{name} and the \emph{anchor}, using
+%   the |\@currentlabel| and |\@currentlabelname| set here to \myhlc|\l_@@_newlabel_arg_two_tl|.
+%   Without the package a plain |\newlabel{#1}{#2}| is written, since |\label|
+%   adds spaces that would change the typeset boxes.
 % \end{important}
 %
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_newlabel:nn
   {
-    \protected@write \@auxout { }
+    \bool_if:NTF \l_@@_hyperref_bool
       {
-        \token_to_str:N \newlabel {#1}
-          {
-            {#2}
-            \bool_if:NT \l_@@_hyperref_bool
-              { { \thepage } {#2} {#1} }
-            { }
-          }
+        \group_begin:
+          \tl_set:Nn \@currentlabel {#2}
+          \tl_set:Nn \@currentlabelname {#2}
+          \MakeLinkTarget* {#1}
+          \label {#1}
+        \group_end:
       }
-    \@@_hypertarget:nn {#1} { }
-    \@@_phantomsection:
+      {
+        \protected@write \@auxout { }
+          { \token_to_str:N \newlabel {#1} { {#2} { } } }
+      }
   }
 %    \end{macrocode}
 % \end{macro}
@@ -9120,7 +9042,7 @@ all the worksheets are as follows:
 % In order for the mechanism for the check-answer to work (not counting
 % \myenv*[no-index]{keyans}, \myenv*[no-index]{keyans*} and \myenv*[no-index]{keyanspic}) it is necessary to:
 %
-% \begin{enumerate}[left=0pt,noitemsep, partopsep=0pt, topsep=5pt]
+% \begin{enumerate}[labelindent=0pt,leftmargin=!,noitemsep, partopsep=0pt, topsep=5pt]
 %   \item Keep track of the total number of |\item| and |\item*| (enumerated) that appear within
 %         the environment including the nested levels.
 %   \item Keep track of the total number of |\item| and |\item*| (enumerated) that appear per
@@ -9134,7 +9056,7 @@ all the worksheets are as follows:
 % integer variable \myhlc|\g_@@_item_anskey_int| associated
 % to the execution of the command |\anskey|. The cases are analyzed below:
 %
-% \begin{enumerate}[label=\alph*),left=0pt,noitemsep, partopsep=0pt, topsep=5pt]
+% \begin{enumerate}[label=\alph*),labelindent=0pt,leftmargin=!,noitemsep, partopsep=0pt, topsep=5pt]
 %   \item If the list only has one level the number of |\item + \item*| = |\anskey|
 %
 %   \item If the list has \emph{nested levels}, for each level of nesting the count
@@ -12105,6 +12027,26 @@ all the worksheets are as follows:
 %
 % \subsubsection{Setting second argument of the lists}
 %
+% \begin{macro}[int]{\@@_unnumbered_list:n}
+%   When \emph{tagged} \texttt{PDF} is active the \hologo{LaTeX} kernel declares a list
+%   as \emph{ordered} if |\@nmbrlist| is true, which |\usecounter| always sets,
+%   even if the \mykey[env]{label} key has no counter, for example
+%   \mykey{label}|={}| or \mykey{label}|=|\mymarg{\textbackslash{}textbullet}.
+%   The function \myhlc|\@@_unnumbered_list:n| takes the level and sets
+%   |\@nmbrlist| to false if the \mymeta{label} of that level does not use the counter
+%   of the level, so the list is declared as \emph{unordered}. The environments
+%   restore |\@nmbrlist| right after opening the list, since the |\item| command
+%   needs it to step the counter.
+%    \begin{macrocode}
+\cs_new_protected:Nn \@@_unnumbered_list:n
+  {
+    \exp_args:Ne \str_if_in:nnF
+      { \tl_to_str:v { l_@@_label_ #1 _tl } } { enumX #1 }
+      { \legacy_if_set_false:n { @nmbrlist } }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
 % \begin{macro}[int]{\@@_list_arg_two_i:, \@@_list_arg_two_ii:, \@@_list_arg_two_iii:,
 %                    \@@_list_arg_two_iv:, \@@_list_arg_two_v:}
 %   |\leftmargini|, |\leftmarginii|, |\leftmarginiii| and
@@ -12131,6 +12073,7 @@ all the worksheets are as follows:
         \usecounter { enumX #1 }
         \setcounter { enumX #1 }
           { \int_eval:n { \int_use:c { l_@@_start_ #1 _int } - 1 } }
+        \@@_unnumbered_list:n {#1}
         \str_if_eq:nnTF {#1} { v }
           {
             \@@_keyans_redefine_item:
@@ -12606,6 +12549,7 @@ all the worksheets are as follows:
         \use:c { @@_list_arg_two_ \@@_level: : }
         \@@_before_keys_exec:
       }
+    \legacy_if_set_true:n { @nmbrlist }
     \@@_set_item_width:
     \@@_after_args_exec:
   }
@@ -12821,6 +12765,7 @@ all the worksheets are as follows:
         \@@_list_arg_two_v:
         \@@_before_keys_exec_v:
       }
+    \legacy_if_set_true:n { @nmbrlist }
     \@@_keyans_set_item_width:
     \@@_after_args_exec_v:
   }

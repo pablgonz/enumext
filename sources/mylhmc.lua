@@ -31,7 +31,18 @@ local d_tail       = node.direct.tail or function(t)
   return t
 end
 local d_setfield   = node.direct.setfield
-local n_write      = node.write
+-- Los nodos copiados de la caché de glyphs y de las plantillas de color
+-- conservan los atributos de cuando se crearon; con tagging eso son MCIDs de
+-- otras líneas. Al escribir, cada nodo recibe la lista de atributos actual.
+local n_write
+do
+  local write, set_attr, to_direct = node.write, node.direct.setattributelist, node.direct.todirect
+  n_write = function(n)
+    local d = to_direct(n)
+    while d do set_attr(d, true); d = d_getnext(d) end
+    return write(n)
+  end
+end
 
 local f_current    = font.current
 local f_getfont    = font.getfont

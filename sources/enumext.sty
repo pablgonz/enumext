@@ -404,30 +404,22 @@
         \bool_set_true:N \l__enumext_footnotehyper_tag_bool
       }
   }
-    \bool_if:NTF \l__enumext_hyperref_bool
-      {
-        \cs_new_eq:NN \__enumext_hypertarget:nn \hypertarget
-        \cs_new_eq:NN \__enumext_phantomsection: \phantomsection
-      }
-      {
-        \cs_new_eq:NN \__enumext_hypertarget:nn \use_none:nn
-        \cs_new_eq:NN \__enumext_phantomsection: \prg_do_nothing:
-      }
   }
 \cs_new_protected:Nn \__enumext_newlabel:nn
   {
-    \protected@write \@auxout { }
+    \bool_if:NTF \l__enumext_hyperref_bool
       {
-        \token_to_str:N \newlabel {#1}
-          {
-            {#2}
-            \bool_if:NT \l__enumext_hyperref_bool
-              { { \thepage } {#2} {#1} }
-            { }
-          }
+        \group_begin:
+          \tl_set:Nn \@currentlabel {#2}
+          \tl_set:Nn \@currentlabelname {#2}
+          \MakeLinkTarget* {#1}
+          \label {#1}
+        \group_end:
       }
-    \__enumext_hypertarget:nn {#1} { }
-    \__enumext_phantomsection:
+      {
+        \protected@write \@auxout { }
+          { \token_to_str:N \newlabel {#1} { {#2} { } } }
+      }
   }
 \int_new:N \g__enumext_footnote_standard_int
 \int_new:N \g__enumext_footnote_starred_int
@@ -4240,6 +4232,12 @@
       }
   }
 \cs_generate_variant:Nn \__enumext_calc_hspace:NNNNNNN { ccccccc }
+\cs_new_protected:Nn \__enumext_unnumbered_list:n
+  {
+    \exp_args:Ne \str_if_in:nnF
+      { \tl_to_str:v { l__enumext_label_ #1 _tl } } { enumX #1 }
+      { \legacy_if_set_false:n { @nmbrlist } }
+  }
 \cs_set_protected:Nn \__enumext_tmp:n
   {
     \cs_new_protected:cpn { __enumext_list_arg_two_ #1 : }
@@ -4260,6 +4258,7 @@
         \usecounter { enumX #1 }
         \setcounter { enumX #1 }
           { \int_eval:n { \int_use:c { l__enumext_start_ #1 _int } - 1 } }
+        \__enumext_unnumbered_list:n {#1}
         \str_if_eq:nnTF {#1} { v }
           {
             \__enumext_keyans_redefine_item:
@@ -4539,6 +4538,7 @@
         \use:c { __enumext_list_arg_two_ \__enumext_level: : }
         \__enumext_before_keys_exec:
       }
+    \legacy_if_set_true:n { @nmbrlist }
     \__enumext_set_item_width:
     \__enumext_after_args_exec:
   }
@@ -4688,6 +4688,7 @@
         \__enumext_list_arg_two_v:
         \__enumext_before_keys_exec_v:
       }
+    \legacy_if_set_true:n { @nmbrlist }
     \__enumext_keyans_set_item_width:
     \__enumext_after_args_exec_v:
   }
