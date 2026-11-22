@@ -5401,7 +5401,7 @@ all the worksheets are as follows:
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}[int]{\@@_newlabel:nn}\label{fun:newlabel}
+% \begin{macro}[int]{\@@_newlabel:nn}\label{fun:newlabel}\ignorespaces
 %   The function \myhlc|\@@_newlabel:nn| writes the information to the |.aux|
 %   file when using the \mykey[env]{save-ref} key. The arguments taken by the
 %   function are:
@@ -12237,7 +12237,7 @@ all the worksheets are as follows:
 %
 % \subsubsection{Internal functions for \env{enumext}}
 %
-% \begin{macro}[int]{\@@_safe_exec:}\label{fun:safe-exec-enumext}
+% \begin{macro}[int]{\@@_safe_exec:}\label{fun:safe-exec-enumext}\ignorespaces
 %   The \myhlc|\@@_safe_exec:| function first calls the function \myhlc|\@@_is_not_nested:|, which
 %   sets \myhlc|\g_@@_standard_bool| to |true| if it is NOT nested within
 %   \myenv*[no-index]{enumext*}. Then it calls the function \myhlc|\@@_internal_mini_page:| to
@@ -12542,7 +12542,7 @@ all the worksheets are as follows:
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}[int]{\@@_set_item_width:}\label{fun:item-width-enumext}
+% \begin{macro}[int]{\@@_set_item_width:}\label{fun:item-width-enumext}\ignorespaces
 %   The function \myhlc|\@@_set_item_width:| will set the value of |\itemwidth|
 %   taking into account the value established by the \mykey[env]{list-offset}
 %   key for each level of the environment.
@@ -12767,7 +12767,7 @@ all the worksheets are as follows:
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}[int]{\@@_keyans_set_item_width:}\label{fun:item-width-keyans}
+% \begin{macro}[int]{\@@_keyans_set_item_width:}\label{fun:item-width-keyans}\ignorespaces
 %   The function \myhlc|\@@_keyans_set_item_width:| will set the value of |\itemwidth|
 %   taking into account the value established by the \mykey[env]{list-offset}
 %   key.
@@ -14311,7 +14311,7 @@ all the worksheets are as follows:
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}[int]{\@@_safe_exec_vii:}\label{fun:safe-exec-starred}
+% \begin{macro}[int]{\@@_safe_exec_vii:}\label{fun:safe-exec-starred}\ignorespaces
 %   The function \myhlc|\@@_is_not_nested:| is called first, which sets
 %   \myhlc|\g_@@_starred_bool| to true if it is NOT nested within \myenv*[no-index]{enumext};
 %   then the function \myhlc|\@@_internal_mini_page:| is called to create the
@@ -14455,12 +14455,11 @@ all the worksheets are as follows:
 % \subsubsection{The command \cs{item} in \env{enumext*}}\label{cmd:item-enumext-starred}
 %
 % \begin{macro}[int]{\@@_first_item_tmp_vii:}
-%
-% The \myhlc|\@@_first_item_tmp_vii:| function will remove horizontal space
-% equal to |\labelwidth| plus |\labelsep| to the left of the \emph{\enquote{first}}
-% |\item| in the environment at the point of execution of this function,
-% where it is equal to the \myhlc|\@@_stop_item_tmp_vii:| function inside the
-% environment body definition.
+%   The \myhlc|\@@_first_item_tmp_vii:| function will remove horizontal space
+%   equal to |\labelwidth| plus |\labelsep| to the left of the \emph{\enquote{first}}
+%   |\item| in the environment at the point of execution of this function,
+%   where it is equal to the \myhlc|\@@_stop_item_tmp_vii:| function inside the
+%   environment body definition.
 %    \begin{macrocode}
 \cs_new_protected_nopar:Nn \@@_first_item_tmp_vii:
   {
