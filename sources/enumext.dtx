@@ -729,6 +729,19 @@
     {\contentspush{\makebox[8mm][l]{\thecontentslabel\hfill}}}
     {\hspace*{-19mm}}% numberless
     {\hspace{0.25em}\titlerule*[6pt]{.}\contentspage}%
+% Tagging: with \DocumentMetadata, titlesec/titletoc are emulated by
+% latex-lab: \titlerule* has no leaders (no dots) and \titlecontents entries
+% get no links. Use the kernel \@dottedtocline (links via the contentsline
+% hooks) with the same indents and widths.
+\makeatletter
+\IfDocumentMetadataT
+  {
+    \renewcommand\@dotsep{3}
+    \renewcommand\l@section[2]{\@dottedtocline{1}{0mm}{5mm}{\bfseries #1}{#2}}
+    \renewcommand\l@subsection{\@dottedtocline{2}{5mm}{6mm}}
+    \renewcommand\l@subsubsection{\@dottedtocline{3}{11mm}{8mm}}
+  }
+\makeatother
 % Table of contents
 \ExplSyntaxOn
 \cs_new_eq:Nc \__mydoc_mkboth:nn { @mkboth }
