@@ -497,10 +497,10 @@
   {
     \NewSocketPlug { fntext/process } { enumextsave }
       {
-        \global \setbox \g__enumext_footnote_box \vbox
+        \vbox_gset:Nn \g__enumext_footnote_box
           {
-            \unvbox \g__enumext_footnote_box
-            \columnwidth \l__enumext_footnote_wd_dim
+            \vbox_unpack_drop:N \g__enumext_footnote_box
+            \dim_set_eq:NN \columnwidth \l__enumext_footnote_wd_dim
             #1
           }
       }
@@ -536,11 +536,11 @@
           {
             \reset@font
             \footnotesize
-            \interlinepenalty \interfootnotelinepenalty
-            \splittopskip \footnotesep
-            \splitmaxdepth \dp \strutbox
-            \floatingpenalty \@MM
-            \unvbox \g__enumext_footnote_box
+            \int_set_eq:NN \interlinepenalty \interfootnotelinepenalty
+            \skip_set:Nn \splittopskip { \footnotesep }
+            \dim_set:Nn \splitmaxdepth { \box_dp:N \strutbox }
+            \int_set_eq:NN \floatingpenalty \@MM
+            \vbox_unpack_drop:N \g__enumext_footnote_box
           }
       }
   }
@@ -4146,20 +4146,28 @@
         \tl_use:N \l__enumext_label_fill_right_v_tl
       }
   }
+\cs_new_protected:Nn \__enumext_keyans_make_label_content:n
+  {
+    \__enumext_keyans_show_ans:
+    \__enumext_keyans_show_pos:
+    \tl_use:N \l__enumext_label_font_style_v_tl
+    \__enumext_keyans_wrapper_label:n {#1}
+  }
 \cs_new_protected:Nn \__enumext_keyans_make_label_box:
   {
     \RenewDocumentCommand \makelabel { m }
       {
-        \strut\smash
+        \hbox_set:Nn \l__enumext_label_width_by_box
           {
-            \makebox[ \l__enumext_labelwidth_v_dim ][ \l__enumext_align_label_pos_v_str ]
-              {
-                \__enumext_keyans_show_ans:
-                \__enumext_keyans_show_pos:
-                \tl_use:N \l__enumext_label_font_style_v_tl
-                \__enumext_keyans_wrapper_label:n {##1}
-              }
+            \IfDocumentMetadataT { \SuspendTagging { enumext } }
+            \__enumext_keyans_make_label_content:n {##1}
           }
+        \makebox
+          [ \dim_max:nn
+              { \l__enumext_labelwidth_v_dim }
+              { \box_wd:N \l__enumext_label_width_by_box } ]
+          [ \l__enumext_align_label_pos_v_str ]
+          { \__enumext_keyans_make_label_content:n {##1} }
       }
   }
 \cs_set_protected:Nn \__enumext_tmp:n
