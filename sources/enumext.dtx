@@ -3984,11 +3984,11 @@ all the worksheets are as follows:
 % \end{important}
 %
 % \begin{important}
-%  When \emph{tagged} PDF is active the default \myenv[no-index]{description} style
-%  is NOT available due to the redefinition of |\makelabel| for the
-%  \mykey{align} key which uses |\makebox| in this case, meaning that
-%  |\item|\myoarg{content} will not extend beyond |\labelwidth| which
-%  causes overlaps,
+%  When \emph{tagged} PDF is active |\makelabel| is redefined using |\makebox|
+%  for the \mykey{align} key. The width of this box is the larger of
+%  |\labelwidth| and the natural width of the label, so
+%  |\item|\myoarg{content} wider than |\labelwidth| pushes the text to the right
+%  as in the default \myenv[no-index]{description} style and there are no overlaps.
 % \end{important}
 %
 % \subsection*{Description indented by label}\label{subsec:description-indented}
@@ -11794,20 +11794,28 @@ all the worksheets are as follows:
 %   Definition using |\makebox| when \myhlc|\DocumentMetadata| is active or
 %   \mykey{mode-box} is active.
 %    \begin{macrocode}
+\cs_new_protected:Nn \@@_keyans_make_label_content:n
+  {
+    \@@_keyans_show_ans:
+    \@@_keyans_show_pos:
+    \tl_use:N \l_@@_label_font_style_v_tl
+    \@@_keyans_wrapper_label:n {#1}
+  }
 \cs_new_protected:Nn \@@_keyans_make_label_box:
   {
     \RenewDocumentCommand \makelabel { m }
       {
-        \strut\smash
+        \hbox_set:Nn \l_@@_label_width_by_box
           {
-            \makebox[ \l_@@_labelwidth_v_dim ][ \l_@@_align_label_pos_v_str ]
-              {
-                \@@_keyans_show_ans:
-                \@@_keyans_show_pos:
-                \tl_use:N \l_@@_label_font_style_v_tl
-                \@@_keyans_wrapper_label:n {##1}
-              }
+            \IfDocumentMetadataT { \SuspendTagging { enumext } }
+            \@@_keyans_make_label_content:n {##1}
           }
+        \makebox
+          [ \dim_max:nn
+              { \l_@@_labelwidth_v_dim }
+              { \box_wd:N \l_@@_label_width_by_box } ]
+          [ \l_@@_align_label_pos_v_str ]
+          { \@@_keyans_make_label_content:n {##1} }
       }
   }
 %    \end{macrocode}

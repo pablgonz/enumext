@@ -1243,7 +1243,7 @@ TEST 1: Show PDF Tags
          id="ID.0210"
          alt="An uppercase letter B"
          xmlns:Layout="http://iso.org/pdf/ssn/Layout"
-         Layout:BBox="{ 212.44333, 572.9811, 238.04385, 592.1815 }"
+         Layout:BBox="{ 212.44333, 572.71082, 238.04385, 591.91122 }"
         >
        <?MarkedContent page="2" ?>
       </Figure>
@@ -1442,7 +1442,7 @@ TEST 1: Show PDF Tags
            id="ID.0244"
            alt="An uppercase letter A"
            xmlns:Layout="http://iso.org/pdf/ssn/Layout"
-           Layout:BBox="{ 422.15952, 519.44946, 447.76004, 538.64986 }"
+           Layout:BBox="{ 422.15952, 519.17918, 447.76004, 538.37958 }"
           >
          <?MarkedContent page="2" ?>
         </Figure>
@@ -1472,7 +1472,7 @@ TEST 1: Show PDF Tags
          id="ID.0248"
          alt="An uppercase letter B"
          xmlns:Layout="http://iso.org/pdf/ssn/Layout"
-         Layout:BBox="{ 212.44333, 491.31537, 238.04385, 510.51577 }"
+         Layout:BBox="{ 212.44333, 490.99106, 238.04385, 510.19146 }"
         >
        <?MarkedContent page="2" ?>
       </Figure>
@@ -1666,7 +1666,7 @@ TEST 1: Show PDF Tags
                id="ID.0282"
                alt="An uppercase letter A"
                xmlns:Layout="http://iso.org/pdf/ssn/Layout"
-               Layout:BBox="{ 422.15952, 421.94571, 447.76004, 441.14611 }"
+               Layout:BBox="{ 422.15952, 421.29707, 447.76004, 440.49747 }"
               >
              <?MarkedContent page="2" ?>
             </Figure>
@@ -1729,7 +1729,7 @@ TEST 1: Show PDF Tags
          id="ID.0291"
          alt="An uppercase letter B"
          xmlns:Layout="http://iso.org/pdf/ssn/Layout"
-         Layout:BBox="{ 212.44333, 355.78723, 238.04385, 374.98763 }"
+         Layout:BBox="{ 212.44333, 354.70616, 238.04385, 373.90656 }"
         >
        <?MarkedContent page="2" ?>
       </Figure>
@@ -1904,7 +1904,7 @@ TEST 1: Show PDF Tags
          id="ID.0320"
          alt="An uppercase letter B"
          xmlns:Layout="http://iso.org/pdf/ssn/Layout"
-         Layout:BBox="{ 212.44333, 263.36572, 238.04385, 282.56612 }"
+         Layout:BBox="{ 212.44333, 261.74411, 238.04385, 280.94451 }"
         >
        <?MarkedContent page="2" ?>
       </Figure>
@@ -2139,7 +2139,7 @@ TEST 1: Show PDF Tags
                id="ID.0361"
                alt="An uppercase letter A"
                xmlns:Layout="http://iso.org/pdf/ssn/Layout"
-               Layout:BBox="{ 422.15952, 151.45966, 447.76004, 170.66006 }"
+               Layout:BBox="{ 422.15952, 149.46712, 447.76004, 168.66752 }"
               >
              <?MarkedContent page="2" ?>
             </Figure>
@@ -2488,7 +2488,7 @@ TEST 1: Show PDF Tags
          id="ID.0418"
          alt="An uppercase letter B"
          xmlns:Layout="http://iso.org/pdf/ssn/Layout"
-         Layout:BBox="{ 212.44333, 470.05257, 238.04385, 489.25297 }"
+         Layout:BBox="{ 212.44333, 470.94917, 238.04385, 490.14957 }"
         >
        <?MarkedContent page="3" ?>
       </Figure>
@@ -2711,7 +2711,7 @@ TEST 1: Show PDF Tags
                id="ID.0457"
                alt="An uppercase letter A"
                xmlns:Layout="http://iso.org/pdf/ssn/Layout"
-               Layout:BBox="{ 422.15952, 402.57324, 447.76004, 421.77364 }"
+               Layout:BBox="{ 422.15952, 403.46985, 447.76004, 422.67025 }"
               >
              <?MarkedContent page="3" ?>
             </Figure>
@@ -2774,7 +2774,7 @@ TEST 1: Show PDF Tags
          id="ID.0466"
          alt="An uppercase letter B"
          xmlns:Layout="http://iso.org/pdf/ssn/Layout"
-         Layout:BBox="{ 212.44333, 316.95435, 238.04385, 336.15475 }"
+         Layout:BBox="{ 212.44333, 318.74754, 238.04385, 337.94794 }"
         >
        <?MarkedContent page="3" ?>
       </Figure>
@@ -2997,7 +2997,7 @@ TEST 1: Show PDF Tags
                id="ID.0505"
                alt="An uppercase letter A"
                xmlns:Layout="http://iso.org/pdf/ssn/Layout"
-               Layout:BBox="{ 422.15952, 245.48996, 447.76004, 264.69036 }"
+               Layout:BBox="{ 422.15952, 247.28316, 447.76004, 266.48356 }"
               >
              <?MarkedContent page="3" ?>
             </Figure>
@@ -3060,7 +3060,7 @@ TEST 1: Show PDF Tags
          id="ID.0514"
          alt="An uppercase letter B"
          xmlns:Layout="http://iso.org/pdf/ssn/Layout"
-         Layout:BBox="{ 212.44333, 189.75897, 238.04385, 208.95937 }"
+         Layout:BBox="{ 212.44333, 191.81877, 238.04385, 211.01917 }"
         >
        <?MarkedContent page="3" ?>
       </Figure>
