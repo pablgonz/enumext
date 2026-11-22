@@ -186,6 +186,8 @@
   }
 \cs_generate_variant:Nn \keys_precompile:nnN { neN }
 \cs_generate_variant:Nn \seq_use:Nn { NV }
+\cs_generate_variant:Nn \keys_set:nn { en, ev }
+\prg_generate_conditional_variant:Nnn \str_if_in:nn { v } { F }
 \cs_new_protected:Nn \__enumext_at_begin_document:n
   {
     \hook_gput_code:nnn {begindocument} {enumext} {#1}
@@ -2026,7 +2028,7 @@
       {
         \bool_if:cT { l__enumext_resume_count_ \int_to_roman:n {##1} _bool }
           {
-            \exp_args:Ne \int_set:cn { l__enumext_start_ \int_to_roman:n {##1} _int }
+            \int_set:cn { l__enumext_start_ \int_to_roman:n {##1} _int }
               {
                 \int_use:c { c@ __enumext_resume_ \int_to_roman:n {##1} _int } + 1
               }
@@ -2181,7 +2183,7 @@
         \tl_if_exist:cTF { g__enumext_series_ \tl_to_str:n {#1} _ \__enumext_level: _tl }
           {
             \__enumext_resume_series:n {#1}
-            \exp_args:Ne \keys_set:nv { enumext /
+            \keys_set:ev { enumext /
               level-\int_use:N \l__enumext_level_int }
               { g__enumext_series_ \tl_to_str:n {#1} _ \__enumext_level: _tl }
           }
@@ -2226,7 +2228,7 @@
         \int_if_exist:cT { g__enumext_series_ \l__enumext_series_name_tl _
           \int_to_roman:n {##1} _int }
           {
-            \exp_args:Ne \int_set:cn { l__enumext_start_ \int_to_roman:n {##1} _int }
+            \int_set:cn { l__enumext_start_ \int_to_roman:n {##1} _int }
               {
                 \int_use:c { g__enumext_series_ \l__enumext_series_name_tl _
                   \int_to_roman:n {##1} _int } + 1
@@ -2277,7 +2279,7 @@
           }
           {
             \__enumext_resume_counter:
-            \exp_args:Ne \keys_set:nv
+            \keys_set:ev
               { enumext / level-\int_use:N \l__enumext_level_int }
               { g__enumext_resume_last_keys_ \int_to_roman:n {##1} _tl }
           }
@@ -3152,6 +3154,7 @@
       }
     \__enumext_store_addto_seq:V \l__enumext_store_anskey_arg_tl
   }
+\cs_generate_variant:Nn \__enumext_store_anskey_arg:n { e }
 \cs_new_protected:Nn \__enumext_anskey_show_wrap_arg:n
   {
     \par
@@ -3252,7 +3255,7 @@
   }
 \cs_new_protected:Nn \__enumext_anskey_unknown:n
   {
-    \exp_args:NV \__enumext_anskey_unknown:nn \l_keys_key_str {#1}
+    \__enumext_anskey_unknown:Vn \l_keys_key_str {#1}
   }
 \cs_new_protected:Nn \__enumext_anskey_unknown:nn
   {
@@ -3264,6 +3267,7 @@
         \msg_error:nnnn { enumext } { anskey-cmd-key-value-unknown } {#1} {#2}
       }
   }
+\cs_generate_variant:Nn \__enumext_anskey_unknown:nn { V }
 \prg_new_conditional:Npnn \__enumext_in_keyans: { p , T , F , TF }
   {
     \int_compare:nNnTF
@@ -3413,7 +3417,7 @@
   }
 \cs_new_protected:Nn \__enumext_anskey_env_unknown:n
   {
-    \exp_args:NV \__enumext_anskey_env_unknown:nn \l_keys_key_str {#1}
+    \__enumext_anskey_env_unknown:Vn \l_keys_key_str {#1}
   }
 \cs_new_protected:Nn \__enumext_anskey_env_unknown:nn
   {
@@ -3425,6 +3429,7 @@
         \msg_error:nnnn { enumext } { anskey-env-key-value-unknown } {#1} {#2}
       }
   }
+\cs_generate_variant:Nn \__enumext_anskey_env_unknown:nn { V }
 \prg_new_protected_conditional:Npnn \__enumext_anskey_env_file_if_writable:n #1
   { T, F, TF }
   {
@@ -3504,11 +3509,10 @@
             \c__enumext_anskey_env_hidden_space_str
           }
       }
-    \exp_args:Ne
-      \__enumext_store_anskey_arg:n
-        {
-          \tl_retokenize:n { \l__enumext_store_anskey_env_tl }
-        }
+    \__enumext_store_anskey_arg:e
+      {
+        \tl_retokenize:n { \l__enumext_store_anskey_env_tl }
+      }
   }
 \NewDocumentEnvironment{anskey*}{ o c }
   {
@@ -4015,7 +4019,7 @@
 \clist_map_inline:nn { keyans, keyans*, keyanspic } { \__enumext_tmp:n {#1} }
 \cs_new_protected:Nn \__enumext_keyans_unknown_keys:n
   {
-    \exp_args:NV \__enumext_keyans_unknown_keys:nn \l_keys_key_str {#1}
+    \__enumext_keyans_unknown_keys:Vn \l_keys_key_str {#1}
   }
 \cs_new_protected:Nn \__enumext_keyans_unknown_keys:nn
   {
@@ -4027,6 +4031,7 @@
         \msg_error:nnee { enumext } { keyans-unknown-key-value } {#1} {#2}
       }
   }
+\cs_generate_variant:Nn \__enumext_keyans_unknown_keys:nn { V }
 \keys_define:nn { enumext / enumext* }
   {
     unknown .code:n =
@@ -4037,7 +4042,7 @@
   }
 \cs_new_protected:Nn \__enumext_starred_unknown_keys:n
   {
-    \exp_args:NV \__enumext_starred_unknown_keys:nn \l_keys_key_str {#1}
+    \__enumext_starred_unknown_keys:Vn \l_keys_key_str {#1}
   }
 \cs_new_protected:Nn \__enumext_starred_unknown_keys:nn
   {
@@ -4049,6 +4054,7 @@
         \msg_error:nnee { enumext } { starred-unknown-key-value } {#1} {#2}
       }
   }
+\cs_generate_variant:Nn \__enumext_starred_unknown_keys:nn { V }
 \cs_set_protected:Nn \__enumext_tmp:n
   {
     \keys_define:nn { enumext / level-#1 }
@@ -4064,7 +4070,7 @@
 \clist_map_inline:nn {1, 2, 3, 4} { \__enumext_tmp:n {#1} }
 \cs_new_protected:Nn \__enumext_standard_unknown_keys:n
   {
-    \exp_args:NV \__enumext_standard_unknown_keys:nn \l_keys_key_str {#1}
+    \__enumext_standard_unknown_keys:Vn \l_keys_key_str {#1}
   }
 \cs_new_protected:Nn \__enumext_standard_unknown_keys:nn
   {
@@ -4076,6 +4082,7 @@
         \msg_error:nnee { enumext } { standard-unknown-key-value } {#1} {#2}
       }
   }
+\cs_generate_variant:Nn \__enumext_standard_unknown_keys:nn { V }
 \cs_new_protected:Nn \__enumext_keyans_default_item:n
   {
     \tl_if_novalue:nTF {#1}
@@ -4263,8 +4270,8 @@
 \cs_generate_variant:Nn \__enumext_calc_hspace:NNNNNNN { ccccccc }
 \cs_new_protected:Nn \__enumext_unnumbered_list:n
   {
-    \exp_args:Ne \str_if_in:nnF
-      { \tl_to_str:v { l__enumext_label_ #1 _tl } } { enumX #1 }
+    \str_if_in:vnF
+      { l__enumext_label_ #1 _tl } { enumX #1 }
       { \legacy_if_set_false:n { @nmbrlist } }
   }
 \cs_set_protected:Nn \__enumext_tmp:n
@@ -4393,7 +4400,7 @@
             \__enumext_nested_base_line_fix:
           }
           {
-            \exp_args:Ne \keys_set:nn
+            \keys_set:en
               { enumext / level-\int_use:N \l__enumext_level_int } {#1}
             \bool_if:NF \l__enumext_print_keyans_cmd_bool
               {
@@ -6314,6 +6321,7 @@
       }
       { \msg_error:nnn { enumext } { missing-colon } {#1} }
   }
+\cs_generate_variant:Nn \__enumext_getkeyans_aux:n { e }
 \cs_new_protected:Nn \__enumext_getkeyans:nn
   {
     \prop_if_exist:cTF { g__enumext_ #1 _prop }
@@ -6326,7 +6334,7 @@
   }
 \NewDocumentCommand \getkeyans { m }
   {
-    \exp_args:Ne \__enumext_getkeyans_aux:n
+    \__enumext_getkeyans_aux:e
       { \tl_to_str:e { \text_expand:n {#1} } }
   }
 \clist_const:Nn \c__enumext_print_envs_clist
@@ -6779,9 +6787,10 @@
         \msg_error:nnnn { enumext } { for-key-value-unknown } {#1} {#2}
       }
   }
+\cs_generate_variant:Nn \__enumext_parse_foreach_keys:nn { V }
 \cs_new_protected:Nn \__enumext_parse_foreach_keys:n
   {
-    \exp_args:NV \__enumext_parse_foreach_keys:nn \l_keys_key_str {#1}
+    \__enumext_parse_foreach_keys:Vn \l_keys_key_str {#1}
   }
 \cs_new_protected:Nn \__enumext_foreach_keyans:nn
   {
