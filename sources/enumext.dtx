@@ -831,8 +831,8 @@
   {%
     \SuspendTagging{\parbox}%
     \IfBooleanTF{#1}
-      {\strut\smash{\parbox[t]{\labelwidth}{\raggedright{#2}}}}%
-      {\strut\smash{\parbox[t]{\labelwidth}{\raggedleft{#2}}}}%
+      {\strut\smash{\parbox[t]{\labelwidth}{\noindent\raggedright{#2}}}}%
+      {\strut\smash{\parbox[t]{\labelwidth}{\noindent\raggedleft{#2}}}}%
     \ResumeTagging{\parbox}%
   }
 % For azetina sample
@@ -4071,8 +4071,8 @@ all the worksheets are as follows:
   {%
     \SuspendTagging{\parbox}%
     \IfBooleanTF{#1}
-      {\strut\smash{\parbox[t]{\labelwidth}{\raggedright{#2}}}}%
-      {\strut\smash{\parbox[t]{\labelwidth}{\raggedleft{#2}}}}%
+      {\strut\smash{\parbox[t]{\labelwidth}{\noindent\raggedright{#2}}}}%
+      {\strut\smash{\parbox[t]{\labelwidth}{\noindent\raggedleft{#2}}}}%
     \ResumeTagging{\parbox}%
   }
 \end{examplecode}
@@ -11360,26 +11360,38 @@ all the worksheets are as follows:
 % \end{important}
 %
 %    \begin{macrocode}
+\cs_new_protected:Nn \@@_make_label_content:n
+  {
+    \@@_item_starred_exec:
+    \tl_use:c { l_@@_label_font_style_ \@@_level: _tl }
+    \bool_if:cTF { l_@@_wrap_label_ \@@_level: _bool }
+      { \use:c { @@_wrapper_label_ \@@_level: :n } {#1} }
+      {#1}
+  }
+%    \end{macrocode}
+%   The label is measured first (with \emph{tagged} \texttt{PDF} suspended) so
+%   that the box is never narrower than the label itself, as in the
+%   standard |\makelabel|.
+%    \begin{macrocode}
 \cs_new_protected:Nn \@@_make_label_box:
   {
     \RenewDocumentCommand \makelabel { m }
       {
+        \hbox_set:Nn \l_@@_label_width_by_box
+          {
+            \IfDocumentMetadataT { \SuspendTagging { enumext } }
+            \@@_make_label_content:n {##1}
+          }
         \strut\smash
           {
             \makebox
-              [ \dim_use:c { l_@@_labelwidth_ \@@_level: _dim } ]
+              [ \dim_max:nn
+                  { \dim_use:c { l_@@_labelwidth_ \@@_level: _dim } }
+                  { \box_wd:N \l_@@_label_width_by_box } ]
               [ \str_use:c { l_@@_align_label_pos_ \@@_level: _str } ]
-              {
-                \@@_item_starred_exec:
-                \tl_use:c { l_@@_label_font_style_ \@@_level: _tl }
-                \bool_if:cTF { l_@@_wrap_label_ \@@_level: _bool }
-                  {
-                    \use:c { @@_wrapper_label_ \@@_level: :n } {##1}
-                  }
-                  {##1}
-                \tl_gclear:N \g_@@_item_symbol_aux_tl
-              }
+              { \@@_make_label_content:n {##1} }
           } % close smash
+        \tl_gclear:N \g_@@_item_symbol_aux_tl
       }
   }
 %    \end{macrocode}
