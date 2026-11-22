@@ -7517,7 +7517,8 @@ all the worksheets are as follows:
 %   \myhlc|\l_@@_minipage_right_skip|.
 %    \begin{macrocode}
     \skip_set_eq:cN
-      { l_@@_multicols_above_ \@@_level: _skip } \l_@@_minipage_right_skip
+      { l_@@_multicols_above_ \@@_level: _skip }
+      \l_@@_minipage_right_skip
 %    \end{macrocode}
 %   If the environment \myenv[no-index]{multicols} is active, it sets |\topskip=|\mydim{0pt}
 %   and then makes |\multicolsep| have the same value as \myhlc|\l_@@_multicols_above_X_skip|.
@@ -7526,7 +7527,8 @@ all the worksheets are as follows:
       { \int_use:c { l_@@_columns_ \@@_level: _int } } > { 1 }
       {
         \skip_zero:N \topskip
-        \skip_set_eq:Nc \multicolsep { l_@@_multicols_above_ \@@_level: _skip }
+        \skip_set_eq:Nc \multicolsep
+          { l_@@_multicols_above_ \@@_level: _skip }
       }
   }
 %    \end{macrocode}
@@ -7721,7 +7723,8 @@ all the worksheets are as follows:
 \cs_new_protected:Nn \@@_mini_right_cmd:n
   {
     \dim_compare:nNnTF
-      { \dim_use:c { l_@@_minipage_right_ \@@_level: _dim } } > { \c_zero_dim }
+      { \dim_use:c { l_@@_minipage_right_ \@@_level: _dim } }
+      > { \c_zero_dim }
       {
         \@@_multicols_stop:
         \int_compare:nNnT
@@ -7732,7 +7735,8 @@ all the worksheets are as follows:
           }
         \end@@_mini_page
         \hfill
-        \@@_mini_page{ \dim_use:c { l_@@_minipage_right_ \@@_level: _dim } }
+        \@@_mini_page
+          { \dim_use:c { l_@@_minipage_right_ \@@_level: _dim } }
           \par\nointerlineskip
           \addvspace { \l_@@_minipage_right_skip }
           \bool_if:nF {#1}
@@ -7857,7 +7861,8 @@ all the worksheets are as follows:
 \cs_new_protected:Nn \@@_vspace_above:
   {
     \skip_if_eq:nnF
-      { \skip_use:c { l_@@_vspace_above_ \@@_level: _skip } } { \c_zero_skip }
+      { \skip_use:c { l_@@_vspace_above_ \@@_level: _skip } }
+      { \c_zero_skip }
       {
         \bool_if:cTF { l_@@_vspace_a_star_ \@@_level: _bool }
           {
@@ -7878,7 +7883,8 @@ all the worksheets are as follows:
 \cs_new_protected:Nn \@@_vspace_below:
   {
     \skip_if_eq:nnF
-      { \skip_use:c { l_@@_vspace_below_ \@@_level: _skip } } { \c_zero_skip }
+      { \skip_use:c { l_@@_vspace_below_ \@@_level: _skip } }
+      { \c_zero_skip }
       {
         \bool_if:cTF { l_@@_vspace_b_star_ \@@_level: _bool }
           {
@@ -8171,7 +8177,8 @@ all the worksheets are as follows:
             \tl_if_empty:NT \l_@@_store_name_tl
               {
                 \int_gset_eq:cc
-                  { c@ @@_resume_ \@@_level: _int } { c@enumX \@@_level: }
+                  { c@ @@_resume_ \@@_level: _int }
+                  { c@enumX \@@_level: }
               }
           }
       }
@@ -8458,7 +8465,8 @@ all the worksheets are as follows:
               { g_@@_series_ \l_@@_series_name_str _ \@@_level: _int }
               {
                 \int_new:c
-                  { g_@@_series_ \l_@@_series_name_str _ \@@_level: _int }
+              { g_@@_series_ \l_@@_series_name_str
+                _ \@@_level: _int }
               }
           }
         \int_compare:nNnT { \l_@@_level_h_int } = { 1 }
@@ -9552,7 +9560,8 @@ all the worksheets are as follows:
     \bool_if:NF \l_@@_store_save_key_vii_bool
       {
         \tl_clear:N \l_@@_store_save_key_vii_tl
-        \tl_set:Ne \l_@@_store_save_key_vii_tl { \@@_filter_save_key:n {#1} }
+        \tl_set:Ne \l_@@_store_save_key_vii_tl
+          { \@@_filter_save_key:n {#1} }
       }
   }
 %    \end{macrocode}
@@ -9760,7 +9769,8 @@ all the worksheets are as follows:
               {
                 ]
               }
-            \@@_store_addto_seq:v { l_@@_store_save_key_ \@@_level: _tl }
+            \@@_store_addto_seq:v
+              { l_@@_store_save_key_ \@@_level: _tl }
           }
       }
   }
@@ -10126,7 +10136,8 @@ all the worksheets are as follows:
               }
           }
         \@@_print_keyans_box:cc
-          { l_@@_labelwidth_ \@@_level: _dim } { l_@@_mark_sym_sep_dim }
+          { l_@@_labelwidth_ \@@_level: _dim }
+          { l_@@_mark_sym_sep_dim }
       }
     \@@_anskey_wrapper:n {#1}
   }
@@ -10887,7 +10898,8 @@ all the worksheets are as follows:
       {
         \cs_set_protected:Nn \@@_tmp:n
           {
-            \tl_set_eq:cc { l_@@_label_copy_ ##1 _tl } { l_@@_label_ ##1 _tl }
+            \tl_set_eq:cc { l_@@_label_copy_ ##1 _tl }
+              { l_@@_label_ ##1 _tl }
             \tl_reverse:c { l_@@_label_copy_ ##1 _tl }
             \tl_remove_once:cn { l_@@_label_copy_ ##1 _tl } { . }
             \tl_reverse:c { l_@@_label_copy_ ##1 _tl }
@@ -10968,7 +10980,8 @@ all the worksheets are as follows:
           { \item \l_@@_label_vi_tl }
       }
       {
-        \tl_put_right:Ne \l_@@_store_current_label_tl { \item \l_@@_label_v_tl }
+        \tl_put_right:Ne \l_@@_store_current_label_tl
+          { \item \l_@@_label_v_tl }
       }
     \tl_if_novalue:nF {#1}
       {
@@ -11210,13 +11223,15 @@ all the worksheets are as follows:
             \bool_set_true:N \l_@@_item_number_bool
           }
         \bool_set_true:c { l_@@_wrap_label_ \@@_level: _bool }
-        \@@_item_std:w \tl_use:c { l_@@_fake_item_indent_ \@@_level: _tl }
+        \@@_item_std:w
+          \tl_use:c { l_@@_fake_item_indent_ \@@_level: _tl }
       }
       {
         \bool_set_eq:cc
           { l_@@_wrap_label_ \@@_level: _bool }
           { l_@@_wrap_label_opt_ \@@_level: _bool }
-        \@@_item_std:w [#1] \tl_use:c { l_@@_fake_item_indent_ \@@_level: _tl }
+        \@@_item_std:w [#1]
+          \tl_use:c { l_@@_fake_item_indent_ \@@_level: _tl }
       }
   }
 %    \end{macrocode}
@@ -11248,7 +11263,8 @@ all the worksheets are as follows:
     \tl_if_novalue:nTF {#1}
       {
         \tl_gset_eq:Nc
-          \g_@@_item_symbol_aux_tl { l_@@_item_symbol_ \@@_level: _tl }
+          \g_@@_item_symbol_aux_tl
+            { l_@@_item_symbol_ \@@_level: _tl }
       }
       {
         \tl_gset:Nn \g_@@_item_symbol_aux_tl {#1}
@@ -11268,7 +11284,8 @@ all the worksheets are as follows:
         \bool_set_true:N \l_@@_item_number_bool
       }
     \bool_set_true:c { l_@@_wrap_label_ \@@_level: _bool }
-    \@@_item_std:w \tl_use:c { l_@@_fake_item_indent_ \@@_level: _tl }
+    \@@_item_std:w
+      \tl_use:c { l_@@_fake_item_indent_ \@@_level: _tl }
   }
 %    \end{macrocode}
 %    The function \myhlc|\@@_item_starred_exec:| will be responsible for
@@ -12371,7 +12388,8 @@ all the worksheets are as follows:
       { \int_use:c { l_@@_columns_ \@@_level: _int } } > { 1 }
       {
         \dim_compare:nNnT
-          { \dim_use:c { l_@@_columns_sep_ \@@_level: _dim } } = { \c_zero_dim }
+          { \dim_use:c { l_@@_columns_sep_ \@@_level: _dim } }
+          = { \c_zero_dim }
           {
             \dim_set:cn { l_@@_columns_sep_ \@@_level: _dim }
               {
@@ -12430,7 +12448,8 @@ all the worksheets are as follows:
             \@@_mini_capture_multicols:
           }
           {
-            \addvspace{ \skip_use:c { l_@@_multicols_below_ \@@_level: _skip } }
+            \addvspace
+              { \skip_use:c { l_@@_multicols_below_ \@@_level: _skip } }
           }
       }
       {
@@ -12464,7 +12483,8 @@ all the worksheets are as follows:
 %   as \emph{maximum width} between them.
 %    \begin{macrocode}
     \dim_compare:nNnT
-      { \dim_use:c { l_@@_minipage_right_ \@@_level: _dim } } > { \c_zero_dim }
+      { \dim_use:c { l_@@_minipage_right_ \@@_level: _dim } }
+      > { \c_zero_dim }
       {
         \dim_set:cn { l_@@_minipage_left_ \@@_level: _dim }
           {
@@ -12488,7 +12508,8 @@ all the worksheets are as follows:
         \int_gincr:N \g_@@_minipage_stat_int
         \@@_minipage_add_space:
         \noindent
-        \@@_mini_page{ \dim_use:c { l_@@_minipage_left_ \@@_level: _dim } }
+        \@@_mini_page
+          { \dim_use:c { l_@@_minipage_left_ \@@_level: _dim } }
       }
     \@@_multicols_start:
   }
@@ -12685,7 +12706,9 @@ all the worksheets are as follows:
       {
         \dim_set:Nn \l_@@_minipage_left_v_dim
           {
-            \linewidth - \l_@@_minipage_right_v_dim - \l_@@_minipage_hsep_v_dim
+            \linewidth
+            - \l_@@_minipage_right_v_dim
+            - \l_@@_minipage_hsep_v_dim
           }
         \bool_set_true:N \l_@@_minipage_active_v_bool
         \int_gincr:N \g_@@_minipage_stat_int
@@ -13356,8 +13379,10 @@ all the worksheets are as follows:
 %    \begin{macrocode}
     \stepcounter { enumXv }
     \hbox_set:Nn \l_@@_anspic_label_box { \l_@@_label_v_tl }
-    \dim_set:Nn \l_@@_anspic_label_ht_dim { \box_ht:N \l_@@_anspic_label_box }
-    \dim_set:Nn \l_@@_anspic_label_dp_dim { \box_dp:N \l_@@_anspic_label_box }
+    \dim_set:Nn \l_@@_anspic_label_ht_dim
+      { \box_ht:N \l_@@_anspic_label_box }
+    \dim_set:Nn \l_@@_anspic_label_dp_dim
+      { \box_dp:N \l_@@_anspic_label_box }
     \dim_set:Nn \l_@@_anspic_label_htdp_dim
       {
         \l_@@_anspic_label_ht_dim + \l_@@_anspic_label_dp_dim
@@ -13383,7 +13408,8 @@ all the worksheets are as follows:
 %   \emph{\enquote{above}} and \emph{\enquote{below}} the environment are added by
 %   \myhlc|\@@_anspic_top_glue:| and \myhlc|\@@_anspic_bottom_glue:|.
 %    \begin{macrocode}
-    \dim_add:Nn \leftmargin { -\l_@@_labelwidth_v_dim - \l_@@_labelsep_v_dim }
+    \dim_add:Nn \leftmargin
+      { -\l_@@_labelwidth_v_dim - \l_@@_labelsep_v_dim }
     \ignorespaces
     \skip_zero:N \topsep
     \dim_zero:N  \listparindent
@@ -13962,7 +13988,8 @@ all the worksheets are as follows:
 \cs_new_protected:Nn \@@_starred_joined_item_vii:n
   {
     \int_set:Nn \l_@@_joined_item_vii_int {#1}
-    \int_compare:nNnT { \l_@@_joined_item_vii_int } > { \l_@@_columns_vii_int }
+    \int_compare:nNnT
+      { \l_@@_joined_item_vii_int } > { \l_@@_columns_vii_int }
       {
         \msg_warning:nnee { enumext } { item-joined }
           { \int_use:N \l_@@_joined_item_vii_int }
@@ -13990,7 +14017,8 @@ all the worksheets are as follows:
       }
     \int_compare:nNnTF { \l_@@_joined_item_vii_int } > { 1 }
       {
-        \int_set_eq:NN \l_@@_joined_item_aux_vii_int \l_@@_joined_item_vii_int
+        \int_set_eq:NN
+          \l_@@_joined_item_aux_vii_int \l_@@_joined_item_vii_int
         \int_decr:N \l_@@_joined_item_aux_vii_int
         \int_add:Nn \l_@@_item_column_pos_vii_int
           { \l_@@_joined_item_aux_vii_int }
@@ -14046,7 +14074,8 @@ all the worksheets are as follows:
       }
     \int_compare:nNnTF { \l_@@_joined_item_viii_int } > { 1 }
       {
-        \int_set_eq:NN \l_@@_joined_item_aux_viii_int \l_@@_joined_item_viii_int
+        \int_set_eq:NN
+          \l_@@_joined_item_aux_viii_int \l_@@_joined_item_viii_int
         \int_decr:N \l_@@_joined_item_aux_viii_int
         \int_add:Nn \l_@@_item_column_pos_viii_int
           { \l_@@_joined_item_aux_viii_int }
@@ -14536,7 +14565,8 @@ all the worksheets are as follows:
     \bool_set_false:N \l_@@_item_starred_vii_bool
     \peek_meaning:NTF [
       {
-        \bool_set_eq:NN \l_@@_wrap_label_vii_bool \l_@@_wrap_label_opt_vii_bool
+        \bool_set_eq:NN
+          \l_@@_wrap_label_vii_bool \l_@@_wrap_label_opt_vii_bool
         \@@_start_item_vii:w
       }
       {
