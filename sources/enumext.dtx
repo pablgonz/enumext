@@ -4782,9 +4782,9 @@ all the worksheets are as follows:
 %   \g_@@_minipage_center_X_bool,
 %   \g_@@_minipage_right_X_dim,
 % }
-%   Internal variables used by \myenv*[no-index]{enumext*} and \myenv*[no-index]{keyans*} environments.
-%   The boolean \myhlc|\l_@@_item_break_X_bool| is set by the key
-%   \mykey[env]{item-break} (\S\ref{subsec:set-item-break}).
+%   Internal variables used by \myenv*[no-index]{enumext*} and \myenv*[no-index]{keyans*}
+%   environments. The key \mykey[env]{item-break} (\S\ref{subsec:set-item-break}) sets the boolean
+%   \myhlc|\l_@@_item_break_X_bool|.
 %    \begin{macrocode}
 \cs_set_protected:Nn \@@_tmp:n
   {
@@ -4823,11 +4823,11 @@ all the worksheets are as follows:
 %   list} where the content is stored. The variable \myhlc|\g_@@_store_name_tl|
 %   is just a global copy of \mymarg{store name} used by different functions.
 %
-%   The variables \myhlc|\l_@@_store_current_label_tl| and
-%   \myhlc|\l_@@_store_current_opt_arg_tl| save the \emph{current label} and
-%   \emph{optional argument} of \ics*{item*} (\S\ref{cmd:item-keyans}) and \ics*{anspic*}
-%   (\S\ref{cmd:anspic}) for the \myenv*[no-index]{keyans}, \myenv*[no-index]{keyans*} and
-%   \myenv*[no-index]{keyanspic} environments.
+%   The \emph{current label} and \emph{optional argument} of \ics*{item*} (\S\ref{cmd:item-keyans})
+%   and \ics*{anspic*} (\S\ref{cmd:anspic}) are saved in the variables
+%   \myhlc|\l_@@_store_current_label_tl| and \myhlc|\l_@@_store_current_opt_arg_tl| for the
+%   \myenv*[no-index]{keyans}, \myenv*[no-index]{keyans*} and \myenv*[no-index]{keyanspic}
+%   environments.
 %    \begin{macrocode}
 \bool_new:N \l_@@_store_active_bool
 \tl_new:N   \l_@@_store_name_tl
@@ -5213,9 +5213,8 @@ all the worksheets are as follows:
 %
 % \begin{macro}[int]{\@@_reset_global_vars:, \@@_reset_global_int:,
 %                    \@@_reset_global_bool:, \@@_reset_global_tl:}
-%   The function \myhlc|\@@_reset_global_vars:| will be passed to the function
-%   \myhlc|\@@_execute_after_env:| and will return the global variables to
-%   their default values after being used.
+%   The function \myhlc|\@@_reset_global_vars:| will be passed to \myhlc|\@@_execute_after_env:| and
+%   will return the global variables to their default values after being used.
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_reset_global_vars:
   {
@@ -5245,11 +5244,10 @@ all the worksheets are as follows:
 % \end{macro}
 %
 % \begin{macro}[int]{\@@_log_global_vars:, \@@_log_answer_vars:}
-%   The function \myhlc|\@@_log_global_vars:| will be passed to the function
-%   \myhlc|\@@_execute_after_env:| and write to the |.log| file the number of
-%   elements saved in the \emph{prop list} and \emph{sequence} created by the
-%   \mykey[env]{save-ans} key along with the value of the integer variable
-%   created for the \mykey[env]{resume} key.
+%   The function \myhlc|\@@_log_global_vars:| will be passed to \myhlc|\@@_execute_after_env:| and
+%   write to the |.log| file the number of elements saved in the \emph{prop list} and
+%   \emph{sequence} created by the \mykey[env]{save-ans} key along with the value of the integer
+%   variable created for the \mykey[env]{resume} key.
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_log_global_vars:
   {
@@ -5260,9 +5258,8 @@ all the worksheets are as follows:
       { \int_use:c { g_@@_resume_ \g_@@_store_name_tl _int } }
   }
 %    \end{macrocode}
-%   The function \myhlc|\@@_log_answer_vars:| will be passed to the function
-%   \myhlc|\@@_execute_after_env:| and write to the |.log| file the number
-%   of items and answers along with the difference between them.
+%   The function \myhlc|\@@_log_answer_vars:| will be passed to \myhlc|\@@_execute_after_env:| and
+%   write to the |.log| file the number of items and answers along with the difference between them.
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_log_answer_vars:
   {
@@ -5350,9 +5347,8 @@ all the worksheets are as follows:
 \hook_gput_code:nnn { begindocument } { enumext } { \@@_after_hyperref: }
 \hook_gset_rule:nnnn { begindocument } { enumext } { after } { hyperref }
 %    \end{macrocode}
-%   The function \myhlc|\@@_after_hyperref:| sets the state of the boolean
-%   variable \myhlc|\l_@@_hyperref_bool| to |true| if the package is
-%   loaded. The public macro |\IfHyperBoolean| determines if the
+%   The function \myhlc|\@@_after_hyperref:| sets the boolean variable \myhlc|\l_@@_hyperref_bool|
+%   to |true| if the package is loaded. The public macro |\IfHyperBoolean| determines if the
 %   |hyperfootnotes=true| key is present, and if so, the boolean variable
 %   \myhlc|\l_@@_footnotes_key_bool| is set to |true|.
 %    \begin{macrocode}
@@ -6666,15 +6662,14 @@ all the worksheets are as follows:
           }
       }
 %    \end{macrocode}
-%   When the |\printkeyans| command is run with the \emph{starred
-%   argument} `|*|' the variable \myhlc|\l_@@_print_keyans_star_bool| is true
-%   the negative space is added with \myhlc|\skip_vertical:n|, the \mypkg*[no-index]{expl3}
-%   interface of \myhlc|\vskip|, instead of |\vspace|. After \myhlc|\mode_leave_vertical:|
-%   \hologo{TeX} is in \mymeta{horizontal mode}, where |\vspace| would only store
-%   the skip in a \myhlc|\vadjust| to be applied after the current line, whereas \myhlc|\vskip|
-%   ends the (still empty) paragraph and applies the skip immediately.
-%   The skip is followed by \myhlc|\skip_vertical:N \c_zero_skip| so that the
-%   negative space is not the last item of the vertical list.
+%   When the |\printkeyans| command is run with the \emph{starred argument} `|*|' the variable is
+%   true (\myhlc|\l_@@_print_keyans_star_bool|), and the negative space is added with
+%   \myhlc|\skip_vertical:n|, the \mypkg*[no-index]{expl3} interface of \myhlc|\vskip|, instead of
+%   |\vspace|. After \myhlc|\mode_leave_vertical:| \hologo{TeX} is in \mymeta{horizontal mode},
+%   where |\vspace| would only store the skip in a \myhlc|\vadjust| to be applied after the current
+%   line, whereas \myhlc|\vskip| ends the (still empty) paragraph and applies the skip immediately.
+%   The skip is followed by \myhlc|\skip_vertical:N \c_zero_skip| so that the negative space is not
+%   the last item of the vertical list.
 %    \begin{macrocode}
     \bool_lazy_and:nnT
       { \bool_if_p:N \l_@@_starred_first_bool }
@@ -7123,8 +7118,8 @@ all the worksheets are as follows:
 %    in \mymeta{horizontal mode}, then the settings for the
 %    \mymeta{vertical mode}, in which |\partopsep| comes into play, are made.
 %
-%    Set the values of \myhlc|\l_@@_multicols_above_X_skip| and \myhlc|\l_@@_multicols_below_X_skip|
-%    equal to the value of |\topsep| in the \emph{current level}.
+%   Set \myhlc|\l_@@_multicols_above_X_skip| and \myhlc|\l_@@_multicols_below_X_skip| equal to the
+%   value of |\topsep| in the \emph{current level}.
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_multi_set_vskip:
   {
@@ -7142,10 +7137,9 @@ all the worksheets are as follows:
 % \end{macro}
 %
 % \begin{macro}[int]{\@@_add_pre_parsep:}
-%    The function \myhlc|\@@_add_pre_parsep:| \emph{\enquote{adjusts}} the value
-%    of \myhlc|\l_@@_multicols_above_X_skip| detecting the value of
-%    |\parsep| from the previous level. This is necessary since
-%    |\parsep| from the previous level affects the \emph{vertical spaces}.
+%   Since |\parsep| in the previous level affects the \emph{vertical spaces}, the function
+%   \myhlc|\@@_add_pre_parsep:| detects its value and \emph{\enquote{adjusts}}
+%   \myhlc|\l_@@_multicols_above_X_skip|.
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_add_pre_parsep:
   {
@@ -7341,17 +7335,15 @@ all the worksheets are as follows:
 %   \g_@@_mini_end_bool,
 % }
 %   Internal variables used by the keys \mykey{mini-env} and \mykey{mini-sep}
-%   (\S\ref{subsec:vspace-minipage}). The variable \myhlc|\l_@@_minipage_right_skip|
-%   holds the space applied \emph{\enquote{above}} the \myhlc|\@@_mini_page|
-%   environment on the \emph{\enquote{right side}} and \emph{\enquote{below}}
-%   the \myenv[no-index]{multicols} environment. The variables
-%   \myhlc|\l_@@_mini_prev_dim|, \myhlc|\l_@@_mini_gap_dim| and
-%   \myhlc|\l_@@_mini_last_box| are used to compute the space
+%   (\S\ref{subsec:vspace-minipage}). The space applied \emph{\enquote{above}} the
+%   \myhlc|\@@_mini_page| environment on the \emph{\enquote{right side}} and \emph{\enquote{below}}
+%   the \myenv[no-index]{multicols} environment is held by the skip
+%   \myhlc|\l_@@_minipage_right_skip|. The variables \myhlc|\l_@@_mini_prev_dim|,
+%   \myhlc|\l_@@_mini_gap_dim| and \myhlc|\l_@@_mini_last_box| are used to compute the space
 %   \emph{\enquote{above}} and to recover the last box of the \myenv[no-index]{multicols}
-%   environment. The variables \myhlc|\g_@@_mini_dp_dim| and
-%   \myhlc|\g_@@_mini_end_skip| store the depth of the last line and the
-%   space \emph{\enquote{below}}, while \myhlc|\g_@@_mini_end_bool| indicates
-%   that both are pending to be applied.
+%   environment. The variables \myhlc|\g_@@_mini_dp_dim| and \myhlc|\g_@@_mini_end_skip| store the
+%   depth of the last line and the space \emph{\enquote{below}}, and the boolean
+%   \myhlc|\g_@@_mini_end_bool| indicates that both are pending to be applied.
 %    \begin{macrocode}
 \skip_new:N \l_@@_minipage_right_skip
 \dim_new:N  \l_@@_mini_prev_dim
@@ -7513,7 +7505,7 @@ all the worksheets are as follows:
           }
       }
 %    \end{macrocode}
-%   Sets the value of \myhlc|\l_@@_multicols_above_X_skip| equal to
+%   Sets the value of the variable \myhlc|\l_@@_multicols_above_X_skip| equal to the value of
 %   \myhlc|\l_@@_minipage_right_skip|.
 %    \begin{macrocode}
     \skip_set_eq:cN
@@ -9129,12 +9121,11 @@ all the worksheets are as follows:
 % \subsubsection{Set-up check answer mechanism}\label{subsubsec:set-check-answer}
 %
 % \begin{macro}[int]{\@@_check_ans_active:, \@@_check_ans_level:}
-%   The function \myhlc|\@@_check_ans_active:| will first check the state of
-%   the variable \myhlc|\l_@@_store_name_tl|, that is, the \mykey[env]{save-ans} key
-%   is active, if so it will check the state of the variable
-%   \myhlc|\l_@@_check_answers_bool| handled by the key \mykey[env]{no-store} and
-%   will execute the function \myhlc|\@@_check_ans_level:| only if
-%   |true|, i.e. the key \mykey{no-store} is not active.
+%   The function \myhlc|\@@_check_ans_active:| first checks if the key \mykey[env]{save-ans} is
+%   active, that is, if the variable \myhlc|\l_@@_store_name_tl| is not empty. If so, it checks the
+%   state of the variable \myhlc|\l_@@_check_answers_bool|, handled by the key
+%   \mykey[env]{no-store}. Only if it is |true|, i.e. the key \mykey{no-store} is not active, it
+%   executes the function \myhlc|\@@_check_ans_level:|.
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_check_ans_active:
   {
@@ -9234,12 +9225,10 @@ all the worksheets are as follows:
 % \end{macro}
 %
 % \begin{macro}[int]{\@@_item_answer_diff:}
-%   The function \myhlc|\@@_item_answer_diff:| will set the value of the
-%   variable \myhlc|\g_@@_item_answer_diff_int| which is used by the functions
-%   \myhlc|\@@_check_ans_show:| for the key \mykey[env]{save-ans} and by the
-%   function \myhlc|\@@_check_ans_log:| by the internal \emph{\enquote{check answer}}
-%   mechanism. This function will be passed to the function
-%   \myhlc|\@@_execute_after_env:|.
+%   The function \myhlc|\@@_item_answer_diff:| will be passed to \myhlc|\@@_execute_after_env:| and
+%   sets the value of the integer \myhlc|\g_@@_item_answer_diff_int|. This value is used by the
+%   function \myhlc|\@@_check_ans_show:| for the key \mykey[env]{save-ans} and by
+%   \myhlc|\@@_check_ans_log:| for the internal \emph{\enquote{check answer}} mechanism.
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_item_answer_diff:
   {
@@ -9253,11 +9242,10 @@ all the worksheets are as follows:
 %
 % \begin{macro}[int]{\@@_check_ans_show:, \@@_check_ans_msg_less:,
 %                    \@@_check_ans_msg_same_ok:, \@@_check_ans_msg_greater:}
-%   The function \myhlc|\@@_check_ans_show:| will be executed within the
-%   function \myhlc|\@@_execute_after_env:| when the key \mykey[env]{check-ans} is
-%   active, that is, when \myhlc|\g_@@_check_ans_key_bool| is |true|
-%   and will return the appropriate message according to the value of
-%   \myhlc|\g_@@_item_answer_diff_int| set by the function \myhlc|\@@_item_answer_diff:|.
+%   The function \myhlc|\@@_check_ans_show:| will be executed within \myhlc|\@@_execute_after_env:|
+%   when the key \mykey[env]{check-ans} is active, that is, when \myhlc|\g_@@_check_ans_key_bool| is
+%   |true|, and will return the appropriate message according to the value of
+%   \myhlc|\g_@@_item_answer_diff_int| set by \myhlc|\@@_item_answer_diff:|.
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_check_ans_show:
   {
@@ -9288,11 +9276,10 @@ all the worksheets are as follows:
 % \end{macro}
 % \begin{macro}[int]{\@@_check_ans_log:, \@@_check_ans_log_msg_less:,
 %                    \@@_check_ans_log_msg_same_ok:, \@@_check_ans_log_msg_greater:}
-%   The function \myhlc|\@@_check_ans_log:| will be executed within the
-%   function \myhlc|\@@_execute_after_env:| when the key \mykey[env]{check-ans} is
-%   not active, that is, when \myhlc|\g_@@_check_ans_key_bool| is |false|
-%   and write in the log the appropriate message according to the value of
-%   \myhlc|\g_@@_item_answer_diff_int| set by the function
+%   The function \myhlc|\@@_check_ans_log:| will be executed within \myhlc|\@@_execute_after_env:|
+%   when the key \mykey[env]{check-ans} is not active, that is, when
+%   \myhlc|\g_@@_check_ans_key_bool| is |false|, and will write in the log the appropriate message
+%   according to the value of \myhlc|\g_@@_item_answer_diff_int| set by
 %   \myhlc|\@@_item_answer_diff:|.
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_check_ans_log:
@@ -9827,11 +9814,9 @@ all the worksheets are as follows:
 % \subsubsection{Function for show marks and position}
 %
 % \begin{macro}[int]{\@@_print_keyans_box:NN, \@@_print_keyans_box:cc}
-%   The function \myhlc|\@@_print_keyans_box:NN| prints a box in the left
-%   margin with \myhlc|\l_@@_mark_answer_sym_tl| used by the \mykey[env]{wrap-ans},
-%   \mykey[env]{show-ans} and \mykey[env]{show-pos} keys. The function takes two
-%   arguments:
-%
+%   The function \myhlc|\@@_print_keyans_box:NN| prints a box in the left margin with the content of
+%   \myhlc|\l_@@_mark_answer_sym_tl|, used by the \mykey[env]{wrap-ans}, \mykey[env]{show-ans} and
+%   \mykey[env]{show-pos} keys. The function takes two arguments:
 % \begin{arguments}
 %   \item \myhlc|\l_@@_labelwidth_X_dim|
 %   \item \myhlc|\l_@@_labelsep_X_dim|
@@ -10060,8 +10045,8 @@ all the worksheets are as follows:
       }
 %    \end{macrocode}
 %   Then the keys \mykey[anskey,anskey*]{item-star}, \mykey[anskey,anskey*]{item-sym*} and
-%   \mykey[anskey,anskey*]{item-pos*} are reviewed and passed to \myhlc|\l_@@_store_anskey_arg_tl|
-%   along with the \mymarg{argument} for |\anskey| or \mymeta{body} for \myenv*[no-index]{anskey*}.
+%   \mykey[anskey,anskey*]{item-pos*} are reviewed and passed, along with the \mymarg{argument} for
+%   |\anskey| or \mymeta{body} for \myenv*[no-index]{anskey*}, to \myhlc|\l_@@_store_anskey_arg_tl|.
 %    \begin{macrocode}
     \bool_if:NTF \l_@@_store_item_star_bool
       {
@@ -10423,9 +10408,9 @@ all the worksheets are as follows:
 %   The variable \myhlc|\l_@@_store_anskey_env_tl| saves the \mymeta{body}
 %   of the environment \myenv*[no-index]{anskey*} (\S\ref{env:anskey}).
 %
-%   The variables \myhlc|\l_@@_write_anskey_env_bool|, \myhlc|\l_@@_write_anskey_env_file_name_tl|
-%   and \myhlc|\l_@@_write_anskey_env_file_iow| are used by the \mykey{write-env}
-%   and \mykey{overwrite} keys in the \myenv*[no-index]{anskey*} environment implementation.
+%   In the implementation of the \myenv*[no-index]{anskey*} environment, the keys \mykey{write-env}
+%   and \mykey{overwrite} use the variables \myhlc|\l_@@_write_anskey_env_bool|,
+%   \myhlc|\l_@@_write_anskey_env_file_name_tl| and \myhlc|\l_@@_write_anskey_env_file_iow|.
 %    \begin{macrocode}
 \tl_new:N   \l_@@_store_anskey_env_tl
 \bool_new:N \l_@@_write_anskey_env_bool
@@ -10909,11 +10894,10 @@ all the worksheets are as follows:
       }
   }
 %    \end{macrocode}
-%   The auxiliary function \myhlc|\@@_keyans_store_ref_aux_i:| sets the
-%   variable \myhlc|\l_@@_newlabel_arg_one_tl| which will contain
-%   \mymarg{store name \textcolor{red}{:} position} analyzing whether
-%   the environment in which they are executed is \myenv*[no-index]{enumext*} or
-%   \myenv*[no-index]{enumext}.
+%   The auxiliary function \myhlc|\@@_keyans_store_ref_aux_i:| analyzes whether the environment in
+%   which it is executed is \myenv*[no-index]{enumext*} or \myenv*[no-index]{enumext} and sets the
+%   variable \myhlc|\l_@@_newlabel_arg_one_tl|, which will contain \mymarg{store name
+%   \textcolor{red}{:} position}.
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_keyans_store_ref_aux_i:
   {
@@ -11860,8 +11844,8 @@ all the worksheets are as follows:
 % \subsubsection{Definition of variables}
 %
 % \begin{variable}[int]{\l_@@_itemindent_X_dim}
-%   The dimension \myhlc|\l_@@_itemindent_X_dim| is set by the function
-%   \myhlc|\@@_calc_hspace:NNNNNNN| (\S\ref{subsubsec:leftmargin}).
+%   The function \myhlc|\@@_calc_hspace:NNNNNNN| sets the dimension \myhlc|\l_@@_itemindent_X_dim|
+%   (\S\ref{subsubsec:leftmargin}).
 %    \begin{macrocode}
 \cs_set_protected:Nn \@@_tmp:n
   {
@@ -12254,15 +12238,13 @@ all the worksheets are as follows:
 % \subsubsection{Internal functions for \env{enumext}}
 %
 % \begin{macro}[int]{\@@_safe_exec:}\label{fun:safe-exec-enumext}
-%   The \myhlc|\@@_safe_exec:| function first calls the function \myhlc|\@@_is_not_nested:|
-%   which sets \myhlc|\g_@@_standard_bool| to |true| if it
-%   is NOT nested within \myenv*[no-index]{enumext*}, then calls the function
-%   \myhlc|\@@_internal_mini_page:| to create the environment \myhlc|\@@_mini_page|,
-%   increments \myhlc|\l_@@_level_int| to restrict nesting of the
-%   environment, sets \myhlc|\l_@@_standard_bool| to |true| and
-%   finally calls the function \myhlc|\@@_is_on_first_level:| which sets
-%   \myhlc|\l_@@_standard_first_bool| to |true| only if the
-%   environment is NOT nested and is at the \emph{\enquote{first level}}.
+%   The \myhlc|\@@_safe_exec:| function first calls the function \myhlc|\@@_is_not_nested:|, which
+%   sets \myhlc|\g_@@_standard_bool| to |true| if it is NOT nested within
+%   \myenv*[no-index]{enumext*}. Then it calls the function \myhlc|\@@_internal_mini_page:| to
+%   create the environment \myhlc|\@@_mini_page|, increments \myhlc|\l_@@_level_int| to restrict
+%   nesting of the environment and sets \myhlc|\l_@@_standard_bool| to |true|. Finally it calls the
+%   function \myhlc|\@@_is_on_first_level:|, and only if the environment is NOT nested and is at the
+%   \emph{\enquote{first level}} it sets \myhlc|\l_@@_standard_first_bool| to |true|.
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_safe_exec:
   {
@@ -12517,13 +12499,11 @@ all the worksheets are as follows:
 % \end{macro}
 %
 % \begin{macro}[int]{\@@_second_part:}
-%   The function \myhlc|\@@_second_part:| first checks the state of
-%   the boolean variable \myhlc|\l_@@_minipage_active_X_bool|; if it is
-%   |true|, a small test is executed to check if the use of
-%   |\miniright| was omitted (the \myhlc|\@@_mini_page|
-%   environment has not been closed), then it closes \myhlc|\@@_mini_page|
-%   and adds the stored \emph{adjusted vertical space} using \myhlc|\@@_mini_apply_end:|,
-%   otherwise it closes the \myenv[no-index]{multicols} environment.
+%   First of all, the function \myhlc|\@@_second_part:| will check the state of the boolean variable
+%   \myhlc|\l_@@_minipage_active_X_bool|. If it is |true|, a small test is executed to check if
+%   |\miniright| was omitted (the \myhlc|\@@_mini_page| environment has not been closed). Then it
+%   closes \myhlc|\@@_mini_page| and adds the stored \emph{adjusted vertical space} using
+%   \myhlc|\@@_mini_apply_end:|. Otherwise it closes the \myenv[no-index]{multicols} environment.
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_second_part:
   {
@@ -12543,12 +12523,11 @@ all the worksheets are as follows:
         \@@_multicols_stop:
       }
 %    \end{macrocode}
-%   Now the functions \myhlc|\@@_after_stop_list:| used by
-%   the key \mykey[env,foreachkeyans]{after}, \myhlc|\@@_check_ans_key_hook:| used by the key
-%   \mykey[env]{check-ans}, and \myhlc|\@@_vspace_below:| used by the keys \mykey[env]{below}
-%   and \mykey[env]{below*} are executed. Finally it sets \myhlc|\l_@@_standard_bool| to false and calls
-%   the function \myhlc|\@@_standard_save_counter:| used by the \mykey[env]{series},
-%   \mykey[env]{resume} and \mykey[env]{resume*} keys.
+%   Now the functions \myhlc|\@@_after_stop_list:| (key \mykey[env,foreachkeyans]{after}),
+%   \myhlc|\@@_check_ans_key_hook:| (key \mykey[env]{check-ans}) and \myhlc|\@@_vspace_below:| (keys
+%   \mykey[env]{below} and \mykey[env]{below*}) are executed. Finally it sets
+%   \myhlc|\l_@@_standard_bool| to false and calls the function \myhlc|\@@_standard_save_counter:|,
+%   used by the \mykey[env]{series}, \mykey[env]{resume} and \mykey[env]{resume*} keys.
 %    \begin{macrocode}
     \@@_after_stop_list:
     \@@_check_ans_key_hook:
@@ -13572,10 +13551,9 @@ all the worksheets are as follows:
 %                    \@@_anspic_label_pos:nnn, \@@_anspic_args:nnn,
 %                    \@@_anspic_print:n, \@@_anspic_print:e,
 %                    \@@_anspic_print:V, \@@_anspic_row:n, \@@_anspic_exec:}
-%   The \myhlc|\@@_anspic_body_dim:n| function will set the value of
-%   \myhlc|\l_@@_anspic_body_htdp_dim| equal to the \enquote{height plus depth}
-%   of the \emph{mandatory argument} if the key \mykey[env]{label-pos} is set
-%   \enquote{below}.
+%   If the key \mykey[env]{label-pos} is set \enquote{below}, the \myhlc|\@@_anspic_body_dim:n|
+%   function will set the value of \myhlc|\l_@@_anspic_body_htdp_dim| equal to the \enquote{height
+%   plus depth} of the \emph{mandatory argument}.
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_anspic_body_dim:n
   {
@@ -13854,13 +13832,11 @@ all the worksheets are as follows:
 %   \l_@@_miniright_code_X_box,
 % }
 %   Internal variables used by \myenv*[no-index]{enumext*} and \myenv*[no-index]{keyans*}
-%   environments. The integers \myhlc|\l_@@_joined_item_X_int|,
-%   \myhlc|\l_@@_joined_item_aux_X_int| and \myhlc|\l_@@_tmpa_X_int| and the dimension
-%   \myhlc|\l_@@_item_width_X_dim| are used by the functions that calculate the
-%   item box width and join the item columns. The variables
-%   \myhlc|\g_@@_minipage_active_X_bool| and \myhlc|\l_@@_miniright_code_X_box|
-%   are used by the \mykey{mini-env}, \mykey{mini-right} and \mykey{mini-right*} keys
-%   (\S\ref{subsubsec:mini-env}).
+%   environments. The functions that calculate the item box width and join the item columns use the
+%   integers \myhlc|\l_@@_joined_item_X_int| and \myhlc|\l_@@_joined_item_aux_X_int|, the integer
+%   \myhlc|\l_@@_tmpa_X_int| and the dimension \myhlc|\l_@@_item_width_X_dim|. The keys
+%   \mykey{mini-env}, \mykey{mini-right} and \mykey{mini-right*} (\S\ref{subsubsec:mini-env}) use
+%   the boolean \myhlc|\g_@@_minipage_active_X_bool| and the box \myhlc|\l_@@_miniright_code_X_box|.
 %    \begin{macrocode}
 \cs_set_protected:Nn \@@_tmp:n
   {
@@ -13980,10 +13956,10 @@ all the worksheets are as follows:
 % \subsubsection{Functions for join item columns}
 %
 % \begin{macro}[int]{\@@_starred_joined_item_vii:n, \@@_starred_joined_item_viii:n}
-%   The functions \myhlc|\@@_starred_joined_item_vii:n| and \myhlc|\@@_starred_joined_item_viii:n|
-%   will set the \emph{width} of the box in which the \mymeta{content}
-%   passed to |\item|\myparg{columns} will be stored together with
-%   the value of |\itemwidth| for the \myenv*[no-index]{enumext*} environment.
+%   The \emph{width} of the box in which the \mymeta{content} passed to |\item|\myparg{columns} will
+%   be stored, together with the value of |\itemwidth| for the \myenv*[no-index]{enumext*}
+%   environment, is set by the functions \myhlc|\@@_starred_joined_item_vii:n| and
+%   \myhlc|\@@_starred_joined_item_viii:n|.
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_starred_joined_item_vii:n
   {
@@ -14533,12 +14509,10 @@ all the worksheets are as follows:
       { \@@_joined_item_vii:w (1) }
   }
 %    \end{macrocode}
-%    The function \myhlc|\@@_joined_item_vii:w| will first call the
-%    function \myhlc|\@@_starred_joined_item_vii:n| in charge of setting the
-%    \emph{width} of the box that stores the content passed to |\item|. Then it
-%    looks for the argument \enquote{\textcolor{star}{\ttfamily *}}; if it is present, it calls the
-%    function \myhlc|\@@_starred_item_vii:w|, otherwise it calls the
-%    function \myhlc|\@@_standard_item_vii:w|.
+%   The function \myhlc|\@@_joined_item_vii:w| first sets the \emph{width} of the box that stores
+%   the content passed to |\item| by calling \myhlc|\@@_starred_joined_item_vii:n|. Then it looks
+%   for the argument \enquote{\textcolor{star}{\ttfamily *}}; if it is present, it calls
+%   \myhlc|\@@_starred_item_vii:w|, otherwise \myhlc|\@@_standard_item_vii:w|.
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_joined_item_vii:w (#1)
   {
@@ -14820,7 +14794,7 @@ all the worksheets are as follows:
 %   \mykey[env]{columns} after the adjustments of
 %   \myhlc|\@@_starred_joined_item_vii:n|, it calls
 %   \myhlc|\@@_start_item_break_vii:n| (\S\ref{subsec:item-break-impl}),
-%   otherwise it calls \myhlc|\@@_start_item_box_vii:w|, described next.
+%   otherwise \myhlc|\@@_start_item_box_vii:w|, described next.
 %
 %   In \myhlc|\@@_start_item_box_vii:w| first the value of \myhlc|\@@_stop_item_tmp_vii:| is set equal to
 %   \myhlc|\@@_stop_item_vii:|, which is defined later; after that it
@@ -15222,12 +15196,10 @@ all the worksheets are as follows:
       { \@@_joined_item_viii:w (1) }
   }
 %    \end{macrocode}
-%   The function \myhlc|\@@_joined_item_viii:w| will first call the
-%   function \myhlc|\@@_starred_joined_item_viii:n| in charge of setting the
-%   \emph{width} of the box that stores the content passed to |\item|. Then it
-%   looks for the argument \enquote{\textcolor{star}{\ttfamily *}}; if it is present, it calls the
-%   function \myhlc|\@@_starred_item_viii:w|, otherwise it calls the
-%   function \myhlc|\@@_standard_item_viii:w|.
+%   The function \myhlc|\@@_joined_item_viii:w| first sets the \emph{width} of the box that stores
+%   the content passed to |\item| by calling \myhlc|\@@_starred_joined_item_viii:n|. Then it looks
+%   for the argument \enquote{\textcolor{star}{\ttfamily *}}; if it is present, it calls
+%   \myhlc|\@@_starred_item_viii:w|, otherwise \myhlc|\@@_standard_item_viii:w|.
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_joined_item_viii:w (#1)
   {
@@ -15481,10 +15453,9 @@ all the worksheets are as follows:
 % \end{macro}
 %
 % \begin{macro}[int]{\@@_start_item_break_viii:n, \@@_stop_item_break_viii:}
-%   Same implementation as \myhlc|\@@_start_item_break_vii:n| and
-%   \myhlc|\@@_stop_item_break_vii:| for the \myenv*[no-index]{keyans*} environment.
-%   The item option shown by \myhlc|\item*| is placed at the beginning of the
-%   \mymeta{content}.
+%   For the \myenv*[no-index]{keyans*} environment the implementation is the same as
+%   \myhlc|\@@_start_item_break_vii:n| and \myhlc|\@@_stop_item_break_vii:|. The item option shown
+%   by \myhlc|\item*| is placed at the beginning of the \mymeta{content}.
 %    \begin{macrocode}
 \cs_new_protected_nopar:Nn \@@_start_item_break_viii:n
   {
@@ -15811,12 +15782,11 @@ all the worksheets are as follows:
       }
   }
 %    \end{macrocode}
-%   The function \myhlc|\@@_default_save_env:nn| saves all the variables of
-%   \myhlc|\c_@@_default_vars_clist| for one environment, together with the
-%   function of the \mykey[env]{wrap-label} key. The function
-%   \myhlc|\@@_default_restore_env:nn| restores them and runs the
-%   \mykey[env]{label} key with the saved \mymeta{label}, since this key also
-%   defines the counter style and the width of the label.
+%   The function \myhlc|\@@_default_save_env:nn| saves, for one environment, all the variables of
+%   \myhlc|\c_@@_default_vars_clist| together with the function of the \mykey[env]{wrap-label} key.
+%   The function \myhlc|\@@_default_restore_env:nn| restores them and runs the \mykey[env]{label}
+%   key with the saved \mymeta{label}, since this key also defines the counter style and the width
+%   of the label.
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_default_save_env:nn
   {
