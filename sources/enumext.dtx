@@ -566,7 +566,7 @@
                     removelastskip, subsection, list, endlist, leftmargin, itemindent, bfseries, endminipage,%
                     minipage, parskip, raisebox, strut, smash, labelwidth, labelsep, labelindent, label,%
                     topsep, parsep, includegraphics, itemize, description, multicolsep, leftmargini,%
-                    leftmarginii, hfill, small, vspace, par, parbox, value, noindent, makebox, textcolor,%
+                    leftmarginii, hfill, small, vspace, par, parbox, value, noindent, leavevmode, makebox, textcolor,%
                     leftmarginiii, leftmarginiv, itemsep, strutbox, raggedright, cs_new_eq, fbox, addvspace,%
                     Alph, alph, arabic, Roman, roman, partopsep, baselineskip, mode_leave_vertical, textborn,%
                     textbullet, textendash, textasteriskcentered, textperiodcentered, raggedleft,%
@@ -831,8 +831,8 @@
   {%
     \SuspendTagging{\parbox}%
     \IfBooleanTF{#1}
-      {\strut\smash{\parbox[t]{\labelwidth}{\noindent\raggedright{#2}}}}%
-      {\strut\smash{\parbox[t]{\labelwidth}{\noindent\raggedleft{#2}}}}%
+      {\strut\smash{\parbox[t]{\labelwidth}{\leavevmode\raggedright{#2}}}}%
+      {\strut\smash{\parbox[t]{\labelwidth}{\leavevmode\raggedleft{#2}}}}%
     \ResumeTagging{\parbox}%
   }
 % For azetina sample
@@ -4080,8 +4080,8 @@ all the worksheets are as follows:
   {%
     \SuspendTagging{\parbox}%
     \IfBooleanTF{#1}
-      {\strut\smash{\parbox[t]{\labelwidth}{\noindent\raggedright{#2}}}}%
-      {\strut\smash{\parbox[t]{\labelwidth}{\noindent\raggedleft{#2}}}}%
+      {\strut\smash{\parbox[t]{\labelwidth}{\leavevmode\raggedright{#2}}}}%
+      {\strut\smash{\parbox[t]{\labelwidth}{\leavevmode\raggedleft{#2}}}}%
     \ResumeTagging{\parbox}%
   }
 \end{examplecode}
@@ -11366,10 +11366,10 @@ all the worksheets are as follows:
 %  The label is not smashed, so a tall label (an image, a duck
 %  drawn with \texttt{tikz}, \ldots) still increases the height of the line as it does with
 %  the standard |\makelabel|. A multi-line label made with |\parbox[t]| needs
-%  |\noindent| at the start of the paragraph (see |\labelbx| in
-%  \S\ref{subsec:description-multiline}), otherwise the \emph{tagged}
-%  \texttt{PDF} code puts material before the first line and the baseline
-%  is lost.
+%  |\leavevmode| at the start of the paragraph (see |\labelbx| in
+%  \S\ref{subsec:description-multiline}), otherwise the box starts in
+%  \emph{vertical mode} and the baseline is lost, with or without \emph{tagged}
+%  \texttt{PDF}.
 % \end{important}
 %
 %    \begin{macrocode}

@@ -23,8 +23,8 @@
   {%
     \SuspendTagging{\parbox}%
     \IfBooleanTF{#1}%
-      {\strut\smash{\parbox[t]{\labelwidth}{\noindent\raggedright{#2}}}}%
-      {\strut\smash{\parbox[t]{\labelwidth}{\noindent\raggedleft{#2}}}}%
+      {\strut\smash{\parbox[t]{\labelwidth}{\leavevmode\raggedright{#2}}}}%
+      {\strut\smash{\parbox[t]{\labelwidth}{\leavevmode\raggedleft{#2}}}}%
     \ResumeTagging{\parbox}
   }
 \begin{document}

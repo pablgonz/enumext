@@ -2451,6 +2451,27 @@ register_tex_cmd('luafun_actual_text_end', function()
   n_write(d_tonode(n))
 end, {})
 
+-- Permite cortar de línea tras un guion bajo dentro de un nombre largo en
+-- línea (\myhlc): un nodo penalty 0, sin guion visible y sin alterar el
+-- texto. No corta tras "\_" ni entre guiones bajos consecutivos.
+local function mylhmc_allow_breaks(head)
+  if not head then return head end
+  local d_getid, d_getchar = node.direct.getid, node.direct.getchar
+  local glyph_id = node.id('glyph')
+  local n = head
+  while n do
+    local nx = d_getnext(n)
+    if nx and d_getid(n) == glyph_id and d_getchar(n) == 95
+       and d_getid(nx) == glyph_id and d_getchar(nx) ~= 95 then
+      local p = d_new('penalty')
+      d_setfield(p, 'penalty', 0)
+      node.direct.insert_after(head, n, p)
+    end
+    n = nx
+  end
+  return head
+end
+
 register_tex_cmd('luafun_inline', function()
   local text = t_get_macro('l__mylhmc_verbatim_line_tl')
   if not text or text == '' then return end
@@ -2463,7 +2484,7 @@ register_tex_cmd('luafun_inline', function()
   -- texto mixto ("ver l_foo_tl aqui") cae al dispatch normal.
   if bare_varname_full:match(text) then
     local h = mylhmc_render_bare_varname(text, fid)
-    if h then n_write(d_tonode(h)) end
+    if h then n_write(d_tonode(mylhmc_allow_breaks(h))) end
     ft.font_bracket_pending = false
     return
   end
@@ -2476,13 +2497,13 @@ register_tex_cmd('luafun_inline', function()
                kw == 'nofix' or kw == 'silent' or kw == 'time' or
                kw == 'date' or kw == 'infix') then
       local rh, rt = mylhmc_colorize_mathml_intent(text, fid, nil, nil)
-      if rh then n_write(d_tonode(rh)) end
+      if rh then n_write(d_tonode(mylhmc_allow_breaks(rh))) end
       ft.font_bracket_pending = false
       return
     end
   end
   local rh, rt = mylhmc_colorize_code(text, fid)
-  if rh then n_write(d_tonode(rh)) end
+  if rh then n_write(d_tonode(mylhmc_allow_breaks(rh))) end
   ft.font_bracket_pending = false
 end, {})
 
