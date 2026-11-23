@@ -5417,9 +5417,10 @@ all the worksheets are as follows:
 % \begin{important}*
 %   If the \mypkg[no-index]{hyperref} package is loaded the link target is created
 %   with |\MakeLinkTarget*| and the label with |\label|, which writes the
-%   |\newlabel| with the page, the \emph{name} and the \emph{anchor}, using
-%   the |\@currentlabel| and |\@currentlabelname| set here to \myhlc|\l_@@_newlabel_arg_two_tl|.
-%   Without the package a plain |\newlabel{#1}{#2}| is written, since |\label|
+%   \myhlc|\newlabel| with the page, the \emph{name} and the \emph{anchor}, using
+%   the \myhlc|\@currentlabel| and \myhlc|\@currentlabelname| set here to
+%   \myhlc|\l_@@_newlabel_arg_two_tl|.
+%   Without the package a plain \myhlc|\newlabel{#1}{#2}| is written, since |\label|
 %   adds spaces that would change the typeset boxes.
 % \end{important}
 %
@@ -5729,7 +5730,7 @@ all the worksheets are as follows:
 % \begin{macro}[int]{\@@_internal_mini_page:, \@@_mini_page}
 %   The function \myhlc|\@@_internal_mini_page:| creates an internal
 %   \myhlc|\@@_mini_page| environment (\emph{custom version} of
-%   \myenv[no-index]{minipage}) setting the |\if@minipage| switch to |false|
+%   \myenv[no-index]{minipage}) setting the \myhlc|\if@minipage| switch to |false|
 %   to allow spaces at the \emph{\enquote{above}} of the environment,
 %   plus \myhlc|\skip_vertical:N \c_zero_skip| is added to maintain alignment
 %   on \emph{\enquote{top}} in the first part and \myhlc|\skip_vertical:N \c_zero_skip|
@@ -6979,7 +6980,7 @@ all the worksheets are as follows:
 %   the functions \myhlc|\@@_after_args_exec_vii:| and \myhlc|\@@_after_args_exec_viii:| do not
 %   exist. Instead, the \mymarg{code} set by the \mykey[env]{first} key is used directly by
 %   \myhlc|\@@_start_item_vii:w| and \myhlc|\@@_start_item_viii:w| inside the \env{minipage} of each
-%   \cs{item}.
+%   \myhlc|\item|.
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_before_args_exec_vii:
   {
@@ -7538,7 +7539,7 @@ all the worksheets are as follows:
 %   environment, taking into account whether \hologo{TeX} is in
 %   \mymeta{horizontal mode} or \mymeta{vertical mode}. First the last
 %   \mymeta{skip} or \mymeta{kern} is removed; in \mymeta{vertical mode} only
-%   |\nopagebreak| is added, while in \mymeta{horizontal mode} the paragraph is
+%   \myhlc|\nopagebreak| is added, while in \mymeta{horizontal mode} the paragraph is
 %   ended and |\partopsep| is set to zero, since this parameter comes into
 %   play according to the mode and this affects the \emph{vertical spacing}.
 %   The space is then added with the function \myhlc|\@@_mini_baselineskip:|.
@@ -10262,7 +10263,7 @@ all the worksheets are as follows:
 % \subsubsection{Internal functions for the command}
 %
 % \begin{macro}[int]{\@@_anskey_unknown:n, \@@_anskey_unknown:nn, \@@_anskey_unknown:Vn}
-%   The \mymeta{keys} are stored in \cs{l_keys_key_str} and the value
+%   The \mymeta{keys} are stored in \myhlc|\l_keys_key_str| and the value
 %   (if any) is passed as an argument to the function \myhlc|\@@_anskey_unknown:n|.
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_anskey_unknown:n
@@ -10558,7 +10559,7 @@ all the worksheets are as follows:
 % \subsubsection{Internal functions for the environment}
 %
 % \begin{macro}[int]{\@@_anskey_env_unknown:n, \@@_anskey_env_unknown:nn, \@@_anskey_env_unknown:Vn}
-%   The \mymeta{keys} are stored in \cs{l_keys_key_str} and the value
+%   The \mymeta{keys} are stored in \myhlc|\l_keys_key_str| and the value
 %   (if any) is passed as an argument to the function \myhlc|\@@_anskey_env_unknown:n|.
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_anskey_env_unknown:n
@@ -12078,13 +12079,13 @@ all the worksheets are as follows:
 %
 % \begin{macro}[int]{\@@_unnumbered_list:n}
 %   When \emph{tagged} \texttt{PDF} is active the \hologo{LaTeX} kernel declares a list
-%   as \emph{ordered} if |\@nmbrlist| is true, which |\usecounter| always sets,
+%   as \emph{ordered} if \myhlc|\@nmbrlist| is true, which \myhlc|\usecounter| always sets,
 %   even if the \mykey[env]{label} key has no counter, for example
 %   \mykey{label}|={}| or \mykey{label}|=|\mymarg{\textbackslash{}textbullet}.
 %   The function \myhlc|\@@_unnumbered_list:n| takes the level and sets
-%   |\@nmbrlist| to false if the \mymeta{label} of that level does not use the counter
+%   \myhlc|\@nmbrlist| to false if the \mymeta{label} of that level does not use the counter
 %   of the level, so the list is declared as \emph{unordered}. The environments
-%   restore |\@nmbrlist| right after opening the list, since the |\item| command
+%   restore \myhlc|\@nmbrlist| right after opening the list, since the |\item| command
 %   needs it to step the counter.
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_unnumbered_list:n
@@ -13452,7 +13453,7 @@ all the worksheets are as follows:
 %   so that the space is the same as \emph{\enquote{below}} the last |\item| of
 %   \myenv*[no-index]{keyans}. It must be executed before closing the
 %   \myenv[no-index]{list} environment and |\parskip| is set to zero, otherwise
-%   |\endtrivlist| adds it to the space.
+%   \myhlc|\endtrivlist| adds it to the space.
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_anspic_bottom_glue:
   {
@@ -14277,7 +14278,8 @@ all the worksheets are as follows:
 %    later) or to a standard list nested inside it; the nesting depth of
 %    the \env{enumext*} environment is stored in \myhlc|\l_@@_base_depth_int|. Unlike the implementation used by
 %    the \mypkg[no-index]{shortlst} package, the values of
-%    \myhlc|\rightskip| and |\@rightskip| are not set equal to |\@flushglue|, whose value is
+%    \myhlc|\rightskip| and \myhlc|\@rightskip| are not set equal to
+%    \myhlc|\@flushglue|, whose value is
 %    \mydim{0.0pt plus 1.0 fil}; in the tests performed this fails in
 %    some circumstances and different results are obtained when using
 %    \hologo{pdfTeX} and \hologo{LuaTeX}.
@@ -14537,7 +14539,7 @@ all the worksheets are as follows:
 %   version |\item|\myoarg{custom} by means of the function
 %   \myhlc|\@@_start_item_vii:w|; otherwise it sets the value of the
 %   variable \myhlc|\l_@@_wrap_label_vii_bool| handled by the
-%   \mykey[env]{wrap-label} key to true and set the switch |\if@noitemarg| to
+%   \mykey[env]{wrap-label} key to true and set the switch \myhlc|\if@noitemarg| to
 %   true to execute the enumerated version of |\item| by means of the
 %   function \myhlc|\@@_start_item_vii:w| |[| \myhlc|\l_@@_label_vii_tl| |]|.
 %    \begin{macrocode}
@@ -14609,7 +14611,7 @@ all the worksheets are as follows:
 % \begin{important}
 %   For compatibility with \emph{tagged} \texttt{PDF} and \mypkg[no-index]{hyperref}
 %   when an environment \myenv*[no-index]{enumext} is nested in \myenv*[no-index]{enumext*}
-%   and the key \mykey[env]{save-ans} is not active need setting the |\if@hyper@item|
+%   and the key \mykey[env]{save-ans} is not active need setting the \myhlc|\if@hyper@item|
 %   switch to |true|. The explanation for this is given
 %   by the master Heiko Oberdiek on \href{https://tex.stackexchange.com/a/404911}{\textbackslash
 %   refstepcounter\{enumi\} twice (or more) creates destination with the
@@ -14845,7 +14847,7 @@ all the worksheets are as follows:
 %   key \mykey[env]{listparindent} and \myhlc|\parskip| takes the value of the key
 %   \mykey[env]{parsep}, then the keys \mykey[env]{itemindent} and
 %   \mykey[env]{first} are executed. Inside the \myenv[no-index]{minipage}
-%   |\@listdepth| is reset to zero, so the nesting depth is stored again in
+%   \myhlc|\@listdepth| is reset to zero, so the nesting depth is stored again in
 %   \myhlc|\l_@@_base_depth_int| right after opening it; this allows the
 %   switch (\S\ref{subsec:item-nested}) to recognize standard lists nested in the item.
 %
@@ -15224,7 +15226,7 @@ all the worksheets are as follows:
 %   version |\item|\myoarg{custom} by means of the function
 %   \myhlc|\@@_start_item_viii:w|; otherwise it sets the value of the
 %   variable \myhlc|\l_@@_wrap_label_viii_bool| handled by the
-%   \mykey[env]{wrap-label} key to true and set the switch |\if@noitemarg| to
+%   \mykey[env]{wrap-label} key to true and set the switch \myhlc|\if@noitemarg| to
 %   true to execute the enumerated version of |\item| by means of the
 %   function \myhlc|\@@_start_item_viii:w| |[| \myhlc|\l_@@_label_viii_tl| |]|.
 %    \begin{macrocode}
@@ -15911,7 +15913,7 @@ all the worksheets are as follows:
 %
 % \begin{important}*
 %  The reason for storing \mymeta{keys} in token lists using
-%  \cs{keys_precompile:neN} is because the keys are set via
+%  \myhlc|\keys_precompile:neN| is because the keys are set via
 %  |\setenumext| but are later executed by running the command
 %  |\printkeyans| and they are not handled directly by its
 %  \emph{optional argument}, except those related to the \emph{first}
