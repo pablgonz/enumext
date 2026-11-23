@@ -12032,7 +12032,6 @@ all the worksheets are as follows:
 %  And returns the \emph{\enquote{adjusted}} values of |\leftmargin|
 %  and |\itemindent|.
 %
-%
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_calc_hspace:NNNNNNN
   {
@@ -12052,26 +12051,13 @@ all the worksheets are as follows:
 %    \begin{macrocode}
     \bool_if:NF #7 { \dim_set:Nn #4 { #1 + #2} }
 %    \end{macrocode}
-%   The cases are now analyzed and the values for |\leftmargin| and
-%   |\itemindent| are set.
+%   Whatever the sign and the size of \myhlc|\l_@@_leftmargin_tmp_X_dim|, the values for
+%   |\itemindent| and |\leftmargin| reduce to two assignments: |\itemindent| is
+%   \mykey{labelwidth} plus \mykey{labelsep} minus \mykey{list-indent}, and |\leftmargin| is
+%   \mykey{list-offset} plus \mykey{list-indent} (\S\ref{subsubsec:leftmargin}).
 %    \begin{macrocode}
-    \dim_compare:nNnTF {#4} < { \c_zero_dim }
-      {
-        \dim_set:Nn #6 { #1 + #2 - #4}
-        \dim_set:Nn #5 { #1 + #2 + #3 - #6 }
-      }
-      {
-        \dim_compare:nNnT {#4} = { #1 + #2 }
-          { \dim_set:Nn #6 { \c_zero_dim } }
-        \dim_compare:nNnT {#4} < { #1 + #2 }
-          { \dim_set:Nn #6 { #1 + #2 - #4} }
-        \dim_compare:nNnT {#4} > { #1 + #2 }
-          {
-            \dim_set:Nn #6 { -#1 - #2 + #4}
-            \dim_set:Nn #6 { #6*-1}
-          }
-        \dim_set:Nn #5 { #1 + #2 + #3 - #6 }
-      }
+    \dim_set:Nn #6 { #1 + #2 - #4 }
+    \dim_set:Nn #5 { #3 + #4 }
   }
 \cs_generate_variant:Nn \@@_calc_hspace:NNNNNNN { ccccccc }
 %    \end{macrocode}
