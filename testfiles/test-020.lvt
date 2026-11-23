@@ -1,0 +1,126 @@
+% test-020.lvt -- ListNumbering especifico de las listas de enumext
+%
+% Hecho con cariño por Pablo González L. <pablgonz@educarchile.cl>
+% para que enumext siga funcionando igual de bien después de cada cambio.
+%
+% Regresion:  l3build save test-020
+%             l3build check test-020
+%
+% Test de regresion del atributo ListNumbering con etiquetado (tagged PDF):
+% las listas de enumext declaran Decimal, LowerAlpha, UpperAlpha, LowerRoman o
+% UpperRoman segun el estilo de contador de label, Unordered si la etiqueta no
+% usa el contador y Ordered en las listas que no crea el paquete (enumerate).
+% Una lista de itemize dentro de enumext no hereda el estilo.
+\input{regression-test}
+
+\DocumentMetadata
+  {
+    lang=en-US,
+    pdfversion=2.0,
+    pdfstandard=ua-2,
+    tagging=on,
+  }
+\documentclass{article}
+\ExplSyntaxOn
+\debug_on:n { all }
+\ExplSyntaxOff
+\usepackage{enumext}
+\usepackage{hyperref}
+\hypersetup
+  {
+    pdfdisplaydoctitle = true,
+    pdftitle           = {test-020: ListNumbering of enumext},
+  }
+\begin{document}
+
+\section*{A. The environment \texttt{enumext}}
+
+% Estructura: un estilo de contador por lista.
+1. Standard counter styles.
+
+\begin{enumext}
+  \item Default (Decimal)
+\end{enumext}
+
+\begin{enumext}[label=\alph*)]
+  \item LowerAlpha
+\end{enumext}
+
+\begin{enumext}[label=\Alph*)]
+  \item UpperAlpha
+\end{enumext}
+
+\begin{enumext}[label=\roman*.]
+  \item LowerRoman
+\end{enumext}
+
+\begin{enumext}[label=\Roman*.]
+  \item UpperRoman
+\end{enumext}
+
+% Estructura: etiquetas que no usan el contador.
+2. Labels without counter.
+
+\begin{enumext}[label={}]
+  \item Empty label
+\end{enumext}
+
+\begin{enumext}[label=\textbullet]
+  \item Bullet label
+\end{enumext}
+
+\section*{B. The environment \texttt{enumext*}}
+
+3. Two columns with letters.
+
+\begin{enumext*}[columns=2,label=\Alph*.]
+  \item One
+  \item Two
+\end{enumext*}
+
+\section*{C. Nested and standard lists}
+
+4. Lists inside \texttt{enumext} and standard lists.
+
+\begin{enumext}[label=\alph*)]
+  \item First
+    \begin{enumext}
+      \item Inner
+    \end{enumext}
+    \begin{itemize}
+      \item Bullet
+    \end{itemize}
+\end{enumext}
+
+\begin{enumerate}
+  \item Standard enumerate
+\end{enumerate}
+
+\begin{itemize}
+  \item Standard itemize
+\end{itemize}
+
+\section*{D. The environments \texttt{keyans} and \texttt{keyans*}}
+
+5. Answers with letters and numerals.
+
+\begin{enumext}[save-ans=numbering]
+  \item Question A.
+    \begin{keyans}[label=\roman*)]
+      \item First
+      \item* Second (correct)
+    \end{keyans}
+  \item Question B.
+    \begin{keyans*}[columns=2,label=\Roman*)]
+      \item First
+      \item* Second (correct)
+    \end{keyans*}
+\end{enumext}
+
+\START
+
+\SHOWPDFTAGS
+
+\OMIT
+
+\end{document}

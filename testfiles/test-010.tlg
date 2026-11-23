@@ -40,7 +40,7 @@ TEST 1: Show PDF Tags
      <list xmlns="https://www.latex-project.org/ns/dflt"
         id="ID.00011"
         xmlns:List="http://iso.org/pdf/ssn/List"
-        List:ListNumbering="Ordered"
+        List:ListNumbering="Decimal"
         rolemaps-to="L"
        >
       <item xmlns="https://www.latex-project.org/ns/dflt"
@@ -152,7 +152,7 @@ TEST 1: Show PDF Tags
      <list xmlns="https://www.latex-project.org/ns/dflt"
         id="ID.00030"
         xmlns:List="http://iso.org/pdf/ssn/List"
-        List:ListNumbering="Ordered"
+        List:ListNumbering="LowerAlpha"
         rolemaps-to="L"
        >
       <item xmlns="https://www.latex-project.org/ns/dflt"
@@ -235,7 +235,7 @@ TEST 1: Show PDF Tags
      <list xmlns="https://www.latex-project.org/ns/dflt"
         id="ID.00044"
         xmlns:List="http://iso.org/pdf/ssn/List"
-        List:ListNumbering="Ordered"
+        List:ListNumbering="Decimal"
         rolemaps-to="L"
        >
       <item xmlns="https://www.latex-project.org/ns/dflt"
@@ -267,7 +267,7 @@ TEST 1: Show PDF Tags
          <list xmlns="https://www.latex-project.org/ns/dflt"
             id="ID.00050"
             xmlns:List="http://iso.org/pdf/ssn/List"
-            List:ListNumbering="Ordered"
+            List:ListNumbering="LowerAlpha"
             rolemaps-to="L"
            >
           <item xmlns="https://www.latex-project.org/ns/dflt"
@@ -299,7 +299,7 @@ TEST 1: Show PDF Tags
              <list xmlns="https://www.latex-project.org/ns/dflt"
                 id="ID.00056"
                 xmlns:List="http://iso.org/pdf/ssn/List"
-                List:ListNumbering="Ordered"
+                List:ListNumbering="LowerRoman"
                 rolemaps-to="L"
                >
               <item xmlns="https://www.latex-project.org/ns/dflt"
@@ -331,7 +331,7 @@ TEST 1: Show PDF Tags
                  <list xmlns="https://www.latex-project.org/ns/dflt"
                     id="ID.00062"
                     xmlns:List="http://iso.org/pdf/ssn/List"
-                    List:ListNumbering="Ordered"
+                    List:ListNumbering="UpperAlpha"
                     rolemaps-to="L"
                    >
                   <item xmlns="https://www.latex-project.org/ns/dflt"
@@ -426,7 +426,7 @@ TEST 1: Show PDF Tags
      <list xmlns="https://www.latex-project.org/ns/dflt"
         id="ID.00076"
         xmlns:List="http://iso.org/pdf/ssn/List"
-        List:ListNumbering="Ordered"
+        List:ListNumbering="Decimal"
         rolemaps-to="L"
        >
       <item xmlns="https://www.latex-project.org/ns/dflt"
@@ -567,7 +567,7 @@ TEST 1: Show PDF Tags
      <list xmlns="https://www.latex-project.org/ns/dflt"
         id="ID.00100"
         xmlns:List="http://iso.org/pdf/ssn/List"
-        List:ListNumbering="Ordered"
+        List:ListNumbering="Decimal"
         rolemaps-to="L"
        >
       <item xmlns="https://www.latex-project.org/ns/dflt"
@@ -650,7 +650,7 @@ TEST 1: Show PDF Tags
      <list xmlns="https://www.latex-project.org/ns/dflt"
         id="ID.00114"
         xmlns:List="http://iso.org/pdf/ssn/List"
-        List:ListNumbering="Ordered"
+        List:ListNumbering="Decimal"
         rolemaps-to="L"
        >
       <item xmlns="https://www.latex-project.org/ns/dflt"
@@ -745,7 +745,7 @@ TEST 1: Show PDF Tags
      <list xmlns="https://www.latex-project.org/ns/dflt"
         id="ID.00130"
         xmlns:List="http://iso.org/pdf/ssn/List"
-        List:ListNumbering="Ordered"
+        List:ListNumbering="Decimal"
         rolemaps-to="L"
        >
       <LI xmlns="http://iso.org/pdf2/ssn"
@@ -954,7 +954,7 @@ TEST 1: Show PDF Tags
      <list xmlns="https://www.latex-project.org/ns/dflt"
         id="ID.00170"
         xmlns:List="http://iso.org/pdf/ssn/List"
-        List:ListNumbering="Ordered"
+        List:ListNumbering="LowerAlpha"
         rolemaps-to="L"
        >
       <LI xmlns="http://iso.org/pdf2/ssn"
@@ -1117,7 +1117,7 @@ TEST 1: Show PDF Tags
      <list xmlns="https://www.latex-project.org/ns/dflt"
         id="ID.00201"
         xmlns:List="http://iso.org/pdf/ssn/List"
-        List:ListNumbering="Ordered"
+        List:ListNumbering="Decimal"
         rolemaps-to="L"
        >
       <LI xmlns="http://iso.org/pdf2/ssn"
@@ -1372,7 +1372,7 @@ TEST 1: Show PDF Tags
      <list xmlns="https://www.latex-project.org/ns/dflt"
         id="ID.00250"
         xmlns:List="http://iso.org/pdf/ssn/List"
-        List:ListNumbering="Ordered"
+        List:ListNumbering="Decimal"
         rolemaps-to="L"
        >
       <LI xmlns="http://iso.org/pdf2/ssn"
@@ -1535,7 +1535,7 @@ TEST 1: Show PDF Tags
      <list xmlns="https://www.latex-project.org/ns/dflt"
         id="ID.00281"
         xmlns:List="http://iso.org/pdf/ssn/List"
-        List:ListNumbering="Ordered"
+        List:ListNumbering="Decimal"
         rolemaps-to="L"
        >
       <item xmlns="https://www.latex-project.org/ns/dflt"
@@ -1567,7 +1567,7 @@ TEST 1: Show PDF Tags
          <list xmlns="https://www.latex-project.org/ns/dflt"
             id="ID.00287"
             xmlns:List="http://iso.org/pdf/ssn/List"
-            List:ListNumbering="Ordered"
+            List:ListNumbering="Decimal"
             rolemaps-to="L"
            >
           <LI xmlns="http://iso.org/pdf2/ssn"
@@ -1729,7 +1729,7 @@ TEST 1: Show PDF Tags
      <list xmlns="https://www.latex-project.org/ns/dflt"
         id="ID.00316"
         xmlns:List="http://iso.org/pdf/ssn/List"
-        List:ListNumbering="Ordered"
+        List:ListNumbering="Decimal"
         rolemaps-to="L"
        >
       <item xmlns="https://www.latex-project.org/ns/dflt"
@@ -1885,7 +1885,7 @@ TEST 1: Show PDF Tags
        <list xmlns="https://www.latex-project.org/ns/dflt"
           id="ID.00343"
           xmlns:List="http://iso.org/pdf/ssn/List"
-          List:ListNumbering="Ordered"
+          List:ListNumbering="Decimal"
           rolemaps-to="L"
          >
         <item xmlns="https://www.latex-project.org/ns/dflt"
@@ -2013,7 +2013,7 @@ TEST 1: Show PDF Tags
        <list xmlns="https://www.latex-project.org/ns/dflt"
           id="ID.00365"
           xmlns:List="http://iso.org/pdf/ssn/List"
-          List:ListNumbering="Ordered"
+          List:ListNumbering="Decimal"
           rolemaps-to="L"
          >
         <item xmlns="https://www.latex-project.org/ns/dflt"
@@ -2199,7 +2199,7 @@ TEST 1: Show PDF Tags
        <list xmlns="https://www.latex-project.org/ns/dflt"
           id="ID.00397"
           xmlns:List="http://iso.org/pdf/ssn/List"
-          List:ListNumbering="Ordered"
+          List:ListNumbering="Decimal"
           rolemaps-to="L"
          >
         <LI xmlns="http://iso.org/pdf2/ssn"
@@ -2895,7 +2895,7 @@ TEST 1: Show PDF Tags
      <list xmlns="https://www.latex-project.org/ns/dflt"
         id="ID.00521"
         xmlns:List="http://iso.org/pdf/ssn/List"
-        List:ListNumbering="Ordered"
+        List:ListNumbering="Decimal"
         rolemaps-to="L"
        >
       <item xmlns="https://www.latex-project.org/ns/dflt"
@@ -2978,7 +2978,7 @@ TEST 1: Show PDF Tags
      <list xmlns="https://www.latex-project.org/ns/dflt"
         id="ID.00535"
         xmlns:List="http://iso.org/pdf/ssn/List"
-        List:ListNumbering="Ordered"
+        List:ListNumbering="Decimal"
         rolemaps-to="L"
        >
       <item xmlns="https://www.latex-project.org/ns/dflt"
@@ -3061,7 +3061,7 @@ TEST 1: Show PDF Tags
      <list xmlns="https://www.latex-project.org/ns/dflt"
         id="ID.00549"
         xmlns:List="http://iso.org/pdf/ssn/List"
-        List:ListNumbering="Ordered"
+        List:ListNumbering="Decimal"
         rolemaps-to="L"
        >
       <item xmlns="https://www.latex-project.org/ns/dflt"
@@ -3093,7 +3093,7 @@ TEST 1: Show PDF Tags
          <list xmlns="https://www.latex-project.org/ns/dflt"
             id="ID.00555"
             xmlns:List="http://iso.org/pdf/ssn/List"
-            List:ListNumbering="Ordered"
+            List:ListNumbering="LowerAlpha"
             rolemaps-to="L"
            >
           <item xmlns="https://www.latex-project.org/ns/dflt"
@@ -3166,7 +3166,7 @@ TEST 1: Show PDF Tags
          <list xmlns="https://www.latex-project.org/ns/dflt"
             id="ID.00567"
             xmlns:List="http://iso.org/pdf/ssn/List"
-            List:ListNumbering="Ordered"
+            List:ListNumbering="LowerAlpha"
             rolemaps-to="L"
            >
           <item xmlns="https://www.latex-project.org/ns/dflt"
@@ -3231,7 +3231,7 @@ TEST 1: Show PDF Tags
          <list xmlns="https://www.latex-project.org/ns/dflt"
             id="ID.00578"
             xmlns:List="http://iso.org/pdf/ssn/List"
-            List:ListNumbering="Ordered"
+            List:ListNumbering="Decimal"
             rolemaps-to="L"
            >
           <LI xmlns="http://iso.org/pdf2/ssn"
@@ -3292,7 +3292,7 @@ TEST 1: Show PDF Tags
          <list xmlns="https://www.latex-project.org/ns/dflt"
             id="ID.00589"
             xmlns:List="http://iso.org/pdf/ssn/List"
-            List:ListNumbering="Ordered"
+            List:ListNumbering="Decimal"
             rolemaps-to="L"
            >
           <LI xmlns="http://iso.org/pdf2/ssn"
@@ -3367,7 +3367,7 @@ TEST 1: Show PDF Tags
      <list xmlns="https://www.latex-project.org/ns/dflt"
         id="ID.00602"
         xmlns:List="http://iso.org/pdf/ssn/List"
-        List:ListNumbering="Ordered"
+        List:ListNumbering="Decimal"
         rolemaps-to="L"
        >
       <item xmlns="https://www.latex-project.org/ns/dflt"
@@ -3437,7 +3437,7 @@ TEST 1: Show PDF Tags
      <list xmlns="https://www.latex-project.org/ns/dflt"
         id="ID.00614"
         xmlns:List="http://iso.org/pdf/ssn/List"
-        List:ListNumbering="Ordered"
+        List:ListNumbering="Decimal"
         rolemaps-to="L"
        >
       <item xmlns="https://www.latex-project.org/ns/dflt"
@@ -3478,7 +3478,7 @@ TEST 1: Show PDF Tags
      <list xmlns="https://www.latex-project.org/ns/dflt"
         id="ID.00621"
         xmlns:List="http://iso.org/pdf/ssn/List"
-        List:ListNumbering="Ordered"
+        List:ListNumbering="Decimal"
         rolemaps-to="L"
        >
       <item xmlns="https://www.latex-project.org/ns/dflt"
@@ -3544,7 +3544,7 @@ TEST 1: Show PDF Tags
      <list xmlns="https://www.latex-project.org/ns/dflt"
         id="ID.00632"
         xmlns:List="http://iso.org/pdf/ssn/List"
-        List:ListNumbering="Ordered"
+        List:ListNumbering="Decimal"
         rolemaps-to="L"
        >
       <LI xmlns="http://iso.org/pdf2/ssn"
@@ -3733,7 +3733,7 @@ TEST 1: Show PDF Tags
      <list xmlns="https://www.latex-project.org/ns/dflt"
         id="ID.00668"
         xmlns:List="http://iso.org/pdf/ssn/List"
-        List:ListNumbering="Ordered"
+        List:ListNumbering="Decimal"
         rolemaps-to="L"
        >
       <LI xmlns="http://iso.org/pdf2/ssn"
@@ -3935,7 +3935,7 @@ TEST 1: Show PDF Tags
      <list xmlns="https://www.latex-project.org/ns/dflt"
         id="ID.00706"
         xmlns:List="http://iso.org/pdf/ssn/List"
-        List:ListNumbering="Ordered"
+        List:ListNumbering="Decimal"
         rolemaps-to="L"
        >
       <LI xmlns="http://iso.org/pdf2/ssn"
@@ -4091,7 +4091,7 @@ TEST 1: Show PDF Tags
      <list xmlns="https://www.latex-project.org/ns/dflt"
         id="ID.00735"
         xmlns:List="http://iso.org/pdf/ssn/List"
-        List:ListNumbering="Ordered"
+        List:ListNumbering="LowerAlpha"
         rolemaps-to="L"
        >
       <LI xmlns="http://iso.org/pdf2/ssn"
@@ -4194,7 +4194,7 @@ TEST 1: Show PDF Tags
      <list xmlns="https://www.latex-project.org/ns/dflt"
         id="ID.00754"
         xmlns:List="http://iso.org/pdf/ssn/List"
-        List:ListNumbering="Ordered"
+        List:ListNumbering="Decimal"
         rolemaps-to="L"
        >
       <LI xmlns="http://iso.org/pdf2/ssn"
@@ -4396,7 +4396,7 @@ TEST 1: Show PDF Tags
      <list xmlns="https://www.latex-project.org/ns/dflt"
         id="ID.00792"
         xmlns:List="http://iso.org/pdf/ssn/List"
-        List:ListNumbering="Ordered"
+        List:ListNumbering="Decimal"
         rolemaps-to="L"
        >
       <LI xmlns="http://iso.org/pdf2/ssn"
@@ -4770,7 +4770,7 @@ TEST 1: Show PDF Tags
      <list xmlns="https://www.latex-project.org/ns/dflt"
         id="ID.00858"
         xmlns:List="http://iso.org/pdf/ssn/List"
-        List:ListNumbering="Ordered"
+        List:ListNumbering="Decimal"
         rolemaps-to="L"
        >
       <LI xmlns="http://iso.org/pdf2/ssn"
@@ -5017,7 +5017,7 @@ TEST 1: Show PDF Tags
      <list xmlns="https://www.latex-project.org/ns/dflt"
         id="ID.00902"
         xmlns:List="http://iso.org/pdf/ssn/List"
-        List:ListNumbering="Ordered"
+        List:ListNumbering="LowerAlpha"
         rolemaps-to="L"
        >
       <LI xmlns="http://iso.org/pdf2/ssn"
@@ -5392,7 +5392,7 @@ TEST 1: Show PDF Tags
      <list xmlns="https://www.latex-project.org/ns/dflt"
         id="ID.00970"
         xmlns:List="http://iso.org/pdf/ssn/List"
-        List:ListNumbering="Ordered"
+        List:ListNumbering="Decimal"
         rolemaps-to="L"
        >
       <LI xmlns="http://iso.org/pdf2/ssn"
@@ -5516,7 +5516,7 @@ TEST 1: Show PDF Tags
      <list xmlns="https://www.latex-project.org/ns/dflt"
         id="ID.00991"
         xmlns:List="http://iso.org/pdf/ssn/List"
-        List:ListNumbering="Ordered"
+        List:ListNumbering="Decimal"
         rolemaps-to="L"
        >
       <LI xmlns="http://iso.org/pdf2/ssn"
@@ -5658,7 +5658,7 @@ TEST 1: Show PDF Tags
      <list xmlns="https://www.latex-project.org/ns/dflt"
         id="ID.01016"
         xmlns:List="http://iso.org/pdf/ssn/List"
-        List:ListNumbering="Ordered"
+        List:ListNumbering="Decimal"
         rolemaps-to="L"
        >
       <LI xmlns="http://iso.org/pdf2/ssn"
@@ -5787,7 +5787,7 @@ TEST 1: Show PDF Tags
      <list xmlns="https://www.latex-project.org/ns/dflt"
         id="ID.01038"
         xmlns:List="http://iso.org/pdf/ssn/List"
-        List:ListNumbering="Ordered"
+        List:ListNumbering="Decimal"
         rolemaps-to="L"
        >
       <LI xmlns="http://iso.org/pdf2/ssn"
@@ -6160,7 +6160,7 @@ TEST 1: Show PDF Tags
      <list xmlns="https://www.latex-project.org/ns/dflt"
         id="ID.01104"
         xmlns:List="http://iso.org/pdf/ssn/List"
-        List:ListNumbering="Ordered"
+        List:ListNumbering="Decimal"
         rolemaps-to="L"
        >
       <LI xmlns="http://iso.org/pdf2/ssn"
@@ -6371,7 +6371,7 @@ TEST 1: Show PDF Tags
      <list xmlns="https://www.latex-project.org/ns/dflt"
         id="ID.01141"
         xmlns:List="http://iso.org/pdf/ssn/List"
-        List:ListNumbering="Ordered"
+        List:ListNumbering="Decimal"
         rolemaps-to="L"
        >
       <LI xmlns="http://iso.org/pdf2/ssn"
@@ -6670,7 +6670,7 @@ TEST 1: Show PDF Tags
      <list xmlns="https://www.latex-project.org/ns/dflt"
         id="ID.01194"
         xmlns:List="http://iso.org/pdf/ssn/List"
-        List:ListNumbering="Ordered"
+        List:ListNumbering="LowerAlpha"
         rolemaps-to="L"
        >
       <LI xmlns="http://iso.org/pdf2/ssn"
@@ -7004,7 +7004,7 @@ TEST 1: Show PDF Tags
      <list xmlns="https://www.latex-project.org/ns/dflt"
         id="ID.01254"
         xmlns:List="http://iso.org/pdf/ssn/List"
-        List:ListNumbering="Ordered"
+        List:ListNumbering="Decimal"
         rolemaps-to="L"
        >
       <LI xmlns="http://iso.org/pdf2/ssn"
@@ -7154,7 +7154,7 @@ TEST 1: Show PDF Tags
      <list xmlns="https://www.latex-project.org/ns/dflt"
         id="ID.01280"
         xmlns:List="http://iso.org/pdf/ssn/List"
-        List:ListNumbering="Ordered"
+        List:ListNumbering="Decimal"
         rolemaps-to="L"
        >
       <LI xmlns="http://iso.org/pdf2/ssn"

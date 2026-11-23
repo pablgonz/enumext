@@ -3917,7 +3917,10 @@ all the worksheets are as follows:
 %  counter of the level is declared as \emph{unordered}, as it happens in
 %  \myenv[no-index]{itemize}. It is not declared as \emph{description}, so
 %  the \emph{fake} \myenv[no-index]{description} environments are also
-%  \emph{unordered}.
+%  \emph{unordered}. When the \mykey{label} uses one of the standard counter styles
+%  |\arabic|, |\alph|, |\Alph|, |\roman| or |\Roman| the list is declared as
+%  \emph{Decimal}, \emph{LowerAlpha}, \emph{UpperAlpha}, \emph{LowerRoman} or
+%  \emph{UpperRoman} respectively; any other numbered \mykey{label} stays \emph{Ordered}.
 % \end{important}
 %
 % \subsection*{Fake \texttt{itemize} environment}\label{subsec:fake-itemize}
@@ -4744,6 +4747,16 @@ all the worksheets are as follows:
 %    \end{macrocode}
 % \end{variable}
 %
+% \begin{variable}[int]{\l_@@_list_class_tl}
+%   When \emph{tagged} \texttt{PDF} is active this variable stores the name of the
+%   attribute class that declares the numbering style of the current list
+%   (\S\ref{subsubsec:list-numbering}). It is empty when the style is not one of the standard
+%   counter styles.
+%    \begin{macrocode}
+\tl_new:N \l_@@_list_class_tl
+%    \end{macrocode}
+% \end{variable}
+%
 % \begin{variable}[int]{
 %   \l_@@_multicols_above_X_skip,
 %   \l_@@_multicols_below_X_skip,
@@ -4989,7 +5002,8 @@ all the worksheets are as follows:
 %
 % \subsubsection{General utility functions}
 %
-% \begin{macro}[int]{\keys_precompile:neN, \seq_use:NV, \keys_set:en, \keys_set:ev, \str_if_in:vnF}
+% \begin{macro}[int]{\keys_precompile:neN, \seq_use:NV, \keys_set:en, \keys_set:ev,
+%                    \str_if_in:vnT, \str_if_in:vnF}
 %    Non-standard kernel variants used by the |\printkeyans| command
 %    (\S\ref{cmd:printkeyans}) and |\foreachkeyans| command (\S\ref{cmd:foreachkeyans}),
 %    and by the functions that set the keys of each level.
@@ -4997,7 +5011,7 @@ all the worksheets are as follows:
 \cs_generate_variant:Nn \keys_precompile:nnN { neN }
 \cs_generate_variant:Nn \seq_use:Nn { NV }
 \cs_generate_variant:Nn \keys_set:nn { en, ev }
-\prg_generate_conditional_variant:Nnn \str_if_in:nn { v } { F }
+\prg_generate_conditional_variant:Nnn \str_if_in:nn { v } { T, F }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -12085,11 +12099,92 @@ all the worksheets are as follows:
 %    \end{macrocode}
 % \end{macro}
 %
+% \subsubsection{Numbering style of the list}\label{subsubsec:list-numbering}
+%
+% \begin{macro}[int]{\@@_list_numbering:n, \@@_list_numbering_check:nnn}
+%   The \hologo{LaTeX} kernel declares every numbered list as \emph{ordered}, whatever the
+%   counter style of the \mymeta{label}. The function \myhlc|\@@_list_numbering:n| takes the
+%   level and looks in \myhlc|\l_@@_label_X_tl| for the standard counter styles |\arabic|,
+%   |\alph|, |\Alph|, |\roman| and |\Roman|. When one of them is found, the variable
+%   \myhlc|\l_@@_list_class_tl| stores the name of the attribute class that declares the list as
+%   |Decimal|, |LowerAlpha|, |UpperAlpha|, |LowerRoman| or |UpperRoman| respectively. The
+%   function \myhlc|\@@_list_numbering_check:nnn| tests one style and keeps the first one
+%   found.
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_list_numbering_check:nnn #1 #2 #3
+  {
+    \tl_if_empty:NT \l_@@_list_class_tl
+      {
+        \str_if_in:vnT { l_@@_label_ #1 _tl } { #2 }
+          { \tl_set:Nn \l_@@_list_class_tl { enumext-#3 } }
+      }
+  }
+\cs_new_protected:Npn \@@_list_numbering:n #1
+  {
+    \tl_clear:N \l_@@_list_class_tl
+    \str_if_in:vnT { l_@@_label_ #1 _tl } { enumX #1 }
+      {
+        \@@_list_numbering_check:nnn {#1} { \arabic } { Decimal }
+        \@@_list_numbering_check:nnn {#1} { \alph } { LowerAlpha }
+        \@@_list_numbering_check:nnn {#1} { \Alph } { UpperAlpha }
+        \@@_list_numbering_check:nnn {#1} { \roman } { LowerRoman }
+        \@@_list_numbering_check:nnn {#1} { \Roman } { UpperRoman }
+      }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}[int]{\@@_apply_list_class:}
+%   The kernel chooses the attribute class of a list in \myhlc|\legacylistsetup|, after running
+%   the second argument of the list, so the class cannot be set from there. When the kernel
+%   provides \myhlc|\legacylistsetup| and the variable that stores the class, the function
+%   \myhlc|\@@_apply_list_class:| is added at the end of \myhlc|\legacylistsetup|. If
+%   \myhlc|\l_@@_list_class_tl| is not empty it replaces the class chosen by the kernel and then
+%   it is emptied, so the lists that are not created by the package are not affected. The classes
+%   are declared with the |role/new-attribute| key of \mypkg[no-index]{tagpdf}.
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_apply_list_class:
+  {
+    \tl_if_empty:NF \l_@@_list_class_tl
+      {
+        \tl_set_eq:NN \l__tag_L_attr_class_tl \l_@@_list_class_tl
+        \tl_clear:N \l_@@_list_class_tl
+      }
+  }
+\bool_lazy_and:nnT
+  { \cs_if_exist_p:N \legacylistsetup }
+  { \cs_if_exist_p:N \l__tag_L_attr_class_tl }
+  {
+    \tagpdfsetup
+      {
+        role/new-attribute = { enumext-Decimal }
+          { /O /List /ListNumbering /Decimal },
+        role/new-attribute = { enumext-LowerAlpha }
+          { /O /List /ListNumbering /LowerAlpha },
+        role/new-attribute = { enumext-UpperAlpha }
+          { /O /List /ListNumbering /UpperAlpha },
+        role/new-attribute = { enumext-LowerRoman }
+          { /O /List /ListNumbering /LowerRoman },
+        role/new-attribute = { enumext-UpperRoman }
+          { /O /List /ListNumbering /UpperRoman }
+      }
+    \cs_new_eq:NN \@@_legacy_list_setup: \legacylistsetup
+    \cs_gset_protected:Npn \legacylistsetup
+      {
+        \@@_legacy_list_setup:
+        \@@_apply_list_class:
+      }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
 % \begin{macro}[int]{\@@_list_arg_two_i:, \@@_list_arg_two_ii:, \@@_list_arg_two_iii:,
 %                    \@@_list_arg_two_iv:, \@@_list_arg_two_v:}
 %   |\leftmargini|, |\leftmarginii|, |\leftmarginiii| and
 %   |\leftmarginiv| are \enquote{not set}; in this case, the parameters
 %   for vertical and horizontal list spacing per level are set directly.
+%   The function \myhlc|\@@_list_numbering:n| (\S\ref{subsubsec:list-numbering}) is also called
+%   to store the numbering style of the level.
 %    \begin{macrocode}
 \cs_set_protected:Nn \@@_tmp:n
   {
@@ -12112,6 +12207,7 @@ all the worksheets are as follows:
         \setcounter { enumX #1 }
           { \int_eval:n { \int_use:c { l_@@_start_ #1 _int } - 1 } }
         \@@_unnumbered_list:n {#1}
+        \@@_list_numbering:n {#1}
         \str_if_eq:nnTF {#1} { v }
           {
             \@@_keyans_redefine_item:
@@ -12184,6 +12280,7 @@ all the worksheets are as follows:
         \usecounter { enumX #1 }
         % \setcounter { enumX #1 }
         %   { \int_eval:n { \int_use:c { l_@@_start_ #1 _int } - 1 } }
+        \@@_list_numbering:n {#1}
         \@@_starred_ref:
         \str_if_eq:nnTF {#1} { vii }
           {
