@@ -14494,7 +14494,7 @@ all the worksheets are as follows:
   }
 %    \end{macrocode}
 %   The function \myhlc|\@@_item_peek_args_vii:| handles the |\item|\myparg{number}.
-%   It looks for the argument \enquote{\textcolor{star}{\ttfamily (}};
+%   It looks for the argument `|(|';
 %   if it is present, it calls the function \myhlc|\@@_joined_item_vii:w| \myparg{number},
 %   which is in charge of joining the items in the same row; if it is
 %   not present, it sets the default value \textcolor{gray}{\ttfamily(\mydim{1})}.
@@ -14508,7 +14508,7 @@ all the worksheets are as follows:
 %    \end{macrocode}
 %   The function \myhlc|\@@_joined_item_vii:w| first sets the \emph{width} of the box that stores
 %   the content passed to |\item| by calling \myhlc|\@@_starred_joined_item_vii:n|. Then it looks
-%   for the argument \enquote{\textcolor{star}{\ttfamily *}}; if it is present, it calls
+%   for the argument `|*|'; if it is present, it calls
 %   \myhlc|\@@_starred_item_vii:w|, otherwise \myhlc|\@@_standard_item_vii:w|.
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_joined_item_vii:w (#1)
@@ -15181,7 +15181,7 @@ all the worksheets are as follows:
   }
 %    \end{macrocode}
 %   The function \myhlc|\@@_item_peek_args_viii:| handles the |\item|\myparg{number}.
-%   It looks for the argument \enquote{\textcolor{star}{\ttfamily (}}; if it is
+%   It looks for the argument `|(|'; if it is
 %   present, it calls the function \myhlc|\@@_joined_item_viii:w| \myparg{number},
 %   which is in charge of joining the items in the same row; if it is
 %   not present, it sets the default value \textcolor{gray}{\ttfamily(\mydim{1})}.
@@ -15195,7 +15195,7 @@ all the worksheets are as follows:
 %    \end{macrocode}
 %   The function \myhlc|\@@_joined_item_viii:w| first sets the \emph{width} of the box that stores
 %   the content passed to |\item| by calling \myhlc|\@@_starred_joined_item_viii:n|. Then it looks
-%   for the argument \enquote{\textcolor{star}{\ttfamily *}}; if it is present, it calls
+%   for the argument `|*|'; if it is present, it calls
 %   \myhlc|\@@_starred_item_viii:w|, otherwise \myhlc|\@@_standard_item_viii:w|.
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_joined_item_viii:w (#1)
