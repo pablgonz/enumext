@@ -220,7 +220,7 @@
   {
     \tl_set:Nn \l_tempc_tl { #1 }
     \__mydoc_color_once:Nnn \l_tempc_tl { \* } { star }
-    \begin{minipage}[t]{3\marginparwidth}%
+    \begin{minipage}[t]{\linewidth}%
         \raggedright\ttfamily\small
         \textcolor{gray}{\textbackslash begin\{\textcolor{module_name}{{\tl_use:N \l_tempc_tl}}\}\myoarg
         [type=tt,sbc=gray,ac=lightgray,cf=keyname]{keyval~list}}\par%
@@ -1449,12 +1449,13 @@
 % environment \myenv*[no-index]{enumext*}.
 %
 % \begin{function}{enumext,enumext*}
-%   \begin{minipage}[t]{0.45\linewidth}
-%       \envexamp{enumext}
-%   \end{minipage}\hfill
-%   \begin{minipage}[t]{0.45\linewidth}
-%       \envexamp{enumext*}
-%   \end{minipage}
+%   \begin{syntax}
+%     \begin{minipage}[t]{0.45\linewidth}
+%         \envexamp{enumext}
+%     \end{minipage}\hfill\begin{minipage}[t]{0.45\linewidth}
+%         \envexamp{enumext*}
+%     \end{minipage}
+%   \end{syntax}
 % \end{function}
 %
 % \subsection{The environment \texttt{enumext}}\label{subsec:envenumext}
@@ -1681,18 +1682,19 @@
 % \section{The command \cs{setenumext}}\label{sec:setenumext}
 %
 % \begin{function}{\setenumext}
-%   \begin{minipage}[t]{0.45\linewidth}
-%     \cmdexamp{setenumext}{key \textnormal{\textcolor{gray}{=}} val}
-%     \cmdexamp{setenumext}[enumext\textnormal{\textcolor{gray}{,}} level]{key \textnormal{\textcolor{gray}{=}} val}
-%     \cmdexamp{setenumext}[enumext*]{key \textnormal{\textcolor{gray}{=}} val}
-%     \cmdexamp{setenumext}[keyans]{key \textnormal{\textcolor{gray}{=}} val}
-%   \end{minipage}\hfill
-%   \begin{minipage}[t]{0.45\linewidth}
-%     \cmdexamp{setenumext}[keyans*]{key \textnormal{\textcolor{gray}{=}} val}
-%     \cmdexamp{setenumext}[print\textnormal{\textcolor{gray}{,}} level]{key \textnormal{\textcolor{gray}{=}} val}
-%     \cmdexamp{setenumext}[print\textnormal{\textcolor{gray}{,}} \textnormal{\textcolor{red}{*}}]{key \textnormal{\textcolor{gray}{=}} val}
-%     \cmdexamp{setenumext}[print*]{key \textnormal{\textcolor{gray}{=}} val}
-%   \end{minipage}
+%   \begin{syntax}
+%     \begin{minipage}[t]{0.45\linewidth}
+%       \cmdexamp{setenumext}{key \textnormal{\textcolor{gray}{=}} val}
+%       \cmdexamp{setenumext}[enumext\textnormal{\textcolor{gray}{,}} level]{key \textnormal{\textcolor{gray}{=}} val}
+%       \cmdexamp{setenumext}[enumext*]{key \textnormal{\textcolor{gray}{=}} val}
+%       \cmdexamp{setenumext}[keyans]{key \textnormal{\textcolor{gray}{=}} val}
+%     \end{minipage}\hfill\begin{minipage}[t]{0.45\linewidth}
+%       \cmdexamp{setenumext}[keyans*]{key \textnormal{\textcolor{gray}{=}} val}
+%       \cmdexamp{setenumext}[print\textnormal{\textcolor{gray}{,}} level]{key \textnormal{\textcolor{gray}{=}} val}
+%       \cmdexamp{setenumext}[print\textnormal{\textcolor{gray}{,}} \textnormal{\textcolor{red}{*}}]{key \textnormal{\textcolor{gray}{=}} val}
+%       \cmdexamp{setenumext}[print*]{key \textnormal{\textcolor{gray}{=}} val}
+%     \end{minipage}
+%   \end{syntax}
 %
 % The command \ics*{setenumext} sets the \mymeta{keys} on a global basis
 % for environments \myenv*[no-index]{enumext}, \myenv*[no-index]{enumext*}, \myenv*[no-index]{keyans},
@@ -2348,16 +2350,17 @@
 % \subsubsection{The command \cs{resetenumext}}\label{subsubsec:resetenumext}
 %
 % \begin{function}{\resetenumext}
-%   \begin{minipage}[t]{0.45\linewidth}
-%     \cmdexamp{resetenumext}[\textnormal{\textcolor{argnum}{\texttt{1}}}]{some counter}
-%     \cmdexamp{resetenumext}[\textnormal{\textcolor{argnum}{\texttt{2}}}]{some counter}
-%     \cmdexamp{resetenumext}[\textnormal{\textcolor{argnum}{\texttt{3}}}]{some counter}
-%   \end{minipage}\hfill
-%   \begin{minipage}[t]{0.45\linewidth}
-%     \cmdexamp{resetenumext}[\textnormal{\textcolor{argnum}{\texttt{4}}}]{some counter}
-%     \cmdexamp{resetenumext}[\textnormal{\textcolor{star}{\texttt{*}}}]{some counter}
-%     \cmdexamp{resetenumext\textcolor{star}{*}}{some counter}
-%   \end{minipage}
+%   \begin{syntax}
+%     \begin{minipage}[t]{0.45\linewidth}
+%       \cmdexamp{resetenumext}[\textnormal{\textcolor{argnum}{\texttt{1}}}]{some counter}
+%       \cmdexamp{resetenumext}[\textnormal{\textcolor{argnum}{\texttt{2}}}]{some counter}
+%       \cmdexamp{resetenumext}[\textnormal{\textcolor{argnum}{\texttt{3}}}]{some counter}
+%     \end{minipage}\hfill\begin{minipage}[t]{0.45\linewidth}
+%       \cmdexamp{resetenumext}[\textnormal{\textcolor{argnum}{\texttt{4}}}]{some counter}
+%       \cmdexamp{resetenumext}[\textnormal{\textcolor{star}{\texttt{*}}}]{some counter}
+%       \cmdexamp{resetenumext\textcolor{star}{*}}{some counter}
+%     \end{minipage}
+%   \end{syntax}
 %
 %  The \ics*{resetenumext} command \emph{\enquote{resets}} the \emph{start value}
 %  of the \emph{\enquote{counters}} for the \myenv*[no-index]{enumext} and \myenv*[no-index]{enumext*}
@@ -3941,8 +3944,7 @@ all the worksheets are as follows:
 %    \end{enumext}
 %  \item First level item
 % \end{enumext}
-% \end{minipage}\hfill
-% \begin{minipage}[t]{0.45\linewidth}
+% \end{minipage}\hfill\begin{minipage}[t]{0.45\linewidth}
 % \begin{enumext}[nosep, label=$\ast$]
 %  \item First level item
 %    \begin{enumext}[nosep,label=$\diamond$]
@@ -4186,8 +4188,8 @@ all the worksheets are as follows:
 %     penalties, the symbol of |\item*|, the code keys \mykey{before},
 %     \mykey{first} and \mykey{after}, and the \myenv{minipage} keys;
 %   \item \myfile{test-004}: the storage system with |\anskey|,
-%     \myenv*[no-index]{anskey*}, |\printkeyans|, |\getkeyans| and
-%     |\foreachkeyans|, and the keys that store and show the answers;
+%     \myenv*[no-index]{anskey*} and the commands |\printkeyans|, |\getkeyans|
+%     and |\foreachkeyans|, plus the keys that store and show the answers;
 %   \item \myfile{test-005}: the environments \myenv*[no-index]{keyans},
 %     \myenv*[no-index]{keyans*} and \myenv*[no-index]{keyanspic}, their keys and
 %     the standard lists nested in the options of \myenv*[no-index]{keyans*};
@@ -5336,8 +5338,8 @@ all the worksheets are as follows:
     \NewCommandCopy \@@_item_std:w \item
   }
 %    \end{macrocode}
-%   The functions \myhlc|\@@_minipage:w| and \myhlc|\@@_endminipage:| correspond
-%   to copies of |\minipage| and |\endminipage| from plain definition of
+%   The functions \myhlc|\@@_minipage:w| and \myhlc|\@@_endminipage:| are copies
+%   of |\minipage| and |\endminipage| taken from the plain definition of the
 %   \myenv[no-index]{minipage} environment.
 %    \begin{macrocode}
 \@@_at_begin_document:n
@@ -8123,15 +8125,15 @@ all the worksheets are as follows:
 % \begin{macro}[int]{\@@_standard_save_counter:, \@@_standard_save_counter_aux:,
 %                    \@@_starred_save_counter:, \@@_starred_save_counter_aux:}
 %   The \myhlc|\@@_standard_save_counter:| and \myhlc|\@@_starred_save_counter:|
-%   functions will save the last counter value to \myhlc|\g_@@_series_#1_X_int|
-%   with the name given to the key \mykey[env]{series}|=|\mymarg{series name}
-%   if it has been passed, to \myhlc|\c@ @@_resume_X_int| if none of the keys
+%   functions save the last counter value as follows. If the key
+%   \mykey[env]{series}|=|\mymarg{series name} has been passed, the value goes to
+%   \myhlc|\g_@@_series_#1_X_int| with that name. If none of the keys
 %   \mykey[env]{series}, \mykey[env]{resume}|=|\mymarg{series name} and
-%   \mykey[env]{save-ans} has been passed (the case of the key
-%   \mykey[env]{resume} \emph{without value}), to
-%   \myhlc|\g_@@_series_#1_X_int| with the name given to the key
-%   \mykey{resume}|=|\mymarg{series name} if it has been passed and, in the
-%   \emph{\enquote{first level}}, to \myhlc|\g_@@_resume_#1_int| with the
+%   \mykey[env]{save-ans} has been passed, which is the case of the key
+%   \mykey[env]{resume} \emph{without value}, it goes to
+%   \myhlc|\c@ @@_resume_X_int|. If the key \mykey{resume}|=|\mymarg{series name}
+%   has been passed, it goes to \myhlc|\g_@@_series_#1_X_int| with that name. In the
+%   \emph{\enquote{first level}} it also goes to \myhlc|\g_@@_resume_#1_int| with the
 %   \mymarg{store name} if the key \mykey[env]{save-ans}|=|\mymarg{store name}
 %   has been passed.
 %
