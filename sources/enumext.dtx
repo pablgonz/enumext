@@ -1437,7 +1437,7 @@
 %  |\footnote| internally and the \enquote{links} are not produced; in
 %  \myenv*[no-index]{enumext*} and \myenv*[no-index]{keyans*} the notes are
 %  processed inside the item and printed after the environment, which avoids the
-%  kernel issue 1337 (a |\footnotetext| after a list gives a \texttt{tagpdf}
+%  kernel issue 1337 (a |\footnotetext| after a list gives a \mypkg[no-index]{tagpdf}
 %  error). With an older version, load \mypkg[no-index]{footnotehyper} only
 %  when \emph{tagged} \texttt{PDF} is not active, using |\IfDocumentMetadataF|.
 % \end{important}
@@ -4348,7 +4348,7 @@ all the worksheets are as follows:
 %        are now declared as \emph{unordered} lists instead of \emph{ordered} lists.
 %      \item \emph{Tagged} \texttt{PDF}: in \myenv*[no-index]{enumext} and \myenv*[no-index]{keyans}
 %        a label wider than |\labelwidth| pushes the text instead of overlapping it, and
-%        tall labels (images, \texttt{tikz} pictures) are no longer smashed and
+%        tall labels (images, \mypkg[no-index]{tikz} pictures) are no longer smashed and
 %        increase the height of the line again.
 %      \item The documentation is now a \emph{tagged} \texttt{PDF} (PDF/UA-2).
 %    \end{itemize}
@@ -4361,7 +4361,7 @@ all the worksheets are as follows:
 %        and \mykey{label-sep} give the exact distance with any font size, and by default
 %        the space above and below is the same as in \myenv*[no-index]{keyans}.
 %        The default value of \mykey{label-sep} is \mydim{1pt} above and \mydim{5pt} below.
-%      \item Fixed the \texttt{tagpdf} error for |\footnote| in \myenv*[no-index]{enumext*}
+%      \item Fixed the \mypkg[no-index]{tagpdf} error for |\footnote| in \myenv*[no-index]{enumext*}
 %        and \myenv*[no-index]{keyans*} with \emph{tagged} \texttt{PDF} when
 %        \mypkg[no-index]{footnotehyper} is not loaded.
 %    \end{itemize}
@@ -5552,7 +5552,7 @@ all the worksheets are as follows:
   }
 %    \end{macrocode}
 %   With \emph{tagged} \texttt{PDF}, a |\footnotetext| placed after a list
-%   gives a \texttt{tagpdf} error (see \texttt{tagging-project} issue 1337), so
+%   gives a \mypkg[no-index]{tagpdf} error (see \texttt{tagging-project} issue 1337), so
 %   in the \myenv*[no-index]{enumext*} and \myenv*[no-index]{keyans*}
 %   environments the notes are processed inside the item, as the
 %   \mypkg[no-index]{footnotehyper} package does. The plug |enumextsave| of the
@@ -6979,8 +6979,8 @@ all the worksheets are as follows:
 %   Same implementation as the one used in the \myenv*[no-index]{enumext} environment, except that
 %   the functions \myhlc|\@@_after_args_exec_vii:| and \myhlc|\@@_after_args_exec_viii:| do not
 %   exist. Instead, the \mymarg{code} set by the \mykey[env]{first} key is used directly by
-%   \myhlc|\@@_start_item_vii:w| and \myhlc|\@@_start_item_viii:w| inside the \env{minipage} of each
-%   \myhlc|\item|.
+%   \myhlc|\@@_start_item_vii:w| and \myhlc|\@@_start_item_viii:w| inside the
+%   \myenv[no-index]{minipage} of each \myhlc|\item|.
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_before_args_exec_vii:
   {
@@ -11364,7 +11364,7 @@ all the worksheets are as follows:
 %
 % \begin{important}
 %  The label is not smashed, so a tall label (an image, a duck
-%  drawn with \texttt{tikz}, \ldots) still increases the height of the line as it does with
+%  drawn with \mypkg[no-index]{tikz}, \ldots) still increases the height of the line as it does with
 %  the standard |\makelabel|. A multi-line label made with |\parbox[t]| needs
 %  |\leavevmode| at the start of the paragraph (see |\labelbx| in
 %  \S\ref{subsec:description-multiline}), otherwise the box starts in
@@ -14274,10 +14274,10 @@ all the worksheets are as follows:
 %    generated and a temporary definition is given to \myhlc|\@@_stop_item_tmp_vii:| equal to
 %    \myhlc|\@@_first_item_tmp_vii:| and next to |\item| equal to the switch
 %    \myhlc|\@@_item_switch_vii:| (\S\ref{subsec:item-nested}), which decides whether
-%    |\item| belongs to \env{enumext*} (\myhlc|\@@_start_item_tmp_vii:|, redefined
+%    |\item| belongs to \myenv*[no-index]{enumext*} (\myhlc|\@@_start_item_tmp_vii:|, redefined
 %    later) or to a standard list nested inside it; the nesting depth of
-%    the \env{enumext*} environment is stored in \myhlc|\l_@@_base_depth_int|. Unlike the implementation used by
-%    the \mypkg[no-index]{shortlst} package, the values of
+%    the \myenv*[no-index]{enumext*} environment is stored in \myhlc|\l_@@_base_depth_int|.
+%    Unlike the implementation used by the \mypkg[no-index]{shortlst} package, the values of
 %    \myhlc|\rightskip| and \myhlc|\@rightskip| are not set equal to
 %    \myhlc|\@flushglue|, whose value is
 %    \mydim{0.0pt plus 1.0 fil}; in the tests performed this fails in
@@ -14699,7 +14699,7 @@ all the worksheets are as follows:
 %
 % \begin{important}*
 %   The nested lists inherit \myhlc|\labelwidth| and \myhlc|\labelsep| from the
-%   group in which they are opened, which is the one of the \env{list} that defines
+%   group in which they are opened, which is the one of the \myenv[no-index]{list} that defines
 %   \myenv*[no-index]{enumext*}, where they have the values of the keys
 %   \mykey{labelwidth} and \mykey{labelsep}. Without a correction the label of
 %   \myenv[no-index]{itemize} would be displaced and the space after the label of
@@ -14742,7 +14742,7 @@ all the worksheets are as follows:
       { #1 }
   }
 %    \end{macrocode}
-%   The function \myhlc|\@@_nested_save:| is run before the \env{list} of the
+%   The function \myhlc|\@@_nested_save:| is run before the \myenv[no-index]{list} of the
 %   environment is opened and \myhlc|\@@_nested_reset:| is run inside the item,
 %   after the label has been typeset; it stores the depth of lists, sets the
 %   boolean to false and restores the saved values.
@@ -14794,7 +14794,7 @@ all the worksheets are as follows:
 % the implementation in \mypkg[no-index]{shortlst}, no extra group is added
 % around the \emph{horizontal box} and the plain form of the
 % \myenv[no-index]{lrbox} environment, that is \myhlc|\hbox_set_to_wd:Nnw| and
-% \myhlc|\hbox_set_end:|, is used instead of the \env{lrbox} environment.
+% \myhlc|\hbox_set_end:|, is used instead of the \myenv[no-index]{lrbox} environment.
 %
 % \begin{macro}[int]{\@@_start_item_vii:w, \@@_start_item_box_vii:w, \@@_stop_item_vii:}
 %   The function \myhlc|\@@_start_item_vii:w| chooses how the item is built:
