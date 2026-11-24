@@ -279,26 +279,34 @@
 
 % ---------------------------------------------------------------------
 % Tagging support for l3doc (only with \DocumentMetadata).
-% Loads the latex-lab l3doc support and maps its structures to standard
-% PDF structure types (its own function/macro/... types are unknown to the
-% LaTeX RelaxNG schemas). A later \AssignStructureRole overrides any of them.
+% Loads the latex-lab l3doc support and maps its structures to the
+% elements that the LaTeX RelaxNG schemas (latex3/pdf_structure) accept
+% inside sections and paragraphs (its own function/macro/... types are
+% unknown to them). The names of a function are typeset in a tabular
+% (layout table), whose rows and cells become inline text; the names are
+% not a Caption because PDF/UA-2 wants it as first or last kid of the
+% section. A later \AssignStructureRole overrides any of them.
 % ---------------------------------------------------------------------
 \IfDocumentMetadataT
   {
     \RequirePackage { latex-lab-testphase-l3doc }
-    \AssignStructureRole { doc/function              } { Sect    }
-    \AssignStructureRole { doc/functionnames         } { Caption }
-    \AssignStructureRole { doc/functionname          } { Code    }
-    \AssignStructureRole { doc/functionnamepart      } { Span    }
-    \AssignStructureRole { doc/syntax                } { Div     }
-    \AssignStructureRole { doc/function-description  } { Div     }
-    \AssignStructureRole { doc/macro                 } { Sect    }
-    \AssignStructureRole { doc/macronames            } { Caption }
-    \AssignStructureRole { doc/macroname             } { Code    }
-    \AssignStructureRole { doc/variable              } { Sect    }
-    \AssignStructureRole { doc/variablenames         } { Caption }
-    \AssignStructureRole { doc/variablename          } { Code    }
-    \AssignStructureRole { doc/codelinenum           } { Lbl     }
+    \AssignStructureRole { doc/function              } { semantic-para }
+    \AssignStructureRole { doc/functionnames         } { text-block    }
+    \AssignStructureRole { doc/functionname          } { Code          }
+    \AssignStructureRole { doc/functionnamepart      } { Span          }
+    \AssignStructureRole { doc/syntax                } { semantic-para }
+    \AssignStructureRole { doc/function-description  } { Div           }
+    \AssignStructureRole { doc/macro                 } { Div           }
+    \AssignStructureRole { doc/macronames            } { text-block    }
+    \AssignStructureRole { doc/macroname             } { Span          }
+    \AssignStructureRole { doc/variable              } { Div           }
+    \AssignStructureRole { doc/variablenames         } { text-block    }
+    \AssignStructureRole { doc/variablename          } { Span          }
+    \AssignStructureRole { doc/codelinenum           } { Lbl           }
+    \AssignStructureRole { layouttable               } { text-fragment }
+    \AssignStructureRole { layouttable/row           } { text-fragment }
+    \AssignStructureRole { layouttable/cell          } { text-fragment }
+    \AssignStructureRole { layouttable/pcell         } { text-fragment }
     % The macro environment of latex-lab-testphase-l3doc hard-codes the tag
     % name `macro'; use the (re)assigned role instead.
     \cs_if_exist:NT \__codedoc_macro_dump:
