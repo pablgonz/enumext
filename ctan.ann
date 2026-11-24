@@ -1,8 +1,9 @@
 Release v2.7
-– save-ref: the link target and the label are created with \MakeLinkTarget and
-  \label when hyperref is loaded.
-– Tagged PDF: lists whose label does not use the counter, for example label={},
-  are now declared as unordered lists.
-– Tagged PDF: in enumext and keyans a label wider than \labelwidth no longer
-  overlaps the text and tall labels are no longer smashed.
-– The documentation is now a tagged PDF (PDF/UA-2).
+– New command \AddEnumextCounter to register counter styles that the package
+  does not provide, such as \fnsymbol, for the label key.
+– Tagged PDF: ordered lists now declare the numbering used in the label
+  (Decimal, LowerAlpha, UpperAlpha, LowerRoman or UpperRoman).
+– Tagged PDF: enumext* and keyans* without the counter in the label are now
+  declared as unordered lists.
+– The message of the save-ans key with the number of items and answers now
+  starts with the name of the storage.

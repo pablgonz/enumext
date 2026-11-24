@@ -45,7 +45,7 @@
         later.~Update~your~TeX~distribution.
       }
   }
-\ProvidesExplPackage {enumext} {2026-11-26} {2.7} {Enumerate exercise sheets}
+\ProvidesExplPackage {enumext} {2026-11-25} {2.7} {Enumerate exercise sheets}
 \hook_gput_code:nnn {begindocument} {enumext}
   {
     \IfPackageLoadedTF { multicol }
@@ -183,7 +183,7 @@
   }
 \msg_new:nnn { enumext } { item-answer-hook }
   {
-    Items~=~#1,~answers~=~#2,~difference~=~#3.
+    Storage~'#1':~items~=~#2,~answers~=~#3,~difference~=~#4.
   }
 \cs_generate_variant:Nn \keys_precompile:nnN { neN }
 \cs_generate_variant:Nn \seq_use:Nn { NV }
@@ -360,7 +360,8 @@
   }
 \cs_new_protected:Nn \__enumext_log_answer_vars:
   {
-    \msg_info:nneee { enumext } { item-answer-hook }
+    \msg_info:nneeee { enumext } { item-answer-hook }
+      { \g__enumext_store_name_tl }
       { \int_use:N \g__enumext_item_number_int }
       { \int_use:N \g__enumext_item_anskey_int }
       { \int_eval:n { \g__enumext_item_number_int - \g__enumext_item_anskey_int} }
@@ -719,6 +720,40 @@
     \tl_set_eq:cN { the #2 } #1
   }
 \cs_generate_variant:Nn \__enumext_label_style:Nnn { cvn }
+\msg_new:nnnn { enumext } { counter-not-cs }
+  {
+    The~first~argument~'#1'~is~not~a~control~sequence~\msg_line_context:.
+  }
+  {
+    The~first~argument~must~be~a~counter~style~such~as~
+    '\c_backslash_str fnsymbol'.
+  }
+\msg_new:nnnn { enumext } { counter-registered }
+  {
+    The~counter~style~'#1'~is~already~registered~\msg_line_context:.
+  }
+  {
+    A~counter~style~can~only~be~registered~once.~The~package~already~
+    registers~'\c_backslash_str arabic',~'\c_backslash_str Alph',~
+    '\c_backslash_str alph',~'\c_backslash_str Roman'~and~
+    '\c_backslash_str roman'.
+  }
+\cs_new_protected:Nn \__enumext_add_counter:nn
+  {
+    \bool_lazy_and:nnTF
+      { \tl_if_single_p:n {#1} }
+      { \token_if_cs_p:N #1 }
+      {
+        \tl_if_exist:cTF { c__enumext_widest_ \cs_to_str:N #1 _tl }
+          { \msg_error:nne { enumext } { counter-registered } { \token_to_str:N #1 } }
+          { \__enumext_register_default_label_wd:Nn #1 {#2} }
+      }
+      { \msg_error:nne { enumext } { counter-not-cs } { \tl_to_str:n {#1} } }
+  }
+\NewDocumentCommand \AddEnumextCounter { m m }
+  {
+    \__enumext_add_counter:nn {#1} {#2}
+  }
 \cs_set_protected:Nn \__enumext_tmp:n
   {
     \keys_define:nn { enumext /  #1 }
