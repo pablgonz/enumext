@@ -10,7 +10,8 @@
 % las listas de enumext declaran Decimal, LowerAlpha, UpperAlpha, LowerRoman o
 % UpperRoman segun el estilo de contador de label, Unordered si la etiqueta no
 % usa el contador y Ordered en las listas que no crea el paquete (enumerate).
-% Una lista de itemize dentro de enumext no hereda el estilo.
+% Una lista de itemize dentro de enumext no hereda el estilo. Tambien se cubren enumext* y
+% keyans* con etiqueta sin contador (Unordered).
 \input{regression-test}
 
 \DocumentMetadata
@@ -78,9 +79,21 @@
   \item Two
 \end{enumext*}
 
+4. Labels without counter in two columns.
+
+\begin{enumext*}[columns=2,label={}]
+  \item One
+  \item Two
+\end{enumext*}
+
+\begin{enumext*}[columns=2,label=\textbullet]
+  \item One
+  \item Two
+\end{enumext*}
+
 \section*{C. Nested and standard lists}
 
-4. Lists inside \texttt{enumext} and standard lists.
+5. Lists inside \texttt{enumext} and standard lists.
 
 \begin{enumext}[label=\alph*)]
   \item First
@@ -102,7 +115,7 @@
 
 \section*{D. The environments \texttt{keyans} and \texttt{keyans*}}
 
-5. Answers with letters and numerals.
+6. Answers with letters and numerals.
 
 \begin{enumext}[save-ans=numbering]
   \item Question A.
@@ -112,6 +125,21 @@
     \end{keyans}
   \item Question B.
     \begin{keyans*}[columns=2,label=\Roman*)]
+      \item First
+      \item* Second (correct)
+    \end{keyans*}
+\end{enumext}
+
+7. Answers without counter.
+
+\begin{enumext}[save-ans=nocounter]
+  \item Question A.
+    \begin{keyans}[label={}]
+      \item First
+      \item* Second (correct)
+    \end{keyans}
+  \item Question B.
+    \begin{keyans*}[columns=2,label={}]
       \item First
       \item* Second (correct)
     \end{keyans*}

@@ -12280,6 +12280,7 @@ all the worksheets are as follows:
         \usecounter { enumX #1 }
         % \setcounter { enumX #1 }
         %   { \int_eval:n { \int_use:c { l_@@_start_ #1 _int } - 1 } }
+        \@@_unnumbered_list:n {#1}
         \@@_list_numbering:n {#1}
         \@@_starred_ref:
         \str_if_eq:nnTF {#1} { vii }
@@ -14381,6 +14382,7 @@ all the worksheets are as follows:
         \@@_list_arg_two_vii:
         \@@_before_keys_exec_vii:
       }
+    \legacy_if_set_true:n { @nmbrlist }
     \IfDocumentMetadataT { \tag_suspend:n {enumext*} }
     \@@_starred_columns_set_vii:
     \item[] \scan_stop:
@@ -15119,6 +15121,7 @@ all the worksheets are as follows:
         \@@_list_arg_two_viii:
         \@@_before_keys_exec_viii:
       }
+    \legacy_if_set_true:n { @nmbrlist }
     \IfDocumentMetadataT { \tag_suspend:n {keyans*} }
     \@@_starred_columns_set_viii:
     \item[] \scan_stop:

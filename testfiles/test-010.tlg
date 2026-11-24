@@ -2766,7 +2766,7 @@ TEST 1: Show PDF Tags
      <list xmlns="https://www.latex-project.org/ns/dflt"
         id="ID.00497"
         xmlns:List="http://iso.org/pdf/ssn/List"
-        List:ListNumbering="Ordered"
+        List:ListNumbering="Unordered"
         rolemaps-to="L"
        >
       <LI xmlns="http://iso.org/pdf2/ssn"
