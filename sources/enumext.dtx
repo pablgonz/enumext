@@ -4346,6 +4346,16 @@ all the worksheets are as follows:
 % \begin{description}[font=\small\sffamily,leftmargin=1.1\descrwidth,labelwidth=1.1\descrwidth,labelsep=0pt,itemindent=0pt,nosep,noitemsep]
 %  \item [\fileversion{} (ctan), \filedate]
 %    \begin{itemize}
+%      \item \emph{Tagged} \texttt{PDF}: the ordered lists declare the numbering used in
+%        the label (\texttt{Decimal}, \texttt{LowerAlpha}, \texttt{UpperAlpha},
+%        \texttt{LowerRoman} or \texttt{UpperRoman}) instead of the generic \texttt{Ordered}.
+%      \item \emph{Tagged} \texttt{PDF}: \myenv*[no-index]{enumext*} and \myenv*[no-index]{keyans*}
+%        without the counter in the label are also declared as \emph{unordered} lists.
+%      \item The message written to the |.log| file by the \mykey{save-ans} key with the
+%        number of items and answers now starts with the name of the storage.
+%    \end{itemize}
+%  \item [v2.6 (ctan), 2026-11-24]
+%    \begin{itemize}
 %      \item When \mypkg[no-index]{hyperref} is loaded the \mykey{save-ref} key creates the link
 %        target with |\MakeLinkTarget| and the label with |\label|.
 %      \item \emph{Tagged} \texttt{PDF}: the lists whose \mykey{label} does not use the
@@ -4355,11 +4365,6 @@ all the worksheets are as follows:
 %        a label wider than |\labelwidth| pushes the text instead of overlapping it, and
 %        tall labels (images, \mypkg[no-index]{tikz} pictures) are no longer smashed and
 %        increase the height of the line again.
-%      \item \emph{Tagged} \texttt{PDF}: the ordered lists declare the numbering used in
-%        the label (\texttt{Decimal}, \texttt{LowerAlpha}, \texttt{UpperAlpha},
-%        \texttt{LowerRoman} or \texttt{UpperRoman}) instead of the generic \texttt{Ordered}.
-%      \item \emph{Tagged} \texttt{PDF}: \myenv*[no-index]{enumext*} and \myenv*[no-index]{keyans*}
-%        without the counter in the label are also declared as \emph{unordered} lists.
 %      \item The documentation is now a \emph{tagged} \texttt{PDF} (PDF/UA-2).
 %    \end{itemize}
 %  \item [v2.5 (ctan), 2026-11-14]
@@ -5000,7 +5005,7 @@ all the worksheets are as follows:
   }
 \msg_new:nnn { enumext } { item-answer-hook }
   {
-    Items~=~#1,~answers~=~#2,~difference~=~#3.
+    Storage~'#1':~items~=~#2,~answers~=~#3,~difference~=~#4.
   }
 %    \end{macrocode}
 % \end{macro}
@@ -5290,11 +5295,13 @@ all the worksheets are as follows:
   }
 %    \end{macrocode}
 %   The function \myhlc|\@@_log_answer_vars:| will be passed to \myhlc|\@@_execute_after_env:| and
-%   write to the |.log| file the number of items and answers along with the difference between them.
+%   write to the |.log| file the name of the storage, the number of items and answers along with the
+%   difference between them.
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_log_answer_vars:
   {
-    \msg_info:nneee { enumext } { item-answer-hook }
+    \msg_info:nneeee { enumext } { item-answer-hook }
+      { \g_@@_store_name_tl }
       { \int_use:N \g_@@_item_number_int }
       { \int_use:N \g_@@_item_anskey_int }
       { \int_eval:n { \g_@@_item_number_int - \g_@@_item_anskey_int} }

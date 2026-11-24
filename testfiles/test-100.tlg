@@ -147,7 +147,7 @@ Defining \g__enumext_resume_d2_int on line ...
 \g__enumext_resume_d2_int=\count...
 Package enumext Info: Stop 'enumext' with 'save-ans=d2' on line ....
 Package enumext Info: Storage 'd2': \g__enumext_d2_prop has 1 elements, \g__enumext_d2_seq has 1 elements, \g__enumext_resume_d2_int = 2.
-Package enumext Info: Items = 2, answers = 1, difference = 1.
+Package enumext Info: Storage 'd2': items = 2, answers = 1, difference = 1.
 Package enumext Warning: Answers in 'd2' (enumext): NOT OK, items > answers.
 (enumext)                Started on line ... and closed on line ....
 [D3]
@@ -161,7 +161,7 @@ Defining \g__enumext_resume_d3_int on line ...
 \g__enumext_resume_d3_int=\count...
 Package enumext Info: Stop 'enumext' with 'save-ans=d3' on line ....
 Package enumext Info: Storage 'd3': \g__enumext_d3_prop has 2 elements, \g__enumext_d3_seq has 2 elements, \g__enumext_resume_d3_int = 1.
-Package enumext Info: Items = 1, answers = 2, difference = -1.
+Package enumext Info: Storage 'd3': items = 1, answers = 2, difference = -1.
 Package enumext Warning: Answers in 'd3' (enumext): NOT OK, items < answers.
 (enumext)                Started on line ... and closed on line ....
 [D4]
@@ -175,7 +175,7 @@ Defining \g__enumext_resume_d4_int on line ...
 \g__enumext_resume_d4_int=\count...
 Package enumext Info: Stop 'enumext' with 'save-ans=d4' on line ....
 Package enumext Info: Storage 'd4': \g__enumext_d4_prop has 2 elements, \g__enumext_d4_seq has 2 elements, \g__enumext_resume_d4_int = 2.
-Package enumext Info: Items = 2, answers = 2, difference = 0.
+Package enumext Info: Storage 'd4': items = 2, answers = 2, difference = 0.
 Package enumext Info: Answers in 'd4' (enumext): OK, items = answers.
 (enumext)             Started on line ... and closed on line ....
 [D5]
@@ -208,7 +208,7 @@ Defining \g__enumext_resume_d9_int on line ...
 \g__enumext_resume_d9_int=\count...
 Package enumext Info: Stop 'enumext' with 'save-ans=d9' on line ....
 Package enumext Info: Storage 'd9': \g__enumext_d9_prop has 1 elements, \g__enumext_d9_seq has 3 elements, \g__enumext_resume_d9_int = 1.
-Package enumext Info: Items = 1, answers = 1, difference = 0.
+Package enumext Info: Storage 'd9': items = 1, answers = 1, difference = 0.
 Package enumext Info: Answers in 'd9' (enumext): OK, items = answers.
 (enumext)             Started on line ... and closed on line ....
 ! Package enumext Error: '\printkeyans*': The sequence 'd9' already contains enumext* environment on line ....
@@ -239,7 +239,7 @@ l. ...      \item Uno \anskey{}
 Give some content to '\anskey' or remove the command.
 Package enumext Info: Stop 'enumext' with 'save-ans=e2' on line ....
 Package enumext Info: Storage 'e2': \g__enumext_e2_prop has 0 elements, \g__enumext_e2_seq has 0 elements, \g__enumext_resume_e2_int = 1.
-Package enumext Info: Items = 1, answers = 0, difference = 1.
+Package enumext Info: Storage 'e2': items = 1, answers = 0, difference = 1.
 Package enumext Info: Answers in 'e2' (enumext): NOT OK, items > answers.
 (enumext)             Started on line ... and closed on line ....
 [E3]
@@ -258,7 +258,7 @@ l. ...      \item Uno \anskey[clavefalsa]{x}
 The command '\anskey' does not have a key called 'clavefalsa'. Check that you have spelled the key name correctly.
 Package enumext Info: Stop 'enumext' with 'save-ans=e3' on line ....
 Package enumext Info: Storage 'e3': \g__enumext_e3_prop has 1 elements, \g__enumext_e3_seq has 1 elements, \g__enumext_resume_e3_int = 1.
-Package enumext Info: Items = 1, answers = 1, difference = 0.
+Package enumext Info: Storage 'e3': items = 1, answers = 1, difference = 0.
 Package enumext Info: Answers in 'e3' (enumext): OK, items = answers.
 (enumext)             Started on line ... and closed on line ....
 [E4]
@@ -282,7 +282,7 @@ l. ...      \item Uno $\anskey{x}
 Leave math mode before using '\anskey'.
 Package enumext Info: Stop 'enumext' with 'save-ans=e4' on line ....
 Package enumext Info: Storage 'e4': \g__enumext_e4_prop has 1 elements, \g__enumext_e4_seq has 1 elements, \g__enumext_resume_e4_int = 1.
-Package enumext Info: Items = 1, answers = 1, difference = 0.
+Package enumext Info: Storage 'e4': items = 1, answers = 1, difference = 0.
 Package enumext Info: Answers in 'e4' (enumext): OK, items = answers.
 (enumext)             Started on line ... and closed on line ....
 [E5]
@@ -296,7 +296,7 @@ Defining \g__enumext_resume_e5_int on line ...
 \g__enumext_resume_e5_int=\count...
 Package enumext Info: Stop 'enumext' with 'save-ans=e5' on line ....
 Package enumext Info: Storage 'e5': \g__enumext_e5_prop has 1 elements, \g__enumext_e5_seq has 1 elements, \g__enumext_resume_e5_int = 1.
-Package enumext Info: Items = 1, answers = 1, difference = 0.
+Package enumext Info: Storage 'e5': items = 1, answers = 1, difference = 0.
 Package enumext Info: Answers in 'e5' (enumext): OK, items = answers.
 (enumext)             Started on line ... and closed on line ....
 [E6]
@@ -310,7 +310,7 @@ Defining \g__enumext_resume_e6_int on line ...
 \g__enumext_resume_e6_int=\count...
 Package enumext Info: Stop 'enumext' with 'save-ans=e6' on line ....
 Package enumext Info: Storage 'e6': \g__enumext_e6_prop has 1 elements, \g__enumext_e6_seq has 1 elements, \g__enumext_resume_e6_int = 1.
-Package enumext Info: Items = 1, answers = 1, difference = 0.
+Package enumext Info: Storage 'e6': items = 1, answers = 1, difference = 0.
 Package enumext Info: Answers in 'e6' (enumext): OK, items = answers.
 (enumext)             Started on line ... and closed on line ....
 [E7]
@@ -335,7 +335,7 @@ l. ...        \end{anskey*}
 The environment 'anskey*' does not have a key called 'clavefalsa'. Check that you have spelled the key name correctly.
 Package enumext Info: Stop 'enumext' with 'save-ans=e8' on line ....
 Package enumext Info: Storage 'e8': \g__enumext_e8_prop has 1 elements, \g__enumext_e8_seq has 1 elements, \g__enumext_resume_e8_int = 1.
-Package enumext Info: Items = 1, answers = 1, difference = 0.
+Package enumext Info: Storage 'e8': items = 1, answers = 1, difference = 0.
 Package enumext Info: Answers in 'e8' (enumext): OK, items = answers.
 (enumext)             Started on line ... and closed on line ....
 [E9]
@@ -354,7 +354,7 @@ l. ...      \item Uno \anskey[clavefalsa=valor]{x}
 The command '\anskey' does not have a key called 'clavefalsa'. Check that you have spelled the key name correctly.
 Package enumext Info: Stop 'enumext' with 'save-ans=e9' on line ....
 Package enumext Info: Storage 'e9': \g__enumext_e9_prop has 1 elements, \g__enumext_e9_seq has 1 elements, \g__enumext_resume_e9_int = 1.
-Package enumext Info: Items = 1, answers = 1, difference = 0.
+Package enumext Info: Storage 'e9': items = 1, answers = 1, difference = 0.
 Package enumext Info: Answers in 'e9' (enumext): OK, items = answers.
 (enumext)             Started on line ... and closed on line ....
 [E10]
@@ -373,7 +373,7 @@ l. ...      \item[X] Uno \anskey{x}
 Store the content with a numbered '\item'.
 Package enumext Info: Stop 'enumext' with 'save-ans=e10' on line ....
 Package enumext Info: Storage 'e10': \g__enumext_e10_prop has 1 elements, \g__enumext_e10_seq has 1 elements, \g__enumext_resume_e10_int = 0.
-Package enumext Info: Items = 0, answers = 1, difference = -1.
+Package enumext Info: Storage 'e10': items = 0, answers = 1, difference = -1.
 Package enumext Info: Answers in 'e10' (enumext): NOT OK, items < answers.
 (enumext)             Started on line ... and closed on line ....
 [E11]
@@ -392,7 +392,7 @@ l. ...        \end{anskey*}
 Store the content with a numbered '\item'.
 Package enumext Info: Stop 'enumext' with 'save-ans=e11' on line ....
 Package enumext Info: Storage 'e11': \g__enumext_e11_prop has 1 elements, \g__enumext_e11_seq has 1 elements, \g__enumext_resume_e11_int = 0.
-Package enumext Info: Items = 0, answers = 1, difference = -1.
+Package enumext Info: Storage 'e11': items = 0, answers = 1, difference = -1.
 Package enumext Info: Answers in 'e11' (enumext): NOT OK, items < answers.
 (enumext)             Started on line ... and closed on line ....
 [E12]
@@ -411,7 +411,7 @@ l. ...        \end{anskey*}
 The environment 'anskey*' does not have a key called 'clavefalsa'. Check that you have spelled the key name correctly.
 Package enumext Info: Stop 'enumext' with 'save-ans=e12' on line ....
 Package enumext Info: Storage 'e12': \g__enumext_e12_prop has 1 elements, \g__enumext_e12_seq has 1 elements, \g__enumext_resume_e12_int = 1.
-Package enumext Info: Items = 1, answers = 1, difference = 0.
+Package enumext Info: Storage 'e12': items = 1, answers = 1, difference = 0.
 Package enumext Info: Answers in 'e12' (enumext): OK, items = answers.
 (enumext)             Started on line ... and closed on line ....
 [E13]
@@ -427,7 +427,7 @@ Package enumext Warning: Writing file 'test-100-e13.txt'.
 \l__enumext_write_anskey_env_file_iow=\write...
 Package enumext Info: Stop 'enumext' with 'save-ans=e13' on line ....
 Package enumext Info: Storage 'e13': \g__enumext_e13_prop has 1 elements, \g__enumext_e13_seq has 1 elements, \g__enumext_resume_e13_int = 1.
-Package enumext Info: Items = 1, answers = 1, difference = 0.
+Package enumext Info: Storage 'e13': items = 1, answers = 1, difference = 0.
 Package enumext Info: Answers in 'e13' (enumext): OK, items = answers.
 (enumext)             Started on line ... and closed on line ....
 [E14]
@@ -442,7 +442,7 @@ Defining \g__enumext_resume_e14_int on line ...
 Package enumext Warning: File 'test-100-e13.txt' already exists. Not writing.
 Package enumext Info: Stop 'enumext' with 'save-ans=e14' on line ....
 Package enumext Info: Storage 'e14': \g__enumext_e14_prop has 1 elements, \g__enumext_e14_seq has 1 elements, \g__enumext_resume_e14_int = 1.
-Package enumext Info: Items = 1, answers = 1, difference = 0.
+Package enumext Info: Storage 'e14': items = 1, answers = 1, difference = 0.
 Package enumext Info: Answers in 'e14' (enumext): OK, items = answers.
 (enumext)             Started on line ... and closed on line ....
 [E15]
@@ -457,7 +457,7 @@ Defining \g__enumext_resume_e15_int on line ...
 Package enumext Warning: Overwriting file 'test-100-e13.txt'.
 Package enumext Info: Stop 'enumext' with 'save-ans=e15' on line ....
 Package enumext Info: Storage 'e15': \g__enumext_e15_prop has 1 elements, \g__enumext_e15_seq has 1 elements, \g__enumext_resume_e15_int = 1.
-Package enumext Info: Items = 1, answers = 1, difference = 0.
+Package enumext Info: Storage 'e15': items = 1, answers = 1, difference = 0.
 Package enumext Info: Answers in 'e15' (enumext): OK, items = answers.
 (enumext)             Started on line ... and closed on line ....
 [E16]
@@ -476,7 +476,7 @@ l. ...          \item* A \anskey{x}
 '\anskey' works outside the environment 'keyans'.
 Package enumext Info: Stop 'enumext' with 'save-ans=e16' on line ....
 Package enumext Info: Storage 'e16': \g__enumext_e16_prop has 2 elements, \g__enumext_e16_seq has 2 elements, \g__enumext_resume_e16_int = 1.
-Package enumext Info: Items = 1, answers = 2, difference = -1.
+Package enumext Info: Storage 'e16': items = 1, answers = 2, difference = -1.
 Package enumext Info: Answers in 'e16' (enumext): NOT OK, items < answers.
 (enumext)             Started on line ... and closed on line ....
 [E17]
@@ -495,7 +495,7 @@ l. ...          \end{anskey*}
 'anskey*' can only be used with the key 'save-ans' in 'enumext' or 'enumext*'.
 Package enumext Info: Stop 'enumext' with 'save-ans=e17' on line ....
 Package enumext Info: Storage 'e17': \g__enumext_e17_prop has 2 elements, \g__enumext_e17_seq has 2 elements, \g__enumext_resume_e17_int = 1.
-Package enumext Info: Items = 1, answers = 2, difference = -1.
+Package enumext Info: Storage 'e17': items = 1, answers = 2, difference = -1.
 Package enumext Info: Answers in 'e17' (enumext): NOT OK, items < answers.
 (enumext)             Started on line ... and closed on line ....
 === F. keyans, keyans* y keyanspic ===
@@ -522,7 +522,7 @@ l. ...        \begin{keyans}[clavefalsa]
 The environment 'keyans' does not have a key called 'clavefalsa'. Check that you have spelled the key name correctly.
 Package enumext Info: Stop 'enumext' with 'save-ans=f2' on line ....
 Package enumext Info: Storage 'f2': \g__enumext_f2_prop has 1 elements, \g__enumext_f2_seq has 1 elements, \g__enumext_resume_f2_int = 1.
-Package enumext Info: Items = 1, answers = 1, difference = 0.
+Package enumext Info: Storage 'f2': items = 1, answers = 1, difference = 0.
 Package enumext Info: Answers in 'f2' (enumext): OK, items = answers.
 (enumext)             Started on line ... and closed on line ....
 [F3]
@@ -544,7 +544,7 @@ Package enumext Warning: Many '\item*' in 'keyans' start on line ....
 Package enumext Warning: Missing '\item*' in 'keyans' start on line ....
 Package enumext Info: Stop 'enumext' with 'save-ans=f3' on line ....
 Package enumext Info: Storage 'f3': \g__enumext_f3_prop has 2 elements, \g__enumext_f3_seq has 2 elements, \g__enumext_resume_f3_int = 1.
-Package enumext Info: Items = 1, answers = 2, difference = -1.
+Package enumext Info: Storage 'f3': items = 1, answers = 2, difference = -1.
 Package enumext Info: Answers in 'f3' (enumext): NOT OK, items < answers.
 (enumext)             Started on line ... and closed on line ....
 [F4]
@@ -563,7 +563,7 @@ l. ...        \begin{keyans*}[clavefalsa]
 The environment 'keyans*' does not have a key called 'clavefalsa'. Check that you have spelled the key name correctly.
 Package enumext Info: Stop 'enumext' with 'save-ans=f4' on line ....
 Package enumext Info: Storage 'f4': \g__enumext_f4_prop has 1 elements, \g__enumext_f4_seq has 1 elements, \g__enumext_resume_f4_int = 1.
-Package enumext Info: Items = 1, answers = 1, difference = 0.
+Package enumext Info: Storage 'f4': items = 1, answers = 1, difference = 0.
 Package enumext Info: Answers in 'f4' (enumext): OK, items = answers.
 (enumext)             Started on line ... and closed on line ....
 [F5]
@@ -590,7 +590,7 @@ l. ...              \item
 The environment 'keyans' can only be in the first level.
 Package enumext Info: Stop 'enumext' with 'save-ans=f7' on line ....
 Package enumext Info: Storage 'f7': \g__enumext_f7_prop has 1 elements, \g__enumext_f7_seq has 3 elements, \g__enumext_resume_f7_int = 1.
-Package enumext Info: Items = 1, answers = 1, difference = 0.
+Package enumext Info: Storage 'f7': items = 1, answers = 1, difference = 0.
 Package enumext Info: Answers in 'f7' (enumext): OK, items = answers.
 (enumext)             Started on line ... and closed on line ....
 [F8]
@@ -611,7 +611,7 @@ Close the first 'keyanspic' environment before starting another one.
 Package enumext Warning: Many '\anspic*' in 'keyanspic' start on line ....
 Package enumext Info: Stop 'enumext' with 'save-ans=f8' on line ....
 Package enumext Info: Storage 'f8': \g__enumext_f8_prop has 3 elements, \g__enumext_f8_seq has 3 elements, \g__enumext_resume_f8_int = 1.
-Package enumext Info: Items = 1, answers = 3, difference = -2.
+Package enumext Info: Storage 'f8': items = 1, answers = 3, difference = -2.
 Package enumext Info: Answers in 'f8' (enumext): NOT OK, items < answers.
 (enumext)             Started on line ... and closed on line ....
 [F9]
@@ -631,7 +631,7 @@ l. ...          \item
 Remove '\item' from the 'keyanspic' environment.
 Package enumext Info: Stop 'enumext' with 'save-ans=f9' on line ....
 Package enumext Info: Storage 'f9': \g__enumext_f9_prop has 1 elements, \g__enumext_f9_seq has 1 elements, \g__enumext_resume_f9_int = 1.
-Package enumext Info: Items = 1, answers = 1, difference = 0.
+Package enumext Info: Storage 'f9': items = 1, answers = 1, difference = 0.
 Package enumext Info: Answers in 'f9' (enumext): OK, items = answers.
 (enumext)             Started on line ... and closed on line ....
 [F10]
@@ -650,7 +650,7 @@ l. ...              \anspic*{B}
 The environment 'keyanspic' can only be in the first level.
 Package enumext Info: Stop 'enumext' with 'save-ans=f10' on line ....
 Package enumext Info: Storage 'f10': \g__enumext_f10_prop has 1 elements, \g__enumext_f10_seq has 3 elements, \g__enumext_resume_f10_int = 1.
-Package enumext Info: Items = 1, answers = 1, difference = 0.
+Package enumext Info: Storage 'f10': items = 1, answers = 1, difference = 0.
 Package enumext Info: Answers in 'f10' (enumext): OK, items = answers.
 (enumext)             Started on line ... and closed on line ....
 [F11]
@@ -669,7 +669,7 @@ l. ...          \anspic{B}
 '\anspic' works outside the environment 'keyans'.
 Package enumext Info: Stop 'enumext' with 'save-ans=f11' on line ....
 Package enumext Info: Storage 'f11': \g__enumext_f11_prop has 1 elements, \g__enumext_f11_seq has 1 elements, \g__enumext_resume_f11_int = 1.
-Package enumext Info: Items = 1, answers = 1, difference = 0.
+Package enumext Info: Storage 'f11': items = 1, answers = 1, difference = 0.
 Package enumext Info: Answers in 'f11' (enumext): OK, items = answers.
 (enumext)             Started on line ... and closed on line ....
 [F12]
@@ -689,7 +689,7 @@ l. ...        \end
 Works in 'enumext' and 'keyans' with key 'mini-env'.
 Package enumext Info: Stop 'enumext' with 'save-ans=f12' on line ....
 Package enumext Info: Storage 'f12': \g__enumext_f12_prop has 1 elements, \g__enumext_f12_seq has 1 elements, \g__enumext_resume_f12_int = 1.
-Package enumext Info: Items = 1, answers = 1, difference = 0.
+Package enumext Info: Storage 'f12': items = 1, answers = 1, difference = 0.
 Package enumext Info: Answers in 'f12' (enumext): OK, items = answers.
 (enumext)             Started on line ... and closed on line ....
 === G. setenumext y comandos de claves ===
