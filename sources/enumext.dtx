@@ -155,7 +155,7 @@
     module  = enumext,
     provide =
       { setenumext, setenumextmeta, resetenumext, printkeyans, foreachkeyans,
-        getkeyans, anskey, anspic, miniright, keyans, keyanspic },
+        getkeyans, anskey, anspic, miniright, keyans, keyanspic, AddEnumextCounter },
     key-path = {print, foreach, meta-families, },
     shortverb         = \|,
     shortverb-options = { language=enumext-doc, basicstyle=\ttfamily },
@@ -589,7 +589,7 @@
     keywords      = [7]{enumext, keyans, keyanspic, getkeyans, anskey, anspic, item, anskey*, itemwidth,%
                     enumextmeta, setenumext, printkeyans, miniright, labelbx, mywrap, descitemwd, theenumXi,%
                     theenumXii, theenumXiii, setenumextmeta, foreachkeyans, theenumX, theenumXiv, theenumXv,%
-                    theenumXvii, theenumXviii, resetenumext},%
+                    theenumXvii, theenumXviii, resetenumext, AddEnumextCounter},%
 % Reserved words 8 (keyname) KEYS and counters
     keywordstyle  = [8]{\color{keyname}},%
     keywords      = [8]{save-ans, wrap-ans, save-ref, show-pos, show-ans, columns, list-offset, enumXi, enumX,%
@@ -1926,6 +1926,49 @@
 % i.e. |\arabic{enumXi}| to indicate the count of the first level
 % instead of using |\theenumXi|.
 % \end{important}
+%
+% \subsection{The command \cs{AddEnumextCounter}}\label{subsec:addenumextcounter}
+%
+% \begin{function}{\AddEnumextCounter}
+%   \begin{syntax}
+%     |\AddEnumextCounter|\mymarg{counter style}\mymarg{widest label}
+%   \end{syntax}
+%
+% The \mykey{label} key replaces |\arabic*|, |\Alph*|, |\alph*|, |\Roman*|
+% and |\roman*| by the counter style followed by the counter of the current level.
+% The command \ics*{AddEnumextCounter} adds another \mymarg{counter style} to that
+% list, that is a command that receives the name of a counter, for example \myhlc|\fnsymbol|.
+% The \mymarg{widest label} is a text typeset in a box to calculate the default value
+% of the \mykey{labelwidth} key, as it is done with `|M|' for |\Alph*|, so it
+% must be as wide as the widest label that will be used.
+% \end{function}
+%
+% The command can be used in the preamble or in the body of the document, but before the
+% style is used in the \mykey{label} key. An error is raised if the first argument is
+% not a single control sequence or if the counter style is already registered, including
+% the five styles of the package.
+%
+% \iffalse
+%<*example>
+% \fi
+\begin{examplecode}[frame=single]
+\AddEnumextCounter{\fnsymbol}{\textdaggerdbl\textdaggerdbl}
+\begin{enumext}[label=\fnsymbol*]
+  \item First item
+  \item Second item
+  \item Third item
+\end{enumext}
+\end{examplecode}
+% \iffalse
+%</example>
+% \fi
+%
+% \AddEnumextCounter{\fnsymbol}{\textdaggerdbl\textdaggerdbl}
+% \begin{enumext}[label=\fnsymbol*]
+%   \item First item
+%   \item Second item
+%   \item Third item
+% \end{enumext}
 %
 % \subsection{Keys for penalties}\label{subsec:penalties}
 %
@@ -4236,6 +4279,10 @@ all the worksheets are as follows:
 %     \myenv*[no-index]{keyanspic} with the font sizes 10pt, 11pt and 12pt,
 %     measured between the boxes of the \texttt{PDF}, for the keys
 %     \mykey[env]{layout-top}, \mykey[env]{layout-sep} and \mykey[env]{label-sep};
+%   \item \myfile{test-020}: the \texttt{ListNumbering} value that the lists declare
+%     with |tagging=on|, according to the counter style of the \mykey{label} key;
+%   \item \myfile{test-021}: the counter styles registered with
+%     |\AddEnumextCounter|, measured with boxes;
 %   \item \myfile{test-100}: the error and warning messages of the package.
 % \end{itemize}
 %
@@ -4351,6 +4398,8 @@ all the worksheets are as follows:
 %        \texttt{LowerRoman} or \texttt{UpperRoman}) instead of the generic \texttt{Ordered}.
 %      \item \emph{Tagged} \texttt{PDF}: \myenv*[no-index]{enumext*} and \myenv*[no-index]{keyans*}
 %        without the counter in the label are also declared as \emph{unordered} lists.
+%      \item New command |\AddEnumextCounter| to register a counter style that the package
+%        does not provide, such as |\fnsymbol|, for the \mykey{label} key.
 %      \item The message written to the |.log| file by the \mykey{save-ans} key with the
 %        number of items and answers now starts with the name of the storage.
 %    \end{itemize}
@@ -6015,6 +6064,70 @@ all the worksheets are as follows:
     \tl_set_eq:cN { the #2 } #1
   }
 \cs_generate_variant:Nn \@@_label_style:Nnn { cvn }
+%    \end{macrocode}
+% \end{macro}
+%
+% \subsection{The command \cs{AddEnumextCounter}}\label{cmd:addenumextcounter}
+%
+% The \mykey{label} key replaces every style registered in
+% \myhlc|\g_@@_counter_styles_tl| followed by a star with that style applied to the
+% counter of the level. The command \ics*{AddEnumextCounter} registers one more style
+% with \myhlc|\@@_register_default_label_wd:Nn|, so that a style defined outside the
+% package, such as \myhlc|\fnsymbol|, can be written as \ilabel[no-index]{fnsymbol*}
+% in the key.
+%
+% \begin{macro}[int]{counter-not-cs, counter-registered}
+% Messages used by |\AddEnumextCounter| command.
+%    \begin{macrocode}
+\msg_new:nnnn { enumext } { counter-not-cs }
+  {
+    The~first~argument~'#1'~is~not~a~control~sequence~\msg_line_context:.
+  }
+  {
+    The~first~argument~must~be~a~counter~style~such~as~
+    '\c_backslash_str fnsymbol'.
+  }
+\msg_new:nnnn { enumext } { counter-registered }
+  {
+    The~counter~style~'#1'~is~already~registered~\msg_line_context:.
+  }
+  {
+    A~counter~style~can~only~be~registered~once.~The~package~already~
+    registers~'\c_backslash_str arabic',~'\c_backslash_str Alph',~
+    '\c_backslash_str alph',~'\c_backslash_str Roman'~and~
+    '\c_backslash_str roman'.
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}[int]{\@@_add_counter:nn}
+%   Checks that `|#1|' is a single control sequence that is not registered yet, and
+%   then registers it with the example `|#2|' used to calculate the default
+%   \mykey[env]{labelwidth}.
+%    \begin{macrocode}
+\cs_new_protected:Nn \@@_add_counter:nn
+  {
+    \bool_lazy_and:nnTF
+      { \tl_if_single_p:n {#1} }
+      { \token_if_cs_p:N #1 }
+      {
+        \tl_if_exist:cTF { c_@@_widest_ \cs_to_str:N #1 _tl }
+          { \msg_error:nne { enumext } { counter-registered } { \token_to_str:N #1 } }
+          { \@@_register_default_label_wd:Nn #1 {#2} }
+      }
+      { \msg_error:nne { enumext } { counter-not-cs } { \tl_to_str:n {#1} } }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\AddEnumextCounter}
+%   Defines the user command \ics*{AddEnumextCounter}. It accepts the counter style
+%   in `|#1|' and the example used to measure the label in `|#2|'.
+%    \begin{macrocode}
+\NewDocumentCommand \AddEnumextCounter { m m }
+  {
+    \@@_add_counter:nn {#1} {#2}
+  }
 %    \end{macrocode}
 % \end{macro}
 %

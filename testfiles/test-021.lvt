@@ -1,0 +1,110 @@
+% test-021.lvt -- estilos de contador propios con \AddEnumextCounter
+%
+% Hecho con cariño por Pablo González L. <pablgonz@educarchile.cl>
+% para que enumext siga funcionando igual de bien después de cada cambio.
+%
+% Regresion:  l3build save test-021
+%             l3build check test-021
+%
+% Test de regresion del comando \AddEnumextCounter: un estilo de contador que
+% el paquete no trae (\fnsymbol y uno propio) se usa en la llave label de
+% enumext, enumext* y keyans, y el ancho por defecto sale del ejemplo
+% registrado. Cada caso compone la lista en una caja y la muestra en el log
+% (\BOXTEST), como en test-003. Los errores del comando estan en test-100.
+\input{regression-test}
+
+\documentclass{article}
+\ExplSyntaxOn
+\debug_on:n { all }
+\ExplSyntaxOff
+\usepackage{enumext}
+\AddEnumextCounter{\fnsymbol}{\textdaggerdbl\textdaggerdbl}
+\newcommand\boldarabic[1]{\textbf{\arabic{#1}}}
+\begin{document}
+
+\newcommand\BOXTEST[2]
+  {%
+    \TEST{#1}
+      {%
+        \setbox0=\vbox{\hsize=250pt \parindent=0pt #2}%
+        \showbox0
+      }%
+  }
+
+\START
+
+\TYPE{=== A. Estilo fnsymbol ===}
+
+\BOXTEST{[1] enumext con fnsymbol*}
+  {
+    \begin{enumext}[label=\fnsymbol*]
+      \item Uno
+      \item Dos
+      \item Tres
+    \end{enumext}
+  }
+
+\BOXTEST{[2] enumext con fnsymbol* y labelwidth explicito}
+  {
+    \begin{enumext}[label=\fnsymbol*, labelwidth=2cm]
+      \item Uno
+      \item Dos
+    \end{enumext}
+  }
+
+\BOXTEST{[3] enumext anidado con fnsymbol*}
+  {
+    \begin{enumext}[label=\fnsymbol*]
+      \item Uno
+        \begin{enumext}[label=\fnsymbol*)]
+          \item A
+          \item B
+        \end{enumext}
+      \item Dos
+    \end{enumext}
+  }
+
+\BOXTEST{[4] enumext* con fnsymbol*}
+  {
+    \begin{enumext*}[columns=2, label=\fnsymbol*]
+      \item Uno
+      \item Dos
+      \item Tres
+      \item Cuatro
+    \end{enumext*}
+  }
+
+\BOXTEST{[5] keyans con fnsymbol*}
+  {
+    \begin{enumext}[save-ans=fnk]
+      \item Pregunta.
+        \begin{keyans}[label=\fnsymbol*)]
+          \item Uno
+          \item* Dos (correcta)
+        \end{keyans}
+    \end{enumext}
+    \printkeyans{fnk}
+  }
+
+\TYPE{=== B. Estilo propio ===}
+
+\AddEnumextCounter{\boldarabic}{0}
+
+\BOXTEST{[6] enumext con estilo propio}
+  {
+    \begin{enumext}[label=\boldarabic*.]
+      \item Uno
+      \item Dos
+    \end{enumext}
+  }
+
+\BOXTEST{[7] estilos de paquete siguen igual}
+  {
+    \begin{enumext}[label=\alph*)]
+      \item Uno
+      \item Dos
+    \end{enumext}
+  }
+
+\OMIT
+\end{document}

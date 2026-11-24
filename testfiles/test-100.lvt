@@ -565,6 +565,28 @@
     \end{enumext*}
   }
 
+\TYPE{=== J. Estilos de contador propios ===}
+
+\CASE{J1}
+  {
+    \AddEnumextCounter{\arabic}{0}
+  }
+
+\CASE{J2}
+  {
+    \AddEnumextCounter{ab}{x}
+  }
+
+\CASE{J3}
+  {
+    \AddEnumextCounter{\fnsymbol}{\textdaggerdbl\textdaggerdbl}
+  }
+
+\CASE{J4}
+  {
+    \AddEnumextCounter{\fnsymbol}{x}
+  }
+
 \TYPE{=== H. Anidamiento ===}
 
 \CASE{H1}
