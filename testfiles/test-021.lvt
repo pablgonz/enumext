@@ -86,6 +86,60 @@
     \printkeyans{fnk}
   }
 
+\BOXTEST{[8] enumext con fnsymbol* y start}
+  {
+    \begin{enumext}[label=\fnsymbol*, start=3]
+      \item Uno
+      \item Dos
+    \end{enumext}
+  }
+
+\BOXTEST{[9] enumext con fnsymbol* y widest entero}
+  {
+    \begin{enumext}[label=\fnsymbol*, widest=9]
+      \item Uno
+      \item Dos
+    \end{enumext}
+  }
+
+\BOXTEST{[10] enumext* con fnsymbol*, columns, widest y start}
+  {
+    \begin{enumext*}[columns=2, label=\fnsymbol*, widest=9, start=2]
+      \item Uno
+      \item Dos
+      \item Tres
+      \item Cuatro
+    \end{enumext*}
+  }
+
+\BOXTEST{[11] keyans* con fnsymbol*}
+  {
+    \begin{enumext}[save-ans=fns]
+      \item Pregunta.
+        \begin{keyans*}[label=\fnsymbol*]
+          \item Uno
+          \item* Dos (correcta)
+        \end{keyans*}
+    \end{enumext}
+    \printkeyans{fns}
+  }
+
+\BOXTEST{[12] ref distinto de label con fnsymbol*}
+  {
+    \begin{enumext}[label=\fnsymbol*, ref=\arabic*]
+      \item Uno \theenumXi
+      \item Dos \theenumXi
+    \end{enumext}
+  }
+
+\BOXTEST{[13] ref con fnsymbol*}
+  {
+    \begin{enumext}[label=\arabic*, ref=\fnsymbol*]
+      \item Uno \theenumXi
+      \item Dos \theenumXi
+    \end{enumext}
+  }
+
 \TYPE{=== B. Estilo propio ===}
 
 \AddEnumextCounter{\boldarabic}{0}

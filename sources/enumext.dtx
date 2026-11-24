@@ -1941,6 +1941,8 @@
 % The \mymarg{widest label} is a text typeset in a box to calculate the default value
 % of the \mykey{labelwidth} key, as it is done with `|M|' for |\Alph*|, so it
 % must be as wide as the widest label that will be used.
+% Since the \mykey{widest} key converts a string to a number, with these styles pass it an
+% \mymeta{integer}, because \myhlc|\fnsymbol| only has nine symbols.
 % \end{function}
 %
 % The command can be used in the preamble or in the body of the document, but before the
