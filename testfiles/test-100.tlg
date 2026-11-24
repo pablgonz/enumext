@@ -812,6 +812,26 @@ For immediate help type H <return>.
  ...                                              
 l. ...    \AddEnumextCounter{\fnsymbol}{x}
 A counter style can only be registered once. The package already registers '\arabic', '\Alph', '\alph', '\Roman' and '\roman'.
+=== K. Valores no enteros en start* y widest ===
+[K1]
+! Package enumext Error: The value 'A' of the key 'start*' is not an integer and the counter style of the key 'label' cannot convert it on line ....
+For immediate help type H <return>.
+ ...                                              
+l. ......\begin{enumext}[label=\arabic*, start*=A]
+Use an integer, or a string with a label that uses '\Alph*', '\alph*', '\Roman*' or '\roman*'. The value 1 will be used.
+[K2]
+! Package enumext Error: The value 'XX' of the key 'widest' is not an integer and the counter style of the key 'label' cannot convert it on line ....
+For immediate help type H <return>.
+ ...                                              
+l. ......begin{enumext}[label=\arabic*, widest=XX]
+Use an integer, or a string with a label that uses '\Alph*', '\alph*', '\Roman*' or '\roman*'. The value 1 will be used.
+[K3]
+! Package enumext Error: The value 'B' of the key 'start*' is not an integer and the counter style of the key 'label' cannot convert it on line ....
+For immediate help type H <return>.
+ ...                                              
+l. ......egin{enumext}[label=\fnsymbol*, start*=B]
+Use an integer, or a string with a label that uses '\Alph*', '\alph*', '\Roman*' or '\roman*'. The value 1 will be used.
+[K4]
 === H. Anidamiento ===
 [H1]
 ! Package enumext Error: The environment enumext* can't be nested on line ....

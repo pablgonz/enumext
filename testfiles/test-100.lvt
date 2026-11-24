@@ -587,6 +587,36 @@
     \AddEnumextCounter{\fnsymbol}{x}
   }
 
+\TYPE{=== K. Valores no enteros en start* y widest ===}
+
+\CASE{K1}
+  {
+    \begin{enumext}[label=\arabic*, start*=A]
+      \item Uno
+    \end{enumext}
+  }
+
+\CASE{K2}
+  {
+    \begin{enumext}[label=\arabic*, widest=XX]
+      \item Uno
+    \end{enumext}
+  }
+
+\CASE{K3}
+  {
+    \begin{enumext}[label=\fnsymbol*, start*=B]
+      \item Uno
+    \end{enumext}
+  }
+
+\CASE{K4}
+  {
+    \begin{enumext}[label=\alph*, start*=c, widest=m]
+      \item Uno
+    \end{enumext}
+  }
+
 \TYPE{=== H. Anidamiento ===}
 
 \CASE{H1}

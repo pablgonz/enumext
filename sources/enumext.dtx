@@ -1849,7 +1849,9 @@
 % the \mymeta{string} of the form |\Alph|, |\alph|, |\Roman| or |\roman|
 % to a \emph{value} for the current counter defined by \mykey{label} key,
 % then calculating the \emph{width} by means of a box. For example |widest={XXIII}|
-% or |widest={23}| are equivalent. This key is useful when the default
+% or |widest={23}| are equivalent. A \mymeta{string} is only converted when the
+% \mykey{label} key uses |\Alph*|, |\alph*|, |\Roman*| or |\roman*|, with any other style an
+% error is raised. This key is useful when the default
 % values of the \mykey{labelwidth} key are smaller than those actually used.
 %
 % \keyexampcmd{font}{font commands}{empty}[env]
@@ -1941,8 +1943,8 @@
 % The \mymarg{widest label} is a text typeset in a box to calculate the default value
 % of the \mykey{labelwidth} key, as it is done with `|M|' for |\Alph*|, so it
 % must be as wide as the widest label that will be used.
-% Since the \mykey{widest} key converts a string to a number, with these styles pass it an
-% \mymeta{integer}, because \myhlc|\fnsymbol| only has nine symbols.
+% The \mykey{start*} and \mykey{widest} keys only convert a string for the styles of the
+% package, so with a registered style pass them an \mymeta{integer}, otherwise an error is raised.
 % \end{function}
 %
 % The command can be used in the preamble or in the body of the document, but before the
@@ -6535,6 +6537,61 @@ all the worksheets are as follows:
 %
 % \subsection{Setting \texttt{start}, \texttt{start*} and \texttt{widest} keys}\label{key:start-widest}
 %
+% \begin{variable}[int]{\l_@@_string_int}
+%   The integer \myhlc|\l_@@_string_int| stores the number that corresponds to the
+%   \mymeta{string} passed to the \mykey[env]{start*} and \mykey[env]{widest} keys.
+%    \begin{macrocode}
+\int_new:N \l_@@_string_int
+%    \end{macrocode}
+% \end{variable}
+%
+% \begin{macro}[int]{string-not-integer}
+%   Message used when the value of the \mykey[env]{start*} or \mykey[env]{widest} keys
+%   is not an integer and the counter style of the \mykey[env]{label} key cannot convert it.
+%    \begin{macrocode}
+\msg_new:nnnn { enumext } { string-not-integer }
+  {
+    The~value~'#2'~of~the~key~'#1'~is~not~an~integer~and~the~counter~style~
+    of~the~key~'label'~cannot~convert~it~\msg_line_context:.
+  }
+  {
+    Use~an~integer,~or~a~string~with~a~label~that~uses~'\c_backslash_str Alph*',~
+    '\c_backslash_str alph*',~'\c_backslash_str Roman*'~or~
+    '\c_backslash_str roman*'.~The~value~1~will~be~used.
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}[int]{\@@_string_to_int:Nnn}
+%   The function \myhlc|\@@_string_to_int:Nnn| takes three arguments:
+%
+% \begin{arguments}
+%    \item \myhlc|\l_@@_label_X_tl|
+%    \item The name of the key, used in the error message
+%    \item \meta{string}
+% \end{arguments}
+%   The argument `|#1|' is the \emph{\enquote{counter style}} set by \mykey[env]{label} key
+%   and `|#3|' is converted to \myhlc|\l_@@_string_int|, using
+%   \myhlc|\int_from_alph:n| for |\Alph| or |\alph| and \myhlc|\int_from_roman:n| for
+%   |\Roman| or |\roman|. For any other style an error is raised and the value is 1.
+%    \begin{macrocode}
+\cs_new_protected:Nn \@@_string_to_int:Nnn
+  {
+    \regex_if_match:nVTF { \c{Alph} | \c{alph} } #1
+      { \int_set:Nn \l_@@_string_int { \int_from_alph:n {#3} } }
+      {
+        \regex_if_match:nVTF { \c{Roman} | \c{roman} } #1
+          { \int_set:Nn \l_@@_string_int { \int_from_roman:n {#3} } }
+          {
+            \msg_error:nnee { enumext } { string-not-integer }
+              { \tl_to_str:n {#2} } { \tl_to_str:n {#3} }
+            \int_set:Nn \l_@@_string_int { 1 }
+          }
+      }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
 % \begin{macro}[int]{\@@_start_from:NNn, \@@_start_from:ccn, \@@_start_from:cce}
 %    The function \myhlc|\@@_start_from:NNn| used by \mykey[env,foreachkeyans]{start} and \mykey[env]{start*}
 %    keys takes three arguments:
@@ -6568,10 +6625,8 @@ all the worksheets are as follows:
         \int_set:Nn #2 {#3}
       }
       {
-        \regex_if_match:nVT { \c{Alph} | \c{alph} } #1
-          { \int_set:Nn #2 { \int_from_alph:n {#3} } }
-        \regex_if_match:nVT { \c{Roman} | \c{roman} } #1
-          { \int_set:Nn #2  { \int_from_roman:n {#3} } }
+        \@@_string_to_int:Nnn #1 { start* } {#3}
+        \int_set_eq:NN #2 \l_@@_string_int
       }
   }
 \cs_generate_variant:Nn \@@_start_from:NNn { ccn, cce }
@@ -6605,10 +6660,8 @@ all the worksheets are as follows:
         \setcounter{enumX #1} {#4}
       }
       {
-        \regex_if_match:nVT { \c{Alph} | \c{alph} } #2
-          { \setcounter{enumX #1} { \int_from_alph:n {#4} } }
-        \regex_if_match:nVT { \c{Roman} | \c{roman} } #2
-          { \setcounter{enumX #1} { \int_from_roman:n {#4} } }
+        \@@_string_to_int:Nnn #2 { widest } {#4}
+        \setcounter{enumX #1} { \int_use:N \l_@@_string_int }
       }
     \@@_label_width_by_box:cv
       { l_@@_labelwidth_ #1 _dim } { l_@@_label_ #1 _tl }
